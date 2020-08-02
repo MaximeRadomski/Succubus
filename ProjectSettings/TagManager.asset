@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Button
+  - SoundControler
   layers:
   - Default
   - TransparentFX
@@ -38,6 +40,33 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4163839915
+    locked: 0
+  - name: UIBot
+    uniqueID: 1433922105
+    locked: 0
+  - name: UITop
+    uniqueID: 445791159
+    locked: 0
+  - name: Buttons
+    uniqueID: 3396590645
+    locked: 0
+  - name: Pieces
+    uniqueID: 3216431097
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Menu
+    uniqueID: 2978424413
+    locked: 0
+  - name: Popup
+    uniqueID: 3510437667
+    locked: 0
+  - name: Snack
+    uniqueID: 3932137079
+    locked: 0
+  - name: Keyboard
+    uniqueID: 2680369509
     locked: 0
