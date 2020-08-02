@@ -35,6 +35,7 @@ public static class Constants
     public const string PpRun = "Run";
     public const string PpSerializeDefault = null;
     public const string PpFavKeyboardLayout = "FavKeyboard";
+    public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
 

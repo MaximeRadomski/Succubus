@@ -14,6 +14,7 @@ public class GameplayControler : MonoBehaviour
     private SceneBhv _sceneBhv;
     private Instantiator _instantiator;
     private GameObject _currentPiece;
+    private GameObject _currentGhost;
     private int _playFieldHeight;
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
@@ -117,6 +118,8 @@ public class GameplayControler : MonoBehaviour
         if (_bag == null || _bag.Length <= 7)
             SetBag();
         _currentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), "Hell", _spawner.transform.position);
+        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), "HellGhost", _spawner.transform.position);
+        DropGhost();
         _bag = _bag.Remove(0, 1);
         UpdateNextPieces();
         _allowedMovesBeforeLock = 0;
@@ -159,7 +162,8 @@ public class GameplayControler : MonoBehaviour
         }
         if (IsNextGravityFallPossible() == false)
         {
-            HandleLock();
+            if (!_currentPiece.GetComponent<Piece>().IsLocked)
+                HandleLock();
         }
         else
         {
@@ -173,6 +177,7 @@ public class GameplayControler : MonoBehaviour
             _nextLock = Time.time + _lockDelay;
         else if (Time.time < _nextLock)
         {
+            _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock((_nextLock - Time.time)/_lockDelay);
             if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock)
             {
                 Lock();
@@ -186,6 +191,7 @@ public class GameplayControler : MonoBehaviour
 
     private void Lock()
     {
+        _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock(1.0f);
         _nextLock = -1;
         if (_currentPiece != null)
         {
@@ -196,6 +202,7 @@ public class GameplayControler : MonoBehaviour
 
     private void ResetLock()
     {
+        _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock(1.0f);
         _nextLock = -1;
     }
 
@@ -207,6 +214,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = _currentPiece.transform.position;
         _currentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
+        DropGhost();
     }
 
     private void LeftHolded()
@@ -219,6 +227,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = _currentPiece.transform.position;
         _currentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
+        DropGhost();
     }
 
     private void Right()
@@ -229,6 +238,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = _currentPiece.transform.position;
         _currentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
+        DropGhost();
     }
 
     private void RightHolded()
@@ -241,6 +251,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = _currentPiece.transform.position;
         _currentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
+        DropGhost();
     }
 
     private void DirectionReleased()
@@ -289,11 +300,29 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    private void DropGhost()
+    {
+        bool hardDropping = true;
+        _currentGhost.transform.position = _currentPiece.transform.position;
+        while (hardDropping)
+        {
+            var lastCurrentGhostValidPosition = _currentGhost.transform.position;
+            _currentGhost.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (IsPiecePosValid(_currentGhost) == false)
+            {
+                _currentGhost.transform.position = lastCurrentGhostValidPosition;
+                hardDropping = false;
+            }
+        }
+    }
+
     private void Clock()
     {
         if (_currentPiece.GetComponent<Piece>().IsLocked)
             return;
         var currentPieceModel = _currentPiece.GetComponent<Piece>();
+        if (currentPieceModel.Letter == "O")
+            return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
         tries.Add(new List<int>() { 0, 0 });
@@ -379,6 +408,8 @@ public class GameplayControler : MonoBehaviour
                     ++_allowedMovesBeforeLock;
                 ResetLock();
                 SetNextGravityFall();
+                _currentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
+                DropGhost();
                 return;
             }
             else
@@ -393,16 +424,117 @@ public class GameplayControler : MonoBehaviour
     {
         if (_currentPiece.GetComponent<Piece>().IsLocked)
             return;
+        var currentPieceModel = _currentPiece.GetComponent<Piece>();
+        if (currentPieceModel.Letter == "O")
+            return;
+        var rotationState = currentPieceModel.RotationState;
+        var tries = new List<List<int>>();
+        tries.Add(new List<int>() { 0, 0 });
+        if (currentPieceModel.Letter != "I")
+        {
+            if (rotationState == RotationState.O) //O->L
+            {
+                tries.Add(new List<int>() { +1, 0 });
+                tries.Add(new List<int>() { +1, +1 });
+                tries.Add(new List<int>() { 0, -2 });
+                tries.Add(new List<int>() { +1, -2 });
+            }
+            else if (rotationState == RotationState.R) //R->O
+            {
+                tries.Add(new List<int>() { +1, 0 });
+                tries.Add(new List<int>() { +1, -1 });
+                tries.Add(new List<int>() { 0, +2 });
+                tries.Add(new List<int>() { +1, +2 });
+            }
+            else if (rotationState == RotationState.L) //L->D
+            {
+                tries.Add(new List<int>() { -1, 0 });
+                tries.Add(new List<int>() { -1, -1 });
+                tries.Add(new List<int>() { 0, +2 });
+                tries.Add(new List<int>() { -1, +2 });
+            }
+            else if (rotationState == RotationState.D) //D->R
+            {
+                tries.Add(new List<int>() { -1, 0 });
+                tries.Add(new List<int>() { -1, +1 });
+                tries.Add(new List<int>() { 0, -2 });
+                tries.Add(new List<int>() { -1, -2 });
+            }
+        }
+        else
+        {
+            if (rotationState == RotationState.O) //O->L
+            {
+                tries.Add(new List<int>() { -1, 0 });
+                tries.Add(new List<int>() { +2, 0 });
+                tries.Add(new List<int>() { -1, +2 });
+                tries.Add(new List<int>() { +2, -1 });
+            }
+            else if (rotationState == RotationState.R) //R->O
+            {
+                tries.Add(new List<int>() { +2, 0 });
+                tries.Add(new List<int>() { -1, 0 });
+                tries.Add(new List<int>() { +2, +1 });
+                tries.Add(new List<int>() { -1, -2 });
+            }
+            else if (rotationState == RotationState.L) //L->D
+            {
+                tries.Add(new List<int>() { -2, 0 });
+                tries.Add(new List<int>() { +1, 0 });
+                tries.Add(new List<int>() { -2, -1 });
+                tries.Add(new List<int>() { +1, +2 });
+            }
+            else if (rotationState == RotationState.D) //D->R
+            {
+                tries.Add(new List<int>() { +1, 0 });
+                tries.Add(new List<int>() { -2, 0 });
+                tries.Add(new List<int>() { +1, -2 });
+                tries.Add(new List<int>() { -2, +1 });
+            }
+        }
+
+        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
         _currentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
+        for (int i = 0; i < 5; ++i)
+        {
+            _currentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
+            if (IsPiecePosValid(_currentPiece))
+            {
+                if (rotationState == RotationState.O) //O->L
+                    currentPieceModel.RotationState = RotationState.L;
+                else if (rotationState == RotationState.R) //R->O
+                    currentPieceModel.RotationState = RotationState.O;
+                else if (rotationState == RotationState.L) //L->D
+                    currentPieceModel.RotationState = RotationState.D;
+                else if (rotationState == RotationState.D) //D->R
+                    currentPieceModel.RotationState = RotationState.R;
+                if (_nextLock > 0.0f)
+                    ++_allowedMovesBeforeLock;
+                ResetLock();
+                SetNextGravityFall();
+                _currentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
+                DropGhost();
+                return;
+            }
+            else
+            {
+                _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+            }
+        }
+        _currentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
     }
 
     private void Hold()
     {
+        if (_currentPiece.GetComponent<Piece>().IsLocked)
+            return;
         if (_holder.transform.childCount <= 0)
         {
             var tmpPiece = _instantiator.NewPiece(_currentPiece.GetComponent<Piece>().Letter, "Hell", _holder.transform.position);
             tmpPiece.transform.SetParent(_holder.transform);
             Destroy(_currentPiece.gameObject);
+            if (_currentGhost != null)
+                Destroy(_currentGhost);
             Spawn();
         }
         else
@@ -413,7 +545,11 @@ public class GameplayControler : MonoBehaviour
             tmpHolding.transform.SetParent(_holder.transform);
             Destroy(_currentPiece.gameObject);
             Destroy(tmpHolded.gameObject);
+            if (_currentGhost != null)
+                Destroy(_currentGhost);
             _currentPiece = _instantiator.NewPiece(pieceLetter, "Hell", _spawner.transform.position);
+            _currentGhost = _instantiator.NewPiece(pieceLetter, "HellGhost", _spawner.transform.position);
+            DropGhost();
             _allowedMovesBeforeLock = 0;
             SetNextGravityFall();
         }
@@ -475,6 +611,8 @@ public class GameplayControler : MonoBehaviour
 
     private void CheckForLines()
     {
+        if (_currentGhost != null)
+            Destroy(_currentGhost);
         int nbLines = 0;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
@@ -485,7 +623,7 @@ public class GameplayControler : MonoBehaviour
             }
         }
         if (nbLines > 0)
-            Invoke(nameof(ClearLineSpace), 0.4f);
+            Invoke(nameof(ClearLineSpace), 0.3f);
         else
             Spawn();
     }
