@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: 1990ddf33476dee4b8973f1cba57ee9f
+guid: 079b94e0344b3324db0562a473530b20
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5134559523624755036
-    second: Panels_0
+      213: 2868101353237766674
+    second: WhiteSquare_0
   - first:
-      213: -4672196534843201658
-    second: Panels_1
+      213: -5151787287431868109
+    second: WhiteSquare_1
   - first:
-      213: -8651609875184883351
-    second: Panels_2
-  - first:
-      213: 2253760293180371077
-    second: Panels_3
+      213: -6016611549893457297
+    second: WhiteSquare_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -75,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -87,7 +84,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -99,7 +96,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,85 +110,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Panels_0
+      name: WhiteSquare_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 14
+        y: 14
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 212ed832cfa8dc720800000000000000
+      internalID: 2868101353237766674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WhiteSquare_1
+      rect:
+        serializedVersion: 2
+        x: 36
         y: 0
-        width: 144
-        height: 144
+        width: 36
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5f90c3ceae914740800000000000000
-      internalID: 5134559523624755036
+      spriteID: 3311046e1cc2188b0800000000000000
+      internalID: -5151787287431868109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Panels_1
+      name: WhiteSquare_2
       rect:
         serializedVersion: 2
-        x: 144
+        x: 72
         y: 0
-        width: 144
-        height: 144
+        width: 36
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6872cd38106092fb0800000000000000
-      internalID: -4672196534843201658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_2
-      rect:
-        serializedVersion: 2
-        x: 304
-        y: 16
-        width: 56
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 969e75e18ae4fe780800000000000000
-      internalID: -8651609875184883351
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_3
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 72
-        width: 32
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58075e3bb07f64f10800000000000000
-      internalID: 2253760293180371077
+      spriteID: f6a86193ca3b08ca0800000000000000
+      internalID: -6016611549893457297
       vertices: []
       indices: 
       edges: []

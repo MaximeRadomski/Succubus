@@ -10,7 +10,7 @@ public class Piece : MonoBehaviour
     public bool IsLocked;
     public RotationState RotationState = RotationState.O;
 
-    public void ReduceOpacityOnLock(float percent)
+    public void HandleOpacityOnLock(float percent)
     {
         foreach (Transform child in transform)
         {

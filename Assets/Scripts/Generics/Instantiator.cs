@@ -11,11 +11,19 @@ public class Instantiator : MonoBehaviour
     {
     }
 
-    public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
+    public GameObject NewPiece(string pieceLetter, string nature, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
-        var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
+        var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + nature);
         var pieceModel = tmpPieceObject.GetComponent<Piece>();
         var tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation);
+        return tmpPieceInstance;
+    }
+
+    public GameObject NewFadeBlock(Nature nature, Vector3 position, int startColor, int endColor)
+    {
+        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + nature);
+        var tmpPieceInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
+        tmpPieceInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor);
         return tmpPieceInstance;
     }
 
@@ -76,20 +84,11 @@ public class Instantiator : MonoBehaviour
         return pauseMenuBhv;
     }
 
-    public void PopText(string text, Vector2 position, TextType type, TextThickness thickness = TextThickness.Thick)
+    public void PopText(string text, Vector2 position, string color = "#FFFFFF")
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
-
-        var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
-        var nbTextsOnThisPosition = 0;
-        foreach (var tmpText in tmpTexts)
-        {
-            if (Helper.VectorEqualsPrecision(tmpText.GetComponent<PoppingTextBhv>().StartingPosition, position, 0.01f))
-                ++nbTextsOnThisPosition;
-        }
-
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.3f * nbTextsOnThisPosition), type, thickness);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color);
     }
 
     public void PopIcon(Sprite sprite, Vector2 position)

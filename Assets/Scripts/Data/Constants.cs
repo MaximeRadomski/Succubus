@@ -10,6 +10,8 @@ public static class Constants
     public const float SceneWidth = 20.57f;
     public const float CameraSize = 18.2936f;
     public const float GravityDelay = 1.0f;
+    public const int GravityDivider = 4;
+    public const int LinesForLevel = 10;
     public const float LockDelay = 0.5f;
     public const float AfterDropDelay = 0.1f;
     public const int NumberOfAllowedMovesBeforeLock = 15;
@@ -41,6 +43,7 @@ public static class Constants
 
     //  SCENES  //
     public const string GameRogueScene = "GameRogueScene";
+    public const string TrainingGameScene = "TrainingGameScene";
     public const string FeaturesShopScene = "FeaturesShopScene";
 
     //  GAMEOBJECT NAMES  //
@@ -63,17 +66,24 @@ public static class Constants
     public const float KeyboardHeight = 3.1f;
 
     //  COLORS  //
-    public static Color ColorRed0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
-    public static Color ColorRed1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
-    public static Color ColorRed2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
-    public static Color ColorRed3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
-    public static Color ColorRed4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
+    public static Color ColorHell0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
+    public static Color ColorHell1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
+    public static Color ColorHell2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
+    public static Color ColorHell3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
+    public static Color ColorHell4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
 
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+
+    public static object GetColorFromNature(Nature nature, int id)
+    {
+        var myActualType = typeof(Constants);
+        var tmp = myActualType.GetField("Color" + nature.ToString() + id);
+        return tmp.GetValue(myActualType);
+    }
 
     // CACHE SAVES
     public static bool InputLocked = false;

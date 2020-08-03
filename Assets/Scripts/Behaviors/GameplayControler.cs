@@ -1,23 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameplayControler : MonoBehaviour
 {
     public float GravityDelay;
+    public GameObject CurrentPiece;
 
     private int _timeDirectionHolded;
     private float _nextGravityFall;
     private float _lockDelay;
     private float _nextLock;
     private int _allowedMovesBeforeLock;
+    private bool _canHold;
     private SceneBhv _sceneBhv;
     private Instantiator _instantiator;
-    private GameObject _currentPiece;
     private GameObject _currentGhost;
     private int _playFieldHeight;
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
+    private int _lastNbLinesCleared;
+    private int _comboCounter;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -32,6 +36,17 @@ public class GameplayControler : MonoBehaviour
         Spawn();
     }
 
+    private void GameOver()
+    {
+        CurrentPiece.GetComponent<Piece>().IsLocked = true;
+        Invoke(nameof(ReloadAfterDelay), 1.0f);
+    }
+
+    private void ReloadAfterDelay()
+    {
+        NavigationService.ReloadScene();
+    }
+
     private void Init()
     {
         GravityDelay = Constants.GravityDelay;
@@ -39,7 +54,7 @@ public class GameplayControler : MonoBehaviour
         _sceneBhv = GetComponent<SceneBhv>();
         _instantiator = GetComponent<Instantiator>();
         SetButtons();
-        _currentPiece = GameObject.Find("T-Hell");
+        CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
         _nextPieces = new List<GameObject>();
@@ -52,8 +67,36 @@ public class GameplayControler : MonoBehaviour
         _playField = new Transform[_playFieldWidth, _playFieldHeight];
     }
 
+    public void SetGravity(int level)
+    {
+        GravityDelay = Constants.GravityDelay;
+        if (level == 19)
+        {
+            GravityDelay = 0.0f;
+        }
+        else if (level >= 20)
+        {
+            GravityDelay = -1.0f;
+        }
+        else
+        {
+            for (int i = 0; i < level - 1; ++i)
+            {
+                GravityDelay *= 1.0f - (Constants.GravityDelay / (float)Constants.GravityDivider);
+                GravityDelay = (float)Math.Round((Decimal)GravityDelay, 5, MidpointRounding.AwayFromZero);
+            }
+        }
+        //Debug.Log("\t[DEBUG]\tGRAVITY = \"" + level + ": " + GravityDelay + "\"");
+    }
+
     private void SetNextGravityFall()
     {
+        if (CurrentPiece != null && CurrentPiece.GetComponent<Piece>().IsLocked)
+        {
+            //Just in case, just because
+            _nextGravityFall = Time.time - GravityDelay;
+            return;
+        }            
         _nextGravityFall = Time.time + GravityDelay;
     }
 
@@ -70,9 +113,9 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonRightName, Right, 0);
         LookForAllPossibleButton(Constants.GoButtonRightName, RightHolded, 1);
         LookForAllPossibleButton(Constants.GoButtonRightName, DirectionReleased, 2);
-        LookForAllPossibleButton(Constants.GoButtonDownName, DownHolded, 1);
+        LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHolded, 1);
         LookForAllPossibleButton(Constants.GoButtonHoldName, Hold, 0);
-        LookForAllPossibleButton(Constants.GoButtonDropName, Drop, 0);
+        LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonAntiClockName, AntiClock, 0);
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
@@ -104,26 +147,31 @@ public class GameplayControler : MonoBehaviour
         {
             if (tmpStr.Length <= 0)
                 tmpStr = "IJLOSTZ";
-            var i = Random.Range(0, tmpStr.Length);
+            var i = UnityEngine.Random.Range(0, tmpStr.Length);
             if (_bag == "" && (tmpStr[i] == 'S' || tmpStr[i] == 'Z'))
                 continue;
             _bag += tmpStr[i].ToString();
             tmpStr = tmpStr.Remove(i, 1);
         }
-        Debug.Log("\t[DEBUG]\tNew Bag = \"" + _bag + "\"");
     }
 
     private void Spawn()
     {
         if (_bag == null || _bag.Length <= 7)
             SetBag();
-        _currentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), "Hell", _spawner.transform.position);
-        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), "HellGhost", _spawner.transform.position);
+        CurrentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell.ToString(), _spawner.transform.position);
+        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell + "Ghost", _spawner.transform.position);
+        if (!IsPiecePosValid(CurrentPiece))
+        {
+            GameOver();
+        }
         DropGhost();
         _bag = _bag.Remove(0, 1);
         UpdateNextPieces();
         _allowedMovesBeforeLock = 0;
+        _canHold = true;
         SetNextGravityFall();
+        _sceneBhv.OnNewPiece();
     }
 
     private void UpdateNextPieces()
@@ -135,7 +183,7 @@ public class GameplayControler : MonoBehaviour
         }
         for (int i = 0; i < 5; ++i)
         {
-            var tmpPiece = _instantiator.NewPiece(_bag.Substring(i, 1), "Hell", _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
+            var tmpPiece = _instantiator.NewPiece(_bag.Substring(i, 1), Nature.Hell.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(_nextPieces[i].transform);
         }
     }
@@ -156,13 +204,17 @@ public class GameplayControler : MonoBehaviour
         if (_sceneBhv.Paused)
             return;
         CheckKeyboardInputs();
-        if (Time.time >= _nextGravityFall)
+        if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
         {
             GravityFall();
         }
+        else if (GravityDelay <= 0.0f)
+        {
+            GravityStomp();
+        }
         if (IsNextGravityFallPossible() == false)
         {
-            if (!_currentPiece.GetComponent<Piece>().IsLocked)
+            if (!CurrentPiece.GetComponent<Piece>().IsLocked)
                 HandleLock();
         }
         else
@@ -177,7 +229,7 @@ public class GameplayControler : MonoBehaviour
             _nextLock = Time.time + _lockDelay;
         else if (Time.time < _nextLock)
         {
-            _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock((_nextLock - Time.time)/_lockDelay);
+            CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock((_nextLock - Time.time)/_lockDelay);
             if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock)
             {
                 Lock();
@@ -191,65 +243,91 @@ public class GameplayControler : MonoBehaviour
 
     private void Lock()
     {
-        _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock(1.0f);
+        CurrentPiece.GetComponent<Piece>().IsLocked = true;
+        CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
-        if (_currentPiece != null)
+        bool isTwtist = false;
+        //Looks for Twists
+        if (CurrentPiece.GetComponent<Piece>().Letter != "O")
         {
-            AddToPlayField(_currentPiece);
+            var nbLocked = 0;
+            _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+            CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
+            if (IsPiecePosValid(CurrentPiece) == false)
+                ++nbLocked;
+            CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
+            if (IsPiecePosValid(CurrentPiece) == false)
+                ++nbLocked;
+            CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+            if (IsPiecePosValid(CurrentPiece) == false)
+                ++nbLocked;
+            CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            isTwtist = nbLocked == 3;
         }
+        if (CurrentPiece != null)
+        {
+            AddToPlayField(CurrentPiece);
+        }
+        _sceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         CheckForLines();
     }
 
     private void ResetLock()
     {
-        _currentPiece.GetComponent<Piece>().ReduceOpacityOnLock(1.0f);
+        CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
     }
 
     private void Left()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         SetTimeDirectionHolded();
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
         DropGhost();
     }
 
     private void LeftHolded()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         ++_timeDirectionHolded;
         if (_timeDirectionHolded < 10)
             return;
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
         DropGhost();
     }
 
     private void Right()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         SetTimeDirectionHolded();
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
         DropGhost();
     }
 
     private void RightHolded()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         ++_timeDirectionHolded;
         if (_timeDirectionHolded < 10)
             return;
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         IsPiecePosValidOrReset();
         DropGhost();
     }
@@ -259,51 +337,118 @@ public class GameplayControler : MonoBehaviour
         SetTimeDirectionHolded();
     }
 
-    private void DownHolded()
+    private void SoftDropHolded()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         if (Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
         SetNextGravityFall();
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-        IsPiecePosValidOrReset();
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+        if (IsPiecePosValidOrReset())
+            _sceneBhv.OnSoftDrop();
     }
 
     private void GravityFall()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         SetNextGravityFall();
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-        IsPiecePosValidOrReset(isGravity: true);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        if (GravityDelay > 0.0f)
+        {
+            CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            IsPiecePosValidOrReset(isGravity: true);
+        }
+        else
+        {
+            CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            IsPiecePosValidOrReset(isGravity: true);
+            _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+            FadeBlocksOnLastPosition(CurrentPiece);
+            CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            IsPiecePosValidOrReset(isGravity: true);
+        }
     }
 
-    private void Drop()
+    private void GravityStomp()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         bool hardDropping = true;
         while (hardDropping)
         {
-            _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-            _currentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (IsPiecePosValid(_currentPiece) == false)
+            _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+            CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (IsPiecePosValid(CurrentPiece) == false)
             {
-                _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+                CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
-                _currentPiece.GetComponent<Piece>().IsLocked = true;
-                Invoke(nameof(Lock), Constants.AfterDropDelay);
             }
+        }
+    }
+
+    private void HardDrop()
+    {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+            return;
+        bool hardDropping = true;
+        int nbLinesDropped = 0;
+        while (hardDropping)
+        {
+            _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+            CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (IsPiecePosValid(CurrentPiece) == false)
+            {
+                CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+                hardDropping = false;
+                CurrentPiece.GetComponent<Piece>().IsLocked = true;
+                Invoke(nameof(Lock), Constants.AfterDropDelay);
+
+                string columns = "";
+                int yMin = Mathf.RoundToInt(CurrentPiece.transform.position.y);
+                foreach (Transform child in CurrentPiece.transform)
+                {
+                    int x = Mathf.RoundToInt(child.transform.position.x);
+                    if (columns.Contains(x.ToString()))
+                        continue;
+                    HardDropFadeBlocksOnX(x, yMin);
+                    columns += x.ToString();
+                }
+            }
+            else
+                ++nbLinesDropped;
+        }
+        _sceneBhv.OnHardDrop(nbLinesDropped);
+    }
+
+    private void HardDropFadeBlocksOnX(int x, int yMin)
+    {
+        for (int y = 19; y >= yMin; --y)
+        {
+            _instantiator.NewFadeBlock(Nature.Hell, new Vector3(x, y, 0.0f), 1, -1);
+        }
+    }
+
+    private void FadeBlocksOnLastPosition(GameObject currentPiece)
+    {
+        foreach (Transform child in currentPiece.transform)
+        {
+            int x = Mathf.RoundToInt(child.transform.position.x);
+            int y = Mathf.RoundToInt(child.transform.position.y);
+
+            _instantiator.NewFadeBlock(Nature.Hell, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
     private void DropGhost()
     {
         bool hardDropping = true;
-        _currentGhost.transform.position = _currentPiece.transform.position;
+        if (_currentGhost != null && CurrentPiece != null)
+            _currentGhost.transform.position = CurrentPiece.transform.position;
         while (hardDropping)
         {
             var lastCurrentGhostValidPosition = _currentGhost.transform.position;
@@ -318,9 +463,9 @@ public class GameplayControler : MonoBehaviour
 
     private void Clock()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
-        var currentPieceModel = _currentPiece.GetComponent<Piece>();
+        var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if (currentPieceModel.Letter == "O")
             return;
         var rotationState = currentPieceModel.RotationState;
@@ -389,12 +534,13 @@ public class GameplayControler : MonoBehaviour
             }
         }
 
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
         for (int i = 0; i < 5; ++i)
         {
-            _currentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
-            if (IsPiecePosValid(_currentPiece))
+            CurrentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
+            if (IsPiecePosValid(CurrentPiece))
             {
                 if (rotationState == RotationState.O) //O->R
                     currentPieceModel.RotationState = RotationState.R;
@@ -414,17 +560,17 @@ public class GameplayControler : MonoBehaviour
             }
             else
             {
-                _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+                CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
             }
         }
-        _currentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
     }
 
     private void AntiClock()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
-        var currentPieceModel = _currentPiece.GetComponent<Piece>();
+        var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if (currentPieceModel.Letter == "O")
             return;
         var rotationState = currentPieceModel.RotationState;
@@ -493,12 +639,13 @@ public class GameplayControler : MonoBehaviour
             }
         }
 
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
         for (int i = 0; i < 5; ++i)
         {
-            _currentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
-            if (IsPiecePosValid(_currentPiece))
+            CurrentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
+            if (IsPiecePosValid(CurrentPiece))
             {
                 if (rotationState == RotationState.O) //O->L
                     currentPieceModel.RotationState = RotationState.L;
@@ -518,40 +665,46 @@ public class GameplayControler : MonoBehaviour
             }
             else
             {
-                _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+                CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
             }
         }
-        _currentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
     }
 
     private void Hold()
     {
-        if (_currentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold)
             return;
         if (_holder.transform.childCount <= 0)
         {
-            var tmpPiece = _instantiator.NewPiece(_currentPiece.GetComponent<Piece>().Letter, "Hell", _holder.transform.position);
+            var tmpPiece = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
             tmpPiece.transform.SetParent(_holder.transform);
-            Destroy(_currentPiece.gameObject);
+            Destroy(CurrentPiece.gameObject);
             if (_currentGhost != null)
                 Destroy(_currentGhost);
             Spawn();
+            _canHold = false;
         }
         else
         {
             var tmpHolded = _holder.transform.GetChild(0);
             var pieceLetter = tmpHolded.GetComponent<Piece>().Letter;
-            var tmpHolding = _instantiator.NewPiece(_currentPiece.GetComponent<Piece>().Letter, "Hell", _holder.transform.position);
+            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
-            Destroy(_currentPiece.gameObject);
+            Destroy(CurrentPiece.gameObject);
             Destroy(tmpHolded.gameObject);
             if (_currentGhost != null)
                 Destroy(_currentGhost);
-            _currentPiece = _instantiator.NewPiece(pieceLetter, "Hell", _spawner.transform.position);
-            _currentGhost = _instantiator.NewPiece(pieceLetter, "HellGhost", _spawner.transform.position);
+            CurrentPiece = _instantiator.NewPiece(pieceLetter, Nature.Hell.ToString(), _spawner.transform.position);
+            _currentGhost = _instantiator.NewPiece(pieceLetter, Nature.Hell + "Ghost", _spawner.transform.position);
+            if (!IsPiecePosValid(CurrentPiece))
+            {
+                GameOver();
+            }
             DropGhost();
             _allowedMovesBeforeLock = 0;
             SetNextGravityFall();
+            _canHold = false;
         }
     }
 
@@ -565,11 +718,12 @@ public class GameplayControler : MonoBehaviour
 
     }
 
-    private void IsPiecePosValidOrReset(bool isGravity = false)
+    private bool IsPiecePosValidOrReset(bool isGravity = false)
     {
-        if (IsPiecePosValid(_currentPiece) == false)
+        if (IsPiecePosValid(CurrentPiece) == false)
         {
-            _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+            CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            return false;
         }
         else
         {
@@ -578,6 +732,7 @@ public class GameplayControler : MonoBehaviour
             else if (isGravity)
                 _allowedMovesBeforeLock = 0;
             ResetLock();
+            return true;
         }
     }
 
@@ -600,10 +755,10 @@ public class GameplayControler : MonoBehaviour
 
     private bool IsNextGravityFallPossible()
     {
-        _lastCurrentPieceValidPosition = _currentPiece.transform.position;
-        _currentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-        var result = IsPiecePosValid(_currentPiece);
-        _currentPiece.transform.position = _lastCurrentPieceValidPosition;
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+        var result = IsPiecePosValid(CurrentPiece);
+        CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
         return result;
     }
 
@@ -623,9 +778,28 @@ public class GameplayControler : MonoBehaviour
             }
         }
         if (nbLines > 0)
+        {
+            bool isB2B = false;
+            if (nbLines > 1 && nbLines == _lastNbLinesCleared)
+                isB2B = true;
+            _lastNbLinesCleared = nbLines;
+            _sceneBhv.OnLinesCleared(nbLines, isB2B);
+
+            ++_comboCounter;
+            if (_comboCounter > 1)
+                _sceneBhv.OnCombo(_comboCounter);
+
+            _sceneBhv.PopText();
             Invoke(nameof(ClearLineSpace), 0.3f);
+        }
         else
+        {
+            _sceneBhv.OnLinesCleared(nbLines, false);
+            _sceneBhv.PopText();
+            _comboCounter = 0;
             Spawn();
+        }
+            
     }
 
     private bool HasLine(int y)
@@ -642,6 +816,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
+            _instantiator.NewFadeBlock(Nature.Hell, _playField[x, y].transform.position, 5, 0);
             Destroy(_playField[x, y].gameObject);
             _playField[x, y] = null;
         }
@@ -665,7 +840,7 @@ public class GameplayControler : MonoBehaviour
         Spawn();
     }
 
-    private int GetHighestBlock()
+    public int GetHighestBlock()
     {
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
@@ -715,7 +890,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Keypad2))
         {
-            DownHolded();
+            SoftDropHolded();
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
@@ -747,7 +922,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
-            Drop();
+            HardDrop();
         }
     }
 
