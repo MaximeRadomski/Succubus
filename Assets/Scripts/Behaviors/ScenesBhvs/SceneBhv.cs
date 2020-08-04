@@ -75,6 +75,11 @@ public abstract class SceneBhv : MonoBehaviour
         }
     }
 
+    public virtual void OnGameOver()
+    {
+
+    }
+
     public virtual void OnNewPiece()
     {
 

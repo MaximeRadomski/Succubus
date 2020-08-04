@@ -19,6 +19,7 @@ public static class Constants
     public const int PlayFieldWidth = 10;
 
     //  TAGS  //
+    public const string TagPlayField = "PlayField";
     public const string TagButton = "Button";
     public const string TagSoundControler = "SoundControler";
     public const string TagPoppingText = "PoppingText";
@@ -34,7 +35,14 @@ public static class Constants
     public const string Proceed = "Proceed";
 
     //  PLAYER PREFS  //
+    public const string PpTrainingScore = "TrainingScore";
+    public const string PpTrainingLevel = "TrainingLevel";
+    public const string PpTrainingLines = "TrainingLines";
+    public const string PpTrainingPieces = "TrainingPieces";
+    public const string PpTrainingHighScore = "TrainingHighScore";
     public const string PpRun = "Run";
+    public const string PpBag = "Bag";
+    public const string PpHolder = "Holder";
     public const string PpSerializeDefault = null;
     public const string PpFavKeyboardLayout = "FavKeyboard";
     public const string PpAudioLevel = "AudioLevel";
@@ -60,7 +68,8 @@ public static class Constants
     public const string GoButtonSpecialName = "ButtonSpecial";
     public const string GoButtonAntiClockName = "ButtonAntiClock";
     public const string GoButtonClockName = "ButtonClock";
-
+    public const string GoButtonPauseName = "ButtonPause";
+    public const string GoButtonInfoName = "ButtonInfo";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 3.1f;

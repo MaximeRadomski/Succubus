@@ -28,7 +28,7 @@ public class GameplayControler : MonoBehaviour
     private List<GameObject> _nextPieces;
     private string _bag;
 
-    private static Transform[,] _playField;
+    private PlayFieldBhv _playFieldBhv;
 
     void Start()
     {
@@ -39,12 +39,16 @@ public class GameplayControler : MonoBehaviour
     private void GameOver()
     {
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
-        Invoke(nameof(ReloadAfterDelay), 1.0f);
+        Invoke(nameof(CleanAfterDelay), 1.0f);
     }
 
-    private void ReloadAfterDelay()
+    private void CleanAfterDelay()
     {
-        NavigationService.ReloadScene();
+        _bag = null;
+        PlayerPrefsHelper.SaveBag(_bag);
+        PlayerPrefsHelper.SaveHolder(null);
+        Destroy(_playFieldBhv.gameObject);
+        _sceneBhv.OnGameOver();
     }
 
     private void Init()
@@ -62,9 +66,24 @@ public class GameplayControler : MonoBehaviour
             _nextPieces.Add(GameObject.Find(Constants.GoNextPieceName + i.ToString("D2")));
         SetNextGravityFall();
         SetTimeDirectionHolded();
+        _playFieldBhv = GameObject.Find("PlayField").GetComponent<PlayFieldBhv>();
         _playFieldHeight = Constants.PlayFieldHeight;
         _playFieldWidth = Constants.PlayFieldWidth;
-        _playField = new Transform[_playFieldWidth, _playFieldHeight];
+        if (_playFieldBhv.Grid != null)
+        {
+            _bag = PlayerPrefsHelper.GetBag();
+            var holding = PlayerPrefsHelper.GetHolder();
+            if (holding != null)
+            {
+                var tmpHolding = _instantiator.NewPiece(holding, Nature.Hell.ToString(), _holder.transform.position);
+                tmpHolding.transform.SetParent(_holder.transform);
+            }
+            _playFieldBhv.HideShow(1);
+        }
+        else
+        {
+            _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
+        }
     }
 
     public void SetGravity(int level)
@@ -120,7 +139,6 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
-
     }
 
     private void LookForAllPossibleButton(string name, ButtonBhv.ActionDelegate actionDelegate, int inputType)
@@ -166,6 +184,7 @@ public class GameplayControler : MonoBehaviour
             GameOver();
         }
         DropGhost();
+        PlayerPrefsHelper.SaveBag(_bag);
         _bag = _bag.Remove(0, 1);
         UpdateNextPieces();
         _allowedMovesBeforeLock = 0;
@@ -190,12 +209,13 @@ public class GameplayControler : MonoBehaviour
 
     private void AddToPlayField(GameObject piece)
     {
+        piece.transform.SetParent(_playFieldBhv.gameObject.transform);
         foreach (Transform child in piece.transform)
         {
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
-            _playField[roundedX, roundedY] = child;
+            _playFieldBhv.Grid[roundedX, roundedY] = child;
         }
     }
 
@@ -677,8 +697,9 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_holder.transform.childCount <= 0)
         {
-            var tmpPiece = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
-            tmpPiece.transform.SetParent(_holder.transform);
+            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
+            tmpHolding.transform.SetParent(_holder.transform);
+            PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
             if (_currentGhost != null)
                 Destroy(_currentGhost);
@@ -691,6 +712,7 @@ public class GameplayControler : MonoBehaviour
             var pieceLetter = tmpHolded.GetComponent<Piece>().Letter;
             var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
+            PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
             Destroy(tmpHolded.gameObject);
             if (_currentGhost != null)
@@ -747,7 +769,7 @@ public class GameplayControler : MonoBehaviour
              || roundedY < 0 || roundedY >= _playFieldHeight)
                 return false;
 
-            if (_playField[roundedX, roundedY] != null)
+            if (_playFieldBhv.Grid[roundedX, roundedY] != null)
                 return false;
         }
         return true;
@@ -806,7 +828,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playField[x, y] == null)
+            if (_playFieldBhv.Grid[x, y] == null)
                 return false;
         }
         return true;
@@ -816,9 +838,9 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            _instantiator.NewFadeBlock(Nature.Hell, _playField[x, y].transform.position, 5, 0);
-            Destroy(_playField[x, y].gameObject);
-            _playField[x, y] = null;
+            _instantiator.NewFadeBlock(Nature.Hell, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Destroy(_playFieldBhv.Grid[x, y].gameObject);
+            _playFieldBhv.Grid[x, y] = null;
         }
     }
 
@@ -854,7 +876,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playField[x, y] != null)
+            if (_playFieldBhv.Grid[x, y] != null)
                 return false;
         }
         return true;
@@ -866,11 +888,11 @@ public class GameplayControler : MonoBehaviour
         {
             for (int x = 0; x < _playFieldWidth; ++x)
             {
-                if (_playField[x, y] != null)
+                if (_playFieldBhv.Grid[x, y] != null)
                 {
-                    _playField[x, y - 1] = _playField[x, y];
-                    _playField[x, y] = null;
-                    _playField[x, y - 1].transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+                    _playFieldBhv.Grid[x, y - 1] = _playFieldBhv.Grid[x, y];
+                    _playFieldBhv.Grid[x, y] = null;
+                    _playFieldBhv.Grid[x, y - 1].transform.position += new Vector3(0.0f, -1.0f, 0.0f);
                 }
             }
         }

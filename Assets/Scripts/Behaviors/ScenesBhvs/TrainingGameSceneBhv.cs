@@ -25,11 +25,12 @@ public class TrainingGameSceneBhv : SceneBhv
         Init();
         _gameplayControler = GetComponent<GameplayControler>();
 
-        _score = 0;
-        _level = 1;
-        _next = 10;
-        _lines = 0;
-        _pieces = 0;
+        var results = PlayerPrefsHelper.GetTraining();
+        _score = results[0];
+        _level = results[1];
+        _lines = results[2];
+        _pieces = results[3];
+        _next = _level * Constants.LinesForLevel - _lines;
 
         _scoreTmp = GameObject.Find("Score").GetComponent<TMPro.TextMeshPro>();
         _levelTmp = GameObject.Find("Level").GetComponent<TMPro.TextMeshPro>();
@@ -42,6 +43,29 @@ public class TrainingGameSceneBhv : SceneBhv
         _nextTmp.text = _next.ToString();
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
+
+        GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Reload;
+    }
+
+    override public void OnGameOver()
+    {
+        if (_score > PlayerPrefsHelper.GetTrainingHighScore())
+            PlayerPrefsHelper.SaveTrainingHightScore(_score);
+        _score = 0;
+        _level = 1;
+        _lines = 0;
+        _pieces = 0;
+        Reload();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerPrefsHelper.SaveTraining(_score, _level, _lines, _pieces);
+    }
+
+    private void Reload()
+    {
+        NavigationService.ReloadScene();
     }
 
     public override void OnNewPiece()

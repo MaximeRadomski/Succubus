@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Button
   - SoundControler
+  - PlayField
   layers:
   - Default
   - TransparentFX
