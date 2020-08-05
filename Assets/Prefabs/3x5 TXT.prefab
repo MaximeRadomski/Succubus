@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4535579311587060280}
   - component: {fileID: 6634099503351920174}
   m_Layer: 0
-  m_Name: SampleTXT
+  m_Name: 3x5 TXT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

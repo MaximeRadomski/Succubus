@@ -1,34 +1,16 @@
 fileFormatVersion: 2
-guid: 1990ddf33476dee4b8973f1cba57ee9f
+guid: bb5c7b27d2836d34899e35445a5b76c7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5134559523624755036
-    second: Panels_0
+      213: 2027992881987474578
+    second: Corners_0
   - first:
-      213: -4672196534843201658
-    second: Panels_1
+      213: -3145627101456307842
+    second: Corners_1
   - first:
-      213: -8651609875184883351
-    second: Panels_2
-  - first:
-      213: 2253760293180371077
-    second: Panels_3
-  - first:
-      213: 3785664432052179852
-    second: Panels_0
-  - first:
-      213: 3620391328644141542
-    second: Panels_1
-  - first:
-      213: -6622561022340043680
-    second: Panels_2
-  - first:
-      213: 3971259856558030151
-    second: Panels_3
-  - first:
-      213: -1205364497283047816
-    second: Panels_4
+      213: 9098328871534416840
+    second: Corners_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -90,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +84,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -114,7 +96,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -128,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Panels_0
+      name: Corners_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 144
-        height: 144
+        y: 69
+        width: 27
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c831d4f5eb1698430800000000000000
-      internalID: 3785664432052179852
+      spriteID: 29452e908c0e42c10800000000000000
+      internalID: 2027992881987474578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Panels_1
+      name: Corners_1
       rect:
         serializedVersion: 2
-        x: 147
-        y: 1
-        width: 144
-        height: 144
+        x: 1
+        y: 60
+        width: 80
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e11db35bb63e3230800000000000000
-      internalID: 3620391328644141542
+      spriteID: e79ead541dc7854d0800000000000000
+      internalID: -3145627101456307842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Panels_2
+      name: Corners_2
       rect:
         serializedVersion: 2
-        x: 309
-        y: 17
-        width: 56
-        height: 112
+        x: 1
+        y: 31
+        width: 44
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,50 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06ce21886dfe714a0800000000000000
-      internalID: -6622561022340043680
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_3
-      rect:
-        serializedVersion: 2
-        x: 373
-        y: 73
-        width: 32
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74df8e48ccfbc1730800000000000000
-      internalID: 3971259856558030151
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_4
-      rect:
-        serializedVersion: 2
-        x: 374
-        y: 19
-        width: 29
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87e9392406fa54fe0800000000000000
-      internalID: -1205364497283047816
+      spriteID: 8c35d7557e1c34e70800000000000000
+      internalID: 9098328871534416840
       vertices: []
       indices: 
       edges: []

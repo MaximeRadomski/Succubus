@@ -1,34 +1,22 @@
 fileFormatVersion: 2
-guid: 1990ddf33476dee4b8973f1cba57ee9f
+guid: 29e8a4bf352abdd4fa1ba1f513cea7e8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5134559523624755036
-    second: Panels_0
+      213: 8316150575541490755
+    second: UIElements_0
   - first:
-      213: -4672196534843201658
-    second: Panels_1
+      213: 8744292842307573814
+    second: UIElements_1
   - first:
-      213: -8651609875184883351
-    second: Panels_2
+      213: 2038032196489607726
+    second: UIElements_2
   - first:
-      213: 2253760293180371077
-    second: Panels_3
+      213: 4444071716422392739
+    second: UIElements_3
   - first:
-      213: 3785664432052179852
-    second: Panels_0
-  - first:
-      213: 3620391328644141542
-    second: Panels_1
-  - first:
-      213: -6622561022340043680
-    second: Panels_2
-  - first:
-      213: 3971259856558030151
-    second: Panels_3
-  - first:
-      213: -1205364497283047816
-    second: Panels_4
+      213: -1617723035926807461
+    second: UIElements_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -90,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +90,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -114,7 +102,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -128,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Panels_0
+      name: UIElements_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 144
-        height: 144
+        y: 126
+        width: 72
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,81 +130,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c831d4f5eb1698430800000000000000
-      internalID: 3785664432052179852
+      spriteID: 3449fc933e6e86370800000000000000
+      internalID: 8316150575541490755
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Panels_1
+      name: UIElements_1
       rect:
         serializedVersion: 2
-        x: 147
-        y: 1
-        width: 144
-        height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e11db35bb63e3230800000000000000
-      internalID: 3620391328644141542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_2
-      rect:
-        serializedVersion: 2
-        x: 309
-        y: 17
-        width: 56
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 06ce21886dfe714a0800000000000000
-      internalID: -6622561022340043680
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_3
-      rect:
-        serializedVersion: 2
-        x: 373
-        y: 73
-        width: 32
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74df8e48ccfbc1730800000000000000
-      internalID: 3971259856558030151
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Panels_4
-      rect:
-        serializedVersion: 2
-        x: 374
-        y: 19
+        x: 115
+        y: 93
         width: 29
         height: 51
       alignment: 0
@@ -226,8 +151,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87e9392406fa54fe0800000000000000
-      internalID: -1205364497283047816
+      spriteID: 638dbb5c208f95970800000000000000
+      internalID: 8744292842307573814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 106
+        width: 113
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2a72981c7b884c10800000000000000
+      internalID: 2038032196489607726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 78
+        width: 48
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab97bd2ea38cad30800000000000000
+      internalID: 4444071716422392739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 78
+        width: 47
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5cbd9a4871bc89e0800000000000000
+      internalID: -1617723035926807461
       vertices: []
       indices: 
       edges: []

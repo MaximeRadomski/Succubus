@@ -46,7 +46,7 @@ public abstract class SceneBhv : MonoBehaviour
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
                 object TransitionGiveUp(bool transResult)
                 {
-                    NavigationService.NewRootScene(Constants.FeaturesShopScene);
+                    NavigationService.NewRootScene(Constants.MainMenuScene);
                     return transResult;
                 }
             }

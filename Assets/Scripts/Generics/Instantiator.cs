@@ -57,7 +57,7 @@ public class Instantiator : MonoBehaviour
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupYesNoBhv>().SetPrivates(title, content, negative, positive, resultAction);
+        tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction);
     }
 
     public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,

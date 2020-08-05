@@ -190,6 +190,7 @@ public class GameplayControler : MonoBehaviour
         _allowedMovesBeforeLock = 0;
         _canHold = true;
         SetNextGravityFall();
+        ResetLock();
         _sceneBhv.OnNewPiece();
     }
 
@@ -726,6 +727,7 @@ public class GameplayControler : MonoBehaviour
             DropGhost();
             _allowedMovesBeforeLock = 0;
             SetNextGravityFall();
+            ResetLock();
             _canHold = false;
         }
     }

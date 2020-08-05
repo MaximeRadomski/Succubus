@@ -6,10 +6,10 @@ public class PopupYesNoBhv : PopupBhv
 {
     private System.Func<bool, object> _resultAction;
 
-    public void SetPrivates(string title, string content, string negative, string positive,
+    public void Init(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction)
     {
-        transform.position = Camera.main.transform.position;
+        //transform.position = Camera.main.transform.position;
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = title;
         transform.Find("Content").GetComponent<TMPro.TextMeshPro>().text = content;
         _resultAction = resultAction;

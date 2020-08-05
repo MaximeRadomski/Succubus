@@ -50,9 +50,9 @@ public static class Constants
     public const int PpFavKeyboardLayoutDefault = 0;
 
     //  SCENES  //
+    public const string MainMenuScene = "MainMenuScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingGameScene = "TrainingGameScene";
-    public const string FeaturesShopScene = "FeaturesShopScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
