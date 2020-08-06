@@ -25,6 +25,9 @@ public class GameplayControler : MonoBehaviour
 
     private GameObject _spawner;
     private GameObject _holder;
+    private GameObject _panelLeft;
+    private GameObject _panelRight;
+    private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
     private string _bag;
 
@@ -57,6 +60,11 @@ public class GameplayControler : MonoBehaviour
         _lockDelay = Constants.LockDelay;
         _sceneBhv = GetComponent<SceneBhv>();
         _instantiator = GetComponent<Instantiator>();
+        _panelLeft = GameObject.Find("PanelLeft");
+        _panelRight = GameObject.Find("PanelRight");
+        _gameplayButtons = new List<GameObject>();
+        PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
+        PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         SetButtons();
         CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
@@ -83,6 +91,38 @@ public class GameplayControler : MonoBehaviour
         else
         {
             _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
+        }
+    }
+
+    private void PanelsVisuals(string panelStr, GameObject panel, bool isLeft)
+    {
+        for (int i = 0; i < panelStr.Length; ++i)
+        {
+            if (panelStr[i] == '0')
+                continue;
+            SetGameplayButton(GameObject.Find((isLeft ? "L-" : "R-") + "Add" + i.ToString("D2")), i, Helper.LetterToGameplayButton(panelStr[i]));
+        }
+    }
+
+    private void SetGameplayButton(GameObject addButton, int buttonId, string gameplayButtonName)
+    {
+        //Debug.Log("\t[DEBUG]\tgameplayButtonName = " + gameplayButtonName);
+        var gameplayButton = _instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
+        if (addButton.gameObject.name[0] == 'L')
+        {
+            _gameplayButtons.Add(gameplayButton);
+            gameplayButton.name = gameplayButton.name + Helper.DoesListContainsSameFromName(_gameplayButtons, gameplayButton.name).ToString("D2");
+            var save = PlayerPrefsHelper.GetButtonsLeftPanel();
+            save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
+            PlayerPrefsHelper.SaveButtonsLeftPanel(save);
+        }
+        else
+        {
+            _gameplayButtons.Add(gameplayButton);
+            gameplayButton.name = gameplayButton.name + Helper.DoesListContainsSameFromName(_gameplayButtons, gameplayButton.name).ToString("D2");
+            var save = PlayerPrefsHelper.GetButtonsRightPanel();
+            save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
+            PlayerPrefsHelper.SaveButtonsRightPanel(save);
         }
     }
 
@@ -157,6 +197,7 @@ public class GameplayControler : MonoBehaviour
 
     private void SetBag()
     {
+        //var tmpStr = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
         var tmpStr = "IJLOSTZ";
         if (_bag == null)
             _bag = "";
@@ -179,6 +220,7 @@ public class GameplayControler : MonoBehaviour
             SetBag();
         CurrentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell.ToString(), _spawner.transform.position);
         _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell + "Ghost", _spawner.transform.position);
+        _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Nature.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
         if (!IsPiecePosValid(CurrentPiece))
         {
             GameOver();
@@ -720,6 +762,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(_currentGhost);
             CurrentPiece = _instantiator.NewPiece(pieceLetter, Nature.Hell.ToString(), _spawner.transform.position);
             _currentGhost = _instantiator.NewPiece(pieceLetter, Nature.Hell + "Ghost", _spawner.transform.position);
+            _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Nature.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
             if (!IsPiecePosValid(CurrentPiece))
             {
                 GameOver();
@@ -813,6 +856,9 @@ public class GameplayControler : MonoBehaviour
             if (_comboCounter > 1)
                 _sceneBhv.OnCombo(_comboCounter);
 
+            if (GetHighestBlock() == 0)
+                _sceneBhv.OnPerfectClear();
+
             _sceneBhv.PopText();
             Invoke(nameof(ClearLineSpace), 0.3f);
         }
@@ -853,13 +899,18 @@ public class GameplayControler : MonoBehaviour
         {
             if (y == 0)
                 highestBlock = GetHighestBlock();
-            if (y > highestBlock)
+            if (y > highestBlock || highestBlock == 0)
                 break;
             if (HasFullLineSpace(y))
             {
                 DropAllAboveLines(y);
                 y = -1;
             }
+        }
+        foreach (Transform child in _playFieldBhv.transform)
+        {
+            if (child.childCount == 0)
+                Destroy(child.gameObject);
         }
         Spawn();
     }

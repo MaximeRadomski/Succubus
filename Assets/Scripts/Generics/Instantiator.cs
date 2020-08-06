@@ -60,6 +60,22 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction);
     }
 
+    public void NewPopupGameplayButtons(System.Func<bool, object> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupGameplayButtons");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupGameplayButtons>().Init(resultAction);
+    }
+
+    public GameObject NewGameplayButton(string name, Vector3 position)
+    {
+        var tmpButtonObject = Resources.Load<GameObject>("Prefabs/" + name);
+        var tmpButtonInstance = Instantiate(tmpButtonObject, position, tmpButtonObject.transform.rotation);
+        tmpButtonInstance.name = tmpButtonInstance.name.Replace("(Clone)", "");
+        return tmpButtonInstance;
+    }
+
     public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,
         System.Func<bool, object> resultAction, bool reverse = false)
     {

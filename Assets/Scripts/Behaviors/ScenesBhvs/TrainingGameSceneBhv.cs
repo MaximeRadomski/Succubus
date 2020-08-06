@@ -171,6 +171,13 @@ public class TrainingGameSceneBhv : SceneBhv
         }
     }
 
+    public override void OnPerfectClear()
+    {
+        _poppingText += "\n<b>perfect clear!</b>";
+        _score += 4000 * _level;
+        DisplayScore();
+    }
+
     public override void PopText()
     {
         if (!string.IsNullOrEmpty(_poppingText))

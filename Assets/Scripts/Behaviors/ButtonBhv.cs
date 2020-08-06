@@ -36,8 +36,8 @@ public class ButtonBhv : InputBhv
         _resetedScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         _pressedScale = new Vector3(transform.localScale.x * 1.2f, transform.localScale.y * 1.1f, transform.localScale.z * 1.0f);
         _isResetingColor = false;
-        _resetedColor = Constants.ColorPlain;
-        _pressedColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+        _resetedColor = Disabled ? Constants.ColorPlain : _spriteRenderer.color;
+        _pressedColor = new Color(_spriteRenderer.color.r * 0.7f, _spriteRenderer.color.g * 0.7f, _spriteRenderer.color.b * 0.7f, 1.0f);
     }
 
     public override void BeginAction(Vector2 initialTouchPosition)

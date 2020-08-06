@@ -70,4 +70,48 @@ public class PlayerPrefsHelper : MonoBehaviour
         var highScore = PlayerPrefs.GetInt(Constants.PpTrainingHighScore, 0);
         return highScore;
     }
+
+    public static void SaveGhostColor(string ghostColor)
+    {
+        PlayerPrefs.SetString(Constants.PpGhostPieceColor, ghostColor);
+    }
+
+    public static string GetGhostColor()
+    {
+        var ghostColor = PlayerPrefs.GetString(Constants.PpGhostPieceColor, Constants.PpGhostPieceColorDefault);
+        return ghostColor;
+    }
+
+    public static void SaveOrientation(string orientation)
+    {
+        PlayerPrefs.SetString(Constants.PpOrientation, orientation);
+    }
+
+    public static string GetOrientation()
+    {
+        var orientation = PlayerPrefs.GetString(Constants.PpOrientation, Constants.PpOrientationDefault);
+        return orientation;
+    }
+
+    public static void SaveButtonsLeftPanel(string buttons)
+    {
+        PlayerPrefs.SetString(Constants.PpButtonsLeftPanel, buttons);
+    }
+
+    public static string GetButtonsLeftPanel()
+    {
+        var buttons = PlayerPrefs.GetString(Constants.PpButtonsLeftPanel, Constants.PpButtonsLeftPanelDefault);
+        return buttons;
+    }
+
+    public static void SaveButtonsRightPanel(string buttons)
+    {
+        PlayerPrefs.SetString(Constants.PpButtonsRightPanel, buttons);
+    }
+
+    public static string GetButtonsRightPanel()
+    {
+        var buttons = PlayerPrefs.GetString(Constants.PpButtonsRightPanel, Constants.PpButtonsRightPanelDefault);
+        return buttons;
+    }
 }

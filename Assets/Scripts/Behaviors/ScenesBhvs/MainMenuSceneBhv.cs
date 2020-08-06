@@ -19,13 +19,28 @@ public class MainMenuSceneBhv : SceneBhv
     {
         GameObject.Find("ButtonNewAscension").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
-        GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
+        GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
     }
 
     private void GoToTraining()
     {
-        NavigationService.LoadNextScene(Constants.TrainingGameScene);
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.TrainingGameScene);
+            return true;
+        }
+    }
+
+    private void GoToSettings()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.SettingsScene);
+            return true;
+        }
     }
 
     private void NotImplemented()

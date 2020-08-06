@@ -8,6 +8,68 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static int DoesListContainsSameFromName(List<GameObject> list, string name)
+    {
+        var count = 0;
+        foreach (GameObject gm in list)
+        {
+            if (gm.name.Contains(name))
+                ++count;
+        }
+        return count;
+    }
+
+    public static string ReplaceChar(this string str, int id, char character)
+    {
+        str = str.Remove(id, 1);
+        return str = str.Insert(id, character.ToString());
+    }
+    public static char GameplayButtonToLetter(string gameplayButton)
+    {
+        if (gameplayButton == Constants.GoButtonLeftName)
+            return 'L';
+        else if (gameplayButton == Constants.GoButtonRightName)
+            return 'R';
+        else if (gameplayButton == Constants.GoButtonDownName)
+            return 'd';
+        else if (gameplayButton == Constants.GoButtonDropName)
+            return 'D';
+        else if (gameplayButton == Constants.GoButtonHoldName)
+            return 'H';
+        else if (gameplayButton == Constants.GoButtonAntiClockName)
+            return 'A';
+        else if (gameplayButton == Constants.GoButtonClockName)
+            return 'C';
+        else if (gameplayButton == Constants.GoButtonItemName)
+            return 'I';
+        else if (gameplayButton == Constants.GoButtonSpecialName)
+            return 'S';
+        return '0';
+    }
+
+    public static string LetterToGameplayButton(char letter)
+    {
+        if (letter == 'L')
+            return Constants.GoButtonLeftName;
+        else if (letter == 'R')
+            return Constants.GoButtonRightName;
+        else if (letter == 'd')
+            return Constants.GoButtonDownName;
+        else if (letter == 'D')
+            return Constants.GoButtonDropName;
+        else if (letter == 'H')
+            return Constants.GoButtonHoldName;
+        else if (letter == 'A')
+            return Constants.GoButtonAntiClockName;
+        else if (letter == 'C')
+            return Constants.GoButtonClockName;
+        else if (letter == 'I')
+            return Constants.GoButtonItemName;
+        else if (letter == 'S')
+            return Constants.GoButtonSpecialName;
+        return null;
+    }
+
     public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)
     {
         float x = Mathf.Abs(start.x - end.x);

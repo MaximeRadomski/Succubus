@@ -105,6 +105,11 @@ public abstract class SceneBhv : MonoBehaviour
         
     }
 
+    public virtual void OnPerfectClear()
+    {
+
+    }
+
     public virtual void OnCombo(int nbCombo)
     {
         

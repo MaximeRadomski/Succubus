@@ -20,6 +20,7 @@ public static class Constants
 
     //  TAGS  //
     public const string TagPlayField = "PlayField";
+    public const string TagBackground = "Background";
     public const string TagButton = "Button";
     public const string TagSoundControler = "SoundControler";
     public const string TagPoppingText = "PoppingText";
@@ -40,6 +41,14 @@ public static class Constants
     public const string PpTrainingLines = "TrainingLines";
     public const string PpTrainingPieces = "TrainingPieces";
     public const string PpTrainingHighScore = "TrainingHighScore";
+    public const string PpGhostPieceColor = "GhostPieceColor";
+    public const string PpGhostPieceColorDefault = "5";
+    public const string PpOrientation = "Orientation";
+    public const string PpOrientationDefault = "Vertical";
+    public const string PpButtonsLeftPanel = "PpButtonsLeftPanel";
+    public const string PpButtonsLeftPanelDefault = "H000000D0000L0R0000d0";
+    public const string PpButtonsRightPanel = "PpButtonsRightPanel";
+    public const string PpButtonsRightPanelDefault = "I0S0000D0000A0C000000";
     public const string PpRun = "Run";
     public const string PpBag = "Bag";
     public const string PpHolder = "Holder";
@@ -51,6 +60,7 @@ public static class Constants
 
     //  SCENES  //
     public const string MainMenuScene = "MainMenuScene";
+    public const string SettingsScene= "SettingsScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingGameScene = "TrainingGameScene";
 
@@ -89,6 +99,10 @@ public static class Constants
 
     public static object GetColorFromNature(Nature nature, int id)
     {
+        if (id == -1)
+            return Color.black;
+        if (id == 5)
+            return Color.white;
         var myActualType = typeof(Constants);
         var tmp = myActualType.GetField("Color" + nature.ToString() + id);
         return tmp.GetValue(myActualType);
