@@ -8,11 +8,11 @@ public class PlayFieldBhv : MonoBehaviour
 
     private void Start()
     {
-        var tmp = GameObject.FindGameObjectsWithTag(Constants.TagPlayField);
-        if (tmp.Length > 1)
-            Destroy(gameObject);
-        else
-            DontDestroyOnLoad(gameObject);
+        //var tmp = GameObject.FindGameObjectsWithTag(Constants.TagPlayField);
+        //if (tmp.Length > 1)
+        //    Destroy(gameObject);
+        //else
+        //    DontDestroyOnLoad(gameObject);
     }
 
     public void HideShow(int param)

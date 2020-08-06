@@ -44,7 +44,13 @@ public class TrainingGameSceneBhv : SceneBhv
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
 
-        GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Reload;
+        GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+    }
+
+    public override void Pause()
+    {
+        _gameplayControler.CleanPlayerPrefs();
+        NavigationService.LoadPreviousScene();
     }
 
     override public void OnGameOver()

@@ -18,6 +18,10 @@ public static class Constants
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
 
+    // COORDINATES //
+    public static float[] LeftPanelAlternateCoordinates = new float[2] { -9.785f, 7.358f };
+    public static float[] RightPanelAlternateCoordinates = new float[2] { 18.785f, 7.358f };
+
     //  TAGS  //
     public const string TagPlayField = "PlayField";
     public const string TagBackground = "Background";

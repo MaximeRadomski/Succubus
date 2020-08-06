@@ -9,6 +9,7 @@ public class PositionBhv : MonoBehaviour
     public float XOffset;
     public float YOffset;
     public bool DontActivateOnStart;
+    public bool Rotated;
 
     private float _verticalMult;
     private float _horizontalMult;
@@ -27,10 +28,7 @@ public class PositionBhv : MonoBehaviour
                 _verticalMult = 0;
             else
                 _verticalMult = VerticalSide == CameraVerticalSide.TopBorder ? 1.0f : -1.0f;
-            if (!DontActivateOnStart)
-                Invoke("AdjustVerticalPosition", 0.0f);
-            else
-                AdjustVerticalPosition();
+            AdjustVerticalPosition();
         }
         if (HorizontalSide != CameraHorizontalSide.None)
         {
@@ -38,22 +36,20 @@ public class PositionBhv : MonoBehaviour
                 _horizontalMult = 0;
             else
                 _horizontalMult = HorizontalSide == CameraHorizontalSide.RightBorder ? 1.0f : -1.0f;
-            if (!DontActivateOnStart)
-                Invoke("AdjustHorizontalPosition", 0.0f);
-            else
-                AdjustHorizontalPosition();
+            AdjustHorizontalPosition();
         }
     }
 
     private void AdjustVerticalPosition()
     {
-        transform.position = new Vector3(transform.position.x, (_verticalMult * Camera.main.orthographicSize) + YOffset, 0.0f);
+        transform.position = new Vector3(transform.position.x, (_verticalMult * Camera.main.orthographicSize * (Rotated ? Camera.main.aspect : 1.0f)) + YOffset, 0.0f);
+        transform.position += new Vector3(0.0f, Camera.main.transform.position.y, 0.0f);
     }
 
     private void AdjustHorizontalPosition()
     {
-        transform.position = new Vector3((_horizontalMult * Camera.main.orthographicSize * Camera.main.aspect) + XOffset, transform.position.y, 0.0f);
-        transform.position += new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
+        transform.position = new Vector3((_horizontalMult * Camera.main.orthographicSize * (Rotated ? 1.0f : Camera.main.aspect)) + XOffset, transform.position.y, 0.0f);
+        transform.position += new Vector3(Camera.main.transform.position.x, 0.0f, 0.0f);
     }
 }
 

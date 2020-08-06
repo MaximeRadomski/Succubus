@@ -27,6 +27,9 @@ public class GameplayControler : MonoBehaviour
     private GameObject _holder;
     private GameObject _panelLeft;
     private GameObject _panelRight;
+    private GameObject _uiPanelLeft;
+    private GameObject _uiPanelRight;
+    private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
     private string _bag;
@@ -42,10 +45,10 @@ public class GameplayControler : MonoBehaviour
     private void GameOver()
     {
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
-        Invoke(nameof(CleanAfterDelay), 1.0f);
+        Invoke(nameof(CleanPlayerPrefs), 1.0f);
     }
 
-    private void CleanAfterDelay()
+    public void CleanPlayerPrefs()
     {
         _bag = null;
         PlayerPrefsHelper.SaveBag(_bag);
@@ -62,9 +65,14 @@ public class GameplayControler : MonoBehaviour
         _instantiator = GetComponent<Instantiator>();
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
+        _uiPanelLeft = GameObject.Find("UiPanelLeft");
+        _uiPanelRight = GameObject.Find("UiPanelRight");
+        _mainCamera = GameObject.Find("Main Camera");
         _gameplayButtons = new List<GameObject>();
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
+        if (PlayerPrefsHelper.GetOrientation() == "Horizontal")
+            SetOrientation();
         SetButtons();
         CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
@@ -94,6 +102,38 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    private void SetOrientation()
+    {
+        _mainCamera.transform.position += new Vector3(0.0f, 8.0f, 0.0f);
+        _mainCamera.transform.Rotate(0.0f, 0.0f, 90.0f);
+        _panelLeft.GetComponent<PositionBhv>().Rotated = true;
+        _panelRight.GetComponent<PositionBhv>().Rotated = true;
+        _uiPanelLeft.transform.Rotate(0.0f, 0.0f, 90.0f);
+        var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
+        uiPanelLeftPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
+        uiPanelLeftPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
+        uiPanelLeftPositionBhv.XOffset = uiPanelLeftPositionBhv.YOffset / 3;
+        uiPanelLeftPositionBhv.YOffset = -2.285f;
+        uiPanelLeftPositionBhv.Rotated = true;
+        RotatePanelChildren(_uiPanelLeft);
+        _uiPanelRight.transform.Rotate(0.0f, 0.0f, 90.0f);
+        var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
+        uiPanelRightPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
+        uiPanelRightPositionBhv.HorizontalSide = CameraHorizontalSide.RightBorder;
+        uiPanelRightPositionBhv.XOffset = -uiPanelRightPositionBhv.YOffset;
+        uiPanelRightPositionBhv.YOffset = -2.285f;
+        uiPanelRightPositionBhv.Rotated = true;
+        RotatePanelChildren(_uiPanelRight);
+    }
+
+    private void RotatePanelChildren(GameObject panel)
+    {
+        panel.transform.GetChild(0).transform.Rotate(0.0f, 0.0f, -90.0f);
+        panel.transform.GetChild(0).transform.position += new Vector3(-Constants.Pixel, 0.0f, 0.0f);
+        panel.transform.GetChild(1).transform.Rotate(0.0f, 0.0f, -90.0f);
+        panel.transform.GetChild(1).transform.position += new Vector3(Constants.Pixel, 0.0f, 0.0f);
+    }
+
     private void PanelsVisuals(string panelStr, GameObject panel, bool isLeft)
     {
         for (int i = 0; i < panelStr.Length; ++i)
@@ -111,6 +151,7 @@ public class GameplayControler : MonoBehaviour
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
+            gameplayButton.transform.parent = _panelLeft.transform;
             gameplayButton.name = gameplayButton.name + Helper.DoesListContainsSameFromName(_gameplayButtons, gameplayButton.name).ToString("D2");
             var save = PlayerPrefsHelper.GetButtonsLeftPanel();
             save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
@@ -119,6 +160,7 @@ public class GameplayControler : MonoBehaviour
         else
         {
             _gameplayButtons.Add(gameplayButton);
+            gameplayButton.transform.parent = _panelRight.transform;
             gameplayButton.name = gameplayButton.name + Helper.DoesListContainsSameFromName(_gameplayButtons, gameplayButton.name).ToString("D2");
             var save = PlayerPrefsHelper.GetButtonsRightPanel();
             save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
