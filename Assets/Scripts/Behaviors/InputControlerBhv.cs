@@ -43,17 +43,10 @@ public class InputControlerBhv : MonoBehaviour
             }
             else
             {
-                if (_currentScene.PauseMenu != null)
-                {
-                    if (!_currentScene.Paused)
-                        _currentScene.Pause();
-                    else
-                        _currentScene.Resume();
-                }
-                else if (_currentScene.CanGoPreviousScene)
-                {
-                    NavigationService.LoadPreviousScene(_currentScene.OnRootPreviousScene);
-                }
+                if (!_currentScene.Paused)
+                    _currentScene.PauseOrPrevious();
+                else
+                    _currentScene.Resume();
             }
             return;
         }

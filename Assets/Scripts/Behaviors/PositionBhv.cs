@@ -22,6 +22,8 @@ public class PositionBhv : MonoBehaviour
 
     public void UpdatePositions()
     {
+        if (Camera.main.GetComponent<CameraBhv>().HasInitiated == false)
+            Camera.main.GetComponent<CameraBhv>().Init();
         if (VerticalSide != CameraVerticalSide.None)
         {
             if (VerticalSide == CameraVerticalSide.MidVertical)

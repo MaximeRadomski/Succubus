@@ -3,16 +3,18 @@
 public class CameraBhv : MonoBehaviour
 {
     public Camera Camera;
+    public bool HasInitiated;
 
     private Vector3 _beforeFocusPosition;
 
-    void Start()
+    public void Init()
     {
         float unitsPerPixel = Constants.SceneWidth / Screen.width;
         float desiredHalfHeight = 0.5f * unitsPerPixel * Screen.height;
         if (desiredHalfHeight > Constants.CameraSize)
             Camera.orthographicSize = desiredHalfHeight;
         _beforeFocusPosition = transform.position;
+        HasInitiated = true;
     }
 
     public void FocusY(float y)

@@ -2,57 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenuBhv : MonoBehaviour
+public class PauseMenuBhv : PopupBhv
 {
-    public List<ButtonBhv> Buttons;
-    public List<TMPro.TextMeshPro> TextMeshes;
-
-    private List<PositionBhv> _borders;
-
+    private System.Func<bool, object> _resumeAction;
+    private Instantiator _instantiator;
+    private bool _isRotated;
     private Vector3 _cameraInitialPosition;
 
-    public void SetPrivates()
+    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, bool isRotated)
     {
-        Buttons = new List<ButtonBhv>();
-        TextMeshes = new List<TMPro.TextMeshPro>();
-        _borders = new List<PositionBhv>();
-        _cameraInitialPosition = Camera.main.transform.position;
-        var canvas = transform.Find("Canvas");
-        for (int i = 0; i < canvas.childCount; ++i)
+        _instantiator = instantiator;
+        _resumeAction = resumeAction;
+        _isRotated = isRotated;
+        if (_isRotated)
         {
-            Buttons.Add(canvas.transform.GetChild(i).GetComponent<ButtonBhv>());
+            _cameraInitialPosition = Camera.main.transform.position;
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
+            Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
         }
-        foreach (var button in Buttons)
+        transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+        GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
+        GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = Settings;
+        GameObject.Find("ButtonGiveUp").GetComponent<ButtonBhv>().EndActionDelegate = GiveUp;
+    }
+
+    private void Resume()
+    {
+        if (_isRotated)
         {
-            TextMeshes.Add(button.gameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>());
+            Camera.main.transform.position = _cameraInitialPosition;
+            Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
         }
-        var borders = transform.Find("Borders");
-        for (int i = 0; i < borders.childCount; ++i)
+        Constants.DecreaseInputLayer();
+        _resumeAction.Invoke(true);
+    }
+
+    public override void ExitPopup()
+    {
+        Resume();
+    }
+
+    private void Settings()
+    {
+        Constants.DecreaseInputLayer();
+        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
+        _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
         {
-            _borders.Add(borders.transform.GetChild(i).GetComponent<PositionBhv>());
-        }
-        foreach (var border in _borders)
-        {
-            border.gameObject.SetActive(false);
+            NavigationService.LoadNextScene(Constants.SettingsScene);
+            return true;
         }
     }
 
-    public void Pause()
+    private void GiveUp()
     {
-        Camera.main.transform.position = transform.position;
-        foreach (var border in _borders)
-        {
-            border.gameObject.SetActive(true);
-            border.UpdatePositions();
-        }
-    }
-
-    public void UnPause()
-    {
-        foreach (var border in _borders)
-        {
-            border.gameObject.SetActive(false);
-        }
-        Camera.main.transform.position = _cameraInitialPosition;
+        Constants.DecreaseInputLayer();
+        _resumeAction.Invoke(false);
     }
 }

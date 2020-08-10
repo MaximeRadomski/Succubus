@@ -91,7 +91,7 @@ public class GameplayControler : MonoBehaviour
             var holding = PlayerPrefsHelper.GetHolder();
             if (holding != null)
             {
-                var tmpHolding = _instantiator.NewPiece(holding, Nature.Hell.ToString(), _holder.transform.position);
+                var tmpHolding = _instantiator.NewPiece(holding, Realm.Hell.ToString(), _holder.transform.position);
                 tmpHolding.transform.SetParent(_holder.transform);
             }
             _playFieldBhv.HideShow(1);
@@ -260,9 +260,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (_bag == null || _bag.Length <= 7)
             SetBag();
-        CurrentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell.ToString(), _spawner.transform.position);
-        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), Nature.Hell + "Ghost", _spawner.transform.position);
-        _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Nature.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+        CurrentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), Realm.Hell.ToString(), _spawner.transform.position);
+        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), Realm.Hell + "Ghost", _spawner.transform.position);
+        _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Realm.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
         if (!IsPiecePosValid(CurrentPiece))
         {
             GameOver();
@@ -287,7 +287,7 @@ public class GameplayControler : MonoBehaviour
         }
         for (int i = 0; i < 5; ++i)
         {
-            var tmpPiece = _instantiator.NewPiece(_bag.Substring(i, 1), Nature.Hell.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
+            var tmpPiece = _instantiator.NewPiece(_bag.Substring(i, 1), Realm.Hell.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(_nextPieces[i].transform);
         }
     }
@@ -534,7 +534,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int y = 19; y >= yMin; --y)
         {
-            _instantiator.NewFadeBlock(Nature.Hell, new Vector3(x, y, 0.0f), 1, -1);
+            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
@@ -545,7 +545,7 @@ public class GameplayControler : MonoBehaviour
             int x = Mathf.RoundToInt(child.transform.position.x);
             int y = Mathf.RoundToInt(child.transform.position.y);
 
-            _instantiator.NewFadeBlock(Nature.Hell, new Vector3(x, y, 0.0f), 1, -1);
+            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
@@ -782,7 +782,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_holder.transform.childCount <= 0)
         {
-            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
+            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Realm.Hell.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
@@ -795,16 +795,16 @@ public class GameplayControler : MonoBehaviour
         {
             var tmpHolded = _holder.transform.GetChild(0);
             var pieceLetter = tmpHolded.GetComponent<Piece>().Letter;
-            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Nature.Hell.ToString(), _holder.transform.position);
+            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Realm.Hell.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
             Destroy(tmpHolded.gameObject);
             if (_currentGhost != null)
                 Destroy(_currentGhost);
-            CurrentPiece = _instantiator.NewPiece(pieceLetter, Nature.Hell.ToString(), _spawner.transform.position);
-            _currentGhost = _instantiator.NewPiece(pieceLetter, Nature.Hell + "Ghost", _spawner.transform.position);
-            _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Nature.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+            CurrentPiece = _instantiator.NewPiece(pieceLetter, Realm.Hell.ToString(), _spawner.transform.position);
+            _currentGhost = _instantiator.NewPiece(pieceLetter, Realm.Hell + "Ghost", _spawner.transform.position);
+            _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Realm.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
             if (!IsPiecePosValid(CurrentPiece))
             {
                 GameOver();
@@ -928,7 +928,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            _instantiator.NewFadeBlock(Nature.Hell, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
+            _instantiator.NewFadeBlock(Realm.Hell, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(_playFieldBhv.Grid[x, y].gameObject);
             _playFieldBhv.Grid[x, y] = null;
         }

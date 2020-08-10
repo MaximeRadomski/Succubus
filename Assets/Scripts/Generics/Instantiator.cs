@@ -19,7 +19,7 @@ public class Instantiator : MonoBehaviour
         return tmpPieceInstance;
     }
 
-    public GameObject NewFadeBlock(Nature nature, Vector3 position, int startColor, int endColor)
+    public GameObject NewFadeBlock(Realm nature, Vector3 position, int startColor, int endColor)
     {
         var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + nature);
         var tmpPieceInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
@@ -91,13 +91,13 @@ public class Instantiator : MonoBehaviour
         tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
-    public PauseMenuBhv NewPauseMenu()
+    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, bool isRotated)
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
-        var pauseMenuBhv = tmpPauseMeuInstance.GetComponent<PauseMenuBhv>();
-        pauseMenuBhv.SetPrivates();
-        return pauseMenuBhv;
+        Constants.IncreaseInputLayer(tmpPauseMeuInstance.name);
+        tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction, isRotated);
+        return tmpPauseMeuInstance;
     }
 
     public void PopText(string text, Vector2 position, string color = "#FFFFFF")

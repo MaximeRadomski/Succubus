@@ -16,20 +16,19 @@ public abstract class SceneBhv : MonoBehaviour
         Instantiator = GetComponent<Instantiator>();
     }
 
-    public virtual void Pause()
+    public virtual void PauseOrPrevious()
     {
-        if (PauseMenu == null)
-            return;
-        Paused = true;
-        PauseMenu.Pause();
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, Previous, reverse: true);
+        object Previous(bool result)
+        {
+            NavigationService.LoadPreviousScene();
+            return result;
+        }
     }
 
     public virtual void Resume()
     {
-        if (PauseMenu == null)
-            return;
-        Paused = false;
-        PauseMenu.UnPause();
+
     }
 
     protected void GiveUp()

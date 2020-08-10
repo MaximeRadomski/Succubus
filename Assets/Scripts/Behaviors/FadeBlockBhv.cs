@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FadeBlockBhv : MonoBehaviour
 {
-    public Nature Nature;
+    public Realm Nature;
 
     private SpriteRenderer _spriteRenderer;
     private float _delay;

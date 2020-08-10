@@ -50,6 +50,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetInt(Constants.PpTrainingPieces, pieces);
     }
 
+    public static void ResetTraining()
+    {
+        PlayerPrefs.SetInt(Constants.PpTrainingScore, 0);
+        PlayerPrefs.SetInt(Constants.PpTrainingLevel, 1);
+        PlayerPrefs.SetInt(Constants.PpTrainingLines, 0);
+        PlayerPrefs.SetInt(Constants.PpTrainingPieces, 0);
+    }
+
     public static List<int> GetTraining()
     {
         var results = new List<int>();
@@ -113,5 +121,27 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var buttons = PlayerPrefs.GetString(Constants.PpButtonsRightPanel, Constants.PpButtonsRightPanelDefault);
         return buttons;
+    }
+
+    public static void SaveUnlockedCharacters(string unlockedCharacters)
+    {
+        PlayerPrefs.SetString(Constants.PpUnlockedCharacters, unlockedCharacters);
+    }
+
+    public static string GetUnlockedCharacters()
+    {
+        var unlockedCharacters = PlayerPrefs.GetString(Constants.PpUnlockedCharacters, Constants.PpUnlockedCharactersDefault);
+        return unlockedCharacters;
+    }
+
+    public static void SaveSelectedCharacter(int selectedCharacter)
+    {
+        PlayerPrefs.SetInt(Constants.PpSelectedCharacter, selectedCharacter);
+    }
+
+    public static int GetSelectedCharacter()
+    {
+        var selectedCharacter = PlayerPrefs.GetInt(Constants.PpSelectedCharacter, Constants.PpSelectedCharacterDefault);
+        return selectedCharacter;
     }
 }

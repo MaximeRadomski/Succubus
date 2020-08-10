@@ -18,10 +18,6 @@ public static class Constants
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
 
-    // COORDINATES //
-    public static float[] LeftPanelAlternateCoordinates = new float[2] { -9.785f, 7.358f };
-    public static float[] RightPanelAlternateCoordinates = new float[2] { 18.785f, 7.358f };
-
     //  TAGS  //
     public const string TagPlayField = "PlayField";
     public const string TagBackground = "Background";
@@ -40,6 +36,10 @@ public static class Constants
     public const string Proceed = "Proceed";
 
     //  PLAYER PREFS  //
+    public const string PpSelectedCharacter = "SelectedCharacter";
+    public const int PpSelectedCharacterDefault = 0;
+    public const string PpUnlockedCharacters = "UnlockedCharacters";
+    public const string PpUnlockedCharactersDefault = "110000000000";
     public const string PpTrainingScore = "TrainingScore";
     public const string PpTrainingLevel = "TrainingLevel";
     public const string PpTrainingLines = "TrainingLines";
@@ -65,8 +65,10 @@ public static class Constants
     //  SCENES  //
     public const string MainMenuScene = "MainMenuScene";
     public const string SettingsScene= "SettingsScene";
+    public const string AscensionScene = "AscensionScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingGameScene = "TrainingGameScene";
+    public const string CharSelScene = "CharSelScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
@@ -101,7 +103,11 @@ public static class Constants
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
 
-    public static object GetColorFromNature(Nature nature, int id)
+    public static string MaterialHell_4_3 = "<material=\"hell.4.3\">";
+    public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
+    public static string MaterialEnd = "</material>";
+
+    public static object GetColorFromNature(Realm nature, int id)
     {
         if (id == -1)
             return Color.black;
@@ -120,6 +126,7 @@ public static class Constants
     public static string ClickHistory = null;
     public static List<string> InputTopLayerNames = null;
     public static bool CardsInCache = false;
+    public static string SelectedGameMode = null;
 
     public static void SetLastEndActionClickedName(string name)
     {

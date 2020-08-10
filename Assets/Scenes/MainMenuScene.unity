@@ -441,6 +441,7 @@ MonoBehaviour:
   XOffset: 3.143
   YOffset: 2
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!212 &169069336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1044,6 +1045,7 @@ MonoBehaviour:
   XOffset: 0
   YOffset: 1.175
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!1 &914832603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1095,7 @@ MonoBehaviour:
   XOffset: -1.929
   YOffset: -1.429
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!212 &914832606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1641,6 +1644,7 @@ MonoBehaviour:
   XOffset: -3.143
   YOffset: 2
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!212 &1332838963
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2009,6 +2013,7 @@ MonoBehaviour:
   XOffset: 0
   YOffset: -0.572
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!212 &1686173754
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2188,6 +2193,7 @@ MonoBehaviour:
   XOffset: 1.929
   YOffset: -1.429
   DontActivateOnStart: 0
+  Rotated: 0
 --- !u!212 &1850407097
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2271,6 +2277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1994265290}
+  HasInitiated: 0
 --- !u!81 &1994265289
 AudioListener:
   m_ObjectHideFlags: 0

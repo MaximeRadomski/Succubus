@@ -44,13 +44,34 @@ public class TrainingGameSceneBhv : SceneBhv
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
 
-        GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+        GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
     }
 
-    public override void Pause()
+    public override void PauseOrPrevious()
     {
-        _gameplayControler.CleanPlayerPrefs();
-        NavigationService.LoadPreviousScene();
+        Paused = true;
+        GameObject menu = null;
+        menu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
+        object ResumeGiveUp(bool resume)
+        {
+            if (resume)
+            {
+                Paused = false;
+                Destroy(menu);
+                return true;
+            }
+            menu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+            Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
+            if (GameObject.Find("PlayField") != null)
+                Destroy(GameObject.Find("PlayField"));
+            object OnBlend(bool result)
+            {
+                NavigationService.LoadPreviousScene();
+                return false;
+            }
+            return false;
+        }
     }
 
     override public void OnGameOver()

@@ -28,7 +28,8 @@ public class MainMenuSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            NavigationService.LoadNextScene(Constants.TrainingGameScene);
+            Constants.SelectedGameMode = Constants.TrainingGameScene;
+            NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
     }

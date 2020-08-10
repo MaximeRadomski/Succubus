@@ -194,6 +194,11 @@ public class SettingsSceneBhv : SceneBhv
         }
     }
 
+    public override void PauseOrPrevious()
+    {
+        GoToPrevious();
+    }
+
     private void GoToPrevious()
     {
         var verif = "000000000";

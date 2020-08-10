@@ -25,9 +25,9 @@ public class OverBlendBhv : MonoBehaviour
         _overBlendType = overBlendType;
         _loadPercent = 0;
         if (reverse)
-            _sourcePosition = new Vector3(-20.0f, 0.0f, 0.0f);
+            _sourcePosition = new Vector3(-20.0f, 0.0f, 0.0f) + new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
         else
-            _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f);
+            _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
         _activePosition = new Vector3(0.0f, 0.0f, 0.0f);
         _endPosition = new Vector3(-_sourcePosition.x, 0.0f, 0.0f);
         _state = 0;

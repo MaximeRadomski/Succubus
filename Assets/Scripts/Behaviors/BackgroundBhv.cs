@@ -29,7 +29,7 @@ public class BackgroundBhv : MonoBehaviour
         ++_i;
         if (_i >= 10)
         {
-            _instantiator.NewFadeBlock(Nature.Hell, new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(-18.0f, 18.0f), 0.0f), 2, -1);
+            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(-18.0f, 18.0f), 0.0f), 2, -1);
             _i = 0;
         }
     }

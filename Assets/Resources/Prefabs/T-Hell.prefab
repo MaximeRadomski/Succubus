@@ -215,6 +215,7 @@ MonoBehaviour:
   XFromSpawn: 0
   YFromSpawn: 0
   IsLocked: 0
+  RotationState: 0
 --- !u!1 &8227962868125424237
 GameObject:
   m_ObjectHideFlags: 0
