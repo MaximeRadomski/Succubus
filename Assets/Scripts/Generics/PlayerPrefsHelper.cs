@@ -144,4 +144,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var selectedCharacter = PlayerPrefs.GetInt(Constants.PpSelectedCharacter, Constants.PpSelectedCharacterDefault);
         return selectedCharacter;
     }
+
+    public static void SaveCurrentItem(string itemName)
+    {
+        PlayerPrefs.SetString(Constants.PpCurrentItem, itemName);
+    }
+
+    public static string GetCurrentItem()
+    {
+        var itemName = PlayerPrefs.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+        return itemName;
+    }
 }

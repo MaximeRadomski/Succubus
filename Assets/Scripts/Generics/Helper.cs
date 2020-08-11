@@ -8,6 +8,12 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static void ResetSelectedCharacterSpecialCooldown()
+    {
+        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
+        Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown;
+    }
+
     public static int DoesListContainsSameFromName(List<GameObject> list, string name)
     {
         var count = 0;

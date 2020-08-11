@@ -8,6 +8,8 @@ public class Piece : MonoBehaviour
     public float XFromSpawn;
     public float YFromSpawn;
     public bool IsLocked;
+    public bool IsAffectedByGravity = true;
+    public bool HasBlocksAffectedByGravity;
     public RotationState RotationState = RotationState.O;
 
     public void HandleOpacityOnLock(float percent)

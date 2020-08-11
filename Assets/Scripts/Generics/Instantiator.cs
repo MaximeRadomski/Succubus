@@ -19,6 +19,13 @@ public class Instantiator : MonoBehaviour
         return tmpPieceInstance;
     }
 
+    public void NewGravitySquare(GameObject parent)
+    {
+        var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare");
+        var tmpSquareInstance = Instantiate(tmpSquareObject, parent.transform.position, tmpSquareObject.transform.rotation);
+        tmpSquareInstance.transform.SetParent(parent.transform);
+    }
+
     public GameObject NewFadeBlock(Realm nature, Vector3 position, int startColor, int endColor)
     {
         var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + nature);

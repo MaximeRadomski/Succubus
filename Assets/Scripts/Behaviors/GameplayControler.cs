@@ -7,6 +7,12 @@ public class GameplayControler : MonoBehaviour
 {
     public float GravityDelay;
     public GameObject CurrentPiece;
+    public GameObject CurrentGhost;
+    public string Bag;
+    public Instantiator Instantiator;
+
+    private Realm _characterRealm;
+    private Realm _levelRealm;
 
     private int _timeDirectionHolded;
     private float _nextGravityFall;
@@ -15,8 +21,6 @@ public class GameplayControler : MonoBehaviour
     private int _allowedMovesBeforeLock;
     private bool _canHold;
     private SceneBhv _sceneBhv;
-    private Instantiator _instantiator;
-    private GameObject _currentGhost;
     private int _playFieldHeight;
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
@@ -32,13 +36,14 @@ public class GameplayControler : MonoBehaviour
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
-    private string _bag;
 
     private PlayFieldBhv _playFieldBhv;
+    private Character _character;
+    private Special _characterSpecial;
 
-    void Start()
+    public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
-        Init();
+        Init(level, characterRealm, levelRealm);
         Spawn();
     }
 
@@ -50,19 +55,21 @@ public class GameplayControler : MonoBehaviour
 
     public void CleanPlayerPrefs()
     {
-        _bag = null;
-        PlayerPrefsHelper.SaveBag(_bag);
+        Bag = null;
+        PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         Destroy(_playFieldBhv.gameObject);
         _sceneBhv.OnGameOver();
     }
 
-    private void Init()
+    private void Init(int level, Realm characterRealm, Realm levelRealm)
     {
-        GravityDelay = Constants.GravityDelay;
+        SetGravity(level);
+        _characterRealm = characterRealm;
+        _levelRealm = levelRealm;
         _lockDelay = Constants.LockDelay;
         _sceneBhv = GetComponent<SceneBhv>();
-        _instantiator = GetComponent<Instantiator>();
+        Instantiator = GetComponent<Instantiator>();
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
@@ -87,11 +94,11 @@ public class GameplayControler : MonoBehaviour
         _playFieldWidth = Constants.PlayFieldWidth;
         if (_playFieldBhv.Grid != null)
         {
-            _bag = PlayerPrefsHelper.GetBag();
+            Bag = PlayerPrefsHelper.GetBag();
             var holding = PlayerPrefsHelper.GetHolder();
-            if (holding != null)
+            if (!string.IsNullOrEmpty(holding))
             {
-                var tmpHolding = _instantiator.NewPiece(holding, Realm.Hell.ToString(), _holder.transform.position);
+                var tmpHolding = Instantiator.NewPiece(holding, _characterRealm.ToString(), _holder.transform.position);
                 tmpHolding.transform.SetParent(_holder.transform);
             }
             _playFieldBhv.HideShow(1);
@@ -99,6 +106,60 @@ public class GameplayControler : MonoBehaviour
         else
         {
             _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
+        }
+        _character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
+        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + _character.SpecialName.Replace(" ", "").Replace("'", "")));
+        _characterSpecial.Init(_character, this);
+        UpdateItemAndSpecialVisuals();
+    }
+
+    private void UpdateItemAndSpecialVisuals()
+    {
+        //ITEM
+        var currentItem = PlayerPrefsHelper.GetCurrentItem();
+        if (!string.IsNullOrEmpty(currentItem))
+        {
+            for (int i = 1; i <= 16; ++i)
+            {
+                var tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                if (tmp == null)
+                    break;
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
+            }
+        }
+        else
+        {
+            for (int i = 1; i <= 16; ++i)
+            {
+                var tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                if (tmp == null)
+                    break;
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+            }
+        }
+        //SPECIAL
+        if (Constants.SelectedCharacterSpecialCooldown <= 0)
+        {
+            for (int i = 1; i <= 16; ++i)
+            {
+                var tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                if (tmp == null)
+                    break;
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 9));//9 = special in sprite sheet
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
+            }
+        }
+        else
+        {
+            for (int i = 1; i <= 16; ++i)
+            {
+                var tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                if (tmp == null)
+                    break;
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.SelectedCharacterSpecialCooldown.ToString();
+            }
+
         }
     }
 
@@ -147,7 +208,10 @@ public class GameplayControler : MonoBehaviour
     private void SetGameplayButton(GameObject addButton, int buttonId, string gameplayButtonName)
     {
         //Debug.Log("\t[DEBUG]\tgameplayButtonName = " + gameplayButtonName);
-        var gameplayButton = _instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
+        var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
+        var spriteName = gameplayButton.GetComponent<SpriteRenderer>().sprite.name;
+        var spriteId = int.Parse(spriteName.Substring(spriteName.IndexOf('_') + 1));
+        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + spriteId));
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
@@ -241,41 +305,42 @@ public class GameplayControler : MonoBehaviour
     {
         //var tmpStr = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
         var tmpStr = "IJLOSTZ";
-        if (_bag == null)
-            _bag = "";
+        if (Bag == null)
+            Bag = "";
 
-        while (tmpStr.Length > 0 || _bag.Length <= 7)
+        while (tmpStr.Length > 0 || Bag.Length <= 7)
         {
             if (tmpStr.Length <= 0)
                 tmpStr = "IJLOSTZ";
             var i = UnityEngine.Random.Range(0, tmpStr.Length);
-            if (_bag == "" && (tmpStr[i] == 'S' || tmpStr[i] == 'Z'))
+            if (Bag == "" && (tmpStr[i] == 'S' || tmpStr[i] == 'Z'))
                 continue;
-            _bag += tmpStr[i].ToString();
+            Bag += tmpStr[i].ToString();
             tmpStr = tmpStr.Remove(i, 1);
         }
     }
 
-    private void Spawn()
+    public void Spawn()
     {
-        if (_bag == null || _bag.Length <= 7)
+        if (Bag == null || Bag.Length <= 7)
             SetBag();
-        CurrentPiece = _instantiator.NewPiece(_bag.Substring(0, 1), Realm.Hell.ToString(), _spawner.transform.position);
-        _currentGhost = _instantiator.NewPiece(_bag.Substring(0, 1), Realm.Hell + "Ghost", _spawner.transform.position);
-        _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Realm.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+        CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
+        CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
+        CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
         if (!IsPiecePosValid(CurrentPiece))
         {
             GameOver();
         }
         DropGhost();
-        PlayerPrefsHelper.SaveBag(_bag);
-        _bag = _bag.Remove(0, 1);
+        PlayerPrefsHelper.SaveBag(Bag);
+        Bag = Bag.Remove(0, 1);
         UpdateNextPieces();
         _allowedMovesBeforeLock = 0;
         _canHold = true;
         SetNextGravityFall();
         ResetLock();
         _sceneBhv.OnNewPiece();
+        _characterSpecial.OnNewPiece(CurrentPiece);
     }
 
     private void UpdateNextPieces()
@@ -287,7 +352,7 @@ public class GameplayControler : MonoBehaviour
         }
         for (int i = 0; i < 5; ++i)
         {
-            var tmpPiece = _instantiator.NewPiece(_bag.Substring(i, 1), Realm.Hell.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
+            var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(_nextPieces[i].transform);
         }
     }
@@ -348,6 +413,8 @@ public class GameplayControler : MonoBehaviour
 
     private void Lock()
     {
+        if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
+            AffectGravityOnBlocks(CurrentPiece);
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
@@ -376,6 +443,7 @@ public class GameplayControler : MonoBehaviour
             AddToPlayField(CurrentPiece);
         }
         _sceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
+        _characterSpecial.OnPieceLocked(CurrentPiece);
         CheckForLines();
     }
 
@@ -383,6 +451,24 @@ public class GameplayControler : MonoBehaviour
     {
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
+    }
+
+    private void AffectGravityOnBlocks(GameObject piece)
+    {
+        for (int i = 0; i < piece.transform.childCount; ++i)
+        {
+            var tmpBlock = piece.transform.GetChild(i);
+            var lastTmpBlockPosition = tmpBlock.position;
+            tmpBlock.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (IsBlockPosValid(tmpBlock, piece.transform))
+            {
+                i = -1;
+            }
+            else
+            {
+                tmpBlock.position = lastTmpBlockPosition;
+            }
+        }
     }
 
     private void Left()
@@ -534,7 +620,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int y = 19; y >= yMin; --y)
         {
-            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(x, y, 0.0f), 1, -1);
+            Instantiator.NewFadeBlock(_characterRealm, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
@@ -545,22 +631,33 @@ public class GameplayControler : MonoBehaviour
             int x = Mathf.RoundToInt(child.transform.position.x);
             int y = Mathf.RoundToInt(child.transform.position.y);
 
-            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(x, y, 0.0f), 1, -1);
+            Instantiator.NewFadeBlock(_characterRealm, new Vector3(x, y, 0.0f), 1, -1);
+        }
+    }
+
+    public void FadeBlocksOnText()
+    {
+        for (int y = 17; y <= 18; ++y)
+        {
+            for (int x = 0; x < 10; ++x)
+            {
+                Instantiator.NewFadeBlock(_character.Realm, new Vector3(x, y, 0.0f), 2, -1);
+            }
         }
     }
 
     private void DropGhost()
     {
         bool hardDropping = true;
-        if (_currentGhost != null && CurrentPiece != null)
-            _currentGhost.transform.position = CurrentPiece.transform.position;
+        if (CurrentGhost != null && CurrentPiece != null)
+            CurrentGhost.transform.position = CurrentPiece.transform.position;
         while (hardDropping)
         {
-            var lastCurrentGhostValidPosition = _currentGhost.transform.position;
-            _currentGhost.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (IsPiecePosValid(_currentGhost) == false)
+            var lastCurrentGhostValidPosition = CurrentGhost.transform.position;
+            CurrentGhost.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (IsPiecePosValid(CurrentGhost) == false)
             {
-                _currentGhost.transform.position = lastCurrentGhostValidPosition;
+                CurrentGhost.transform.position = lastCurrentGhostValidPosition;
                 hardDropping = false;
             }
         }
@@ -659,7 +756,7 @@ public class GameplayControler : MonoBehaviour
                     ++_allowedMovesBeforeLock;
                 ResetLock();
                 SetNextGravityFall();
-                _currentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
+                CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
                 DropGhost();
                 return;
             }
@@ -764,7 +861,7 @@ public class GameplayControler : MonoBehaviour
                     ++_allowedMovesBeforeLock;
                 ResetLock();
                 SetNextGravityFall();
-                _currentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
+                CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost();
                 return;
             }
@@ -782,12 +879,12 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_holder.transform.childCount <= 0)
         {
-            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Realm.Hell.ToString(), _holder.transform.position);
+            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
-            if (_currentGhost != null)
-                Destroy(_currentGhost);
+            if (CurrentGhost != null)
+                Destroy(CurrentGhost);
             Spawn();
             _canHold = false;
         }
@@ -795,16 +892,16 @@ public class GameplayControler : MonoBehaviour
         {
             var tmpHolded = _holder.transform.GetChild(0);
             var pieceLetter = tmpHolded.GetComponent<Piece>().Letter;
-            var tmpHolding = _instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, Realm.Hell.ToString(), _holder.transform.position);
+            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
             Destroy(tmpHolded.gameObject);
-            if (_currentGhost != null)
-                Destroy(_currentGhost);
-            CurrentPiece = _instantiator.NewPiece(pieceLetter, Realm.Hell.ToString(), _spawner.transform.position);
-            _currentGhost = _instantiator.NewPiece(pieceLetter, Realm.Hell + "Ghost", _spawner.transform.position);
-            _currentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(Realm.Hell, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+            if (CurrentGhost != null)
+                Destroy(CurrentGhost);
+            CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
+            CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
+            CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
             if (!IsPiecePosValid(CurrentPiece))
             {
                 GameOver();
@@ -814,17 +911,21 @@ public class GameplayControler : MonoBehaviour
             SetNextGravityFall();
             ResetLock();
             _canHold = false;
+            _characterSpecial.OnNewPiece(CurrentPiece);
         }
     }
 
     private void Item()
     {
-
+        var currentItem = PlayerPrefsHelper.GetCurrentItem();
+        if (string.IsNullOrEmpty(currentItem))
+            return;
     }
 
     private void Special()
     {
-
+        _characterSpecial.Activate();
+        UpdateItemAndSpecialVisuals();
     }
 
     private bool IsPiecePosValidOrReset(bool isGravity = false)
@@ -845,20 +946,40 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+
     private bool IsPiecePosValid(GameObject piece)
     {
         foreach (Transform child in piece.transform)
         {
-            int roundedX = Mathf.RoundToInt(child.transform.position.x);
-            int roundedY = Mathf.RoundToInt(child.transform.position.y);
-
-            if (roundedX < 0 || roundedX >= _playFieldWidth
-             || roundedY < 0 || roundedY >= _playFieldHeight)
-                return false;
-
-            if (_playFieldBhv.Grid[roundedX, roundedY] != null)
+            if (!IsBlockPosValid(child, piece.transform))
                 return false;
         }
+        return true;
+    }
+
+    private bool IsBlockPosValid(Transform block, Transform piece)
+    {
+        int roundedX = Mathf.RoundToInt(block.transform.position.x);
+        int roundedY = Mathf.RoundToInt(block.transform.position.y);
+
+        if (roundedX < 0 || roundedX >= _playFieldWidth
+            || roundedY < 0 || roundedY >= _playFieldHeight)
+            return false;
+
+        if (_playFieldBhv.Grid[roundedX, roundedY] != null)
+            return false;
+
+        var nbSamePos = 0;
+        foreach (Transform child in piece)
+        {
+            int childRoundedX = Mathf.RoundToInt(child.transform.position.x);
+            int childRoundedY = Mathf.RoundToInt(child.transform.position.y);
+            if (roundedX == childRoundedX && roundedY == childRoundedY)
+                ++nbSamePos;
+        }
+        if (nbSamePos > 1)
+            return false;
+
         return true;
     }
 
@@ -875,8 +996,8 @@ public class GameplayControler : MonoBehaviour
 
     private void CheckForLines()
     {
-        if (_currentGhost != null)
-            Destroy(_currentGhost);
+        if (CurrentGhost != null)
+            Destroy(CurrentGhost);
         int nbLines = 0;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
@@ -893,6 +1014,7 @@ public class GameplayControler : MonoBehaviour
                 isB2B = true;
             _lastNbLinesCleared = nbLines;
             _sceneBhv.OnLinesCleared(nbLines, isB2B);
+            _characterSpecial.OnLinesCleared(nbLines, isB2B);
 
             ++_comboCounter;
             if (_comboCounter > 1)
@@ -902,6 +1024,7 @@ public class GameplayControler : MonoBehaviour
                 _sceneBhv.OnPerfectClear();
 
             _sceneBhv.PopText();
+            UpdateItemAndSpecialVisuals();
             Invoke(nameof(ClearLineSpace), 0.3f);
         }
         else
@@ -928,7 +1051,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            _instantiator.NewFadeBlock(Realm.Hell, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Instantiator.NewFadeBlock(_characterRealm, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(_playFieldBhv.Grid[x, y].gameObject);
             _playFieldBhv.Grid[x, y] = null;
         }
@@ -1040,6 +1163,14 @@ public class GameplayControler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
             HardDrop();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            Item();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            Special();
         }
     }
 

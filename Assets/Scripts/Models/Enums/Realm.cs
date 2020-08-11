@@ -6,9 +6,9 @@ using UnityEngine;
 public enum Realm
 {
     [Description("each combo adds an attack point")]
-    Hell,
+    Hell = 0,
     [Description("quadruple lines remove one grey row")]
-    Earth,
+    Earth = 1,
     [Description("consecutive multiple lines lower your cooldown")]
-    Heaven
+    Heaven = 2
 }

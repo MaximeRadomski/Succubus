@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public static class Constants
@@ -17,6 +14,9 @@ public static class Constants
     public const int NumberOfAllowedMovesBeforeLock = 15;
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
+    public static List<int> RoomDifficultyPerRealm = new List<int>() {80, 160, 320};
+    public static List<int> RoomDifficultyPerRoom = new List<int>() { 10, 20, 30 };
+    public static List<float> RoomDifficultyPerRarity = new List<float>() { 1.0f, 1.5f, 2.0f };
 
     //  TAGS  //
     public const string TagPlayField = "PlayField";
@@ -38,6 +38,7 @@ public static class Constants
     //  PLAYER PREFS  //
     public const string PpSelectedCharacter = "SelectedCharacter";
     public const int PpSelectedCharacterDefault = 0;
+    public const string PpCurrentItem = "CurrentItem";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
     public const string PpTrainingScore = "TrainingScore";
@@ -127,6 +128,7 @@ public static class Constants
     public static List<string> InputTopLayerNames = null;
     public static bool CardsInCache = false;
     public static string SelectedGameMode = null;
+    public static int SelectedCharacterSpecialCooldown;
 
     public static void SetLastEndActionClickedName(string name)
     {

@@ -59,9 +59,10 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = tmpChar.Name + " - " + tmpChar.Kind;
         GameObject.Find("Attack").GetComponent<TMPro.TextMeshPro>().text = "attack:" + Constants.MaterialHell_4_3 + tmpChar.Attack;
         GameObject.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.MaterialHell_4_3 + tmpChar.Cooldown;
-        GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + tmpChar.SpecialName + ":\n" + tmpChar.SpecialDescription;
+        GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + tmpChar.SpecialName.ToLower() + ":\n" + tmpChar.SpecialDescription;
         GameObject.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + tmpChar.Realm.ToString().ToLower() + ":\n" + tmpChar.Realm.GetDescription();
         GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + tmpChar.Id);
+        Helper.ResetSelectedCharacterSpecialCooldown();
     }
 
     private void GoToPrevious()
@@ -83,6 +84,7 @@ public class CharSelSceneBhv : SceneBhv
             if (Constants.SelectedGameMode == Constants.TrainingGameScene)
             {
                 PlayerPrefsHelper.ResetTraining();
+                PlayerPrefsHelper.SaveCurrentItem(null);
                 scene = Constants.TrainingGameScene;
             }
             NavigationService.LoadNextScene(scene);

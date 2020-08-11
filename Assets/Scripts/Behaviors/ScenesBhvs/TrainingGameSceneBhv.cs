@@ -45,6 +45,8 @@ public class TrainingGameSceneBhv : SceneBhv
         _piecesTmp.text = _pieces.ToString();
 
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
+        GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + PlayerPrefsHelper.GetSelectedCharacter());
+        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
     }
 
     public override void PauseOrPrevious()
@@ -200,7 +202,9 @@ public class TrainingGameSceneBhv : SceneBhv
 
     public override void OnPerfectClear()
     {
-        _poppingText += "\n<b>perfect clear!</b>";
+        if (_poppingText.Length > 0)
+            _poppingText += "\n";
+        _poppingText += "<b>perfect clear!</b>";
         _score += 4000 * _level;
         DisplayScore();
     }
@@ -209,11 +213,9 @@ public class TrainingGameSceneBhv : SceneBhv
     {
         if (!string.IsNullOrEmpty(_poppingText))
         {
-            var y = 17.5f;
-            if (_gameplayControler.CurrentPiece.transform.position.y > 17.0f)
-                y = 15.0f;
-            Instantiator.PopText(_poppingText, new Vector2(4.5f, y));
+            Instantiator.PopText(_poppingText, new Vector2(4.5f, 17.4f));
             _poppingText = "";
+            _gameplayControler.FadeBlocksOnText();
         }
     }
 }

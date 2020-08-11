@@ -584,6 +584,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityDelay: 0
   CurrentPiece: {fileID: 0}
+  CurrentGhost: {fileID: 0}
+  Bag: 
+  Instantiator: {fileID: 0}
 --- !u!114 &331272313
 MonoBehaviour:
   m_ObjectHideFlags: 0
