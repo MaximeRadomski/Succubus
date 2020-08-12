@@ -18,7 +18,7 @@ public class PopupYesNoBhv : PopupBhv
         buttonPositive.GetComponent<ButtonBhv>().EndActionDelegate = PositiveDelegate;
         buttonPositive.transform.Find("ButtonPositiveText").GetComponent<TMPro.TextMeshPro>().text = positive;
         if (string.IsNullOrEmpty(negative))
-            buttonPositive.transform.position = new Vector3(0.0f, buttonPositive.transform.position.y, 0.0f);
+            buttonPositive.transform.position = new Vector3(buttonPositive.transform.parent.position.x, buttonPositive.transform.position.y, 0.0f);
 
         var buttonNegative = transform.Find("ButtonNegative");
         buttonNegative.GetComponent<ButtonBhv>().EndActionDelegate = NegativeDelegate;

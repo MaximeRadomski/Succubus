@@ -19,7 +19,7 @@ public static class CharactersData
             Id = 1, Name = "Odamm", Kind = "Incubus", Realm = Realm.Hell,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Sin's Weight", SpecialDescription = "blocks of the current and next piece are affected by gravity"
+            SpecialName = "Sin's Weight", SpecialDescription = "blocks of the current and next 2 pieces are affected by gravity"
         },
         new Character()
         {

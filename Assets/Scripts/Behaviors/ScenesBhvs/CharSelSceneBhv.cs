@@ -84,7 +84,7 @@ public class CharSelSceneBhv : SceneBhv
             if (Constants.SelectedGameMode == Constants.TrainingGameScene)
             {
                 PlayerPrefsHelper.ResetTraining();
-                PlayerPrefsHelper.SaveCurrentItem(null);
+                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[0]);
                 scene = Constants.TrainingGameScene;
             }
             NavigationService.LoadNextScene(scene);

@@ -21,6 +21,7 @@ public static class NavigationService
 
     public static void LoadNextScene(string name)
     {
+        Constants.NameLastScene = SceneManager.GetActiveScene().name;
         _path += "/" + name;
         //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(name);
@@ -43,6 +44,7 @@ public static class NavigationService
 
     public static void LoadPreviousScene(string onRootPreviousScene = null)
     {
+        Constants.NameLastScene = SceneManager.GetActiveScene().name;
         var lastSeparator = _path.LastIndexOf('/');
         if (string.IsNullOrEmpty(_path) || lastSeparator == 0)
         {

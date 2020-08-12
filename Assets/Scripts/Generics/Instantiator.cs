@@ -62,7 +62,7 @@ public class Instantiator : MonoBehaviour
         System.Func<bool, object> resultAction)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
-        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction);
     }
@@ -105,6 +105,15 @@ public class Instantiator : MonoBehaviour
         Constants.IncreaseInputLayer(tmpPauseMeuInstance.name);
         tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction, isRotated);
         return tmpPauseMeuInstance;
+    }
+
+    public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, bool isRotated, Character character, Opponent opponent)
+    {
+        var tmpInfoMenuObject = Resources.Load<GameObject>("Prefabs/InfoMenu");
+        var tmpInfoMeuInstance = Instantiate(tmpInfoMenuObject, tmpInfoMenuObject.transform.position, tmpInfoMenuObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpInfoMeuInstance.name);
+        tmpInfoMeuInstance.GetComponent<InfoMenuBhv>().Init(this, resumeAction, isRotated, character, opponent);
+        return tmpInfoMeuInstance;
     }
 
     public void PopText(string text, Vector2 position, string color = "#FFFFFF")

@@ -129,6 +129,8 @@ public static class Constants
     public static bool CardsInCache = false;
     public static string SelectedGameMode = null;
     public static int SelectedCharacterSpecialCooldown;
+    public static Opponent CurrentOpponent;
+    public static string NameLastScene;
 
     public static void SetLastEndActionClickedName(string name)
     {

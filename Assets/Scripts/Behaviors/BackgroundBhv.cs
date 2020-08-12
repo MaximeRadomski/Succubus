@@ -16,10 +16,15 @@ public class BackgroundBhv : MonoBehaviour
 
     private void Init()
     {
-        _positionToReach = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-2.0f, 2.0f));
+        NewPositionToReach();
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _i = 0;
         _isMoving = true;
+    }
+
+    private void NewPositionToReach()
+    {
+        _positionToReach = new Vector2(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
     }
 
     void Update()
@@ -39,7 +44,7 @@ public class BackgroundBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _positionToReach, 0.005f);
         if (Helper.VectorEqualsPrecision(transform.position, _positionToReach, 0.5f))
         {
-            Init();
+            NewPositionToReach();
         }
     }
 }

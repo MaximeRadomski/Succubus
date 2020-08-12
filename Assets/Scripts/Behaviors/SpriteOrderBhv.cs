@@ -36,6 +36,19 @@ public class SpriteOrderBhv : MonoBehaviour
             //int decimals = currentOrder - (toSubstract * 100);
             //_textMesh.sortingOrder = (hundred * 100) + decimals;
             _textMesh.sortingOrder = currentOrder + (hundred * 1000);
+            if (_textMesh.transform.childCount > 0)
+            {
+                var child = _textMesh.transform.GetChild(0);
+                if (child != null)
+                {
+                    var subMesh = child.GetComponent<TMPro.TMP_SubMesh>();
+                    if (subMesh != null)
+                    {
+                        subMesh.renderer.sortingOrder = currentOrder + (hundred * 1000);
+                        subMesh.renderer.sortingLayerID = _textMesh.sortingLayerID;
+                    }
+                }
+            }
         }
     }
 }

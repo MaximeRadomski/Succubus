@@ -10,6 +10,7 @@ public class GameplayControler : MonoBehaviour
     public GameObject CurrentGhost;
     public string Bag;
     public Instantiator Instantiator;
+    public Character Character;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -38,8 +39,8 @@ public class GameplayControler : MonoBehaviour
     private List<GameObject> _nextPieces;
 
     private PlayFieldBhv _playFieldBhv;
-    private Character _character;
     private Special _characterSpecial;
+    private Item _characterItem;
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
@@ -56,6 +57,7 @@ public class GameplayControler : MonoBehaviour
     public void CleanPlayerPrefs()
     {
         Bag = null;
+        _characterSpecial.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         Destroy(_playFieldBhv.gameObject);
@@ -107,9 +109,17 @@ public class GameplayControler : MonoBehaviour
         {
             _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
-        _character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
-        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + _character.SpecialName.Replace(" ", "").Replace("'", "")));
-        _characterSpecial.Init(_character, this);
+        Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
+        var itemName = PlayerPrefsHelper.GetCurrentItem();
+        if (itemName == null)
+            _characterItem = null;
+        else
+        {
+            _characterItem = (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
+            _characterItem.Init(Character, this);
+        }
+        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
+        _characterSpecial.Init(Character, this);
         UpdateItemAndSpecialVisuals();
     }
 
@@ -641,7 +651,7 @@ public class GameplayControler : MonoBehaviour
         {
             for (int x = 0; x < 10; ++x)
             {
-                Instantiator.NewFadeBlock(_character.Realm, new Vector3(x, y, 0.0f), 2, -1);
+                Instantiator.NewFadeBlock(Character.Realm, new Vector3(x, y, 0.0f), 2, -1);
             }
         }
     }
@@ -917,9 +927,8 @@ public class GameplayControler : MonoBehaviour
 
     private void Item()
     {
-        var currentItem = PlayerPrefsHelper.GetCurrentItem();
-        if (string.IsNullOrEmpty(currentItem))
-            return;
+        if (_characterItem != null)
+            _characterItem.Activate();
     }
 
     private void Special()
