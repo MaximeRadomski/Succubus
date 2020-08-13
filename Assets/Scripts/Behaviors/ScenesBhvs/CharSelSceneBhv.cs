@@ -83,9 +83,15 @@ public class CharSelSceneBhv : SceneBhv
             var scene = Constants.AscensionScene;
             if (Constants.SelectedGameMode == Constants.TrainingGameScene)
             {
-                PlayerPrefsHelper.ResetTraining();
-                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[0]);
                 scene = Constants.TrainingGameScene;
+                PlayerPrefsHelper.ResetTraining();
+                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
+                PlayerPrefsHelper.ResetTattoos();
+            }
+            else
+            {
+                PlayerPrefsHelper.ResetCurrentItem();
+                PlayerPrefsHelper.ResetTattoos();
             }
             NavigationService.LoadNextScene(scene);
             return true;

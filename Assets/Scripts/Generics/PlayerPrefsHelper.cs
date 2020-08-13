@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -145,14 +146,68 @@ public class PlayerPrefsHelper : MonoBehaviour
         return selectedCharacter;
     }
 
+    public static void ResetCurrentItem()
+    {
+        PlayerPrefs.SetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+    }
+
     public static void SaveCurrentItem(string itemName)
     {
         PlayerPrefs.SetString(Constants.PpCurrentItem, itemName);
     }
 
-    public static string GetCurrentItem()
+    public static string GetCurrentItemName()
     {
         var itemName = PlayerPrefs.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
         return itemName;
+    }
+
+    public static Item GetCurrentItem()
+    {
+        var itemName = PlayerPrefs.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+        if (string.IsNullOrEmpty(itemName))
+            return null;
+        else
+            return (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
+    }
+
+    public static void ResetTattoos()
+    {
+        PlayerPrefs.SetString(Constants.PpCurrentTattoos, null);
+    }
+
+    public static void AddTattoo(string name)
+    {
+        var tattoos = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        if (tattoos == null)
+            tattoos = "";
+        tattoos += name.Replace(" ", "").Replace("'", "") + ";";
+        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoos);
+    }
+
+    public static string GetCurrentTattoosString()
+    {
+        var tattoos = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        return tattoos;
+    }
+
+    public static List<Tattoo> GetCurrentTattoos()
+    {
+        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        int i = 0;
+        var tattoosList = new List<Tattoo>();
+        while (!string.IsNullOrEmpty(tattoosStr) || i > 15)
+        {
+            var separatorId = tattoosStr.IndexOf(';');
+            if (separatorId == -1)
+                break;
+            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorId)));
+            tattoosList.Add(tmpTattoo);
+            if (separatorId + 1 >= tattoosStr.Length)
+                break;
+            tattoosStr = tattoosStr.Substring(separatorId + 1);
+            ++i;
+        }
+        return tattoosList;
     }
 }

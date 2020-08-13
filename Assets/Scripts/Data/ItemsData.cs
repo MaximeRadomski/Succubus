@@ -8,7 +8,7 @@ public static class ItemsData
     public static int RareItemAppearancePercent = 10;
     public static int MagicalItemAppearancePercent = 30;
 
-    public static string[] NormalItemsNames = { "Holy Water" };
+    public static string[] NormalItemsNames = { "Holy Water", "Demon Blood", "Grenade" };
     public static string[] MagicalItemsNames = { "" };
     public static string[] RareItemsNames = { "" };
 

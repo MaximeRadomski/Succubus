@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameplayControler : MonoBehaviour
 {
+    public SceneBhv SceneBhv;
     public float GravityDelay;
     public GameObject CurrentPiece;
     public GameObject CurrentGhost;
@@ -21,7 +22,6 @@ public class GameplayControler : MonoBehaviour
     private float _nextLock;
     private int _allowedMovesBeforeLock;
     private bool _canHold;
-    private SceneBhv _sceneBhv;
     private int _playFieldHeight;
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
@@ -61,7 +61,7 @@ public class GameplayControler : MonoBehaviour
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         Destroy(_playFieldBhv.gameObject);
-        _sceneBhv.OnGameOver();
+        SceneBhv.OnGameOver();
     }
 
     private void Init(int level, Realm characterRealm, Realm levelRealm)
@@ -70,7 +70,7 @@ public class GameplayControler : MonoBehaviour
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
         _lockDelay = Constants.LockDelay;
-        _sceneBhv = GetComponent<SceneBhv>();
+        SceneBhv = GetComponent<SceneBhv>();
         Instantiator = GetComponent<Instantiator>();
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
@@ -110,24 +110,18 @@ public class GameplayControler : MonoBehaviour
             _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
         Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
-        var itemName = PlayerPrefsHelper.GetCurrentItem();
-        if (itemName == null)
-            _characterItem = null;
-        else
-        {
-            _characterItem = (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
+        if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
             _characterItem.Init(Character, this);
-        }
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
         _characterSpecial.Init(Character, this);
         UpdateItemAndSpecialVisuals();
     }
 
-    private void UpdateItemAndSpecialVisuals()
+    public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        var currentItem = PlayerPrefsHelper.GetCurrentItem();
-        if (!string.IsNullOrEmpty(currentItem))
+        var currentItemName = PlayerPrefsHelper.GetCurrentItemName();
+        if (!string.IsNullOrEmpty(currentItemName))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -349,7 +343,7 @@ public class GameplayControler : MonoBehaviour
         _canHold = true;
         SetNextGravityFall();
         ResetLock();
-        _sceneBhv.OnNewPiece();
+        SceneBhv.OnNewPiece();
         _characterSpecial.OnNewPiece(CurrentPiece);
     }
 
@@ -381,7 +375,7 @@ public class GameplayControler : MonoBehaviour
 
     void Update()
     {
-        if (_sceneBhv.Paused)
+        if (SceneBhv.Paused)
             return;
         CheckKeyboardInputs();
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
@@ -452,7 +446,7 @@ public class GameplayControler : MonoBehaviour
         {
             AddToPlayField(CurrentPiece);
         }
-        _sceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
+        SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
         CheckForLines();
     }
@@ -549,7 +543,7 @@ public class GameplayControler : MonoBehaviour
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
         if (IsPiecePosValidOrReset())
-            _sceneBhv.OnSoftDrop();
+            SceneBhv.OnSoftDrop();
     }
 
     private void GravityFall()
@@ -623,7 +617,7 @@ public class GameplayControler : MonoBehaviour
             else
                 ++nbLinesDropped;
         }
-        _sceneBhv.OnHardDrop(nbLinesDropped);
+        SceneBhv.OnHardDrop(nbLinesDropped);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
@@ -1022,24 +1016,24 @@ public class GameplayControler : MonoBehaviour
             if (nbLines > 1 && nbLines == _lastNbLinesCleared)
                 isB2B = true;
             _lastNbLinesCleared = nbLines;
-            _sceneBhv.OnLinesCleared(nbLines, isB2B);
+            SceneBhv.OnLinesCleared(nbLines, isB2B);
             _characterSpecial.OnLinesCleared(nbLines, isB2B);
 
             ++_comboCounter;
             if (_comboCounter > 1)
-                _sceneBhv.OnCombo(_comboCounter);
+                SceneBhv.OnCombo(_comboCounter);
 
-            if (GetHighestBlock() == 0)
-                _sceneBhv.OnPerfectClear();
+            if (GetHighestBlock() == -1)
+                SceneBhv.OnPerfectClear();
 
-            _sceneBhv.PopText();
+            SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
             Invoke(nameof(ClearLineSpace), 0.3f);
         }
         else
         {
-            _sceneBhv.OnLinesCleared(nbLines, false);
-            _sceneBhv.PopText();
+            SceneBhv.OnLinesCleared(nbLines, false);
+            SceneBhv.PopText();
             _comboCounter = 0;
             Spawn();
         }
@@ -1060,6 +1054,8 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
+            if (_playFieldBhv.Grid[x, y] == null)
+                continue;
             Instantiator.NewFadeBlock(_characterRealm, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(_playFieldBhv.Grid[x, y].gameObject);
             _playFieldBhv.Grid[x, y] = null;
@@ -1073,7 +1069,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (y == 0)
                 highestBlock = GetHighestBlock();
-            if (y > highestBlock || highestBlock == 0)
+            if (y > highestBlock || highestBlock == -1)
                 break;
             if (HasFullLineSpace(y))
             {
@@ -1086,7 +1082,10 @@ public class GameplayControler : MonoBehaviour
             if (child.childCount == 0)
                 Destroy(child.gameObject);
         }
-        Spawn();
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+            Spawn();
+        else
+            DropGhost();
     }
 
     public int GetHighestBlock()
@@ -1096,7 +1095,7 @@ public class GameplayControler : MonoBehaviour
             if (!HasFullLineSpace(y))
                 return y;
         }
-        return 0;
+        return -1;
     }
 
     private bool HasFullLineSpace(int y)
@@ -1123,6 +1122,19 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ClearFromTop(int nbRows)
+    {
+        int start = GetHighestBlock();
+        int end = start - (nbRows - 1);
+        for (int y = start; y >= end; --y)
+        {
+            if (y < 0)
+                break;
+            DeleteLine(y);
+        }
+        ClearLineSpace();
     }
 
     #endregion

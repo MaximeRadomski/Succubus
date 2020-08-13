@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemHolyWater : Item
+public class ItemDemonBlood : Item
 {
     public override void Init(Character character, GameplayControler gameplayControler)
     {
         base.Init(character, gameplayControler);
-        Id = 0;
-        Name = "Holy Water";
-        Description = "clear all grey rows";
+        Id = 1;
+        Name = "Demon Blood";
+        Description = "Clear all black rows";
     }
 
     public override bool Activate()

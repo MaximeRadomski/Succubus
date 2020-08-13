@@ -25,6 +25,8 @@ public class TrainingGameSceneBhv : SceneBhv
     void Start()
     {
         Init();
+        if (Constants.NameLastScene == Constants.SettingsScene)
+            PauseOrPrevious();
         _gameplayControler = GetComponent<GameplayControler>();
 
         var results = PlayerPrefsHelper.GetTraining();
@@ -52,8 +54,7 @@ public class TrainingGameSceneBhv : SceneBhv
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
         _character = _gameplayControler.Character;
         Constants.CurrentOpponent = null;
-        if (Constants.NameLastScene == Constants.SettingsScene)
-            PauseOrPrevious();
+        
     }
 
     public override void PauseOrPrevious()

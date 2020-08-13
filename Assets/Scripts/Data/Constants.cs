@@ -39,6 +39,7 @@ public static class Constants
     public const string PpSelectedCharacter = "SelectedCharacter";
     public const int PpSelectedCharacterDefault = 0;
     public const string PpCurrentItem = "CurrentItem";
+    public const string PpCurrentTattoos = "CurrentTattoos";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
     public const string PpTrainingScore = "TrainingScore";
