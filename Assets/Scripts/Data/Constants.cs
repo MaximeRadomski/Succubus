@@ -17,8 +17,11 @@ public static class Constants
     public static List<int> RoomDifficultyPerRealm = new List<int>() {80, 160, 320};
     public static List<int> RoomDifficultyPerRoom = new List<int>() { 10, 20, 30 };
     public static List<float> RoomDifficultyPerRarity = new List<float>() { 1.0f, 1.5f, 2.0f };
+    public static Vector3 _cameraVerticalGameplayPosition = new Vector3(4.5f, 1.64f, -10.0f);
+    public static Vector3 _cameraHorizontalGameplayPosition = new Vector3(4.5f, 9.64f, -10.0f);
 
     //  TAGS  //
+    public const string TagMusic = "Music";
     public const string TagPlayField = "PlayField";
     public const string TagBackground = "Background";
     public const string TagButton = "Button";
@@ -65,6 +68,7 @@ public static class Constants
     public const int PpFavKeyboardLayoutDefault = 0;
 
     //  SCENES  //
+    public const string SplashScreenScene = "SplashScreenScene";
     public const string MainMenuScene = "MainMenuScene";
     public const string SettingsScene= "SettingsScene";
     public const string AscensionScene = "AscensionScene";

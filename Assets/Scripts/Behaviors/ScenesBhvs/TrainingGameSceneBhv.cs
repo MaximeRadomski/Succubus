@@ -25,8 +25,6 @@ public class TrainingGameSceneBhv : SceneBhv
     void Start()
     {
         Init();
-        if (Constants.NameLastScene == Constants.SettingsScene)
-            PauseOrPrevious();
         _gameplayControler = GetComponent<GameplayControler>();
 
         var results = PlayerPrefsHelper.GetTraining();
@@ -52,6 +50,8 @@ public class TrainingGameSceneBhv : SceneBhv
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + PlayerPrefsHelper.GetSelectedCharacter());
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
+        if (Constants.NameLastScene == Constants.SettingsScene)
+            PauseOrPrevious();
         _character = _gameplayControler.Character;
         Constants.CurrentOpponent = null;
         

@@ -81,7 +81,8 @@ public class GameplayControler : MonoBehaviour
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         if (PlayerPrefsHelper.GetOrientation() == "Horizontal")
-            SetOrientation();
+            SetHorizontalOrientation();
+        UpdatePanelsPositions();
         SetButtons();
         CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
@@ -167,12 +168,16 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void SetOrientation()
+    public void SetHorizontalOrientation()
     {
-        _mainCamera.transform.position += new Vector3(0.0f, 8.0f, 0.0f);
+        var resetRotation = new Quaternion();
+        resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
+        _mainCamera.transform.rotation = resetRotation;
         _mainCamera.transform.Rotate(0.0f, 0.0f, 90.0f);
         _panelLeft.GetComponent<PositionBhv>().Rotated = true;
         _panelRight.GetComponent<PositionBhv>().Rotated = true;
+        _uiPanelLeft.transform.rotation = resetRotation;
         _uiPanelLeft.transform.Rotate(0.0f, 0.0f, 90.0f);
         var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
         uiPanelLeftPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
@@ -180,7 +185,9 @@ public class GameplayControler : MonoBehaviour
         uiPanelLeftPositionBhv.XOffset = uiPanelLeftPositionBhv.YOffset / 3;
         uiPanelLeftPositionBhv.YOffset = -2.285f;
         uiPanelLeftPositionBhv.Rotated = true;
+        uiPanelLeftPositionBhv.UpdatePositions();
         RotatePanelChildren(_uiPanelLeft);
+        _uiPanelRight.transform.rotation = resetRotation;
         _uiPanelRight.transform.Rotate(0.0f, 0.0f, 90.0f);
         var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
         uiPanelRightPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
@@ -188,7 +195,16 @@ public class GameplayControler : MonoBehaviour
         uiPanelRightPositionBhv.XOffset = -uiPanelRightPositionBhv.YOffset;
         uiPanelRightPositionBhv.YOffset = -2.285f;
         uiPanelRightPositionBhv.Rotated = true;
+        uiPanelRightPositionBhv.UpdatePositions();
         RotatePanelChildren(_uiPanelRight);
+    }
+
+    private void UpdatePanelsPositions()
+    {
+        _panelLeft.GetComponent<PositionBhv>().UpdatePositions();
+        _panelRight.GetComponent<PositionBhv>().UpdatePositions();
+        _uiPanelLeft.GetComponent<PositionBhv>().UpdatePositions();
+        _uiPanelRight.GetComponent<PositionBhv>().UpdatePositions();
     }
 
     private void RotatePanelChildren(GameObject panel)

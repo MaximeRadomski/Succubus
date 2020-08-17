@@ -582,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d74c06aba58c01e419d904facd206c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneBhv: {fileID: 0}
   GravityDelay: 0
   CurrentPiece: {fileID: 0}
   CurrentGhost: {fileID: 0}
@@ -1881,7 +1882,7 @@ MonoBehaviour:
   HorizontalSide: 2
   XOffset: -4
   YOffset: 8
-  DontActivateOnStart: 0
+  DontActivateOnStart: 1
   Rotated: 0
 --- !u!1001 &1059182583
 PrefabInstance:
@@ -2431,7 +2432,7 @@ MonoBehaviour:
   HorizontalSide: 1
   XOffset: 4
   YOffset: 8
-  DontActivateOnStart: 0
+  DontActivateOnStart: 1
   Rotated: 0
 --- !u!1 &1215617768
 GameObject:
@@ -2624,7 +2625,7 @@ MonoBehaviour:
   HorizontalSide: 3
   XOffset: 0
   YOffset: 12
-  DontActivateOnStart: 0
+  DontActivateOnStart: 1
   Rotated: 0
 --- !u!1 &1421854121
 GameObject:
@@ -2999,7 +3000,7 @@ MonoBehaviour:
   HorizontalSide: 3
   XOffset: 0
   YOffset: 4
-  DontActivateOnStart: 0
+  DontActivateOnStart: 1
   Rotated: 0
 --- !u!1001 &1445906648
 PrefabInstance:
@@ -3563,7 +3564,7 @@ PrefabInstance:
     - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 3499f323bf547964481c0aa55da7ce42, type: 2}
+      objectReference: {fileID: 2100000, guid: 40218a3c91545f34bac6379eef8aad6b, type: 2}
     - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_padding
       value: 6.6535997
@@ -4751,7 +4752,7 @@ PrefabInstance:
     - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 3499f323bf547964481c0aa55da7ce42, type: 2}
+      objectReference: {fileID: 2100000, guid: 40218a3c91545f34bac6379eef8aad6b, type: 2}
     - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_padding
       value: 6.6535997
