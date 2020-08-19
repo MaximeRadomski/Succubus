@@ -42,6 +42,24 @@ public class GameplayControler : MonoBehaviour
     private Special _characterSpecial;
     private Item _characterItem;
 
+    private SoundControlerBhv _soundControler;
+    private int _id1Line;
+    private int _id2Line;
+    private int _id3Line;
+    private int _id4Line;
+    private int _idCombo;
+    private int _idConsecutive;
+    private int _idHardDrop;
+    private int _idHold;
+    private int _idItem;
+    private int _idLeftRightDown;
+    private int _idLock;
+    private int _idPerfect;
+    private int _idRotate;
+    private int _idSpecial;
+    private int _idTwist;
+
+
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
         Init(level, characterRealm, levelRealm);
@@ -72,6 +90,7 @@ public class GameplayControler : MonoBehaviour
         _lockDelay = Constants.LockDelay;
         SceneBhv = GetComponent<SceneBhv>();
         Instantiator = GetComponent<Instantiator>();
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
@@ -305,6 +324,22 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
+
+        _id1Line = _soundControler.SetSound("1Line");
+        _id2Line = _soundControler.SetSound("2Line");
+        _id3Line = _soundControler.SetSound("3Line");
+        _id4Line = _soundControler.SetSound("4Line");
+        _idCombo = _soundControler.SetSound("Combo");
+        _idConsecutive = _soundControler.SetSound("Consecutive");
+        _idHardDrop = _soundControler.SetSound("HardDrop");
+        _idHold = _soundControler.SetSound("Hold");
+        _idItem = _soundControler.SetSound("Item");
+        _idLeftRightDown = _soundControler.SetSound("LeftRightDown");
+        _idLock = _soundControler.SetSound("Lock");
+        _idPerfect = _soundControler.SetSound("Perfect");
+        _idRotate = _soundControler.SetSound("Rotate");
+        _idSpecial = _soundControler.SetSound("Special");
+        _idTwist = _soundControler.SetSound("Twist");
     }
 
     private void LookForAllPossibleButton(string name, ButtonBhv.ActionDelegate actionDelegate, int inputType)
@@ -457,6 +492,8 @@ public class GameplayControler : MonoBehaviour
                 ++nbLocked;
             CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
             isTwtist = nbLocked == 3;
+            if (isTwtist)
+                _soundControler.PlaySound(_idTwist);
         }
         if (CurrentPiece != null)
         {
@@ -464,6 +501,7 @@ public class GameplayControler : MonoBehaviour
         }
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
+        _soundControler.PlaySound(_idLock);
         CheckForLines();
     }
 
@@ -499,8 +537,10 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        IsPiecePosValidOrReset();
+        if (IsPiecePosValidOrReset())
+            _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void LeftHolded()
@@ -513,8 +553,10 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        IsPiecePosValidOrReset();
+        if (IsPiecePosValidOrReset())
+            _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        
     }
 
     private void Right()
@@ -525,8 +567,10 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        IsPiecePosValidOrReset();
+        if (IsPiecePosValidOrReset())
+            _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void RightHolded()
@@ -539,8 +583,10 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        IsPiecePosValidOrReset();
+        if (IsPiecePosValidOrReset())
+            _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void DirectionReleased()
@@ -633,6 +679,7 @@ public class GameplayControler : MonoBehaviour
             else
                 ++nbLinesDropped;
         }
+        //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
     }
 
@@ -778,6 +825,7 @@ public class GameplayControler : MonoBehaviour
                 SetNextGravityFall();
                 CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
                 DropGhost();
+                _soundControler.PlaySound(_idRotate);
                 return;
             }
             else
@@ -883,6 +931,7 @@ public class GameplayControler : MonoBehaviour
                 SetNextGravityFall();
                 CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost();
+                _soundControler.PlaySound(_idRotate);
                 return;
             }
             else
@@ -933,17 +982,22 @@ public class GameplayControler : MonoBehaviour
             _canHold = false;
             _characterSpecial.OnNewPiece(CurrentPiece);
         }
+        _soundControler.PlaySound(_idHold);
     }
 
     private void Item()
     {
         if (_characterItem != null)
+        {
+            _soundControler.PlaySound(_idItem);
             _characterItem.Activate();
+        }
     }
 
     private void Special()
     {
-        _characterSpecial.Activate();
+        if (_characterSpecial.Activate())
+            _soundControler.PlaySound(_idSpecial);
         UpdateItemAndSpecialVisuals();
     }
 
@@ -1028,6 +1082,15 @@ public class GameplayControler : MonoBehaviour
         }
         if (nbLines > 0)
         {
+            if (nbLines == 1)
+                _soundControler.PlaySound(_id1Line);
+            else if (nbLines == 2)
+                _soundControler.PlaySound(_id2Line);
+            else if (nbLines == 3)
+                _soundControler.PlaySound(_id3Line);
+            else if (nbLines == 4)
+                _soundControler.PlaySound(_id4Line);
+
             bool isB2B = false;
             if (nbLines > 1 && nbLines == _lastNbLinesCleared)
                 isB2B = true;
@@ -1037,10 +1100,16 @@ public class GameplayControler : MonoBehaviour
 
             ++_comboCounter;
             if (_comboCounter > 1)
+            {
+                _soundControler.PlaySound(_idCombo);
                 SceneBhv.OnCombo(_comboCounter);
+            }                
 
-            if (GetHighestBlock() == -1)
+            if (GetHighestBlock() == -1) //PERFECT
+            {
+                _soundControler.PlaySound(_idPerfect);
                 SceneBhv.OnPerfectClear();
+            }                
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();

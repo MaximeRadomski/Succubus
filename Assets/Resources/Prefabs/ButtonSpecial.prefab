@@ -101,6 +101,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 1
 --- !u!61 &6415633934118628221
 BoxCollider2D:
   m_ObjectHideFlags: 0

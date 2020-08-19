@@ -10,6 +10,7 @@ public class ButtonBhv : InputBhv
     public ActionDelegate EndActionDelegate;
     public bool Disabled;
     public bool StretchDisabled;
+    public bool CustomSound;
 
     private SpriteRenderer _spriteRenderer;
     private SoundControlerBhv _soundControler;
@@ -44,7 +45,8 @@ public class ButtonBhv : InputBhv
     {
         if (_soundControler == null)
             SetPrivates();
-        _soundControler.PlaySound(_soundControler.ClickIn);
+        if (!CustomSound)
+            _soundControler.PlaySound(_soundControler.ClickIn);
         if (!StretchDisabled)
         {
             _isStretching = true;
@@ -63,7 +65,8 @@ public class ButtonBhv : InputBhv
 
     public override void EndAction(Vector2 lastTouchPosition)
     {
-        _soundControler.PlaySound(_soundControler.ClickOut);
+        if (!CustomSound)
+            _soundControler.PlaySound(_soundControler.ClickOut);
         _isResetingColor = true;
         EndActionDelegate?.Invoke();
     }
