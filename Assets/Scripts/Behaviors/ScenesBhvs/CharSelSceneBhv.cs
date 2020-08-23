@@ -83,6 +83,7 @@ public class CharSelSceneBhv : SceneBhv
             var scene = Constants.AscensionScene;
             if (Constants.SelectedGameMode == Constants.TrainingGameScene)
             {
+                Constants.CurrentMusicType = MusicTyoe.GameHell;
                 scene = Constants.TrainingGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);

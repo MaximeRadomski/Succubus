@@ -23,6 +23,7 @@ public abstract class Item
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
+        PlayerPrefsHelper.ResetCurrentItem();
         return true;
     }
 }

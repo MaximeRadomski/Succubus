@@ -84,6 +84,7 @@ public class TrainingGameSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
+            Constants.CurrentMusicType = MusicTyoe.Menu;
             NavigationService.LoadPreviousScene();
             return false;
         }

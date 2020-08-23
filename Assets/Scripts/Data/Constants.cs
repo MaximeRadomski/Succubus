@@ -136,6 +136,7 @@ public static class Constants
     public static int SelectedCharacterSpecialCooldown;
     public static Opponent CurrentOpponent;
     public static string NameLastScene;
+    public static MusicTyoe CurrentMusicType = MusicTyoe.SplashScreen;
 
     public static void SetLastEndActionClickedName(string name)
     {

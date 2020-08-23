@@ -274,8 +274,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 100344850}
-  - component: {fileID: 100344849}
   - component: {fileID: 100344848}
+  - component: {fileID: 100344849}
   m_Layer: 0
   m_Name: Music
   m_TagString: Music
@@ -307,7 +307,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -798,6 +798,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!212 &944535801
 SpriteRenderer:
   m_ObjectHideFlags: 0

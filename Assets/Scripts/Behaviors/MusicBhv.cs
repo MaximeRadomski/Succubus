@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicBhv : MonoBehaviour
 {
     private AudioSource _audioSource;
+    private MusicTyoe _currentType;
 
     void Start()
     {
@@ -21,15 +20,25 @@ public class MusicBhv : MonoBehaviour
     private void Init()
     {
         DontDestroyOnLoad(transform.gameObject);
-        SceneManager.sceneLoaded += SceneLoaded;
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
-        _audioSource.Play();
+        SceneManager.sceneLoaded += SceneLoaded;
+        _currentType = MusicTyoe.None;
+        SceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
+
+    
 
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == Constants.TrainingGameScene)
-            _audioSource.Stop();
+        if (_currentType == Constants.CurrentMusicType)
+            return;
+        _currentType = Constants.CurrentMusicType;
+        if (_currentType == MusicTyoe.SplashScreen)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/SplashScreen");
+        else if (_currentType == MusicTyoe.Menu)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
+        else if (_currentType == MusicTyoe.GameHell)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/GameHell");
+        _audioSource.Play();        
     }
 }

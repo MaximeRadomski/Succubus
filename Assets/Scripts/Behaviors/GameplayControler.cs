@@ -540,7 +540,6 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset())
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
-        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void LeftHolded()
@@ -556,7 +555,6 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset())
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
-        
     }
 
     private void Right()
@@ -570,7 +568,6 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset())
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
-        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void RightHolded()
@@ -586,7 +583,6 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset())
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
-        _soundControler.PlaySound(_idLeftRightDown);
     }
 
     private void DirectionReleased()
@@ -990,7 +986,9 @@ public class GameplayControler : MonoBehaviour
         if (_characterItem != null)
         {
             _soundControler.PlaySound(_idItem);
-            _characterItem.Activate();
+            var result = _characterItem.Activate();
+            if (result == true)
+                _characterItem = null;
         }
     }
 
