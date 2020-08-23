@@ -19,6 +19,8 @@ public static class Constants
     public static List<float> RoomDifficultyPerRarity = new List<float>() { 1.0f, 1.5f, 2.0f };
     public static Vector3 _cameraVerticalGameplayPosition = new Vector3(4.5f, 1.64f, -10.0f);
     public static Vector3 _cameraHorizontalGameplayPosition = new Vector3(4.5f, 9.64f, -10.0f);
+    public const float MaximumPCVolumeMusic = 0.2f;
+    public const float MaximumMobileVolumeMusic = 1.0f;
 
     //  TAGS  //
     public const string TagMusic = "Music";

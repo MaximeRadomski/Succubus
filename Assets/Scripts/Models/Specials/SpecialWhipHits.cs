@@ -10,11 +10,10 @@ public class SpecialWhipHits : Special
             return false;
         if (!base.Activate())
             return false;
+        _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter);
         Object.Destroy(_gameplayControler.CurrentPiece ?? null);
         Object.Destroy(_gameplayControler.CurrentGhost ?? null);
-        _gameplayControler.Bag = _gameplayControler.Bag.ReplaceChar(0, 'D');
-        _gameplayControler.Bag = _gameplayControler.Bag.ReplaceChar(1, 'D');
-        _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, "D");
+        _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, "DDD");
         _gameplayControler.Spawn();
         return true;
     }

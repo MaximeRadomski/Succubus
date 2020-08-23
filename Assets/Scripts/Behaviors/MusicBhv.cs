@@ -21,6 +21,7 @@ public class MusicBhv : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = Constants.MaximumPCVolumeMusic;
         SceneManager.sceneLoaded += SceneLoaded;
         _currentType = MusicTyoe.None;
         SceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
@@ -38,7 +39,8 @@ public class MusicBhv : MonoBehaviour
         else if (_currentType == MusicTyoe.Menu)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
         else if (_currentType == MusicTyoe.GameHell)
-            _audioSource.clip = (AudioClip)Resources.Load("Musics/GameHell");
-        _audioSource.Play();        
+            _audioSource.clip = null;
+            //_audioSource.clip = (AudioClip)Resources.Load("Musics/GameHell");
+        _audioSource.Play();
     }
 }

@@ -49,7 +49,6 @@ public class GameplayControler : MonoBehaviour
     private int _id4Line;
     private int _idCombo;
     private int _idConsecutive;
-    private int _idHardDrop;
     private int _idHold;
     private int _idItem;
     private int _idLeftRightDown;
@@ -58,6 +57,7 @@ public class GameplayControler : MonoBehaviour
     private int _idRotate;
     private int _idSpecial;
     private int _idTwist;
+    private int _idGameOver;
 
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
@@ -68,6 +68,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GameOver()
     {
+        _soundControler.PlaySound(_idGameOver);
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
     }
@@ -331,7 +332,6 @@ public class GameplayControler : MonoBehaviour
         _id4Line = _soundControler.SetSound("4Line");
         _idCombo = _soundControler.SetSound("Combo");
         _idConsecutive = _soundControler.SetSound("Consecutive");
-        _idHardDrop = _soundControler.SetSound("HardDrop");
         _idHold = _soundControler.SetSound("Hold");
         _idItem = _soundControler.SetSound("Item");
         _idLeftRightDown = _soundControler.SetSound("LeftRightDown");
@@ -340,6 +340,7 @@ public class GameplayControler : MonoBehaviour
         _idRotate = _soundControler.SetSound("Rotate");
         _idSpecial = _soundControler.SetSound("Special");
         _idTwist = _soundControler.SetSound("Twist");
+        _idGameOver = _soundControler.SetSound("GameOver");
     }
 
     private void LookForAllPossibleButton(string name, ButtonBhv.ActionDelegate actionDelegate, int inputType)
@@ -1091,7 +1092,10 @@ public class GameplayControler : MonoBehaviour
 
             bool isB2B = false;
             if (nbLines > 1 && nbLines == _lastNbLinesCleared)
+            {
                 isB2B = true;
+                _soundControler.PlaySound(_idConsecutive);
+            }
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B);
             _characterSpecial.OnLinesCleared(nbLines, isB2B);
@@ -1101,7 +1105,7 @@ public class GameplayControler : MonoBehaviour
             {
                 _soundControler.PlaySound(_idCombo);
                 SceneBhv.OnCombo(_comboCounter);
-            }                
+            }
 
             if (GetHighestBlock() == -1) //PERFECT
             {

@@ -12,21 +12,21 @@ public static class CharactersData
             Id = 0, Name = "Ivy", Kind = "Succubus", Realm = Realm.Hell,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Whip Hits", SpecialDescription = "transform the current and next 2 pieces into a single cube"
+            SpecialName = "Whip Hits", SpecialDescription = "summons 3 single cubes as your next pieces"
         },
         new Character()
         {
-            Id = 1, Name = "Odamm", Kind = "Incubus", Realm = Realm.Hell,
+            Id = 1, Name = "Edam", Kind = "Incubus", Realm = Realm.Hell,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Sin's Weight", SpecialDescription = "blocks of the current and next 2 pieces are affected by gravity"
+            SpecialName = "Sin's Weight", SpecialDescription = "the blocks of the next 3 pieces are affected by gravity"
         },
         new Character()
         {
             Id = 2, Name = "Podarge", Kind = "Harpy", Realm = Realm.Hell,
             Attack = 8,
             Cooldown = 5,
-            SpecialName = "Mine", SpecialDescription = "switch current piece with the last of the piece preview"
+            SpecialName = "Mine", SpecialDescription = "switches current piece with the last of the piece preview"
         },
         new Character()
         {

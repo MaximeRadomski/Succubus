@@ -13,10 +13,11 @@ public class SpecialSinsWeight : Special
         if (!base.Activate())
             return false;
         _nbPiece = 3;
-        _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter);
-        Object.Destroy(_gameplayControler.CurrentPiece ?? null);
-        Object.Destroy(_gameplayControler.CurrentGhost ?? null);
-        _gameplayControler.Spawn();
+        //_gameplayControler.Bag = _gameplayControler.Bag.Insert(0, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter);
+        //Object.Destroy(_gameplayControler.CurrentPiece ?? null);
+        //Object.Destroy(_gameplayControler.CurrentGhost ?? null);
+        //_gameplayControler.Spawn();
+        OnNewPiece(_gameplayControler.CurrentPiece);
         return true;
     }
 
