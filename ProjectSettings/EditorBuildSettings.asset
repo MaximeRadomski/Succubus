@@ -13,6 +13,12 @@ EditorBuildSettings:
     guid: 4bf53139dfabc224294318748057b327
   - enabled: 1
     path: Assets/Scenes/SettingsScene.unity
+    guid: 3e1f62ef2a71aac46a5e3940ee7ea3fd
+  - enabled: 1
+    path: Assets/Scenes/SettingsAudioScene.unity
+    guid: 81e164f90c624ae4499b89dc68a167f3
+  - enabled: 1
+    path: Assets/Scenes/SettingsGameplayScene.unity
     guid: 4d2a810d0f5a443408ae760b3fd7d972
   - enabled: 1
     path: Assets/Scenes/CharSelScene.unity

@@ -19,8 +19,8 @@ public static class Constants
     public static List<float> RoomDifficultyPerRarity = new List<float>() { 1.0f, 1.5f, 2.0f };
     public static Vector3 _cameraVerticalGameplayPosition = new Vector3(4.5f, 1.64f, -10.0f);
     public static Vector3 _cameraHorizontalGameplayPosition = new Vector3(4.5f, 9.64f, -10.0f);
-    public const float MaximumPCVolumeMusic = 0.2f;
-    public const float MaximumMobileVolumeMusic = 1.0f;
+    public const float MaximumVolumeMusic = 0.2f;
+    public const float MaximumEffectsMusic = 1.0f;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -65,7 +65,8 @@ public static class Constants
     public const string PpHolder = "Holder";
     public const string PpSerializeDefault = null;
     public const string PpFavKeyboardLayout = "FavKeyboard";
-    public const string PpAudioLevel = "AudioLevel";
+    public const string PpEffectsLevel = "EffectsLevel";
+    public const string PpMusicLevel = "MusicLevel";
     public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
 
@@ -73,6 +74,8 @@ public static class Constants
     public const string SplashScreenScene = "SplashScreenScene";
     public const string MainMenuScene = "MainMenuScene";
     public const string SettingsScene= "SettingsScene";
+    public const string SettingsAudioScene = "SettingsAudioScene";
+    public const string SettingsGameplayScene = "SettingsGameplayScene";
     public const string AscensionScene = "AscensionScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingGameScene = "TrainingGameScene";

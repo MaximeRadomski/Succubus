@@ -210,4 +210,26 @@ public class PlayerPrefsHelper : MonoBehaviour
         }
         return tattoosList;
     }
+
+    public static void SaveEffectsLevel(float level)
+    {
+        PlayerPrefs.SetFloat(Constants.PpEffectsLevel, level);
+    }
+
+    public static float GetEffectsLevel()
+    {
+        var level = PlayerPrefs.GetFloat(Constants.PpEffectsLevel, Constants.PpAudioLevelDefault);
+        return level;
+    }
+
+    public static void SaveMusicLevel(float level)
+    {
+        PlayerPrefs.SetFloat(Constants.PpMusicLevel, level);
+    }
+
+    public static float GetMusicLevel()
+    {
+        var level = PlayerPrefs.GetFloat(Constants.PpMusicLevel, Constants.PpAudioLevelDefault);
+        return level;
+    }
 }
