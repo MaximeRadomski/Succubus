@@ -1103,7 +1103,7 @@ public class GameplayControler : MonoBehaviour
             ++_comboCounter;
             if (_comboCounter > 1)
             {
-                _soundControler.PlaySound(_idCombo);
+                _soundControler.PlaySound(_idCombo, 1.0f + ((_comboCounter - 2) * 0.15f));
                 SceneBhv.OnCombo(_comboCounter);
             }
 

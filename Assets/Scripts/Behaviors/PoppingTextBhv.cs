@@ -30,7 +30,7 @@ public class PoppingTextBhv : MonoBehaviour
     private void MoveAndFade()
     {
         transform.position = Vector2.Lerp(transform.position, _positionToReach, 0.05f);
-        if (transform.position.y >= _positionToReach.y - 0.05f)
+        if (transform.position.y >= _positionToReach.y - 0.01f)
         {
             //tag = Constants.TagCell;
             _text.color = Color.Lerp(_text.color, _colorToFade, 0.1f);

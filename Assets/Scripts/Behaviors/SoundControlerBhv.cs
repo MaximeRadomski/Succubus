@@ -59,6 +59,7 @@ public class SoundControlerBhv : MonoBehaviour
         if (!_hasInit)
             Init();
 #if UNITY_EDITOR
+        _pcAudio.pitch = customRate;
         _pcAudio.PlayOneShot((AudioClip)Resources.Load("Sounds/" + Sounds[soundId].Name));
 #else
         AndroidNativeAudio.play(soundId, _level, rate: customRate);

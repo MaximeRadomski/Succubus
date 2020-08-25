@@ -5,6 +5,7 @@ public class OverBlendBhv : MonoBehaviour
     private GameObject _loading;
     private GameObject _loadingBorders;
     private SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
     private TMPro.TextMeshPro _message;
     private System.Func<bool, object> _resultAction;
 
@@ -22,6 +23,7 @@ public class OverBlendBhv : MonoBehaviour
     {
         Constants.InputLocked = true;
         DontDestroyOnLoad(gameObject);
+        _audioSource = GetComponent<AudioSource>();
         _overBlendType = overBlendType;
         _loadPercent = 0;
         if (reverse)
@@ -49,6 +51,8 @@ public class OverBlendBhv : MonoBehaviour
         _message.text = message;
         _midActionDone = false;
         transform.position = _sourcePosition;
+        _audioSource.volume = _audioSource.volume * PlayerPrefsHelper.GetEffectsLevel();
+        _audioSource.Play();
     }
 
     // Update is called once per frame

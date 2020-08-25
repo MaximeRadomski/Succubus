@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8003662362969628372}
   - component: {fileID: 8003662362969628373}
   - component: {fileID: 7143619630063904563}
-  - component: {fileID: 7746997376321172027}
+  - component: {fileID: 3733768512306572507}
   m_Layer: 0
   m_Name: OverBlend
   m_TagString: Untagged
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8382951cf17a2ac4d94b639a3323a76a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &7746997376321172027
+--- !u!82 &3733768512306572507
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,8 +192,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c345d7aa5238b354abc5ad31ae1a3129, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
