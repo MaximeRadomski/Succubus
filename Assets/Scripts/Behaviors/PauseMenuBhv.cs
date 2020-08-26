@@ -8,6 +8,7 @@ public class PauseMenuBhv : PopupBhv
     private Instantiator _instantiator;
     private bool _isRotated;
     private Vector3 _cameraInitialPosition;
+    private Quaternion _cameraInitialRotation;
 
     public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, bool isRotated)
     {
@@ -18,7 +19,8 @@ public class PauseMenuBhv : PopupBhv
         {
             _cameraInitialPosition = Camera.main.transform.position;
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
-            Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
+            _cameraInitialRotation = Camera.main.transform.rotation;
+            Camera.main.transform.rotation = transform.rotation;
         }
         transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
         GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
@@ -31,7 +33,7 @@ public class PauseMenuBhv : PopupBhv
         if (_isRotated)
         {
             Camera.main.transform.position = _cameraInitialPosition;
-            Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
+            Camera.main.transform.rotation = _cameraInitialRotation;
         }
         Constants.DecreaseInputLayer();
         _resumeAction.Invoke(true);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameplayControler : MonoBehaviour
 {
-    public SceneBhv SceneBhv;
+    public GameSceneBhv SceneBhv;
     public float GravityDelay;
     public GameObject CurrentPiece;
     public GameObject CurrentGhost;
@@ -64,12 +64,15 @@ public class GameplayControler : MonoBehaviour
     {
         Init(level, characterRealm, levelRealm);
         Spawn();
+        if (Constants.NameLastScene == Constants.SettingsScene)
+            SceneBhv.PauseOrPrevious();
     }
 
     private void GameOver()
     {
         _soundControler.PlaySound(_idGameOver);
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
+        Constants.InputLocked = true;
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
     }
 
@@ -80,6 +83,7 @@ public class GameplayControler : MonoBehaviour
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         Destroy(_playFieldBhv.gameObject);
+        Constants.InputLocked = false;
         SceneBhv.OnGameOver();
     }
 
@@ -89,7 +93,7 @@ public class GameplayControler : MonoBehaviour
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
         _lockDelay = Constants.LockDelay;
-        SceneBhv = GetComponent<SceneBhv>();
+        SceneBhv = GetComponent<GameSceneBhv>();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");

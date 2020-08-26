@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainingGameSceneBhv : SceneBhv
+public class TrainingGameSceneBhv : GameSceneBhv
 {
-    private Character _character;
-    private GameplayControler _gameplayControler;
-
     private int _score;
     private int _level;
     private int _next;
@@ -19,13 +16,9 @@ public class TrainingGameSceneBhv : SceneBhv
     private TMPro.TextMeshPro _linesTmp;
     private TMPro.TextMeshPro _piecesTmp;
 
-    private string _poppingText = "";
-    private GameObject _menu;
-
     void Start()
     {
         Init();
-        _gameplayControler = GetComponent<GameplayControler>();
 
         var results = PlayerPrefsHelper.GetTraining();
         _score = results[0];
@@ -46,49 +39,8 @@ public class TrainingGameSceneBhv : SceneBhv
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
 
-        GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
-        GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + PlayerPrefsHelper.GetSelectedCharacter());
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
-        if (Constants.NameLastScene == Constants.SettingsScene)
-            PauseOrPrevious();
-        _character = _gameplayControler.Character;
         Constants.CurrentOpponent = null;
-        
-    }
-
-    public override void PauseOrPrevious()
-    {
-        Paused = true;
-        _menu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
-    }
-
-    private void Info()
-    {
-        Paused = true;
-        _menu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", _character, Constants.CurrentOpponent);
-    }
-
-    private object ResumeGiveUp(bool resume)
-    {
-        if (resume)
-        {
-            Paused = false;
-            Destroy(_menu);
-            return true;
-        }
-        _menu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
-        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
-        if (GameObject.Find("PlayField") != null)
-            Destroy(GameObject.Find("PlayField"));
-        object OnBlend(bool result)
-        {
-            Constants.CurrentMusicType = MusicTyoe.Menu;
-            NavigationService.LoadPreviousScene();
-            return false;
-        }
-        return false;
+        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
     }
 
     override public void OnGameOver()
@@ -99,6 +51,7 @@ public class TrainingGameSceneBhv : SceneBhv
         _level = 1;
         _lines = 0;
         _pieces = 0;
+        PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
         Reload();
     }
 

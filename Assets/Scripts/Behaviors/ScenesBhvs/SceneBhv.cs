@@ -78,44 +78,4 @@ public abstract class SceneBhv : MonoBehaviour
     {
 
     }
-
-    public virtual void OnNewPiece()
-    {
-
-    }
-
-    public virtual void OnPieceLocked(string pieceLetter)
-    {
-        
-    }
-
-    public virtual void OnSoftDrop()
-    {
-        
-    }
-
-    public virtual void OnHardDrop(int nbLines)
-    {
-        
-    }
-
-    public virtual void OnLinesCleared(int nbLines, bool isB2B)
-    {
-        
-    }
-
-    public virtual void OnPerfectClear()
-    {
-
-    }
-
-    public virtual void OnCombo(int nbCombo)
-    {
-        
-    }
-
-    public virtual void PopText()
-    {
-
-    }
 }
