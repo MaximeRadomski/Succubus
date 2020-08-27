@@ -5,6 +5,12 @@ TextureImporter:
   - first:
       213: 1608453112818237458
     second: Opponents_0
+  - first:
+      213: 6504033521421448412
+    second: Opponents_0
+  - first:
+      213: -3202193120836282684
+    second: Opponents_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -118,8 +124,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 210076b859f525610800000000000000
-      internalID: 1608453112818237458
+      spriteID: cd4fe832708f24a50800000000000000
+      internalID: 6504033521421448412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Opponents_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c69a5292568f83d0800000000000000
+      internalID: -3202193120836282684
       vertices: []
       indices: 
       edges: []

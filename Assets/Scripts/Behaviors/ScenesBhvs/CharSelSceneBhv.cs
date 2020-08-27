@@ -16,8 +16,8 @@ public class CharSelSceneBhv : SceneBhv
     {
         base.Init();
         var gameModeTitle = "New Ascension";
-        if (Constants.SelectedGameMode == Constants.TrainingGameScene)
-            gameModeTitle = "Training";
+        if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
+            gameModeTitle = "Free Play";
         _charSelector = GameObject.Find("CharSelector");
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
         _charButtonsContainer = GameObject.Find("CharacterButtons");        
@@ -81,10 +81,10 @@ public class CharSelSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             var scene = Constants.AscensionScene;
-            if (Constants.SelectedGameMode == Constants.TrainingGameScene)
+            if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
             {
                 Constants.CurrentMusicType = MusicTyoe.GameHell;
-                scene = Constants.TrainingGameScene;
+                scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();

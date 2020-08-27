@@ -78,7 +78,9 @@ public static class Constants
     public const string SettingsGameplayScene = "SettingsGameplayScene";
     public const string AscensionScene = "AscensionScene";
     public const string GameRogueScene = "GameRogueScene";
-    public const string TrainingGameScene = "TrainingGameScene";
+    public const string TrainingChoiceScene = "TrainingChoiceScene";
+    public const string TrainingFreeGameScene = "TrainingFreeGameScene";
+    public const string TrainingDummyGameScene = "TrainingDummyGameScene";
     public const string CharSelScene = "CharSelScene";
 
     //  GAMEOBJECT NAMES  //
@@ -97,6 +99,10 @@ public static class Constants
     public const string GoButtonClockName = "ButtonClock";
     public const string GoButtonPauseName = "ButtonPause";
     public const string GoButtonInfoName = "ButtonInfo";
+    public const string GoMusicControler = "MusicControler";
+    public const string GoCharacterInstance = "CharacterInstance";
+    public const string GoOpponentInstance = "OpponentInstance";
+
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 3.1f;

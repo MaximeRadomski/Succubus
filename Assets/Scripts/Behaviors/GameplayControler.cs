@@ -43,6 +43,7 @@ public class GameplayControler : MonoBehaviour
     private Item _characterItem;
 
     private SoundControlerBhv _soundControler;
+    private MusicControlerBhv _musicControler;
     private int _id1Line;
     private int _id2Line;
     private int _id3Line;
@@ -71,6 +72,7 @@ public class GameplayControler : MonoBehaviour
     private void GameOver()
     {
         _soundControler.PlaySound(_idGameOver);
+        _musicControler.Stop();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
@@ -96,6 +98,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv = GetComponent<GameSceneBhv>();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _musicControler = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");

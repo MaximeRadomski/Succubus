@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public abstract class GameSceneBhv : SceneBhv
 {
     protected Character _character;
+    protected CharacterInstanceBhv _characterInstanceBhv;
     protected GameplayControler _gameplayControler;
 
     protected string _poppingText = "";
@@ -15,27 +16,37 @@ public abstract class GameSceneBhv : SceneBhv
     {
         base.Init();
         _gameplayControler = GetComponent<GameplayControler>();
-
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + PlayerPrefsHelper.GetSelectedCharacter());
+        GameObject.Find(Constants.GoCharacterInstance).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + PlayerPrefsHelper.GetSelectedCharacter());
+        GetCharacter();
+    }
+
+    private void GetCharacter()
+    {
         _character = _gameplayControler.Character;
+        _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
     }
 
     public override void PauseOrPrevious()
     {
         Paused = true;
+        _musicControler.HalveVolume();
         _menu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
     }
 
     private void Info()
     {
         Paused = true;
+        if (_character == null)
+            GetCharacter();
+        _musicControler.HalveVolume();
         _menu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", _character, Constants.CurrentOpponent);
     }
 
     private object ResumeGiveUp(bool resume)
     {
+        _musicControler.SetNewVolumeLevel();
         if (resume)
         {
             Paused = false;

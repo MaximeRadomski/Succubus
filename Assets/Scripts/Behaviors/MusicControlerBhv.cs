@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MusicBhv : MonoBehaviour
+public class MusicControlerBhv : MonoBehaviour
 {
     private AudioSource _audioSource;
     private MusicTyoe _currentType;
     private float _level;
+    private bool _isHalved;
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class MusicBhv : MonoBehaviour
 
     public void SetNewVolumeLevel(float? level = null)
     {
+        if (_isHalved && !SceneManager.GetActiveScene().name.Contains("SettingsAudio"))
+            _isHalved = false;
         if (level == null)
             _level = PlayerPrefsHelper.GetMusicLevel();
         else
@@ -37,8 +40,38 @@ public class MusicBhv : MonoBehaviour
         _audioSource.volume = Constants.MaximumVolumeMusic * _level;
     }
 
+    public void HalveVolume()
+    {
+        _isHalved = true;
+        _audioSource.volume = Constants.MaximumVolumeMusic * (_level / 2.5f);
+    }
+
+    public void Mute()
+    {
+        _audioSource.volume = 0;
+    }
+
+    public void Stop()
+    {
+        _audioSource.Stop();
+    }
+
+    public void PlayFromStart()
+    {
+        _audioSource.Stop();
+        _audioSource.Play();
+    }
+
+    public void Play()
+    {
+        if (!_audioSource.isPlaying)
+            _audioSource.Play();
+    }
+
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (_isHalved)
+            HalveVolume();
         if (_currentType == Constants.CurrentMusicType)
             return;
         _currentType = Constants.CurrentMusicType;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainingGameSceneBhv : GameSceneBhv
+public class TrainingFreeGameSceneBhv : GameSceneBhv
 {
     private int _score;
     private int _level;
@@ -63,6 +63,7 @@ public class TrainingGameSceneBhv : GameSceneBhv
     private void Reload()
     {
         NavigationService.ReloadScene();
+        _musicControler.PlayFromStart();
     }
 
     public override void OnNewPiece()
@@ -116,8 +117,9 @@ public class TrainingGameSceneBhv : GameSceneBhv
                 _poppingText += " single";
             else
                 _poppingText += "\n";
+            _characterInstanceBhv.Attack();
         }
-        else
+        else if (nbLines > 0)
         {
             if (nbLines == 1)
                 tmpAdded = 100 * _level;
@@ -127,6 +129,7 @@ public class TrainingGameSceneBhv : GameSceneBhv
                 tmpAdded = 500 * _level;
             else if (nbLines == 4)
                 tmpAdded = 800 * _level;
+            _characterInstanceBhv.Attack();
         }
         if (nbLines > 1)
             _poppingText += nbLines + " lines";

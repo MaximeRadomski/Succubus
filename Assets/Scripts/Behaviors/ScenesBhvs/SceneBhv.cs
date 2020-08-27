@@ -9,11 +9,14 @@ public abstract class SceneBhv : MonoBehaviour
     public string OnRootPreviousScene = null;
     public bool CanGoPreviousScene = true;
 
+    protected MusicControlerBhv _musicControler;
+
     protected virtual void Init()
     {
         Application.targetFrameRate = 60;
         NavigationService.TrySetCurrentRootScene(SceneManager.GetActiveScene().name);
         Instantiator = GetComponent<Instantiator>();
+        _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
     }
 
     public virtual void PauseOrPrevious()

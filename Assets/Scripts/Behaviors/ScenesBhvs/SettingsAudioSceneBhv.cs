@@ -8,7 +8,7 @@ public class SettingsAudioSceneBhv : SceneBhv
     private GameObject _effectsLevelSelector;
     private GameObject _musicLevelSelector;
 
-    private MusicBhv _musicBhv;
+    private MusicControlerBhv _musicControlerBhv;
     private SoundControlerBhv _soundControler;
 
     private int _idSpecial;
@@ -23,7 +23,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         base.Init();
         _effectsLevelSelector = GameObject.Find("EffectsLevelSelector");
         _musicLevelSelector = GameObject.Find("MusicLevelSelector");
-        _musicBhv = GameObject.Find("Music").GetComponent<MusicBhv>();
+        _musicControlerBhv = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
         _soundControler = GameObject.Find("SoundControler").GetComponent<SoundControlerBhv>();
         _idSpecial = _soundControler.SetSound("Special");
 
@@ -68,7 +68,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         {
             _musicLevelSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _musicLevelSelector.transform.position.y, 0.0f);
             PlayerPrefsHelper.SaveMusicLevel(choiceLevel);
-            _musicBhv.SetNewVolumeLevel(choiceLevel);
+            _musicControlerBhv.SetNewVolumeLevel(choiceLevel);
         }
     }
 
