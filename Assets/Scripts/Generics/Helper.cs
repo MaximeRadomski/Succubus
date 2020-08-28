@@ -10,7 +10,7 @@ public static class Helper
 {
     public static void ResetSelectedCharacterSpecialCooldown()
     {
-        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
+        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown;
     }
 

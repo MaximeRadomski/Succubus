@@ -4,29 +4,38 @@ using UnityEngine;
 
 public static class OpponentsData
 {
-    public static List<Opponent> Characters = new List<Opponent>()
+    public static List<Opponent> Opponents = new List<Opponent>()
     {
         //HELL
         new Opponent()
         {
-            Id = 0, Kind = "Lost Soul", Realm = Realm.Hell,
-            Health = 40, Weakness = Weakness.None, DamagesOnWeakness = 0,
-            AttackType = AttackType.Black, NbAttackRows = 1, Cooldown = 10.0f,
-            DifficultyWeight = 10
+            Id = 0, Kind = "Training Dummy", Realm = Realm.Hell,
+            HP = 999, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 25.0f,
+            Attack1Type = AttackType.DarkLines, NbAttack1Rows = 4,
+            Attack2Type = AttackType.GarbageLines, NbAttack2Rows = 4, Attack2Param = 1,
+            Attack3Type = AttackType.LightLines, NbAttack3Rows = 4, Attack3Param = 10,
+            GravityLevel = 4, DifficultyWeight = 10
         },
         new Opponent()
         {
-            Id = 1, Kind = "Warrior Soul", Realm = Realm.Hell,
-            Health = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10,
-            AttackType = AttackType.Black, NbAttackRows = 2, Cooldown = 15.0f,
-            DifficultyWeight = 20
+            Id = 1, Kind = "Lost Soul", Realm = Realm.Hell,
+            HP = 40, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10.0f,
+            Attack1Type = AttackType.DarkLines, NbAttack1Rows = 1,
+            GravityLevel = 1, DifficultyWeight = 10
         },
         new Opponent()
         {
-            Id = 2, Kind = "Tormentor", Realm = Realm.Hell,
-            Health = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 20,
-            AttackType = AttackType.Grey, NbAttackRows = 2, Cooldown = 30.0f,
-            DifficultyWeight = 40
+            Id = 2, Kind = "Warrior Soul", Realm = Realm.Hell,
+            HP = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 15.0f,
+            Attack1Type = AttackType.DarkLines, NbAttack1Rows = 2,
+            GravityLevel = 1, DifficultyWeight = 20
+        },
+        new Opponent()
+        {
+            Id = 3, Kind = "Tormentor", Realm = Realm.Hell,
+            HP = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 20, Cooldown = 30.0f,
+            Attack1Type = AttackType.GarbageLines, NbAttack1Rows = 2,
+            GravityLevel = 2, DifficultyWeight = 40
         }
     };
 }

@@ -42,6 +42,7 @@ public static class Constants
 
     //  PLAYER PREFS  //
     public const string PpSelectedCharacter = "SelectedCharacter";
+    public const string PpCurrentOpponents = "CurrentOpponents";
     public const int PpSelectedCharacterDefault = 0;
     public const string PpCurrentItem = "CurrentItem";
     public const string PpCurrentTattoos = "CurrentTattoos";
@@ -145,7 +146,6 @@ public static class Constants
     public static bool CardsInCache = false;
     public static string SelectedGameMode = null;
     public static int SelectedCharacterSpecialCooldown;
-    public static Opponent CurrentOpponent;
     public static string NameLastScene;
     public static MusicTyoe CurrentMusicType = MusicTyoe.SplashScreen;
 

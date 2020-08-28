@@ -137,7 +137,7 @@ public class GameplayControler : MonoBehaviour
         {
             _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
-        Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacter()];
+        Character = SceneBhv.Character;
         if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
             _characterItem.Init(Character, this);
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
@@ -739,7 +739,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if (currentPieceModel.Letter == "O")
+        if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -826,7 +826,8 @@ public class GameplayControler : MonoBehaviour
                 if (_nextLock > 0.0f)
                     ++_allowedMovesBeforeLock;
                 ResetLock();
-                SetNextGravityFall();
+                if (!IsNextGravityFallPossible())
+                    SetNextGravityFall();
                 CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
                 DropGhost();
                 _soundControler.PlaySound(_idRotate);
@@ -845,7 +846,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if (currentPieceModel.Letter == "O")
+        if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -932,7 +933,8 @@ public class GameplayControler : MonoBehaviour
                 if (_nextLock > 0.0f)
                     ++_allowedMovesBeforeLock;
                 ResetLock();
-                SetNextGravityFall();
+                if (!IsNextGravityFallPossible())
+                    SetNextGravityFall();
                 CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost();
                 _soundControler.PlaySound(_idRotate);
@@ -991,6 +993,8 @@ public class GameplayControler : MonoBehaviour
 
     private void Item()
     {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+            return;
         if (_characterItem != null)
         {
             _soundControler.PlaySound(_idItem);
@@ -1002,6 +1006,8 @@ public class GameplayControler : MonoBehaviour
 
     private void Special()
     {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+            return;
         if (_characterSpecial.Activate())
             _soundControler.PlaySound(_idSpecial);
         UpdateItemAndSpecialVisuals();

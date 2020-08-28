@@ -28,7 +28,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.SelectedGameMode = Constants.TrainingFreeGameScene;
-            NavigationService.LoadNextScene(Constants.TrainingFreeGameScene);
+            NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
     }
@@ -38,8 +38,8 @@ public class TrainingChoiceSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.SelectedGameMode = Constants.TrainingFreeGameScene;
-            NavigationService.LoadNextScene(Constants.TrainingFreeGameScene);
+            Constants.SelectedGameMode = Constants.TrainingDummyGameScene;
+            NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
     }

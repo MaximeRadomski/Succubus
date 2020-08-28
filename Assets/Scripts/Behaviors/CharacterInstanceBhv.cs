@@ -84,6 +84,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         else if (_isAttacking == 2 && Helper.VectorEqualsPrecision(transform.position, _originalPosition, 0.01f))
         {
             _isAttacking = 0;
+            transform.position = _originalPosition;
         }
     }
 

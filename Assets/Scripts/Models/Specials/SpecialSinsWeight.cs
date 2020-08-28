@@ -29,7 +29,7 @@ public class SpecialSinsWeight : Special
         _gameplayControler.CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity = true;
         foreach (Transform child in _gameplayControler.CurrentPiece.transform)
         {
-            _gameplayControler.Instantiator.NewGravitySquare(child.gameObject);
+            _gameplayControler.Instantiator.NewGravitySquare(child.gameObject, _character.Realm.ToString());
         }
     }
 

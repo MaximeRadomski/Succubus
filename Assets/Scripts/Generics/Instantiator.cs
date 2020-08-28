@@ -11,17 +11,17 @@ public class Instantiator : MonoBehaviour
     {
     }
 
-    public GameObject NewPiece(string pieceLetter, string nature, Vector3 spawnerPosition, bool keepSpawnerX = false)
+    public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
-        var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + nature);
+        var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
         var pieceModel = tmpPieceObject.GetComponent<Piece>();
         var tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation);
         return tmpPieceInstance;
     }
 
-    public void NewGravitySquare(GameObject parent)
+    public void NewGravitySquare(GameObject parent, string realm)
     {
-        var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare");
+        var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare-" + realm);
         var tmpSquareInstance = Instantiate(tmpSquareObject, parent.transform.position, tmpSquareObject.transform.rotation);
         tmpSquareInstance.transform.SetParent(parent.transform);
     }

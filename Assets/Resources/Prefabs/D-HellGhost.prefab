@@ -131,4 +131,5 @@ MonoBehaviour:
   YFromSpawn: 0
   IsLocked: 0
   IsAffectedByGravity: 1
+  HasBlocksAffectedByGravity: 0
   RotationState: 0

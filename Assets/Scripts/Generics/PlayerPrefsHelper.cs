@@ -124,12 +124,19 @@ public class PlayerPrefsHelper : MonoBehaviour
         return buttons;
     }
 
+    public static void AddUnlockedCharacters(Character character)
+    {
+        var currentUnlockedCharactersString = GetUnlockedCharactersString();
+        currentUnlockedCharactersString.ReplaceChar(character.Id, '1');
+        SaveUnlockedCharacters(currentUnlockedCharactersString);
+    }
+
     public static void SaveUnlockedCharacters(string unlockedCharacters)
     {
         PlayerPrefs.SetString(Constants.PpUnlockedCharacters, unlockedCharacters);
     }
 
-    public static string GetUnlockedCharacters()
+    public static string GetUnlockedCharactersString()
     {
         var unlockedCharacters = PlayerPrefs.GetString(Constants.PpUnlockedCharacters, Constants.PpUnlockedCharactersDefault);
         return unlockedCharacters;
@@ -140,10 +147,43 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetInt(Constants.PpSelectedCharacter, selectedCharacter);
     }
 
-    public static int GetSelectedCharacter()
+    public static int GetSelectedCharacterId()
     {
         var selectedCharacter = PlayerPrefs.GetInt(Constants.PpSelectedCharacter, Constants.PpSelectedCharacterDefault);
         return selectedCharacter;
+    }
+
+    public static void SaveCurrentOpponents(List<Opponent> opponents)
+    {
+        if (opponents == null)
+            PlayerPrefs.SetString(Constants.PpCurrentOpponents, Constants.PpButtonsLeftPanelDefault);
+        var opponentsStr = "";
+        foreach (var opponent in opponents)
+        {
+            opponentsStr += opponent.Id + ";";
+        }
+        PlayerPrefs.SetString(Constants.PpCurrentOpponents, opponentsStr);
+    }
+
+    public static List<Opponent> GetCurrentOpponents()
+    {
+        var opponentsStr = PlayerPrefs.GetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
+        int i = 0;
+        var opponentsList = new List<Opponent>();
+        while (!string.IsNullOrEmpty(opponentsStr) || i > 15)
+        {
+            var separatorId = opponentsStr.IndexOf(';');
+            if (separatorId == -1)
+                break;
+            var tmpId = int.Parse(opponentsStr.Substring(0, separatorId));
+            var tmpOpponent = OpponentsData.Opponents[tmpId];
+            opponentsList.Add(tmpOpponent);
+            if (separatorId + 1 >= opponentsStr.Length)
+                break;
+            opponentsStr = opponentsStr.Substring(separatorId + 1);
+            ++i;
+        }
+        return opponentsList;
     }
 
     public static void ResetCurrentItem()

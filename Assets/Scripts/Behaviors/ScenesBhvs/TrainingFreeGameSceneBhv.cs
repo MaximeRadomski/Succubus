@@ -39,8 +39,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
 
-        Constants.CurrentOpponent = null;
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_level, Realm.Hell, Realm.Hell);
+        _currentOpponent = null;
+        _gameplayControler.StartGameplay(_level, Realm.Hell, Realm.Hell);
     }
 
     override public void OnGameOver()
@@ -84,8 +84,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         ++_pieces;
         _piecesTmp.text = _pieces.ToString();
-        if (!string.IsNullOrEmpty(pieceLetter))
-            _poppingText += pieceLetter + " twist";
+        base.OnPieceLocked(pieceLetter);
     }
 
     public override void OnSoftDrop()

@@ -23,7 +23,7 @@ public class CharSelSceneBhv : SceneBhv
         _charButtonsContainer = GameObject.Find("CharacterButtons");        
         SetButtons();
 
-        var lastSelectedCharacter = PlayerPrefsHelper.GetSelectedCharacter();
+        var lastSelectedCharacter = PlayerPrefsHelper.GetSelectedCharacterId();
         Constants.SetLastEndActionClickedName(_charButtonsContainer.transform.GetChild(lastSelectedCharacter).name);
         SelectCharacter();
     }
@@ -47,7 +47,7 @@ public class CharSelSceneBhv : SceneBhv
             realm = 4;
         else if (lastClickedButton.name.Contains(Realm.Heaven.ToString()))
             realm = 8;
-        var unlockedCharacters = PlayerPrefsHelper.GetUnlockedCharacters();
+        var unlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString();
         if (unlockedCharacters[realm + buttonId] == '0')
         {
             Instantiator.NewPopupYesNo("Locked", "you haven't unlocked this character yet", null, "Hmm...", null);
@@ -80,17 +80,27 @@ public class CharSelSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
         object OnBlend(bool result)
         {
-            var scene = Constants.AscensionScene;
+            var scene = "";
             if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
             {
                 Constants.CurrentMusicType = MusicTyoe.GameHell;
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
+                PlayerPrefsHelper.SaveCurrentOpponents(null);
+                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
+                PlayerPrefsHelper.ResetTattoos();
+            }
+            else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+            {
+                Constants.CurrentMusicType = MusicTyoe.GameHell;
+                scene = Constants.TrainingDummyGameScene;
+                PlayerPrefsHelper.SaveCurrentOpponents(new List<Opponent>() { OpponentsData.Opponents[0] });
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
             }
             else
             {
+                scene = Constants.AscensionScene;
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
             }

@@ -55,7 +55,7 @@ public static class CharactersData
             Id = 6, Name = "Theresa", Kind = "Perverted Nun", Realm = Realm.Earth,
             Attack = 8,
             Cooldown = 8,
-            SpecialName = "Penitence", SpecialDescription = "remove the last 2 rows from the top for a grey one"
+            SpecialName = "Penitence", SpecialDescription = "remove the last 2 rows from the top for a garbage one"
         },
         new Character()
         {
@@ -77,7 +77,7 @@ public static class CharactersData
             Id = 9, Name = "Enepsigos", Kind = "Fallen Angel", Realm = Realm.Heaven,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Wisdom", SpecialDescription = "peplenish 10% of enemy HP but remove two grey rows from the top ones"
+            SpecialName = "Wisdom", SpecialDescription = "peplenish 10% of enemy HP but remove two garbage rows from the top ones"
         },
         new Character()
         {
