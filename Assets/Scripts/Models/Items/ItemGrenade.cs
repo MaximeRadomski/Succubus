@@ -10,6 +10,7 @@ public class ItemGrenade : Item
         Id = 2;
         Name = "Grenade";
         Description = "Clear your last four rows";
+        Rarity = Rarity.Common;
     }
 
     public override bool Activate()

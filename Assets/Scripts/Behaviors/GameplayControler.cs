@@ -12,6 +12,7 @@ public class GameplayControler : MonoBehaviour
     public string Bag;
     public Instantiator Instantiator;
     public Character Character;
+    public bool AttackIncoming;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -41,6 +42,7 @@ public class GameplayControler : MonoBehaviour
     private PlayFieldBhv _playFieldBhv;
     private Special _characterSpecial;
     private Item _characterItem;
+    private List<Vector3> _currentGhostPiecesOriginalPos;
 
     private SoundControlerBhv _soundControler;
     private MusicControlerBhv _musicControler;
@@ -390,6 +392,8 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
         CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+        if (_currentGhostPiecesOriginalPos != null)
+            _currentGhostPiecesOriginalPos.Clear();
         if (!IsPiecePosValid(CurrentPiece))
         {
             GameOver();
@@ -717,8 +721,28 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void DropGhost()
+    public void DropGhost()
     {
+        if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
+        {
+            if (_currentGhostPiecesOriginalPos == null || _currentGhostPiecesOriginalPos.Count == 0)
+            {
+                if (_currentGhostPiecesOriginalPos == null)
+                    _currentGhostPiecesOriginalPos = new List<Vector3>();
+                foreach (Transform block in CurrentGhost.transform)
+                {
+                    _currentGhostPiecesOriginalPos.Add(block.transform.localPosition);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CurrentGhost.transform.childCount; ++i)
+                {
+                    var block = CurrentGhost.transform.GetChild(i);
+                    block.transform.localPosition = _currentGhostPiecesOriginalPos[i];
+                }
+            }
+        }
         bool hardDropping = true;
         if (CurrentGhost != null && CurrentPiece != null)
             CurrentGhost.transform.position = CurrentPiece.transform.position;
@@ -729,6 +753,8 @@ public class GameplayControler : MonoBehaviour
             if (IsPiecePosValid(CurrentGhost) == false)
             {
                 CurrentGhost.transform.position = lastCurrentGhostValidPosition;
+                if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
+                    AffectGravityOnBlocks(CurrentGhost);
                 hardDropping = false;
             }
         }
@@ -977,6 +1003,8 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
             CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+            if (_currentGhostPiecesOriginalPos != null)
+                _currentGhostPiecesOriginalPos.Clear();
             if (!IsPiecePosValid(CurrentPiece))
             {
                 GameOver();
@@ -1103,6 +1131,9 @@ public class GameplayControler : MonoBehaviour
             else if (nbLines == 4)
                 _soundControler.PlaySound(_id4Line);
 
+            if (nbLines >= 2)
+                CheckForDarkRows(nbLines - 1);
+
             bool isB2B = false;
             if (nbLines > 1 && nbLines == _lastNbLinesCleared)
             {
@@ -1135,19 +1166,41 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnLinesCleared(nbLines, false);
             SceneBhv.PopText();
             _comboCounter = 0;
+            if (AttackIncoming)
+            {
+                SceneBhv.OpponentAttack();
+            }
             Spawn();
+        }            
+    }
+
+    private void CheckForDarkRows(int nbLines)
+    {
+        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        {
+            if (HasDarkRow(y))
+            {
+                DeleteLine(y);
+                --nbLines;
+            }
+            if (nbLines <= 0)
+                return;
         }
-            
     }
 
     private bool HasLine(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playFieldBhv.Grid[x, y] == null)
+            if (_playFieldBhv.Grid[x, y] == null || _playFieldBhv.Grid[x, y].gameObject.name.Contains("Dark") || _playFieldBhv.Grid[x, y].gameObject.name.Contains("Light"))
                 return false;
         }
         return true;
+    }
+
+    private bool HasDarkRow(int y)
+    {
+        return _playFieldBhv.Grid[0, y] != null && _playFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
     }
 
     private void DeleteLine(int y)
@@ -1183,7 +1236,14 @@ public class GameplayControler : MonoBehaviour
                 Destroy(child.gameObject);
         }
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        {
+            if (AttackIncoming)
+            {
+                SceneBhv.OpponentAttack();
+            }
             Spawn();
+        }
+            
         else
             DropGhost();
     }
@@ -1224,6 +1284,22 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    private void IncreaseAllAboveLines(int nbRows)
+    {
+        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        {
+            for (int x = 0; x < _playFieldWidth; ++x)
+            {
+                if (_playFieldBhv.Grid[x, y] != null)
+                {
+                    _playFieldBhv.Grid[x, y + nbRows] = _playFieldBhv.Grid[x, y];
+                    _playFieldBhv.Grid[x, y] = null;
+                    _playFieldBhv.Grid[x, y + nbRows].transform.position += new Vector3(0.0f, nbRows, 0.0f);
+                }
+            }
+        }
+    }
+
     public void ClearFromTop(int nbRows)
     {
         int start = GetHighestBlock();
@@ -1235,6 +1311,36 @@ public class GameplayControler : MonoBehaviour
             DeleteLine(y);
         }
         ClearLineSpace();
+    }
+
+    public void OpponentAttack(AttackType type, int rows, int param, Realm opponentRealm)
+    {
+        IncreaseAllAboveLines(rows);
+        if (type == AttackType.EmptyRows)
+            return;
+        int emptyStart = -1;
+        int emptyEnd = -1;
+        if (type == AttackType.GarbageRows)
+        {
+            param = param < 1 ? 1 : param;
+            emptyStart = UnityEngine.Random.Range(0, (10 + 1) - param); //10 + 1 because exclusive, and param always at least 1
+            emptyEnd = emptyStart + param - 1;
+        }
+        for (int y = 0; y < rows; ++y)
+        {
+            FillLine(y, type, opponentRealm, emptyStart, emptyEnd);
+        }
+    }
+
+    private void FillLine(int y, AttackType type, Realm realm, int emptyStart, int emptyEnd)
+    {
+        for (int x = 0; x < _playFieldWidth; ++x)
+        {
+            if (type == AttackType.GarbageRows && x >= emptyStart && x <= emptyEnd)
+                continue;
+            var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
+            _playFieldBhv.Grid[x, y] = attackBlock.transform;
+        }
     }
 
     #endregion

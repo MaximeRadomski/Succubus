@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Rarity
+public enum OpponentType
 {
     Common = 0,
-    Rare = 1,
-    Legendary = 2,
-    Cursed = 3
+    Elite = 1,
+    Champion = 2,
+    Boss = 3
 }

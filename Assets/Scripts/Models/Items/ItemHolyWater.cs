@@ -10,6 +10,7 @@ public class ItemHolyWater : Item
         Id = 0;
         Name = "Holy Water";
         Description = "clear all grey rows";
+        Rarity = Rarity.Common;
     }
 
     public override bool Activate()

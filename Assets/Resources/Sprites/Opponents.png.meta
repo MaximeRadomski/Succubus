@@ -11,6 +11,9 @@ TextureImporter:
   - first:
       213: -3202193120836282684
     second: Opponents_1
+  - first:
+      213: 5344536764766634918
+    second: Opponents_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -147,6 +150,27 @@ TextureImporter:
       bones: []
       spriteID: 4c69a5292568f83d0800000000000000
       internalID: -3202193120836282684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Opponents_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 4
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a34ee8fedb9b2a40800000000000000
+      internalID: 5344536764766634918
       vertices: []
       indices: 
       edges: []

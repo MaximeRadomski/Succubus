@@ -31,6 +31,7 @@ public class SpecialSinsWeight : Special
         {
             _gameplayControler.Instantiator.NewGravitySquare(child.gameObject, _character.Realm.ToString());
         }
+        _gameplayControler.DropGhost();
     }
 
     public override void OnPieceLocked(GameObject piece)

@@ -18,6 +18,8 @@ public class CharSelSceneBhv : SceneBhv
         var gameModeTitle = "New Ascension";
         if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
             gameModeTitle = "Free Play";
+        else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+            gameModeTitle = "Training Dummy";
         _charSelector = GameObject.Find("CharSelector");
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
         _charButtonsContainer = GameObject.Find("CharacterButtons");        

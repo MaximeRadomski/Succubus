@@ -15,7 +15,11 @@ public class Instantiator : MonoBehaviour
     {
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
         var pieceModel = tmpPieceObject.GetComponent<Piece>();
-        var tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation);
+        GameObject tmpPieceInstance = null;
+        if (pieceModel != null)
+            tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation); 
+        else
+            tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition, tmpPieceObject.transform.rotation);
         return tmpPieceInstance;
     }
 

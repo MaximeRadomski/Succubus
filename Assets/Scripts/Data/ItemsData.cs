@@ -15,20 +15,20 @@ public static class ItemsData
     public static Item GetRandomItem(bool isPlayer = false)
     {
         if (isPlayer)
-            return GetRandomItemFromRarity(Rarity.Normal);
+            return GetRandomItemFromRarity(OpponentType.Common);
         int rarityPercent = UnityEngine.Random.Range(0, 100);
         if (rarityPercent < RareItemAppearancePercent)
-            return GetRandomItemFromRarity(Rarity.Rare);
+            return GetRandomItemFromRarity(OpponentType.Champion);
         else if (rarityPercent < MagicalItemAppearancePercent)
-            return GetRandomItemFromRarity(Rarity.Magical);
-        return GetRandomItemFromRarity(Rarity.Normal);
+            return GetRandomItemFromRarity(OpponentType.Elite);
+        return GetRandomItemFromRarity(OpponentType.Common);
     }
 
-    public static Item GetRandomItemFromRarity(Rarity rarity)
+    public static Item GetRandomItemFromRarity(OpponentType rarity)
     {
-        if (rarity == Rarity.Rare)
+        if (rarity == OpponentType.Champion)
             return GetItemFromName(RareItemsNames[UnityEngine.Random.Range(0, RareItemsNames.Length)]);
-        else if (rarity == Rarity.Magical)
+        else if (rarity == OpponentType.Elite)
             return GetItemFromName(MagicalItemsNames[UnityEngine.Random.Range(0, MagicalItemsNames.Length)]);
         return GetItemFromName(NormalItemsNames[UnityEngine.Random.Range(0, NormalItemsNames.Length)]);
     }

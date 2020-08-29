@@ -10,6 +10,7 @@ public class ItemDemonBlood : Item
         Id = 1;
         Name = "Demon Blood";
         Description = "Clear all black rows";
+        Rarity = Rarity.Common;
     }
 
     public override bool Activate()

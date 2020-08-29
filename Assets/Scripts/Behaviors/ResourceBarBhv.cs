@@ -14,11 +14,12 @@ public class ResourceBarBhv : MonoBehaviour
     GameObject _delayedChange;
     private bool _isDelayingContent;
     private float _delayingSpeed;
+    private bool _tiltingUp;
 
     void Start()
     {
         if (!_isSet)
-            SetPrivates();
+            Init();
     }
 
     void Update()
@@ -37,7 +38,7 @@ public class ResourceBarBhv : MonoBehaviour
         }
     }
 
-    private void SetPrivates()
+    private void Init()
     {
         _text = transform.Find("Text")?.GetComponent<TMPro.TextMeshPro>();
         _content = transform.Find("Content")?.gameObject;
@@ -47,7 +48,7 @@ public class ResourceBarBhv : MonoBehaviour
         _isSet = true;
     }
 
-    public void UpdateContent(int current, int max, string name, GameObject frame = null, Direction direction = Direction.None)
+    public void UpdateContent(int current, int max, Direction direction = Direction.None)
     {
         bool isDelaying;
         if (current < 0)
@@ -55,7 +56,7 @@ public class ResourceBarBhv : MonoBehaviour
         if (current > max)
             current = max;
         if (_text == null && _content == null)
-            SetPrivates();
+            Init();
         if (direction == Direction.Up)
         {
             _instantChange = _subContent;
@@ -76,7 +77,7 @@ public class ResourceBarBhv : MonoBehaviour
         }
 
         if (_text != null)
-            _text.text = name + "   (" + current + ")";
+            _text.text = current.ToString();
         if (isDelaying)
         {
             _delayedChange.transform.localScale = _instantChange.transform.localScale;
@@ -93,15 +94,33 @@ public class ResourceBarBhv : MonoBehaviour
             _delayedChange.transform.localScale = _instantChange.transform.localScale;
             _delayedChange.transform.position = _instantChange.transform.position;
         }
+    }
 
-        if (frame != null)
+    public void Tilt()
+    {
+        if (_tiltingUp == false)
         {
-            var frameHealthBar = frame.transform.Find("HealthBar").gameObject;
-            if (_frameHeight == null)
-                _frameHeight = frameHealthBar.GetComponent<SpriteRenderer>().sprite.rect.size.y * Constants.Pixel;
-            frameHealthBar.transform.localScale = new Vector3(1.0f, 1.0f * ratio, 1.0f);
-            space = (_frameHeight ?? 0) * ((1.0f - ratio) / 2);
-            frameHealthBar.transform.position = new Vector3(frameHealthBar.transform.position.x, frame.transform.position.y - space, 0.0f);
+            _contentSpriteRenderer.color = Color.Lerp(_contentSpriteRenderer.color, Constants.ColorPlainTransparent, 0.3f);
+            if (Helper.FloatEqualsPrecision(_contentSpriteRenderer.color.a, Constants.ColorPlainTransparent.a, 0.1f))
+            {
+                _contentSpriteRenderer.color = Constants.ColorPlainTransparent;
+                _tiltingUp = true;
+            }
         }
+        else
+        {
+            _contentSpriteRenderer.color = Color.Lerp(_contentSpriteRenderer.color, Constants.ColorPlain, 0.3f);
+            if (Helper.FloatEqualsPrecision(_contentSpriteRenderer.color.a, Constants.ColorPlain.a, 0.1f))
+            {
+                _contentSpriteRenderer.color = Constants.ColorPlain;
+                _tiltingUp = false;
+            }
+        }
+    }
+
+    public void ResetTilt()
+    {
+        _contentSpriteRenderer.color = Constants.ColorPlain;
+        _tiltingUp = false;
     }
 }

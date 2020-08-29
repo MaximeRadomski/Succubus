@@ -156,7 +156,10 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void SaveCurrentOpponents(List<Opponent> opponents)
     {
         if (opponents == null)
+        {
             PlayerPrefs.SetString(Constants.PpCurrentOpponents, Constants.PpButtonsLeftPanelDefault);
+            return;
+        }
         var opponentsStr = "";
         foreach (var opponent in opponents)
         {

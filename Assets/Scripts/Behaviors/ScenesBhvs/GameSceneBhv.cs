@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 public abstract class GameSceneBhv : SceneBhv
 {
     public Character Character;
-    protected CharacterInstanceBhv _characterInstanceBhv;
-    protected Opponent _currentOpponent;
     protected List<Opponent> _opponents;
-    protected CharacterInstanceBhv _opponentInstanceBhv;
-    protected TMPro.TextMeshPro _opponentHp;
+    protected Opponent _currentOpponent;
+    protected CharacterInstanceBhv _characterInstanceBhv;
 
     protected GameplayControler _gameplayControler;
     protected string _poppingText = "";
@@ -25,26 +23,6 @@ public abstract class GameSceneBhv : SceneBhv
         Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
-        _opponents = PlayerPrefsHelper.GetCurrentOpponents();
-        if (_opponents != null && _opponents.Count > 0)
-        {
-            if (_opponents.Count == 1)
-                GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
-            for (int i = _opponents.Count; i < 12; ++i)
-            {
-                GameObject.Find("Opponent" + i).SetActive(false);
-            }
-            _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
-            _opponentHp = GameObject.Find("OpponentHP").GetComponent<TMPro.TextMeshPro>();
-            NextOpponent();
-        }
-    }
-
-    protected void NextOpponent()
-    {
-        _currentOpponent = _opponents[0];
-        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Opponents_" + _currentOpponent.Id);
-        _opponentHp.text = _currentOpponent.HP.ToString();
     }
 
     public override void PauseOrPrevious()
@@ -148,5 +126,10 @@ public abstract class GameSceneBhv : SceneBhv
             _poppingText = "";
             _gameplayControler.FadeBlocksOnText();
         }
+    }
+
+    public virtual void OpponentAttack()
+    {
+
     }
 }

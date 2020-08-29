@@ -7,6 +7,7 @@ public abstract class Item
     public int Id;
     public string Name;
     public string Description;
+    public Rarity Rarity;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;
