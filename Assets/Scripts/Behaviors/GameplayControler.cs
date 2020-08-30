@@ -38,6 +38,7 @@ public class GameplayControler : MonoBehaviour
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
+    protected CharacterInstanceBhv _characterInstanceBhv;
 
     private PlayFieldBhv _playFieldBhv;
     private Special _characterSpecial;
@@ -77,6 +78,8 @@ public class GameplayControler : MonoBehaviour
         _musicControler.Stop();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
+        _characterInstanceBhv.TakeDamage();
+        _characterInstanceBhv.Die();
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
     }
 
@@ -106,6 +109,7 @@ public class GameplayControler : MonoBehaviour
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
         _uiPanelRight = GameObject.Find("UiPanelRight");
         _mainCamera = GameObject.Find("Main Camera");
+        _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
@@ -514,6 +518,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
+        CheckForLightRows();
         CheckForLines();
     }
 
@@ -1148,7 +1153,7 @@ public class GameplayControler : MonoBehaviour
             if (_comboCounter > 1)
             {
                 _soundControler.PlaySound(_idCombo, 1.0f + ((_comboCounter - 2) * 0.15f));
-                SceneBhv.OnCombo(_comboCounter);
+                SceneBhv.OnCombo(_comboCounter, nbLines);
             }
 
             if (GetHighestBlock() == -1) //PERFECT
@@ -1159,7 +1164,17 @@ public class GameplayControler : MonoBehaviour
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
-            Invoke(nameof(ClearLineSpace), 0.3f);
+            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () =>
+            {
+                ClearLineSpace();
+                if (AttackIncoming)
+                {
+                    SceneBhv.OpponentAttack();
+                }
+                Spawn();                    
+                return true;
+            }));
+            
         }
         else
         {
@@ -1188,6 +1203,42 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    public void CheckForGarbageRows(int nbLines)
+    {
+        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        {
+            if (HasGarbagekRow(y))
+            {
+                DeleteLine(y);
+                --nbLines;
+            }
+            if (nbLines <= 0)
+                return;
+        }
+    }
+
+    private void CheckForLightRows()
+    {
+        int startY;
+        int nbRows;
+        var allLightRows = GameObject.FindGameObjectsWithTag(Constants.TagLightRows);
+        foreach (var lightRowGameObject in allLightRows)
+        {
+            var lightRowBhv = lightRowGameObject.GetComponent<LightRowBlockBhv>();
+            if (lightRowBhv.IsOverOrDecreaseCooldown())
+            {
+                int yRounded = Mathf.RoundToInt(lightRowGameObject.transform.position.y);
+                startY = yRounded;
+                nbRows = lightRowBhv.NbRows;
+                for (int y = yRounded; y < yRounded + lightRowBhv.NbRows; ++y)
+                {
+                    DeleteLine(y);
+                }
+                ClearLineSpace(startY, startY + nbRows - 1);
+            }
+        }
+    }
+
     private bool HasLine(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
@@ -1203,6 +1254,16 @@ public class GameplayControler : MonoBehaviour
         return _playFieldBhv.Grid[0, y] != null && _playFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
     }
 
+    private bool HasGarbagekRow(int y)
+    {
+        for (int x = 0; x < _playFieldWidth; ++x)
+        {
+            if (_playFieldBhv.Grid[x, y] != null && _playFieldBhv.Grid[x, y].gameObject.name.Contains("Garbage"))
+                return true;
+        }
+        return false;
+    }
+
     private void DeleteLine(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
@@ -1215,7 +1276,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void ClearLineSpace()
+    private void ClearLineSpace(int minY = -1, int maxY = -1)
     {
         int highestBlock = _playFieldHeight - 1;
         for (int y = 0; y < _playFieldHeight; ++y)
@@ -1226,26 +1287,20 @@ public class GameplayControler : MonoBehaviour
                 break;
             if (HasFullLineSpace(y))
             {
+                if (maxY != -1 && minY != -1
+                    && (y < minY || y > maxY))
+                    continue;
                 DropAllAboveLines(y);
                 y = -1;
+                if (maxY != -1 && minY != -1 && --maxY < minY)
+                    maxY = minY = -2;
             }
         }
         foreach (Transform child in _playFieldBhv.transform)
         {
             if (child.childCount == 0)
                 Destroy(child.gameObject);
-        }
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
-        {
-            if (AttackIncoming)
-            {
-                SceneBhv.OpponentAttack();
-            }
-            Spawn();
-        }
-            
-        else
-            DropGhost();
+        }        
     }
 
     public int GetHighestBlock()
@@ -1311,6 +1366,7 @@ public class GameplayControler : MonoBehaviour
             DeleteLine(y);
         }
         ClearLineSpace();
+        DropGhost();
     }
 
     public void OpponentAttack(AttackType type, int rows, int param, Realm opponentRealm)
@@ -1329,6 +1385,19 @@ public class GameplayControler : MonoBehaviour
         for (int y = 0; y < rows; ++y)
         {
             FillLine(y, type, opponentRealm, emptyStart, emptyEnd);
+        }
+        if (type == AttackType.LightRows)
+        {
+            param = param < 1 ? 1 : param;
+            _playFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
+            _playFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
+            var lightRowBhv = _playFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
+            lightRowBhv.NbRows = rows;
+            lightRowBhv.Cooldown = param;
+            var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)rows - 1.0f) / 2.0f));
+            tmpTextGameObject.transform.SetParent(_playFieldBhv.Grid[0, 0]);
+            lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
+            lightRowBhv.UpdateCooldownText(param);
         }
     }
 

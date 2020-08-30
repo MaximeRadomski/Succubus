@@ -9,6 +9,7 @@ TagManager:
   - PlayField
   - Background
   - Music
+  - LightRows
   layers:
   - Default
   - TransparentFX

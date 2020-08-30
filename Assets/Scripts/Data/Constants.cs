@@ -29,6 +29,7 @@ public static class Constants
     public const string TagButton = "Button";
     public const string TagSoundControler = "SoundControler";
     public const string TagPoppingText = "PoppingText";
+    public const string TagLightRows = "LightRows";
 
     // UNITS OF MEASURE //
     public const int HourInMinutes = 60;
@@ -62,6 +63,7 @@ public static class Constants
     public const string PpButtonsRightPanel = "PpButtonsRightPanel";
     public const string PpButtonsRightPanelDefault = "I0S0000D0000A0C000000";
     public const string PpRun = "Run";
+    public const string PpRunCharacter = "RunCharacter";
     public const string PpBag = "Bag";
     public const string PpHolder = "Holder";
     public const string PpSerializeDefault = null;
@@ -143,11 +145,23 @@ public static class Constants
     public static string LastEndActionClickedName = null;
     public static string ClickHistory = null;
     public static List<string> InputTopLayerNames = null;
-    public static bool CardsInCache = false;
     public static string SelectedGameMode = null;
-    public static int SelectedCharacterSpecialCooldown;
     public static string NameLastScene;
     public static MusicTyoe CurrentMusicType = MusicTyoe.SplashScreen;
+
+    //CACHE CLASSIC GAME
+    public static int SelectedCharacterSpecialCooldown;
+    public static int CurrentListOpponentsId;
+    public static int CurrentOpponentHp;
+    public static int CurrentOpponentCooldown;
+
+    public static void ResetClassicGameCache()
+    {
+        Helper.ResetSelectedCharacterSpecialCooldown();
+        CurrentListOpponentsId = 0;
+        CurrentOpponentHp = 0;
+        CurrentOpponentCooldown = 0;
+    }
 
     public static void SetLastEndActionClickedName(string name)
     {

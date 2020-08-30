@@ -96,7 +96,9 @@ public class CharSelSceneBhv : SceneBhv
             {
                 Constants.CurrentMusicType = MusicTyoe.GameHell;
                 scene = Constants.TrainingDummyGameScene;
-                PlayerPrefsHelper.SaveCurrentOpponents(new List<Opponent>() { OpponentsData.Opponents[0] });
+                var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2]};
+                Constants.ResetClassicGameCache();
+                PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
             }

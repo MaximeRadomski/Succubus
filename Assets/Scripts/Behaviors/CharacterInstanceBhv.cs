@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CharacterInstanceBhv : MonoBehaviour
 {
-    SceneBhv _sceneBhv;
+    public System.Func<object> AfterDeath;
 
+    private SceneBhv _sceneBhv;
     private int _isAttacking;
     private Vector3 _originalPosition;
     private Vector3 _endAttackPosition;
@@ -31,7 +32,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         _endAttackPosition = _originalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);
         _originalScale = transform.localScale;
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
-        _hitPosition = new Vector3(0.0f, 0.025f, 0.0f);
+        _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -42,11 +43,11 @@ public class CharacterInstanceBhv : MonoBehaviour
         if (_isResetingHit)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
-            transform.position = Vector3.Lerp(transform.position, transform.parent.position + _originalPosition, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
             if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
             {
                 transform.localScale = _originalScale;
-                transform.position = transform.parent.position + _originalPosition;
+                transform.position = _originalPosition;
                 _isResetingHit = false;
             }
         }
@@ -62,6 +63,7 @@ public class CharacterInstanceBhv : MonoBehaviour
                     _spriteRenderer.color = Constants.ColorTransparent;
                 }
                 _isDying = false;
+                AfterDeath?.Invoke();
             }
         }
     }
@@ -77,7 +79,7 @@ public class CharacterInstanceBhv : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, _endAttackPosition, 0.2f);
         else
             transform.position = Vector2.Lerp(transform.position, _originalPosition, 0.7f);
-        if (_isAttacking == 1 && Vector2.Distance(_originalPosition, transform.position) > 0.75f)
+        if (_isAttacking == 1 && Vector2.Distance(_originalPosition, transform.position) > 1.5f)
         {
             _isAttacking = 2;
         }
@@ -91,11 +93,11 @@ public class CharacterInstanceBhv : MonoBehaviour
     public void TakeDamage()
     {
         transform.localScale = new Vector3(transform.localScale.x * _hitScale.x, _hitScale.y, _hitScale.z);
-        transform.position = transform.parent.position + _originalPosition + _hitPosition;
+        transform.position = _originalPosition + _hitPosition;
         _isResetingHit = true;
     }
 
-    public void OnDeath()
+    public void Die()
     {
         _isDying = true;
     }

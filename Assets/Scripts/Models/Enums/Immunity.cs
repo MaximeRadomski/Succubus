@@ -8,8 +8,6 @@ public enum Immunity
     [Description("None")]
     None = 0,
     [Description("Combos")]
-    SimpleLines = 1,
-    [Description("Combos")]
     Combos = 1,
     [Description(" Lines")]
     xLines = 2,

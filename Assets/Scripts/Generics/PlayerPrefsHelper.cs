@@ -153,17 +153,30 @@ public class PlayerPrefsHelper : MonoBehaviour
         return selectedCharacter;
     }
 
+    public static void SaveRunCharacter(Character character)
+    {
+        PlayerPrefs.SetString(Constants.PpRunCharacter, JsonUtility.ToJson(character));
+    }
+
+    public static Character GetRunCharacter()
+    {
+        var character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpRunCharacter, Constants.PpSerializeDefault));
+        if (character == null)
+            return CharactersData.Characters[GetSelectedCharacterId()];
+        return character;
+    }
+
     public static void SaveCurrentOpponents(List<Opponent> opponents)
     {
         if (opponents == null)
         {
-            PlayerPrefs.SetString(Constants.PpCurrentOpponents, Constants.PpButtonsLeftPanelDefault);
+            PlayerPrefs.SetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
             return;
         }
         var opponentsStr = "";
         foreach (var opponent in opponents)
         {
-            opponentsStr += opponent.Id + ";";
+            opponentsStr += opponent.Realm.GetHashCode() + ":" + opponent.Id + ";";
         }
         PlayerPrefs.SetString(Constants.PpCurrentOpponents, opponentsStr);
     }
@@ -175,11 +188,19 @@ public class PlayerPrefsHelper : MonoBehaviour
         var opponentsList = new List<Opponent>();
         while (!string.IsNullOrEmpty(opponentsStr) || i > 15)
         {
+            var separatorRealmId = opponentsStr.IndexOf(':');
             var separatorId = opponentsStr.IndexOf(';');
             if (separatorId == -1)
                 break;
-            var tmpId = int.Parse(opponentsStr.Substring(0, separatorId));
-            var tmpOpponent = OpponentsData.Opponents[tmpId];
+            var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
+            var tmpId = int.Parse(opponentsStr.Substring(separatorRealmId + 1, separatorId - (separatorRealmId + 1)));
+            Opponent tmpOpponent = null;
+            if (realmId == Realm.Hell.GetHashCode())
+                tmpOpponent = OpponentsData.HellOpponents[tmpId];
+            else if (realmId == Realm.Earth.GetHashCode())
+                tmpOpponent = OpponentsData.EarthOpponents[tmpId];
+            else if (realmId == Realm.Heaven.GetHashCode())
+                tmpOpponent = OpponentsData.HeavenOpponents[tmpId];
             opponentsList.Add(tmpOpponent);
             if (separatorId + 1 >= opponentsStr.Length)
                 break;

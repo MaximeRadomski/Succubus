@@ -20,7 +20,10 @@ public abstract class GameSceneBhv : SceneBhv
         _gameplayControler = GetComponent<GameplayControler>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        if (SceneManager.GetActiveScene().name.Contains("Training"))
+            Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        else
+            Character = PlayerPrefsHelper.GetRunCharacter();
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
     }
@@ -113,7 +116,7 @@ public abstract class GameSceneBhv : SceneBhv
         _poppingText += "<b>perfect clear!</b>";
     }
 
-    public virtual void OnCombo(int nbCombo)
+    public virtual void OnCombo(int nbCombo, int nbLines)
     {
         _poppingText += "\n*" + nbCombo + " combo";
     }

@@ -145,7 +145,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _linesTmp.text = _lines.ToString();
     }
 
-    public override void OnCombo(int nbCombo)
+    public override void OnCombo(int nbCombo, int nbLines)
     {
         var tmpAdded = 50 * nbCombo * _level;
         _score += tmpAdded;

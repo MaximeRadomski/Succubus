@@ -8,6 +8,23 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static bool IsSuperiorByRealm(Realm subjectRealm, Realm targetRealm)
+    {
+        if (subjectRealm == Realm.Hell)
+        {
+            return targetRealm == Realm.Earth;
+        }
+        else if (subjectRealm == Realm.Earth)
+        {
+            return targetRealm == Realm.Heaven;
+        }
+        else if (subjectRealm == Realm.Heaven)
+        {
+            return targetRealm == Realm.Hell;
+        }
+        return false;
+    }
+
     public static void ResetSelectedCharacterSpecialCooldown()
     {
         var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];

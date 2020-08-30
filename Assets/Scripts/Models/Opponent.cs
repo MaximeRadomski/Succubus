@@ -7,11 +7,13 @@ public class Opponent
     public int Id;
     public string Kind;
     public int HpMax;
-    public float Cooldown;
+    public int Cooldown;
     public Realm Realm;
     public Weakness Weakness;
     public Immunity Immunity;
     public OpponentType Type;
+    public int XLineWeakness;
+    public int XLineImmunity;
     public int GravityLevel;
 
     public List<OpponentAttack> Attacks;

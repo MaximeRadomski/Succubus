@@ -127,6 +127,13 @@ public class Instantiator : MonoBehaviour
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color);
     }
 
+    public GameObject NewLightRowText(Vector2 position)
+    {
+        var tmpTextObject = Resources.Load<GameObject>("Prefabs/LightRowText");
+        var tmpTextInstance = Instantiate(tmpTextObject, position, tmpTextObject.transform.rotation);
+        return tmpTextInstance;
+    }
+
     public void PopIcon(Sprite sprite, Vector2 position)
     {
         var tmpPoppingIconObject = Resources.Load<GameObject>("Prefabs/PoppingIcon");

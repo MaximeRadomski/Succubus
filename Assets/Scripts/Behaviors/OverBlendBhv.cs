@@ -111,6 +111,7 @@ public class OverBlendBhv : MonoBehaviour
         else if (_overBlendType == OverBlendType.StartLoadMidActionEnd && !_midActionDone && _loadPercent >= 50.0f)
         {
             _midActionDone = true;
+            Constants.InputLocked = false;
             _resultAction?.Invoke(true);
         }
     }
