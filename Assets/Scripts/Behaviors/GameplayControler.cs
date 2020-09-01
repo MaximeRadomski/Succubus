@@ -62,6 +62,11 @@ public class GameplayControler : MonoBehaviour
     private int _idSpecial;
     private int _idTwist;
     private int _idGameOver;
+    private int _idDarkRows;
+    private int _idGarbageRows;
+    private int _idLightRows;
+    private int _idEmptyRows;
+    private int _idCleanRows;
 
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
@@ -117,6 +122,28 @@ public class GameplayControler : MonoBehaviour
             SetHorizontalOrientation();
         UpdatePanelsPositions();
         SetButtons();
+
+        _id1Line = _soundControler.SetSound("1Line");
+        _id2Line = _soundControler.SetSound("2Line");
+        _id3Line = _soundControler.SetSound("3Line");
+        _id4Line = _soundControler.SetSound("4Line");
+        _idCombo = _soundControler.SetSound("Combo");
+        _idConsecutive = _soundControler.SetSound("Consecutive");
+        _idHold = _soundControler.SetSound("Hold");
+        _idItem = _soundControler.SetSound("Item");
+        _idLeftRightDown = _soundControler.SetSound("LeftRightDown");
+        _idLock = _soundControler.SetSound("Lock");
+        _idPerfect = _soundControler.SetSound("Perfect");
+        _idRotate = _soundControler.SetSound("Rotate");
+        _idSpecial = _soundControler.SetSound("Special");
+        _idTwist = _soundControler.SetSound("Twist");
+        _idGameOver = _soundControler.SetSound("GameOver");
+        _idDarkRows = _soundControler.SetSound("DarkRows");
+        _idGarbageRows = _soundControler.SetSound("GarbageRows");
+        _idLightRows = _soundControler.SetSound("LightRows");
+        _idEmptyRows = _soundControler.SetSound("EmptyRows");
+        _idCleanRows = _soundControler.SetSound("CleanRows");
+
         CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
@@ -340,22 +367,6 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
-
-        _id1Line = _soundControler.SetSound("1Line");
-        _id2Line = _soundControler.SetSound("2Line");
-        _id3Line = _soundControler.SetSound("3Line");
-        _id4Line = _soundControler.SetSound("4Line");
-        _idCombo = _soundControler.SetSound("Combo");
-        _idConsecutive = _soundControler.SetSound("Consecutive");
-        _idHold = _soundControler.SetSound("Hold");
-        _idItem = _soundControler.SetSound("Item");
-        _idLeftRightDown = _soundControler.SetSound("LeftRightDown");
-        _idLock = _soundControler.SetSound("Lock");
-        _idPerfect = _soundControler.SetSound("Perfect");
-        _idRotate = _soundControler.SetSound("Rotate");
-        _idSpecial = _soundControler.SetSound("Special");
-        _idTwist = _soundControler.SetSound("Twist");
-        _idGameOver = _soundControler.SetSound("GameOver");
     }
 
     private void LookForAllPossibleButton(string name, ButtonBhv.ActionDelegate actionDelegate, int inputType)
@@ -1193,10 +1204,14 @@ public class GameplayControler : MonoBehaviour
 
     private void CheckForDarkRows(int nbLines)
     {
+        bool hasDeletedRows = false;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
             if (HasDarkRow(y))
             {
+                if (hasDeletedRows == false)
+                    _soundControler.PlaySound(_idCleanRows);
+                hasDeletedRows = true;
                 DeleteLine(y);
                 --nbLines;
             }
@@ -1223,6 +1238,7 @@ public class GameplayControler : MonoBehaviour
     {
         int startY;
         int nbRows;
+        bool hasDeletedRows = false;
         var allLightRows = GameObject.FindGameObjectsWithTag(Constants.TagLightRows);
         foreach (var lightRowGameObject in allLightRows)
         {
@@ -1234,6 +1250,9 @@ public class GameplayControler : MonoBehaviour
                 nbRows = lightRowBhv.NbRows;
                 for (int y = yRounded; y < yRounded + lightRowBhv.NbRows; ++y)
                 {
+                    if (hasDeletedRows == false)
+                        _soundControler.PlaySound(_idCleanRows);
+                    hasDeletedRows = true;
                     DeleteLine(y);
                 }
                 ClearLineSpace(startY, startY + nbRows - 1);
@@ -1375,11 +1394,15 @@ public class GameplayControler : MonoBehaviour
     {
         IncreaseAllAboveLines(rows);
         if (type == AttackType.EmptyRows)
+        {
+            _soundControler.PlaySound(_idEmptyRows);
             return;
+        }
         int emptyStart = -1;
         int emptyEnd = -1;
         if (type == AttackType.GarbageRows)
         {
+            _soundControler.PlaySound(_idGarbageRows);
             param = param < 1 ? 1 : param;
             emptyStart = UnityEngine.Random.Range(0, (10 + 1) - param); //10 + 1 because exclusive, and param always at least 1
             emptyEnd = emptyStart + param - 1;
@@ -1390,6 +1413,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (type == AttackType.LightRows)
         {
+            _soundControler.PlaySound(_idLightRows);
             param = param < 1 ? 1 : param;
             _playFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
             _playFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
@@ -1400,6 +1424,10 @@ public class GameplayControler : MonoBehaviour
             tmpTextGameObject.transform.SetParent(_playFieldBhv.Grid[0, 0]);
             lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
             lightRowBhv.UpdateCooldownText(param);
+        }
+        if (type == AttackType.DarkRows)
+        {
+            _soundControler.PlaySound(_idDarkRows);
         }
     }
 

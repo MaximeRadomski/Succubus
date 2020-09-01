@@ -163,7 +163,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < _currentOpponent.Cooldown)
                 {
-                    Constants.CurrentOpponentCooldown -= 1 + Character.EnemyCooldownProgressionReducer;
+                    if (_currentOpponent.Immunity != Immunity.Cooldown)
+                        Constants.CurrentOpponentCooldown -= 1 + Character.EnemyCooldownProgressionReducer;
                     if (Constants.CurrentOpponentCooldown <= 0)
                         Constants.CurrentOpponentCooldown = 0;
                     UpdateCooldownBar(Direction.Down);
