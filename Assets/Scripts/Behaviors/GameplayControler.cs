@@ -295,6 +295,8 @@ public class GameplayControler : MonoBehaviour
         else if (level >= 20)
         {
             GravityDelay = -1.0f;
+            int levelAfter20 = level - 20;
+            _lockDelay = Constants.LockDelay - (Constants.LockDelay * 0.05f * levelAfter20);
         }
         else
         {

@@ -22,5 +22,10 @@ public class Opponent
     public bool IsDead;
     public int DifficultyWeight;
 
+    public string TextEntrance;
+    public string TextHit;
+    public string TextVictory;
+    public string TextDeath;
+
     public string Lore;
 }

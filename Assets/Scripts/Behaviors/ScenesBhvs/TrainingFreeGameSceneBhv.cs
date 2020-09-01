@@ -16,9 +16,14 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private TMPro.TextMeshPro _linesTmp;
     private TMPro.TextMeshPro _piecesTmp;
 
+    private SoundControlerBhv _soundControler;
+    private int _levelUp;
+
     void Start()
     {
         Init();
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _levelUp = _soundControler.SetSound("LevelUp");
 
         var results = PlayerPrefsHelper.GetTraining();
         _score = results[0];
@@ -74,6 +79,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         {
             ++_level;
             _gameplayControler.SetGravity(_level);
+            Instantiator.PopText("L   level  up   J", new Vector2(4.5f, 15.0f));
         }
         _levelTmp.text = _level.ToString();
         _next = _level * Constants.LinesForLevel - _lines;

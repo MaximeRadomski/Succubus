@@ -15,4 +15,6 @@ public enum Immunity
     Twists = 3,
     [Description("CC Lines")]
     Consecutive = 4,
+    [Description("Cooldown")]
+    Cooldown = 5,
 }

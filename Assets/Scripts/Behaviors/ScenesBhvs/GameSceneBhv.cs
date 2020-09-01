@@ -135,4 +135,9 @@ public abstract class GameSceneBhv : SceneBhv
     {
 
     }
+
+    public virtual void OnGameOver()
+    {
+        Constants.CurrentMusicType = MusicTyoe.Menu;
+    }
 }

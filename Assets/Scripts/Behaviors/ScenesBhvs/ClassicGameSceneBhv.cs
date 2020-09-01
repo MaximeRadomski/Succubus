@@ -17,6 +17,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private int _characterAttack;
 
+    private SoundControlerBhv _soundControler;
+    private int _characterVoice;
+
+    private int _opponentVoice;
+
     void Start()
     {
         Init();
@@ -40,7 +45,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
         _opponentInstanceBhv.AfterDeath = AfterOpponentDeath;
         _nextCooldownTick = Time.time - 1.0f;
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         NextOpponent();
+        _characterVoice = _soundControler.SetSound("CharVoice" + Character.Id.ToString("00"));
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Realm.Hell, Realm.Hell);
     }
 
@@ -62,6 +69,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
         _gameplayControler.SetGravity(_currentOpponent.GravityLevel);
+        _opponentVoice = _soundControler.SetSound("OppoVoice" + _currentOpponent.Realm.ToString() + _currentOpponent.Id.ToString("00"));
         StartOpponentCooldown();
     }
 
@@ -82,7 +90,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
-            ++Constants.CurrentOpponentCooldown;
             _nextCooldownTick = Time.time + 1.0f;
         }
     }
@@ -114,6 +121,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
+            ++Constants.CurrentOpponentCooldown;
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }
@@ -130,6 +138,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     override public void OnGameOver()
     {
+        base.OnGameOver();
         NavigationService.LoadPreviousScene();
         _characterInstanceBhv.Die();
     }
@@ -152,9 +161,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             else
             {
-                if (Constants.CurrentOpponentCooldown < _currentOpponent.Cooldown)
+                if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < _currentOpponent.Cooldown)
                 {
                     Constants.CurrentOpponentCooldown -= 1 + Character.EnemyCooldownProgressionReducer;
+                    if (Constants.CurrentOpponentCooldown <= 0)
+                        Constants.CurrentOpponentCooldown = 0;
                     UpdateCooldownBar(Direction.Down);
                 }                
                 SetNextCooldownTick();

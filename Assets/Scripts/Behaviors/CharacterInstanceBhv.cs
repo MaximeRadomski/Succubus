@@ -40,7 +40,7 @@ public class CharacterInstanceBhv : MonoBehaviour
     {
         if (_isAttacking > 0)
             DoAttack();
-        if (_isResetingHit)
+        else if (_isResetingHit)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
             transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);

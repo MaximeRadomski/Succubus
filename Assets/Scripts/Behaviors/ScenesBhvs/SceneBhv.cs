@@ -76,9 +76,4 @@ public abstract class SceneBhv : MonoBehaviour
             return result;
         }
     }
-
-    public virtual void OnGameOver()
-    {
-
-    }
 }
