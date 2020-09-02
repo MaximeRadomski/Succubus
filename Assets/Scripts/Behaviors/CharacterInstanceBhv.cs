@@ -14,9 +14,14 @@ public class CharacterInstanceBhv : MonoBehaviour
     private Vector3 _originalScale;
     private Vector3 _hitScale;
     private Vector3 _hitPosition;
+    private Vector3 _spawnScale;
+    private Vector3 _spawnPosition;
     private bool _isResetingHit;
+    private bool _isSpawning;
     private bool _isDying;
     private SpriteRenderer _spriteRenderer;
+
+    private bool _hasInit;
 
     void Start()
     {
@@ -25,6 +30,8 @@ public class CharacterInstanceBhv : MonoBehaviour
 
     private void Init()
     {
+        if (_hasInit)
+            return;
         _sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
         _isAttacking = 0;
         _direction = transform.position.x > Camera.main.transform.position.x ? Direction.Right : Direction.Left;
@@ -33,7 +40,10 @@ public class CharacterInstanceBhv : MonoBehaviour
         _originalScale = transform.localScale;
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
+        _spawnScale = new Vector3(0.5f, 1.5f, 1.0f);
+        _spawnPosition = new Vector3(0.0f, 3.0f, 0.0f);
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _hasInit = true;
     }
 
     void Update()
@@ -42,30 +52,70 @@ public class CharacterInstanceBhv : MonoBehaviour
             DoAttack();
         else if (_isResetingHit)
         {
-            transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
-            transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
-            if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
-            {
-                transform.localScale = _originalScale;
-                transform.position = _originalPosition;
-                _isResetingHit = false;
-            }
+            ResetingHit();
         }
         if (_isDying)
         {
-            if (_spriteRenderer)
-               _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorTransparent, 0.05f);
-            if (_spriteRenderer != null && Helper.FloatEqualsPrecision(_spriteRenderer.color.a, Constants.ColorTransparent.a, 0.01f))
-            {
-                for (int i = 0; i < transform.childCount; ++i)
-                {
-                    _spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    _spriteRenderer.color = Constants.ColorTransparent;
-                }
-                _isDying = false;
-                AfterDeath?.Invoke();
-            }
+            Dying();
         }
+        else if (_isSpawning)
+        {
+            Spawning();
+        }
+    }
+
+    private void ResetingHit()
+    {
+        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
+        if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
+        {
+            transform.localScale = _originalScale;
+            transform.position = _originalPosition;
+            _isResetingHit = false;
+        }
+    }
+
+    private void Dying()
+    {
+        if (_spriteRenderer)
+            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorTransparent, 0.05f);
+        if (_spriteRenderer != null && Helper.FloatEqualsPrecision(_spriteRenderer.color.a, Constants.ColorTransparent.a, 0.01f))
+        {
+            for (int i = 0; i < transform.childCount; ++i)
+            {
+                _spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                _spriteRenderer.color = Constants.ColorTransparent;
+            }
+            _isDying = false;
+            AfterDeath?.Invoke();
+        }
+    }
+
+    private void Spawning()
+    {
+        if (_spriteRenderer)
+            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlain, 0.2f);
+        if (_spriteRenderer != null && Helper.FloatEqualsPrecision(_spriteRenderer.color.a, Constants.ColorPlain.a, 0.01f))
+            _spriteRenderer.color = Constants.ColorPlain;
+        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
+        if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
+        {
+            transform.localScale = _originalScale;
+            transform.position = _originalPosition;
+            _isSpawning = false;
+        }
+    }
+
+    public void Spawn()
+    {
+        if (_hasInit == false)
+            Init();
+        _spriteRenderer.color = Constants.ColorPlainTransparent;
+        transform.localScale = new Vector3(_spawnScale.x, _spawnScale.y, _spawnScale.z);
+        transform.position = _originalPosition + _spawnPosition;
+        _isSpawning = true;
     }
 
     public void Attack()

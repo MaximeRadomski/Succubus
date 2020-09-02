@@ -117,6 +117,18 @@ public static class Constants
     public static Color ColorHell3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
     public static Color ColorHell4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
 
+    public static Color ColorEarth0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
+    public static Color ColorEarth1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
+    public static Color ColorEarth2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
+    public static Color ColorEarth3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
+    public static Color ColorEarth4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
+
+    public static Color ColorHeaven0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
+    public static Color ColorHeaven1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
+    public static Color ColorHeaven2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
+    public static Color ColorHeaven3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
+    public static Color ColorHeaven4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
+
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -127,14 +139,14 @@ public static class Constants
     public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
     public static string MaterialEnd = "</material>";
 
-    public static object GetColorFromNature(Realm nature, int id)
+    public static object GetColorFromNature(Realm realm, int id)
     {
         if (id == -1)
             return Color.black;
         if (id == 5)
             return Color.white;
         var myActualType = typeof(Constants);
-        var tmp = myActualType.GetField("Color" + nature.ToString() + id);
+        var tmp = myActualType.GetField("Color" + realm.ToString() + id);
         return tmp.GetValue(myActualType);
     }
 

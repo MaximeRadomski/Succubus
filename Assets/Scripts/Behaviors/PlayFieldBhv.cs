@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 public class PlayFieldBhv : MonoBehaviour
 {
     public Transform[,] Grid;
+    public SpriteRenderer _semiOpacitySpriteRenderer;
 
     private void Start()
     {
         SceneManager.sceneLoaded += SceneLoaded;
+        var semiOpacityTransform = transform.Find("SemiOpacity");
+        if (semiOpacityTransform != null)
+            _semiOpacitySpriteRenderer = semiOpacityTransform.GetComponent<SpriteRenderer>();
         var tmp = GameObject.FindGameObjectsWithTag(Constants.TagPlayField);
         if (tmp.Length > 1)
             Destroy(gameObject);
@@ -38,5 +42,16 @@ public class PlayFieldBhv : MonoBehaviour
             else
                 child.gameObject.SetActive(true);
         }
+    }
+
+    public void ShowSemiOpcaity(int show)
+    {
+        if (Grid == null || _semiOpacitySpriteRenderer == null)
+            return;
+        if (show == 0)
+            _semiOpacitySpriteRenderer.enabled = false;
+        else
+            _semiOpacitySpriteRenderer.enabled = true;
+        
     }
 }

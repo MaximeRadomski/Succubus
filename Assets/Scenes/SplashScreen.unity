@@ -1030,6 +1030,7 @@ MonoBehaviour:
   Paused: 0
   PauseMenu: {fileID: 0}
   Instantiator: {fileID: 0}
+  CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
 --- !u!114 &1286873009

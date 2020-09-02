@@ -120,11 +120,12 @@ public class Instantiator : MonoBehaviour
         return tmpInfoMeuInstance;
     }
 
-    public void PopText(string text, Vector2 position, string color = "#FFFFFF")
+    public GameObject PopText(string text, Vector2 position, string color = "#FFFFFF", float floatingTime = 0.0f)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color, floatingTime);
+        return tmpPoppingTextInstance;
     }
 
     public GameObject NewLightRowText(Vector2 position)

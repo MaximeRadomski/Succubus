@@ -7,6 +7,11 @@ public class CameraBhv : MonoBehaviour
 
     private Vector3 _beforeFocusPosition;
 
+    private float _initialSize;
+    private float _bumpSize;
+    private bool _isBumbing;
+    private bool _isResetBumping;
+
     public void Init()
     {
         float unitsPerPixel = Constants.SceneWidth / Screen.width;
@@ -15,6 +20,7 @@ public class CameraBhv : MonoBehaviour
             Camera.orthographicSize = desiredHalfHeight;
         _beforeFocusPosition = transform.position;
         HasInitiated = true;
+        _isBumbing = false;
     }
 
     public void FocusY(float y)
@@ -26,5 +32,44 @@ public class CameraBhv : MonoBehaviour
     public void Unfocus()
     {
         transform.position = _beforeFocusPosition;
+    }
+
+    private void Update()
+    {
+        if (_isBumbing)
+        {
+            Bumping();
+        }
+        else if (_isResetBumping)
+        {
+            ResetBumping();
+        }
+    }
+
+    public void Bump(int bumpPercent)
+    {
+        _initialSize = Camera.orthographicSize;
+        _bumpSize = _initialSize - (_initialSize * Helper.MultiplierFromPercent(0.0f, bumpPercent));
+        _isBumbing = true;
+    }
+
+    private void Bumping()
+    {
+        Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, _bumpSize, 0.3f);
+        if (Helper.FloatEqualsPrecision(Camera.orthographicSize, _bumpSize, 0.1f))
+        {
+            _isBumbing = false;
+            _isResetBumping = true;
+        }
+    }
+
+    private void ResetBumping()
+    {
+        Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, _initialSize, 0.3f);
+        if (Helper.FloatEqualsPrecision(Camera.orthographicSize, _initialSize, 0.01f))
+        {
+            Camera.orthographicSize = _initialSize;
+            _isResetBumping = false;
+        }
     }
 }

@@ -8,6 +8,15 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static string ToHex(this Color color, bool withoutHash = false)
+    {
+        var tmp = withoutHash ? "" : "#";
+        tmp += ((int)(color.r * 255.0f)).ToString("X");
+        tmp += ((int)(color.g * 255.0f)).ToString("X");
+        tmp += ((int)(color.b * 255.0f)).ToString("X");
+        return tmp;
+    }
+
     public static bool IsSuperiorByRealm(Realm subjectRealm, Realm targetRealm)
     {
         if (subjectRealm == Realm.Hell)
@@ -171,6 +180,11 @@ public static class Helper
         func.Invoke();
         if (lockInputWhile)
             Constants.InputLocked = false;
+    }
+
+    public static bool RandomThrow(int target)
+    {
+        return UnityEngine.Random.Range(0, 100) < target;
     }
 
     public static int RandomIntMultipleOf(int min, int max, int multiple)

@@ -10,6 +10,7 @@ TagManager:
   - Background
   - Music
   - LightRows
+  - PoppingText
   layers:
   - Default
   - TransparentFX

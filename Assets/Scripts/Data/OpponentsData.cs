@@ -9,7 +9,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 333, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10,
+            HpMax = 333, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 1),
                 new OpponentAttack(AttackType.GarbageRows, 1, 1),
@@ -20,25 +20,25 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 1, Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 666, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 7,
+            HpMax = 666, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 2),
                 new OpponentAttack(AttackType.GarbageRows, 2, 2),
                 new OpponentAttack(AttackType.EmptyRows, 2),
                 new OpponentAttack(AttackType.LightRows, 2, 15)},
-            GravityLevel = 3, DifficultyWeight = 0
+            GravityLevel = 5, DifficultyWeight = 0
         },
         new Opponent()
         {
             Id = 2, Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
-            HpMax = 999, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 5,
+            HpMax = 999, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 3),
                 new OpponentAttack(AttackType.GarbageRows, 3, 3),
                 new OpponentAttack(AttackType.EmptyRows, 3),
                 new OpponentAttack(AttackType.LightRows, 3, 20)},
-            GravityLevel = 5, DifficultyWeight = 0
+            GravityLevel = 10, DifficultyWeight = 0
         },
         new Opponent()
         {

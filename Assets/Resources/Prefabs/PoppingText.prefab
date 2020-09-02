@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7382554702372907098}
   - component: {fileID: 5598099968232995415}
   m_Layer: 0
-  m_Name: SampleTXT
-  m_TagString: Untagged
+  m_Name: PoppingText
+  m_TagString: PoppingText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,7 +201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingPosition: {x: 0, y: 0}
-  Fonts: []
 --- !u!1 &7326997875396723226
 GameObject:
   m_ObjectHideFlags: 0

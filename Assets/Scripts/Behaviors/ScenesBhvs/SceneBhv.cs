@@ -6,6 +6,7 @@ public abstract class SceneBhv : MonoBehaviour
     public bool Paused;
     public PauseMenuBhv PauseMenu;
     public Instantiator Instantiator;
+    public CameraBhv CameraBhv;
     public string OnRootPreviousScene = null;
     public bool CanGoPreviousScene = true;
 
@@ -14,6 +15,7 @@ public abstract class SceneBhv : MonoBehaviour
     protected virtual void Init()
     {
         Application.targetFrameRate = 60;
+        CameraBhv = Camera.main.gameObject.GetComponent<CameraBhv>();
         NavigationService.TrySetCurrentRootScene(SceneManager.GetActiveScene().name);
         Instantiator = GetComponent<Instantiator>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -44,7 +46,7 @@ public abstract class SceneBhv : MonoBehaviour
         {
             if (result)
             {
-                Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+                CameraBhv.Unfocus();
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
                 object TransitionGiveUp(bool transResult)
                 {

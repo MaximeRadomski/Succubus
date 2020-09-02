@@ -18,6 +18,8 @@ public class Character
     public string TextDeath;
 
     //Global to all
+    public int CritChancePercent;
+    public int CritMultiplier;
     public int DamagePercentToInferiorRealm;
     public int DamagePercentToSuperiorRealm;
     public int RealmPassiveEffect;
@@ -25,9 +27,11 @@ public class Character
 
     public Character()
     {
+        CritChancePercent = 1;
+        CritMultiplier = 50;
         DamagePercentToInferiorRealm = 20;
         DamagePercentToSuperiorRealm = 20;
         RealmPassiveEffect = 1;
-        EnemyCooldownProgressionReducer = 1;
+        EnemyCooldownProgressionReducer = 0;
     }
 }

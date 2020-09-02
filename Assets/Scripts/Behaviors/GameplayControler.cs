@@ -13,6 +13,7 @@ public class GameplayControler : MonoBehaviour
     public Instantiator Instantiator;
     public Character Character;
     public bool AttackIncoming;
+    public PlayFieldBhv PlayFieldBhv;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -38,9 +39,8 @@ public class GameplayControler : MonoBehaviour
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
-    protected CharacterInstanceBhv _characterInstanceBhv;
+    private CharacterInstanceBhv _characterInstanceBhv;
 
-    private PlayFieldBhv _playFieldBhv;
     private Special _characterSpecial;
     private Item _characterItem;
     private List<Vector3> _currentGhostPiecesOriginalPos;
@@ -94,7 +94,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        Destroy(_playFieldBhv.gameObject);
+        Destroy(PlayFieldBhv.gameObject);
         Constants.InputLocked = false;
         SceneBhv.OnGameOver();
     }
@@ -152,10 +152,10 @@ public class GameplayControler : MonoBehaviour
             _nextPieces.Add(GameObject.Find(Constants.GoNextPieceName + i.ToString("D2")));
         SetNextGravityFall();
         SetTimeDirectionHolded();
-        _playFieldBhv = GameObject.Find("PlayField").GetComponent<PlayFieldBhv>();
+        PlayFieldBhv = GameObject.Find("PlayField").GetComponent<PlayFieldBhv>();
         _playFieldHeight = Constants.PlayFieldHeight;
         _playFieldWidth = Constants.PlayFieldWidth;
-        if (_playFieldBhv.Grid != null)
+        if (PlayFieldBhv.Grid != null)
         {
             Bag = PlayerPrefsHelper.GetBag();
             var holding = PlayerPrefsHelper.GetHolder();
@@ -164,17 +164,18 @@ public class GameplayControler : MonoBehaviour
                 var tmpHolding = Instantiator.NewPiece(holding, _characterRealm.ToString(), _holder.transform.position);
                 tmpHolding.transform.SetParent(_holder.transform);
             }
-            _playFieldBhv.HideShow(1);
+            PlayFieldBhv.HideShow(1);
         }
         else
         {
-            _playFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
+            PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
         Character = SceneBhv.Character;
         if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
             _characterItem.Init(Character, this);
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
         _characterSpecial.Init(Character, this);
+        _characterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
     }
 
@@ -443,13 +444,13 @@ public class GameplayControler : MonoBehaviour
 
     private void AddToPlayField(GameObject piece)
     {
-        piece.transform.SetParent(_playFieldBhv.gameObject.transform);
+        piece.transform.SetParent(PlayFieldBhv.gameObject.transform);
         foreach (Transform child in piece.transform)
         {
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
-            _playFieldBhv.Grid[roundedX, roundedY] = child;
+            PlayFieldBhv.Grid[roundedX, roundedY] = child;
         }
     }
 
@@ -1097,7 +1098,7 @@ public class GameplayControler : MonoBehaviour
             || roundedY < 0 || roundedY >= _playFieldHeight)
             return false;
 
-        if (_playFieldBhv.Grid[roundedX, roundedY] != null)
+        if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
             return false;
 
         var nbSamePos = 0;
@@ -1264,7 +1265,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playFieldBhv.Grid[x, y] == null || _playFieldBhv.Grid[x, y].gameObject.name.Contains("Dark") || _playFieldBhv.Grid[x, y].gameObject.name.Contains("Light"))
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Light"))
                 return false;
         }
         return true;
@@ -1272,14 +1273,14 @@ public class GameplayControler : MonoBehaviour
 
     private bool HasDarkRow(int y)
     {
-        return _playFieldBhv.Grid[0, y] != null && _playFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
+        return PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
     }
 
     private bool HasGarbagekRow(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playFieldBhv.Grid[x, y] != null && _playFieldBhv.Grid[x, y].gameObject.name.Contains("Garbage"))
+            if (PlayFieldBhv.Grid[x, y] != null && PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Garbage"))
                 return true;
         }
         return false;
@@ -1289,11 +1290,11 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playFieldBhv.Grid[x, y] == null)
+            if (PlayFieldBhv.Grid[x, y] == null)
                 continue;
-            Instantiator.NewFadeBlock(_characterRealm, _playFieldBhv.Grid[x, y].transform.position, 5, 0);
-            Destroy(_playFieldBhv.Grid[x, y].gameObject);
-            _playFieldBhv.Grid[x, y] = null;
+            Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Destroy(PlayFieldBhv.Grid[x, y].gameObject);
+            PlayFieldBhv.Grid[x, y] = null;
         }
     }
 
@@ -1317,9 +1318,9 @@ public class GameplayControler : MonoBehaviour
                     maxY = minY = -2;
             }
         }
-        foreach (Transform child in _playFieldBhv.transform)
+        foreach (Transform child in PlayFieldBhv.transform)
         {
-            if (child.childCount == 0)
+            if (child.childCount == 0 && child.name.Contains("Clone"))
                 Destroy(child.gameObject);
         }        
     }
@@ -1338,7 +1339,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (_playFieldBhv.Grid[x, y] != null)
+            if (PlayFieldBhv.Grid[x, y] != null)
                 return false;
         }
         return true;
@@ -1350,11 +1351,11 @@ public class GameplayControler : MonoBehaviour
         {
             for (int x = 0; x < _playFieldWidth; ++x)
             {
-                if (_playFieldBhv.Grid[x, y] != null)
+                if (PlayFieldBhv.Grid[x, y] != null)
                 {
-                    _playFieldBhv.Grid[x, y - 1] = _playFieldBhv.Grid[x, y];
-                    _playFieldBhv.Grid[x, y] = null;
-                    _playFieldBhv.Grid[x, y - 1].transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+                    PlayFieldBhv.Grid[x, y - 1] = PlayFieldBhv.Grid[x, y];
+                    PlayFieldBhv.Grid[x, y] = null;
+                    PlayFieldBhv.Grid[x, y - 1].transform.position += new Vector3(0.0f, -1.0f, 0.0f);
                 }
             }
         }
@@ -1366,11 +1367,11 @@ public class GameplayControler : MonoBehaviour
         {
             for (int x = 0; x < _playFieldWidth; ++x)
             {
-                if (_playFieldBhv.Grid[x, y] != null)
+                if (PlayFieldBhv.Grid[x, y] != null)
                 {
-                    _playFieldBhv.Grid[x, y + nbRows] = _playFieldBhv.Grid[x, y];
-                    _playFieldBhv.Grid[x, y] = null;
-                    _playFieldBhv.Grid[x, y + nbRows].transform.position += new Vector3(0.0f, nbRows, 0.0f);
+                    PlayFieldBhv.Grid[x, y + nbRows] = PlayFieldBhv.Grid[x, y];
+                    PlayFieldBhv.Grid[x, y] = null;
+                    PlayFieldBhv.Grid[x, y + nbRows].transform.position += new Vector3(0.0f, nbRows, 0.0f);
                 }
             }
         }
@@ -1415,13 +1416,13 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idLightRows);
             param = param < 1 ? 1 : param;
-            _playFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
-            _playFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
-            var lightRowBhv = _playFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
+            PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
+            PlayFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
+            var lightRowBhv = PlayFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
             lightRowBhv.NbRows = rows;
             lightRowBhv.Cooldown = param;
             var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)rows - 1.0f) / 2.0f));
-            tmpTextGameObject.transform.SetParent(_playFieldBhv.Grid[0, 0]);
+            tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
             lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
             lightRowBhv.UpdateCooldownText(param);
         }
@@ -1429,6 +1430,7 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idDarkRows);
         }
+        VibrationService.Vibrate();
     }
 
     private void FillLine(int y, AttackType type, Realm realm, int emptyStart, int emptyEnd)
@@ -1438,7 +1440,7 @@ public class GameplayControler : MonoBehaviour
             if (type == AttackType.GarbageRows && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
-            _playFieldBhv.Grid[x, y] = attackBlock.transform;
+            PlayFieldBhv.Grid[x, y] = attackBlock.transform;
         }
     }
 
