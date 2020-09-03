@@ -12,10 +12,7 @@ public class Character
     public string SpecialDescription;
     public Realm Realm;
 
-    public string TextEntrance;
-    public string TextSpecial;
-    public string TextVictory;
-    public string TextDeath;
+    public string Lore;
 
     //Global to all
     public int CritChancePercent;

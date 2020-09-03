@@ -7,14 +7,13 @@ using UnityEngine.SceneManagement;
 public class ClassicGameSceneBhv : GameSceneBhv
 {
     private CharacterInstanceBhv _opponentInstanceBhv;
-    private TMPro.TextMeshPro _weaknessText;
     private ResourceBarBhv _opponentHpBar;
     private ResourceBarBhv _opponentCooldownBar;
     private bool _opponentOnCooldown;
-    //private float _opponentCooldownStart;
-    //private float _opponentCooldownEnd;
     private float _nextCooldownTick;
     private int _opponentAttackId;
+    private SpriteRenderer _weaknessSpriteRenderer;
+    private SpriteRenderer _immunitySpriteRenderer;
 
     private int _characterAttack;
     private bool _isCrit;
@@ -42,7 +41,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
-        _weaknessText = GameObject.Find("Weakness").GetComponent<TMPro.TextMeshPro>();
+        _weaknessSpriteRenderer = GameObject.Find("Weakness").GetComponent<SpriteRenderer>();
+        _immunitySpriteRenderer = GameObject.Find("Immunity").GetComponent<SpriteRenderer>();
         _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
@@ -72,9 +72,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentAttackId = 0;
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _currentOpponent.Realm + "Opponents_" + _currentOpponent.Id);
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
-        _weaknessText.text = _currentOpponent.Weakness != Weakness.None ? _currentOpponent.Weakness.GetDescription().ToLower() : "";
-        if (_currentOpponent.Weakness == Weakness.xLines)
-            _weaknessText.text = _currentOpponent.XLineWeakness + _weaknessText.text;
+        _weaknessSpriteRenderer.enabled = _currentOpponent.Weakness != Weakness.None;
+        _immunitySpriteRenderer.enabled = _currentOpponent.Immunity != Immunity.None;
         _opponentHpBar.UpdateContent(0, _currentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
@@ -130,7 +129,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
     void Update()
     {
         if (Paused)
+        {
+            SetNextCooldownTick();
             return;
+        }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
             ++Constants.CurrentOpponentCooldown;

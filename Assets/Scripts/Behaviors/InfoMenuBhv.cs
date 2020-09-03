@@ -11,8 +11,8 @@ public class InfoMenuBhv : PopupBhv
     private Vector3 _cameraInitialPosition;
     private GameObject _characterFrame;
     private GameObject _opponentFrame;
-    private GameObject _characterButton;
-    private GameObject _opponentButton;
+    private GameObject _characterTab;
+    private GameObject _opponentTab;
     private Item _characterItem;
 
     private Character _character;
@@ -38,8 +38,8 @@ public class InfoMenuBhv : PopupBhv
         }
         transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
-        (_characterButton = GameObject.Find("CharacterButton")).GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacter;
-        (_opponentButton = GameObject.Find("OpponentButton")).GetComponent<ButtonBhv>().EndActionDelegate = ShowOpponent;
+        (_characterTab = GameObject.Find("CharacterTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacter;
+        (_opponentTab = GameObject.Find("OpponentTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowOpponent;
         _characterFrame = GameObject.Find("CharacterFrame");
         _opponentFrame = GameObject.Find("OpponentFrame");
         InitCharacterFrame(character);
@@ -56,8 +56,9 @@ public class InfoMenuBhv : PopupBhv
         _characterFrame.transform.Find("Attack").GetComponent<TMPro.TextMeshPro>().text = "attack:" + Constants.MaterialHell_4_3 + character.Attack;
         _characterFrame.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.MaterialHell_4_3 + character.Cooldown;
         _characterFrame.transform.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
-        _characterFrame.transform.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription();
-        _characterFrame.transform.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
+        _characterFrame.transform.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
+        _characterFrame.transform.Find("ButtonCharacter").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
+        _characterFrame.transform.Find("ButtonCharacter").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
         if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
         {
             _characterItem.Init(character, null);
@@ -71,10 +72,16 @@ public class InfoMenuBhv : PopupBhv
         _instantiator.NewPopupYesNo("Item", Constants.MaterialHell_3_2 + _characterItem.Name.ToLower() + Constants.MaterialEnd + ":\n" + _characterItem.Description.ToLower(), null, "Ok", null);
     }
 
+    private void CharacterLore()
+    {
+        _instantiator.NewPopupYesNo("Lore", _character.Lore.ToLower(), null, "Ok", null);
+    }
+
     private void InitOpponentFrame(Opponent opponent)
     {
         if (opponent == null)
         {
+
             return;
         }
     }
@@ -83,29 +90,29 @@ public class InfoMenuBhv : PopupBhv
     {
         _characterFrame.transform.position = transform.position;
         _opponentFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
-        _characterButton.transform.position = new Vector3(_characterButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOnY, 0.0f);
-        _opponentButton.transform.position = new Vector3(_opponentButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOffY, 0.0f);
+        _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+        _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
     }
 
     private void ShowOpponent()
     {
         if (_opponent == null)
         {
-            _opponentButton.transform.position = new Vector3(_opponentButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOnY, 0.0f);
-            _characterButton.transform.position = new Vector3(_characterButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOffY, 0.0f);
+            _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+            _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
             _instantiator.NewPopupYesNo("No Opponent", "you currently have no opponent", null, "Ok", OnOk);
             object OnOk(bool result)
             {
-                _characterButton.transform.position = new Vector3(_characterButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOnY, 0.0f);
-                _opponentButton.transform.position = new Vector3(_opponentButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOffY, 0.0f);
+                _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+                _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
                 return result;
             }
             return;
         }
         _opponentFrame.transform.position = transform.position;
         _characterFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
-        _opponentButton.transform.position = new Vector3(_opponentButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOnY, 0.0f);
-        _characterButton.transform.position = new Vector3(_characterButton.transform.position.x, _characterButton.transform.parent.position.y + _buttonOffY, 0.0f);
+        _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+        _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
     }
 
     private void Resume()

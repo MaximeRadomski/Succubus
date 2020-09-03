@@ -31,13 +31,15 @@ public class SplashScreenBhv : SceneBhv
             "How are you doing ?",
             "My regards",
             "Back in the game",
-            "Urgh... [DAY]s am I right ?",
-            "It's [DAY] my dudes",
             "Since 2020",
             "Do you like the game ?",
             "Looking goood",
             "Hey you"
         };
+        if (DateTime.Today.DayOfWeek == DayOfWeek.Monday || DateTime.Today.DayOfWeek == DayOfWeek.Thursday)
+            _catchPhrases.Add("Urgh... [DAY]s am I right ?");
+        else if (DateTime.Today.DayOfWeek == DayOfWeek.Wednesday)
+            _catchPhrases.Add("It's [DAY] my dudes");
         _catchPhrase = GameObject.Find("CatchPhrase").GetComponent<TMPro.TextMeshPro>();
         var tmpTxt = _catchPhrases[UnityEngine.Random.Range(0, _catchPhrases.Count)];
         tmpTxt = tmpTxt.Replace("[DAY]", DateTime.Today.DayOfWeek.ToString());

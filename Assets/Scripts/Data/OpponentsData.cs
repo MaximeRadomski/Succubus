@@ -9,36 +9,39 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 333, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
+            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 1),
                 new OpponentAttack(AttackType.GarbageRows, 1, 1),
                 new OpponentAttack(AttackType.EmptyRows, 1),
                 new OpponentAttack(AttackType.LightRows, 1, 10)},
-            GravityLevel = 1, DifficultyWeight = 0
+            GravityLevel = 1, DifficultyWeight = 0,
+            Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother and therefore allow the good training of hell's forces. "
         },
         new Opponent()
         {
             Id = 1, Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 666, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
+            HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 2),
                 new OpponentAttack(AttackType.GarbageRows, 2, 2),
                 new OpponentAttack(AttackType.EmptyRows, 2),
                 new OpponentAttack(AttackType.LightRows, 2, 15)},
-            GravityLevel = 5, DifficultyWeight = 0
+            GravityLevel = 5, DifficultyWeight = 0,
+            Lore = "Older children of the dummies, his will is to honor the family duty, and prevent his little brother to murder him in order to take his place."
         },
         new Opponent()
         {
             Id = 2, Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
-            HpMax = 999, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
+            HpMax = 666, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRows, 3),
                 new OpponentAttack(AttackType.GarbageRows, 3, 3),
                 new OpponentAttack(AttackType.EmptyRows, 3),
                 new OpponentAttack(AttackType.LightRows, 3, 20)},
-            GravityLevel = 10, DifficultyWeight = 0
+            GravityLevel = 10, DifficultyWeight = 0,
+            Lore = "Matriarch of the dummy family. Her reign over the hell's forces training is one of a kind. It's said she even trained the Antichrist himself!"
         },
         new Opponent()
         {
