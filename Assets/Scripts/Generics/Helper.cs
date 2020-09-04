@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using UnityEngine;
 
@@ -32,6 +33,26 @@ public static class Helper
             return targetRealm == Realm.Hell;
         }
         return false;
+    }
+
+    public static Realm GetSuperiorFrom(Realm realm)
+    {
+        if (realm == Realm.Hell)
+            return Realm.Heaven;
+        else if (realm == Realm.Earth)
+            return Realm.Hell;
+        else
+            return Realm.Earth;
+    }
+
+    public static Realm GetInferiorFrom(Realm realm)
+    {
+        if (realm == Realm.Hell)
+            return Realm.Earth;
+        else if (realm == Realm.Earth)
+            return Realm.Heaven;
+        else
+            return Realm.Hell;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown()

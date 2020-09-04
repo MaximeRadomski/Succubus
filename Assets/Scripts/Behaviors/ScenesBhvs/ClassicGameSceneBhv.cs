@@ -12,8 +12,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private bool _opponentOnCooldown;
     private float _nextCooldownTick;
     private int _opponentAttackId;
-    private SpriteRenderer _weaknessSpriteRenderer;
-    private SpriteRenderer _immunitySpriteRenderer;
+    private IconInstanceBhv _weaknessInstance;
+    private IconInstanceBhv _immunityInstance;
 
     private int _characterAttack;
     private bool _isCrit;
@@ -41,8 +41,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
-        _weaknessSpriteRenderer = GameObject.Find("Weakness").GetComponent<SpriteRenderer>();
-        _immunitySpriteRenderer = GameObject.Find("Immunity").GetComponent<SpriteRenderer>();
+        _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
+        _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
         _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
@@ -72,8 +72,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentAttackId = 0;
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _currentOpponent.Realm + "Opponents_" + _currentOpponent.Id);
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
-        _weaknessSpriteRenderer.enabled = _currentOpponent.Weakness != Weakness.None;
-        _immunitySpriteRenderer.enabled = _currentOpponent.Immunity != Immunity.None;
+        _weaknessInstance.SetVisible(_currentOpponent.Weakness != Weakness.None);
+        _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (_currentOpponent.Realm.GetHashCode() * 2)));
+        _immunityInstance.SetVisible(_currentOpponent.Immunity != Immunity.None);
+        _immunityInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (_currentOpponent.Realm.GetHashCode() * 2 + 1)));
         _opponentHpBar.UpdateContent(0, _currentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
@@ -90,11 +92,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void SetNextCooldownTick()
     {
-        if (Constants.CurrentOpponentCooldown >= _currentOpponent.Cooldown)
+        if (Constants.CurrentOpponentCooldown > _currentOpponent.Cooldown)
         {
             _opponentOnCooldown = false;
             _nextCooldownTick = Time.time + 3600;
-            Invoke(nameof(SetOpponentAttackReady), 1.0f);
+            _gameplayControler.AttackIncoming = true;
         }
         else
         {
@@ -102,14 +104,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
-    private void SetOpponentAttackReady()
-    {
-        _gameplayControler.AttackIncoming = true;
-    }
-
     public override void OpponentAttack()
     {
-        _gameplayControler.AttackIncoming = false;
         CameraBhv.Bump(1);
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
@@ -194,6 +190,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 {
                     if (_currentOpponent.Immunity != Immunity.Cooldown)
                         Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;
+                    else
+                        _immunityInstance.Pop();
                     if (Constants.CurrentOpponentCooldown <= 0)
                         Constants.CurrentOpponentCooldown = 0;
                     UpdateCooldownBar(Direction.Down);
@@ -222,9 +220,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         var incomingDamages = 0;
         if (_currentOpponent.Weakness == Weakness.Twists)
+        {
+            _weaknessInstance.Pop();
             incomingDamages += _currentOpponent.DamagesOnWeakness;
+        }
         if (_currentOpponent.Immunity == Immunity.Twists)
+        {
+            _immunityInstance.Pop();
             incomingDamages = 0;
+        }
         _characterAttack += incomingDamages;
     }
 
@@ -242,22 +246,32 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             if (Helper.IsSuperiorByRealm(Character.Realm, _currentOpponent.Realm))
                 incomingDamages = (int)(incomingDamages * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
-            else if (Helper.IsSuperiorByRealm(_currentOpponent.Realm, Character.Realm))
-                incomingDamages -= (int)(incomingDamages * Helper.MultiplierFromPercent(1.0f, -Character.DamagePercentToInferiorRealm));
             incomingDamages *= nbLines;
             if (_currentOpponent.Weakness == Weakness.xLines && _currentOpponent.XLineWeakness == nbLines)
+            {
+                _weaknessInstance.Pop();
                 incomingDamages += _currentOpponent.DamagesOnWeakness;
+            }
             if (_currentOpponent.Immunity == Immunity.xLines && _currentOpponent.XLineImmunity == nbLines)
+            {
+                _immunityInstance.Pop();
                 incomingDamages = 0;
+            }
             if (Character.Realm == Realm.Earth && nbLines == 4)
                 _gameplayControler.CheckForGarbageRows(Character.RealmPassiveEffect);
         }
         if (isB2B)
         {
             if (_currentOpponent.Weakness == Weakness.Consecutive)
+            {
+                _weaknessInstance.Pop();
                 incomingDamages += _currentOpponent.DamagesOnWeakness;
+            }
             if (_currentOpponent.Immunity == Immunity.Consecutive)
+            {
+                _immunityInstance.Pop();
                 incomingDamages = 0;
+            }
             if (Character.Realm == Realm.Heaven)
             {
                 Constants.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
@@ -274,9 +288,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Character.Realm == Realm.Hell)
             incomingDamages += (int)((Character.Attack * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
         if (_currentOpponent.Weakness == Weakness.Combos)
+        {
+            _weaknessInstance.Pop();
             incomingDamages += _currentOpponent.DamagesOnWeakness * (nbCombo - 1);
+        }
         if (_currentOpponent.Immunity == Immunity.Combos)
+        {
+            _immunityInstance.Pop();
             incomingDamages = 0;
+        }
         _characterAttack += incomingDamages;
     }
 

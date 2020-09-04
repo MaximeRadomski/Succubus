@@ -53,10 +53,10 @@ public class InfoMenuBhv : PopupBhv
     private void InitCharacterFrame(Character character)
     {
         _characterFrame.transform.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = character.Name + " - " + character.Kind;
-        _characterFrame.transform.Find("Attack").GetComponent<TMPro.TextMeshPro>().text = "attack:" + Constants.MaterialHell_4_3 + character.Attack;
-        _characterFrame.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.MaterialHell_4_3 + character.Cooldown;
-        _characterFrame.transform.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
-        _characterFrame.transform.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
+        _characterFrame.transform.Find("CharacterAttack").GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.MaterialHell_4_3 + character.Attack;
+        _characterFrame.transform.Find("CharacterCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + character.Cooldown;
+        _characterFrame.transform.Find("CharacterSpecial").GetComponent<TMPro.TextMeshPro>().text = "special: " + Constants.MaterialHell_4_3 + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
+        _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
         if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
@@ -80,10 +80,31 @@ public class InfoMenuBhv : PopupBhv
     private void InitOpponentFrame(Opponent opponent)
     {
         if (opponent == null)
-        {
-
             return;
+        _opponentFrame.transform.Find("OpponentKind").GetComponent<TMPro.TextMeshPro>().text = opponent.Kind;
+        _opponentFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.MaterialHell_4_3 + opponent.HpMax;
+        _opponentFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + opponent.Cooldown;
+        for (int i = 0; i < 5; ++i)
+        {
+            if (i < opponent.Attacks.Count)
+                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = "attack " + (i + 1) + ": " + Constants.MaterialHell_4_3 + opponent.Attacks[i].NbAttackRows + " " + opponent.Attacks[i].AttackType.GetDescription().ToLower();
+            else
+                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
         }
+        _opponentFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.MaterialHell_4_3 + opponent.Realm.ToString().ToLower() + "\n" +
+            "- takes more damages from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n" +
+            "- attacks " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters with one more row.";
+        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
+        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + opponent.Realm + "Opponents_" + opponent.Id);
+        _opponentFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.MaterialHell_4_3 + 
+            (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + opponent.Weakness.ToString().ToLower() : opponent.Weakness.ToString().ToLower());
+        _opponentFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.MaterialHell_4_3 +
+            (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + opponent.Immunity.ToString().ToLower() : opponent.Immunity.ToString().ToLower());
+    }
+
+    private void OpponentLore()
+    {
+        _instantiator.NewPopupYesNo("Lore", _opponent.Lore.ToLower(), null, "Ok", null);
     }
 
     private void ShowCharacter()

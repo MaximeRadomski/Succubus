@@ -485,12 +485,12 @@ public class GameplayControler : MonoBehaviour
         else if (Time.time < _nextLock)
         {
             CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock((_nextLock - Time.time)/_lockDelay);
-            if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock)
+            if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock && !CurrentPiece.GetComponent<Piece>().IsLocked)
             {
                 Lock();
             }
         }
-        else if (_nextLock <= Time.time)
+        else if (_nextLock <= Time.time && !CurrentPiece.GetComponent<Piece>().IsLocked)
         {
             Lock();
         }
@@ -1183,6 +1183,8 @@ public class GameplayControler : MonoBehaviour
                 ClearLineSpace();
                 if (AttackIncoming)
                 {
+                    AttackIncoming = false;
+                    //Debug.Log(DateTime.Now + "CheckForLine (line)");
                     SceneBhv.OpponentAttack();
                 }
                 Spawn();                    
@@ -1197,6 +1199,8 @@ public class GameplayControler : MonoBehaviour
             _comboCounter = 0;
             if (AttackIncoming)
             {
+                AttackIncoming = false;
+                //Debug.Log(DateTime.Now + "CheckForLine (no line)");
                 SceneBhv.OpponentAttack();
             }
             Spawn();

@@ -14,4 +14,6 @@ public enum AttackType
     LightRows = 3, //Full rows with a cooldown, each time a piece locks, it decreases the cooldown. Is destroyed after cooldown.
     [Description("Empty Rows")]
     EmptyRows = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it
+    [Description("Vision Rows")]
+    VisionRows = 5, //Rows that will go over yours to hide your gameplay
 }

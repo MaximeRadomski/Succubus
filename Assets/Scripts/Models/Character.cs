@@ -18,7 +18,6 @@ public class Character
     public int CritChancePercent;
     public int CritMultiplier;
     public int DamagePercentToInferiorRealm;
-    public int DamagePercentToSuperiorRealm;
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
 
@@ -27,7 +26,6 @@ public class Character
         CritChancePercent = 1;
         CritMultiplier = 50;
         DamagePercentToInferiorRealm = 20;
-        DamagePercentToSuperiorRealm = 20;
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;
     }

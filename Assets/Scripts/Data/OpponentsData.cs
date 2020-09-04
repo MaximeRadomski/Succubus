@@ -16,7 +16,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.EmptyRows, 1),
                 new OpponentAttack(AttackType.LightRows, 1, 10)},
             GravityLevel = 1, DifficultyWeight = 0,
-            Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother and therefore allow the good training of hell's forces. "
+            Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
         new Opponent()
         {

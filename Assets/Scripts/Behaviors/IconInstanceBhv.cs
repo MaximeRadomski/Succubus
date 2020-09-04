@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class IconInstanceBhv : MonoBehaviour
 {
+    private SpriteRenderer _spriteRenderer;
+    
     private Vector3 _originalScale;
     private Vector3 _poppingScale;
     private bool _popping;
@@ -20,6 +22,7 @@ public class IconInstanceBhv : MonoBehaviour
     {
         if (_hasInit)
             return;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalScale = transform.localScale;
         _poppingScale = new Vector3(1.1f, 1.3f, 1.0f);
         _hasInit = true;
@@ -35,6 +38,23 @@ public class IconInstanceBhv : MonoBehaviour
         {
             ResetPopping();
         }
+    }
+
+    public void SetVisible(bool visible)
+    {
+        if (!_hasInit)
+            Init();
+        _spriteRenderer.enabled = visible;
+    }
+
+    public void SetSkin(Sprite sprite)
+    {
+        _spriteRenderer.sprite = sprite;
+    }
+
+    public void Pop()
+    {
+        _popping = true;
     }
 
     private void Popping()
