@@ -9,12 +9,15 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
+            HpMax = 2222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRows, 1),
-                new OpponentAttack(AttackType.GarbageRows, 1, 1),
-                new OpponentAttack(AttackType.EmptyRows, 1),
-                new OpponentAttack(AttackType.LightRows, 1, 10)},
+                new OpponentAttack(AttackType.VisionRows, 4, 0),
+                new OpponentAttack(AttackType.VisionRows, 4, 4),
+                new OpponentAttack(AttackType.VisionRows, 4, 8),
+                //new OpponentAttack(AttackType.DarkRows, 1),
+                //new OpponentAttack(AttackType.GarbageRows, 1, 1),
+                //new OpponentAttack(AttackType.EmptyRows, 1),
+                /*new OpponentAttack(AttackType.LightRows, 1, 10)*/},
             GravityLevel = 1, DifficultyWeight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
