@@ -67,6 +67,7 @@ public class GameplayControler : MonoBehaviour
     private int _idLightRows;
     private int _idEmptyRows;
     private int _idCleanRows;
+    private int _idVisionBlock;
 
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
@@ -143,6 +144,7 @@ public class GameplayControler : MonoBehaviour
         _idLightRows = _soundControler.SetSound("LightRows");
         _idEmptyRows = _soundControler.SetSound("EmptyRows");
         _idCleanRows = _soundControler.SetSound("CleanRows");
+        _idVisionBlock = _soundControler.SetSound("VisionBlock");
 
         CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
@@ -1395,55 +1397,97 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    public void OpponentAttack(AttackType type, int rows, int param, Realm opponentRealm)
+    public void OpponentAttack(AttackType type, int nbRows, int param, Realm opponentRealm)
     {
-        IncreaseAllAboveLines(rows);
-        if (type == AttackType.EmptyRows)
-        {
-            _soundControler.PlaySound(_idEmptyRows);
-            return;
-        }
-        int emptyStart = -1;
-        int emptyEnd = -1;
-        if (type == AttackType.GarbageRows)
-        {
-            _soundControler.PlaySound(_idGarbageRows);
-            param = param < 1 ? 1 : param;
-            emptyStart = UnityEngine.Random.Range(0, (10 + 1) - param); //10 + 1 because exclusive, and param always at least 1
-            emptyEnd = emptyStart + param - 1;
-        }
-        for (int y = 0; y < rows; ++y)
-        {
-            FillLine(y, type, opponentRealm, emptyStart, emptyEnd);
-        }
-        if (type == AttackType.LightRows)
-        {
-            _soundControler.PlaySound(_idLightRows);
-            param = param < 1 ? 1 : param;
-            PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
-            PlayFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
-            var lightRowBhv = PlayFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
-            lightRowBhv.NbRows = rows;
-            lightRowBhv.Cooldown = param;
-            var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)rows - 1.0f) / 2.0f));
-            tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
-            lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
-            lightRowBhv.UpdateCooldownText(param);
-        }
-        if (type == AttackType.DarkRows)
-        {
-            _soundControler.PlaySound(_idDarkRows);
-        }
         VibrationService.Vibrate();
+        switch (type)
+        {
+            case AttackType.DarkRows:
+                AttackDarkRows(nbRows, opponentRealm);
+                break;
+            case AttackType.GarbageRows:
+                AttackGarbageRows(nbRows, opponentRealm, param);
+                break;
+            case AttackType.LightRows:
+                AttackLightRows(nbRows, opponentRealm, param);
+                break;
+            case AttackType.EmptyRows:
+                AttackEmptyRows(nbRows, opponentRealm);
+                break;
+            case AttackType.VisionBlock:
+                AttackVisionBlock(nbRows, opponentRealm, param);
+                break;
+        }
     }
 
-    private void FillLine(int y, AttackType type, Realm realm, int emptyStart, int emptyEnd)
+    private void AttackDarkRows(int nbRows, Realm opponentRealm)
+    {
+        IncreaseAllAboveLines(nbRows);
+        _soundControler.PlaySound(_idDarkRows);
+        for (int y = 0; y < nbRows; ++y)
+        {
+            FillLine(y, AttackType.DarkRows, opponentRealm);
+        }
+    }
+
+    private void AttackGarbageRows(int nbRows, Realm opponentRealm, int param)
+    {
+        IncreaseAllAboveLines(nbRows);
+        _soundControler.PlaySound(_idGarbageRows);
+        param = param < 1 ? 1 : param;
+        int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - param);
+        int emptyEnd = emptyStart + param - 1;
+        for (int y = 0; y < nbRows; ++y)
+        {
+            FillLine(y, AttackType.GarbageRows, opponentRealm, emptyStart, emptyEnd);
+        }
+    }
+
+    private void AttackLightRows(int nbRows, Realm opponentRealm, int param)
+    {
+        IncreaseAllAboveLines(nbRows);
+        _soundControler.PlaySound(_idLightRows);
+        for (int y = 0; y < nbRows; ++y)
+        {
+            FillLine(y, AttackType.LightRows, opponentRealm);
+        }
+        param = param < 1 ? 1 : param;
+        PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
+        PlayFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
+        var lightRowBhv = PlayFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
+        lightRowBhv.NbRows = nbRows;
+        lightRowBhv.Cooldown = param;
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)nbRows - 1.0f) / 2.0f));
+        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
+        lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
+        lightRowBhv.UpdateCooldownText(param);
+    }
+
+    private void AttackEmptyRows(int nbRows, Realm opponentRealm)
+    {
+        IncreaseAllAboveLines(nbRows);
+        _soundControler.PlaySound(_idEmptyRows);
+    }
+
+    private void AttackVisionBlock(int nbRows, Realm opponentRealm, int param)
+    {
+        _soundControler.PlaySound(_idVisionBlock);
+        nbRows = nbRows < 2 ? 2 : nbRows;
+        var currentHiest = GetHighestBlock();
+        if (currentHiest + nbRows > 19)
+            currentHiest = 19 - nbRows;
+        var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, param, opponentRealm);
+        visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
+    }
+
+    private void FillLine(int y, AttackType type, Realm realm, int emptyStart = -1, int emptyEnd = -1)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
             if (type == AttackType.GarbageRows && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
+            attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[x, y] = attackBlock.transform;
         }
     }
@@ -1452,55 +1496,55 @@ public class GameplayControler : MonoBehaviour
 
     private void CheckKeyboardInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+        if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Space))
         {
             Hold();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.B))
         {
             AntiClock();
         }
-        if (Input.GetKey(KeyCode.Keypad2))
+        if (Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.N))
         {
             SoftDropHolded();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.G))
         {
             Left();
         }
-        if (Input.GetKey(KeyCode.Keypad4))
+        if (Input.GetKey(KeyCode.Keypad4) || Input.GetKey(KeyCode.G))
         {
             LeftHolded();
         }
-        if (Input.GetKeyUp(KeyCode.Keypad4))
+        if (Input.GetKeyUp(KeyCode.Keypad4) || Input.GetKeyUp(KeyCode.G))
         {
             DirectionReleased();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad5))
+        if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.H))
         {
             Clock();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad6))
+        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.J))
         {
             Right();
         }
-        if (Input.GetKey(KeyCode.Keypad6))
+        if (Input.GetKey(KeyCode.Keypad6) || Input.GetKey(KeyCode.J))
         {
             RightHolded();
         }
-        if (Input.GetKeyUp(KeyCode.Keypad6))
+        if (Input.GetKeyUp(KeyCode.Keypad6) || Input.GetKeyUp(KeyCode.J))
         {
             DirectionReleased();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad8))
+        if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Y))
         {
             HardDrop();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad7))
+        if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.T))
         {
             Item();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad9))
+        if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.U))
         {
             Special();
         }

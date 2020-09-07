@@ -135,6 +135,14 @@ public class Instantiator : MonoBehaviour
         return tmpTextInstance;
     }
 
+    public GameObject NewVisionBlock(Vector2 position, int nbRows, int nbSeconds, Realm opponentRealm)
+    {
+        var tmpVisionBlockObject = Resources.Load<GameObject>("Prefabs/VisionBlock");
+        var tmpVisionBlockInstance = Instantiate(tmpVisionBlockObject, position, tmpVisionBlockObject.transform.rotation);
+        tmpVisionBlockInstance.GetComponent<VisionBlockBhv>().Init(nbRows, nbSeconds, opponentRealm);
+        return tmpVisionBlockInstance;
+    }
+
     public void PopIcon(Sprite sprite, Vector2 position)
     {
         var tmpPoppingIconObject = Resources.Load<GameObject>("Prefabs/PoppingIcon");

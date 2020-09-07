@@ -23,10 +23,10 @@ public class MusicControlerBhv : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
-        SceneManager.sceneLoaded += SceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         _currentType = MusicTyoe.None;
         SetNewVolumeLevel();
-        SceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     public void SetNewVolumeLevel(float? level = null)
@@ -68,7 +68,7 @@ public class MusicControlerBhv : MonoBehaviour
             _audioSource.Play();
     }
 
-    private void SceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (_isHalved)
             HalveVolume();

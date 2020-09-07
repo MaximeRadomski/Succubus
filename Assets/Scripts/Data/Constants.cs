@@ -30,6 +30,7 @@ public static class Constants
     public const string TagSoundControler = "SoundControler";
     public const string TagPoppingText = "PoppingText";
     public const string TagLightRows = "LightRows";
+    public const string TagVisionBlock = "VisionBlock";
 
     // UNITS OF MEASURE //
     public const int HourInMinutes = 60;
