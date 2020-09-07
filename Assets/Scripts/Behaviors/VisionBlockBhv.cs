@@ -99,7 +99,7 @@ public class VisionBlockBhv : MonoBehaviour
 
     private void UpdateTextAndSetNextTick()
     {
-        _secondsText.text = "- -  " + _cooldown + "  - -";
+        _secondsText.text = "-  " + _cooldown + "  -";
         _nextTick = Time.time + 1.0f;
     }
 

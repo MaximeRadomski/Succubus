@@ -11,7 +11,9 @@ public static class OpponentsData
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 2222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.VisionBlock, 4, 4)
+                new OpponentAttack(AttackType.VisionBlock, 4, 4),
+                new OpponentAttack(AttackType.VisionBlock, 6, 3),
+                new OpponentAttack(AttackType.VisionBlock, 8, 2),
                 //new OpponentAttack(AttackType.DarkRows, 1),
                 //new OpponentAttack(AttackType.GarbageRows, 1, 1),
                 //new OpponentAttack(AttackType.EmptyRows, 1),

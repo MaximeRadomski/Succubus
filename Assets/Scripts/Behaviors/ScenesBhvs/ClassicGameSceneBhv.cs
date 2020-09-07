@@ -61,8 +61,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (Constants.CurrentListOpponentsId >= _opponents.Count)
         {
-            Constants.CurrentMusicType = MusicTyoe.Menu;
-            NavigationService.LoadPreviousScene();
+            Victory();
             return;
         }
         _currentOpponent = _opponents[Constants.CurrentListOpponentsId];
@@ -81,6 +80,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.UpdateContent(0, 1);
         _gameplayControler.SetGravity(_currentOpponent.GravityLevel);
         StartOpponentCooldown();
+    }
+
+    private void Victory()
+    {
+        _gameplayControler.CleanPlayerPrefs();
+        Constants.CurrentMusicType = MusicTyoe.Menu;
+        NavigationService.LoadPreviousScene();
     }
 
     private void StartOpponentCooldown()
