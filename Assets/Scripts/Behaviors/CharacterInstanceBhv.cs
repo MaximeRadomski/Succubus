@@ -41,7 +41,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
         _spawnScale = new Vector3(0.5f, 1.5f, 1.0f);
-        _spawnPosition = new Vector3(0.0f, 3.0f, 0.0f);
+        _spawnPosition = new Vector3(0.0f, 5.0f, 0.0f);
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _hasInit = true;
     }

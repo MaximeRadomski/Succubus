@@ -20,6 +20,7 @@ public class Character
     public int DamagePercentToInferiorRealm;
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
+    public int VisionBlockAlterator;
 
     public Character()
     {
@@ -28,5 +29,6 @@ public class Character
         DamagePercentToInferiorRealm = 20;
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;
+        VisionBlockAlterator = 1;
     }
 }

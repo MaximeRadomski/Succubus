@@ -31,9 +31,9 @@ public class PlayFieldBhv : MonoBehaviour
 
     public void HideShow(int show)
     {
-        if (Grid == null)
+        if (transform == null)
             return;
-        foreach (Transform child in Grid)
+        foreach (Transform child in transform)
         {
             if (child == null)
                 continue;

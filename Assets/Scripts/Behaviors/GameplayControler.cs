@@ -29,6 +29,7 @@ public class GameplayControler : MonoBehaviour
     private Vector3 _lastCurrentPieceValidPosition;
     private int _lastNbLinesCleared;
     private int _comboCounter;
+    private int _leftHolded, _rightHolded;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -535,6 +536,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         CheckForLightRows();
+        CheckForVisionBlocks();
         CheckForLines();
     }
 
@@ -564,6 +566,7 @@ public class GameplayControler : MonoBehaviour
 
     private void Left()
     {
+        _leftHolded = _rightHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         SetTimeDirectionHolded();
@@ -577,6 +580,7 @@ public class GameplayControler : MonoBehaviour
 
     private void LeftHolded()
     {
+        ++_leftHolded;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         ++_timeDirectionHolded;
@@ -585,13 +589,14 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset())
+        if (IsPiecePosValidOrReset() && _rightHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
 
     private void Right()
     {
+        _rightHolded = _leftHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         SetTimeDirectionHolded();
@@ -605,6 +610,7 @@ public class GameplayControler : MonoBehaviour
 
     private void RightHolded()
     {
+        ++_rightHolded;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         ++_timeDirectionHolded;
@@ -613,7 +619,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset())
+        if (IsPiecePosValidOrReset() && _leftHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
@@ -1209,7 +1215,7 @@ public class GameplayControler : MonoBehaviour
         }            
     }
 
-    private void CheckForDarkRows(int nbLines)
+    public void CheckForDarkRows(int nbLines)
     {
         bool hasDeletedRows = false;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
@@ -1263,6 +1269,19 @@ public class GameplayControler : MonoBehaviour
                     DeleteLine(y);
                 }
                 ClearLineSpace(startY, startY + nbRows - 1);
+            }
+        }
+    }
+
+    private void CheckForVisionBlocks()
+    {
+        var allVisionBlocks = GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock);
+        foreach (var visionBlockGameObject in allVisionBlocks)
+        {
+            var visionBlockBhv = visionBlockGameObject.GetComponent<VisionBlockBhv>();
+            if (visionBlockBhv != null)
+            {
+                visionBlockBhv.DecreaseCooldown(Character.VisionBlockAlterator, pop: true);
             }
         }
     }

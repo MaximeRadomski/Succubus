@@ -264,7 +264,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamages = 0;
             }
             if (Character.Realm == Realm.Earth && nbLines == 4)
+            {
+                _gameplayControler.CheckForDarkRows(Character.RealmPassiveEffect);
                 _gameplayControler.CheckForGarbageRows(Character.RealmPassiveEffect);
+                
+            }
         }
         if (isB2B)
         {

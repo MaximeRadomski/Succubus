@@ -55,8 +55,10 @@ public class SettingsAudioSceneBhv : SceneBhv
     private void LevelChoice()
     {
         var choiceLevelSring = Constants.LastEndActionClickedName.Substring(Constants.LastEndActionClickedName.Length - 4);
-        var choiceLevel = float.Parse(choiceLevelSring);
-        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);        
+        var choiceLevel = -1.0f;
+        if (!float.TryParse(choiceLevelSring.Replace(",", "."), out choiceLevel))
+            float.TryParse(choiceLevelSring.Replace(".", ","), out choiceLevel);
+        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName.Replace(",", "."));
         if (Constants.LastEndActionClickedName.Contains("Effects"))
         {
             _effectsLevelSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _effectsLevelSelector.transform.position.y, 0.0f);

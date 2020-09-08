@@ -83,7 +83,7 @@ public class InfoMenuBhv : PopupBhv
             return;
         _opponentFrame.transform.Find("OpponentKind").GetComponent<TMPro.TextMeshPro>().text = opponent.Kind;
         _opponentFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.MaterialHell_4_3 + opponent.HpMax;
-        _opponentFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + opponent.Cooldown;
+        _opponentFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + opponent.Cooldown + " seconds";
         for (int i = 0; i < 5; ++i)
         {
             if (i < opponent.Attacks.Count)

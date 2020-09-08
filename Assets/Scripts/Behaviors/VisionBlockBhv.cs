@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class VisionBlockBhv : MonoBehaviour
 {
     private TMPro.TextMeshPro _secondsText;
+    private IconInstanceBhv _secondsTextIconInstance;
     private bool _isInGameScene;
     private int _cooldown;
     private float _nextTick;
@@ -37,7 +38,9 @@ public class VisionBlockBhv : MonoBehaviour
             }
         }
         _secondsText = transform.Find("Seconds").GetComponent<TMPro.TextMeshPro>();
+        _secondsTextIconInstance = _secondsText.GetComponent<IconInstanceBhv>();
         _secondsText.color = (Color)Constants.GetColorFromNature(_realm, 2);
+        transform.Find("Scores").GetComponent<TMPro.TextMeshPro>().color = _secondsText.color;
         _cooldown = nbSeconds;
         UpdateTextAndSetNextTick();
         _isInGameScene = true;
@@ -52,7 +55,7 @@ public class VisionBlockBhv : MonoBehaviour
     {
         if (_gameScene == null)
             GetScene();
-        if (_isInGameScene && !_gameScene.Paused)
+        if (_isInGameScene && _gameScene != null && !_gameScene.Paused)
         {
             CheckNextTick();
         }
@@ -72,11 +75,7 @@ public class VisionBlockBhv : MonoBehaviour
         }
         if (Time.time >= _nextTick)
         {
-            --_cooldown;
-            if (_cooldown <= 0)
-                End();
-            else
-                UpdateTextAndSetNextTick();
+            DecreaseCooldown(1);
         }
     }
 
@@ -87,7 +86,8 @@ public class VisionBlockBhv : MonoBehaviour
         if (_gameScene == null)
             GetScene();
         int yRounded = Mathf.RoundToInt(transform.Find("BotLeftCorner").position.y);
-        for (int y = yRounded; y < _nbRows; ++y)
+        int yMax = yRounded + _nbRows;
+        for (int y = yRounded; y < yMax; ++y)
         {
             for (int x = 0; x < 10; ++x)
             {
@@ -99,7 +99,7 @@ public class VisionBlockBhv : MonoBehaviour
 
     private void UpdateTextAndSetNextTick()
     {
-        _secondsText.text = "-  " + _cooldown + "  -";
+        _secondsText.text = _cooldown.ToString();
         _nextTick = Time.time + 1.0f;
     }
 
@@ -109,5 +109,16 @@ public class VisionBlockBhv : MonoBehaviour
             _isInGameScene = true;
         else
             _isInGameScene = false;
+    }
+
+    public void DecreaseCooldown(int amount, bool pop = false)
+    {
+        if (pop)
+            _secondsTextIconInstance.Pop();
+        _cooldown -= amount;
+        if (_cooldown <= 0)
+            End();
+        else
+            UpdateTextAndSetNextTick();
     }
 }
