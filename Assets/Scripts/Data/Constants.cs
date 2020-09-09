@@ -21,6 +21,7 @@ public static class Constants
     public static Vector3 _cameraHorizontalGameplayPosition = new Vector3(4.5f, 9.64f, -10.0f);
     public const float MaximumVolumeMusic = 0.2f;
     public const float MaximumEffectsMusic = 1.0f;
+    public const string PiecesLetters = "IJLOSTZ";
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -106,6 +107,7 @@ public static class Constants
     public const string GoMusicControler = "MusicControler";
     public const string GoCharacterInstance = "CharacterInstance";
     public const string GoOpponentInstance = "OpponentInstance";
+    public const string GoForcedPiece = "ForcedPiece";
 
 
     //  GAMEOBJECT VALUES  //

@@ -115,14 +115,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         CameraBhv.Bump(1);
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
-        if (_opponentAttackId >= _currentOpponent.Attacks.Count)
-            _opponentAttackId = 0;
         _gameplayControler.OpponentAttack(
             _currentOpponent.Attacks[_opponentAttackId].AttackType,
             _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
             _currentOpponent.Attacks[_opponentAttackId].AttackParam,
             _currentOpponent.Realm);
-        ++_opponentAttackId;
+        if (++_opponentAttackId >= _currentOpponent.Attacks.Count)
+            _opponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
@@ -138,6 +137,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
             ++Constants.CurrentOpponentCooldown;
+            if (Constants.CurrentOpponentCooldown >= 1 && _currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && GameObject.Find(Constants.GoForcedPiece) == null)
+                _gameplayControler.AttackForcedPiece(_currentOpponent.Realm);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }

@@ -21,6 +21,11 @@ public class PlayFieldBhv : MonoBehaviour
             DontDestroyOnLoad(gameObject);
     }
 
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
+    }
+
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>() == null)

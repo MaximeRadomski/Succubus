@@ -81,6 +81,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             _gameplayControler.SetGravity(_level);
             _soundControler.PlaySound(_levelUp);
             Instantiator.PopText("L   level  up   J", new Vector2(4.5f, 15.0f));
+            CameraBhv.Bump(2);
         }
         _levelTmp.text = _level.ToString();
         _next = _level * Constants.LinesForLevel - _lines;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class GameplayControler : MonoBehaviour
@@ -24,6 +25,7 @@ public class GameplayControler : MonoBehaviour
     private float _nextLock;
     private int _allowedMovesBeforeLock;
     private bool _canHold;
+    private bool _hasInit;
     private int _playFieldHeight;
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
@@ -103,6 +105,8 @@ public class GameplayControler : MonoBehaviour
 
     private void Init(int level, Realm characterRealm, Realm levelRealm)
     {
+        if (_hasInit)
+            return;
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
@@ -180,6 +184,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.Init(Character, this);
         _characterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
+        _hasInit = true;
     }
 
     public void UpdateItemAndSpecialVisuals()
@@ -327,7 +332,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay - (Constants.LockDelay * 0.05f * levelAfter20);
+            _lockDelay = Constants.LockDelay - (Constants.LockDelay * 0.04f * levelAfter20);
         }
         else
         {
@@ -459,7 +464,7 @@ public class GameplayControler : MonoBehaviour
 
     void Update()
     {
-        if (SceneBhv.Paused)
+        if (!_hasInit || SceneBhv.Paused)
             return;
         CheckKeyboardInputs();
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
@@ -698,8 +703,10 @@ public class GameplayControler : MonoBehaviour
                 CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
                 CurrentPiece.GetComponent<Piece>().IsLocked = true;
-                Invoke(nameof(Lock), Constants.AfterDropDelay);
-
+                if (CurrentPiece.name == "Old" + Constants.GoForcedPiece)
+                    AddToPlayField(CurrentPiece);
+                else
+                    Invoke(nameof(Lock), Constants.AfterDropDelay);
                 string columns = "";
                 int yMin = Mathf.RoundToInt(CurrentPiece.transform.position.y);
                 foreach (Transform child in CurrentPiece.transform)
@@ -782,6 +789,26 @@ public class GameplayControler : MonoBehaviour
                 CurrentGhost.transform.position = lastCurrentGhostValidPosition;
                 if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
                     AffectGravityOnBlocks(CurrentGhost);
+                hardDropping = false;
+            }
+        }
+        DropForcedPiece();
+    }
+
+    private void DropForcedPiece()
+    {
+        var forcedPiece = GameObject.Find(Constants.GoForcedPiece);
+        if (forcedPiece == null)
+            return;
+        bool hardDropping = true;
+        forcedPiece.transform.position = new Vector3(forcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f + forcedPiece.GetComponent<Piece>().YFromSpawn, 0.0f);
+        while (hardDropping)
+        {
+            var lastPos = forcedPiece.transform.position;
+            forcedPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (!IsPiecePosValid(forcedPiece) || IsPiecesBlocksOverlappingGhost(forcedPiece))
+            {
+                forcedPiece.transform.position = lastPos;
                 hardDropping = false;
             }
         }
@@ -1123,6 +1150,26 @@ public class GameplayControler : MonoBehaviour
         return true;
     }
 
+    private bool IsPiecesBlocksOverlappingGhost(GameObject piece)
+    {
+        if (CurrentGhost == null)
+            return false;
+        foreach (Transform child in piece.transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.transform.position.x);
+            int roundedY = Mathf.RoundToInt(child.transform.position.y);
+
+            foreach (Transform ghostChild in CurrentGhost.transform)
+            {
+                int ghostChildRoundedX = Mathf.RoundToInt(ghostChild.transform.position.x);
+                int ghostChildRoundedY = Mathf.RoundToInt(ghostChild.transform.position.y);
+                if (roundedX == ghostChildRoundedX && roundedY == ghostChildRoundedY)
+                    return true;
+            }
+        }
+        return false;
+    }
+
     private bool IsNextGravityFallPossible()
     {
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -1421,20 +1468,23 @@ public class GameplayControler : MonoBehaviour
         VibrationService.Vibrate();
         switch (type)
         {
-            case AttackType.DarkRows:
+            case AttackType.DarkRow:
                 AttackDarkRows(nbRows, opponentRealm);
                 break;
-            case AttackType.GarbageRows:
+            case AttackType.GarbageRow:
                 AttackGarbageRows(nbRows, opponentRealm, param);
                 break;
-            case AttackType.LightRows:
+            case AttackType.LightRow:
                 AttackLightRows(nbRows, opponentRealm, param);
                 break;
-            case AttackType.EmptyRows:
+            case AttackType.EmptyRow:
                 AttackEmptyRows(nbRows, opponentRealm);
                 break;
             case AttackType.VisionBlock:
                 AttackVisionBlock(nbRows, opponentRealm, param);
+                break;
+            case AttackType.ForcedPiece:
+                AttackForcedPiece(opponentRealm);
                 break;
         }
     }
@@ -1445,7 +1495,7 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idDarkRows);
         for (int y = 0; y < nbRows; ++y)
         {
-            FillLine(y, AttackType.DarkRows, opponentRealm);
+            FillLine(y, AttackType.DarkRow, opponentRealm);
         }
     }
 
@@ -1458,7 +1508,7 @@ public class GameplayControler : MonoBehaviour
         int emptyEnd = emptyStart + param - 1;
         for (int y = 0; y < nbRows; ++y)
         {
-            FillLine(y, AttackType.GarbageRows, opponentRealm, emptyStart, emptyEnd);
+            FillLine(y, AttackType.GarbageRow, opponentRealm, emptyStart, emptyEnd);
         }
     }
 
@@ -1468,7 +1518,7 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idLightRows);
         for (int y = 0; y < nbRows; ++y)
         {
-            FillLine(y, AttackType.LightRows, opponentRealm);
+            FillLine(y, AttackType.LightRow, opponentRealm);
         }
         param = param < 1 ? 1 : param;
         PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
@@ -1499,11 +1549,60 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
     }
 
+    public void AttackForcedPiece(Realm opponentRealm)
+    {
+        var forcedPiece = GameObject.Find(Constants.GoForcedPiece);
+        if (forcedPiece != null)
+        {
+            CurrentPiece = Instantiator.NewPiece(forcedPiece.GetComponent<Piece>().Letter, opponentRealm.ToString(), new Vector3(forcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f, 0.0f));
+            CurrentPiece.transform.rotation = forcedPiece.transform.rotation;
+            CurrentPiece.name = "Old" + Constants.GoForcedPiece;
+            HardDrop();
+            Destroy(forcedPiece);
+        }
+        else
+        {
+            var randomRotation = UnityEngine.Random.Range(0, 4);
+            var randomX = UnityEngine.Random.Range(-4, 6);
+            forcedPiece = Instantiator.NewPiece(/*Constants.PiecesLetters[UnityEngine.Random.Range(0, Constants.PiecesLetters.Length)].ToString()*/"O", opponentRealm.ToString(), _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
+            string mesCouilles;
+            if (forcedPiece.GetComponent<Piece>().Letter == "I" && forcedPiece.GetComponent<Piece>().Letter == "O")
+                mesCouilles = "Kiwi";
+            forcedPiece.name = Constants.GoForcedPiece;
+            var tmpFadeBlockSpriteRenderer = Instantiator.NewFadeBlock(opponentRealm, new Vector3(50.0f, 50.0f, 1.0f), 5, 5).GetComponent<SpriteRenderer>();
+            foreach (Transform child in forcedPiece.transform)
+            {
+                var childSpriteRenderer = child.GetComponent<SpriteRenderer>();
+                childSpriteRenderer.sprite = tmpFadeBlockSpriteRenderer.sprite;
+                childSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+            }
+            forcedPiece.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+            Destroy(tmpFadeBlockSpriteRenderer.gameObject);
+            if (forcedPiece.GetComponent<Piece>().Letter != "O")
+            {
+                for (int i = 0; i < randomRotation; ++i)
+                    forcedPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
+            }
+            for (int j = 0; ((int)forcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)
+            {
+                var lastPos = forcedPiece.transform.position;
+                forcedPiece.transform.position += new Vector3(1.0f * (randomX < 0 ? -1.0f : 1.0f), 0.0f, 0.0f);
+                if (IsPiecePosValid(forcedPiece) == false)
+                {
+                    forcedPiece.transform.position = lastPos;
+                    break;
+                }
+            }
+            forcedPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
+            DropForcedPiece();
+        }
+    }
+
     private void FillLine(int y, AttackType type, Realm realm, int emptyStart = -1, int emptyEnd = -1)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (type == AttackType.GarbageRows && x >= emptyStart && x <= emptyEnd)
+            if (type == AttackType.GarbageRow && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
             attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
