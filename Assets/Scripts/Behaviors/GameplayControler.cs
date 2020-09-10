@@ -693,7 +693,7 @@ public class GameplayControler : MonoBehaviour
 
     private void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked && !CurrentPiece.name.Contains(Constants.GoForcedPiece))
+        if (CurrentPiece.GetComponent<Piece>().IsLocked && CurrentPiece.name != "Old" + Constants.GoForcedPiece)
             return;
         bool hardDropping = true;
         int nbLinesDropped = 0;
@@ -1571,11 +1571,11 @@ public class GameplayControler : MonoBehaviour
         }
         else
         {
-            SetForcedPieceModel();
             var randomRotation = UnityEngine.Random.Range(0, 4);
             var randomX = UnityEngine.Random.Range(-4, 6);
             ForcedPiece = Instantiator.NewPiece(Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString(), opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
             ForcedPiece.name = Constants.GoForcedPiece;
+            SetForcedPieceModel();
             //var tmpFadeBlockSpriteRenderer = Instantiator.NewFadeBlock(opponentRealm, new Vector3(50.0f, 50.0f, 1.0f), 5, 5).GetComponent<SpriteRenderer>();
             //foreach (Transform child in forcedPiece.transform)
             //{
@@ -1614,7 +1614,7 @@ public class GameplayControler : MonoBehaviour
                 return;
             SetForcedPieceModel();
         }
-        _forcedPieceModel.HandleOpacityOnLock((current / max / 2.0f) + 0.5f);
+        _forcedPieceModel.HandleOpacityOnLock((current / max) + 0.2f);
     }
 
     private void SetForcedPieceModel()
