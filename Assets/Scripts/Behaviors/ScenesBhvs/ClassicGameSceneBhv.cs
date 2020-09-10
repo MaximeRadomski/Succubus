@@ -66,6 +66,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         _currentOpponent = _opponents[Constants.CurrentListOpponentsId];
         _opponentInstanceBhv.Spawn();
+        CameraBhv.Bump(2);
         _soundControler.PlaySound(_idOpponentAppearance);
         Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime:3.0f);
         _opponentAttackId = 0;
@@ -110,7 +111,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
-    public override void OpponentAttack()
+    public override bool OpponentAttack()
     {
         CameraBhv.Bump(1);
         _opponentInstanceBhv.Attack();
@@ -125,6 +126,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+            return false;
+        return true;
     }
 
     void Update()
@@ -134,11 +138,19 @@ public class ClassicGameSceneBhv : GameSceneBhv
             SetNextCooldownTick();
             return;
         }
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+        {
+            if (_gameplayControler.ForcedPiece == null)
+                _gameplayControler.OpponentAttack(
+                _currentOpponent.Attacks[_opponentAttackId].AttackType,
+                _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
+                _currentOpponent.Attacks[_opponentAttackId].AttackParam,
+                _currentOpponent.Realm);
+            _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown / (float)_currentOpponent.Cooldown);
+        }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
             ++Constants.CurrentOpponentCooldown;
-            if (Constants.CurrentOpponentCooldown >= 1 && _currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && GameObject.Find(Constants.GoForcedPiece) == null)
-                _gameplayControler.AttackForcedPiece(_currentOpponent.Realm);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }

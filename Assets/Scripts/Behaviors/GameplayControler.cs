@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class GameplayControler : MonoBehaviour
     public Character Character;
     public bool AttackIncoming;
     public PlayFieldBhv PlayFieldBhv;
+    public GameObject ForcedPiece;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -43,6 +45,7 @@ public class GameplayControler : MonoBehaviour
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
     private CharacterInstanceBhv _characterInstanceBhv;
+    private Piece _forcedPieceModel;
 
     private Special _characterSpecial;
     private Item _characterItem;
@@ -690,7 +693,7 @@ public class GameplayControler : MonoBehaviour
 
     private void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked && !CurrentPiece.name.Contains(Constants.GoForcedPiece))
             return;
         bool hardDropping = true;
         int nbLinesDropped = 0;
@@ -703,10 +706,7 @@ public class GameplayControler : MonoBehaviour
                 CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
                 CurrentPiece.GetComponent<Piece>().IsLocked = true;
-                if (CurrentPiece.name == "Old" + Constants.GoForcedPiece)
-                    AddToPlayField(CurrentPiece);
-                else
-                    Invoke(nameof(Lock), Constants.AfterDropDelay);
+                Invoke(nameof(Lock), Constants.AfterDropDelay);
                 string columns = "";
                 int yMin = Mathf.RoundToInt(CurrentPiece.transform.position.y);
                 foreach (Transform child in CurrentPiece.transform)
@@ -797,18 +797,17 @@ public class GameplayControler : MonoBehaviour
 
     private void DropForcedPiece()
     {
-        var forcedPiece = GameObject.Find(Constants.GoForcedPiece);
-        if (forcedPiece == null)
+        if (ForcedPiece == null)
             return;
         bool hardDropping = true;
-        forcedPiece.transform.position = new Vector3(forcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f + forcedPiece.GetComponent<Piece>().YFromSpawn, 0.0f);
+        ForcedPiece.transform.position = new Vector3(ForcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f + _forcedPieceModel.YFromSpawn, 0.0f);
         while (hardDropping)
         {
-            var lastPos = forcedPiece.transform.position;
-            forcedPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (!IsPiecePosValid(forcedPiece) || IsPiecesBlocksOverlappingGhost(forcedPiece))
+            var lastPos = ForcedPiece.transform.position;
+            ForcedPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+            if (!IsPiecePosValid(ForcedPiece) || IsPiecesBlocksOverlappingGhost(ForcedPiece))
             {
-                forcedPiece.transform.position = lastPos;
+                ForcedPiece.transform.position = lastPos;
                 hardDropping = false;
             }
         }
@@ -1194,6 +1193,7 @@ public class GameplayControler : MonoBehaviour
                 DeleteLine(y);
             }
         }
+        var canSpawn = true;
         if (nbLines > 0)
         {
             if (nbLines == 1)
@@ -1240,9 +1240,10 @@ public class GameplayControler : MonoBehaviour
                 {
                     AttackIncoming = false;
                     //Debug.Log(DateTime.Now + "CheckForLine (line)");
-                    SceneBhv.OpponentAttack();
+                    canSpawn = SceneBhv.OpponentAttack();
                 }
-                Spawn();                    
+                if (canSpawn)
+                    Spawn();
                 return true;
             }));
             
@@ -1256,9 +1257,10 @@ public class GameplayControler : MonoBehaviour
             {
                 AttackIncoming = false;
                 //Debug.Log(DateTime.Now + "CheckForLine (no line)");
-                SceneBhv.OpponentAttack();
+                canSpawn = SceneBhv.OpponentAttack();
             }
-            Spawn();
+            if (canSpawn)
+                Spawn();
         }            
     }
 
@@ -1484,7 +1486,7 @@ public class GameplayControler : MonoBehaviour
                 AttackVisionBlock(nbRows, opponentRealm, param);
                 break;
             case AttackType.ForcedPiece:
-                AttackForcedPiece(opponentRealm);
+                AttackForcedPiece(opponentRealm, nbRows, param);
                 break;
         }
     }
@@ -1549,53 +1551,75 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
     }
 
-    public void AttackForcedPiece(Realm opponentRealm)
+    public void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
     {
-        var forcedPiece = GameObject.Find(Constants.GoForcedPiece);
-        if (forcedPiece != null)
+        if (ForcedPiece != null)
         {
-            CurrentPiece = Instantiator.NewPiece(forcedPiece.GetComponent<Piece>().Letter, opponentRealm.ToString(), new Vector3(forcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f, 0.0f));
-            CurrentPiece.transform.rotation = forcedPiece.transform.rotation;
+            if (_forcedPieceModel == null)
+                SetForcedPieceModel();
+            CurrentPiece = Instantiator.NewPiece(_forcedPieceModel.Letter, opponentRealm.ToString(), new Vector3(50.0f, 50.0f, 0.0f));
+            CurrentPiece.transform.position = new Vector3(ForcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f + _forcedPieceModel.YFromSpawn, 0.0f);
+            CurrentPiece.transform.rotation = ForcedPiece.transform.rotation;
             CurrentPiece.name = "Old" + Constants.GoForcedPiece;
-            HardDrop();
-            Destroy(forcedPiece);
+            if (CurrentPiece.GetComponent<Piece>().Letter == "O")
+            {
+                var test = "test";
+            }
+            Destroy(ForcedPiece);
+            CurrentPiece.GetComponent<Piece>().IsLocked = true;
+            Invoke(nameof(HardDrop), 0.25f);
         }
         else
         {
+            SetForcedPieceModel();
             var randomRotation = UnityEngine.Random.Range(0, 4);
             var randomX = UnityEngine.Random.Range(-4, 6);
-            forcedPiece = Instantiator.NewPiece(/*Constants.PiecesLetters[UnityEngine.Random.Range(0, Constants.PiecesLetters.Length)].ToString()*/"O", opponentRealm.ToString(), _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
-            string mesCouilles;
-            if (forcedPiece.GetComponent<Piece>().Letter == "I" && forcedPiece.GetComponent<Piece>().Letter == "O")
-                mesCouilles = "Kiwi";
-            forcedPiece.name = Constants.GoForcedPiece;
-            var tmpFadeBlockSpriteRenderer = Instantiator.NewFadeBlock(opponentRealm, new Vector3(50.0f, 50.0f, 1.0f), 5, 5).GetComponent<SpriteRenderer>();
-            foreach (Transform child in forcedPiece.transform)
-            {
-                var childSpriteRenderer = child.GetComponent<SpriteRenderer>();
-                childSpriteRenderer.sprite = tmpFadeBlockSpriteRenderer.sprite;
-                childSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
-            }
-            forcedPiece.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
-            Destroy(tmpFadeBlockSpriteRenderer.gameObject);
-            if (forcedPiece.GetComponent<Piece>().Letter != "O")
+            ForcedPiece = Instantiator.NewPiece(Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString(), opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
+            ForcedPiece.name = Constants.GoForcedPiece;
+            //var tmpFadeBlockSpriteRenderer = Instantiator.NewFadeBlock(opponentRealm, new Vector3(50.0f, 50.0f, 1.0f), 5, 5).GetComponent<SpriteRenderer>();
+            //foreach (Transform child in forcedPiece.transform)
+            //{
+            //    var childSpriteRenderer = child.GetComponent<SpriteRenderer>();
+            //    childSpriteRenderer.sprite = tmpFadeBlockSpriteRenderer.sprite;
+            //    childSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+            //}
+            var color = int.Parse(PlayerPrefsHelper.GetGhostColor()) == 3 ? 4 : 3;
+            _forcedPieceModel.SetColor((Color)Constants.GetColorFromNature(_characterRealm, color));
+            //Destroy(tmpFadeBlockSpriteRenderer.gameObject);
+            if (_forcedPieceModel.Letter != "O" && rotation != -1)
             {
                 for (int i = 0; i < randomRotation; ++i)
-                    forcedPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
+                    ForcedPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
             }
-            for (int j = 0; ((int)forcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)
+            for (int j = 0; ((int)ForcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)
             {
-                var lastPos = forcedPiece.transform.position;
-                forcedPiece.transform.position += new Vector3(1.0f * (randomX < 0 ? -1.0f : 1.0f), 0.0f, 0.0f);
-                if (IsPiecePosValid(forcedPiece) == false)
+                var lastPos = ForcedPiece.transform.position;
+                ForcedPiece.transform.position += new Vector3(1.0f * (randomX < 0 ? -1.0f : 1.0f), 0.0f, 0.0f);
+                if (IsPiecePosValid(ForcedPiece) == false)
                 {
-                    forcedPiece.transform.position = lastPos;
+                    ForcedPiece.transform.position = lastPos;
                     break;
                 }
             }
-            forcedPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
+            ForcedPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
             DropForcedPiece();
         }
+    }
+
+    public void SetForcedPieceOpacity(float percent)
+    {
+        if (_forcedPieceModel == null)
+        {
+            if (ForcedPiece == null)
+                return;
+            SetForcedPieceModel();
+        }
+        _forcedPieceModel.HandleOpacityOnLock(percent);
+    }
+
+    private void SetForcedPieceModel()
+    {
+        _forcedPieceModel = ForcedPiece.GetComponent<Piece>();
     }
 
     private void FillLine(int y, AttackType type, Realm realm, int emptyStart = -1, int emptyEnd = -1)

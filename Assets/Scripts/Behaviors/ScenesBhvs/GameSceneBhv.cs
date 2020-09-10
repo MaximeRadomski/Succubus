@@ -131,9 +131,9 @@ public abstract class GameSceneBhv : SceneBhv
         }
     }
 
-    public virtual void OpponentAttack()
+    public virtual bool OpponentAttack()
     {
-
+        return true;
     }
 
     public virtual void OnGameOver()
