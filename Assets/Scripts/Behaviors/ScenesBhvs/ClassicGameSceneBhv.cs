@@ -138,19 +138,20 @@ public class ClassicGameSceneBhv : GameSceneBhv
             SetNextCooldownTick();
             return;
         }
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
-        {
-            if (_gameplayControler.ForcedPiece == null)
-                _gameplayControler.OpponentAttack(
-                _currentOpponent.Attacks[_opponentAttackId].AttackType,
-                _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
-                _currentOpponent.Attacks[_opponentAttackId].AttackParam,
-                _currentOpponent.Realm);
-            _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown / (float)_currentOpponent.Cooldown);
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
+            {
+            
+            _gameplayControler.OpponentAttack(
+            _currentOpponent.Attacks[_opponentAttackId].AttackType,
+            _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
+            _currentOpponent.Attacks[_opponentAttackId].AttackParam,
+            _currentOpponent.Realm);
+            _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
             ++Constants.CurrentOpponentCooldown;
+            _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }

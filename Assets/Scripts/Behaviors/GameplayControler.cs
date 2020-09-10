@@ -495,7 +495,7 @@ public class GameplayControler : MonoBehaviour
             _nextLock = Time.time + _lockDelay;
         else if (Time.time < _nextLock)
         {
-            CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock((_nextLock - Time.time)/_lockDelay);
+            CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(((_nextLock - Time.time)/_lockDelay) + 0.25f);
             if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock && !CurrentPiece.GetComponent<Piece>().IsLocked)
             {
                 Lock();
@@ -1606,7 +1606,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void SetForcedPieceOpacity(float percent)
+    public void SetForcedPieceOpacity(float current, float max)
     {
         if (_forcedPieceModel == null)
         {
@@ -1614,7 +1614,7 @@ public class GameplayControler : MonoBehaviour
                 return;
             SetForcedPieceModel();
         }
-        _forcedPieceModel.HandleOpacityOnLock(percent);
+        _forcedPieceModel.HandleOpacityOnLock((current / max / 2.0f) + 0.5f);
     }
 
     private void SetForcedPieceModel()

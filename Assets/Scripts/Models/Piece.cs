@@ -21,7 +21,7 @@ public class Piece : MonoBehaviour
         foreach (Transform child in transform)
         {
             var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
-            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent + 0.25f);
+            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > 1.0f ? 1.0f : percent);
         }
     }
 
