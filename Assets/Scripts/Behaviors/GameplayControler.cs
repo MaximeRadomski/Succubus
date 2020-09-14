@@ -1551,7 +1551,7 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
     }
 
-    public void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
+    private void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
     {
         if (ForcedPiece != null)
         {
@@ -1571,6 +1571,12 @@ public class GameplayControler : MonoBehaviour
         }
         else
         {
+            var alreadyExistingForcedPiece = GameObject.Find(Constants.GoForcedPiece);
+            if (alreadyExistingForcedPiece != null)
+            {
+                ForcedPiece = alreadyExistingForcedPiece;
+                return;
+            }
             var randomRotation = UnityEngine.Random.Range(0, 4);
             var randomX = UnityEngine.Random.Range(-4, 6);
             ForcedPiece = Instantiator.NewPiece(Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString(), opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));

@@ -53,11 +53,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idOpponentAppearance = _soundControler.SetSound("OpponentAppearance");
         _idCrit = _soundControler.SetSound("Crit");
         _idHit = _soundControler.SetSound("Hit");
-        NextOpponent();
+        NextOpponent(sceneInit:true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Realm.Hell, Realm.Hell);
     }
 
-    protected void NextOpponent()
+    protected void NextOpponent(bool sceneInit = false)
     {
         if (Constants.CurrentListOpponentsId >= _opponents.Count)
         {
@@ -80,7 +80,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
         _gameplayControler.SetGravity(_currentOpponent.GravityLevel);
-        StartOpponentCooldown();
+        StartOpponentCooldown(sceneInit);
     }
 
     private void Victory()
@@ -90,10 +90,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         NavigationService.LoadPreviousScene();
     }
 
-    private void StartOpponentCooldown()
+    private void StartOpponentCooldown(bool sceneInit = false)
     {
         _opponentOnCooldown = true;
-        Constants.CurrentOpponentCooldown = 0;
+        if (!sceneInit)
+            Constants.CurrentOpponentCooldown = 0;
         SetNextCooldownTick();
     }
 
@@ -113,6 +114,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public override bool OpponentAttack()
     {
+        bool spawnAfterAttack = true;
         CameraBhv.Bump(1);
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
@@ -127,8 +129,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
-            return false;
-        return true;
+            spawnAfterAttack = false;
+        return spawnAfterAttack;
     }
 
     void Update()
@@ -138,9 +140,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
             SetNextCooldownTick();
             return;
         }
+        HandleForcedPiece();
+        if (_gameplayControler.AttackIncoming)
+        {
+            _opponentCooldownBar.Tilt();
+        }
+    }
+
+    private void HandleForcedPiece()
+    {
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
-            {
-            
+        {
             _gameplayControler.OpponentAttack(
             _currentOpponent.Attacks[_opponentAttackId].AttackType,
             _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
@@ -154,10 +164,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
-        }
-        if (_gameplayControler.AttackIncoming)
-        {
-            _opponentCooldownBar.Tilt();
         }
     }
 
@@ -227,6 +233,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         GameObject.Find("Opponent" + Constants.CurrentListOpponentsId).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[Constants.CurrentListOpponentsId].Realm.GetHashCode() * 2) + 1));
         ++Constants.CurrentListOpponentsId;
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+            Destroy(_gameplayControler.ForcedPiece);
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
