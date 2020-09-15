@@ -11,6 +11,7 @@ public class ItemGrenade : Item
         Name = "Grenade";
         Description = "Clear your last four rows";
         Rarity = Rarity.Common;
+        Cooldown = 15;
     }
 
     public override bool Activate()

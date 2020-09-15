@@ -69,7 +69,7 @@ public class InfoMenuBhv : PopupBhv
 
     private void ItemInfo()
     {
-        _instantiator.NewPopupYesNo("Item", Constants.MaterialHell_3_2 + _characterItem.Name.ToLower() + Constants.MaterialEnd + ":\n" + _characterItem.Description.ToLower(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(_characterItem.Name.ToLower(), Constants.MaterialHell_3_2 + "(cooldown: " + _characterItem.Cooldown + ")" + Constants.MaterialEnd + ":\n" + _characterItem.Description.ToLower(), null, "Ok", null);
     }
 
     private void CharacterLore()

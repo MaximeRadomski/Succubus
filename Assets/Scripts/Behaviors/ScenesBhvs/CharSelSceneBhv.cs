@@ -90,6 +90,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
+                Constants.CurrentItemCooldown = 0;
                 PlayerPrefsHelper.ResetTattoos();
             }
             else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)

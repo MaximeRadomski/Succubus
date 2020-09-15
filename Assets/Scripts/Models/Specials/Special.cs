@@ -40,9 +40,7 @@ public abstract class Special
 
     public virtual void OnLinesCleared(int nbLines, bool isB2B)
     {
-        Constants.SelectedCharacterSpecialCooldown -= nbLines;
-        if (_character.Realm == Realm.Heaven && isB2B)
-            --Constants.SelectedCharacterSpecialCooldown;
+        Constants.SelectedCharacterSpecialCooldown -= nbLines * _character.SpecialCooldownReducer;
     }
 
     public virtual void OnPerfectClear()

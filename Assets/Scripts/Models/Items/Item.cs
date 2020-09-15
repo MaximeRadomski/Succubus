@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Item
 {
@@ -8,6 +6,7 @@ public abstract class Item
     public string Name;
     public string Description;
     public Rarity Rarity;
+    public int Cooldown;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;
@@ -20,7 +19,7 @@ public abstract class Item
 
     public virtual bool Activate()
     {
-        if (_gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer > 0)
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();

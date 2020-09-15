@@ -21,6 +21,10 @@ public class Character
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
     public int VisionBlockAlterator;
+    public int ItemCooldownReducer;
+    public int ItemMaxCooldownReducer;
+    public int SpecialCooldownReducer;
+    public int SpecialMaxCooldownReducer;
 
     public Character()
     {
@@ -30,5 +34,7 @@ public class Character
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;
         VisionBlockAlterator = 1;
+        ItemCooldownReducer = 1;
+        SpecialCooldownReducer = 1;
     }
 }

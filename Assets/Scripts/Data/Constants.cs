@@ -166,6 +166,7 @@ public static class Constants
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;
+    public static int CurrentItemCooldown;
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static int CurrentOpponentCooldown;
@@ -176,6 +177,7 @@ public static class Constants
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
+        CurrentItemCooldown = 0;
     }
 
     public static void SetLastEndActionClickedName(string name)

@@ -26,7 +26,7 @@ public static class OpponentsData
             HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
-                new OpponentAttack(AttackType.GarbageRow, 2, 2),
+                new OpponentAttack(AttackType.WasteRow, 2, 2),
                 new OpponentAttack(AttackType.EmptyRow, 2),
                 new OpponentAttack(AttackType.LightRow, 2, 15)},
             GravityLevel = 5, DifficultyWeight = 0,
@@ -39,7 +39,7 @@ public static class OpponentsData
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3),
-                new OpponentAttack(AttackType.GarbageRow, 3, 3),
+                new OpponentAttack(AttackType.WasteRow, 3, 3),
                 new OpponentAttack(AttackType.EmptyRow, 3),
                 new OpponentAttack(AttackType.LightRow, 3, 20)},
             GravityLevel = 10, DifficultyWeight = 0,
@@ -66,7 +66,7 @@ public static class OpponentsData
             Id = 5, Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 20, Cooldown = 30,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.GarbageRow, 3, 2) },
+                new OpponentAttack(AttackType.WasteRow, 3, 2) },
             GravityLevel = 2, DifficultyWeight = 40
         }
     };

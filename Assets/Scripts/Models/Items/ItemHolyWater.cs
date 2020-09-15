@@ -9,7 +9,7 @@ public class ItemHolyWater : Item
         base.Init(character, gameplayControler);
         Id = 0;
         Name = "Holy Water";
-        Description = "clear all grey rows";
+        Description = "clear all waste rows";
         Rarity = Rarity.Common;
     }
 

@@ -116,6 +116,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         bool spawnAfterAttack = true;
         CameraBhv.Bump(1);
+        Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
         _gameplayControler.OpponentAttack(

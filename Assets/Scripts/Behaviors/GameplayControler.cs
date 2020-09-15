@@ -193,8 +193,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        var currentItemName = PlayerPrefsHelper.GetCurrentItemName();
-        if (!string.IsNullOrEmpty(currentItemName))
+        if (Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer <= 0)
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -202,6 +201,7 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
             }
         }
         else
@@ -212,6 +212,7 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
             }
         }
         //SPECIAL
@@ -1078,10 +1079,10 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_characterItem != null)
         {
-            _soundControler.PlaySound(_idItem);
-            var result = _characterItem.Activate();
-            if (result == true)
-                _characterItem = null;
+            
+            if (_characterItem.Activate())
+                _soundControler.PlaySound(_idItem);
+            UpdateItemAndSpecialVisuals();
         }
     }
 
@@ -1228,6 +1229,7 @@ public class GameplayControler : MonoBehaviour
             if (GetHighestBlock() == -1) //PERFECT
             {
                 _soundControler.PlaySound(_idPerfect);
+                _characterSpecial.OnPerfectClear();
                 SceneBhv.OnPerfectClear();
             }                
 
@@ -1473,7 +1475,7 @@ public class GameplayControler : MonoBehaviour
             case AttackType.DarkRow:
                 AttackDarkRows(nbRows, opponentRealm);
                 break;
-            case AttackType.GarbageRow:
+            case AttackType.WasteRow:
                 AttackGarbageRows(nbRows, opponentRealm, param);
                 break;
             case AttackType.LightRow:
@@ -1510,7 +1512,7 @@ public class GameplayControler : MonoBehaviour
         int emptyEnd = emptyStart + param - 1;
         for (int y = 0; y < nbRows; ++y)
         {
-            FillLine(y, AttackType.GarbageRow, opponentRealm, emptyStart, emptyEnd);
+            FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
     }
 
@@ -1561,10 +1563,6 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position = new Vector3(ForcedPiece.transform.position.x, _spawner.transform.position.y + 10.0f + _forcedPieceModel.YFromSpawn, 0.0f);
             CurrentPiece.transform.rotation = ForcedPiece.transform.rotation;
             CurrentPiece.name = "Old" + Constants.GoForcedPiece;
-            if (CurrentPiece.GetComponent<Piece>().Letter == "O")
-            {
-                var test = "test";
-            }
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Invoke(nameof(HardDrop), 0.25f);
@@ -1632,7 +1630,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (type == AttackType.GarbageRow && x >= emptyStart && x <= emptyEnd)
+            if (type == AttackType.WasteRow && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
             attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
