@@ -173,11 +173,24 @@ public static class Constants
 
     public static void ResetClassicGameCache()
     {
-        Helper.ResetSelectedCharacterSpecialCooldown();
+        ResetSelectedCharacterSpecialCooldown();
+        ResetCurrentItemCooldown();
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
-        CurrentItemCooldown = 0;
+    }
+
+    public static void ResetSelectedCharacterSpecialCooldown()
+    {
+        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialMaxCooldownReducer;
+    }
+
+    public static void ResetCurrentItemCooldown()
+    {
+        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        var tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
+        Constants.CurrentItemCooldown = tmpCurrentItem.Cooldown - tmpChar.ItemMaxCooldownReducer;
     }
 
     public static void SetLastEndActionClickedName(string name)

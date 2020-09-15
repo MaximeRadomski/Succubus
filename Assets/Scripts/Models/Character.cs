@@ -20,7 +20,7 @@ public class Character
     public int DamagePercentToInferiorRealm;
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
-    public int VisionBlockAlterator;
+    public int VisionBlockReducer;
     public int ItemCooldownReducer;
     public int ItemMaxCooldownReducer;
     public int SpecialCooldownReducer;
@@ -33,8 +33,10 @@ public class Character
         DamagePercentToInferiorRealm = 20;
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;
-        VisionBlockAlterator = 1;
+        VisionBlockReducer = 1;
         ItemCooldownReducer = 1;
+        ItemMaxCooldownReducer = 0;
         SpecialCooldownReducer = 1;
+        SpecialMaxCooldownReducer = 0;
     }
 }

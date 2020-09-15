@@ -64,7 +64,6 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + tmpChar.SpecialName.ToLower() + ":\n" + tmpChar.SpecialDescription;
         GameObject.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + tmpChar.Realm.ToString().ToLower() + ":\n" + tmpChar.Realm.GetDescription();
         GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + tmpChar.Id);
-        Helper.ResetSelectedCharacterSpecialCooldown();
     }
 
     private void GoToPrevious()
@@ -90,18 +89,19 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
-                Constants.CurrentItemCooldown = 0;
                 PlayerPrefsHelper.ResetTattoos();
+                Constants.ResetClassicGameCache();
+                Constants.CurrentItemCooldown = 0;
             }
             else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
             {
                 Constants.CurrentMusicType = MusicTyoe.GameHell;
                 scene = Constants.TrainingDummyGameScene;
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2]};
-                Constants.ResetClassicGameCache();
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
+                Constants.ResetClassicGameCache();
             }
             else
             {

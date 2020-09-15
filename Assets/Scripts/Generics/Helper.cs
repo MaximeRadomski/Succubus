@@ -55,12 +55,6 @@ public static class Helper
             return Realm.Hell;
     }
 
-    public static void ResetSelectedCharacterSpecialCooldown()
-    {
-        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
-        Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown;
-    }
-
     public static int DoesListContainsSameFromName(List<GameObject> list, string name)
     {
         var count = 0;

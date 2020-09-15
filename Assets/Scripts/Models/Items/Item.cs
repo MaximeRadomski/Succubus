@@ -19,11 +19,12 @@ public abstract class Item
 
     public virtual bool Activate()
     {
-        if (Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer > 0)
+        if (Constants.CurrentItemCooldown - _character.ItemMaxCooldownReducer > 0)
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        PlayerPrefsHelper.ResetCurrentItem();
+        Constants.ResetCurrentItemCooldown();
+        _gameplayControler.UpdateItemAndSpecialVisuals();
         return true;
     }
 }

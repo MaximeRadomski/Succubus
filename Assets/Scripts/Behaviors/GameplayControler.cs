@@ -1332,7 +1332,7 @@ public class GameplayControler : MonoBehaviour
             var visionBlockBhv = visionBlockGameObject.GetComponent<VisionBlockBhv>();
             if (visionBlockBhv != null)
             {
-                visionBlockBhv.DecreaseCooldown(Character.VisionBlockAlterator, pop: true);
+                visionBlockBhv.DecreaseCooldown(Character.VisionBlockReducer, pop: true);
             }
         }
     }

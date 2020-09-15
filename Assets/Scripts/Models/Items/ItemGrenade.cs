@@ -16,12 +16,11 @@ public class ItemGrenade : Item
 
     public override bool Activate()
     {
-        base.Activate();
+        if (!base.Activate())
+            return false;
         _gameplayControler.SceneBhv.Paused = true;
         _gameplayControler.ClearFromTop(4);
         _gameplayControler.SceneBhv.Paused = false;
-        PlayerPrefsHelper.ResetCurrentItem();
-        _gameplayControler.UpdateItemAndSpecialVisuals();
         return true;
     }
 }

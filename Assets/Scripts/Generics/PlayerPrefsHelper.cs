@@ -232,7 +232,11 @@ public class PlayerPrefsHelper : MonoBehaviour
         if (string.IsNullOrEmpty(itemName))
             return null;
         else
-            return (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
+        {
+            var currentItem = (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
+            currentItem.Init(null, null);
+            return currentItem;
+        }
     }
 
     public static void ResetTattoos()
