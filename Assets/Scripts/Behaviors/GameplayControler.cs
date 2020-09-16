@@ -201,7 +201,10 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
+                var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
+                if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                    tmp.GetComponent<IconInstanceBhv>().Pop();
             }
         }
         else
@@ -212,7 +215,10 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
+                if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
             }
         }
         //SPECIAL
@@ -224,7 +230,10 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 9));//9 = special in sprite sheet
+                var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
+                if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                    tmp.GetComponent<IconInstanceBhv>().Pop();
             }
         }
         else
@@ -235,7 +244,10 @@ public class GameplayControler : MonoBehaviour
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.SelectedCharacterSpecialCooldown.ToString();
+                if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
             }
 
         }
@@ -692,9 +704,15 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    private void ForcedPieceHardDrop()
+    {
+        CurrentPiece.GetComponent<Piece>().IsLocked = false;
+        HardDrop();
+    }
+
     private void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked && CurrentPiece.name != "Old" + Constants.GoForcedPiece)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
         bool hardDropping = true;
         int nbLinesDropped = 0;
@@ -1491,6 +1509,15 @@ public class GameplayControler : MonoBehaviour
                 AttackForcedPiece(opponentRealm, nbRows, param);
                 break;
         }
+        if (type == AttackType.DarkRow
+            || type == AttackType.WasteRow
+            || type == AttackType.LightRow
+            || type == AttackType.EmptyRow)
+            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * nbRows;
+        else if (type == AttackType.VisionBlock
+            || type == AttackType.ForcedPiece)
+            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
+        UpdateItemAndSpecialVisuals();
     }
 
     private void AttackDarkRows(int nbRows, Realm opponentRealm)
@@ -1553,7 +1580,7 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
     }
 
-    private void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
+    public void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
     {
         if (ForcedPiece != null)
         {
@@ -1565,7 +1592,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.name = "Old" + Constants.GoForcedPiece;
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
-            Invoke(nameof(HardDrop), 0.25f);
+            Invoke(nameof(ForcedPieceHardDrop), 0.25f);
         }
         else
         {

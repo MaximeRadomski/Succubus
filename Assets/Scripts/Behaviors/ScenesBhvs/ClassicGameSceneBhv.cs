@@ -116,8 +116,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         bool spawnAfterAttack = true;
         CameraBhv.Bump(1);
-        Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
-        _gameplayControler.UpdateItemAndSpecialVisuals();
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
         _gameplayControler.OpponentAttack(
@@ -153,11 +151,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
-            _gameplayControler.OpponentAttack(
-            _currentOpponent.Attacks[_opponentAttackId].AttackType,
-            _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
-            _currentOpponent.Attacks[_opponentAttackId].AttackParam,
-            _currentOpponent.Realm);
+            _gameplayControler.AttackForcedPiece(_currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].NbAttackRows, _currentOpponent.Attacks[_opponentAttackId].AttackParam);
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
@@ -233,7 +227,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private object AfterOpponentDeath()
     {
-        GameObject.Find("Opponent" + Constants.CurrentListOpponentsId).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[Constants.CurrentListOpponentsId].Realm.GetHashCode() * 2) + 1));
+        var opponentIcon = GameObject.Find("Opponent" + Constants.CurrentListOpponentsId);
+        opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[Constants.CurrentListOpponentsId].Realm.GetHashCode() * 2) + 1));
+        opponentIcon.GetComponent<IconInstanceBhv>().Pop();
         ++Constants.CurrentListOpponentsId;
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
