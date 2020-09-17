@@ -88,7 +88,7 @@ public class CharSelSceneBhv : SceneBhv
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
-                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
+                PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
                 Constants.CurrentItemCooldown = 0;
@@ -99,7 +99,7 @@ public class CharSelSceneBhv : SceneBhv
                 scene = Constants.TrainingDummyGameScene;
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2]};
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
-                PlayerPrefsHelper.SaveCurrentItem(ItemsData.NormalItemsNames[2]);
+                PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
             }

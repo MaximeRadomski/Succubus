@@ -1485,35 +1485,35 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    public void OpponentAttack(AttackType type, int nbRows, int param, Realm opponentRealm)
+    public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm)
     {
         VibrationService.Vibrate();
         switch (type)
         {
             case AttackType.DarkRow:
-                AttackDarkRows(nbRows, opponentRealm);
+                AttackDarkRows(param1, opponentRealm);
                 break;
             case AttackType.WasteRow:
-                AttackGarbageRows(nbRows, opponentRealm, param);
+                AttackGarbageRows(param1, opponentRealm, param2);
                 break;
             case AttackType.LightRow:
-                AttackLightRows(nbRows, opponentRealm, param);
+                AttackLightRows(param1, opponentRealm, param2);
                 break;
             case AttackType.EmptyRow:
-                AttackEmptyRows(nbRows, opponentRealm);
+                AttackEmptyRows(param1, opponentRealm);
                 break;
             case AttackType.VisionBlock:
-                AttackVisionBlock(nbRows, opponentRealm, param);
+                AttackVisionBlock(param1, opponentRealm, param2);
                 break;
             case AttackType.ForcedPiece:
-                AttackForcedPiece(opponentRealm, nbRows, param);
+                AttackForcedPiece(opponentRealm, param1, param2);
                 break;
         }
         if (type == AttackType.DarkRow
             || type == AttackType.WasteRow
             || type == AttackType.LightRow
             || type == AttackType.EmptyRow)
-            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * nbRows;
+            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
         else if (type == AttackType.VisionBlock
             || type == AttackType.ForcedPiece)
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
@@ -1580,7 +1580,7 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
     }
 
-    public void AttackForcedPiece(Realm opponentRealm, int rotation, int letter)
+    public void AttackForcedPiece(Realm opponentRealm, int letter, int rotation)
     {
         if (ForcedPiece != null)
         {
@@ -1602,7 +1602,7 @@ public class GameplayControler : MonoBehaviour
                 ForcedPiece = alreadyExistingForcedPiece;
                 return;
             }
-            var randomRotation = UnityEngine.Random.Range(0, 4);
+            var numberRotation = rotation == -1 ? UnityEngine.Random.Range(0, 4) : rotation;
             var randomX = UnityEngine.Random.Range(-4, 6);
             ForcedPiece = Instantiator.NewPiece(Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString(), opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
             ForcedPiece.name = Constants.GoForcedPiece;
@@ -1617,9 +1617,9 @@ public class GameplayControler : MonoBehaviour
             var color = int.Parse(PlayerPrefsHelper.GetGhostColor()) == 3 ? 4 : 3;
             _forcedPieceModel.SetColor((Color)Constants.GetColorFromNature(_characterRealm, color));
             //Destroy(tmpFadeBlockSpriteRenderer.gameObject);
-            if (_forcedPieceModel.Letter != "O" && rotation != -1)
+            if (_forcedPieceModel.Letter != "O")
             {
-                for (int i = 0; i < randomRotation; ++i)
+                for (int i = 0; i < numberRotation; ++i)
                     ForcedPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
             }
             for (int j = 0; ((int)ForcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)

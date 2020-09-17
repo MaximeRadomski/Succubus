@@ -5,30 +5,30 @@ using UnityEngine;
 
 public static class ItemsData
 {
-    public static int RareItemAppearancePercent = 10;
-    public static int MagicalItemAppearancePercent = 30;
+    public static int LegendaryItemAppearancePercent = 10;
+    public static int RareItemAppearancePercent = 30;
 
-    public static string[] NormalItemsNames = { "Holy Water", "Demon Blood", "Grenade" };
-    public static string[] MagicalItemsNames = { "" };
+    public static string[] CommonItemsNames = { "Holy Water", "Demon Blood", "Grenade" };
     public static string[] RareItemsNames = { "" };
+    public static string[] LegendaryItemsNames = { "" };
 
     public static Item GetRandomItem()
     {
         int rarityPercent = UnityEngine.Random.Range(0, 100);
-        if (rarityPercent < RareItemAppearancePercent)
-            return GetRandomItemFromRarity(OpponentType.Champion);
-        else if (rarityPercent < MagicalItemAppearancePercent)
-            return GetRandomItemFromRarity(OpponentType.Elite);
-        return GetRandomItemFromRarity(OpponentType.Common);
+        if (rarityPercent < LegendaryItemAppearancePercent)
+            return GetRandomItemFromRarity(Rarity.Legendary);
+        else if (rarityPercent < RareItemAppearancePercent)
+            return GetRandomItemFromRarity(Rarity.Rare);
+        return GetRandomItemFromRarity(Rarity.Common);
     }
 
-    public static Item GetRandomItemFromRarity(OpponentType rarity)
+    public static Item GetRandomItemFromRarity(Rarity rarity)
     {
-        if (rarity == OpponentType.Champion)
+        if (rarity == Rarity.Legendary)
+            return GetItemFromName(LegendaryItemsNames[UnityEngine.Random.Range(0, LegendaryItemsNames.Length)]);
+        else if (rarity == Rarity.Rare)
             return GetItemFromName(RareItemsNames[UnityEngine.Random.Range(0, RareItemsNames.Length)]);
-        else if (rarity == OpponentType.Elite)
-            return GetItemFromName(MagicalItemsNames[UnityEngine.Random.Range(0, MagicalItemsNames.Length)]);
-        return GetItemFromName(NormalItemsNames[UnityEngine.Random.Range(0, NormalItemsNames.Length)]);
+        return GetItemFromName(CommonItemsNames[UnityEngine.Random.Range(0, CommonItemsNames.Length)]);
     }
 
     public static Item GetItemFromName(string name)

@@ -84,7 +84,7 @@ public class StepService
         else
         {
             lootType = LootType.Tattoo;
-            lootId = TattooData.GetRandomTattoo().Id;
+            lootId = TattoosData.GetRandomTattoo().Id;
         }
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, GetDifficultyWieghtFromRunLevel(run)));
         run.Steps += newStep.ToString();

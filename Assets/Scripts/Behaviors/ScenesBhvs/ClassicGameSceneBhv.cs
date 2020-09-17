@@ -23,6 +23,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idOpponentAppearance;
     private int _idHit;
     private int _idCrit;
+    private int _idWeakness;
+    private int _idImmunity;
 
     void Start()
     {
@@ -53,6 +55,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idOpponentAppearance = _soundControler.SetSound("OpponentAppearance");
         _idCrit = _soundControler.SetSound("Crit");
         _idHit = _soundControler.SetSound("Hit");
+        _idWeakness = _soundControler.SetSound("Weakness");
+        _idImmunity = _soundControler.SetSound("Immunity");
         NextOpponent(sceneInit:true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Realm.Hell, Realm.Hell);
     }
@@ -123,13 +127,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
             _currentOpponent.Attacks[_opponentAttackId].AttackParam,
             _currentOpponent.Realm);
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+            spawnAfterAttack = false;
         if (++_opponentAttackId >= _currentOpponent.Attacks.Count)
             _opponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
-            spawnAfterAttack = false;
         return spawnAfterAttack;
     }
 
@@ -213,7 +217,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     if (_currentOpponent.Immunity != Immunity.Cooldown)
                         Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;
                     else
+                    {
                         _immunityInstance.Pop();
+                        _soundControler.PlaySound(_idImmunity);
+                    }
                     if (Constants.CurrentOpponentCooldown <= 0)
                         Constants.CurrentOpponentCooldown = 0;
                     UpdateCooldownBar(Direction.Down);
@@ -248,11 +255,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_currentOpponent.Weakness == Weakness.Twists)
         {
             _weaknessInstance.Pop();
+            _soundControler.PlaySound(_idWeakness);
             incomingDamages += _currentOpponent.DamagesOnWeakness;
         }
         if (_currentOpponent.Immunity == Immunity.Twists)
         {
             _immunityInstance.Pop();
+            _soundControler.PlaySound(_idImmunity);
             incomingDamages = 0;
         }
         _characterAttack += incomingDamages;
@@ -276,11 +285,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (_currentOpponent.Weakness == Weakness.xLines && _currentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();
+                _soundControler.PlaySound(_idWeakness);
                 incomingDamages += _currentOpponent.DamagesOnWeakness;
             }
             if (_currentOpponent.Immunity == Immunity.xLines && _currentOpponent.XLineImmunity == nbLines)
             {
                 _immunityInstance.Pop();
+                _soundControler.PlaySound(_idImmunity);
                 incomingDamages = 0;
             }
             if (Character.Realm == Realm.Earth && nbLines == 4)
@@ -295,11 +306,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (_currentOpponent.Weakness == Weakness.Consecutive)
             {
                 _weaknessInstance.Pop();
+                _soundControler.PlaySound(_idWeakness);
                 incomingDamages += _currentOpponent.DamagesOnWeakness;
             }
             if (_currentOpponent.Immunity == Immunity.Consecutive)
             {
                 _immunityInstance.Pop();
+                _soundControler.PlaySound(_idImmunity);
                 incomingDamages = 0;
             }
             if (Character.Realm == Realm.Heaven)
@@ -320,11 +333,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_currentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();
+            _soundControler.PlaySound(_idWeakness);
             incomingDamages += _currentOpponent.DamagesOnWeakness * (nbCombo - 1);
         }
         if (_currentOpponent.Immunity == Immunity.Combos)
         {
             _immunityInstance.Pop();
+            _soundControler.PlaySound(_idImmunity);
             incomingDamages = 0;
         }
         _characterAttack += incomingDamages;

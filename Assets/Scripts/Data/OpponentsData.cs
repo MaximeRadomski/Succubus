@@ -9,14 +9,10 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 10, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 8,
+            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.ForcedPiece, -1, -1),
-                //new OpponentAttack(AttackType.DarkRow, 1),
-                //new OpponentAttack(AttackType.GarbageRow, 1, 1),
-                //new OpponentAttack(AttackType.EmptyRow, 1),
-                //new OpponentAttack(AttackType.LightRow, 1, 10)
-            },
+                new OpponentAttack(AttackType.DarkRow, 2),
+                new OpponentAttack(AttackType.WasteRow, 2, 1)},
             GravityLevel = 1, DifficultyWeight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
@@ -25,10 +21,10 @@ public static class OpponentsData
             Id = 1, Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
             HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 2),
-                new OpponentAttack(AttackType.WasteRow, 2, 2),
+                new OpponentAttack(AttackType.VisionBlock, 4, 6),
+                new OpponentAttack(AttackType.ForcedPiece, 0, 1),
                 new OpponentAttack(AttackType.EmptyRow, 2),
-                new OpponentAttack(AttackType.LightRow, 2, 15)},
+                new OpponentAttack(AttackType.ForcedPiece, -1, 1)},
             GravityLevel = 5, DifficultyWeight = 0,
             Lore = "Older children of the dummies, his will is to honor the family duty, and prevent his little brother to murder him in order to take his place."
         },

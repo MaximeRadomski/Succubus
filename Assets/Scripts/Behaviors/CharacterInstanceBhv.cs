@@ -39,7 +39,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         _originalPosition = transform.position;
         _originalScale = transform.localScale;
         _attackPosition = _originalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);
-        _attackScale = new Vector3(1.2f, 0.8f, 1.0f);
+        _attackScale = new Vector3(1.15f, 0.85f, 1.0f);
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
         _spawnScale = new Vector3(0.5f, 1.5f, 1.0f);

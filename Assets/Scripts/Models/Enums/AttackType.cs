@@ -17,5 +17,5 @@ public enum AttackType
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay
     [Description("Forced Piece")]
-    ForcedPiece = 6, //Rows that will go over yours to hide your gameplay
+    ForcedPiece = 6, //Rows that will go over yours to hide your gameplay param 1 = Letter or -1 for random, param 2 = nbRotation or -1 for random
 }
