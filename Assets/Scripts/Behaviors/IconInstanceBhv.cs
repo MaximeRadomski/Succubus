@@ -31,13 +31,9 @@ public class IconInstanceBhv : MonoBehaviour
     void Update()
     {
         if (_popping)
-        {
             Popping();
-        }
         else if (_resetPopping)
-        {
             ResetPopping();
-        }
     }
 
     public void SetVisible(bool visible)

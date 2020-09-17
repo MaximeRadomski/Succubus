@@ -7,16 +7,18 @@ public class CharacterInstanceBhv : MonoBehaviour
     public System.Func<object> AfterDeath;
 
     private SceneBhv _sceneBhv;
-    private int _isAttacking;
-    private Vector3 _originalPosition;
-    private Vector3 _endAttackPosition;
     private Direction _direction;
+    private Vector3 _originalPosition;
     private Vector3 _originalScale;
+    private Vector3 _attackPosition;
+    private Vector3 _attackScale;
     private Vector3 _hitScale;
     private Vector3 _hitPosition;
     private Vector3 _spawnScale;
     private Vector3 _spawnPosition;
-    private bool _isResetingHit;
+    private bool _attacking;
+    private bool _resetAttacking;
+    private bool _resetingHit;
     private bool _isSpawning;
     private bool _isDying;
     private SpriteRenderer _spriteRenderer;
@@ -33,11 +35,11 @@ public class CharacterInstanceBhv : MonoBehaviour
         if (_hasInit)
             return;
         _sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-        _isAttacking = 0;
         _direction = transform.position.x > Camera.main.transform.position.x ? Direction.Right : Direction.Left;
         _originalPosition = transform.position;
-        _endAttackPosition = _originalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);
         _originalScale = transform.localScale;
+        _attackPosition = _originalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);
+        _attackScale = new Vector3(1.2f, 0.8f, 1.0f);
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
         _spawnScale = new Vector3(0.5f, 1.5f, 1.0f);
@@ -48,9 +50,11 @@ public class CharacterInstanceBhv : MonoBehaviour
 
     void Update()
     {
-        if (_isAttacking > 0)
-            DoAttack();
-        else if (_isResetingHit)
+        if (_attacking)
+            Attacking();
+        else if (_resetAttacking)
+            ResetAttacking();
+        else if (_resetingHit)
         {
             ResetingHit();
         }
@@ -72,7 +76,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         {
             transform.localScale = _originalScale;
             transform.position = _originalPosition;
-            _isResetingHit = false;
+            _resetingHit = false;
         }
     }
 
@@ -120,23 +124,29 @@ public class CharacterInstanceBhv : MonoBehaviour
 
     public void Attack()
     {
-        _isAttacking = 1;
+        _attacking = true;
     }
 
-    private void DoAttack()
+    private void Attacking()
     {
-        if (_isAttacking == 1)
-            transform.position = Vector2.Lerp(transform.position, _endAttackPosition, 0.2f);
-        else
-            transform.position = Vector2.Lerp(transform.position, _originalPosition, 0.7f);
-        if (_isAttacking == 1 && Vector2.Distance(_originalPosition, transform.position) > 1.5f)
+        transform.position = Vector2.Lerp(transform.position, _attackPosition, 0.2f);
+        transform.localScale = Vector3.Lerp(transform.localScale, _attackScale, 0.3f);
+        if (Vector2.Distance(_originalPosition, transform.position) > 1.5f)
         {
-            _isAttacking = 2;
+            _attacking = false;
+            _resetAttacking = true;
         }
-        else if (_isAttacking == 2 && Helper.VectorEqualsPrecision(transform.position, _originalPosition, 0.01f))
+    }
+
+    private void ResetAttacking()
+    {
+        transform.position = Vector2.Lerp(transform.position, _originalPosition, 0.7f);
+        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.8f);
+        if (Helper.VectorEqualsPrecision(transform.position, _originalPosition, 0.01f))
         {
-            _isAttacking = 0;
+            _resetAttacking = false;
             transform.position = _originalPosition;
+            transform.localScale = _originalScale;
         }
     }
 
@@ -144,7 +154,7 @@ public class CharacterInstanceBhv : MonoBehaviour
     {
         transform.localScale = new Vector3(transform.localScale.x * _hitScale.x, _hitScale.y, _hitScale.z);
         transform.position = _originalPosition + _hitPosition;
-        _isResetingHit = true;
+        _resetingHit = true;
     }
 
     public void Die()

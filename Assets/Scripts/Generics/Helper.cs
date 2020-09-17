@@ -197,7 +197,7 @@ public static class Helper
             Constants.InputLocked = false;
     }
 
-    public static bool RandomThrow(int target)
+    public static bool RandomDice100(int target)
     {
         return UnityEngine.Random.Range(0, 100) < target;
     }

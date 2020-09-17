@@ -265,7 +265,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (nbLines > 0)
         {
             incomingDamages = Character.Attack;
-            if (Helper.RandomThrow(Character.CritChancePercent))
+            if (Helper.RandomDice100(Character.CritChancePercent))
             {
                 incomingDamages += (int)(Character.Attack * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;

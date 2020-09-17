@@ -12,10 +12,8 @@ public static class ItemsData
     public static string[] MagicalItemsNames = { "" };
     public static string[] RareItemsNames = { "" };
 
-    public static Item GetRandomItem(bool isPlayer = false)
+    public static Item GetRandomItem()
     {
-        if (isPlayer)
-            return GetRandomItemFromRarity(OpponentType.Common);
         int rarityPercent = UnityEngine.Random.Range(0, 100);
         if (rarityPercent < RareItemAppearancePercent)
             return GetRandomItemFromRarity(OpponentType.Champion);
