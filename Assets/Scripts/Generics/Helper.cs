@@ -9,6 +9,11 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static Vector3 TransformFromStepCoordinates(int x, int y)
+    {
+        return new Vector3((x - 50) * Constants.Pixel * 27, (y - 50) * Constants.Pixel * 25, 0.0f);
+    }
+
     public static string ToHex(this Color color, bool withoutHash = false)
     {
         var tmp = withoutHash ? "" : "#";

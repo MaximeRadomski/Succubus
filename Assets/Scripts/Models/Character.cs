@@ -17,6 +17,7 @@ public class Character
     //Global to all
     public int CritChancePercent;
     public int CritMultiplier;
+    public int DamagePercentBonus;
     public int DamagePercentToInferiorRealm;
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
@@ -30,6 +31,7 @@ public class Character
     {
         CritChancePercent = 1;
         CritMultiplier = 50;
+        DamagePercentBonus = 0;
         DamagePercentToInferiorRealm = 20;
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;

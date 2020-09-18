@@ -17,10 +17,21 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        GameObject.Find("ButtonNewAscension").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
+        GameObject.Find("ButtonNewAscension").GetComponent<ButtonBhv>().EndActionDelegate = GoToNewAscension;
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
+    }
+
+    private void GoToNewAscension()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            Constants.SelectedGameMode = Constants.StepsScene;
+            NavigationService.LoadNextScene(Constants.CharSelScene);
+            return true;
+        }
     }
 
     private void GoToTraining()

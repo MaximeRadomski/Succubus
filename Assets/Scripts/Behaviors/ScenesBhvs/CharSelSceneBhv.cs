@@ -38,6 +38,7 @@ public class CharSelSceneBhv : SceneBhv
         }
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         GameObject.Find("ButtonPlay").GetComponent<ButtonBhv>().EndActionDelegate = Play;
+        GameObject.Find("CharacterPicture").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
     }
 
     private void SelectCharacter()
@@ -66,6 +67,11 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + tmpChar.Id);
     }
 
+    private void CharacterLore()
+    {
+        Instantiator.NewPopupYesNo("Lore", CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()].Lore.ToLower(), null, "Ok", null);
+    }
+
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
@@ -78,7 +84,11 @@ public class CharSelSceneBhv : SceneBhv
 
     private void Play()
     {
-        Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
+        if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene
+            || Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+            Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
+        else
+            Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
         object OnBlend(bool result)
         {
             var scene = "";
@@ -105,9 +115,11 @@ public class CharSelSceneBhv : SceneBhv
             }
             else
             {
-                scene = Constants.AscensionScene;
+                scene = Constants.StepsScene;
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
+                PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
+                PlayerPrefsHelper.SaveRun(new Run());
             }
             NavigationService.LoadNextScene(scene);
             return true;

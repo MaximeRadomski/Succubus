@@ -11,6 +11,22 @@ public class Instantiator : MonoBehaviour
     {
     }
 
+    public GameObject NewStepsContainer()
+    {
+        var tmpStepsContainerInstance = Instantiate(new GameObject(), new Vector3(0.0f, 0.0f, 0.0f), new Quaternion());
+        tmpStepsContainerInstance.name = "StepsContainer";
+        return tmpStepsContainerInstance;
+    }
+
+    public GameObject NewStepInstance(Step step)
+    {
+        var tmpStepObject = Resources.Load<GameObject>("Prefabs/Step");
+        var tmpStepInstance = Instantiate(tmpStepObject, Helper.TransformFromStepCoordinates(step.X, step.Y), tmpStepObject.transform.rotation);
+        tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step);
+        tmpStepInstance.transform.name = "Step" + step.X + "_" + step.Y;
+        return tmpStepInstance;
+    }
+
     public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);

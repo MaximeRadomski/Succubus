@@ -31,7 +31,7 @@ public class Step
     public Step(string parsedString)
     {
         X = int.Parse(parsedString.Substring(parsedString.IndexOf('X') + 1, 2));
-        X = int.Parse(parsedString.Substring(parsedString.IndexOf('Y') + 1, 2));
+        Y = int.Parse(parsedString.Substring(parsedString.IndexOf('Y') + 1, 2));
         Realm = (Realm)int.Parse(parsedString.Substring(parsedString.IndexOf('R') + 1, 1));
         StepType = (StepType)int.Parse(parsedString.Substring(parsedString.IndexOf('S') + 1, 2));
         Discovered = int.Parse(parsedString.Substring(parsedString.IndexOf('D') + 1, 1)) == 1 ? true : false;
@@ -71,8 +71,10 @@ public class Step
         stepStr += "V" + (LandLordVision ? "1" : "0");
         stepStr += LootType.ToString().Substring(0, 1) + LootId.ToString("00");
         stepStr += "O";
-        foreach (var opponent in Opponents)
-            stepStr += opponent.Id.ToString("00");
+        if (Opponents != null)
+            foreach (var opponent in Opponents)
+                stepStr += opponent.Id.ToString("00");
+        stepStr += ";";
         return stepStr;
     }
 }

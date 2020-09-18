@@ -5,6 +5,24 @@ using UnityEngine;
 
 public class StepService
 {
+    public List<Step> GetAllSteps(Run run)
+    {
+        int start = -1;
+        int end = -1;
+        var listSteps = new List<Step>();
+        for (int i = 0; i < run.Steps.Length; ++i)
+        {
+            if (i == 0 || run.Steps[i - 1] == ';')
+                start = i;
+            else if (run.Steps[i] == ';')
+            {
+                end = i;
+                listSteps.Add(new Step(run.Steps.Substring(start, (end - start) + 1)));
+            }
+        }
+        return listSteps;
+    }
+
     public void GenerateOriginSteps(Run run, Character character)
     {
         run.Steps = "";
@@ -96,7 +114,7 @@ public class StepService
         if (stepStartId == -1)
             return null;
         var stepEndId = parsedStepsString.Substring(stepStartId).IndexOf(';');
-        var stepStr = parsedStepsString.Substring(stepStartId, stepEndId - stepStartId);
+        var stepStr = parsedStepsString.Substring(stepStartId, (stepEndId - stepStartId) + 1);
         return new Step(stepStr);
     }
 

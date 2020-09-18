@@ -249,7 +249,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         var tattoos = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         if (tattoos == null)
             tattoos = "";
-        tattoos += name.Replace(" ", "").Replace("'", "") + ";";
+        var nameToAdd = name.Replace(" ", "").Replace("'", "");
+        if ()
+        {
+
+        }
+        else
+            tattoos += nameToAdd + ":1;";
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoos);
     }
 

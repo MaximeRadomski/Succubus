@@ -24,6 +24,7 @@
 
     public Run()
     {
-
+        CurrentRealm = Realm.Heaven;
+        RealmLevel = 1;
     }
 }

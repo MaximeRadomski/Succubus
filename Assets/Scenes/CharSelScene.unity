@@ -694,6 +694,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &112964963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1126,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &297658040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2055,7 @@ MonoBehaviour:
   Paused: 0
   PauseMenu: {fileID: 0}
   Instantiator: {fileID: 0}
+  CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
 --- !u!114 &576413844
@@ -2372,6 +2375,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &724955122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,6 +2729,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &767934853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,6 +2858,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &877763184
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,6 +3731,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1110716840
 GameObject:
   m_ObjectHideFlags: 0
@@ -3955,6 +3962,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1111992098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4031,6 +4039,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!212 &1111992102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4994,6 +5003,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1409088001}
   - component: {fileID: 1409088002}
+  - component: {fileID: 1409088004}
+  - component: {fileID: 1409088003}
   m_Layer: 0
   m_Name: CharacterPicture
   m_TagString: Untagged
@@ -5066,6 +5077,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1409088003
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409088000}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.142857, y: 7.285714}
+    newSize: {x: 4.142857, y: 7.285714}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.142857, y: 7.285714}
+  m_EdgeRadius: 0
+--- !u!114 &1409088004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409088000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1427222500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5237,6 +5291,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!212 &1434796712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5416,6 +5471,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1527800777
 GameObject:
   m_ObjectHideFlags: 0
@@ -5677,6 +5733,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1601270429
 GameObject:
   m_ObjectHideFlags: 0
@@ -6035,6 +6092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1680876403}
+  HasInitiated: 0
 --- !u!81 &1680876402
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6443,6 +6501,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &1803340083
 GameObject:
   m_ObjectHideFlags: 0
@@ -6925,6 +6984,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1001 &1890396418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7379,6 +7439,7 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  CustomSound: 0
 --- !u!1 &2013879014
 GameObject:
   m_ObjectHideFlags: 0

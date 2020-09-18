@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: 656988019031298925
     second: Backgrounds_1
+  - first:
+      213: -7810250789829366425
+    second: Backgrounds_2
+  - first:
+      213: 5652514795977546035
+    second: Backgrounds_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,7 +121,7 @@ TextureImporter:
         width: 500
         height: 456
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -136,7 +142,7 @@ TextureImporter:
         width: 500
         height: 456
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,6 +150,48 @@ TextureImporter:
       bones: []
       spriteID: d635c085f171e1900800000000000000
       internalID: 656988019031298925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_2
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 760
+        width: 240
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76da181894a6c9390800000000000000
+      internalID: -7810250789829366425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_3
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 768
+        width: 222
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33991e53244c17e40800000000000000
+      internalID: 5652514795977546035
       vertices: []
       indices: 
       edges: []

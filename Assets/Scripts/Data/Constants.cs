@@ -81,7 +81,7 @@ public static class Constants
     public const string SettingsScene= "SettingsScene";
     public const string SettingsAudioScene = "SettingsAudioScene";
     public const string SettingsGameplayScene = "SettingsGameplayScene";
-    public const string AscensionScene = "AscensionScene";
+    public const string StepsScene = "StepsScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingChoiceScene = "TrainingChoiceScene";
     public const string TrainingFreeGameScene = "TrainingFreeGameScene";
