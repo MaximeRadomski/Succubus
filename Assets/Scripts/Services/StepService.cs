@@ -64,7 +64,7 @@ public class StepService
                 else if (i == 3)
                     alreadyExitIdToCheck = 3;
                 if (alreadyStep.StepType.ToString().Substring(1)[alreadyExitIdToCheck] == '1')
-                    minimumExit.ReplaceChar(i, '1');
+                    minimumExit = minimumExit.ReplaceChar(i, '1');
             }
         }
         var chancePercentageToHaveAnExit = 50;
@@ -74,7 +74,7 @@ public class StepService
                 continue;
             if (Helper.RandomDice100(chancePercentageToHaveAnExit))
             {
-                minimumExit.ReplaceChar(i, '1');
+                minimumExit = minimumExit.ReplaceChar(i, '1');
                 chancePercentageToHaveAnExit -= chancePercentageToHaveAnExit / 2;
             }
         }
@@ -82,7 +82,7 @@ public class StepService
         var stepType = StepType.S0000;
         for (int i = 0; i < typeNames.Count; ++i)
         {
-            if (typeNames[i] == minimumExit)
+            if (typeNames[i].Substring(1) == minimumExit)
             {
                 stepType = (StepType)i;
                 break;
@@ -105,16 +105,16 @@ public class StepService
             lootId = TattoosData.GetRandomTattoo().Id;
         }
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, GetDifficultyWieghtFromRunLevel(run)));
-        run.Steps += newStep.ToString();
+        run.Steps += newStep.ToParsedString();
     }
 
-    private Step GetStepOnPos(int x, int y, string parsedStepsString)
+    public Step GetStepOnPos(int x, int y, string parsedStepsString)
     {
         var stepStartId = parsedStepsString.IndexOf("X" + x.ToString("00") + "Y" + y.ToString("00"));
         if (stepStartId == -1)
             return null;
         var stepEndId = parsedStepsString.Substring(stepStartId).IndexOf(';');
-        var stepStr = parsedStepsString.Substring(stepStartId, (stepEndId - stepStartId) + 1);
+        var stepStr = parsedStepsString.Substring(stepStartId, stepEndId + 1);
         return new Step(stepStr);
     }
 

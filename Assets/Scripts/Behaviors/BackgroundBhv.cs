@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BackgroundBhv : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class BackgroundBhv : MonoBehaviour
     private bool _isMoving;
     private Instantiator _instantiator;
     private int _i;
+    private bool _fadeBlocksMuted;
 
     void Start()
     {
@@ -17,6 +19,7 @@ public class BackgroundBhv : MonoBehaviour
     private void Init()
     {
         NewPositionToReach();
+        SceneManager.sceneLoaded += OnSceneLoaded;
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _i = 0;
         _isMoving = true;
@@ -31,11 +34,14 @@ public class BackgroundBhv : MonoBehaviour
     {
         if (_isMoving)
             Move();
-        ++_i;
-        if (_i >= 10)
+        if (!!_fadeBlocksMuted)
         {
-            _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(-18.0f, 18.0f), 0.0f), 2, -1);
-            _i = 0;
+            ++_i;
+            if (_i >= 10)
+            {
+                _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(-18.0f, 18.0f), 0.0f), 2, -1);
+                _i = 0;
+            }
         }
     }
 
@@ -46,5 +52,13 @@ public class BackgroundBhv : MonoBehaviour
         {
             NewPositionToReach();
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == Constants.StepsScene)
+            _fadeBlocksMuted = true;
+        else
+            _fadeBlocksMuted = false;
     }
 }

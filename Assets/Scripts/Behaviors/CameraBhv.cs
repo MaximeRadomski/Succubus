@@ -6,11 +6,13 @@ public class CameraBhv : MonoBehaviour
     public bool HasInitiated;
 
     private Vector3 _beforeFocusPosition;
+    private Vector3 _targetPosition;
 
     private float _initialSize;
     private float _bumpSize;
     private bool _isBumbing;
     private bool _isResetBumping;
+    private bool _isSliding;
 
     public void Init()
     {
@@ -44,6 +46,10 @@ public class CameraBhv : MonoBehaviour
         {
             ResetBumping();
         }
+        if (_isSliding)
+        {
+            Sliding();
+        }
     }
 
     public void Bump(int bumpPercent)
@@ -70,6 +76,22 @@ public class CameraBhv : MonoBehaviour
         {
             Camera.orthographicSize = _initialSize;
             _isResetBumping = false;
+        }
+    }
+
+    public void SlideToPosition(Vector3 target)
+    {
+        _targetPosition = new Vector3(target.x, target.y, transform.position.z);
+        _isSliding = true;
+    }
+
+    private void Sliding()
+    {
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, _targetPosition, 0.3f);
+        if (Helper.VectorEqualsPrecision(Camera.transform.position, _targetPosition, 0.01f))
+        {
+            Camera.transform.position = _targetPosition;
+            _isSliding = false;
         }
     }
 }

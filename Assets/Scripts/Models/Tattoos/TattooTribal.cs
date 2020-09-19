@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TattooPower : Tattoo
+public class TattooTribal : Tattoo
 {
-    public override void Init(Character character, GameplayControler gameplayControler)
+    public TattooTribal()
     {
-        base.Init(character, gameplayControler);
         Id = 0;
-        Name = "Power";
+        Name = "Tribal";
         Stat = 10;
-        Description = "You deal " + StatToString("+", "%") + "";
+        Description = "You deal " + StatToString("+", "%") + " damages.";
+        Rarity = Rarity.Common;
     }
 
     public override void ApplyToCharacter(Character character)

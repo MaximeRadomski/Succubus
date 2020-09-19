@@ -8,9 +8,11 @@ public static class TattoosData
     public static int LegendaryTattooAppearancePercent = 10;
     public static int RareTattooAppearancePercent = 30;
 
-    public static string[] CommonTattoosNames = { "Power" };
-    public static string[] RareTattoosNames = { "Power" };
-    public static string[] LegendaryTattoosNames = { "Power" };
+    public static string[] Tattoos = { "Tribal" };
+
+    public static string[] CommonTattoosNames = { Tattoos[0] };
+    public static string[] RareTattoosNames = { Tattoos[0] };
+    public static string[] LegendaryTattoosNames = { Tattoos[0] };
 
     public static Tattoo GetRandomTattoo()
     {

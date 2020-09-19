@@ -23,7 +23,7 @@ public class Instantiator : MonoBehaviour
         var tmpStepObject = Resources.Load<GameObject>("Prefabs/Step");
         var tmpStepInstance = Instantiate(tmpStepObject, Helper.TransformFromStepCoordinates(step.X, step.Y), tmpStepObject.transform.rotation);
         tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step);
-        tmpStepInstance.transform.name = "Step" + step.X + "_" + step.Y;
+        tmpStepInstance.transform.name = step.X + "_" + step.Y;
         return tmpStepInstance;
     }
 
@@ -118,7 +118,7 @@ public class Instantiator : MonoBehaviour
         tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
-    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, bool isRotated)
+    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, bool isRotated = false)
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);

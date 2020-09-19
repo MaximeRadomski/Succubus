@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ItemDemonBlood : Item
 {
-    public override void Init(Character character, GameplayControler gameplayControler)
+    public ItemDemonBlood()
     {
-        base.Init(character, gameplayControler);
         Id = 1;
         Name = "Demon Blood";
         Description = "Clear all black rows";

@@ -21,6 +21,11 @@ public class PlayerPrefsHelper : MonoBehaviour
         return run;
     }
 
+    public static void ResetRun()
+    {
+        SaveRun(null);
+    }
+
     public static void SaveBag(string bag)
     {
         PlayerPrefs.SetString(Constants.PpBag, bag);
@@ -127,7 +132,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void AddUnlockedCharacters(Character character)
     {
         var currentUnlockedCharactersString = GetUnlockedCharactersString();
-        currentUnlockedCharactersString.ReplaceChar(character.Id, '1');
+        currentUnlockedCharactersString = currentUnlockedCharactersString.ReplaceChar(character.Id, '1');
         SaveUnlockedCharacters(currentUnlockedCharactersString);
     }
 
@@ -250,12 +255,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         if (tattoos == null)
             tattoos = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "");
-        if ()
+        var alreadyStart = tattoos.IndexOf(nameToAdd);
+        if (alreadyStart != -1)
         {
-
+            int currentTattooLevel = int.Parse(tattoos.Substring(alreadyStart + nameToAdd.Length + 1, 2));
+            tattoos = tattoos.Replace(nameToAdd + ":" + currentTattooLevel.ToString("00"), nameToAdd + ":" + (++currentTattooLevel).ToString("00"));
         }
         else
-            tattoos += nameToAdd + ":1;";
+            tattoos += nameToAdd + ":01;";
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoos);
     }
 

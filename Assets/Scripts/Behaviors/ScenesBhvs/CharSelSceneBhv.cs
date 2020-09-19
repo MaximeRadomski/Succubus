@@ -36,8 +36,8 @@ public class CharSelSceneBhv : SceneBhv
         {
             child.GetComponent<ButtonBhv>().EndActionDelegate = SelectCharacter;
         }
-        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
-        GameObject.Find("ButtonPlay").GetComponent<ButtonBhv>().EndActionDelegate = Play;
+        GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
+        GameObject.Find(Constants.GoButtonPlayName).GetComponent<ButtonBhv>().EndActionDelegate = Play;
         GameObject.Find("CharacterPicture").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
     }
 
@@ -119,6 +119,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
                 PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
+                PlayerPrefsHelper.ResetRun();
                 PlayerPrefsHelper.SaveRun(new Run());
             }
             NavigationService.LoadNextScene(scene);

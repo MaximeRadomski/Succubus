@@ -8,7 +8,8 @@ public abstract class Tattoo
     public string Name;
     public int Stat;
     public string Description;
-    public int Level;
+    public Rarity Rarity;
+    public int Level = 1;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;

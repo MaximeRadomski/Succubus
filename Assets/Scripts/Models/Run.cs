@@ -3,6 +3,7 @@
     public Realm CurrentRealm;
     public int RealmLevel;
     public int MaxSteps;
+    public int CurrentStep;
     public string Steps;
     public int X, Y;
     // Character starts at X50 Y50 because coordinates are stored in two digits and coordinates under zero could mean up to 3 digits
@@ -24,7 +25,10 @@
 
     public Run()
     {
-        CurrentRealm = Realm.Heaven;
+        CurrentRealm = Realm.Hell;
         RealmLevel = 1;
+        CurrentStep = 0;
+        X = 50;
+        Y = 50;
     }
 }

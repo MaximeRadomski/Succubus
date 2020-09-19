@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ItemHolyWater : Item
 {
-    public override void Init(Character character, GameplayControler gameplayControler)
+    public ItemHolyWater()
     {
-        base.Init(character, gameplayControler);
         Id = 0;
         Name = "Holy Water";
         Description = "clear all waste rows";

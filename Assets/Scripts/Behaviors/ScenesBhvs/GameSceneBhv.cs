@@ -12,7 +12,7 @@ public abstract class GameSceneBhv : SceneBhv
 
     protected GameplayControler _gameplayControler;
     protected string _poppingText = "";
-    protected GameObject _menu;
+    protected GameObject _pauseMenu;
 
     protected override void Init()
     {
@@ -32,14 +32,14 @@ public abstract class GameSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _menu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
     }
 
     private void Info()
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _menu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", Character, _currentOpponent);
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", Character, _currentOpponent);
     }
 
     private object ResumeGiveUp(bool resume)
@@ -49,10 +49,10 @@ public abstract class GameSceneBhv : SceneBhv
         {
             Paused = false;
             Constants.NameLastScene = SceneManager.GetActiveScene().name;
-            Destroy(_menu);
+            Destroy(_pauseMenu);
             return true;
         }
-        _menu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        _pauseMenu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
         if (GameObject.Find("PlayField") != null)

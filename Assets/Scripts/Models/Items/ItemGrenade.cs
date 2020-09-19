@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ItemGrenade : Item
 {
-    public override void Init(Character character, GameplayControler gameplayControler)
+    public ItemGrenade()
     {
-        base.Init(character, gameplayControler);
         Id = 2;
         Name = "Grenade";
         Description = "Clear your last four rows";
