@@ -103,7 +103,6 @@ public class GameplayControler : MonoBehaviour
         PlayerPrefsHelper.SaveHolder(null);
         Destroy(PlayFieldBhv.gameObject);
         Constants.InputLocked = false;
-        SceneBhv.OnGameOver();
     }
 
     private void Init(int level, Realm characterRealm, Realm levelRealm)
@@ -1380,7 +1379,7 @@ public class GameplayControler : MonoBehaviour
         return false;
     }
 
-    private void DeleteLine(int y)
+    public void DeleteLine(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
@@ -1392,7 +1391,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void ClearLineSpace(int minY = -1, int maxY = -1)
+    public void ClearLineSpace(int minY = -1, int maxY = -1)
     {
         int highestBlock = _playFieldHeight - 1;
         for (int y = 0; y < _playFieldHeight; ++y)
@@ -1469,20 +1468,6 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void ClearFromTop(int nbRows)
-    {
-        int start = GetHighestBlock();
-        int end = start - (nbRows - 1);
-        for (int y = start; y >= end; --y)
-        {
-            if (y < 0)
-                break;
-            DeleteLine(y);
-        }
-        ClearLineSpace();
-        DropGhost();
     }
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm)

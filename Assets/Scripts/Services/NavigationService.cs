@@ -19,6 +19,12 @@ public static class NavigationService
         LoadNextScene(name);
     }
 
+    public static void LoadBackUntil(string name)
+    {
+        _path = _path.Substring(0, _path.IndexOf(name) + name.Length);
+        SceneManager.LoadScene(name);
+    }
+
     public static void LoadNextScene(string name)
     {
         Constants.NameLastScene = SceneManager.GetActiveScene().name;

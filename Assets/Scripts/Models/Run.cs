@@ -27,6 +27,7 @@
     {
         CurrentRealm = Realm.Hell;
         RealmLevel = 1;
+        MaxSteps = 6;
         CurrentStep = 0;
         X = 50;
         Y = 50;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public static class Constants
@@ -22,6 +23,7 @@ public static class Constants
     public const float MaximumVolumeMusic = 0.2f;
     public const float MaximumEffectsMusic = 1.0f;
     public const string PiecesLetters = "IJLOSTZ";
+    public const string AvailableBodyPartsIds = "000102030405060708091011";
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -49,6 +51,7 @@ public static class Constants
     public const int PpSelectedCharacterDefault = 0;
     public const string PpCurrentItem = "CurrentItem";
     public const string PpCurrentTattoos = "CurrentTattoos";
+    public const string PpCurrentBodyParts = "CurrentBodyParts";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
     public const string PpTrainingScore = "TrainingScore";
@@ -85,7 +88,7 @@ public static class Constants
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingChoiceScene = "TrainingChoiceScene";
     public const string TrainingFreeGameScene = "TrainingFreeGameScene";
-    public const string TrainingDummyGameScene = "TrainingDummyGameScene";
+    public const string ClassicGameScene = "ClassicGameScene";
     public const string CharSelScene = "CharSelScene";
 
     //  GAMEOBJECT NAMES  //
@@ -162,9 +165,9 @@ public static class Constants
     public static string LastEndActionClickedName = null;
     public static string ClickHistory = null;
     public static List<string> InputTopLayerNames = null;
-    public static string SelectedGameMode = null;
+    public static GameMode CurrentGameMode;
     public static string NameLastScene;
-    public static MusicTyoe CurrentMusicType = MusicTyoe.SplashScreen;
+    public static MusicType CurrentMusicType = MusicType.SplashScreen;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;
@@ -192,6 +195,8 @@ public static class Constants
     {
         var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         var tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
+        if (tmpCurrentItem == null)
+            return;
         Constants.CurrentItemCooldown = tmpCurrentItem.Cooldown - tmpChar.ItemMaxCooldownReducer;
     }
 

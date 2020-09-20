@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Item
+public abstract class Item : Loot
 {
     public int Id;
     public string Name;

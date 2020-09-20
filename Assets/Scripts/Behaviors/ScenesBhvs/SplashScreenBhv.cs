@@ -52,7 +52,7 @@ public class SplashScreenBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicTyoe.Menu;
+            Constants.CurrentMusicType = MusicType.Menu;
             NavigationService.LoadNextScene(Constants.MainMenuScene);
             return true;
         }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MusicControlerBhv : MonoBehaviour
 {
     private AudioSource _audioSource;
-    private MusicTyoe _currentType;
+    private MusicType _currentType;
     private float _level;
     private bool _isHalved;
 
@@ -24,7 +24,7 @@ public class MusicControlerBhv : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        _currentType = MusicTyoe.None;
+        _currentType = MusicType.None;
         SetNewVolumeLevel();
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
@@ -75,11 +75,11 @@ public class MusicControlerBhv : MonoBehaviour
         if (_currentType == Constants.CurrentMusicType)
             return;
         _currentType = Constants.CurrentMusicType;
-        if (_currentType == MusicTyoe.SplashScreen)
+        if (_currentType == MusicType.SplashScreen)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/SplashScreen");
-        else if (_currentType == MusicTyoe.Menu)
+        else if (_currentType == MusicType.Menu)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
-        else if (_currentType == MusicTyoe.GameHell)
+        else if (_currentType == MusicType.GameHell)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/GameHell");
         _audioSource.Play();
     }

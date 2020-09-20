@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Character
+public class Character : Loot
 {
     //Unique per character
     public int Id;

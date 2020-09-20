@@ -16,9 +16,9 @@ public class CharSelSceneBhv : SceneBhv
     {
         base.Init();
         var gameModeTitle = "New Ascension";
-        if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
+        if (Constants.CurrentGameMode == GameMode.TrainingFree)
             gameModeTitle = "Free Play";
-        else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+        else if (Constants.CurrentGameMode == GameMode.TrainingDummy)
             gameModeTitle = "Training Dummy";
         _charSelector = GameObject.Find("CharSelector");
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
@@ -84,17 +84,17 @@ public class CharSelSceneBhv : SceneBhv
 
     private void Play()
     {
-        if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene
-            || Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
         else
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
         object OnBlend(bool result)
         {
             var scene = "";
-            if (Constants.SelectedGameMode == Constants.TrainingFreeGameScene)
+            if (Constants.CurrentGameMode == GameMode.TrainingFree)
             {
-                Constants.CurrentMusicType = MusicTyoe.GameHell;
+                Constants.CurrentMusicType = MusicType.GameHell;
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
@@ -103,10 +103,10 @@ public class CharSelSceneBhv : SceneBhv
                 Constants.ResetClassicGameCache();
                 Constants.CurrentItemCooldown = 0;
             }
-            else if (Constants.SelectedGameMode == Constants.TrainingDummyGameScene)
+            else if (Constants.CurrentGameMode == GameMode.TrainingDummy)
             {
-                Constants.CurrentMusicType = MusicTyoe.GameHell;
-                scene = Constants.TrainingDummyGameScene;
+                Constants.CurrentMusicType = MusicType.GameHell;
+                scene = Constants.ClassicGameScene;
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2]};
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);

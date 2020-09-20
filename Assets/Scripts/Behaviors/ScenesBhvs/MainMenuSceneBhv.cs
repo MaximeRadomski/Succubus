@@ -28,7 +28,7 @@ public class MainMenuSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.SelectedGameMode = Constants.StepsScene;
+            Constants.CurrentGameMode = GameMode.Ascension;
             NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }

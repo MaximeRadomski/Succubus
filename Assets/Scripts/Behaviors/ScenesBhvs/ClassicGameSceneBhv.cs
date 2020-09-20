@@ -90,8 +90,46 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private void Victory()
     {
         _gameplayControler.CleanPlayerPrefs();
-        Constants.CurrentMusicType = MusicTyoe.Menu;
-        NavigationService.LoadPreviousScene();
+
+        var stepsService = new StepService();
+        var run = PlayerPrefsHelper.GetRun();
+        var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
+        var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
+        if (loot.GetType() == typeof(Character))
+        {
+            Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", null);
+        }
+        else if (loot.GetType() == typeof(Item))
+        {
+            var currentItem = PlayerPrefsHelper.GetCurrentItem();
+            if (currentItem == null)
+            {
+                Instantiator.NewPopupYesNo("New Item", "new item added to your gear.", null, "Ok", null);
+                PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
+            }                
+            else
+            {
+                var content = "switch your " + currentItem.Name.ToLower() + " for " + ((Item)loot).Name.ToLower() + " ?";
+                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch);
+                object OnItemSwitch(bool result)
+                {
+                    if (result)
+                        PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
+                    return result;
+                }
+            }
+        }
+        else if (loot.GetType() == typeof(Tattoo))
+        {
+            
+        }
+
+        Constants.CurrentMusicType = MusicType.Menu;
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            NavigationService.LoadBackUntil(Constants.CharSelScene);
+        else
+            NavigationService.LoadBackUntil(Constants.StepsScene);
     }
 
     private void StartOpponentCooldown(bool sceneInit = false)
@@ -175,8 +213,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
     override public void OnGameOver()
     {
         base.OnGameOver();
-        NavigationService.LoadPreviousScene();
         _characterInstanceBhv.Die();
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            NavigationService.LoadBackUntil(Constants.CharSelScene);
+        else
+            NavigationService.LoadBackUntil(Constants.MainMenuScene);
     }
 
     public override void OnNewPiece()

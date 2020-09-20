@@ -1,4 +1,4 @@
-﻿public enum MusicTyoe
+﻿public enum MusicType
 {
     None,
     SplashScreen,

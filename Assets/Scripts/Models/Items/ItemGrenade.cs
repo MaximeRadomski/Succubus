@@ -8,7 +8,7 @@ public class ItemGrenade : Item
     {
         Id = 2;
         Name = "Grenade";
-        Description = "Clear your last four rows";
+        Description = "Clears your last four rows";
         Rarity = Rarity.Common;
         Cooldown = 15;
     }
@@ -18,8 +18,22 @@ public class ItemGrenade : Item
         if (!base.Activate())
             return false;
         _gameplayControler.SceneBhv.Paused = true;
-        _gameplayControler.ClearFromTop(4);
+        ClearFromTop(4);
         _gameplayControler.SceneBhv.Paused = false;
         return true;
+    }
+
+    public void ClearFromTop(int nbRows)
+    {
+        int start = _gameplayControler.GetHighestBlock();
+        int end = start - (nbRows - 1);
+        for (int y = start; y >= end; --y)
+        {
+            if (y < 0)
+                break;
+            _gameplayControler.DeleteLine(y);
+        }
+        _gameplayControler.ClearLineSpace();
+        _gameplayControler.DropGhost();
     }
 }

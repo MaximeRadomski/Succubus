@@ -87,7 +87,7 @@ public class CameraBhv : MonoBehaviour
 
     private void Sliding()
     {
-        Camera.transform.position = Vector3.Lerp(Camera.transform.position, _targetPosition, 0.3f);
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, _targetPosition, 0.15f);
         if (Helper.VectorEqualsPrecision(Camera.transform.position, _targetPosition, 0.01f))
         {
             Camera.transform.position = _targetPosition;

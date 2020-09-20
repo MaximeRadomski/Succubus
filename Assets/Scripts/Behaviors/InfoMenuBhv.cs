@@ -61,10 +61,11 @@ public class InfoMenuBhv : PopupBhv
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
         if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
         {
-            _characterItem.Init(character, null);
             _characterFrame.transform.Find("ButtonItem").GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
             _characterFrame.transform.Find("ButtonItem").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id);
         }
+        else
+            _characterFrame.transform.Find("ButtonItem").gameObject.SetActive(false);
     }
 
     private void ItemInfo()

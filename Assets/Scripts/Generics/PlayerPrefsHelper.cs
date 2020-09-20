@@ -247,6 +247,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void ResetTattoos()
     {
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, null);
+        PlayerPrefs.SetString(Constants.PpCurrentBodyParts, null);
     }
 
     public static void AddTattoo(string name)
@@ -263,6 +264,21 @@ public class PlayerPrefsHelper : MonoBehaviour
         }
         else
             tattoos += nameToAdd + ":01;";
+        
+        var availablesPartsIds = Constants.AvailableBodyPartsIds;
+        var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.AvailableBodyPartsIds);
+        if (alreadyBodyPartsIds == null)
+            alreadyBodyPartsIds = "";
+        for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
+        {
+            int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
+            if (availablesPartsIds.Contains(id.ToString("00")))
+                availablesPartsIds.Remove(id * 2, 2);
+        }
+        var newBodyPart = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
+        alreadyBodyPartsIds += newBodyPart;
+
+        PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoos);
     }
 

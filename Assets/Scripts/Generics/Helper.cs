@@ -9,6 +9,23 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static Loot GetLootFromTypeAndId(LootType lootType, int id)
+    {
+        if (lootType == LootType.Character)
+        {
+            return CharactersData.Characters[id];
+        }
+        else if (lootType == LootType.Item)
+        {
+            return ItemsData.GetItemFromName(ItemsData.Items[id]);
+        }
+        else if (lootType == LootType.Tattoo)
+        {
+            return TattoosData.GetTattooFromName(TattoosData.Tattoos[id]);
+        }
+        return null;
+    }
+
     public static Vector3 TransformFromStepCoordinates(int x, int y)
     {
         return new Vector3((x - 50) * Constants.Pixel * 27, (y - 50) * Constants.Pixel * 25, 0.0f);

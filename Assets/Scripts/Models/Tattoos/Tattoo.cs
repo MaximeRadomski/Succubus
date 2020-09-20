@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Tattoo
+public abstract class Tattoo : Loot
 {
     public int Id;
     public string Name;
@@ -10,6 +10,7 @@ public abstract class Tattoo
     public string Description;
     public Rarity Rarity;
     public int Level = 1;
+    public int MaxLevel;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;

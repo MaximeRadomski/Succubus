@@ -59,7 +59,7 @@ public abstract class GameSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicTyoe.Menu;
+            Constants.CurrentMusicType = MusicType.Menu;
             NavigationService.LoadPreviousScene();
             return false;
         }
@@ -138,6 +138,6 @@ public abstract class GameSceneBhv : SceneBhv
 
     public virtual void OnGameOver()
     {
-        Constants.CurrentMusicType = MusicTyoe.Menu;
+        Constants.CurrentMusicType = MusicType.Menu;
     }
 }

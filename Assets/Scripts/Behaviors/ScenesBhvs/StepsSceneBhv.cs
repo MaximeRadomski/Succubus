@@ -19,6 +19,7 @@ public class StepsSceneBhv : SceneBhv
     private TMPro.TextMeshPro _opponents;
     private SpriteRenderer _lootPicture;
     private TMPro.TextMeshPro _lootName;
+    private SpriteRenderer _characterPicture;
 
     private Step _selectedStep;
 
@@ -41,6 +42,9 @@ public class StepsSceneBhv : SceneBhv
         _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
         _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+        _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
+        _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _character.Id);
+        _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
@@ -86,6 +90,7 @@ public class StepsSceneBhv : SceneBhv
         var rarity = Rarity.Common;
         if (_selectedStep.LootType != LootType.None)
         {
+            _characterPicture.enabled = false;
             if (_selectedStep.LootType == LootType.Character)
             {
                 rarity = Rarity.Legendary;
@@ -110,18 +115,21 @@ public class StepsSceneBhv : SceneBhv
         }
         else
         {
-            _lootTypeRarity.text = " - \n" + Constants.MaterialHell_4_3 + " - ";
-            _lootPicture.sprite = null;
-            _opponents.text = _lootTypeRarity.text;
             if (x == _run.X && y == _run.Y)
             {
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_2");
                 _lootName.text = "current location";
+                _lootTypeRarity.text = "";
+                _opponents.text = "";
+                _characterPicture.enabled = true;
             }
             else
             {
                 _lootPicture.sprite = null;
                 _lootName.text = " - ";
+                _lootTypeRarity.text = " - \n" + Constants.MaterialHell_4_3 + " - ";
+                _opponents.text = _lootTypeRarity.text;
+                _characterPicture.enabled = false;
             }
         }
     }
@@ -164,16 +172,30 @@ public class StepsSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicTyoe.Menu;
+            Constants.CurrentMusicType = MusicType.Menu;
             NavigationService.LoadPreviousScene();
             return false;
         }
         return false;
     }
 
+    private void Info()
+    {
+        Paused = true;
+        _musicControler.HalveVolume();
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", _character, null);
+    }
+
     private void GoToStep()
     {
-
+        _run.X = _selectedStep.X;
+        _run.Y = _selectedStep.Y;
+        --_run.CurrentStep;
+        PlayerPrefsHelper.SaveRun(_run);
+        Constants.CurrentMusicType = MusicType.GameHell;
+        PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
+        Constants.ResetClassicGameCache();
+        NavigationService.LoadNextScene(Constants.ClassicGameScene);
     }
 
     private void ItemInfo()

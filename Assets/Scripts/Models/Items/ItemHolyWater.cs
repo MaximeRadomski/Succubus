@@ -8,7 +8,7 @@ public class ItemHolyWater : Item
     {
         Id = 0;
         Name = "Holy Water";
-        Description = "clear all waste rows";
+        Description = "clears all waste rows";
         Rarity = Rarity.Common;
     }
 
