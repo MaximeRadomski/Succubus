@@ -66,11 +66,25 @@ public class InfoMenuBhv : PopupBhv
         }
         else
             _characterFrame.transform.Find("ButtonItem").gameObject.SetActive(false);
+        var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
+        foreach (Tattoo tattoo in tattoos)
+        {
+            var tmpTattooGameObject = _characterFrame.transform.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+            tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
+            tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = TattooInfo;
+            tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
+        }
     }
 
     private void ItemInfo()
     {
-        _instantiator.NewPopupYesNo(_characterItem.Name.ToLower(), Constants.MaterialHell_3_2 + "(cooldown: " + _characterItem.Cooldown + ")" + Constants.MaterialEnd + ":\n" + _characterItem.Description.ToLower(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(_characterItem.Name, Constants.MaterialHell_3_2 + "(cooldown: " + _characterItem.Cooldown + ")" + Constants.MaterialEnd + ":\n" + _characterItem.Description.ToLower(), null, "Ok", null);
+    }
+
+    private void TattooInfo()
+    {
+        var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Constants.LastEndActionClickedName.Substring("Tattoo".Length))]);
+        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_3_2 + clickedTattoo.Description, null, "Ok", null);
     }
 
     private void CharacterLore()

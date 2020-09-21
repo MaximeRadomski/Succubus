@@ -11,9 +11,15 @@ public abstract class Tattoo : Loot
     public Rarity Rarity;
     public int Level = 1;
     public int MaxLevel;
+    public BodyPart BodyPart;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;
+
+    public Tattoo()
+    {
+        LootType = LootType.Tattoo;
+    }
 
     public virtual void Init(Character character, GameplayControler gameplayControler)
     {

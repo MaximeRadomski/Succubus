@@ -9,7 +9,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
+            HpMax = 10/*222*/, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.WasteRow, 2, 1)},
@@ -19,7 +19,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 1, Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
+            HpMax = 10/*444*/, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 4, 6),
                 new OpponentAttack(AttackType.ForcedPiece, 0, 1),
@@ -31,7 +31,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 2, Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
-            HpMax = 666, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
+            HpMax = 10/*666*/, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3),
@@ -44,7 +44,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 3, Kind = "Lost Soul", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 40, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10,
+            HpMax = 10/*40*/, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
             GravityLevel = 1, DifficultyWeight = 10
@@ -52,7 +52,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 4, Kind = "Warrior Soul", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 15,
+            HpMax = 10/*100*/, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 1, DifficultyWeight = 20
@@ -60,7 +60,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 5, Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 20, Cooldown = 30,
+            HpMax = 10/*300*/, Weakness = Weakness.Combos, DamagesOnWeakness = 20, Cooldown = 30,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 3, 2) },
             GravityLevel = 2, DifficultyWeight = 40

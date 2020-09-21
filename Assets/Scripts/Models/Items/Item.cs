@@ -11,6 +11,11 @@ public abstract class Item : Loot
     protected Character _character;
     protected GameplayControler _gameplayControler;
 
+    public Item()
+    {
+        LootType = LootType.Item;
+    }
+
     public virtual void Init(Character character, GameplayControler gameplayControler)
     {
         _character = character;

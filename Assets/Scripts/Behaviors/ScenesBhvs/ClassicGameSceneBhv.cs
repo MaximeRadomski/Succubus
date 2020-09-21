@@ -89,47 +89,88 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void Victory()
     {
+        Paused = true;
+        _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
 
-        var stepsService = new StepService();
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        {
+            LoadBackAfterVictory(false);
+            return;
+        }
+
+            var stepsService = new StepService();
         var run = PlayerPrefsHelper.GetRun();
         var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
         var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
-        if (loot.GetType() == typeof(Character))
+        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
+        stepsService.ClearLootOnPos(run.X, run.Y, run);
+        stepsService.SetVisionOnRandomStep(run);
+        PlayerPrefsHelper.SaveRun(run);
+        if (loot.LootType == LootType.Character)
         {
-            Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", null);
+            Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", LoadBackAfterVictory);
         }
-        else if (loot.GetType() == typeof(Item))
+        else if (loot.LootType == LootType.Item)
         {
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             if (currentItem == null)
             {
-                Instantiator.NewPopupYesNo("New Item", "new item added to your gear.", null, "Ok", null);
+                Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-            }                
+            }
+            else if (currentItem.Id == ((Item)loot).Id)
+            {
+                Instantiator.NewPopupYesNo("Same Item", Constants.MaterialHell_3_2 + "well... this is awkward... you already use " + Constants.MaterialHell_4_3 + currentItem.Name + Constants.MaterialHell_3_2 + "...", null, "Oh...", LoadBackAfterVictory);
+            }
             else
             {
-                var content = "switch your " + currentItem.Name.ToLower() + " for " + ((Item)loot).Name.ToLower() + " ?";
+                var content = Constants.MaterialHell_3_2 + "switch your " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + " for " + Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " ?";
                 Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch);
                 object OnItemSwitch(bool result)
                 {
                     if (result)
                         PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
+                    LoadBackAfterVictory(true);
                     return result;
                 }
             }
         }
-        else if (loot.GetType() == typeof(Tattoo))
+        else if (loot.LootType == LootType.Tattoo)
         {
-            
+            var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "");
+            var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
+            var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+            if (bodyPart == BodyPart.MaxLevelReached)
+            {
+                Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level", null, "Damn...", LoadBackAfterVictory);
+            }
+            else if (!tattoos.Contains(nameToCheck))
+            {
+                Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
+            }
+            else
+            {
+                Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory);
+            }
+        }
+        else
+        {
+            LoadBackAfterVictory(false);
         }
 
+    }
+
+    private object LoadBackAfterVictory(bool result)
+    {
         Constants.CurrentMusicType = MusicType.Menu;
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
             NavigationService.LoadBackUntil(Constants.StepsScene);
+        return result;
     }
 
     private void StartOpponentCooldown(bool sceneInit = false)

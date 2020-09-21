@@ -118,6 +118,49 @@ public class StepService
         return new Step(stepStr);
     }
 
+    public void DiscoverStepOnPos(int x, int y, Run run)
+    {
+        var stepStartId = run.Steps.IndexOf("X" + x.ToString("00") + "Y" + y.ToString("00"));
+        if (stepStartId == -1)
+            return;
+        var stepDiscoveredValueId = run.Steps.Substring(stepStartId).IndexOf('D') + 1;
+        run.Steps = run.Steps.ReplaceChar(stepStartId + stepDiscoveredValueId, '1');
+    }
+
+    public void ClearLootOnPos(int x, int y, Run run)
+    {
+        var stepStartId = run.Steps.IndexOf("X" + x.ToString("00") + "Y" + y.ToString("00"));
+        if (stepStartId == -1)
+            return;
+        var stepLootTypeId = run.Steps.Substring(stepStartId).IndexOf('V') + 2;
+        run.Steps = run.Steps.ReplaceChar(stepStartId + stepLootTypeId, 'N');
+    }
+
+    public void SetVisionOnRandomStep(Run run)
+    {
+        var steps = GetAllSteps(run);
+        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && !s.Discovered);
+        var randomId = Random.Range(0, unvisionnedSteps.Count);
+        SetLandLordVisionOnPos(unvisionnedSteps[randomId].X, unvisionnedSteps[randomId].Y, run);
+    }
+
+    public void SetVisionOnAllSteps(Run run)
+    {
+        var steps = GetAllSteps(run);
+        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && !s.Discovered);
+        foreach (Step step in unvisionnedSteps)
+            SetLandLordVisionOnPos(step.X, step.Y, run);
+    }
+
+    public void SetLandLordVisionOnPos(int x, int y, Run run)
+    {
+        var stepStartId = run.Steps.IndexOf("X" + x.ToString("00") + "Y" + y.ToString("00"));
+        if (stepStartId == -1)
+            return;
+        var stepVisionValueId = run.Steps.Substring(stepStartId).IndexOf('V') + 1;
+        run.Steps = run.Steps.ReplaceChar(stepStartId + stepVisionValueId, '1');
+    }
+
     private List<Opponent> GetOpponentsFromDifficultyWeight(Realm realm, int difficultyWeight)
     {
         var realmOpponents = new List<Opponent>();

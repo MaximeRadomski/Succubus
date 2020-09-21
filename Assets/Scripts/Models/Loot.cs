@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Loot
 {
-    
+    public LootType LootType;
 }

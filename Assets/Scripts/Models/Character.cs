@@ -29,6 +29,7 @@ public class Character : Loot
 
     public Character()
     {
+        LootType = LootType.Character;
         CritChancePercent = 1;
         CritMultiplier = 50;
         DamagePercentBonus = 0;

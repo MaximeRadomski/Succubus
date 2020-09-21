@@ -39,7 +39,7 @@ public class StepsSceneBhv : SceneBhv
         _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
         _opponents = GameObject.Find("Opponents").GetComponent<TMPro.TextMeshPro>();
         _lootPicture = GameObject.Find("LootPicture").GetComponent<SpriteRenderer>();
-        _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
+        _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = LootInfo;
         _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
@@ -53,11 +53,16 @@ public class StepsSceneBhv : SceneBhv
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
         if (string.IsNullOrEmpty(_run.Steps))
-        {
             _stepsService.GenerateOriginSteps(_run, _character);
-            UpdateAllStepsVisuals();
-            FocusOnSelected(_run.Y, _run.Y);
-            PositionOnCurrent();
+        else if (_run.CurrentStep == _run.MaxSteps)
+            _stepsService.SetVisionOnAllSteps(_run);
+        UpdateAllStepsVisuals();
+        FocusOnSelected(_run.X, _run.Y);
+        PositionOnCurrent();
+        if (_stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps).LandLordVision)
+        {
+            Constants.InputLocked = true;
+            Invoke(nameof(OnBossTriggered), 1.0f);
         }
     }
 
@@ -188,9 +193,25 @@ public class StepsSceneBhv : SceneBhv
 
     private void GoToStep()
     {
+        if (_selectedStep.LandLordVision)
+        {
+            Instantiator.NewPopupYesNo("Landlord Watching", "this area is under the landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
+            return;
+        }
+        object OnLandLordVisionStep(bool result)
+        {
+            if (result)
+            {
+                _selectedStep.LandLordVision = false;
+                GoToStep();
+            }
+            return result;
+        }
+
         _run.X = _selectedStep.X;
         _run.Y = _selectedStep.Y;
-        --_run.CurrentStep;
+        ++_run.CurrentStep;
+        _stepsService.DiscoverStepOnPos(_selectedStep.X, _selectedStep.Y, _run);
         PlayerPrefsHelper.SaveRun(_run);
         Constants.CurrentMusicType = MusicType.GameHell;
         PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
@@ -198,7 +219,7 @@ public class StepsSceneBhv : SceneBhv
         NavigationService.LoadNextScene(Constants.ClassicGameScene);
     }
 
-    private void ItemInfo()
+    private void LootInfo()
     {
         var name = "";
         var cooldown = "";
@@ -228,5 +249,10 @@ public class StepsSceneBhv : SceneBhv
         Instantiator.NewPopupYesNo(name, (cooldown != null ?
             (Constants.MaterialHell_3_2 + "cooldown: " + cooldown + "" + Constants.MaterialEnd + "\n")
             : "") + description.ToLower(), null, "Ok", null);
+    }
+
+    private void OnBossTriggered()
+    {
+
     }
 }

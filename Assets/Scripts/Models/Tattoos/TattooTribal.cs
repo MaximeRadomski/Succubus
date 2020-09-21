@@ -9,8 +9,9 @@ public class TattooTribal : Tattoo
         Id = 0;
         Name = "Tribal";
         Stat = 10;
-        Description = "You deal " + StatToString("+", "%") + " damages.";
+        Description = "you deal " + StatToString("+", "%") + " damages.";
         Rarity = Rarity.Common;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)

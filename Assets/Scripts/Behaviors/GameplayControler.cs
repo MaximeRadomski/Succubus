@@ -192,7 +192,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        if (Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer <= 0)
+        if (_characterItem != null && Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer <= 0)
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -215,7 +215,10 @@ public class GameplayControler : MonoBehaviour
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
+                if (_characterItem != null)
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
+                else
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
             }

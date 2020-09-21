@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public enum BodyParts
+public enum BodyPart
 {
+    MaxLevelReached = -10,
+    None = -1,
     [Description("Left Arm")]
     LeftArm = 0,
     [Description("Right Arm")]

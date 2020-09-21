@@ -250,36 +250,43 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetString(Constants.PpCurrentBodyParts, null);
     }
 
-    public static void AddTattoo(string name)
+    public static BodyPart AddTattoo(string name)
     {
-        var tattoos = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
-        if (tattoos == null)
-            tattoos = "";
+        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        if (tattoosStr == null)
+            tattoosStr = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "");
-        var alreadyStart = tattoos.IndexOf(nameToAdd);
+        var alreadyStart = tattoosStr.IndexOf(nameToAdd);
+        var newBodyPart = -1;
         if (alreadyStart != -1)
         {
-            int currentTattooLevel = int.Parse(tattoos.Substring(alreadyStart + nameToAdd.Length + 1, 2));
-            tattoos = tattoos.Replace(nameToAdd + ":" + currentTattooLevel.ToString("00"), nameToAdd + ":" + (++currentTattooLevel).ToString("00"));
+            var separatorLevelId = tattoosStr.Substring(alreadyStart).IndexOf('L');
+            var tattooModel = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(alreadyStart, separatorLevelId)));
+            int currentTattooLevel = int.Parse(tattoosStr.Substring(alreadyStart + nameToAdd.Length + 1, 2));
+            if (currentTattooLevel + 1 > tattooModel.MaxLevel)
+                return BodyPart.MaxLevelReached;
+            tattoosStr = tattoosStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
         }
         else
-            tattoos += nameToAdd + ":01;";
-        
-        var availablesPartsIds = Constants.AvailableBodyPartsIds;
-        var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.AvailableBodyPartsIds);
-        if (alreadyBodyPartsIds == null)
-            alreadyBodyPartsIds = "";
-        for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
         {
-            int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
-            if (availablesPartsIds.Contains(id.ToString("00")))
-                availablesPartsIds.Remove(id * 2, 2);
+            var availablesPartsIds = Constants.AvailableBodyPartsIds;
+            var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.AvailableBodyPartsIds);
+            if (alreadyBodyPartsIds == null)
+                alreadyBodyPartsIds = "";
+            for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
+            {
+                int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
+                if (availablesPartsIds.Contains(id.ToString("00")))
+                    availablesPartsIds.Remove(id * 2, 2);
+            }
+            newBodyPart = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
+            alreadyBodyPartsIds += newBodyPart;
+            tattoosStr += nameToAdd + "L01B" + newBodyPart.ToString("00") +";";
+            PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
-        var newBodyPart = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
-        alreadyBodyPartsIds += newBodyPart;
-
-        PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
-        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoos);
+        
+        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosStr);
+        return (BodyPart)newBodyPart;
     }
 
     public static string GetCurrentTattoosString()
@@ -295,17 +302,34 @@ public class PlayerPrefsHelper : MonoBehaviour
         var tattoosList = new List<Tattoo>();
         while (!string.IsNullOrEmpty(tattoosStr) || i > 15)
         {
-            var separatorId = tattoosStr.IndexOf(';');
-            if (separatorId == -1)
+            var separatorLevelId = tattoosStr.IndexOf('L');
+            if (separatorLevelId == -1)
                 break;
-            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorId)));
+            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorLevelId)));
+            tmpTattoo.Level = int.Parse(tattoosStr.Substring(separatorLevelId + 1, 2));
+            tmpTattoo.BodyPart = (BodyPart)int.Parse(tattoosStr.Substring(separatorLevelId + 4, 2));
             tattoosList.Add(tmpTattoo);
-            if (separatorId + 1 >= tattoosStr.Length)
+            if (separatorLevelId + 1 >= tattoosStr.Length)
                 break;
-            tattoosStr = tattoosStr.Substring(separatorId + 1);
+            tattoosStr = tattoosStr.Substring(separatorLevelId + 1);
             ++i;
         }
         return tattoosList;
+    }
+
+    public static Tattoo GetCurrentInkedTattoo(string name)
+    {
+        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var parsedName = name.Replace(" ", "").Replace("'", "");
+        var tattooStartId = tattoosStr.IndexOf(parsedName);
+        if (tattooStartId == -1)
+            return null;
+        tattoosStr = tattoosStr.Substring(tattooStartId);
+        var separatorLevelId = tattoosStr.IndexOf('L');
+        var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorLevelId)));
+        tmpTattoo.Level = int.Parse(tattoosStr.Substring(separatorLevelId + 1, 2));
+        tmpTattoo.BodyPart = (BodyPart)int.Parse(tattoosStr.Substring(separatorLevelId + 4, 2));
+        return tmpTattoo;
     }
 
     public static void SaveEffectsLevel(float level)
