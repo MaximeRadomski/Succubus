@@ -122,7 +122,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
-                Instantiator.NewPopupYesNo("Same Item", Constants.MaterialHell_3_2 + "well... this is awkward... you already use " + Constants.MaterialHell_4_3 + currentItem.Name + Constants.MaterialHell_3_2 + "...", null, "Oh...", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("Same Item", Constants.MaterialHell_3_2 + "well... this is awkward... you already use " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + "...", null, "Oh...", LoadBackAfterVictory);
             }
             else
             {
@@ -148,7 +148,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             else if (!tattoos.Contains(nameToCheck))
             {
-                Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
             }
             else
             {
@@ -251,7 +251,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.UpdateContent(Constants.CurrentOpponentCooldown, _currentOpponent.Cooldown, direction);
     }
 
-    override public void OnGameOver()
+    public override void OnGameOver()
     {
         base.OnGameOver();
         _characterInstanceBhv.Die();
@@ -259,7 +259,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
+        {
+            PlayerPrefsHelper.ResetRun();
             NavigationService.LoadBackUntil(Constants.MainMenuScene);
+        }
     }
 
     public override void OnNewPiece()

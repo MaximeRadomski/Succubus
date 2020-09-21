@@ -48,7 +48,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _gameplayControler.StartGameplay(_level, Realm.Hell, Realm.Hell);
     }
 
-    override public void OnGameOver()
+    public override void OnGameOver()
     {
         if (_score > PlayerPrefsHelper.GetTrainingHighScore())
             PlayerPrefsHelper.SaveTrainingHightScore(_score);

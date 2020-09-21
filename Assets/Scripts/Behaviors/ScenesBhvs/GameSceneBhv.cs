@@ -60,7 +60,11 @@ public abstract class GameSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentMusicType = MusicType.Menu;
-            NavigationService.LoadPreviousScene();
+            if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+                NavigationService.LoadBackUntil(Constants.CharSelScene);
+            else
+                NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return false;
         }
         return false;

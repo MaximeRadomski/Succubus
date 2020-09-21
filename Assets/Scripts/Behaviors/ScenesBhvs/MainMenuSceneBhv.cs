@@ -17,7 +17,10 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        GameObject.Find("ButtonNewAscension").GetComponent<ButtonBhv>().EndActionDelegate = GoToNewAscension;
+        var buttonAscension = GameObject.Find("ButtonNewAscension");
+        buttonAscension.GetComponent<ButtonBhv>().EndActionDelegate = GoToNewAscension;
+        if (PlayerPrefsHelper.GetRun() != null)
+            buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
@@ -29,7 +32,10 @@ public class MainMenuSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentGameMode = GameMode.Ascension;
-            NavigationService.LoadNextScene(Constants.CharSelScene);
+            if (PlayerPrefsHelper.GetRun() != null)
+                NavigationService.LoadNextScene(Constants.StepsScene);
+            else
+                NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
     }

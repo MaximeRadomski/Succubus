@@ -59,25 +59,28 @@ public class StepService
                 var alreadyExitIdToCheck = 0;
                 if (i == 3)
                     alreadyExitIdToCheck = 1;
-                else if (i == 1)
+                else if (i == 0)
                     alreadyExitIdToCheck = 2;
-                else if (i == 3)
+                else if (i == 1)
                     alreadyExitIdToCheck = 3;
                 if (alreadyStep.StepType.ToString().Substring(1)[alreadyExitIdToCheck] == '1')
                     minimumExit = minimumExit.ReplaceChar(i, '1');
+                else
+                    minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
-        var chancePercentageToHaveAnExit = 50;
+        var chancePercentageToHaveAnExit = 90;
         for (int i = 0; i < 4; ++i)
         {
-            if (minimumExit[i] == '1')
+            if (minimumExit[i] == '1' || minimumExit[i] == '.')
                 continue;
             if (Helper.RandomDice100(chancePercentageToHaveAnExit))
             {
                 minimumExit = minimumExit.ReplaceChar(i, '1');
-                chancePercentageToHaveAnExit -= chancePercentageToHaveAnExit / 2;
+                chancePercentageToHaveAnExit -= 20;
             }
         }
+        minimumExit = minimumExit.Replace('.', '0');
         var typeNames = System.Enum.GetNames(typeof(StepType)).ToList();
         var stepType = StepType.S0000;
         for (int i = 0; i < typeNames.Count; ++i)
@@ -140,6 +143,8 @@ public class StepService
     {
         var steps = GetAllSteps(run);
         var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && !s.Discovered);
+        if (unvisionnedSteps == null || unvisionnedSteps.Count == 0)
+            return;
         var randomId = Random.Range(0, unvisionnedSteps.Count);
         SetLandLordVisionOnPos(unvisionnedSteps[randomId].X, unvisionnedSteps[randomId].Y, run);
     }

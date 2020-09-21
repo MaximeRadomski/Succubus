@@ -25,7 +25,11 @@ public class PauseMenuBhv : PopupBhv
         transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
         GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = Settings;
-        GameObject.Find("ButtonGiveUp").GetComponent<ButtonBhv>().EndActionDelegate = GiveUp;
+        var buttonGiveUpGameObject = GameObject.Find("ButtonGiveUp");
+        buttonGiveUpGameObject.GetComponent<ButtonBhv>().EndActionDelegate = GiveUp;
+        if (Constants.CurrentGameMode == GameMode.Ascension || Constants.CurrentGameMode == GameMode.TrueAscension)
+            buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Save & Quit";
+
     }
 
     private void Resume()

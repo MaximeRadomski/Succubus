@@ -93,6 +93,11 @@ public class GameplayControler : MonoBehaviour
         _characterInstanceBhv.TakeDamage();
         _characterInstanceBhv.Die();
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
+        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
+        {
+            SceneBhv.OnGameOver();
+            return true;
+        }));
     }
 
     public void CleanPlayerPrefs()

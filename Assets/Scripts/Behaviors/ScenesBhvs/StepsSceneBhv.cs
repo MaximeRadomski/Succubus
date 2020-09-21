@@ -53,7 +53,10 @@ public class StepsSceneBhv : SceneBhv
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
         if (string.IsNullOrEmpty(_run.Steps))
+        {
             _stepsService.GenerateOriginSteps(_run, _character);
+            PlayerPrefsHelper.SaveRun(_run);
+        }
         else if (_run.CurrentStep == _run.MaxSteps)
             _stepsService.SetVisionOnAllSteps(_run);
         UpdateAllStepsVisuals();
@@ -65,6 +68,15 @@ public class StepsSceneBhv : SceneBhv
             Invoke(nameof(OnBossTriggered), 1.0f);
         }
     }
+
+    public override void PauseOrPrevious()
+    {
+        Paused = true;
+        _musicControler.HalveVolume();
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp);
+    }
+
+
 
     private void OnStepClicked()
     {
@@ -86,7 +98,7 @@ public class StepsSceneBhv : SceneBhv
             PositionOnCurrent();
         _selector.GetComponent<IconInstanceBhv>().Pop();
         var distance = Vector2.Distance(CameraBhv.gameObject.transform.position, _stepsBackground.transform.position);
-        StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () =>
+        StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () =>
         {
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
             return true;
@@ -178,7 +190,7 @@ public class StepsSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentMusicType = MusicType.Menu;
-            NavigationService.LoadPreviousScene();
+            NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return false;
         }
         return false;
@@ -195,7 +207,7 @@ public class StepsSceneBhv : SceneBhv
     {
         if (_selectedStep.LandLordVision)
         {
-            Instantiator.NewPopupYesNo("Landlord Watching", "this area is under the landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
+            Instantiator.NewPopupYesNo("Landlord Vision", "this area is under the landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
             return;
         }
         object OnLandLordVisionStep(bool result)
