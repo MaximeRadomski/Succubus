@@ -8,7 +8,7 @@ public class ItemDemonBlood : Item
     {
         Id = 1;
         Name = "Demon Blood";
-        Description = "Clears all black rows";
+        Description = "Clears all dark rows";
         Rarity = Rarity.Common;
         Cooldown = 15;
     }

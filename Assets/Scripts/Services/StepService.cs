@@ -69,7 +69,7 @@ public class StepService
                     minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
-        var chancePercentageToHaveAnExit = 90;
+        var chancePercentageToHaveAnExit = 70;
         for (int i = 0; i < 4; ++i)
         {
             if (minimumExit[i] == '1' || minimumExit[i] == '.')

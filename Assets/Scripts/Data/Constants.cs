@@ -197,7 +197,7 @@ public static class Constants
         var tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
         if (tmpCurrentItem == null)
             return;
-        Constants.CurrentItemCooldown = tmpCurrentItem.Cooldown - tmpChar.ItemMaxCooldownReducer;
+        CurrentItemCooldown = tmpCurrentItem.Cooldown - tmpChar.ItemMaxCooldownReducer;
     }
 
     public static void SetLastEndActionClickedName(string name)

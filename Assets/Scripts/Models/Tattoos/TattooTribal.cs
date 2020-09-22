@@ -7,16 +7,19 @@ public class TattooTribal : Tattoo
     public TattooTribal()
     {
         Id = 0;
-        Name = "Tribal";
+        Name = TattoosData.Tattoos[Id];
         Stat = 10;
-        Description = "you deal " + StatToString("+", "%") + " damages.";
         Rarity = Rarity.Common;
-        MaxLevel = 2;
+        MaxLevel = 99;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        base.ApplyToCharacter(character);
         character.DamagePercentBonus += Stat;
+    }
+
+    public override string GetDescription()
+    {
+        return "you deal " + StatToString("+", "%") + " damages";
     }
 }

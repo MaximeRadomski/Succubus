@@ -313,6 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8186298108528082538}
   - component: {fileID: 3003256489708074775}
+  - component: {fileID: 6035905548335135609}
   m_Layer: 0
   m_Name: BodyPart04
   m_TagString: Untagged
@@ -375,7 +376,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 6356550582717892342, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -386,6 +387,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6035905548335135609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188433942715665053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &193653186118451968
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +409,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1975635934483759482}
   - component: {fileID: 4308000628040690257}
+  - component: {fileID: 8111241349328030761}
+  - component: {fileID: 8135851739668194359}
+  - component: {fileID: 6503144890981382591}
   m_Layer: 0
   m_Name: TattooPlaceHolder00
   m_TagString: Untagged
@@ -468,6 +484,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8111241349328030761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193653186118451968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &8135851739668194359
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193653186118451968}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &6503144890981382591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193653186118451968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &363047892229124351
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6305473329726178756}
   - component: {fileID: 1222658104932128828}
+  - component: {fileID: 3455783343845222670}
   m_Layer: 0
   m_Name: BodyPart03
   m_TagString: Untagged
@@ -635,7 +707,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 5161784919520665249, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -646,6 +718,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3455783343845222670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431869660170628462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &464416813629918394
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1344445224117707912}
   - component: {fileID: 1140489095062894111}
+  - component: {fileID: 6865295799061535361}
   m_Layer: 0
   m_Name: BodyPart10
   m_TagString: Untagged
@@ -813,7 +898,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: -8644017481814157157, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -824,6 +909,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6865295799061535361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481131310056738043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &618182508973893254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1362,6 +1459,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4060568448786591226}
   - component: {fileID: 6613480093777043922}
+  - component: {fileID: 2707594886499695019}
+  - component: {fileID: 4959160761561029802}
+  - component: {fileID: 7676409197078760828}
   m_Layer: 0
   m_Name: TattooPlaceHolder08
   m_TagString: Untagged
@@ -1434,6 +1534,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2707594886499695019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275867775902183700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &4959160761561029802
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275867775902183700}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &7676409197078760828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275867775902183700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1323919091764931281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,6 +2074,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6227266383945190768}
   - component: {fileID: 1135876155532895523}
+  - component: {fileID: 2697258773940303441}
+  - component: {fileID: 866163539854299667}
+  - component: {fileID: 7157188767861905952}
   m_Layer: 0
   m_Name: TattooPlaceHolder04
   m_TagString: Untagged
@@ -1991,6 +2149,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2697258773940303441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544989336186175097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &866163539854299667
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544989336186175097}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &7157188767861905952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544989336186175097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2580335544959331452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,6 +2214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 205523116263137900}
   - component: {fileID: 3163663199416672615}
+  - component: {fileID: 6838673012576438612}
   m_Layer: 0
   m_Name: BodyPart05
   m_TagString: Untagged
@@ -2063,7 +2277,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 1500480791905975801, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2074,6 +2288,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6838673012576438612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580335544959331452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2581170634945631357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032961621014952869}
   - component: {fileID: 5905582498814566287}
+  - component: {fileID: 7344830532844163308}
   m_Layer: 0
   m_Name: BodyPart02
   m_TagString: Untagged
@@ -2360,7 +2587,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: -484752807161407650, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2371,6 +2598,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7344830532844163308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192288340024812922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3299170607279182684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,6 +2620,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7054759477634527540}
   - component: {fileID: 113095111481842865}
+  - component: {fileID: 7014054309538896715}
+  - component: {fileID: 6790232298116391987}
+  - component: {fileID: 9181841005880069608}
   m_Layer: 0
   m_Name: TattooPlaceHolder11
   m_TagString: Untagged
@@ -2453,6 +2695,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7014054309538896715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299170607279182684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &6790232298116391987
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299170607279182684}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &9181841005880069608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299170607279182684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3307402093373488193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2855,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4048117576015416527}
   - component: {fileID: 2335762906378311533}
+  - component: {fileID: 3037822497206166601}
+  - component: {fileID: 3414708183846309471}
+  - component: {fileID: 2243795012627091353}
   m_Layer: 0
   m_Name: TattooPlaceHolder07
   m_TagString: Untagged
@@ -2630,6 +2930,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3037822497206166601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320450316410740407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &3414708183846309471
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320450316410740407}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &2243795012627091353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320450316410740407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3431957792765137584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,6 +2995,9 @@ GameObject:
   m_Component:
   - component: {fileID: 71938036802080552}
   - component: {fileID: 6124515661406348780}
+  - component: {fileID: 2990718081025193586}
+  - component: {fileID: 7944605757690202179}
+  - component: {fileID: 8048652316685692186}
   m_Layer: 0
   m_Name: TattooPlaceHolder03
   m_TagString: Untagged
@@ -2712,6 +3070,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2990718081025193586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431957792765137584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &7944605757690202179
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431957792765137584}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &8048652316685692186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431957792765137584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3658576589453832092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,6 +3420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7382012276515678049}
   - component: {fileID: 1383566539554296576}
+  - component: {fileID: 8875522791912103820}
   m_Layer: 0
   m_Name: BodyPart09
   m_TagString: Untagged
@@ -3069,7 +3483,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 7472974498694144076, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3080,6 +3494,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8875522791912103820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764256487367963363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9072536063236023199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3481,6 +3907,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1829006019065326249}
   - component: {fileID: 6358308305216188270}
+  - component: {fileID: 729436364931216238}
+  - component: {fileID: 4545770489781069398}
+  - component: {fileID: 440528922385652289}
   m_Layer: 0
   m_Name: TattooPlaceHolder06
   m_TagString: Untagged
@@ -3553,6 +3982,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &729436364931216238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624060241780646439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &4545770489781069398
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624060241780646439}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &440528922385652289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624060241780646439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4904240770424875422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3872,6 +4356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4311706857475163425}
   - component: {fileID: 6081332062656954722}
+  - component: {fileID: 6897959115834977408}
   m_Layer: 0
   m_Name: BodyPart11
   m_TagString: Untagged
@@ -3934,7 +4419,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 4712800131386580551, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3945,6 +4430,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6897959115834977408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4970266866534753938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5134074729270779462
 GameObject:
   m_ObjectHideFlags: 0
@@ -3955,6 +4452,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8396195911642217797}
   - component: {fileID: 7110227493631337606}
+  - component: {fileID: 3858712646733523847}
   m_Layer: 0
   m_Name: BodyPart01
   m_TagString: Untagged
@@ -4017,7 +4515,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: -5832328230772474265, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4028,6 +4526,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3858712646733523847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134074729270779462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5138077719268939438
 GameObject:
   m_ObjectHideFlags: 0
@@ -4038,6 +4548,9 @@ GameObject:
   m_Component:
   - component: {fileID: 388098298772169439}
   - component: {fileID: 5058912088691367634}
+  - component: {fileID: 5833422366760549750}
+  - component: {fileID: 1659069785845794397}
+  - component: {fileID: 7597389296508386629}
   m_Layer: 0
   m_Name: TattooPlaceHolder05
   m_TagString: Untagged
@@ -4110,6 +4623,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5833422366760549750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138077719268939438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &1659069785845794397
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138077719268939438}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &7597389296508386629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138077719268939438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5190583410303179084
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,6 +4878,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4793609701006271790}
   - component: {fileID: 8427711904115737439}
+  - component: {fileID: 4874992977865821145}
+  - component: {fileID: 3200194345432209833}
+  - component: {fileID: 5563772907648377155}
   m_Layer: 0
   m_Name: TattooPlaceHolder09
   m_TagString: Untagged
@@ -4382,6 +4953,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4874992977865821145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384905358793102637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &3200194345432209833
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384905358793102637}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &5563772907648377155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384905358793102637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5423218059533815112
 GameObject:
   m_ObjectHideFlags: 0
@@ -5126,6 +5752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4954199122134312956}
   - component: {fileID: 5854918469186919889}
+  - component: {fileID: 929274570193373274}
   m_Layer: 0
   m_Name: BodyPart06
   m_TagString: Untagged
@@ -5188,7 +5815,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 5555608219717485125, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5199,6 +5826,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &929274570193373274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191386108820413839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6230652474462101693
 GameObject:
   m_ObjectHideFlags: 0
@@ -5231,7 +5870,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4896691201930264699}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6884200827061315177
 SpriteRenderer:
@@ -5817,9 +6456,9 @@ Transform:
   - {fileID: 757766591858440252}
   - {fileID: 4146215749699182660}
   - {fileID: 6974169768926778780}
-  - {fileID: 9024087403069603978}
   - {fileID: 3649824125642362976}
   - {fileID: 114133703749196597}
+  - {fileID: 9024087403069603978}
   - {fileID: 3891774608245530969}
   m_Father: {fileID: 3623107026622950904}
   m_RootOrder: 2
@@ -5834,6 +6473,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2814774532425255473}
   - component: {fileID: 5723226395153491995}
+  - component: {fileID: 7485639006742110066}
+  - component: {fileID: 1505796933427029935}
+  - component: {fileID: 1250629270423408584}
   m_Layer: 0
   m_Name: TattooPlaceHolder10
   m_TagString: Untagged
@@ -5906,6 +6548,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7485639006742110066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673896386101068300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &1505796933427029935
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673896386101068300}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &1250629270423408584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673896386101068300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6444714789583676164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5928,6 +6625,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8385008632424059214}
   - component: {fileID: 1963441504878958889}
+  - component: {fileID: 8926844478617310174}
+  - component: {fileID: 1480344606171608534}
+  - component: {fileID: 7397995343117057968}
   m_Layer: 0
   m_Name: TattooPlaceHolder01
   m_TagString: Untagged
@@ -6000,6 +6700,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8926844478617310174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761197447918617111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &1480344606171608534
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761197447918617111}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &7397995343117057968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761197447918617111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7974723895230358554
 GameObject:
   m_ObjectHideFlags: 0
@@ -6010,6 +6765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698686567097803932}
   - component: {fileID: 1216151645357355976}
+  - component: {fileID: 746233832041007301}
   m_Layer: 0
   m_Name: BodyPart00
   m_TagString: Untagged
@@ -6072,7 +6828,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: -4588443081701881606, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6083,6 +6839,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &746233832041007301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974723895230358554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8127518110587744909
 GameObject:
   m_ObjectHideFlags: 0
@@ -6545,6 +7313,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8135237974828566827}
   - component: {fileID: 6335292131451302370}
+  - component: {fileID: 3898754266313155511}
+  - component: {fileID: 5623923262802767491}
+  - component: {fileID: 6348226862116109967}
   m_Layer: 0
   m_Name: TattooPlaceHolder02
   m_TagString: Untagged
@@ -6617,6 +7388,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3898754266313155511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588637838710244151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ded5afade849d54e9bc8318c0bb9748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Layer: 0
+  ForcedLayer: 0
+  Disabled: 0
+  StretchDisabled: 0
+  CustomSound: 0
+--- !u!61 &5623923262802767491
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588637838710244151}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 4.5}
+  m_EdgeRadius: 0
+--- !u!114 &6348226862116109967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588637838710244151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8636321922780575714
 GameObject:
   m_ObjectHideFlags: 0
@@ -6627,7 +7453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3891774608245530969}
   m_Layer: 0
-  m_Name: TattooContainer
+  m_Name: TattoosContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6821,6 +7647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118245734483418189}
   - component: {fileID: 2003791489173363331}
+  - component: {fileID: 3453979717115649280}
   m_Layer: 0
   m_Name: BodyPart07
   m_TagString: Untagged
@@ -6883,7 +7710,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 579112150887051673, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6894,6 +7721,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3453979717115649280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795122269119259744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8814619002590255996
 GameObject:
   m_ObjectHideFlags: 0
@@ -7142,6 +7981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3481239374940607821}
   - component: {fileID: 1789444507569892663}
+  - component: {fileID: 1388637954172700726}
   m_Layer: 0
   m_Name: BodyPart08
   m_TagString: Untagged
@@ -7204,7 +8044,7 @@ SpriteRenderer:
   m_SortingLayerID: -1316542883
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3884173937897477957, guid: 58dda26f89bdc3045afd5f627b7e1913, type: 3}
+  m_Sprite: {fileID: 7147454072809489580, guid: b6a9d82ef377c5f4ba9be23afc2ca939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7215,6 +8055,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1388637954172700726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142561816243994976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &755932341666380644
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7648,14 +8500,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &757766591858440252 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 1829415245038053880}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8670184762567019231 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 1829415245038053880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &757766591858440252 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 1829415245038053880}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2053677496611622240
@@ -7930,7 +8782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8086,14 +8938,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!1 &4643290509140222595 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 2396342154325410212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3649824125642362976 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 2396342154325410212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4643290509140222595 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 2396342154325410212}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2785361784984347595
@@ -8691,14 +9543,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!1 &5523116133570162368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 3285306381981126119}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4499240569851288611 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 3285306381981126119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5523116133570162368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 3285306381981126119}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3459253891834422525
@@ -9131,14 +9983,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &2931794319938975674 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 4271823318244681342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6519343980224103769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 4271823318244681342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2931794319938975674 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 4271823318244681342}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5199513779637027214
@@ -9942,14 +10794,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &8295192694669753527 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 6987671289678310771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &128632311382675028 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 6987671289678310771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8295192694669753527 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 6987671289678310771}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7335275011945633422
@@ -10093,14 +10945,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
---- !u!224 &2854539383207087886 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
-  m_PrefabInstance: {fileID: 7335275011945633422}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2854539383207087885 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
+  m_PrefabInstance: {fileID: 7335275011945633422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2854539383207087886 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
   m_PrefabInstance: {fileID: 7335275011945633422}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7497829042665952300
@@ -10897,14 +11749,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &9205810760583072608 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 7793162319441812132}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &943244315900737923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 7793162319441812132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &9205810760583072608 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 7793162319441812132}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7950097583853908491
@@ -11116,14 +11968,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &9057627719323460559 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 7950097583853908491}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1109477336252617004 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 7950097583853908491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &9057627719323460559 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 7950097583853908491}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7988466977322996046
@@ -11179,7 +12031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

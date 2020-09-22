@@ -24,8 +24,10 @@ public class Character : Loot
     public int VisionBlockReducer;
     public int ItemCooldownReducer;
     public int ItemMaxCooldownReducer;
+    public int ItemCooldownReducerOnKill;
     public int SpecialCooldownReducer;
     public int SpecialMaxCooldownReducer;
+    public int LandLordLateAmount;
 
     public Character()
     {
@@ -39,7 +41,14 @@ public class Character : Loot
         VisionBlockReducer = 1;
         ItemCooldownReducer = 1;
         ItemMaxCooldownReducer = 0;
+        ItemCooldownReducerOnKill = 0;
         SpecialCooldownReducer = 1;
         SpecialMaxCooldownReducer = 0;
+        LandLordLateAmount = 1; //1 beause he does not land vision on first step
+    }
+
+    public int GetAttack()
+    {
+        return (int)(Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus));
     }
 }

@@ -60,7 +60,7 @@ public class CharSelSceneBhv : SceneBhv
         PlayerPrefsHelper.SaveSelectedCharacter(buttonId);
         var tmpChar = CharactersData.Characters[buttonId];
         GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = tmpChar.Name + " - " + tmpChar.Kind;
-        GameObject.Find("Attack").GetComponent<TMPro.TextMeshPro>().text = "attack:" + Constants.MaterialHell_4_3 + tmpChar.Attack;
+        GameObject.Find("Attack").GetComponent<TMPro.TextMeshPro>().text = "attack:" + Constants.MaterialHell_4_3 + tmpChar.GetAttack();
         GameObject.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.MaterialHell_4_3 + tmpChar.Cooldown;
         GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.MaterialHell_4_3 + tmpChar.SpecialName.ToLower() + ":\n" + tmpChar.SpecialDescription;
         GameObject.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.MaterialHell_4_3 + tmpChar.Realm.ToString().ToLower() + ":\n" + tmpChar.Realm.GetDescription();

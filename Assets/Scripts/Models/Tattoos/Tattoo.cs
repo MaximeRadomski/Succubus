@@ -7,29 +7,17 @@ public abstract class Tattoo : Loot
     public int Id;
     public string Name;
     public int Stat;
-    public string Description;
     public Rarity Rarity;
     public int Level = 1;
     public int MaxLevel;
     public BodyPart BodyPart;
 
-    protected Character _character;
-    protected GameplayControler _gameplayControler;
+    public abstract string GetDescription();
+    public abstract void ApplyToCharacter(Character character);
 
     public Tattoo()
     {
         LootType = LootType.Tattoo;
-    }
-
-    public virtual void Init(Character character, GameplayControler gameplayControler)
-    {
-        _character = character;
-        _gameplayControler = gameplayControler;
-    }
-
-    public virtual void ApplyToCharacter(Character character)
-    {
-
     }
 
     protected string StatToString(string before = "", string after = "")

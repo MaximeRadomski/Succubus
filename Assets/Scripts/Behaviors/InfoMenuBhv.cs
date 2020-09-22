@@ -53,7 +53,7 @@ public class InfoMenuBhv : PopupBhv
     private void InitCharacterFrame(Character character)
     {
         _characterFrame.transform.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = character.Name + " - " + character.Kind;
-        _characterFrame.transform.Find("CharacterAttack").GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.MaterialHell_4_3 + character.Attack;
+        _characterFrame.transform.Find("CharacterAttack").GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.MaterialHell_4_3 + character.GetAttack();
         _characterFrame.transform.Find("CharacterCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + character.Cooldown;
         _characterFrame.transform.Find("CharacterSpecial").GetComponent<TMPro.TextMeshPro>().text = "special: " + Constants.MaterialHell_4_3 + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
         _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
@@ -69,10 +69,11 @@ public class InfoMenuBhv : PopupBhv
         var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
         foreach (Tattoo tattoo in tattoos)
         {
-            var tmpTattooGameObject = _characterFrame.transform.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+            var tmpTattooGameObject = GameObject.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
             tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
             tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = TattooInfo;
             tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
+            tmpTattooGameObject.transform.parent.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
         }
     }
 
@@ -84,7 +85,7 @@ public class InfoMenuBhv : PopupBhv
     private void TattooInfo()
     {
         var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Constants.LastEndActionClickedName.Substring("Tattoo".Length))]);
-        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_3_2 + clickedTattoo.Description, null, "Ok", null);
+        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_3_2 + clickedTattoo.GetDescription(), null, "Ok", null);
     }
 
     private void CharacterLore()

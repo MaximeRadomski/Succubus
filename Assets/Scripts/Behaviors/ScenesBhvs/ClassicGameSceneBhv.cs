@@ -104,9 +104,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var run = PlayerPrefsHelper.GetRun();
         var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
         var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
-        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
         stepsService.ClearLootOnPos(run.X, run.Y, run);
-        stepsService.SetVisionOnRandomStep(run);
+        if (run.CurrentStep > Character.LandLordLateAmount)
+            stepsService.SetVisionOnRandomStep(run);
+        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
         PlayerPrefsHelper.SaveRun(run);
         if (loot.LootType == LootType.Character)
         {
@@ -146,13 +147,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level", null, "Damn...", LoadBackAfterVictory);
             }
-            else if (!tattoos.Contains(nameToCheck))
+            else 
             {
-                Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
-            }
-            else
-            {
-                Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory);
+                if (!tattoos.Contains(nameToCheck))
+                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
+                else
+                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory);
+                ((Tattoo)loot).ApplyToCharacter(Character);
+                PlayerPrefsHelper.SaveRunCharacter(Character);
             }
         }
         else
@@ -326,6 +328,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         ++Constants.CurrentListOpponentsId;
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
+        Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
@@ -359,10 +362,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var incomingDamages = 0;
         if (nbLines > 0)
         {
-            incomingDamages = Character.Attack;
+            incomingDamages = Character.GetAttack();
             if (Helper.RandomDice100(Character.CritChancePercent))
             {
-                incomingDamages += (int)(Character.Attack * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
+                incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
             if (Helper.IsSuperiorByRealm(Character.Realm, _currentOpponent.Realm))
@@ -415,7 +418,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         base.OnCombo(nbCombo, nbLines);
         var incomingDamages = 0;
         if (Character.Realm == Realm.Hell)
-            incomingDamages += (int)((Character.Attack * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
+            incomingDamages += (int)((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
         if (_currentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();

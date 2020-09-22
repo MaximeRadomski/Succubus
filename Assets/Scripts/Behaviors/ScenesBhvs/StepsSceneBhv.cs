@@ -28,7 +28,7 @@ public class StepsSceneBhv : SceneBhv
         Init();
     }
 
-    private void Init()
+    protected override void Init()
     {
         base.Init();
         _run = PlayerPrefsHelper.GetRun();
@@ -233,9 +233,9 @@ public class StepsSceneBhv : SceneBhv
 
     private void LootInfo()
     {
-        var name = "";
-        var cooldown = "";
-        var description = "";
+        string name;
+        string cooldown;
+        string description;
         if (_selectedStep.LootType == LootType.Character)
         {
             name = CharactersData.Characters[_selectedStep.LootId].Name;
@@ -254,7 +254,7 @@ public class StepsSceneBhv : SceneBhv
             var tattoo = TattoosData.GetTattooFromName(TattoosData.Tattoos[_selectedStep.LootId]);
             name = tattoo.Name;
             cooldown = null;
-            description = Constants.MaterialHell_3_2 + tattoo.Description;
+            description = Constants.MaterialHell_3_2 + tattoo.GetDescription();
         }
         else
             return;

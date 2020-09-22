@@ -8,8 +8,6 @@ public class StepInstanceBhv : MonoBehaviour
     private SpriteRenderer _stepVision;
     private SpriteRenderer _stepLoot;
     private SpriteRenderer _stepOpponent;
-    private bool _discovered;
-
     private bool _hasInit;
 
     public void Init()
@@ -27,12 +25,10 @@ public class StepInstanceBhv : MonoBehaviour
             Init();
         if (step.Discovered)
         {
-            _discovered = true;
             _step.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Steps_" + step.StepType.GetHashCode());
         }
         else
         {
-            _discovered = false;
             _step.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Steps_0");
         }
         _stepVision.enabled = step.LandLordVision;

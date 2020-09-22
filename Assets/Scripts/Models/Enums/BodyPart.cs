@@ -27,8 +27,8 @@ public enum BodyPart
     Chest = 8,
     [Description("Abdomen")]
     Abdomen = 9,
-    [Description("Back")]
-    Back = 10,
     [Description("Neck")]
-    Neck = 11
+    Neck = 10,
+    [Description("Back")]
+    Back = 11
 }
