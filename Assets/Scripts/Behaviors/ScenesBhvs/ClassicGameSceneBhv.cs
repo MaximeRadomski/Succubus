@@ -112,6 +112,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (loot.LootType == LootType.Character)
         {
             Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", LoadBackAfterVictory);
+            PlayerPrefsHelper.AddUnlockedCharacters((Character)loot);
         }
         else if (loot.LootType == LootType.Item)
         {
@@ -150,7 +151,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else 
             {
                 if (!tattoos.Contains(nameToCheck))
-                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked on your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
+                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked \non your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
                 else
                     Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory);
                 ((Tattoo)loot).ApplyToCharacter(Character);

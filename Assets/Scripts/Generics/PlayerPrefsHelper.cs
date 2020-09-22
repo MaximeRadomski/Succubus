@@ -311,7 +311,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             tattoosList.Add(tmpTattoo);
             if (separatorLevelId + 1 >= tattoosStr.Length)
                 break;
-            tattoosStr = tattoosStr.Substring(separatorLevelId + 1);
+            tattoosStr = tattoosStr.Substring(tattoosStr.IndexOf(';') + 1);
             ++i;
         }
         return tattoosList;
