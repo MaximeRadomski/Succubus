@@ -26,6 +26,24 @@ TextureImporter:
   - first:
       213: 6431663227698327145
     second: HellOpponents_3
+  - first:
+      213: -8983031518613348227
+    second: HellOpponents_0
+  - first:
+      213: -882400676631627588
+    second: HellOpponents_1
+  - first:
+      213: -8113995470125774355
+    second: HellOpponents_2
+  - first:
+      213: 9110869643711090685
+    second: HellOpponents_3
+  - first:
+      213: 5490315389741113778
+    second: HellOpponents_4
+  - first:
+      213: 8653528733826625253
+    second: HellOpponents_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -87,7 +105,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -99,7 +117,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -111,7 +129,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -139,8 +157,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e36be83f576159600800000000000000
-      internalID: 474310031610656318
+      spriteID: d70e9ee8d6cd55380800000000000000
+      internalID: -8983031518613348227
       vertices: []
       indices: 
       edges: []
@@ -160,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 721bb15d5d4add320800000000000000
-      internalID: 2584402999490883879
+      spriteID: cb8becf724511c3f0800000000000000
+      internalID: -882400676631627588
       vertices: []
       indices: 
       edges: []
@@ -181,8 +199,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 881152e462b7aa690800000000000000
-      internalID: -7590118817529523832
+      spriteID: de946061c1c456f80800000000000000
+      internalID: -8113995470125774355
       vertices: []
       indices: 
       edges: []
@@ -202,8 +220,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96ea6e111abd14950800000000000000
-      internalID: 6431663227698327145
+      spriteID: dff0a446baf407e70800000000000000
+      internalID: 9110869643711090685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_4
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b1216e02c4813c40800000000000000
+      internalID: 5490315389741113778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_5
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee2f59f882871870800000000000000
+      internalID: 8653528733826625253
       vertices: []
       indices: 
       edges: []

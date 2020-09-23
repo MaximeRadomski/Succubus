@@ -329,7 +329,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         ++Constants.CurrentListOpponentsId;
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
-        Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
+        if (Character.ItemCooldownReducerOnKill > 0)
+        {
+            Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
+            _gameplayControler.UpdateItemAndSpecialVisuals();
+        }
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
@@ -387,7 +391,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Character.Realm == Realm.Earth && nbLines == 4)
             {
                 _gameplayControler.CheckForDarkRows(Character.RealmPassiveEffect);
-                _gameplayControler.CheckForGarbageRows(Character.RealmPassiveEffect);
+                _gameplayControler.CheckForWasteRows(Character.RealmPassiveEffect);
                 
             }
         }

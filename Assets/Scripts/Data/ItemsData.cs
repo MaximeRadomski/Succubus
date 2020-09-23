@@ -8,9 +8,9 @@ public static class ItemsData
     public static int LegendaryItemAppearancePercent = 10;
     public static int RareItemAppearancePercent = 30;
 
-    public static string[] Items = { "Holy Water", "Demon Blood", "Grenade" };
+    public static string[] Items = { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll" };
 
-    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], };
+    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3] };
     public static string[] RareItemsNames = { Items[1], };
     public static string[] LegendaryItemsNames = { Items[1], };
 

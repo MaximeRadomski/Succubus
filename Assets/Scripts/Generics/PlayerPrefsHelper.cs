@@ -239,7 +239,6 @@ public class PlayerPrefsHelper : MonoBehaviour
         else
         {
             var currentItem = (Item)Activator.CreateInstance(Type.GetType("Item" + itemName.Replace(" ", "").Replace("'", "")));
-            currentItem.Init(null, null);
             return currentItem;
         }
     }
@@ -258,6 +257,9 @@ public class PlayerPrefsHelper : MonoBehaviour
         var nameToAdd = name.Replace(" ", "").Replace("'", "");
         var alreadyStart = tattoosStr.IndexOf(nameToAdd);
         var newBodyPart = -1;
+        var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+        if (alreadyBodyPartsIds == null)
+            alreadyBodyPartsIds = "";
         if (alreadyStart != -1)
         {
             var separatorLevelId = tattoosStr.Substring(alreadyStart).IndexOf('L');
@@ -267,12 +269,9 @@ public class PlayerPrefsHelper : MonoBehaviour
                 return BodyPart.MaxLevelReached;
             tattoosStr = tattoosStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
         }
-        else
+        else if (alreadyBodyPartsIds.Length < Constants.AvailableBodyPartsIds.Length)
         {
             var availablesPartsIds = Constants.AvailableBodyPartsIds;
-            var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.AvailableBodyPartsIds);
-            if (alreadyBodyPartsIds == null)
-                alreadyBodyPartsIds = "";
             for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
             {
                 int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));

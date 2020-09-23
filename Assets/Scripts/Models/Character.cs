@@ -49,6 +49,7 @@ public class Character : Loot
 
     public int GetAttack()
     {
-        return (int)(Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus));
+        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        return Mathf.RoundToInt(floatValue);
     }
 }

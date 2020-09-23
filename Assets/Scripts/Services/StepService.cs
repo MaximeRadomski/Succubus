@@ -93,21 +93,30 @@ public class StepService
         }
         var lootType = LootType.None;
         var lootId = 0;
+        var opponentType = OpponentType.Common;
         if (run.CharacterEncounterAvailability && Helper.RandomDice100(run.CharEncounterPercent))
         {
             lootType = LootType.Character;
+            opponentType = OpponentType.Common;
         }
         else if (Helper.RandomDice100(run.ItemLootPercent))
         {
             lootType = LootType.Item;
             lootId = ItemsData.GetRandomItem().Id;
+            opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         else
         {
             lootType = LootType.Tattoo;
-            lootId = TattoosData.GetRandomTattoo().Id;
+            if (PlayerPrefs.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)
+                lootId = TattoosData.GetRandomTattoo().Id;
+            else
+                lootId = PlayerPrefsHelper.GetCurrentTattoos()[Random.Range(0, 12)].Id;
+            opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
-        var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, GetDifficultyWieghtFromRunLevel(run)));
+        var levelDifficulty = GetDifficultyWieghtFromRunLevel(run);
+        var difficulty = (int)(levelDifficulty + (levelDifficulty * (0.5f * opponentType.GetHashCode())));
+        var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, difficulty));
         run.Steps += newStep.ToParsedString();
     }
 

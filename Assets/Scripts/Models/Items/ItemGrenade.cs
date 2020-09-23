@@ -7,15 +7,15 @@ public class ItemGrenade : Item
     public ItemGrenade()
     {
         Id = 2;
-        Name = "Grenade";
-        Description = "Clears your last four rows";
+        Name = ItemsData.Items[Id];
+        Description = "clears your last four rows";
         Rarity = Rarity.Common;
-        Cooldown = 15;
+        Cooldown = 12;
     }
 
-    public override bool Activate()
+    public override bool Activate(Character character, GameplayControler gameplayControler)
     {
-        if (!base.Activate())
+        if (!base.Activate(character, gameplayControler))
             return false;
         _gameplayControler.SceneBhv.Paused = true;
         ClearFromTop(4);

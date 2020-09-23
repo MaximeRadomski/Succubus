@@ -185,8 +185,7 @@ public class GameplayControler : MonoBehaviour
             PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
         Character = SceneBhv.Character;
-        if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
-            _characterItem.Init(Character, this);
+        _characterItem = PlayerPrefsHelper.GetCurrentItem();
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
         _characterSpecial.Init(Character, this);
         _characterInstanceBhv.Spawn();
@@ -783,6 +782,8 @@ public class GameplayControler : MonoBehaviour
 
     public void DropGhost()
     {
+        if (CurrentGhost == null)
+            return;
         if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
         {
             if (_currentGhostPiecesOriginalPos == null || _currentGhostPiecesOriginalPos.Count == 0)
@@ -1105,7 +1106,7 @@ public class GameplayControler : MonoBehaviour
         if (_characterItem != null)
         {
             
-            if (_characterItem.Activate())
+            if (_characterItem.Activate(Character, this))
                 _soundControler.PlaySound(_idItem);
             UpdateItemAndSpecialVisuals();
         }
@@ -1309,12 +1310,16 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void CheckForGarbageRows(int nbLines)
+    public void CheckForWasteRows(int nbLines)
     {
+        bool hasDeletedRows = false;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
-            if (HasGarbagekRow(y))
+            if (HasWasteRow(y))
             {
+                if (hasDeletedRows == false)
+                    _soundControler.PlaySound(_idCleanRows);
+                hasDeletedRows = true;
                 DeleteLine(y);
                 --nbLines;
             }
@@ -1377,11 +1382,11 @@ public class GameplayControler : MonoBehaviour
         return PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
     }
 
-    private bool HasGarbagekRow(int y)
+    private bool HasWasteRow(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] != null && PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Garbage"))
+            if (PlayFieldBhv.Grid[x, y] != null && PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Waste"))
                 return true;
         }
         return false;
@@ -1423,7 +1428,8 @@ public class GameplayControler : MonoBehaviour
         {
             if (child.childCount == 0 && child.name.Contains("Clone"))
                 Destroy(child.gameObject);
-        }        
+        }
+        DropGhost();
     }
 
     public int GetHighestBlock()

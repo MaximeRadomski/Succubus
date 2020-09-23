@@ -16,14 +16,10 @@ public abstract class Item : Loot
         LootType = LootType.Item;
     }
 
-    public virtual void Init(Character character, GameplayControler gameplayControler)
+    public virtual bool Activate(Character character, GameplayControler gameplayControler)
     {
         _character = character;
         _gameplayControler = gameplayControler;
-    }
-
-    public virtual bool Activate()
-    {
         if (Constants.CurrentItemCooldown - _character.ItemMaxCooldownReducer > 0)
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));

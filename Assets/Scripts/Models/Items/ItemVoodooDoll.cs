@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDemonBlood : Item
+public class ItemVoodooDoll : Item
 {
-    public ItemDemonBlood()
+    public ItemVoodooDoll()
     {
-        Id = 1;
+        Id = 3;
         Name = ItemsData.Items[Id];
-        Description = "clears 4 dark rows";
+        Description = "bypasses your current opponent's cooldown and activates its attack";
         Rarity = Rarity.Common;
-        Cooldown = 12;
+        Cooldown = 1;
     }
 
     public override bool Activate(Character character, GameplayControler gameplayControler)
     {
         if (!base.Activate(character, gameplayControler))
             return false;
-        _gameplayControler.SceneBhv.Paused = true;
-        _gameplayControler.CheckForDarkRows(4);
-        _gameplayControler.ClearLineSpace();
-        _gameplayControler.SceneBhv.Paused = false;
+        Constants.CurrentOpponentCooldown = 1000;
         return true;
     }
 }
