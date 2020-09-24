@@ -214,5 +214,18 @@ public class StepService
         difficultyWeight += (int)(baseWeight * 0.75f) * run.RealmLevel;
         difficultyWeight *= run.CurrentRealm.GetHashCode() + 1;
         return difficultyWeight;
-    }    
+    }
+
+    public Step GetClosestAvailableStepFromPos(int stepX, int stepY, Run run)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            var x = (i == 0 || i == 2) ? stepX : (i == 1 ? stepX + 1 : stepX - 1);
+            var y = (i == 1 || i == 3) ? stepY : (i == 0 ? stepY + 1 : stepY - 1);
+            var tmpStep = GetStepOnPos(x, y, run.Steps);
+            if (tmpStep.Discovered)
+                return tmpStep;
+        }
+        return null;
+    }
 }

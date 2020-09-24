@@ -112,6 +112,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
                 PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
+                Constants.ResetCurrentItemCooldown();
             }
             else
             {

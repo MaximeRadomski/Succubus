@@ -103,7 +103,7 @@ public class StepsSceneBhv : SceneBhv
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
             return true;
         }));
-        _playButton.SetActive(!_selectedStep.Discovered);
+        _playButton.SetActive(_selectedStep.LootType != LootType.None);
         var rarity = Rarity.Common;
         if (_selectedStep.LootType != LootType.None)
         {

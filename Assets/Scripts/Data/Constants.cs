@@ -179,7 +179,6 @@ public static class Constants
     public static void ResetClassicGameCache()
     {
         ResetSelectedCharacterSpecialCooldown();
-        ResetCurrentItemCooldown();
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
