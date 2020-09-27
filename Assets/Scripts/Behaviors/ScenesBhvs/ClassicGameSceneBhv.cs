@@ -17,6 +17,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private int _characterAttack;
     private bool _isCrit;
+    private bool _isVictorious;
 
     private SoundControlerBhv _soundControler;
     private int _idOpponentDeath;
@@ -90,6 +91,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private void Victory()
     {
         Paused = true;
+        _isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
 
@@ -100,7 +102,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
 
-            var stepsService = new StepService();
+        var stepsService = new StepService();
         var run = PlayerPrefsHelper.GetRun();
         var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
         var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
@@ -329,7 +331,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         ++Constants.CurrentListOpponentsId;
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
-        if (Character.ItemCooldownReducerOnKill > 0)
+        if (Character.ItemCooldownReducerOnKill > 0 && PlayerPrefsHelper.GetCurrentItemName() != null)
         {
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
             _gameplayControler.UpdateItemAndSpecialVisuals();
@@ -442,5 +444,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void OnPerfectClear()
     {
         base.OnPerfectClear();
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (_isVictorious)
+            return;
+        var stepsService = new StepService();
+        var run = PlayerPrefsHelper.GetRun();
+        var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
+        stepsService.ClearLootOnPos(run.X, run.Y, run);
+        stepsService.SetVisionOnRandomStep(run);
+        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
     }
 }

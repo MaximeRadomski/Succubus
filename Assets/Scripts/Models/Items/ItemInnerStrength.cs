@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InnerStrength : Item
+public class ItemInnerStrength : Item
 {
-    public InnerStrength()
+    public ItemInnerStrength()
     {
         Id = 5;
         Name = ItemsData.Items[Id];

@@ -24,6 +24,7 @@ public class ItemSmokeBomb : Item
         run.X = tmpStep.X;
         run.Y = tmpStep.Y;
         PlayerPrefsHelper.SaveRun(run);
+        gameplayControler.CleanPlayerPrefs();
         NavigationService.LoadBackUntil(Constants.StepsScene);
         return true;
     }

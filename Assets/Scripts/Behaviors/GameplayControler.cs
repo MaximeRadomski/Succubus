@@ -1508,13 +1508,15 @@ public class GameplayControler : MonoBehaviour
                 AttackForcedPiece(opponentRealm, param1, param2);
                 break;
         }
-        if (type == AttackType.DarkRow
+        if (_characterItem != null
+            && (type == AttackType.DarkRow
             || type == AttackType.WasteRow
             || type == AttackType.LightRow
-            || type == AttackType.EmptyRow)
+            || type == AttackType.EmptyRow))
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
-        else if (type == AttackType.VisionBlock
-            || type == AttackType.ForcedPiece)
+        else if (_characterItem != null
+            && (type == AttackType.VisionBlock
+            || type == AttackType.ForcedPiece))
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
         UpdateItemAndSpecialVisuals();
     }

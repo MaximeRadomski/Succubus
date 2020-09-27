@@ -64,7 +64,10 @@ public abstract class GameSceneBhv : SceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
                 NavigationService.LoadBackUntil(Constants.CharSelScene);
             else
+            {
+                PlayerPrefsHelper.ResetRun();
                 NavigationService.LoadBackUntil(Constants.MainMenuScene);
+            }                
             return false;
         }
         return false;

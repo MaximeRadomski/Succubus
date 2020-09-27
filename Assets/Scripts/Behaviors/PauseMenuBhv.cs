@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuBhv : PopupBhv
 {
@@ -28,7 +29,12 @@ public class PauseMenuBhv : PopupBhv
         var buttonGiveUpGameObject = GameObject.Find("ButtonGiveUp");
         buttonGiveUpGameObject.GetComponent<ButtonBhv>().EndActionDelegate = GiveUp;
         if (Constants.CurrentGameMode == GameMode.Ascension || Constants.CurrentGameMode == GameMode.TrueAscension)
-            buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Save & Quit";
+        {
+            if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene)
+                buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Abandon";
+            else
+                buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Save & Quit";
+        }
 
     }
 
