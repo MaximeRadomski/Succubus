@@ -7,7 +7,7 @@ public class StepsSceneBhv : SceneBhv
 {
     private Run _run;
     private Character _character;
-    private StepService _stepsService;
+    private StepsService _stepsService;
     private GameObject _stepsContainer;
     private GameObject _selector;
     private GameObject _position;
@@ -49,7 +49,7 @@ public class StepsSceneBhv : SceneBhv
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
 
-        _stepsService = new StepService();
+        _stepsService = new StepsService();
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
         if (string.IsNullOrEmpty(_run.Steps))

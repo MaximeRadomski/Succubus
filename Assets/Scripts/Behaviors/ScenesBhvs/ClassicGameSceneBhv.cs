@@ -9,6 +9,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private CharacterInstanceBhv _opponentInstanceBhv;
     private ResourceBarBhv _opponentHpBar;
     private ResourceBarBhv _opponentCooldownBar;
+    private SpriteRenderer _opponentTypeSpriteRenderer;
     private bool _opponentOnCooldown;
     private float _nextCooldownTick;
     private int _opponentAttackId;
@@ -50,6 +51,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
         _opponentInstanceBhv.AfterDeath = AfterOpponentDeath;
+        _opponentTypeSpriteRenderer = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
         _nextCooldownTick = Time.time + 3600;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _idOpponentDeath = _soundControler.SetSound("OpponentDeath");
@@ -76,6 +78,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime:3.0f);
         _opponentAttackId = 0;
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _currentOpponent.Realm + "Opponents_" + _currentOpponent.Id);
+        _opponentTypeSpriteRenderer.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
         _weaknessInstance.SetVisible(_currentOpponent.Weakness != Weakness.None);
         _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (_currentOpponent.Realm.GetHashCode() * 2)));
@@ -102,7 +105,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
 
-        var stepsService = new StepService();
+        var stepsService = new StepsService();
         var run = PlayerPrefsHelper.GetRun();
         var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
         var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
@@ -270,54 +273,59 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
+    public override void DamageOpponent(int amount)
+    {
+        _opponentInstanceBhv.TakeDamage();
+        Constants.CurrentOpponentHp -= amount;
+        CameraBhv.Bump(1);
+        var attackText = "-" + amount;
+        if (amount == 69)
+            attackText = "nice";
+        if (!_isCrit)
+            _soundControler.PlaySound(_idHit);
+        else
+        {
+            attackText += "!";
+            _soundControler.PlaySound(_idCrit);
+        }
+        VibrationService.Vibrate();
+        Instantiator.PopText(attackText, _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f), !_isCrit ? ((Color)Constants.GetColorFromNature(Character.Realm, 4)).ToHex() : Color.white.ToHex());
+        _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Left);
+        if (Constants.CurrentOpponentHp <= 0)
+        {
+            _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
+            _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(1);
+            _soundControler.PlaySound(_idOpponentDeath);
+            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " defeated!", new Vector2(4.5f, 15.0f));
+            _opponentInstanceBhv.Die();
+            _opponentOnCooldown = false;
+            Constants.CurrentOpponentCooldown = 0;
+            UpdateCooldownBar(Direction.Down);
+        }
+        else
+        {
+            if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < _currentOpponent.Cooldown)
+            {
+                if (_currentOpponent.Immunity != Immunity.Cooldown)
+                    Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;
+                else
+                {
+                    _immunityInstance.Pop();
+                    _soundControler.PlaySound(_idImmunity);
+                }
+                if (Constants.CurrentOpponentCooldown <= 0)
+                    Constants.CurrentOpponentCooldown = 0;
+                UpdateCooldownBar(Direction.Down);
+            }
+            SetNextCooldownTick();
+        }
+    }
+
     public override void OnNewPiece()
     {
         if (_characterAttack > 0)
         {
-            _opponentInstanceBhv.TakeDamage();
-            Constants.CurrentOpponentHp -= _characterAttack;
-            CameraBhv.Bump(1);
-            var attackText = "-" + _characterAttack;
-            if (_characterAttack == 69)
-                attackText = "nice";
-            if (!_isCrit)
-                _soundControler.PlaySound(_idHit);
-            else
-            {
-                attackText += "!";
-                _soundControler.PlaySound(_idCrit);
-            }
-            VibrationService.Vibrate();
-            Instantiator.PopText(attackText, _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f), !_isCrit ? ((Color)Constants.GetColorFromNature(Character.Realm, 4)).ToHex() : Color.white.ToHex());
-            _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Left);
-            if (Constants.CurrentOpponentHp <= 0)
-            {
-                _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
-                _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(1);
-                _soundControler.PlaySound(_idOpponentDeath);
-                Instantiator.PopText(_currentOpponent.Kind.ToLower() + " defeated!", new Vector2(4.5f, 15.0f));
-                _opponentInstanceBhv.Die();
-                _opponentOnCooldown = false;
-                Constants.CurrentOpponentCooldown = 0;
-                UpdateCooldownBar(Direction.Down);
-            }
-            else
-            {
-                if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < _currentOpponent.Cooldown)
-                {
-                    if (_currentOpponent.Immunity != Immunity.Cooldown)
-                        Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;
-                    else
-                    {
-                        _immunityInstance.Pop();
-                        _soundControler.PlaySound(_idImmunity);
-                    }
-                    if (Constants.CurrentOpponentCooldown <= 0)
-                        Constants.CurrentOpponentCooldown = 0;
-                    UpdateCooldownBar(Direction.Down);
-                }                
-                SetNextCooldownTick();
-            }
+            DamageOpponent(_characterAttack);
         }
         _characterAttack = 0;
         _isCrit = false;
@@ -450,7 +458,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_isVictorious)
             return;
-        var stepsService = new StepService();
+        var stepsService = new StepsService();
         var run = PlayerPrefsHelper.GetRun();
         var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
         stepsService.ClearLootOnPos(run.X, run.Y, run);

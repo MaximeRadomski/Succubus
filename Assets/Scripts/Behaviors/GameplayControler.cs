@@ -206,6 +206,7 @@ public class GameplayControler : MonoBehaviour
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
+                tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id.ToString("00"));
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.GetComponent<IconInstanceBhv>().Pop();
             }
@@ -223,6 +224,7 @@ public class GameplayControler : MonoBehaviour
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
                 else
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
+                tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
             }

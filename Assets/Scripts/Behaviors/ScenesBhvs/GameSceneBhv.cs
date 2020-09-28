@@ -94,6 +94,11 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
+    public virtual void DamageOpponent(int amount)
+    {
+
+    }
+
     public virtual void OnLinesCleared(int nbLines, bool isB2B)
     {
         if (_poppingText.Contains("twist"))

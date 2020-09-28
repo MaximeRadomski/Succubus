@@ -17,7 +17,7 @@ public class ItemSmokeBomb : Item
     {
         if (!base.Activate(character, gameplayControler))
             return false;
-        var stepService = new StepService();
+        var stepService = new StepsService();
         var run = PlayerPrefsHelper.GetRun();
         _gameplayControler.SceneBhv.Paused = true;
         var tmpStep = stepService.GetClosestAvailableStepFromPos(run.X, run.Y, run);
