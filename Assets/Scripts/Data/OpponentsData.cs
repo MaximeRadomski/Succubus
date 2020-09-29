@@ -60,7 +60,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 5, Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 16,
+            HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
             GravityLevel = 2, DifficultyWeight = 40

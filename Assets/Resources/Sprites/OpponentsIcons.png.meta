@@ -8,6 +8,24 @@ TextureImporter:
   - first:
       213: -7875985212398333054
     second: OpponentsIcons_1
+  - first:
+      213: 8736627620284158400
+    second: OpponentsIcons_0
+  - first:
+      213: 603955033969965884
+    second: OpponentsIcons_1
+  - first:
+      213: -2233342923961484296
+    second: OpponentsIcons_2
+  - first:
+      213: 5013709699799091084
+    second: OpponentsIcons_3
+  - first:
+      213: -7139998147305224610
+    second: OpponentsIcons_4
+  - first:
+      213: 6593273773654855275
+    second: OpponentsIcons_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -69,7 +87,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -81,7 +99,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,7 +111,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -121,8 +139,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: beb0a122a101a1ac0800000000000000
-      internalID: -3883774024226305045
+      spriteID: 0c157e1388cbe3970800000000000000
+      internalID: 8736627620284158400
       vertices: []
       indices: 
       edges: []
@@ -142,8 +160,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28394c69d21e2b290800000000000000
-      internalID: -7875985212398333054
+      spriteID: c3bb61c47eda16800800000000000000
+      internalID: 603955033969965884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OpponentsIcons_2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fbb4a381729101e0800000000000000
+      internalID: -2233342923961484296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OpponentsIcons_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c87847f7866449540800000000000000
+      internalID: 5013709699799091084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OpponentsIcons_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e56cceca381a9ec90800000000000000
+      internalID: -7139998147305224610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OpponentsIcons_5
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6ec8918093008b50800000000000000
+      internalID: 6593273773654855275
       vertices: []
       indices: 
       edges: []

@@ -186,27 +186,23 @@ public class StepsService
             realmOpponents = OpponentsData.EarthOpponents;
         else if (realm == Realm.Heaven)
             realmOpponents = OpponentsData.HeavenOpponents;
-        plausibleOpponents = realmOpponents.FindAll(o => o.DifficultyWeight > 0 && o.DifficultyWeight <= difficultyWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
         int i = 0;
+        var totalStepWeight = 0;
         while (i <= 12)
         {
-            var totalStepWeight = 0;
-            foreach (var opponent in stepOpponents)
-            {
-                totalStepWeight += opponent.DifficultyWeight;
-            }
-            if (totalStepWeight < difficultyWeight)
+            plausibleOpponents = realmOpponents.FindAll(o => o.DifficultyWeight > 0 && o.DifficultyWeight <= difficultyWeight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
+            if (totalStepWeight < difficultyWeight && plausibleOpponents != null && plausibleOpponents.Count > 0)
             {
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
                 if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
                 {
                     var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
-                    opponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.2f));
-                    opponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.2f));
+                    opponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.25f));
+                    opponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.5f));
                     opponent.Type = opponentType;
                 }
                 stepOpponents.Add(opponent);
-                plausibleOpponents = realmOpponents.FindAll(o => o.DifficultyWeight > 0 && o.DifficultyWeight <= difficultyWeight - totalStepWeight);
+                totalStepWeight += opponent.DifficultyWeight;
             }
             else
                 i = 12;
@@ -231,7 +227,7 @@ public class StepsService
             var x = (i == 0 || i == 2) ? stepX : (i == 1 ? stepX + 1 : stepX - 1);
             var y = (i == 1 || i == 3) ? stepY : (i == 0 ? stepY + 1 : stepY - 1);
             var tmpStep = GetStepOnPos(x, y, run.Steps);
-            if (tmpStep.Discovered)
+            if (tmpStep != null && tmpStep.Discovered)
                 return tmpStep;
         }
         return null;

@@ -186,7 +186,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetString(Constants.PpCurrentOpponents, opponentsStr);
     }
 
-    public static List<Opponent> GetCurrentOpponents()
+    public static List<Opponent> GetCurrentOpponents(Run run)
     {
         var opponentsStr = PlayerPrefs.GetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
         int i = 0;
@@ -197,14 +197,14 @@ public class PlayerPrefsHelper : MonoBehaviour
             var separatorId = opponentsStr.IndexOf(';');
             if (separatorId == -1)
                 break;
-            var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
+            //var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
             var tmpId = int.Parse(opponentsStr.Substring(separatorRealmId + 1, separatorId - (separatorRealmId + 1)));
             Opponent tmpOpponent = null;
-            if (realmId == Realm.Hell.GetHashCode())
+            if (run.CurrentRealm == Realm.Hell)
                 tmpOpponent = OpponentsData.HellOpponents[tmpId];
-            else if (realmId == Realm.Earth.GetHashCode())
+            else if (run.CurrentRealm == Realm.Earth)
                 tmpOpponent = OpponentsData.EarthOpponents[tmpId];
-            else if (realmId == Realm.Heaven.GetHashCode())
+            else if (run.CurrentRealm == Realm.Heaven)
                 tmpOpponent = OpponentsData.HeavenOpponents[tmpId];
             opponentsList.Add(tmpOpponent);
             if (separatorId + 1 >= opponentsStr.Length)
@@ -279,7 +279,7 @@ public class PlayerPrefsHelper : MonoBehaviour
                     availablesPartsIds.Remove(id * 2, 2);
             }
             newBodyPart = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
-            alreadyBodyPartsIds += newBodyPart;
+            alreadyBodyPartsIds += newBodyPart.ToString("00");
             tattoosStr += nameToAdd + "L01B" + newBodyPart.ToString("00") +";";
             PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }

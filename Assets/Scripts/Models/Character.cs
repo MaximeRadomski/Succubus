@@ -17,6 +17,7 @@ public class Character : Loot
     //Global to all
     public int CritChancePercent;
     public int CritMultiplier;
+    public int SingleLineDamageBonus;
     public int DamagePercentBonus;
     public int DamagePercentToInferiorRealm;
     public int RealmPassiveEffect;
@@ -34,6 +35,7 @@ public class Character : Loot
         LootType = LootType.Character;
         CritChancePercent = 1;
         CritMultiplier = 50;
+        SingleLineDamageBonus = 0;
         DamagePercentBonus = 0;
         DamagePercentToInferiorRealm = 20;
         RealmPassiveEffect = 1;

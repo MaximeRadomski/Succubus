@@ -14,6 +14,7 @@ public class InfoMenuBhv : PopupBhv
     private GameObject _characterTab;
     private GameObject _opponentTab;
     private Item _characterItem;
+    private Run _run;
 
     private Character _character;
     private Opponent _opponent;
@@ -23,6 +24,7 @@ public class InfoMenuBhv : PopupBhv
 
     public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, bool isRotated, Character character, Opponent opponent)
     {
+        _run = PlayerPrefsHelper.GetRun();
         _instantiator = instantiator;
         _resumeAction = resumeAction;
         _character = character;
@@ -84,8 +86,9 @@ public class InfoMenuBhv : PopupBhv
 
     private void TattooInfo()
     {
+        var bodyPart = (BodyPart)int.Parse(GameObject.Find(Constants.LastEndActionClickedName).transform.parent.name.Substring("BodyPart".Length));
         var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Constants.LastEndActionClickedName.Substring("Tattoo".Length))]);
-        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_3_2 + clickedTattoo.GetDescription(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower() + "\n" + Constants.MaterialHell_3_2 + clickedTattoo.GetDescription(), null, "Ok", null);
     }
 
     private void CharacterLore()
@@ -111,7 +114,8 @@ public class InfoMenuBhv : PopupBhv
             "- takes more damages from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n" +
             "- attacks " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters with one more row.";
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
-        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + opponent.Realm + "Opponents_" + opponent.Id);
+        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _run.CurrentRealm + "Opponents_" + opponent.Id);
+        _opponentFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
         _opponentFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.MaterialHell_4_3 + 
             (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + opponent.Weakness.ToString().ToLower() : opponent.Weakness.ToString().ToLower());
         _opponentFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.MaterialHell_4_3 +

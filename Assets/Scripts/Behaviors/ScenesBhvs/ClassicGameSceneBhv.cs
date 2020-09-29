@@ -9,13 +9,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private CharacterInstanceBhv _opponentInstanceBhv;
     private ResourceBarBhv _opponentHpBar;
     private ResourceBarBhv _opponentCooldownBar;
-    private SpriteRenderer _opponentTypeSpriteRenderer;
+    private SpriteRenderer _opponentType;
     private bool _opponentOnCooldown;
     private float _nextCooldownTick;
     private int _opponentAttackId;
     private IconInstanceBhv _weaknessInstance;
     private IconInstanceBhv _immunityInstance;
 
+    private Run _run;
     private int _characterAttack;
     private bool _isCrit;
     private bool _isVictorious;
@@ -31,9 +32,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
     void Start()
     {
         Init();
-        _opponents = PlayerPrefsHelper.GetCurrentOpponents();
-        if (_opponents.Count == 1)
-            GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
+        _run = PlayerPrefsHelper.GetRun();
+        _opponents = PlayerPrefsHelper.GetCurrentOpponents(_run);
+        //if (_opponents.Count == 1)
+        //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
         for (int i = _opponents.Count; i < 12; ++i)
         {
             GameObject.Find("Opponent" + i).SetActive(false);
@@ -51,7 +53,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
         _opponentInstanceBhv.AfterDeath = AfterOpponentDeath;
-        _opponentTypeSpriteRenderer = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
+        _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
         _nextCooldownTick = Time.time + 3600;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _idOpponentDeath = _soundControler.SetSound("OpponentDeath");
@@ -60,6 +62,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idHit = _soundControler.SetSound("Hit");
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
+        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = "realm:\n" + Constants.MaterialHell_4_3 + _run.CurrentRealm.ToString().ToLower() + "\nlvl " + _run.RealmLevel;
         NextOpponent(sceneInit:true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Realm.Hell, Realm.Hell);
     }
@@ -77,8 +80,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _soundControler.PlaySound(_idOpponentAppearance);
         Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime:3.0f);
         _opponentAttackId = 0;
-        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _currentOpponent.Realm + "Opponents_" + _currentOpponent.Id);
-        _opponentTypeSpriteRenderer.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
+        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _run.CurrentRealm + "Opponents_" + _currentOpponent.Id);
+        _opponentType.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
         _weaknessInstance.SetVisible(_currentOpponent.Weakness != Weakness.None);
         _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (_currentOpponent.Realm.GetHashCode() * 2)));
@@ -87,7 +90,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentHpBar.UpdateContent(0, _currentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
-        _gameplayControler.SetGravity(_currentOpponent.GravityLevel);
+        _gameplayControler.SetGravity(_currentOpponent.GravityLevel + (_run.RealmLevel - 1));
         StartOpponentCooldown(sceneInit);
     }
 
@@ -106,14 +109,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
 
         var stepsService = new StepsService();
-        var run = PlayerPrefsHelper.GetRun();
-        var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
+        var currentStep = stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
-        stepsService.ClearLootOnPos(run.X, run.Y, run);
-        if (run.CurrentStep > Character.LandLordLateAmount)
-            stepsService.SetVisionOnRandomStep(run);
-        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
-        PlayerPrefsHelper.SaveRun(run);
+        stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
+        if (_run.CurrentStep > Character.LandLordLateAmount)
+            stepsService.SetVisionOnRandomStep(_run);
+        stepsService.GenerateAdjacentSteps(_run, Character, currentStep);
+        PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
         {
             Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", LoadBackAfterVictory);
@@ -378,6 +380,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (nbLines > 0)
         {
             incomingDamages = Character.GetAttack();
+            if (nbLines == 1)
+                incomingDamages += Character.SingleLineDamageBonus;
             if (Helper.RandomDice100(Character.CritChancePercent))
             {
                 incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));

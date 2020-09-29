@@ -17,9 +17,11 @@ public class StepsSceneBhv : SceneBhv
 
     private TMPro.TextMeshPro _lootTypeRarity;
     private TMPro.TextMeshPro _opponents;
+    private SpriteRenderer _opponentType;
     private SpriteRenderer _lootPicture;
     private TMPro.TextMeshPro _lootName;
     private SpriteRenderer _characterPicture;
+    private GameObject _buttonInfo;
 
     private Step _selectedStep;
 
@@ -38,6 +40,8 @@ public class StepsSceneBhv : SceneBhv
         GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.MaxSteps - _run.CurrentStep);
         _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
         _opponents = GameObject.Find("Opponents").GetComponent<TMPro.TextMeshPro>();
+        _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
+        _opponentType.sprite = null;
         _lootPicture = GameObject.Find("LootPicture").GetComponent<SpriteRenderer>();
         _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = LootInfo;
         _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
@@ -45,6 +49,8 @@ public class StepsSceneBhv : SceneBhv
         _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
         _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _character.Id);
         _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
+        _buttonInfo = GameObject.Find("ButtonInfo");
+        _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
@@ -107,7 +113,8 @@ public class StepsSceneBhv : SceneBhv
         var rarity = Rarity.Common;
         if (_selectedStep.LootType != LootType.None)
         {
-            _characterPicture.enabled = false;
+            _characterPicture.gameObject.SetActive(false);
+            _buttonInfo.SetActive(false);
             if (_selectedStep.LootType == LootType.Character)
             {
                 rarity = Rarity.Legendary;
@@ -128,6 +135,7 @@ public class StepsSceneBhv : SceneBhv
             }
             _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.MaterialHell_4_3 + rarity.ToString().ToLower();
             _opponents.text = "opponents\n" + Constants.MaterialHell_4_3 + ((OpponentType)rarity.GetHashCode()).ToString().ToLower();
+            _opponentType.sprite = rarity == Rarity.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_run.CurrentRealm.GetHashCode() * 3) + (rarity.GetHashCode() - 1)));
             _lootPicture.GetComponent<IconInstanceBhv>().Pop();
         }
         else
@@ -138,7 +146,9 @@ public class StepsSceneBhv : SceneBhv
                 _lootName.text = "current location";
                 _lootTypeRarity.text = "";
                 _opponents.text = "";
-                _characterPicture.enabled = true;
+                _opponentType.sprite = null;
+                _characterPicture.gameObject.SetActive(true);
+                _buttonInfo.SetActive(true);
             }
             else
             {
@@ -146,7 +156,9 @@ public class StepsSceneBhv : SceneBhv
                 _lootName.text = " - ";
                 _lootTypeRarity.text = " - \n" + Constants.MaterialHell_4_3 + " - ";
                 _opponents.text = _lootTypeRarity.text;
-                _characterPicture.enabled = false;
+                _opponentType.sprite = null;
+                _characterPicture.gameObject.SetActive(false);
+                _buttonInfo.SetActive(false);
             }
         }
     }
