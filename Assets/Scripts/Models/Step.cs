@@ -53,9 +53,15 @@ public class Step
             realmOpponents = OpponentsData.HeavenOpponents;
         var nextOpponentIdStart = parsedString.IndexOf('O') + 1;
         Opponents = new List<Opponent>();
+        var opponentType = (OpponentType)(Helper.GetLootFromTypeAndId(LootType, LootId)?.Rarity.GetHashCode() ?? OpponentType.Common.GetHashCode());
         while (nextOpponentIdStart <= parsedString.Length && parsedString[nextOpponentIdStart] != ';')
         {
-            Opponents.Add(realmOpponents[int.Parse(parsedString.Substring(nextOpponentIdStart, 2))]);
+            var opponent = realmOpponents[int.Parse(parsedString.Substring(nextOpponentIdStart, 2))];
+            if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
+            {
+                opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
+            }
+            Opponents.Add(opponent);
             nextOpponentIdStart += 2;
         }
     }

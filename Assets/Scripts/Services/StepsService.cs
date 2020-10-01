@@ -196,10 +196,7 @@ public class StepsService
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
                 if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
                 {
-                    var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
-                    opponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.25f));
-                    opponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.5f));
-                    opponent.Type = opponentType;
+                    opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
                 }
                 stepOpponents.Add(opponent);
                 totalStepWeight += opponent.DifficultyWeight;

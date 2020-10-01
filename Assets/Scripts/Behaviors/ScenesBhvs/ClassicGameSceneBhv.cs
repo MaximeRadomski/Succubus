@@ -17,6 +17,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private IconInstanceBhv _immunityInstance;
 
     private Run _run;
+    private StepsService _stepsService;
+    private Step _currentStep;
+
     private int _characterAttack;
     private bool _isCrit;
     private bool _isVictorious;
@@ -33,7 +36,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         Init();
         _run = PlayerPrefsHelper.GetRun();
-        _opponents = PlayerPrefsHelper.GetCurrentOpponents(_run);
+        _stepsService = new StepsService();
+        _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+        _opponents = _currentStep.Opponents;
+        Constants.CurrentItemCooldown = _run.CurrentItemCooldown;
         //if (_opponents.Count == 1)
         //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
         for (int i = _opponents.Count; i < 12; ++i)
@@ -64,7 +70,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idImmunity = _soundControler.SetSound("Immunity");
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = "realm:\n" + Constants.MaterialHell_4_3 + _run.CurrentRealm.ToString().ToLower() + "\nlvl " + _run.RealmLevel;
         NextOpponent(sceneInit:true);
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Realm.Hell, Realm.Hell);
+        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Character.Realm, _run.CurrentRealm);
     }
 
     protected void NextOpponent(bool sceneInit = false)
@@ -108,13 +114,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
 
-        var stepsService = new StepsService();
-        var currentStep = stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
-        var loot = Helper.GetLootFromTypeAndId(currentStep.LootType, currentStep.LootId);
-        stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
+        _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+        var loot = Helper.GetLootFromTypeAndId(_currentStep.LootType, _currentStep.LootId);
+        _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
         if (_run.CurrentStep > Character.LandLordLateAmount)
-            stepsService.SetVisionOnRandomStep(_run);
-        stepsService.GenerateAdjacentSteps(_run, Character, currentStep);
+            _stepsService.SetVisionOnRandomStep(_run);
+        _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
+        _run.CurrentItemCooldown = Constants.CurrentItemCooldown;
         PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
         {
@@ -128,6 +134,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
+                Constants.ResetCurrentItemCooldown();
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
@@ -140,7 +147,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 object OnItemSwitch(bool result)
                 {
                     if (result)
+                    {
                         PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
+                        Constants.ResetCurrentItemCooldown();
+                    }
                     LoadBackAfterVictory(true);
                     return result;
                 }
@@ -462,11 +472,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_isVictorious)
             return;
-        var stepsService = new StepsService();
-        var run = PlayerPrefsHelper.GetRun();
-        var currentStep = stepsService.GetStepOnPos(run.X, run.Y, run.Steps);
-        stepsService.ClearLootOnPos(run.X, run.Y, run);
-        stepsService.SetVisionOnRandomStep(run);
-        stepsService.GenerateAdjacentSteps(run, Character, currentStep);
+        _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
+        _stepsService.SetVisionOnRandomStep(_run);
+        _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
     }
 }

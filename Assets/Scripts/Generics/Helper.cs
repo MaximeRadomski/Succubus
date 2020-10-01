@@ -9,6 +9,16 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static Opponent UpgradeOpponentToUpperType(Opponent opponent, OpponentType opponentType)
+    {
+        var tmpOpponent = opponent;
+        var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
+        tmpOpponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.25f));
+        tmpOpponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.5f));
+        tmpOpponent.Type = opponentType;
+        return tmpOpponent;
+    }
+
     public static Loot GetLootFromTypeAndId(LootType lootType, int id)
     {
         if (lootType == LootType.Character)

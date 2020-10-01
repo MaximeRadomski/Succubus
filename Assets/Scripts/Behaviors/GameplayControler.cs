@@ -196,7 +196,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        if (_characterItem != null && Constants.CurrentItemCooldown - Character.ItemMaxCooldownReducer <= 0)
+        if (_characterItem != null && Constants.CurrentItemCooldown <= 0)
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -1607,7 +1607,10 @@ public class GameplayControler : MonoBehaviour
             }
             var numberRotation = rotation == -1 ? UnityEngine.Random.Range(0, 4) : rotation;
             var randomX = UnityEngine.Random.Range(-4, 6);
-            ForcedPiece = Instantiator.NewPiece(Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString(), opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
+            var forcedPieceLetter = Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString();
+            if (letter == -2)
+                forcedPieceLetter = "D";
+            ForcedPiece = Instantiator.NewPiece(forcedPieceLetter, opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
             ForcedPiece.name = Constants.GoForcedPiece;
             SetForcedPieceModel();
             //var tmpFadeBlockSpriteRenderer = Instantiator.NewFadeBlock(opponentRealm, new Vector3(50.0f, 50.0f, 1.0f), 5, 5).GetComponent<SpriteRenderer>();

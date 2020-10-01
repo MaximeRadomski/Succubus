@@ -238,7 +238,7 @@ public class StepsSceneBhv : SceneBhv
         _stepsService.DiscoverStepOnPos(_selectedStep.X, _selectedStep.Y, _run);
         PlayerPrefsHelper.SaveRun(_run);
         Constants.CurrentMusicType = MusicType.GameHell;
-        PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
+        //PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
         Constants.ResetClassicGameCache();
         NavigationService.LoadNextScene(Constants.ClassicGameScene);
     }

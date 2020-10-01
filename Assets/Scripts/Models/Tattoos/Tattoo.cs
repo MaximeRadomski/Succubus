@@ -7,7 +7,6 @@ public abstract class Tattoo : Loot
     public int Id;
     public string Name;
     public int Stat;
-    public Rarity Rarity;
     public int Level = 1;
     public int MaxLevel;
     public BodyPart BodyPart;

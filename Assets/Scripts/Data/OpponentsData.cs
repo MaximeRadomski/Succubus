@@ -63,7 +63,23 @@ public static class OpponentsData
             HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
-            GravityLevel = 2, DifficultyWeight = 40
+            GravityLevel = 3, DifficultyWeight = 40
+        },
+        new Opponent()
+        {
+            Id = 6, Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Elite,
+            HpMax = 100, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
+            GravityLevel = 8, DifficultyWeight = 40
+        },
+        new Opponent()
+        {
+            Id = 7, Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 16,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.DarkRow, 4) },
+            GravityLevel = 8, DifficultyWeight = 20
         }
     };
 

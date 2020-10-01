@@ -81,7 +81,7 @@ public class InfoMenuBhv : PopupBhv
 
     private void ItemInfo()
     {
-        _instantiator.NewPopupYesNo(_characterItem.Name, Constants.MaterialHell_3_2 + "(cooldown: " + _characterItem.Cooldown + ")" + Constants.MaterialEnd + "\n" + _characterItem.Description.ToLower(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(_characterItem.Name, Constants.MaterialHell_3_2 + "cooldown: " + _characterItem.Cooldown + Constants.MaterialEnd + "\n" + _characterItem.Description.ToLower(), null, "Ok", null);
     }
 
     private void TattooInfo()
@@ -124,7 +124,8 @@ public class InfoMenuBhv : PopupBhv
 
     private void OpponentLore()
     {
-        _instantiator.NewPopupYesNo("Lore", _opponent.Lore.ToLower(), null, "Ok", null);
+        if (_opponent.Lore != null)
+            _instantiator.NewPopupYesNo("Lore", _opponent.Lore.ToLower(), null, "Ok", null);
     }
 
     private void ShowCharacter()

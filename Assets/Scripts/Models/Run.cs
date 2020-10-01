@@ -4,6 +4,7 @@
     public int RealmLevel;
     public int MaxSteps;
     public int CurrentStep;
+    public int CurrentItemCooldown;
     public string Steps;
     public int X, Y;
     // Character starts at X50 Y50 because coordinates are stored in two digits and coordinates under zero could mean up to 3 digits
