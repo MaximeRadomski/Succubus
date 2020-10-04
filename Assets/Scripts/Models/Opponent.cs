@@ -22,10 +22,29 @@ public class Opponent
     public bool IsDead;
     public int DifficultyWeight;
 
-    public string TextEntrance;
-    public string TextHit;
-    public string TextVictory;
-    public string TextDeath;
-
     public string Lore;
+
+    public Opponent Clone()
+    {
+        var newOpponent = new Opponent();
+
+        newOpponent.Id = Id;
+        newOpponent.Kind = Kind;
+        newOpponent.HpMax = HpMax;
+        newOpponent.Cooldown = Cooldown;
+        newOpponent.Realm = Realm;
+        newOpponent.Weakness = Weakness;
+        newOpponent.Immunity = Immunity;
+        newOpponent.Type = Type;
+        newOpponent.XLineWeakness = XLineWeakness;
+        newOpponent.XLineImmunity = XLineImmunity;
+        newOpponent.GravityLevel = GravityLevel;
+        newOpponent.Attacks = Attacks;
+        newOpponent.DamagesOnWeakness = DamagesOnWeakness;
+        newOpponent.IsDead = IsDead;
+        newOpponent.DifficultyWeight = DifficultyWeight;
+        newOpponent.Lore = Lore;
+
+        return newOpponent;
+    }
 }

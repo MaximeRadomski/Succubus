@@ -55,7 +55,7 @@ public static class OpponentsData
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
-            GravityLevel = 1, DifficultyWeight = 20
+            GravityLevel = 2, DifficultyWeight = 20
         },
         new Opponent()
         {
@@ -67,8 +67,8 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 6, Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 100, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 3,
+            Id = 6, Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 250, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
             GravityLevel = 8, DifficultyWeight = 40
@@ -76,10 +76,18 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 7, Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 16,
+            HpMax = 120, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 16,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 4) },
-            GravityLevel = 8, DifficultyWeight = 20
+            GravityLevel = 5, DifficultyWeight = 30
+        },
+        new Opponent()
+        {
+            Id = 8, Kind = "Lesser Demon", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 80, Weakness = Weakness.None, Cooldown = 8,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 1) },
+            GravityLevel = 5, DifficultyWeight = 20
         }
     };
 

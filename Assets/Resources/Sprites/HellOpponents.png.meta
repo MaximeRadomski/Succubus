@@ -44,6 +44,51 @@ TextureImporter:
   - first:
       213: 8653528733826625253
     second: HellOpponents_5
+  - first:
+      213: -820642999806757471
+    second: HellOpponents_4
+  - first:
+      213: 2827841519841306493
+    second: HellOpponents_5
+  - first:
+      213: 2611817753310253591
+    second: HellOpponents_6
+  - first:
+      213: -5366737267598060912
+    second: HellOpponents_7
+  - first:
+      213: 475384795996153382
+    second: HellOpponents_8
+  - first:
+      213: -1204221865532377537
+    second: HellOpponents_9
+  - first:
+      213: -7414464746520607088
+    second: HellOpponents_10
+  - first:
+      213: -981966128373611957
+    second: HellOpponents_11
+  - first:
+      213: -7006035623681250806
+    second: HellOpponents_12
+  - first:
+      213: 2087990574666874252
+    second: HellOpponents_13
+  - first:
+      213: 960761004580712446
+    second: HellOpponents_14
+  - first:
+      213: -6659914807818868615
+    second: HellOpponents_15
+  - first:
+      213: -4223826857003283204
+    second: HellOpponents_16
+  - first:
+      213: 417711676968202044
+    second: HellOpponents_17
+  - first:
+      213: 8265039900767987635
+    second: HellOpponents_18
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -241,8 +286,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b1216e02c4813c40800000000000000
-      internalID: 5490315389741113778
+      spriteID: 1a57b152a8d7c94f0800000000000000
+      internalID: -820642999806757471
       vertices: []
       indices: 
       edges: []
@@ -262,8 +307,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ee2f59f882871870800000000000000
-      internalID: 8653528733826625253
+      spriteID: d77ed3731e28e3720800000000000000
+      internalID: 2827841519841306493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_6
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712dd1c986a0f3420800000000000000
+      internalID: 2611817753310253591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_7
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09297f9a3e48585b0800000000000000
+      internalID: -5366737267598060912
       vertices: []
       indices: 
       edges: []

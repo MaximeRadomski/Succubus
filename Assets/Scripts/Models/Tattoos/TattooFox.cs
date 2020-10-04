@@ -19,6 +19,6 @@ public class TattooFox : Tattoo
 
     public override string GetDescription()
     {
-        return "your item Max cooldown is reduced by " + StatToString();
+        return "your item max cooldown is reduced by " + StatToString();
     }
 }

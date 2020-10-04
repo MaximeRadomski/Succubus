@@ -256,10 +256,10 @@ public class PlayerPrefsHelper : MonoBehaviour
             tattoosStr = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "");
         var alreadyStart = tattoosStr.IndexOf(nameToAdd);
-        var newBodyPart = -1;
         var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
+        var newBodyPartStr = "";
         if (alreadyStart != -1)
         {
             var separatorLevelId = tattoosStr.Substring(alreadyStart).IndexOf('L');
@@ -278,14 +278,15 @@ public class PlayerPrefsHelper : MonoBehaviour
                 if (availablesPartsIds.Contains(id.ToString("00")))
                     availablesPartsIds.Remove(id * 2, 2);
             }
-            newBodyPart = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
-            alreadyBodyPartsIds += newBodyPart.ToString("00");
-            tattoosStr += nameToAdd + "L01B" + newBodyPart.ToString("00") +";";
+            var newBodyPartId = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
+            newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
+            alreadyBodyPartsIds += newBodyPartStr;
+            tattoosStr += nameToAdd + "L01B" + newBodyPartStr + ";";
             PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
         
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosStr);
-        return (BodyPart)newBodyPart;
+        return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
     }
 
     public static string GetCurrentTattoosString()

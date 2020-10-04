@@ -11,7 +11,7 @@ public static class Helper
 {
     public static Opponent UpgradeOpponentToUpperType(Opponent opponent, OpponentType opponentType)
     {
-        var tmpOpponent = opponent;
+        var tmpOpponent = opponent.Clone();
         var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
         tmpOpponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.25f));
         tmpOpponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.5f));

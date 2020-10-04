@@ -1607,7 +1607,7 @@ public class GameplayControler : MonoBehaviour
             }
             var numberRotation = rotation == -1 ? UnityEngine.Random.Range(0, 4) : rotation;
             var randomX = UnityEngine.Random.Range(-4, 6);
-            var forcedPieceLetter = Constants.PiecesLetters[letter == -1 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString();
+            var forcedPieceLetter = Constants.PiecesLetters[letter < 0 ? UnityEngine.Random.Range(0, Constants.PiecesLetters.Length) : letter].ToString();
             if (letter == -2)
                 forcedPieceLetter = "D";
             ForcedPiece = Instantiator.NewPiece(forcedPieceLetter, opponentRealm.ToString() + "Ghost", _spawner.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
