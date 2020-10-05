@@ -8,6 +8,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _orientationSelector;
     private GameObject _panelLeft;
     private GameObject _panelRight;
+    private GameObject _gameplayChoiceButtons;
+    private GameObject _gameplayChoiceSwipes;
     private List<GameObject> _gameplayButtons;
 
     void Start()
@@ -28,8 +30,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
         Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGhostColor());
         GhostColorChoice();
 
-        Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetOrientation());
-        OrientationChoice();
+        Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
+        GameplayButtonChoice();
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft:true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft:false);
@@ -55,8 +57,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
         GameObject.Find("Ghost4").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
         GameObject.Find("Ghost5").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
 
-        GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = OrientationChoice;
-        GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = OrientationChoice;
+        (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
+        (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -81,12 +83,13 @@ public class SettingsGameplaySceneBhv : SceneBhv
         PlayerPrefsHelper.SaveGhostColor(choiceId);
     }
 
-    private void OrientationChoice()
+    private void GameplayButtonChoice()
     {
-        var choice = Constants.LastEndActionClickedName;
-        var choiceGameObject = GameObject.Find(choice);
+        var choiceButtonName = Constants.LastEndActionClickedName;
+        var choiceGameObject = GameObject.Find(choiceButtonName);
+        var choiceType = choiceButtonName.Contains("Buttons") ? GameplayChoice.Buttons : GameplayChoice.SwipesRightHanded;
         _orientationSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _orientationSelector.transform.position.y, 0.0f);
-        PlayerPrefsHelper.SaveOrientation(choice);
+        PlayerPrefsHelper.SaveGameplayChoice(choiceType);
     }
 
     private void SetGameplayButtonOnClick()
@@ -247,7 +250,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             if (!result)
                 return result;
             PlayerPrefsHelper.SaveGhostColor(Constants.PpGhostPieceColorDefault);
-            PlayerPrefsHelper.SaveOrientation(Constants.PpOrientationDefault);
+            PlayerPrefsHelper.SaveGameplayChoice(Constants.PpGameplayChoiceDefault);
             PlayerPrefsHelper.SaveButtonsLeftPanel(Constants.PpButtonsLeftPanelDefault);
             PlayerPrefsHelper.SaveButtonsRightPanel(Constants.PpButtonsRightPanelDefault);
             foreach (var gm in _gameplayButtons)

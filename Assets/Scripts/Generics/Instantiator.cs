@@ -118,21 +118,21 @@ public class Instantiator : MonoBehaviour
         tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
-    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, bool isRotated = false)
+    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction)
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPauseMeuInstance.name);
-        tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction, isRotated);
+        tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction);
         return tmpPauseMeuInstance;
     }
 
-    public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, bool isRotated, Character character, Opponent opponent)
+    public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, Character character, Opponent opponent)
     {
         var tmpInfoMenuObject = Resources.Load<GameObject>("Prefabs/InfoMenu");
         var tmpInfoMeuInstance = Instantiate(tmpInfoMenuObject, tmpInfoMenuObject.transform.position, tmpInfoMenuObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpInfoMeuInstance.name);
-        tmpInfoMeuInstance.GetComponent<InfoMenuBhv>().Init(this, resumeAction, isRotated, character, opponent);
+        tmpInfoMeuInstance.GetComponent<InfoMenuBhv>().Init(this, resumeAction, character, opponent);
         return tmpInfoMeuInstance;
     }
 

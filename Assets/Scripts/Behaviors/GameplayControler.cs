@@ -131,8 +131,9 @@ public class GameplayControler : MonoBehaviour
         _gameplayButtons = new List<GameObject>();
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
-        if (PlayerPrefsHelper.GetOrientation() == "Horizontal")
-            SetHorizontalOrientation();
+        var gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
+        if (gameplayChoice != GameplayChoice.Buttons)
+            SetSwipeGameplayChoice(gameplayChoice);
         UpdatePanelsPositions();
         SetButtons();
 
@@ -261,7 +262,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void SetHorizontalOrientation()
+    public void SetSwipeGameplayChoice(GameplayChoice gameplayChoice)
     {
         var resetRotation = new Quaternion();
         resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);

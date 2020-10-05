@@ -3049,7 +3049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_textInfo.spaceCount
@@ -3069,7 +3069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_text
-      value: 'Orientation:'
+      value: 'Gameplay:'
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_sharedMaterial
@@ -3085,7 +3085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_Name
-      value: Orientation
+      value: Gameplay
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
@@ -7664,7 +7664,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.714286, y: 3.857143}
+    oldSize: {x: 6.857143, y: 3.857143}
     newSize: {x: 6.714286, y: 3.857143}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -8574,6 +8574,7 @@ MonoBehaviour:
   Paused: 0
   PauseMenu: {fileID: 0}
   Instantiator: {fileID: 0}
+  CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
 --- !u!4 &1967374792

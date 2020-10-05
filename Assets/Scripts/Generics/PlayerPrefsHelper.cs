@@ -96,15 +96,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         return ghostColor;
     }
 
-    public static void SaveOrientation(string orientation)
+    public static void SaveGameplayChoice(GameplayChoice gameplayChoice)
     {
-        PlayerPrefs.SetString(Constants.PpOrientation, orientation);
+        PlayerPrefs.SetInt(Constants.PpGameplayChoice, gameplayChoice.GetHashCode());
     }
 
-    public static string GetOrientation()
+    public static GameplayChoice GetGameplayChoice()
     {
-        var orientation = PlayerPrefs.GetString(Constants.PpOrientation, Constants.PpOrientationDefault);
-        return orientation;
+        var gameplayChoice = PlayerPrefs.GetInt(Constants.PpGameplayChoice, Constants.PpGameplayChoiceDefault);
+        return (GameplayChoice)gameplayChoice;
     }
 
     public static void SaveButtonsLeftPanel(string buttons)

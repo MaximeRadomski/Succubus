@@ -32,14 +32,14 @@ public abstract class GameSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal");
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp);
     }
 
     private void Info()
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", Character, _currentOpponent);
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, _currentOpponent);
     }
 
     private object ResumeGiveUp(bool resume)

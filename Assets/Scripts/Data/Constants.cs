@@ -61,8 +61,8 @@ public static class Constants
     public const string PpTrainingHighScore = "TrainingHighScore";
     public const string PpGhostPieceColor = "GhostPieceColor";
     public const string PpGhostPieceColorDefault = "5";
-    public const string PpOrientation = "Orientation";
-    public const string PpOrientationDefault = "Vertical";
+    public const string PpGameplayChoice = "GameplayChoice";
+    public const int PpGameplayChoiceDefault = 0;
     public const string PpButtonsLeftPanel = "PpButtonsLeftPanel";
     public const string PpButtonsLeftPanelDefault = "H000000D0000L0R0000d0";
     public const string PpButtonsRightPanel = "PpButtonsRightPanel";

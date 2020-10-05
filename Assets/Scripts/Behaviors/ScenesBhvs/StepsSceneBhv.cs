@@ -181,7 +181,7 @@ public class StepsSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, false);
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp);
     }
 
     private object ResumeGiveUp(bool resume)
@@ -212,7 +212,7 @@ public class StepsSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, PlayerPrefsHelper.GetOrientation() == "Horizontal", _character, null);
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, _character, null);
     }
 
     private void GoToStep()
