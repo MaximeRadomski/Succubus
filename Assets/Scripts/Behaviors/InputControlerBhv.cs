@@ -10,16 +10,19 @@ public class InputControlerBhv : MonoBehaviour
     private bool _beginPhase, _doPhase, _endPhase;
     private SceneBhv _currentScene;
     private SoundControlerBhv _soundControler;
+    private GameplayControler _gameplayControler;
 
     private void Start()
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
     }
 
     void Update()
     {
         if (Constants.InputLocked)
             return;
+        CheckKeyboardInputs();
         // IF BACK BUTTON //
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -172,4 +175,69 @@ public class InputControlerBhv : MonoBehaviour
         }
         return false;
     }
+
+    private void CheckKeyboardInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Space))
+        {
+            _gameplayControler.Hold();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.B))
+        {
+            _gameplayControler.AntiClock();
+        }
+        if (Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.N))
+        {
+            _gameplayControler.SoftDropHolded();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.G))
+        {
+            _gameplayControler.Left();
+        }
+        if (Input.GetKey(KeyCode.Keypad4) || Input.GetKey(KeyCode.G))
+        {
+            _gameplayControler.LeftHolded();
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad4) || Input.GetKeyUp(KeyCode.G))
+        {
+            _gameplayControler.DirectionReleased();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.H))
+        {
+            _gameplayControler.Clock();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.J))
+        {
+            _gameplayControler.Right();
+        }
+        if (Input.GetKey(KeyCode.Keypad6) || Input.GetKey(KeyCode.J))
+        {
+            _gameplayControler.RightHolded();
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad6) || Input.GetKeyUp(KeyCode.J))
+        {
+            _gameplayControler.DirectionReleased();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Y))
+        {
+            _gameplayControler.HardDrop();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.T))
+        {
+            _gameplayControler.Item();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.U))
+        {
+            _gameplayControler.Special();
+        }
+    }
+
+    //void OnGUI()
+    //{
+    //    Event e = Event.current;
+    //    if (e.isKey)
+    //    {
+    //        Debug.Log("Detected key code: " + e.keyCode);
+    //    }
+    //}
 }

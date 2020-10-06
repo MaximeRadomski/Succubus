@@ -440,6 +440,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (Bag == null || Bag.Length <= 7)
             SetBag();
+        var tmpLastPiece = CurrentPiece;
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
         CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
@@ -457,7 +458,7 @@ public class GameplayControler : MonoBehaviour
         _canHold = true;
         SetNextGravityFall();
         ResetLock();
-        SceneBhv.OnNewPiece();
+        SceneBhv.OnNewPiece(tmpLastPiece);
         _characterSpecial.OnNewPiece(CurrentPiece);
     }
 
@@ -491,7 +492,6 @@ public class GameplayControler : MonoBehaviour
     {
         if (!_hasInit || SceneBhv.Paused)
             return;
-        CheckKeyboardInputs();
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
         {
             GravityFall();
@@ -594,7 +594,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void Left()
+    public void Left()
     {
         _leftHolded = _rightHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -608,7 +608,7 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    private void LeftHolded()
+    public void LeftHolded()
     {
         ++_leftHolded;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -624,7 +624,7 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    private void Right()
+    public void Right()
     {
         _rightHolded = _leftHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -638,7 +638,7 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    private void RightHolded()
+    public void RightHolded()
     {
         ++_rightHolded;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -654,12 +654,12 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    private void DirectionReleased()
+    public void DirectionReleased()
     {
         SetTimeDirectionHolded();
     }
 
-    private void SoftDropHolded()
+    public void SoftDropHolded()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -719,7 +719,7 @@ public class GameplayControler : MonoBehaviour
         HardDrop();
     }
 
-    private void HardDrop()
+    public void HardDrop()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -843,7 +843,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void Clock()
+    public void Clock()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -950,7 +950,7 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
     }
 
-    private void AntiClock()
+    public void AntiClock()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -1057,7 +1057,7 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
     }
 
-    private void Hold()
+    public void Hold()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold)
             return;
@@ -1102,7 +1102,7 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idHold);
     }
 
-    private void Item()
+    public void Item()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -1115,7 +1115,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void Special()
+    public void Special()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
             return;
@@ -1673,69 +1673,4 @@ public class GameplayControler : MonoBehaviour
     }
 
     #endregion
-
-    private void CheckKeyboardInputs()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Space))
-        {
-            Hold();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.B))
-        {
-            AntiClock();
-        }
-        if (Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.N))
-        {
-            SoftDropHolded();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.G))
-        {
-            Left();
-        }
-        if (Input.GetKey(KeyCode.Keypad4) || Input.GetKey(KeyCode.G))
-        {
-            LeftHolded();
-        }
-        if (Input.GetKeyUp(KeyCode.Keypad4) || Input.GetKeyUp(KeyCode.G))
-        {
-            DirectionReleased();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.H))
-        {
-            Clock();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.J))
-        {
-            Right();
-        }
-        if (Input.GetKey(KeyCode.Keypad6) || Input.GetKey(KeyCode.J))
-        {
-            RightHolded();
-        }
-        if (Input.GetKeyUp(KeyCode.Keypad6) || Input.GetKeyUp(KeyCode.J))
-        {
-            DirectionReleased();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Y))
-        {
-            HardDrop();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.T))
-        {
-            Item();
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.U))
-        {
-            Special();
-        }
-    }
-
-    //void OnGUI()
-    //{
-    //    Event e = Event.current;
-    //    if (e.isKey)
-    //    {
-    //        Debug.Log("Detected key code: " + e.keyCode);
-    //    }
-    //}
 }

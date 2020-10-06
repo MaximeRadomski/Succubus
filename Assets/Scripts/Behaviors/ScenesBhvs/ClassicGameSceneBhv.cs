@@ -333,10 +333,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
-    public override void OnNewPiece()
+    public override void OnNewPiece(GameObject lastPiece)
     {
         if (_characterAttack > 0)
         {
+            Instantiator.NewAttackLine(lastPiece, _opponentHpBar.gameObject, Character.Realm);
             DamageOpponent(_characterAttack);
         }
         _characterAttack = 0;

@@ -11,6 +11,13 @@ public class Instantiator : MonoBehaviour
     {
     }
 
+    public void NewAttackLine(GameObject source, GameObject target, Realm realm)
+    {
+        var attackLine = Instantiate(new GameObject(), source.transform.position, new Quaternion());
+        attackLine.AddComponent<AttackLineBhv>();
+        attackLine.GetComponent<AttackLineBhv>().Init(target, realm, this);
+    }
+
     public GameObject NewStepsContainer()
     {
         var tmpStepsContainerInstance = Instantiate(new GameObject(), new Vector3(0.0f, 0.0f, 0.0f), new Quaternion());

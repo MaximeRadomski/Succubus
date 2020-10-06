@@ -77,6 +77,8 @@ public static class Constants
     public const string PpMusicLevel = "MusicLevel";
     public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
+    public const string PpTouchSensitivity = "TouchSensitivity";
+    public const float PpTouchSensitivityDefault = 2.0f;
 
     //  SCENES  //
     public const string SplashScreenScene = "SplashScreenScene";

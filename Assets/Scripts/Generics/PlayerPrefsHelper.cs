@@ -353,4 +353,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var level = PlayerPrefs.GetFloat(Constants.PpMusicLevel, Constants.PpAudioLevelDefault);
         return level;
     }
+
+    public static void SaveTouchSensitivity(float sensitivity)
+    {
+        PlayerPrefs.SetFloat(Constants.PpTouchSensitivity, sensitivity);
+    }
+
+    public static float GetTouchSensitivity()
+    {
+        var sensitivity = PlayerPrefs.GetFloat(Constants.PpTouchSensitivity, Constants.PpTouchSensitivityDefault);
+        return sensitivity;
+    }
 }

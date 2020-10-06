@@ -71,7 +71,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _musicControler.PlayFromStart();
     }
 
-    public override void OnNewPiece()
+    public override void OnNewPiece(GameObject lastPiece)
     {
         if (_gameplayControler == null)
             return;

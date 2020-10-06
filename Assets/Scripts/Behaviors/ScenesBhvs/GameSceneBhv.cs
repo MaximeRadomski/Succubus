@@ -73,7 +73,7 @@ public abstract class GameSceneBhv : SceneBhv
         return false;
     }
 
-    public virtual void OnNewPiece()
+    public virtual void OnNewPiece(GameObject lastPiece)
     {
 
     }
