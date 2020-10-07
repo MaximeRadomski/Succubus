@@ -11,6 +11,8 @@ public class SwipeControlerBhv : MonoBehaviour
     private Vector2 _rotationFrontier;
     private float _tapZoneBoundariesSize;
     private bool _isHoldingDown;
+    private int _framesBeforeHoldingDown;
+    private Direction _direction;
 
     private float _oneTapDistance = 1.0f;
     private float _touchSensitivity;
@@ -36,6 +38,8 @@ public class SwipeControlerBhv : MonoBehaviour
             {
                 _beginPos = touchPosWorld2D;
                 _reBeginPos = _beginPos;
+                _framesBeforeHoldingDown = 0;
+                _direction = Direction.None;
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
@@ -60,6 +64,8 @@ public class SwipeControlerBhv : MonoBehaviour
                 {
                     _beginPos = touchPosWorld2D;
                     _reBeginPos = _beginPos;
+                    _framesBeforeHoldingDown = 0;
+                    _direction = Direction.None;
                 }
                 else if (_endPhase)
                 {
@@ -78,7 +84,6 @@ public class SwipeControlerBhv : MonoBehaviour
 
     private void CheckEndPhase(Vector2 currentPos)
     {
-        _isHoldingDown = false;
         if (Vector2.Distance(_beginPos, currentPos) <= _oneTapDistance)
         {
             if (currentPos.x < _rotationFrontier.x - _tapZoneBoundariesSize
@@ -89,18 +94,26 @@ public class SwipeControlerBhv : MonoBehaviour
             else
                 _gameplayControler.Clock();
         }
-        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity)
+        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity && _direction == Direction.Vertical)
         {
             if (currentPos.y > _beginPos.y)
                 _gameplayControler.Hold();
-            else
+            else if (!_isHoldingDown)
                 _gameplayControler.HardDrop();
         }
+        _isHoldingDown = false;
+        _framesBeforeHoldingDown = 0;
+        _direction = Direction.None;
     }
 
     private void CheckDoPhase(Vector2 currentPos)
     {
-        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _touchSensitivity)
+        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > (_touchSensitivity / 2))
+            _direction = Direction.Horizontal;
+        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > (_touchSensitivity / 2))
+            _direction = Direction.Vertical;
+
+        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _touchSensitivity && _direction == Direction.Horizontal)
         {
             if (currentPos.x > _reBeginPos.x)
                 _gameplayControler.Right();
@@ -109,12 +122,16 @@ public class SwipeControlerBhv : MonoBehaviour
             _reBeginPos = currentPos;
         }
         else if (_isHoldingDown
-            || (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity && currentPos.y < _beginPos.y))
+            || (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity && currentPos.y < _beginPos.y && _direction == Direction.Vertical))
         {
+            ++_framesBeforeHoldingDown;
+            if (_framesBeforeHoldingDown < 10)
+                return;
             _gameplayControler.SoftDropHolded();
             if (!_isHoldingDown)
             {
                 _reBeginPos = currentPos;
+                _direction = Direction.None;
                 _isHoldingDown = true;
             }
         }

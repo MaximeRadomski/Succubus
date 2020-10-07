@@ -337,7 +337,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_characterAttack > 0)
         {
-            Instantiator.NewAttackLine(lastPiece, _opponentHpBar.gameObject, Character.Realm);
+            Instantiator.NewAttackLine(lastPiece, _opponentInstanceBhv.gameObject, Character.Realm);
             DamageOpponent(_characterAttack);
         }
         _characterAttack = 0;

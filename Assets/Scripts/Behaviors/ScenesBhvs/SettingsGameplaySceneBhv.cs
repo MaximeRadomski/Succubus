@@ -5,11 +5,13 @@ using UnityEngine;
 public class SettingsGameplaySceneBhv : SceneBhv
 {
     private GameObject _ghostSelector;
-    private GameObject _orientationSelector;
+    private GameObject _gameplaySelector;
     private GameObject _panelLeft;
     private GameObject _panelRight;
     private GameObject _gameplayChoiceButtons;
     private GameObject _gameplayChoiceSwipes;
+    private GameObject _buttonsPanels;
+    private GameObject _swipesPanels;
     private List<GameObject> _gameplayButtons;
 
     void Start()
@@ -21,9 +23,11 @@ public class SettingsGameplaySceneBhv : SceneBhv
     {
         base.Init();
         _ghostSelector = GameObject.Find("GhostSelector");
-        _orientationSelector = GameObject.Find("OrientationSelector");
+        _gameplaySelector = GameObject.Find("GameplaySelector");
         _panelLeft = GameObject.Find("PanelLeft");
         _panelRight = GameObject.Find("PanelRight");
+        _buttonsPanels = GameObject.Find("ButtonsPanels");
+        _swipesPanels = GameObject.Find("SwipesPanels");
         _gameplayButtons = new List<GameObject>();
         SetButtons();
 
@@ -59,6 +63,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
+        GameObject.Find("SwipeType").GetComponent<ButtonBhv>().EndActionDelegate = FlipGameplaySwipe;
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -72,6 +77,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
         foreach (Transform child in panel.transform)
         {
             child.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = SetGameplayButtonOnClick;
+            child.transform.SetParent(panel.transform);
         }
     }
 
@@ -87,9 +93,54 @@ public class SettingsGameplaySceneBhv : SceneBhv
     {
         var choiceButtonName = Constants.LastEndActionClickedName;
         var choiceGameObject = GameObject.Find(choiceButtonName);
-        var choiceType = choiceButtonName.Contains("Buttons") ? GameplayChoice.Buttons : GameplayChoice.SwipesRightHanded;
-        _orientationSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _orientationSelector.transform.position.y, 0.0f);
+
+        var choiceType = GameplayChoice.Buttons;
+        if (!choiceButtonName.Contains("Buttons"))
+        {
+            if (PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.SwipesLeftHanded)
+                choiceType = GameplayChoice.SwipesLeftHanded;
+            else
+                choiceType = GameplayChoice.SwipesRightHanded;
+        }
+        _gameplaySelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _gameplaySelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveGameplayChoice(choiceType);
+        UpdateViewFromGameplayChoice(choiceType);
+    }
+
+    private void UpdateViewFromGameplayChoice(GameplayChoice gameplayChoice)
+    {
+        if (gameplayChoice == GameplayChoice.Buttons)
+        {
+            _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _buttonsPanels.GetComponent<PositionBhv>().UpdatePositions();
+        }
+        else
+        {
+            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
+            var text = _swipesPanels.transform.GetChild(0).Find("Text").GetComponent<TMPro.TextMeshPro>();
+            var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
+            if (gameplayChoice == GameplayChoice.SwipesRightHanded)
+            {
+                sprite.flipX = false;
+                GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = false;
+                text.text = $"Right Handed\n{Constants.MaterialLong_3_2}(click to change)";
+            }
+            else
+            {
+                sprite.flipX = true;
+                GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = true;
+                text.text = $"Left Handed\n{Constants.MaterialLong_3_2}(click to change)";
+            }
+        }
+    }
+
+    private void FlipGameplaySwipe()
+    {
+        var currentGameplayType = PlayerPrefsHelper.GetGameplayChoice();
+        var newGameplayStyle = currentGameplayType == GameplayChoice.SwipesRightHanded ? GameplayChoice.SwipesLeftHanded : GameplayChoice.SwipesRightHanded;
+        PlayerPrefsHelper.SaveGameplayChoice(newGameplayStyle);
+        UpdateViewFromGameplayChoice(newGameplayStyle);
     }
 
     private void SetGameplayButtonOnClick()
@@ -120,6 +171,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             var save = PlayerPrefsHelper.GetButtonsLeftPanel();
             save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
             PlayerPrefsHelper.SaveButtonsLeftPanel(save);
+            gameplayButton.transform.SetParent(_panelLeft.transform);
         }
         else
         {
@@ -129,6 +181,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             var save = PlayerPrefsHelper.GetButtonsRightPanel();
             save = save.ReplaceChar(buttonId, Helper.GameplayButtonToLetter(gameplayButtonName));
             PlayerPrefsHelper.SaveButtonsRightPanel(save);
+            gameplayButton.transform.SetParent(_panelRight.transform);
         }
     }
 
@@ -189,6 +242,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
         }
         foreach (Transform addButton in panel.transform)
         {
+            if (!addButton.name.Contains("Add"))
+                continue;
             foreach (var gameplayButton in gameplayButtons)
             {
                 if (gameplayButton != null && Vector3.Distance(addButton.position, gameplayButton.transform.position) <= 3.0f)

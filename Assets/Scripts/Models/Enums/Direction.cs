@@ -4,5 +4,7 @@
     Up,
     Right,
     Down,
-    Left
+    Left,
+    Horizontal,
+    Vertical
 }

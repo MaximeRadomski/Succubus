@@ -35,6 +35,36 @@ TextureImporter:
   - first:
       213: -6013114577419157067
     second: Panels_5
+  - first:
+      213: -3557776448327188126
+    second: Panels_6
+  - first:
+      213: 6294552075594933438
+    second: Panels_7
+  - first:
+      213: -5269898165987320781
+    second: Panels_8
+  - first:
+      213: -814070457592636269
+    second: Panels_9
+  - first:
+      213: -8326840978009538080
+    second: Panels_5
+  - first:
+      213: 6995232690159193886
+    second: Panels_6
+  - first:
+      213: 3872582338194225892
+    second: Panels_7
+  - first:
+      213: 8201721527094642035
+    second: Panels_8
+  - first:
+      213: -8069388661936068251
+    second: Panels_9
+  - first:
+      213: -8111605230254018310
+    second: Panels_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -96,7 +126,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -108,7 +138,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -120,7 +150,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -142,7 +172,7 @@ TextureImporter:
         width: 144
         height: 144
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -158,12 +188,12 @@ TextureImporter:
       name: Panels_1
       rect:
         serializedVersion: 2
-        x: 147
+        x: 146
         y: 1
         width: 144
         height: 144
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -179,12 +209,12 @@ TextureImporter:
       name: Panels_2
       rect:
         serializedVersion: 2
-        x: 293
+        x: 291
         y: 33
         width: 56
         height: 112
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,12 +230,12 @@ TextureImporter:
       name: Panels_3
       rect:
         serializedVersion: 2
-        x: 350
+        x: 348
         y: 89
         width: 32
         height: 56
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -221,12 +251,12 @@ TextureImporter:
       name: Panels_4
       rect:
         serializedVersion: 2
-        x: 351
-        y: 35
-        width: 29
-        height: 51
+        x: 381
+        y: 33
+        width: 112
+        height: 112
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -242,7 +272,91 @@ TextureImporter:
       name: Panels_5
       rect:
         serializedVersion: 2
-        x: 384
+        x: 494
+        y: 1
+        width: 8
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e1439c7f3e117c80800000000000000
+      internalID: -8326840978009538080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_6
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 33
+        width: 8
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1f8322c11f041160800000000000000
+      internalID: 6995232690159193886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_7
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 89
+        width: 8
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eab4876e1d2eb530800000000000000
+      internalID: 3872582338194225892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_8
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 113
+        width: 8
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3758629364e52d170800000000000000
+      internalID: 8201721527094642035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_9
+      rect:
+        serializedVersion: 2
+        x: 530
         y: 5
         width: 4
         height: 140
@@ -253,8 +367,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b1453396202d8ca0800000000000000
-      internalID: -6013114577419157067
+      spriteID: 5696cb2f3c5c30090800000000000000
+      internalID: -8069388661936068251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_10
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 35
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af0328c250acd6f80800000000000000
+      internalID: -8111605230254018310
       vertices: []
       indices: 
       edges: []

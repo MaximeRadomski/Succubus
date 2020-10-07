@@ -10,6 +10,7 @@ public class AttackLineBhv : MonoBehaviour
     public void Init(GameObject target, Realm realm, Instantiator instantiator)
     {
         _target = target.transform.position;
+        transform.position = transform.position + new Vector3(0.0f, -2.0f, 0.0f);
         _realm = realm;
         _instantiator = instantiator;
     }
@@ -18,7 +19,9 @@ public class AttackLineBhv : MonoBehaviour
     {
         if (_target == null)
             return;
-        _instantiator.NewFadeBlock(_realm, Vector3.Lerp(transform.position, _target, 0.1f), 4, -1);
+        var fadeBlock = _instantiator.NewFadeBlock(_realm, transform.position, 4, -1);
+        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+        transform.position = Vector3.Lerp(transform.position, _target, 0.3f);
         if (Helper.VectorEqualsPrecision(transform.position, _target, 0.1f))
             Destroy(gameObject);
     }

@@ -134,7 +134,8 @@ public class GameplayControler : MonoBehaviour
         var gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
         if (gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(gameplayChoice);
-        UpdatePanelsPositions();
+        else
+            UpdatePanelsPositions();
         SetButtons();
 
         _id1Line = _soundControler.SetSound("1Line");
@@ -264,33 +265,29 @@ public class GameplayControler : MonoBehaviour
 
     public void SetSwipeGameplayChoice(GameplayChoice gameplayChoice)
     {
-        var resetRotation = new Quaternion();
-        resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-        _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
-        _mainCamera.transform.rotation = resetRotation;
-        _mainCamera.transform.Rotate(0.0f, 0.0f, 90.0f);
-        _panelLeft.GetComponent<PositionBhv>().Rotated = true;
-        _panelRight.GetComponent<PositionBhv>().Rotated = true;
-        _uiPanelLeft.transform.rotation = resetRotation;
-        _uiPanelLeft.transform.Rotate(0.0f, 0.0f, 90.0f);
+        var mult = 1.0f;
+        if (gameplayChoice == GameplayChoice.SwipesLeftHanded)
+            mult = -mult;
         var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
-        uiPanelLeftPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
         uiPanelLeftPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
-        uiPanelLeftPositionBhv.XOffset = uiPanelLeftPositionBhv.YOffset / 3;
-        uiPanelLeftPositionBhv.YOffset = -2.285f;
-        uiPanelLeftPositionBhv.Rotated = true;
-        uiPanelLeftPositionBhv.UpdatePositions();
-        RotatePanelChildren(_uiPanelLeft);
-        _uiPanelRight.transform.rotation = resetRotation;
-        _uiPanelRight.transform.Rotate(0.0f, 0.0f, 90.0f);
+        uiPanelLeftPositionBhv.XOffset = 2.285f * mult;
+        uiPanelLeftPositionBhv.UpdatePositions();        
         var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
-        uiPanelRightPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
-        uiPanelRightPositionBhv.HorizontalSide = CameraHorizontalSide.RightBorder;
-        uiPanelRightPositionBhv.XOffset = -uiPanelRightPositionBhv.YOffset;
-        uiPanelRightPositionBhv.YOffset = -2.285f;
-        uiPanelRightPositionBhv.Rotated = true;
+        uiPanelRightPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
+        uiPanelRightPositionBhv.XOffset = 2.285f * mult;
         uiPanelRightPositionBhv.UpdatePositions();
-        RotatePanelChildren(_uiPanelRight);
+        _panelLeft.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+        _panelLeft.GetComponent<PositionBhv>().enabled = false;
+        _panelRight.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+        _panelRight.GetComponent<PositionBhv>().enabled = false;
+        var panelSwipe = GameObject.Find("PanelSwipe");
+        panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
+        panelSwipe.GetComponent<SwipeControlerBhv>().enabled = true;
+        panelSwipe.GetComponent<SwipeControlerBhv>().Init(this, panelSwipe);
+        panelSwipe.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = Item;
+        panelSwipe.transform.GetChild(0).name = Constants.GoButtonItemName + "01";
+        panelSwipe.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = Special;
+        panelSwipe.transform.GetChild(1).name = Constants.GoButtonItemName + "01";
     }
 
     private void UpdatePanelsPositions()
@@ -301,13 +298,13 @@ public class GameplayControler : MonoBehaviour
         _uiPanelRight.GetComponent<PositionBhv>().UpdatePositions();
     }
 
-    private void RotatePanelChildren(GameObject panel)
-    {
-        panel.transform.GetChild(0).transform.Rotate(0.0f, 0.0f, -90.0f);
-        panel.transform.GetChild(0).transform.position += new Vector3(-Constants.Pixel, 0.0f, 0.0f);
-        panel.transform.GetChild(1).transform.Rotate(0.0f, 0.0f, -90.0f);
-        panel.transform.GetChild(1).transform.position += new Vector3(Constants.Pixel, 0.0f, 0.0f);
-    }
+    //private void RotatePanelChildren(GameObject panel)
+    //{
+    //    panel.transform.GetChild(0).transform.Rotate(0.0f, 0.0f, -90.0f);
+    //    panel.transform.GetChild(0).transform.position += new Vector3(-Constants.Pixel, 0.0f, 0.0f);
+    //    panel.transform.GetChild(1).transform.Rotate(0.0f, 0.0f, -90.0f);
+    //    panel.transform.GetChild(1).transform.position += new Vector3(Constants.Pixel, 0.0f, 0.0f);
+    //}
 
     private void PanelsVisuals(string panelStr, GameObject panel, bool isLeft)
     {
