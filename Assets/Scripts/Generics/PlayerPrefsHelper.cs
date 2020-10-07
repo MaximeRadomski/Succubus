@@ -197,14 +197,14 @@ public class PlayerPrefsHelper : MonoBehaviour
             var separatorId = opponentsStr.IndexOf(';');
             if (separatorId == -1)
                 break;
-            //var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
+            var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
             var tmpId = int.Parse(opponentsStr.Substring(separatorRealmId + 1, separatorId - (separatorRealmId + 1)));
             Opponent tmpOpponent = null;
-            if (run.CurrentRealm == Realm.Hell)
+            if ((run?.CurrentRealm ?? (Realm)realmId) == Realm.Hell)
                 tmpOpponent = OpponentsData.HellOpponents[tmpId];
-            else if (run.CurrentRealm == Realm.Earth)
+            else if ((run?.CurrentRealm ?? (Realm)realmId) == Realm.Earth)
                 tmpOpponent = OpponentsData.EarthOpponents[tmpId];
-            else if (run.CurrentRealm == Realm.Heaven)
+            else if ((run?.CurrentRealm ?? (Realm)realmId) == Realm.Heaven)
                 tmpOpponent = OpponentsData.HeavenOpponents[tmpId];
             opponentsList.Add(tmpOpponent);
             if (separatorId + 1 >= opponentsStr.Length)

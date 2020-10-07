@@ -38,8 +38,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _run = PlayerPrefsHelper.GetRun();
         _stepsService = new StepsService();
         _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
-        _opponents = _currentStep.Opponents;
-        Constants.CurrentItemCooldown = _run.CurrentItemCooldown;
+        if (Constants.CurrentGameMode == GameMode.TrainingDummy
+            || Constants.CurrentGameMode == GameMode.TrainingFree)
+        {
+            _opponents = PlayerPrefsHelper.GetCurrentOpponents(null);
+            Constants.ResetCurrentItemCooldown();
+        }
+        else
+        {
+            _opponents = _currentStep.Opponents;
+            Constants.CurrentItemCooldown = _run.CurrentItemCooldown;
+        }
         //if (_opponents.Count == 1)
         //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
         for (int i = _opponents.Count; i < 12; ++i)
@@ -225,7 +234,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _currentOpponent.Attacks[_opponentAttackId].AttackType,
             _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
             _currentOpponent.Attacks[_opponentAttackId].AttackParam,
-            _currentOpponent.Realm);
+            _currentOpponent.Realm,
+            _opponentInstanceBhv.gameObject);
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             spawnAfterAttack = false;
         if (++_opponentAttackId >= _currentOpponent.Attacks.Count)
@@ -254,7 +264,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
-            _gameplayControler.AttackForcedPiece(_currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].NbAttackRows, _currentOpponent.Attacks[_opponentAttackId].AttackParam);
+            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].NbAttackRows, _currentOpponent.Attacks[_opponentAttackId].AttackParam);
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
@@ -337,7 +347,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_characterAttack > 0)
         {
-            Instantiator.NewAttackLine(lastPiece, _opponentInstanceBhv.gameObject, Character.Realm);
+            Instantiator.NewAttackLine(lastPiece.transform.position, _opponentInstanceBhv.gameObject.transform.position, Character.Realm);
             DamageOpponent(_characterAttack);
         }
         _characterAttack = 0;

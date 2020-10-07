@@ -127,17 +127,17 @@ public static class Constants
     public static Color ColorHell3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
     public static Color ColorHell4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
 
-    public static Color ColorEarth0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
-    public static Color ColorEarth1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
-    public static Color ColorEarth2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
-    public static Color ColorEarth3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
-    public static Color ColorEarth4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
+    public static Color ColorEarth0 = new Color(0.023f, 0.121f, 0.141f, 1.0f);  //061f24
+    public static Color ColorEarth1 = new Color(0.035f, 0.325f, 0.325f, 1.0f);  //095353
+    public static Color ColorEarth2 = new Color(0.023f, 0.454f, 0.447f, 1.0f);  //067472
+    public static Color ColorEarth3 = new Color(0.090f, 0.623f, 0.607f, 1.0f);  //179f9b
+    public static Color ColorEarth4 = new Color(0.149f, 0.780f, 0.662f, 1.0f);  //26c7a9
 
-    public static Color ColorHeaven0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b
-    public static Color ColorHeaven1 = new Color(0.392f, 0.035f, 0.141f, 1.0f);  //640924
-    public static Color ColorHeaven2 = new Color(0.568f, 0.027f, 0.156f, 1.0f);  //910728
-    public static Color ColorHeaven3 = new Color(0.752f, 0.094f, 0.156f, 1.0f);  //c01828
-    public static Color ColorHeaven4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
+    public static Color ColorHeaven0 = new Color(0.050f, 0.172f, 0.349f, 1.0f);  //0d2c59
+    public static Color ColorHeaven1 = new Color(0.098f, 0.337f, 0.623f, 1.0f);  //19569f
+    public static Color ColorHeaven2 = new Color(0.094f, 0.447f, 0.752f, 1.0f);  //1872c0
+    public static Color ColorHeaven3 = new Color(0.270f, 0.603f, 0.898f, 1.0f);  //459ae5
+    public static Color ColorHeaven4 = new Color(0.317f, 0.807f, 0.255f, 1.0f);  //51ceff
 
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);

@@ -37,6 +37,8 @@ public class ButtonBhv : InputBhv
         _resetedScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         _pressedScale = new Vector3(transform.localScale.x * 1.2f, transform.localScale.y * 1.1f, transform.localScale.z * 1.0f);
         _isResetingColor = false;
+        if (_spriteRenderer == null)
+            return;
         _resetedColor = Disabled ? Constants.ColorPlain : _spriteRenderer.color;
         _pressedColor = new Color(_spriteRenderer.color.r * 0.7f, _spriteRenderer.color.g * 0.7f, _spriteRenderer.color.b * 0.7f, 1.0f);
     }
@@ -117,6 +119,8 @@ public class ButtonBhv : InputBhv
         Disabled = true;
         if (_spriteRenderer == null)
             SetPrivates();
+        if (_spriteRenderer == null)
+            return;
         _spriteRenderer.color = Constants.ColorPlainSemiTransparent;
         GetComponent<BoxCollider2D>().enabled = false;
         for (int i = 0; i < transform.childCount; ++i)
@@ -134,6 +138,8 @@ public class ButtonBhv : InputBhv
     public void EnableButton()
     {
         Disabled = false;
+        if (_spriteRenderer == null)
+            return;
         _spriteRenderer.color = Constants.ColorPlain;
         GetComponent<BoxCollider2D>().enabled = true;
         for (int i = 0; i < transform.childCount; ++i)

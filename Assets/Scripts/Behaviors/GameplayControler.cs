@@ -50,6 +50,7 @@ public class GameplayControler : MonoBehaviour
     private Special _characterSpecial;
     private Item _characterItem;
     private List<Vector3> _currentGhostPiecesOriginalPos;
+    private GameplayChoice _gameplayChoice;
 
     private SoundControlerBhv _soundControler;
     private MusicControlerBhv _musicControler;
@@ -131,9 +132,9 @@ public class GameplayControler : MonoBehaviour
         _gameplayButtons = new List<GameObject>();
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
-        var gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
-        if (gameplayChoice != GameplayChoice.Buttons)
-            SetSwipeGameplayChoice(gameplayChoice);
+        _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
+        if (_gameplayChoice != GameplayChoice.Buttons)
+            SetSwipeGameplayChoice(_gameplayChoice);
         else
             UpdatePanelsPositions();
         SetButtons();
@@ -160,7 +161,6 @@ public class GameplayControler : MonoBehaviour
         _idCleanRows = _soundControler.SetSound("CleanRows");
         _idVisionBlock = _soundControler.SetSound("VisionBlock");
 
-        CurrentPiece = GameObject.Find("T-Hell");
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
         _nextPieces = new List<GameObject>();
@@ -202,7 +202,14 @@ public class GameplayControler : MonoBehaviour
         {
             for (int i = 1; i <= 16; ++i)
             {
-                var tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                GameObject tmp = null;
+                if (_gameplayChoice == GameplayChoice.Buttons)
+                    tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                else
+                {
+                    tmp = GameObject.Find(Constants.GoButtonItemName + "Swipe");
+                    i = 16;
+                }
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
@@ -217,7 +224,14 @@ public class GameplayControler : MonoBehaviour
         {
             for (int i = 1; i <= 16; ++i)
             {
-                var tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                GameObject tmp = null;
+                if (_gameplayChoice == GameplayChoice.Buttons)
+                    tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
+                else
+                {
+                    tmp = GameObject.Find(Constants.GoButtonItemName + "Swipe");
+                    i = 16;
+                }
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
@@ -236,7 +250,14 @@ public class GameplayControler : MonoBehaviour
         {
             for (int i = 1; i <= 16; ++i)
             {
-                var tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                GameObject tmp = null;
+                if (_gameplayChoice == GameplayChoice.Buttons)
+                    tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                else
+                {
+                    tmp = GameObject.Find(Constants.GoButtonSpecialName + "Swipe");
+                    i = 16;
+                }
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 9));//9 = special in sprite sheet
@@ -250,7 +271,14 @@ public class GameplayControler : MonoBehaviour
         {
             for (int i = 1; i <= 16; ++i)
             {
-                var tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                GameObject tmp = null;
+                if (_gameplayChoice == GameplayChoice.Buttons)
+                    tmp = GameObject.Find(Constants.GoButtonSpecialName + i.ToString("D2"));
+                else
+                {
+                    tmp = GameObject.Find(Constants.GoButtonSpecialName + "Swipe");
+                    i = 16;
+                }
                 if (tmp == null)
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
@@ -269,11 +297,11 @@ public class GameplayControler : MonoBehaviour
         if (gameplayChoice == GameplayChoice.SwipesLeftHanded)
             mult = -mult;
         var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
-        uiPanelLeftPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
+        uiPanelLeftPositionBhv.HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.LeftBorder : CameraHorizontalSide.RightBorder;
         uiPanelLeftPositionBhv.XOffset = 2.285f * mult;
         uiPanelLeftPositionBhv.UpdatePositions();        
         var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
-        uiPanelRightPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
+        uiPanelRightPositionBhv.HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.LeftBorder : CameraHorizontalSide.RightBorder;
         uiPanelRightPositionBhv.XOffset = 2.285f * mult;
         uiPanelRightPositionBhv.UpdatePositions();
         _panelLeft.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
@@ -281,13 +309,13 @@ public class GameplayControler : MonoBehaviour
         _panelRight.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         _panelRight.GetComponent<PositionBhv>().enabled = false;
         var panelSwipe = GameObject.Find("PanelSwipe");
+        panelSwipe.GetComponent<PositionBhv>().HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.RightBorder : CameraHorizontalSide.LeftBorder;
+        panelSwipe.GetComponent<PositionBhv>().XOffset *= mult;
         panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
         panelSwipe.GetComponent<SwipeControlerBhv>().enabled = true;
         panelSwipe.GetComponent<SwipeControlerBhv>().Init(this, panelSwipe);
         panelSwipe.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = Item;
-        panelSwipe.transform.GetChild(0).name = Constants.GoButtonItemName + "01";
         panelSwipe.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = Special;
-        panelSwipe.transform.GetChild(1).name = Constants.GoButtonItemName + "01";
     }
 
     private void UpdatePanelsPositions()
@@ -1484,28 +1512,28 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm)
+    public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
     {
         VibrationService.Vibrate();
         switch (type)
         {
             case AttackType.DarkRow:
-                AttackDarkRows(param1, opponentRealm);
+                AttackDarkRows(opponentInstance, param1, opponentRealm);
                 break;
             case AttackType.WasteRow:
-                AttackGarbageRows(param1, opponentRealm, param2);
+                AttackGarbageRows(opponentInstance, param1, opponentRealm, param2);
                 break;
             case AttackType.LightRow:
-                AttackLightRows(param1, opponentRealm, param2);
+                AttackLightRows(opponentInstance, param1, opponentRealm, param2);
                 break;
             case AttackType.EmptyRow:
-                AttackEmptyRows(param1, opponentRealm);
+                AttackEmptyRows(opponentInstance, param1, opponentRealm);
                 break;
             case AttackType.VisionBlock:
-                AttackVisionBlock(param1, opponentRealm, param2);
+                AttackVisionBlock(opponentInstance, param1, opponentRealm, param2);
                 break;
             case AttackType.ForcedPiece:
-                AttackForcedPiece(opponentRealm, param1, param2);
+                AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
                 break;
         }
         if (_characterItem != null
@@ -1521,7 +1549,7 @@ public class GameplayControler : MonoBehaviour
         UpdateItemAndSpecialVisuals();
     }
 
-    private void AttackDarkRows(int nbRows, Realm opponentRealm)
+    private void AttackDarkRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
@@ -1529,9 +1557,10 @@ public class GameplayControler : MonoBehaviour
         {
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
     }
 
-    private void AttackGarbageRows(int nbRows, Realm opponentRealm, int param)
+    private void AttackGarbageRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
@@ -1542,9 +1571,10 @@ public class GameplayControler : MonoBehaviour
         {
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
     }
 
-    private void AttackLightRows(int nbRows, Realm opponentRealm, int param)
+    private void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idLightRows);
@@ -1562,15 +1592,17 @@ public class GameplayControler : MonoBehaviour
         tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(param);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
     }
 
-    private void AttackEmptyRows(int nbRows, Realm opponentRealm)
+    private void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
     }
 
-    private void AttackVisionBlock(int nbRows, Realm opponentRealm, int param)
+    private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
     {
         _soundControler.PlaySound(_idVisionBlock);
         nbRows = nbRows < 2 ? 2 : nbRows;
@@ -1579,9 +1611,10 @@ public class GameplayControler : MonoBehaviour
             currentHiest = 19 - nbRows;
         var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, param, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
     }
 
-    public void AttackForcedPiece(Realm opponentRealm, int letter, int rotation)
+    public void AttackForcedPiece(GameObject opponentInstance, Realm opponentRealm, int letter, int rotation)
     {
         if (ForcedPiece != null)
         {
@@ -1593,6 +1626,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.name = "Old" + Constants.GoForcedPiece;
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
+            Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
             Invoke(nameof(ForcedPieceHardDrop), 0.25f);
         }
         else

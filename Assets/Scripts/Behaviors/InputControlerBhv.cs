@@ -178,6 +178,8 @@ public class InputControlerBhv : MonoBehaviour
 
     private void CheckKeyboardInputs()
     {
+        if (_gameplayControler == null)
+            return;
         if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Space))
         {
             _gameplayControler.Hold();

@@ -12,6 +12,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _gameplayChoiceSwipes;
     private GameObject _buttonsPanels;
     private GameObject _swipesPanels;
+    private GameObject _sensitivitySelector;
     private List<GameObject> _gameplayButtons;
 
     void Start()
@@ -28,6 +29,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _panelRight = GameObject.Find("PanelRight");
         _buttonsPanels = GameObject.Find("ButtonsPanels");
         _swipesPanels = GameObject.Find("SwipesPanels");
+        _sensitivitySelector = GameObject.Find("SensitivitySelector");
         _gameplayButtons = new List<GameObject>();
         SetButtons();
 
@@ -36,6 +38,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
         GameplayButtonChoice();
+
+        SetSensitivity((int)PlayerPrefsHelper.GetTouchSensitivity());
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft:true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft:false);
@@ -64,6 +68,9 @@ public class SettingsGameplaySceneBhv : SceneBhv
         (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         GameObject.Find("SwipeType").GetComponent<ButtonBhv>().EndActionDelegate = FlipGameplaySwipe;
+        GameObject.Find("1").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(1); };
+        GameObject.Find("2").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2); };
+        GameObject.Find("3").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(3); };
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -118,19 +125,19 @@ public class SettingsGameplaySceneBhv : SceneBhv
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
-            var text = _swipesPanels.transform.GetChild(0).Find("Text").GetComponent<TMPro.TextMeshPro>();
+            var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
             if (gameplayChoice == GameplayChoice.SwipesRightHanded)
             {
                 sprite.flipX = false;
                 GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = false;
-                text.text = $"Right Handed\n{Constants.MaterialLong_3_2}(click to change)";
+                text.text = $"Right Handed {Constants.MaterialLong_3_2}(click to change)";
             }
             else
             {
                 sprite.flipX = true;
                 GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = true;
-                text.text = $"Left Handed\n{Constants.MaterialLong_3_2}(click to change)";
+                text.text = $"Left Handed {Constants.MaterialLong_3_2}(click to change)";
             }
         }
     }
@@ -141,6 +148,13 @@ public class SettingsGameplaySceneBhv : SceneBhv
         var newGameplayStyle = currentGameplayType == GameplayChoice.SwipesRightHanded ? GameplayChoice.SwipesLeftHanded : GameplayChoice.SwipesRightHanded;
         PlayerPrefsHelper.SaveGameplayChoice(newGameplayStyle);
         UpdateViewFromGameplayChoice(newGameplayStyle);
+    }
+
+    private void SetSensitivity(int amount)
+    {
+        var buttonTapped = GameObject.Find(amount.ToString());
+        _sensitivitySelector.transform.position = buttonTapped.transform.position;
+        PlayerPrefsHelper.SaveTouchSensitivity(amount);
     }
 
     private void SetGameplayButtonOnClick()

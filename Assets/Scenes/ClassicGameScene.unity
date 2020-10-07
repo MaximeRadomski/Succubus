@@ -283,7 +283,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -294,7 +294,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 16, y: 16}
+  m_Size: {x: 16, y: 3.4}
   m_EdgeRadius: 0
 --- !u!1 &21065852
 GameObject:
@@ -3306,7 +3306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4366819776367908909, guid: 8eb2567b6ce31864889696f463daf817, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.643
+      value: -5.643
       objectReference: {fileID: 0}
     - target: {fileID: 4366819776367908909, guid: 8eb2567b6ce31864889696f463daf817, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3346,7 +3346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534612009328829313, guid: 8eb2567b6ce31864889696f463daf817, type: 3}
       propertyPath: m_Name
-      value: ButtonSpecial
+      value: ButtonSpecialSwipe
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3258149055060086691, guid: 8eb2567b6ce31864889696f463daf817, type: 3}
@@ -4483,7 +4483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1145693126124873536, guid: 035b13a671c6105408395785621acd69, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.643
+      value: -5.643
       objectReference: {fileID: 0}
     - target: {fileID: 1145693126124873536, guid: 035b13a671c6105408395785621acd69, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4523,7 +4523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5643583280925763436, guid: 035b13a671c6105408395785621acd69, type: 3}
       propertyPath: m_Name
-      value: ButtonItem
+      value: ButtonItemSwipe
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5007367638863068802, guid: 035b13a671c6105408395785621acd69, type: 3}

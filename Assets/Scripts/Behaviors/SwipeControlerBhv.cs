@@ -28,7 +28,11 @@ public class SwipeControlerBhv : MonoBehaviour
     void Update()
     {
         if (Constants.InputLocked || _gameplayControler == null)
+        {
+            _beginPos = new Vector3(-99, -99);
+            _reBeginPos = _beginPos;
             return;
+        }
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
@@ -36,17 +40,17 @@ public class SwipeControlerBhv : MonoBehaviour
             Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                _beginPos = touchPosWorld2D;
-                _reBeginPos = _beginPos;
-                _framesBeforeHoldingDown = 0;
-                _direction = Direction.None;
+                ResetBeginPos(touchPosWorld2D);
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                CheckEndPhase(touchPosWorld2D);
+                if (_beginPos.x > -90.0f)
+                    CheckEndPhase(touchPosWorld2D);
             }
             else
             {
+                if (_beginPos.x < -90.0f)
+                    ResetBeginPos(touchPosWorld2D);
                 CheckDoPhase(touchPosWorld2D);
             }                
         }
@@ -62,17 +66,17 @@ public class SwipeControlerBhv : MonoBehaviour
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
                 if (_beginPhase)
                 {
-                    _beginPos = touchPosWorld2D;
-                    _reBeginPos = _beginPos;
-                    _framesBeforeHoldingDown = 0;
-                    _direction = Direction.None;
+                    ResetBeginPos(touchPosWorld2D);
                 }
                 else if (_endPhase)
                 {
-                    CheckEndPhase(touchPosWorld2D);
+                    if (_beginPos.x > -90.0f)
+                        CheckEndPhase(touchPosWorld2D);
                 }
                 else if (_doPhase)
                 {
+                    if (_beginPos.x < -90.0f)
+                        ResetBeginPos(touchPosWorld2D);
                     CheckDoPhase(touchPosWorld2D);
                 }
             }
@@ -80,6 +84,14 @@ public class SwipeControlerBhv : MonoBehaviour
             else
                 _touchPosWorld = new Vector3(-99, -99, -99);
         }
+    }
+
+    private void ResetBeginPos(Vector2 touchPosWorld2D)
+    {
+        _beginPos = touchPosWorld2D;
+        _reBeginPos = _beginPos;
+        _framesBeforeHoldingDown = 0;
+        _direction = Direction.None;
     }
 
     private void CheckEndPhase(Vector2 currentPos)
@@ -94,7 +106,7 @@ public class SwipeControlerBhv : MonoBehaviour
             else
                 _gameplayControler.Clock();
         }
-        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity && _direction == Direction.Vertical)
+        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity)
         {
             if (currentPos.y > _beginPos.y)
                 _gameplayControler.Hold();
