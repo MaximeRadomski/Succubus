@@ -39,7 +39,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
         Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
         GameplayButtonChoice();
 
-        SetSensitivity((int)PlayerPrefsHelper.GetTouchSensitivity());
+        SetSensitivity(PlayerPrefsHelper.GetTouchSensitivity());
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft:true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft:false);
@@ -68,9 +68,13 @@ public class SettingsGameplaySceneBhv : SceneBhv
         (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         GameObject.Find("SwipeType").GetComponent<ButtonBhv>().EndActionDelegate = FlipGameplaySwipe;
-        GameObject.Find("1").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(1); };
-        GameObject.Find("2").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2); };
-        GameObject.Find("3").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(3); };
+        GameObject.Find("0.25").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(0.25f); };
+        GameObject.Find("0.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(0.5f); };
+        GameObject.Find("1.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(1.0f); };
+        GameObject.Find("1.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(1.5f); };
+        GameObject.Find("2.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2.0f); };
+        GameObject.Find("2.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2.5f); };
+        GameObject.Find("3.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(3.0f); };
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -150,9 +154,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
         UpdateViewFromGameplayChoice(newGameplayStyle);
     }
 
-    private void SetSensitivity(int amount)
+    private void SetSensitivity(float amount)
     {
-        var buttonTapped = GameObject.Find(amount.ToString());
+        var buttonName = amount.ToString("0.00").Replace(",", ".");
+        var buttonTapped = GameObject.Find(buttonName);
         _sensitivitySelector.transform.position = buttonTapped.transform.position;
         PlayerPrefsHelper.SaveTouchSensitivity(amount);
     }

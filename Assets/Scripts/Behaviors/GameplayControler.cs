@@ -466,6 +466,8 @@ public class GameplayControler : MonoBehaviour
         if (Bag == null || Bag.Length <= 7)
             SetBag();
         var tmpLastPiece = CurrentPiece;
+        if (tmpLastPiece != null)
+            tmpLastPiece.GetComponent<Piece>().enabled = false;
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
         CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));

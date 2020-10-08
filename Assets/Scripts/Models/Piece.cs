@@ -40,6 +40,13 @@ public class Piece : MonoBehaviour
         {
             DoubleJumping();
         }
+        if (!IsLocked)
+        {
+            foreach (Transform block in transform)
+            {
+                block.GetComponent<BlockBhv>()?.CastShadow();
+            }
+        }
     }
 
     public void DoubleJump()

@@ -9,25 +9,28 @@ public class SwipeControlerBhv : MonoBehaviour
     private Vector2 _reBeginPos;
     private GameplayControler _gameplayControler;
     private Vector2 _rotationFrontier;
-    private float _tapZoneBoundariesSize;
+    private float _tapZoneBoundaryHorizontal;
+    private float _tapZoneBoundaryVertical;
     private bool _isHoldingDown;
     private int _framesBeforeHoldingDown;
     private Direction _direction;
 
     private float _oneTapDistance = 1.0f;
-    private float _touchSensitivity;
+    private float _verticalSensitivity = 1.5f;
+    private float _horizontalSensitivity;
 
     public void Init(GameplayControler gameplayControler, GameObject rotationFrontier)
     {
         _gameplayControler = gameplayControler;
         _rotationFrontier = rotationFrontier.transform.position;
-        _tapZoneBoundariesSize = rotationFrontier.GetComponent<BoxCollider2D>().size.x / 2.0f;
-        _touchSensitivity = PlayerPrefsHelper.GetTouchSensitivity();
+        _tapZoneBoundaryHorizontal = rotationFrontier.GetComponent<BoxCollider2D>().size.x / 2.0f;
+        _tapZoneBoundaryVertical = rotationFrontier.GetComponent<BoxCollider2D>().size.y;
+        _horizontalSensitivity = PlayerPrefsHelper.GetTouchSensitivity();
     }
 
     void Update()
     {
-        if (Constants.InputLocked || _gameplayControler == null)
+        if (Constants.InputLocked || _gameplayControler == null || _gameplayControler.SceneBhv.Paused)
         {
             _beginPos = new Vector3(-99, -99);
             _reBeginPos = _beginPos;
@@ -98,15 +101,19 @@ public class SwipeControlerBhv : MonoBehaviour
     {
         if (Vector2.Distance(_beginPos, currentPos) <= _oneTapDistance)
         {
-            if (currentPos.x < _rotationFrontier.x - _tapZoneBoundariesSize
-                || currentPos.x > _rotationFrontier.x + _tapZoneBoundariesSize)
+            if (((currentPos.x < _rotationFrontier.x - _tapZoneBoundaryHorizontal
+                || currentPos.x > _rotationFrontier.x + _tapZoneBoundaryHorizontal)
+                && currentPos.y < _rotationFrontier.y)
+                || ((currentPos.x < _rotationFrontier.x - _tapZoneBoundaryVertical
+                || currentPos.x > _rotationFrontier.x + _tapZoneBoundaryVertical)
+                && currentPos.y < _rotationFrontier.y - _tapZoneBoundaryVertical))
                 return;
             if (currentPos.x < _rotationFrontier.x)
                 _gameplayControler.AntiClock();
             else
                 _gameplayControler.Clock();
         }
-        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity)
+        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _verticalSensitivity)
         {
             if (currentPos.y > _beginPos.y)
                 _gameplayControler.Hold();
@@ -120,12 +127,12 @@ public class SwipeControlerBhv : MonoBehaviour
 
     private void CheckDoPhase(Vector2 currentPos)
     {
-        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > (_touchSensitivity / 2))
+        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _horizontalSensitivity)
             _direction = Direction.Horizontal;
-        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > (_touchSensitivity / 2))
+        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > (_verticalSensitivity / 2))
             _direction = Direction.Vertical;
 
-        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _touchSensitivity && _direction == Direction.Horizontal)
+        if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _horizontalSensitivity && _direction == Direction.Horizontal)
         {
             if (currentPos.x > _reBeginPos.x)
                 _gameplayControler.Right();
@@ -134,7 +141,7 @@ public class SwipeControlerBhv : MonoBehaviour
             _reBeginPos = currentPos;
         }
         else if (_isHoldingDown
-            || (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _touchSensitivity && currentPos.y < _beginPos.y && _direction == Direction.Vertical))
+            || (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _verticalSensitivity && currentPos.y < _beginPos.y && _direction == Direction.Vertical))
         {
             ++_framesBeforeHoldingDown;
             if (_framesBeforeHoldingDown < 10)
