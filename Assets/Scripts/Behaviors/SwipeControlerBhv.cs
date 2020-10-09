@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class SwipeControlerBhv : MonoBehaviour
 {
@@ -134,10 +135,12 @@ public class SwipeControlerBhv : MonoBehaviour
 
         if (Vector2.Distance(new Vector2(_reBeginPos.x, 0.0f), new Vector2(currentPos.x, 0.0f)) > _horizontalSensitivity && _direction == Direction.Horizontal)
         {
+            var canMimic = Helper.FloatEqualsPrecision(_beginPos.x, _reBeginPos.x, 0.01f);
             if (currentPos.x > _reBeginPos.x)
-                _gameplayControler.Right();
+                _gameplayControler.Right(canMimic);
             else
-                _gameplayControler.Left();
+                _gameplayControler.Left(canMimic);
+            //Debug.Log("beginX = " + _beginPos.x + "\treBeginX = " + _reBeginPos.x);
             _reBeginPos = currentPos;
         }
         else if (_isHoldingDown

@@ -11,25 +11,40 @@ public class Piece : MonoBehaviour
     public bool IsAffectedByGravity = true;
     public bool HasBlocksAffectedByGravity;
     public RotationState RotationState = RotationState.O;
+    public bool IsMimic;
 
     private Vector3 _originalScale;
     private Vector3 _doubleJumpScale = new Vector3(1.3f, 1.3f, 1.0f);
     private bool _isDoubleJumping = false;
+    private bool _atLeastOneShadowSet = false;
 
     public void HandleOpacityOnLock(float percent)
     {
         foreach (Transform child in transform)
         {
             var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
-            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > 1.0f ? 1.0f : percent);
+            var max = 1.0f;
+            if (Vector2.Distance(child.position, transform.position) > 4.0f)
+                max = 0.25f;
+            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > max ? max : percent);
         }
+    }
+
+    public int GetNbBlocksMimicked()
+    {
+        int count = 0;
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<BlockBhv>()?.IsMimicked ?? false)
+                ++count;
+        }
+        return count;
     }
 
     public void SetColor(Color color)
     {
         foreach (Transform child in transform)
         {
-            var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
             child.gameObject.GetComponent<SpriteRenderer>().color = color;
         }
     }
@@ -40,8 +55,9 @@ public class Piece : MonoBehaviour
         {
             DoubleJumping();
         }
-        if (!IsLocked)
+        if (!IsLocked || !_atLeastOneShadowSet)
         {
+            _atLeastOneShadowSet = true;
             foreach (Transform block in transform)
             {
                 block.GetComponent<BlockBhv>()?.CastShadow();
@@ -63,6 +79,25 @@ public class Piece : MonoBehaviour
         {
             transform.localScale = _originalScale;
             _isDoubleJumping = false;
+        }
+    }
+    public void CheckAndSetMimicStatus()
+    {
+        var nbMimibBlocks = 0;
+        foreach (Transform block in transform)
+        {
+            if (Vector2.Distance(block.position, transform.position) > 4.0f)
+                ++nbMimibBlocks;
+        }
+        if (nbMimibBlocks == 0)
+        {
+            HasBlocksAffectedByGravity = IsMimic = false;
+            IsAffectedByGravity = true;
+        }
+        else
+        {
+            HasBlocksAffectedByGravity = IsMimic = true;
+            IsAffectedByGravity = false;
         }
     }
 }

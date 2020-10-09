@@ -42,7 +42,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
             _opponents = PlayerPrefsHelper.GetCurrentOpponents(null);
-            Constants.ResetCurrentItemCooldown();
+            Constants.ResetCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
         }
         else
         {
@@ -143,7 +143,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                Constants.ResetCurrentItemCooldown();
+                Constants.ResetCurrentItemCooldown(Character, currentItem);
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
@@ -158,7 +158,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     if (result)
                     {
                         PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                        Constants.ResetCurrentItemCooldown();
+                        Constants.ResetCurrentItemCooldown(Character, (Item)loot);
                     }
                     LoadBackAfterVictory(true);
                     return result;
@@ -347,7 +347,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_characterAttack > 0)
         {
-            Instantiator.NewAttackLine(lastPiece.transform.position, _opponentInstanceBhv.gameObject.transform.position, Character.Realm);
+            var realm = Character.Realm;
+            var sourcePosition = lastPiece.transform.position;
+            if (lastPiece.GetComponent<Piece>().IsMimic)
+            {
+                realm = Helper.GetInferiorFrom(Character.Realm);
+                if (lastPiece.transform.position.x < 0)
+                    sourcePosition = new Vector3(0.0f, sourcePosition.y, 0.0f);
+                else if (lastPiece.transform.position.x > 9)
+                    sourcePosition = new Vector3(9.0f, sourcePosition.y, 0.0f);
+            }
+            Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
             DamageOpponent(_characterAttack);
         }
         _characterAttack = 0;

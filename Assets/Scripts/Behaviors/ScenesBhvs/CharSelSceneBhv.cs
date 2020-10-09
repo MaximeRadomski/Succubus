@@ -98,8 +98,6 @@ public class CharSelSceneBhv : SceneBhv
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
-                PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
-                PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
                 Constants.CurrentItemCooldown = 0;
             }
@@ -107,12 +105,11 @@ public class CharSelSceneBhv : SceneBhv
             {
                 Constants.CurrentMusicType = MusicType.GameHell;
                 scene = Constants.ClassicGameScene;
-                var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2]};
+                var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2] };
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
-                PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
-                PlayerPrefsHelper.ResetTattoos();
+                //PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
-                Constants.ResetCurrentItemCooldown();
+                Constants.ResetCurrentItemCooldown(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
             }
             else
             {

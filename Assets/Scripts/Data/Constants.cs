@@ -144,6 +144,7 @@ public static class Constants
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+    public static Color ColorBlack = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
     public static string MaterialHell_4_3 = "<material=\"hell.4.3\">";
     public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
@@ -193,13 +194,16 @@ public static class Constants
         Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialMaxCooldownReducer;
     }
 
-    public static void ResetCurrentItemCooldown()
+    public static void ResetCurrentItemCooldown(Character character, Item item = null)
     {
-        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
-        var tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
+        Item tmpCurrentItem;
+        if (item != null)
+            tmpCurrentItem = item;
+        else
+            tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
         if (tmpCurrentItem == null)
             return;
-        CurrentItemCooldown = tmpCurrentItem.Cooldown - tmpChar.ItemMaxCooldownReducer;
+        CurrentItemCooldown = tmpCurrentItem.Cooldown - character.ItemMaxCooldownReducer;
     }
 
     public static void SetLastEndActionClickedName(string name)

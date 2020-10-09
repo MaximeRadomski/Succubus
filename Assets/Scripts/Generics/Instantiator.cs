@@ -53,11 +53,11 @@ public class Instantiator : MonoBehaviour
         tmpSquareInstance.transform.SetParent(parent.transform);
     }
 
-    public GameObject NewFadeBlock(Realm nature, Vector3 position, int startColor, int endColor)
+    public GameObject NewFadeBlock(Realm realm, Vector3 position, int startColor, int endColor)
     {
-        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + nature);
+        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + realm);
         var tmpPieceInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
-        tmpPieceInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor);
+        tmpPieceInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor, realm);
         return tmpPieceInstance;
     }
 

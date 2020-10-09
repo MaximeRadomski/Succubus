@@ -51,6 +51,7 @@ public class GameplayControler : MonoBehaviour
     private Item _characterItem;
     private List<Vector3> _currentGhostPiecesOriginalPos;
     private GameplayChoice _gameplayChoice;
+    private Color _ghostColor;
 
     private SoundControlerBhv _soundControler;
     private MusicControlerBhv _musicControler;
@@ -130,6 +131,7 @@ public class GameplayControler : MonoBehaviour
         _mainCamera = GameObject.Find("Main Camera");
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
+        _ghostColor = (Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
@@ -187,7 +189,11 @@ public class GameplayControler : MonoBehaviour
             PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
         Character = SceneBhv.Character;
-        _characterItem = PlayerPrefsHelper.GetCurrentItem();
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            _characterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
+        else
+            _characterItem = PlayerPrefsHelper.GetCurrentItem();
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
         _characterSpecial.Init(Character, this);
         _characterInstanceBhv.Spawn();
@@ -413,10 +419,10 @@ public class GameplayControler : MonoBehaviour
 
     private void SetButtons()
     {
-        LookForAllPossibleButton(Constants.GoButtonLeftName, Left, 0);
+        LookForAllPossibleButton(Constants.GoButtonLeftName, () => { Left(); }, 0);
         LookForAllPossibleButton(Constants.GoButtonLeftName, LeftHolded, 1);
         LookForAllPossibleButton(Constants.GoButtonLeftName, DirectionReleased, 2);
-        LookForAllPossibleButton(Constants.GoButtonRightName, Right, 0);
+        LookForAllPossibleButton(Constants.GoButtonRightName, () => { Right(); }, 0);
         LookForAllPossibleButton(Constants.GoButtonRightName, RightHolded, 1);
         LookForAllPossibleButton(Constants.GoButtonRightName, DirectionReleased, 2);
         LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHolded, 1);
@@ -470,7 +476,7 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().enabled = false;
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
-        CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+        CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor);
         if (_currentGhostPiecesOriginalPos != null)
             _currentGhostPiecesOriginalPos.Clear();
         if (!IsPiecePosValid(CurrentPiece))
@@ -505,6 +511,8 @@ public class GameplayControler : MonoBehaviour
 
     private void AddToPlayField(GameObject piece)
     {
+        if (PlayFieldBhv == null)
+            return;
         piece.transform.SetParent(PlayFieldBhv.gameObject.transform);
         foreach (Transform child in piece.transform)
         {
@@ -621,7 +629,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void Left()
+    public void Left(bool mimicPossible = true)
     {
         _leftHolded = _rightHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -630,7 +638,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset())
+        if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
@@ -646,12 +654,12 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset() && _rightHolded == 0)
+        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
 
-    public void Right()
+    public void Right(bool mimicPossible = true)
     {
         _rightHolded = _leftHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -660,7 +668,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset())
+        if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
@@ -676,7 +684,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset() && _leftHolded == 0)
+        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
     }
@@ -702,7 +710,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityFall()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !CurrentPiece.GetComponent<Piece>().IsAffectedByGravity)
             return;
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -810,11 +818,11 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void DropGhost()
+    public void  DropGhost()
     {
         if (CurrentGhost == null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
+        if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity || Character.CanMimic)
         {
             if (_currentGhostPiecesOriginalPos == null || _currentGhostPiecesOriginalPos.Count == 0)
             {
@@ -841,7 +849,7 @@ public class GameplayControler : MonoBehaviour
         {
             var lastCurrentGhostValidPosition = CurrentGhost.transform.position;
             CurrentGhost.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (IsPiecePosValid(CurrentGhost) == false)
+            if (IsPiecePosValid(CurrentGhost, mimicPossible:true) == false)
             {
                 CurrentGhost.transform.position = lastCurrentGhostValidPosition;
                 if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
@@ -872,7 +880,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Clock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
@@ -979,7 +987,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AntiClock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
@@ -1112,7 +1120,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
-            CurrentGhost.GetComponent<Piece>().SetColor((Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor())));
+            CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor);
             if (_currentGhostPiecesOriginalPos != null)
                 _currentGhostPiecesOriginalPos.Clear();
             if (!IsPiecePosValid(CurrentPiece))
@@ -1151,11 +1159,13 @@ public class GameplayControler : MonoBehaviour
         UpdateItemAndSpecialVisuals();
     }
 
-    private bool IsPiecePosValidOrReset(bool isGravity = false)
+    private bool IsPiecePosValidOrReset(bool isGravity = false, bool mimicPossible = false)
     {
-        if (IsPiecePosValid(CurrentPiece) == false)
+        if (IsPiecePosValid(CurrentPiece, mimicPossible) == false)
         {
             CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            if (Character.CanMimic)
+                CancelMimicPiece(CurrentPiece.transform);
             return false;
         }
         else
@@ -1170,23 +1180,32 @@ public class GameplayControler : MonoBehaviour
     }
 
 
-    private bool IsPiecePosValid(GameObject piece)
+    private bool IsPiecePosValid(GameObject piece, bool mimicPossible = false)
     {
         foreach (Transform child in piece.transform)
         {
-            if (!IsBlockPosValid(child, piece.transform))
+            if (!IsBlockPosValid(child, piece.transform, mimicPossible))
                 return false;
         }
         return true;
     }
 
-    private bool IsBlockPosValid(Transform block, Transform piece)
+    private bool IsBlockPosValid(Transform block, Transform piece, bool mimicPossible = false)
     {
         int roundedX = Mathf.RoundToInt(block.transform.position.x);
         int roundedY = Mathf.RoundToInt(block.transform.position.y);
 
-        if (roundedX < 0 || roundedX >= _playFieldWidth
-            || roundedY < 0 || roundedY >= _playFieldHeight)
+        if (roundedX < 0 || roundedX >= _playFieldWidth)
+        {
+            if (mimicPossible && Character.CanMimic && piece.GetComponent<Piece>().GetNbBlocksMimicked() < piece.transform.childCount)
+                roundedX = MimicBlock(block, piece);
+            else
+                return false;
+        }
+        if (roundedX == -1)
+            return false;
+
+        if (roundedY < 0 || roundedY >= _playFieldHeight)
             return false;
 
         if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
@@ -1204,6 +1223,45 @@ public class GameplayControler : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    private int MimicBlock(Transform block, Transform piece)
+    {
+        var lastBlockPos = block.position;
+        if (block.transform.position.x < 0)
+            block.position += new Vector3(10.0f, 0.0f, 0.0f);
+        else if (block.transform.position.x > 9)
+            block.position += new Vector3(-10.0f, 0.0f, 0.0f);
+
+        if (!IsBlockPosValid(block, piece))
+        {
+            block.position = lastBlockPos;
+            return -1;
+        }
+        if (Vector2.Distance(new Vector2(block.position.x, 0.0f), new Vector2(piece.position.x, 0.0f)) > 4.0f)
+        {
+            if (block.GetComponent<BlockBhv>() != null)
+                block.GetComponent<BlockBhv>().SetMimicAppearance();
+            else
+                block.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromNature(Helper.GetInferiorFrom(Character.Realm), 4);
+        }
+        else
+        {
+            if (block.GetComponent<BlockBhv>() != null)
+                block.GetComponent<BlockBhv>().UnsetMimicAppearance();
+            else
+                block.GetComponent<SpriteRenderer>().color = _ghostColor;
+        }
+        piece.GetComponent<Piece>().CheckAndSetMimicStatus();
+        return Mathf.RoundToInt(block.transform.position.x);
+    }
+
+    private void CancelMimicPiece(Transform piece)
+    {
+        foreach (Transform block in piece)
+        {
+            MimicBlock(block, piece);
+        }
     }
 
     private bool IsPiecesBlocksOverlappingGhost(GameObject piece)

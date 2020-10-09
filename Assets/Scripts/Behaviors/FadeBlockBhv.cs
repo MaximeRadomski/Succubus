@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class FadeBlockBhv : MonoBehaviour
 {
-    public Realm Nature;
-
     private SpriteRenderer _spriteRenderer;
     private float _delay;
     private float _delayRange;
     private int _sequence;
     private bool _increment;
     private int _endColor;
+    private Realm _realm;
 
     //5 = White
     //-1 = Black
 
-    public void Init(int startColor, int endColor)
+    public void Init(int startColor, int endColor, Realm realm)
     {
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _delay = 0.05f;
@@ -25,6 +24,7 @@ public class FadeBlockBhv : MonoBehaviour
         _sequence = startColor;
         _increment = startColor < endColor;
         _endColor = endColor;
+        _realm = realm;
         LoopColor();
     }
 
@@ -32,7 +32,7 @@ public class FadeBlockBhv : MonoBehaviour
     {
         Color tmpColor = Color.white;
         if (_sequence >= 0 && _sequence <= 4)
-            tmpColor = (Color)Constants.GetColorFromNature(Nature, _sequence);
+            tmpColor = (Color)Constants.GetColorFromNature(_realm, _sequence);
         else if (_sequence < 0)
             tmpColor = Color.black;
         _spriteRenderer.color = tmpColor;

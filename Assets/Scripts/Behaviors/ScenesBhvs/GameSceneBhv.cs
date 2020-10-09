@@ -20,7 +20,8 @@ public abstract class GameSceneBhv : SceneBhv
         _gameplayControler = GetComponent<GameplayControler>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        if (SceneManager.GetActiveScene().name.Contains("Training"))
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
             Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         else
             Character = PlayerPrefsHelper.GetRunCharacter();

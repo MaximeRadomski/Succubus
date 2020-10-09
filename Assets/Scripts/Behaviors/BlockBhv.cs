@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockBhv : MonoBehaviour
 {
     public GameObject Shadow;
+    public bool IsMimicked;
 
     public void Start()
     {
@@ -16,5 +17,19 @@ public class BlockBhv : MonoBehaviour
     public void CastShadow()
     {
         Shadow.transform.position = transform.position + new Vector3(Constants.Pixel, Constants.Pixel, 0.0f);
+    }
+
+    public void SetMimicAppearance()
+    {
+        IsMimicked = true;
+        GetComponent<SpriteRenderer>().color = Constants.ColorPlainQuarterTransparent;
+        Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
+    }
+
+    public void UnsetMimicAppearance()
+    {
+        IsMimicked = false;
+        GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
+        Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorBlack;
     }
 }

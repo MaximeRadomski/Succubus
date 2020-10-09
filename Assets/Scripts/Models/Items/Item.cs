@@ -23,7 +23,7 @@ public abstract class Item : Loot
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        Constants.ResetCurrentItemCooldown();
+        Constants.ResetCurrentItemCooldown(character, this);
         _gameplayControler.UpdateItemAndSpecialVisuals();
         return true;
     }

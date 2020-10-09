@@ -56,7 +56,6 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _level = 1;
         _lines = 0;
         _pieces = 0;
-        PlayerPrefsHelper.SaveCurrentItem(ItemsData.CommonItemsNames[2]);
         Reload();
     }
 
