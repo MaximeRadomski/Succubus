@@ -114,9 +114,9 @@ public class SwipeControlerBhv : MonoBehaviour
             else
                 _gameplayControler.Clock();
         }
-        else if (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _verticalSensitivity)
+        else if (Vector2.Distance(new Vector2(0.0f, _reBeginPos.y), new Vector2(0.0f, currentPos.y)) > _verticalSensitivity)
         {
-            if (currentPos.y > _beginPos.y)
+            if (currentPos.y > _reBeginPos.y)
                 _gameplayControler.Hold();
             else if (!_isHoldingDown)
                 _gameplayControler.HardDrop();
