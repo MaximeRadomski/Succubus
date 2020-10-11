@@ -77,7 +77,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idHit = _soundControler.SetSound("Hit");
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
-        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = "realm:\n" + Constants.MaterialHell_4_3 + _run.CurrentRealm.ToString().ToLower() + "\nlvl " + _run.RealmLevel;
+        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ _run.CurrentRealm.ToString().ToLower()}\nlvl {_run.RealmLevel}";
         NextOpponent(sceneInit:true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Character.Realm, _run.CurrentRealm);
     }

@@ -147,7 +147,9 @@ public static class Constants
     public static Color ColorBlack = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
     public static string MaterialHell_4_3 = "<material=\"hell.4.3\">";
+    public static string MaterialHell_4_3B = "<material=\"hell.4.3B\">";
     public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
+    public static string MaterialHell_3_2B = "<material=\"hell.3.2B\">";
     public static string MaterialLong_3_2 = "<material=\"Long.3.2\">";
     public static string MaterialEnd = "</material>";
 

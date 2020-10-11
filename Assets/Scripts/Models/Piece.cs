@@ -17,6 +17,7 @@ public class Piece : MonoBehaviour
     private Vector3 _doubleJumpScale = new Vector3(1.3f, 1.3f, 1.0f);
     private bool _isDoubleJumping = false;
     private bool _atLeastOneShadowSet = false;
+    private bool _disableAsked = false;
 
     public void HandleOpacityOnLock(float percent)
     {
@@ -55,6 +56,10 @@ public class Piece : MonoBehaviour
         {
             DoubleJumping();
         }
+        else if (_disableAsked)
+        {
+            this.enabled = false;
+        }
         if (!IsLocked || !_atLeastOneShadowSet)
         {
             _atLeastOneShadowSet = true;
@@ -81,6 +86,12 @@ public class Piece : MonoBehaviour
             _isDoubleJumping = false;
         }
     }
+
+    public void AskDisable()
+    {
+        _disableAsked = true;
+    }
+
     public void CheckAndSetMimicStatus()
     {
         var nbMimibBlocks = 0;

@@ -473,7 +473,7 @@ public class GameplayControler : MonoBehaviour
             SetBag();
         var tmpLastPiece = CurrentPiece;
         if (tmpLastPiece != null)
-            tmpLastPiece.GetComponent<Piece>().enabled = false;
+            tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
         CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor);
@@ -596,6 +596,8 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece != null)
         {
             AddToPlayField(CurrentPiece);
+            if (Character.CanDoubleJump)
+                CurrentPiece.GetComponent<Piece>().DoubleJump();
         }
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
@@ -618,7 +620,7 @@ public class GameplayControler : MonoBehaviour
             var tmpBlock = piece.transform.GetChild(i);
             var lastTmpBlockPosition = tmpBlock.position;
             tmpBlock.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (IsBlockPosValid(tmpBlock, piece.transform))
+            if (IsBlockPosValid(tmpBlock, i, piece.transform))
             {
                 i = -1;
             }
@@ -1182,15 +1184,17 @@ public class GameplayControler : MonoBehaviour
 
     private bool IsPiecePosValid(GameObject piece, bool mimicPossible = false)
     {
+        int id = 0;
         foreach (Transform child in piece.transform)
         {
-            if (!IsBlockPosValid(child, piece.transform, mimicPossible))
+            if (!IsBlockPosValid(child, id, piece.transform, mimicPossible))
                 return false;
+            ++id;
         }
         return true;
     }
 
-    private bool IsBlockPosValid(Transform block, Transform piece, bool mimicPossible = false)
+    private bool IsBlockPosValid(Transform block, int blockId, Transform piece, bool mimicPossible = false)
     {
         int roundedX = Mathf.RoundToInt(block.transform.position.x);
         int roundedY = Mathf.RoundToInt(block.transform.position.y);
@@ -1198,7 +1202,7 @@ public class GameplayControler : MonoBehaviour
         if (roundedX < 0 || roundedX >= _playFieldWidth)
         {
             if (mimicPossible && Character.CanMimic && piece.GetComponent<Piece>().GetNbBlocksMimicked() < piece.transform.childCount)
-                roundedX = MimicBlock(block, piece);
+                roundedX = MimicBlock(block, blockId, piece);
             else
                 return false;
         }
@@ -1225,7 +1229,7 @@ public class GameplayControler : MonoBehaviour
         return true;
     }
 
-    private int MimicBlock(Transform block, Transform piece)
+    private int MimicBlock(Transform block, int blockId, Transform piece)
     {
         var lastBlockPos = block.position;
         if (block.transform.position.x < 0)
@@ -1233,7 +1237,7 @@ public class GameplayControler : MonoBehaviour
         else if (block.transform.position.x > 9)
             block.position += new Vector3(-10.0f, 0.0f, 0.0f);
 
-        if (!IsBlockPosValid(block, piece))
+        if (!IsBlockPosValid(block, blockId, piece))
         {
             block.position = lastBlockPos;
             return -1;
@@ -1248,9 +1252,11 @@ public class GameplayControler : MonoBehaviour
         else
         {
             if (block.GetComponent<BlockBhv>() != null)
+            {
                 block.GetComponent<BlockBhv>().UnsetMimicAppearance();
-            else
-                block.GetComponent<SpriteRenderer>().color = _ghostColor;
+                if (CurrentGhost != null)
+                    CurrentGhost.transform.GetChild(blockId).GetComponent<SpriteRenderer>().color = _ghostColor;
+            }
         }
         piece.GetComponent<Piece>().CheckAndSetMimicStatus();
         return Mathf.RoundToInt(block.transform.position.x);
@@ -1258,9 +1264,11 @@ public class GameplayControler : MonoBehaviour
 
     private void CancelMimicPiece(Transform piece)
     {
+        int id = 0;
         foreach (Transform block in piece)
         {
-            MimicBlock(block, piece);
+            MimicBlock(block, id, piece);
+            ++id;
         }
     }
 
@@ -1514,7 +1522,7 @@ public class GameplayControler : MonoBehaviour
         }
         foreach (Transform child in PlayFieldBhv.transform)
         {
-            if (child.childCount == 0 && child.name.Contains("Clone"))
+            if (child.childCount == 0 && child.GetComponent<Piece>() != null)
                 Destroy(child.gameObject);
         }
         DropGhost();

@@ -13,6 +13,7 @@ public class Instantiator : MonoBehaviour
 
     public void NewAttackLine(Vector3 source, Vector3 target, Realm realm)
     {
+        return;
         var attackLine = Instantiate(new GameObject(), source, new Quaternion());
         attackLine.AddComponent<AttackLineBhv>();
         attackLine.GetComponent<AttackLineBhv>().Init(target, realm, this);

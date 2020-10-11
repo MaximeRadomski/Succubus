@@ -7,6 +7,7 @@ public abstract class Tattoo : Loot
     public int Id;
     public string Name;
     public int Stat;
+    public string StatStr;
     public int Level = 1;
     public int MaxLevel;
     public BodyPart BodyPart;
@@ -21,6 +22,11 @@ public abstract class Tattoo : Loot
 
     protected string StatToString(string before = "", string after = "")
     {
-        return Constants.MaterialHell_4_3 + before + (Stat * Level).ToString() + after + Constants.MaterialEnd;
+        string stat;
+        if (Stat != 0)
+            stat = (Stat * Level).ToString();
+        else
+            stat = StatStr;
+        return $"{Constants.MaterialHell_4_3}{before}{stat}{after}{Constants.MaterialEnd}";
     }
 }

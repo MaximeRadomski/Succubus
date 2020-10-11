@@ -20,7 +20,7 @@ public static class CharactersData
             Id = 1, Name = "Edam", Kind = "Incubus", Realm = Realm.Hell,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Sin's Weight", SpecialDescription = "the blocks of the next 3 pieces are affected by gravity",
+            SpecialName = "Sin's Weight", SpecialDescription = "the blocks of the next 3 pieces are individually affected by gravity",
             Lore = "Ivy's less exuberant twin brother. He possesses dark needs which cannot be fulfilled. His army of harpies constantly hunts down hell looking for his next victims."
         },
         new Character()
