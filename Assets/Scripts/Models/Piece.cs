@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Piece : MonoBehaviour
@@ -13,11 +14,12 @@ public class Piece : MonoBehaviour
     public RotationState RotationState = RotationState.O;
     public bool IsMimic;
 
-    private Vector3 _originalScale;
-    private Vector3 _doubleJumpScale = new Vector3(1.3f, 1.3f, 1.0f);
+    private Vector3 _originalScale = new Vector3(1.0f, 1.0f, 1.0f);
+    private Vector3 _doubleJumpScale = new Vector3(1.5f, 1.5f, 1.0f);
     private bool _isDoubleJumping = false;
     private bool _atLeastOneShadowSet = false;
     private bool _disableAsked = false;
+    private bool _canMimicAlterBlocksAffectedByGravity = true;
 
     public void HandleOpacityOnLock(float percent)
     {
@@ -72,17 +74,28 @@ public class Piece : MonoBehaviour
 
     public void DoubleJump()
     {
-        _originalScale = transform.localScale;
-        transform.localScale = _doubleJumpScale;
+        foreach (Transform block in transform)
+        {
+            block.localScale = _doubleJumpScale;
+        }
         _isDoubleJumping = true;
     }
 
     private void DoubleJumping()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
-        if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
+        if (transform.childCount <= 0)
+            return;
+        foreach (Transform block in transform)
         {
-            transform.localScale = _originalScale;
+            block.localScale = Vector3.Lerp(block.localScale, _originalScale, 0.2f);
+        }
+        
+        if (Helper.VectorEqualsPrecision(transform.GetChild(0).localScale, _originalScale, 0.01f))
+        {
+            foreach (Transform block in transform)
+            {
+                transform.localScale = _originalScale;
+            }
             _isDoubleJumping = false;
         }
     }
@@ -102,13 +115,26 @@ public class Piece : MonoBehaviour
         }
         if (nbMimibBlocks == 0)
         {
-            HasBlocksAffectedByGravity = IsMimic = false;
+            IsMimic = false;
             IsAffectedByGravity = true;
+            if (_canMimicAlterBlocksAffectedByGravity)
+                HasBlocksAffectedByGravity = false;
         }
         else
         {
-            HasBlocksAffectedByGravity = IsMimic = true;
+            IsMimic = true;
             IsAffectedByGravity = false;
+            if (_canMimicAlterBlocksAffectedByGravity)
+                HasBlocksAffectedByGravity = true;
         }
+    }
+
+    public void AlterBlocksAffectedByGravity(bool value)
+    {
+        HasBlocksAffectedByGravity = value;
+        if (value)
+            _canMimicAlterBlocksAffectedByGravity = false;
+        else
+            _canMimicAlterBlocksAffectedByGravity = true;
     }
 }

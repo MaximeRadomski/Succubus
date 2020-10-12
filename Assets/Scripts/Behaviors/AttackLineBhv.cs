@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class AttackLineBhv : MonoBehaviour
 {
@@ -7,10 +8,10 @@ public class AttackLineBhv : MonoBehaviour
     private Instantiator _instantiator;
     private Vector3 _target;
 
-    public void Init(Vector3 target, Realm realm, Instantiator instantiator)
+    public void Init(Vector3 source, Vector3 target, Realm realm, Instantiator instantiator)
     {
         _target = target;
-        transform.position = transform.position + new Vector3(0.0f, -2.0f, 0.0f);
+        transform.position = source + new Vector3(0.0f, -2.0f, 0.0f);
         if (transform.position.y < 0)
             transform.position = new Vector3(transform.position.x, 0.0f, 0.0f);
         _realm = realm;

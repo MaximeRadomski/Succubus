@@ -16,7 +16,8 @@ public class BlockBhv : MonoBehaviour
 
     public void CastShadow()
     {
-        Shadow.transform.position = transform.position + new Vector3(Constants.Pixel, Constants.Pixel, 0.0f);
+        if (Shadow != null)
+            Shadow.transform.position = transform.position + new Vector3(Constants.Pixel, Constants.Pixel, 0.0f);
     }
 
     public void SetMimicAppearance()
@@ -31,5 +32,11 @@ public class BlockBhv : MonoBehaviour
         IsMimicked = false;
         GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
         Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorBlack;
+    }
+
+    public void PreventYAxisShif()
+    {
+        int roundedY = Mathf.RoundToInt(transform.position.y);
+        transform.position = new Vector3(transform.position.x, roundedY, 0.0f);
     }
 }

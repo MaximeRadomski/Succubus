@@ -139,20 +139,21 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else if (loot.LootType == LootType.Item)
         {
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
+            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + ((Item)loot).Id);
             if (currentItem == null)
             {
-                Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory, sprite);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
                 Constants.ResetCurrentItemCooldown(Character, currentItem);
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
-                Instantiator.NewPopupYesNo("Same Item", Constants.MaterialHell_3_2 + "well... this is awkward... you already use " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + "...", null, "Oh...", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("Same Item", Constants.MaterialHell_3_2 + "well... this is awkward... you already use " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + "...", null, "Oh...", LoadBackAfterVictory, sprite);
             }
             else
             {
                 var content = Constants.MaterialHell_3_2 + "switch your " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + " for " + Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " ?";
-                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch);
+                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite);
                 object OnItemSwitch(bool result)
                 {
                     if (result)
@@ -170,16 +171,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "");
             var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
             var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + ((Tattoo)loot).Id);
             if (bodyPart == BodyPart.MaxLevelReached)
             {
-                Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level", null, "Damn...", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level", null, "Damn...", LoadBackAfterVictory, sprite);
             }
             else 
             {
                 if (!tattoos.Contains(nameToCheck))
-                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked \non your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory);
+                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked \non your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory, sprite);
                 else
-                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory);
+                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory, sprite);
                 ((Tattoo)loot).ApplyToCharacter(Character);
                 PlayerPrefsHelper.SaveRunCharacter(Character);
             }

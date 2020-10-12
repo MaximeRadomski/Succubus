@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class Instantiator : MonoBehaviour
 {
@@ -13,10 +14,9 @@ public class Instantiator : MonoBehaviour
 
     public void NewAttackLine(Vector3 source, Vector3 target, Realm realm)
     {
-        return;
-        var attackLine = Instantiate(new GameObject(), source, new Quaternion());
+        var attackLine = new GameObject("AttackLine");
         attackLine.AddComponent<AttackLineBhv>();
-        attackLine.GetComponent<AttackLineBhv>().Init(target, realm, this);
+        attackLine.GetComponent<AttackLineBhv>().Init(source, target, realm, this);
     }
 
     public GameObject NewStepsContainer()
@@ -87,12 +87,12 @@ public class Instantiator : MonoBehaviour
     }
 
     public void NewPopupYesNo(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction)
+        System.Func<bool, object> resultAction, Sprite sprite = null)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction);
+        tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite);
     }
 
     public void NewPopupGameplayButtons(System.Func<bool, object> resultAction)

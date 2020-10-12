@@ -7,7 +7,7 @@ public class PopupYesNoBhv : PopupBhv
     private System.Func<bool, object> _resultAction;
 
     public void Init(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction)
+        System.Func<bool, object> resultAction, Sprite sprite = null)
     {
         //transform.position = Camera.main.transform.position;
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = title;
@@ -25,6 +25,8 @@ public class PopupYesNoBhv : PopupBhv
         buttonNegative.transform.Find("ButtonNegativeText").GetComponent<TMPro.TextMeshPro>().text = negative;
         if (string.IsNullOrEmpty(negative))
             buttonNegative.gameObject.SetActive(false);
+        if (sprite != null)
+            transform.Find("MainPicture").GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
     private void PositiveDelegate()
