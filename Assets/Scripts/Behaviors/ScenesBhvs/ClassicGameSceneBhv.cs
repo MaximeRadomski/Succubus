@@ -209,6 +209,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
+        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.Drill)
+            _gameplayControler.AttackDrill(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].Param1);
         SetNextCooldownTick();
     }
 
@@ -234,8 +236,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _characterInstanceBhv.TakeDamage();
         _gameplayControler.OpponentAttack(
             _currentOpponent.Attacks[_opponentAttackId].AttackType,
-            _currentOpponent.Attacks[_opponentAttackId].NbAttackRows,
-            _currentOpponent.Attacks[_opponentAttackId].AttackParam,
+            _currentOpponent.Attacks[_opponentAttackId].Param1,
+            _currentOpponent.Attacks[_opponentAttackId].Param2,
             _currentOpponent.Realm,
             _opponentInstanceBhv.gameObject);
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
@@ -266,7 +268,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
-            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].NbAttackRows, _currentOpponent.Attacks[_opponentAttackId].AttackParam);
+            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].Param1, _currentOpponent.Attacks[_opponentAttackId].Param2);
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
@@ -297,8 +299,20 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
-    public override void DamageOpponent(int amount)
+    public override void DamageOpponent(int amount, GameObject source)
     {
+        var realm = Character.Realm;
+        var sourcePosition = source.transform.position;
+        var piece = source.GetComponent<Piece>();
+        if (piece != null && piece.IsMimic)
+        {
+            realm = Helper.GetInferiorFrom(Character.Realm);
+            if (source.transform.position.x < 0)
+                sourcePosition = new Vector3(0.0f, sourcePosition.y, 0.0f);
+            else if (source.transform.position.x > 9)
+                sourcePosition = new Vector3(9.0f, sourcePosition.y, 0.0f);
+        }
+        Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
         _opponentInstanceBhv.TakeDamage();
         Constants.CurrentOpponentHp -= amount;
         CameraBhv.Bump(1);
@@ -313,7 +327,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();
-        Instantiator.PopText(attackText, _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f), !_isCrit ? ((Color)Constants.GetColorFromNature(Character.Realm, 4)).ToHex() : Color.white.ToHex());
+        Instantiator.PopText(attackText, _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f), !_isCrit ? ((Color)Constants.GetColorFromRealm(Character.Realm, 4)).ToHex() : Color.white.ToHex());
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {
@@ -349,18 +363,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_characterAttack > 0)
         {
-            var realm = Character.Realm;
-            var sourcePosition = lastPiece.transform.position;
-            if (lastPiece.GetComponent<Piece>().IsMimic)
-            {
-                realm = Helper.GetInferiorFrom(Character.Realm);
-                if (lastPiece.transform.position.x < 0)
-                    sourcePosition = new Vector3(0.0f, sourcePosition.y, 0.0f);
-                else if (lastPiece.transform.position.x > 9)
-                    sourcePosition = new Vector3(9.0f, sourcePosition.y, 0.0f);
-            }
-            Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
-            DamageOpponent(_characterAttack);
+            DamageOpponent(_characterAttack, lastPiece);
         }
         _characterAttack = 0;
         _isCrit = false;
@@ -374,6 +377,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         ++Constants.CurrentListOpponentsId;
         if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
+        else if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.Drill)
+        {
+            var tmpDrillTarget = GameObject.Find(Constants.GoDrillTarget);
+            if (tmpDrillTarget != null)
+                Destroy(tmpDrillTarget);
+        }
         if (Character.ItemCooldownReducerOnKill > 0 && PlayerPrefsHelper.GetCurrentItemName() != null)
         {
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;

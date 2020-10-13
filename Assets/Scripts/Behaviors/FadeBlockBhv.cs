@@ -32,7 +32,7 @@ public class FadeBlockBhv : MonoBehaviour
     {
         Color tmpColor = Color.white;
         if (_sequence >= 0 && _sequence <= 4)
-            tmpColor = (Color)Constants.GetColorFromNature(_realm, _sequence);
+            tmpColor = (Color)Constants.GetColorFromRealm(_realm, _sequence);
         else if (_sequence < 0)
             tmpColor = Color.black;
         _spriteRenderer.color = tmpColor;

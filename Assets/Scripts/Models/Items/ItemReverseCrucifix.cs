@@ -17,7 +17,7 @@ public class ItemReverseCrucifix : Item
         if (!base.Activate(character, gameplayControler))
             return false;
         _gameplayControler.SceneBhv.Paused = true;
-        _gameplayControler.SceneBhv.DamageOpponent(666);
+        _gameplayControler.SceneBhv.DamageOpponent(666, gameplayControler.CharacterInstanceBhv.gameObject);
         _gameplayControler.SceneBhv.Paused = false;
         return true;
     }

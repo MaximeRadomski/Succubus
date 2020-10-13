@@ -31,12 +31,12 @@ public class VisionBlockBhv : MonoBehaviour
                     child.transform.position += new Vector3(0.0f, floatHeight / 2 , 0.0f);
                 else if (child.name.Contains("Bot"))
                     child.transform.position += new Vector3(0.0f, -floatHeight / 2, 0.0f);
-                child.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromNature(_realm, 1);
+                child.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(_realm, 1);
             }
         }
         _secondsText = transform.Find("Seconds").GetComponent<TMPro.TextMeshPro>();
         _secondsTextIconInstance = _secondsText.GetComponent<IconInstanceBhv>();
-        _secondsText.color = (Color)Constants.GetColorFromNature(_realm, 2);
+        _secondsText.color = (Color)Constants.GetColorFromRealm(_realm, 2);
         transform.Find("Scores").GetComponent<TMPro.TextMeshPro>().color = _secondsText.color;
         _cooldown = nbSeconds;
         UpdateTextAndSetNextTick();

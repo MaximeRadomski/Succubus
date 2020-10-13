@@ -104,8 +104,7 @@ public class StepsSceneBhv : SceneBhv
             PositionOnCurrent();
         _selector.GetComponent<IconInstanceBhv>().Pop();
         var distance = Vector2.Distance(CameraBhv.gameObject.transform.position, _stepsBackground.transform.position);
-        StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () =>
-        {
+        StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () => {
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
             return true;
         }));

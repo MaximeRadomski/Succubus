@@ -14,6 +14,7 @@ public class GameplayControler : MonoBehaviour
     public string Bag;
     public Instantiator Instantiator;
     public Character Character;
+    public CharacterInstanceBhv CharacterInstanceBhv;
     public bool AttackIncoming;
     public PlayFieldBhv PlayFieldBhv;
     public GameObject ForcedPiece;
@@ -44,7 +45,6 @@ public class GameplayControler : MonoBehaviour
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
-    private CharacterInstanceBhv _characterInstanceBhv;
     private Piece _forcedPieceModel;
 
     private Special _characterSpecial;
@@ -92,11 +92,10 @@ public class GameplayControler : MonoBehaviour
         _musicControler.Stop();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
-        _characterInstanceBhv.TakeDamage();
-        _characterInstanceBhv.Die();
+        CharacterInstanceBhv.TakeDamage();
+        CharacterInstanceBhv.Die();
         Invoke(nameof(CleanPlayerPrefs), 1.0f);
-        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
-        {
+        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () => {
             SceneBhv.OnGameOver();
             return true;
         }));
@@ -129,9 +128,9 @@ public class GameplayControler : MonoBehaviour
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
         _uiPanelRight = GameObject.Find("UiPanelRight");
         _mainCamera = GameObject.Find("Main Camera");
-        _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
+        CharacterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
-        _ghostColor = (Color)Constants.GetColorFromNature(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
+        _ghostColor = (Color)Constants.GetColorFromRealm(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
@@ -196,7 +195,7 @@ public class GameplayControler : MonoBehaviour
             _characterItem = PlayerPrefsHelper.GetCurrentItem();
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
         _characterSpecial.Init(Character, this);
-        _characterInstanceBhv.Spawn();
+        CharacterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
         _hasInit = true;
     }
@@ -750,12 +749,6 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void ForcedPieceHardDrop()
-    {
-        CurrentPiece.GetComponent<Piece>().IsLocked = false;
-        HardDrop();
-    }
-
     public void HardDrop()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -1247,7 +1240,7 @@ public class GameplayControler : MonoBehaviour
             if (block.GetComponent<BlockBhv>() != null)
                 block.GetComponent<BlockBhv>().SetMimicAppearance();
             else
-                block.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromNature(Helper.GetInferiorFrom(Character.Realm), 4);
+                block.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(Helper.GetInferiorFrom(Character.Realm), 4);
         }
         else
         {
@@ -1357,8 +1350,7 @@ public class GameplayControler : MonoBehaviour
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
-            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () =>
-            {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
                 ClearLineSpace();
                 if (AttackIncoming)
                 {
@@ -1538,9 +1530,29 @@ public class GameplayControler : MonoBehaviour
         return -1;
     }
 
+    public int GetHighestBlockOnX(int x)
+    {
+        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        {
+            if (PlayFieldBhv.Grid[x, y] != null)
+                return y;
+        }
+        return -1;
+    }
+
     private bool HasFullLineSpace(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
+        {
+            if (PlayFieldBhv.Grid[x, y] != null)
+                return false;
+        }
+        return true;
+    }
+
+    private bool HasFullColumnSpace(int x)
+    {
+        for (int y = 0; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return false;
@@ -1603,16 +1615,24 @@ public class GameplayControler : MonoBehaviour
             case AttackType.ForcedPiece:
                 AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
                 break;
+            case AttackType.Drill:
+                AttackDrill(opponentInstance, opponentRealm, param1);
+                break;
+            case AttackType.AirPiece:
+                AttackAirPiece(opponentInstance, opponentRealm, param1);
+                break;
         }
         if (_characterItem != null
             && (type == AttackType.DarkRow
             || type == AttackType.WasteRow
             || type == AttackType.LightRow
-            || type == AttackType.EmptyRow))
+            || type == AttackType.EmptyRow
+            || type == AttackType.AirPiece))
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
         else if (_characterItem != null
             && (type == AttackType.VisionBlock
-            || type == AttackType.ForcedPiece))
+            || type == AttackType.ForcedPiece)
+            || type == AttackType.Drill)
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
         UpdateItemAndSpecialVisuals();
     }
@@ -1695,7 +1715,11 @@ public class GameplayControler : MonoBehaviour
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
-            Invoke(nameof(ForcedPieceHardDrop), 0.25f);
+            StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => {
+                CurrentPiece.GetComponent<Piece>().IsLocked = false;
+                HardDrop();
+                return true;
+            }, true));
         }
         else
         {
@@ -1721,7 +1745,7 @@ public class GameplayControler : MonoBehaviour
             //    childSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
             //}
             var color = int.Parse(PlayerPrefsHelper.GetGhostColor()) == 3 ? 4 : 3;
-            _forcedPieceModel.SetColor((Color)Constants.GetColorFromNature(_characterRealm, color));
+            _forcedPieceModel.SetColor((Color)Constants.GetColorFromRealm(_characterRealm, color));
             //Destroy(tmpFadeBlockSpriteRenderer.gameObject);
             if (_forcedPieceModel.Letter != "O")
             {
@@ -1741,6 +1765,49 @@ public class GameplayControler : MonoBehaviour
             ForcedPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
             DropForcedPiece();
         }
+    }
+
+    public void AttackDrill(GameObject opponentInstance, Realm opponentRealm, int deepness)
+    {
+        var drillTarget = GameObject.Find(Constants.GoDrillTarget);
+        if (drillTarget != null)
+        {
+            drillTarget.name += "(Old)";
+            _soundControler.PlaySound(_idEmptyRows);
+            int roundedX = Mathf.RoundToInt(drillTarget.transform.position.x);
+            int roundedY = Mathf.RoundToInt(drillTarget.transform.position.y);
+            if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
+            {
+                Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
+                Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
+                Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
+                PlayFieldBhv.Grid[roundedX, roundedY] = null;
+            }
+            Destroy(drillTarget);
+        }
+        else
+        {
+            var x = UnityEngine.Random.Range(0, 10);
+            var firstXTried = x;
+            int y;
+            while ((y = GetHighestBlockOnX(x)) == -1)
+            {
+                if (++x >= 10)
+                    x = 0;
+                if (x == firstXTried)
+                    break;
+            }
+            y -= 1 + deepness; //At least 1 in order to be really bothering
+            y = y < 0 ? 0 : y;
+            if (Instantiator == null)
+                Instantiator = GetComponent<Instantiator>();
+            Instantiator.NewDrillTarget(opponentRealm, new Vector3(x, y, 0.0f));
+        }
+    }
+
+    private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int deepness)
+    {
+
     }
 
     public void SetForcedPieceOpacity(float current, float max)

@@ -115,6 +115,7 @@ public static class Constants
     public const string GoCharacterInstance = "CharacterInstance";
     public const string GoOpponentInstance = "OpponentInstance";
     public const string GoForcedPiece = "ForcedPiece";
+    public const string GoDrillTarget = "DrillTarget";
 
 
     //  GAMEOBJECT VALUES  //
@@ -153,7 +154,7 @@ public static class Constants
     public static string MaterialLong_3_2 = "<material=\"Long.3.2\">";
     public static string MaterialEnd = "</material>";
 
-    public static object GetColorFromNature(Realm realm, int id)
+    public static object GetColorFromRealm(Realm realm, int id)
     {
         if (id == -1)
             return Color.black;

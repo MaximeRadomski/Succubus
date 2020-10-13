@@ -35,6 +35,15 @@ public class Instantiator : MonoBehaviour
         return tmpStepInstance;
     }
 
+    public GameObject NewDrillTarget(Realm realm, Vector3 position)
+    {
+        var tmpDrillTargetObject = Resources.Load<GameObject>("Prefabs/DrillTarget");
+        var tmpDrillTargetInstance = Instantiate(tmpDrillTargetObject, position, tmpDrillTargetObject.transform.rotation);
+        tmpDrillTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
+        tmpDrillTargetInstance.name = Constants.GoDrillTarget;
+        return tmpDrillTargetInstance;
+    }
+
     public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);

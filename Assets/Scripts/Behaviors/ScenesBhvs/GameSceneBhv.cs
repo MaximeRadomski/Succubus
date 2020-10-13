@@ -95,7 +95,7 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
-    public virtual void DamageOpponent(int amount)
+    public virtual void DamageOpponent(int amount, GameObject source)
     {
 
     }
