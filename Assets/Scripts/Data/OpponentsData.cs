@@ -9,7 +9,7 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 12,
+            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2),
                 //new OpponentAttack(AttackType.DarkRow, 2),

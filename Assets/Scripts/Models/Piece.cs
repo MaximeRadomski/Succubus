@@ -27,7 +27,7 @@ public class Piece : MonoBehaviour
         {
             var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
             var max = 1.0f;
-            if (Vector2.Distance(child.position, transform.position) > 4.0f)
+            if (Vector2.Distance(child.position, transform.position) > 4.0f && IsMimic)
                 max = 0.25f;
             child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > max ? max : percent);
         }
