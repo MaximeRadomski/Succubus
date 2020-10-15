@@ -9,6 +9,7 @@ public class AttackLineBhv : MonoBehaviour
     private Vector3 _target;
     private float _distance;
     private float _distanceToAdd;
+    private Vector3 _fadeBlockScale;
 
     public void Init(Vector3 source, Vector3 target, Realm realm, Instantiator instantiator)
     {
@@ -19,14 +20,22 @@ public class AttackLineBhv : MonoBehaviour
         _realm = realm;
         _instantiator = instantiator;
         _distance = _distanceToAdd = 0.05f;
+        _fadeBlockScale = new Vector3(0.75f, 0.75f, 0.75f);
     }
 
     void Update()
     {
         if (_target == null)
             return;
+
         var fadeBlock = _instantiator.NewFadeBlock(_realm, transform.position, 4, 0);
         fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+        fadeBlock.transform.localScale = _fadeBlockScale;
+        
+        fadeBlock = _instantiator.NewFadeBlock(_realm, Vector3.Lerp(transform.position, _target, _distance / 2), 4, 0);
+        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+        fadeBlock.transform.localScale = _fadeBlockScale;
+        
         transform.position = Vector3.Lerp(transform.position, _target, _distance);
         if (Helper.VectorEqualsPrecision(transform.position, _target, 0.1f))
             Destroy(gameObject);
