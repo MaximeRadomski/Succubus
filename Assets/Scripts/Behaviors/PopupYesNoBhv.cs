@@ -26,7 +26,12 @@ public class PopupYesNoBhv : PopupBhv
         if (string.IsNullOrEmpty(negative))
             buttonNegative.gameObject.SetActive(false);
         if (sprite != null)
-            transform.Find("MainPicture").GetComponent<SpriteRenderer>().sprite = sprite;
+        {
+            var mainPicture = transform.Find("MainPicture");
+            mainPicture.GetComponent<SpriteRenderer>().sprite = sprite;
+            foreach (Transform child in mainPicture)
+                child.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     private void PositiveDelegate()

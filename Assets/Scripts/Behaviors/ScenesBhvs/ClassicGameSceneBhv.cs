@@ -91,7 +91,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         _currentOpponent = _opponents[Constants.CurrentListOpponentsId];
         _opponentInstanceBhv.Spawn();
-        CameraBhv.Bump(2);
+        CameraBhv.Bump(4);
         _soundControler.PlaySound(_idOpponentAppearance);
         Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime:3.0f);
         _opponentAttackId = 0;
@@ -231,7 +231,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override bool OpponentAttack()
     {
         bool spawnAfterAttack = true;
-        CameraBhv.Bump(1);
+        CameraBhv.Bump(2);
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
         _gameplayControler.OpponentAttack(
@@ -315,7 +315,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
         _opponentInstanceBhv.TakeDamage();
         Constants.CurrentOpponentHp -= amount;
-        CameraBhv.Bump(1);
+        CameraBhv.Bump(2);
         var attackText = "-" + amount;
         if (amount == 69)
             attackText = "nice";
