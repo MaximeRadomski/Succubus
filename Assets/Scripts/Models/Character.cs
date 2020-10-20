@@ -29,6 +29,7 @@ public class Character : Loot
     public int SpecialCooldownReducer;
     public int SpecialMaxCooldownReducer;
     public int LandLordLateAmount;
+    public int AirPieceOpacity;
     public bool CanMimic;
     public bool CanDoubleJump;
 
@@ -49,6 +50,7 @@ public class Character : Loot
         SpecialCooldownReducer = 1;
         SpecialMaxCooldownReducer = 0;
         LandLordLateAmount = 1; //1 beause he does not land vision on first step
+        AirPieceOpacity = 1;
         CanMimic = false;
         CanDoubleJump = false;
     }

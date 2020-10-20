@@ -492,7 +492,10 @@ public class GameplayControler : MonoBehaviour
         ResetLock();
         SceneBhv.OnNewPiece(tmpLastPiece);
         _characterSpecial.OnNewPiece(CurrentPiece);
+        if (AfterSpawn != null)
+            AfterSpawn();
     }
+    public Func<bool> AfterSpawn;
 
     private void UpdateNextPieces()
     {
@@ -601,6 +604,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
+        --_nbAirPiece;
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -1128,6 +1132,8 @@ public class GameplayControler : MonoBehaviour
             ResetLock();
             _canHold = false;
             _characterSpecial.OnNewPiece(CurrentPiece);
+            if (AfterSpawn != null)
+                AfterSpawn();
         }
         _soundControler.PlaySound(_idHold);
     }
@@ -1805,9 +1811,27 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int deepness)
+    private int _nbAirPiece = 0;
+    private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
+        if (_nbAirPiece < 0)
+            _nbAirPiece = 0;
+        _nbAirPiece += nbPieces;
+        AfterSpawn = AirPieceAfterSpawn;
 
+        bool AirPieceAfterSpawn()
+        {
+            if (_nbAirPiece <= 0)
+            {
+                AfterSpawn = null;
+                _nbAirPiece = 0;
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
+            CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
+            return true;
+        }
     }
 
     public void SetForcedPieceOpacity(float current, float max)

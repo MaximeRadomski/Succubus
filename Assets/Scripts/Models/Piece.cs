@@ -20,16 +20,17 @@ public class Piece : MonoBehaviour
     private bool _atLeastOneShadowSet = false;
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
+    private Color _actualColor = Constants.ColorPlain;
 
     public void HandleOpacityOnLock(float percent)
     {
         foreach (Transform child in transform)
         {
             var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
-            var max = 1.0f;
+            var maxOpacity = _actualColor.a;
             if (Vector2.Distance(child.position, transform.position) > 4.0f && IsMimic)
-                max = 0.25f;
-            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > max ? max : percent);
+                maxOpacity = 0.25f;
+            child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > maxOpacity ? maxOpacity : percent);
         }
     }
 
@@ -46,9 +47,16 @@ public class Piece : MonoBehaviour
 
     public void SetColor(Color color)
     {
+        _actualColor = color;
         foreach (Transform child in transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = color;
+            if (child.childCount > 0)
+            {
+                var grandChildColor = child.GetChild(0).GetComponent<SpriteRenderer>().color;
+                grandChildColor = new Color(grandChildColor.r, grandChildColor.g, grandChildColor.b, color.a);
+                child.GetChild(0).GetComponent<SpriteRenderer>().color = grandChildColor;
+            }
         }
     }
 
