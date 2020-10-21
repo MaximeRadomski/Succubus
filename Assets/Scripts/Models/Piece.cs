@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 
@@ -144,5 +145,49 @@ public class Piece : MonoBehaviour
             _canMimicAlterBlocksAffectedByGravity = false;
         else
             _canMimicAlterBlocksAffectedByGravity = true;
+    }
+
+    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator)
+    {
+        int remainingBlocks = nbBlocks;
+        var id = Random.Range(0, transform.childCount);
+        var initialRandomBlockId = id;
+        while (id < 10)
+        {
+            if (id == transform.childCount)
+                id = 0;
+            if (id == initialRandomBlockId
+                || remainingBlocks <= 0)
+                break;
+            for (int i = 0; i < 4; ++i)
+            {
+                var child = transform.GetChild(id);
+                int x = i == 0 || i == 2 ? 0 : (i == 1 ? 1 : -1);
+                int y = i == 1 || i == 3 ? 0 : (i == 0 ? 1 : -1);
+                int roundedChildX = Mathf.RoundToInt(child.position.x);
+                int roundedChildY = Mathf.RoundToInt(child.position.y);
+
+                if (!AnyChildWithPosition(roundedChildX + x, roundedChildY + y))
+                {
+                    instantiator.NewPieceBlock(realm, new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
+                    AddRandomBlocks(realm, --nbBlocks, instantiator);
+                    return;
+                }
+            }
+            ++id;
+        }
+    }
+
+    private bool AnyChildWithPosition(int x, int y)
+    {
+        foreach (Transform child in transform)
+        {
+            int roundedX = Mathf.RoundToInt(child.position.x);
+            int roundedY = Mathf.RoundToInt(child.position.y);
+
+            if (child.transform.position.x == x && child.transform.position.y == y)
+                return true;
+        }
+        return false;
     }
 }

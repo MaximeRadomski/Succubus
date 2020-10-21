@@ -56,6 +56,14 @@ public class Instantiator : MonoBehaviour
         return tmpPieceInstance;
     }
 
+    public GameObject NewPieceBlock(Realm realm, Vector3 spawnPosition, Transform parent)
+    {
+        var tmpPieceBlockObject = Resources.Load<GameObject>("Prefabs/PieceBlock-" + realm);
+        GameObject tmpPieceBlockInstance = Instantiate(tmpPieceBlockObject, spawnPosition, tmpPieceBlockObject.transform.rotation);
+        tmpPieceBlockInstance.transform.SetParent(parent);
+        return tmpPieceBlockInstance;
+    }
+
     public void NewGravitySquare(GameObject parent, string realm)
     {
         var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare-" + realm);

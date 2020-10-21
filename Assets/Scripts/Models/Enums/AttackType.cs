@@ -17,9 +17,11 @@ public enum AttackType
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay
     [Description("Forced Piece")]
-    ForcedPiece = 6, //Rows that will go over yours to hide your gameplay. param 1 = Letter or -1 for random or -2 for single block, param 2 = nbRotation or -1 for random
+    ForcedPiece = 6, //Piece that will drop from above. param 1 = Letter or -1 for random or -2 for single block, param 2 = nbRotation or -1 for random
     [Description("Drill")]
     Drill = 7, //Creates a hole in your pieces. param1 = number of upper blocks before hole
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next 'param1' pieces transparent
+    [Description("Forced BLock")]
+    ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
 }

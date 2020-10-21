@@ -605,6 +605,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_nbAirPiece;
+        --_nbForcedBlock;
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -1627,6 +1628,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.AirPiece:
                 AttackAirPiece(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.ForcedBlock:
+                AttackForcedBlock(opponentInstance, opponentRealm, param1, param2);
+                break;
         }
         if (_characterItem != null
             && (type == AttackType.DarkRow
@@ -1830,6 +1834,29 @@ public class GameplayControler : MonoBehaviour
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
             CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
+            return true;
+        }
+    }
+
+    private int _nbForcedBlock = 0;
+    private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
+    {
+        if (_nbForcedBlock < 0)
+            _nbForcedBlock = 0;
+        _nbForcedBlock += nbPieces;
+        AfterSpawn = ForcedBlockAfterSpawn;
+
+        bool ForcedBlockAfterSpawn()
+        {
+            if (_nbForcedBlock <= 0)
+            {
+                AfterSpawn = null;
+                _nbForcedBlock = 0;
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator);
             return true;
         }
     }
