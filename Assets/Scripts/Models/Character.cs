@@ -50,9 +50,9 @@ public class Character : Loot
         SpecialCooldownReducer = 1;
         SpecialMaxCooldownReducer = 0;
         LandLordLateAmount = 1; //1 beause he does not land vision on first step
-        AirPieceOpacity = 1;
-        CanMimic = false;
-        CanDoubleJump = false;
+        AirPieceOpacity = 1; //0
+        CanMimic = true;
+        CanDoubleJump = false; //false
     }
 
     public int GetAttack()

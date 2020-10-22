@@ -56,10 +56,11 @@ public class Instantiator : MonoBehaviour
         return tmpPieceInstance;
     }
 
-    public GameObject NewPieceBlock(Realm realm, Vector3 spawnPosition, Transform parent)
+    public GameObject NewPieceBlock(string realm, Vector3 spawnPosition, Transform parent)
     {
-        var tmpPieceBlockObject = Resources.Load<GameObject>("Prefabs/PieceBlock-" + realm);
-        GameObject tmpPieceBlockInstance = Instantiate(tmpPieceBlockObject, spawnPosition, tmpPieceBlockObject.transform.rotation);
+        var tmpPieceObject = Resources.Load<GameObject>("Prefabs/D-" + realm);
+        var tmpPieceBlockObject = tmpPieceObject.transform.GetChild(0);
+        GameObject tmpPieceBlockInstance = Instantiate(tmpPieceBlockObject.gameObject, spawnPosition, tmpPieceBlockObject.rotation);
         tmpPieceBlockInstance.transform.SetParent(parent);
         return tmpPieceBlockInstance;
     }

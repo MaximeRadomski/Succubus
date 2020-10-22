@@ -14,6 +14,7 @@ public class Piece : MonoBehaviour
     public bool HasBlocksAffectedByGravity;
     public RotationState RotationState = RotationState.O;
     public bool IsMimic;
+    public Color ActualColor = Constants.ColorPlain;
 
     private Vector3 _originalScale = new Vector3(1.0f, 1.0f, 1.0f);
     private Vector3 _doubleJumpScale = new Vector3(1.5f, 1.5f, 1.0f);
@@ -21,14 +22,13 @@ public class Piece : MonoBehaviour
     private bool _atLeastOneShadowSet = false;
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
-    private Color _actualColor = Constants.ColorPlain;
 
     public void HandleOpacityOnLock(float percent)
     {
         foreach (Transform child in transform)
         {
             var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
-            var maxOpacity = _actualColor.a;
+            var maxOpacity = ActualColor.a;
             if (Vector2.Distance(child.position, transform.position) > 4.0f && IsMimic)
                 maxOpacity = 0.25f;
             child.gameObject.GetComponent<SpriteRenderer>().color = new Color(tmpColor.r, tmpColor.g, tmpColor.b, percent > maxOpacity ? maxOpacity : percent);
@@ -48,7 +48,7 @@ public class Piece : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        _actualColor = color;
+        ActualColor = color;
         foreach (Transform child in transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = color;
@@ -147,7 +147,7 @@ public class Piece : MonoBehaviour
             _canMimicAlterBlocksAffectedByGravity = true;
     }
 
-    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator)
+    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost)
     {
         int remainingBlocks = nbBlocks;
         var id = Random.Range(0, transform.childCount);
@@ -156,8 +156,7 @@ public class Piece : MonoBehaviour
         {
             if (id == transform.childCount)
                 id = 0;
-            if (id == initialRandomBlockId
-                || remainingBlocks <= 0)
+            if (remainingBlocks <= 0)
                 break;
             for (int i = 0; i < 4; ++i)
             {
@@ -169,12 +168,15 @@ public class Piece : MonoBehaviour
 
                 if (!AnyChildWithPosition(roundedChildX + x, roundedChildY + y))
                 {
-                    instantiator.NewPieceBlock(realm, new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
-                    AddRandomBlocks(realm, --nbBlocks, instantiator);
+                    instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
+                    instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
+                    AddRandomBlocks(realm, --nbBlocks, instantiator, ghost);
                     return;
                 }
             }
             ++id;
+            if (id == initialRandomBlockId)
+                break;
         }
     }
 

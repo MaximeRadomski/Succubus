@@ -27,11 +27,13 @@ public class BlockBhv : MonoBehaviour
         Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
     }
 
-    public void UnsetMimicAppearance()
+    public void UnsetMimicAppearance(float maxOpacity)
     {
         IsMimicked = false;
-        GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
-        Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorBlack;
+        var plainColor = new Color(Constants.ColorPlain.r, Constants.ColorPlain.g, Constants.ColorPlain.b, maxOpacity);
+        var shadowColor = new Color(Constants.ColorBlack.r, Constants.ColorBlack.g, Constants.ColorBlack.b, maxOpacity);
+        GetComponent<SpriteRenderer>().color = plainColor;
+        Shadow.GetComponent<SpriteRenderer>().color = shadowColor;
     }
 
     public void PreventYAxisShif()

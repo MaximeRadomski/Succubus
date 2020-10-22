@@ -482,7 +482,6 @@ public class GameplayControler : MonoBehaviour
         {
             GameOver();
         }
-        DropGhost();
         PlayerPrefsHelper.SaveBag(Bag);
         Bag = Bag.Remove(0, 1);
         UpdateNextPieces();
@@ -492,8 +491,8 @@ public class GameplayControler : MonoBehaviour
         ResetLock();
         SceneBhv.OnNewPiece(tmpLastPiece);
         _characterSpecial.OnNewPiece(CurrentPiece);
-        if (AfterSpawn != null)
-            AfterSpawn();
+        AfterSpawn?.Invoke();
+        DropGhost();
     }
     public Func<bool> AfterSpawn;
 
@@ -883,7 +882,8 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
+        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
+            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -990,7 +990,8 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if (currentPieceModel.Letter == "O" || currentPieceModel.Letter == "D")
+        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
+            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -1127,14 +1128,13 @@ public class GameplayControler : MonoBehaviour
             {
                 GameOver();
             }
-            DropGhost();
             _allowedMovesBeforeLock = 0;
             SetNextGravityFall();
             ResetLock();
             _canHold = false;
             _characterSpecial.OnNewPiece(CurrentPiece);
-            if (AfterSpawn != null)
-                AfterSpawn();
+            AfterSpawn?.Invoke();
+            DropGhost();
         }
         _soundControler.PlaySound(_idHold);
     }
@@ -1236,6 +1236,7 @@ public class GameplayControler : MonoBehaviour
             block.position += new Vector3(10.0f, 0.0f, 0.0f);
         else if (block.transform.position.x > 9)
             block.position += new Vector3(-10.0f, 0.0f, 0.0f);
+        var maxOpacity = piece.GetComponent<Piece>().ActualColor.a;
 
         if (!IsBlockPosValid(block, blockId, piece))
         {
@@ -1253,7 +1254,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (block.GetComponent<BlockBhv>() != null)
             {
-                block.GetComponent<BlockBhv>().UnsetMimicAppearance();
+                block.GetComponent<BlockBhv>().UnsetMimicAppearance(maxOpacity);
                 if (CurrentGhost != null)
                     CurrentGhost.transform.GetChild(blockId).GetComponent<SpriteRenderer>().color = _ghostColor;
             }
@@ -1327,6 +1328,8 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_id3Line);
             else if (nbLines == 4)
                 _soundControler.PlaySound(_id4Line);
+            else if (nbLines > 4)
+                _soundControler.PlaySound(_idPerfect);
 
             if (nbLines >= 2)
                 CheckForDarkRows(nbLines - 1);
@@ -1637,7 +1640,8 @@ public class GameplayControler : MonoBehaviour
             || type == AttackType.WasteRow
             || type == AttackType.LightRow
             || type == AttackType.EmptyRow
-            || type == AttackType.AirPiece))
+            || type == AttackType.AirPiece
+            || type == AttackType.ForcedBlock))
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
         else if (_characterItem != null
             && (type == AttackType.VisionBlock
@@ -1856,7 +1860,7 @@ public class GameplayControler : MonoBehaviour
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator);
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform);
             return true;
         }
     }

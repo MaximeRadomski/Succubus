@@ -215,7 +215,10 @@ MonoBehaviour:
   XFromSpawn: 0
   YFromSpawn: 0
   IsLocked: 0
+  IsAffectedByGravity: 1
+  HasBlocksAffectedByGravity: 0
   RotationState: 0
+  IsMimic: 0
 --- !u!1 &3912129378288896595
 GameObject:
   m_ObjectHideFlags: 0
