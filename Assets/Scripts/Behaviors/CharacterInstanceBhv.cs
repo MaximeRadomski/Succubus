@@ -9,6 +9,7 @@ public class CharacterInstanceBhv : MonoBehaviour
     private SceneBhv _sceneBhv;
     private Direction _direction;
     private Vector3 _originalPosition;
+    private Vector3 _idlePositionToReach;
     private Vector3 _originalScale;
     private Vector3 _attackPosition;
     private Vector3 _attackScale;
@@ -50,22 +51,25 @@ public class CharacterInstanceBhv : MonoBehaviour
 
     void Update()
     {
-        if (_attacking)
+        if (_isSpawning)
+            Spawning();
+        else if (_isDying)
+            Dying();
+        else if (_attacking)
             Attacking();
         else if (_resetAttacking)
             ResetAttacking();
         else if (_resetingHit)
-        {
             ResetingHit();
-        }
-        if (_isDying)
-        {
-            Dying();
-        }
-        else if (_isSpawning)
-        {
-            Spawning();
-        }
+        else
+            Idle();
+    }
+
+    private void Idle()
+    {
+        transform.position = Vector2.Lerp(transform.position, _idlePositionToReach + _originalPosition, 0.025f);
+        if (Helper.VectorEqualsPrecision(transform.position, _idlePositionToReach + _originalPosition, 0.01f))
+            _idlePositionToReach = new Vector2(Random.Range(-2 * Constants.Pixel, 2 * Constants.Pixel), Random.Range(-2 * Constants.Pixel, 2 * Constants.Pixel));
     }
 
     private void ResetingHit()

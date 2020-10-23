@@ -1729,6 +1729,7 @@ public class GameplayControler : MonoBehaviour
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
+            _soundControler.PlaySound(_idTwist);
             StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
@@ -1838,6 +1839,7 @@ public class GameplayControler : MonoBehaviour
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
             CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
+            _soundControler.PlaySound(_idEmptyRows);
             return true;
         }
     }
@@ -1861,6 +1863,7 @@ public class GameplayControler : MonoBehaviour
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform);
+            _soundControler.PlaySound(_idGarbageRows);
             return true;
         }
     }
