@@ -22,6 +22,6 @@ public enum AttackType
     Drill = 7, //Creates a hole in your pieces. param1 = number of upper blocks before hole
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next 'param1' pieces transparent
-    [Description("Forced BLock")]
+    [Description("Forced Block")]
     ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
 }

@@ -9,10 +9,9 @@ public static class OpponentsData
         new Opponent()
         {
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10,
+            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.ForcedBlock, 2, 1),
-                new OpponentAttack(AttackType.AirPiece, 1)
+                new OpponentAttack(AttackType.ForcedBlock, 10, 1)
                 //new OpponentAttack(AttackType.DarkRow, 2),
                 //new OpponentAttack(AttackType.WasteRow, 2, 1)
             },
