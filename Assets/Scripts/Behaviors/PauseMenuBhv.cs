@@ -10,6 +10,7 @@ public class PauseMenuBhv : PopupBhv
     //private bool _isRotated;
     //private Vector3 _cameraInitialPosition;
     //private Quaternion _cameraInitialRotation;
+    private Camera _mainCamera;
 
     public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction)
     {
@@ -23,7 +24,8 @@ public class PauseMenuBhv : PopupBhv
         //    _cameraInitialRotation = Camera.main.transform.rotation;
         //    Camera.main.transform.rotation = transform.rotation;
         //}
-        transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+        _mainCamera = Helper.GetMainCamera();
+        transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = Settings;
         var buttonGiveUpGameObject = GameObject.Find("ButtonGiveUp");
@@ -58,7 +60,7 @@ public class PauseMenuBhv : PopupBhv
     {
         Constants.DecreaseInputLayer();
         transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
+        _mainCamera.transform.position = new Vector3(0.0f, 0.0f, _mainCamera.transform.position.z);
         _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {

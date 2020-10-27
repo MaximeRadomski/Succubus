@@ -54,7 +54,7 @@ public abstract class GameSceneBhv : SceneBhv
             return true;
         }
         _pauseMenu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        Camera.main.transform.position = new Vector3(0.0f, 0.0f, Camera.main.transform.position.z);
+        CameraBhv.transform.position = new Vector3(0.0f, 0.0f, CameraBhv.transform.position.z);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
         if (GameObject.Find("PlayField") != null)
             Destroy(GameObject.Find("PlayField"));

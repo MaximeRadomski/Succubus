@@ -38,6 +38,7 @@ public class GameplayControler : MonoBehaviour
 
     private GameObject _spawner;
     private GameObject _holder;
+    private GameObject _effectsCamera;
     private GameObject _panelLeft;
     private GameObject _panelRight;
     private GameObject _uiPanelLeft;
@@ -124,6 +125,8 @@ public class GameplayControler : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");
+        _effectsCamera = GameObject.Find("EffectsCamera");
+        _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
         _panelRight = GameObject.Find("PanelRight");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
         _uiPanelRight = GameObject.Find("UiPanelRight");
@@ -603,8 +606,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
-        --_nbAirPiece;
-        --_nbForcedBlock;
+        --_afterSpawnAttackCounter;
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -1634,6 +1636,10 @@ public class GameplayControler : MonoBehaviour
             case AttackType.ForcedBlock:
                 AttackForcedBlock(opponentInstance, opponentRealm, param1, param2);
                 break;
+            case AttackType.MirrorMirror:
+            case AttackType.Intoxication:
+                AttackCameraEffects(type, opponentInstance, opponentRealm, param1, param2);
+                break;
         }
         if (_characterItem != null
             && (type == AttackType.DarkRow
@@ -1641,7 +1647,8 @@ public class GameplayControler : MonoBehaviour
             || type == AttackType.LightRow
             || type == AttackType.EmptyRow
             || type == AttackType.AirPiece
-            || type == AttackType.ForcedBlock))
+            || type == AttackType.ForcedBlock
+            || type == AttackType.MirrorMirror))
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
         else if (_characterItem != null
             && (type == AttackType.VisionBlock
@@ -1820,20 +1827,24 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private int _nbAirPiece = 0;
+    private int _afterSpawnAttackCounter;
+
+    private void BaseAfterSpawnEnd()
+    {
+        AfterSpawn = null;
+        _afterSpawnAttackCounter = 0;
+    }
+
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
-        if (_nbAirPiece < 0)
-            _nbAirPiece = 0;
-        _nbAirPiece += nbPieces;
+        _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = AirPieceAfterSpawn;
 
         bool AirPieceAfterSpawn()
         {
-            if (_nbAirPiece <= 0)
+            if (_afterSpawnAttackCounter <= 0)
             {
-                AfterSpawn = null;
-                _nbAirPiece = 0;
+                BaseAfterSpawnEnd();
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -1844,26 +1855,44 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private int _nbForcedBlock = 0;
     private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
     {
-        if (_nbForcedBlock < 0)
-            _nbForcedBlock = 0;
-        _nbForcedBlock += nbPieces;
+        _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = ForcedBlockAfterSpawn;
 
         bool ForcedBlockAfterSpawn()
         {
-            if (_nbForcedBlock <= 0)
+            if (_afterSpawnAttackCounter <= 0)
             {
-                AfterSpawn = null;
-                _nbForcedBlock = 0;
+                BaseAfterSpawnEnd();
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform);
             _soundControler.PlaySound(_idGarbageRows);
+            return true;
+        }
+    }
+
+    private void AttackCameraEffects(AttackType attackType, GameObject opponentInstance, Realm opponentRealm, int nbPieces, int param)
+    {
+        _afterSpawnAttackCounter = nbPieces;
+        _effectsCamera.SetActive(true);
+        _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param);
+        _soundControler.PlaySound(_idTwist);
+        AfterSpawn = MirrorMirrorAfterSpawn;
+
+        bool MirrorMirrorAfterSpawn()
+        {
+            if (_afterSpawnAttackCounter <= 0)
+            {
+                BaseAfterSpawnEnd();
+                _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
+                _soundControler.PlaySound(_idTwist, 0.85f);
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             return true;
         }
     }

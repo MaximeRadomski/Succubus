@@ -10,6 +10,7 @@ public class BackgroundBhv : MonoBehaviour
     private Instantiator _instantiator;
     private int _i;
     private bool _fadeBlocksMuted;
+    private Camera _mainCamera;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class BackgroundBhv : MonoBehaviour
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _i = 0;
         _isMoving = true;
+        _mainCamera = Helper.GetMainCamera();
     }
 
     private void NewPositionToReach()
@@ -39,7 +41,7 @@ public class BackgroundBhv : MonoBehaviour
             ++_i;
             if (_i >= 10)
             {
-                _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f) + Camera.main.transform.position.x, Random.Range(-18.0f, 18.0f) + Camera.main.transform.position.y, 0.0f), 2, -1);
+                _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), 2, -1);
                 _i = 0;
             }
         }
@@ -47,8 +49,8 @@ public class BackgroundBhv : MonoBehaviour
 
     private void Move()
     {
-        transform.position = Vector2.Lerp(transform.position, _positionToReach + (Vector2)Camera.main.transform.position, 0.005f);
-        if (Helper.VectorEqualsPrecision(transform.position, _positionToReach + (Vector2)Camera.main.transform.position, 0.5f))
+        transform.position = Vector2.Lerp(transform.position, _positionToReach + (Vector2)_mainCamera.transform.position, 0.005f);
+        if (Helper.VectorEqualsPrecision(transform.position, _positionToReach + (Vector2)_mainCamera.transform.position, 0.5f))
         {
             NewPositionToReach();
         }

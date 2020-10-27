@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Instantiator : MonoBehaviour
 {
+    private Camera _mainCamera;
+
     void Start()
     {
         Init();
@@ -10,6 +12,7 @@ public class Instantiator : MonoBehaviour
 
     public void Init()
     {
+        _mainCamera = Helper.GetMainCamera();
     }
 
     public void NewAttackLine(Vector3 source, Vector3 target, Realm realm)
@@ -100,15 +103,15 @@ public class Instantiator : MonoBehaviour
                 inputKeyBhv.SetPrivates(target, maxWidth);
         }
         tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
-        if (target.transform.position.y < -Camera.main.orthographicSize + Constants.KeyboardHeight)
-            Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
+        if (target.transform.position.y < -_mainCamera.orthographicSize + Constants.KeyboardHeight)
+            _mainCamera.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (_mainCamera.orthographicSize - Constants.KeyboardHeight));
     }
 
     public void NewPopupYesNo(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction, Sprite sprite = null)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
-        var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
+        var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite);
     }

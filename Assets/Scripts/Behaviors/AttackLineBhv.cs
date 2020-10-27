@@ -29,11 +29,11 @@ public class AttackLineBhv : MonoBehaviour
             return;
 
         var fadeBlock = _instantiator.NewFadeBlock(_realm, transform.position, 4, 0);
-        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Effects";
         fadeBlock.transform.localScale = _fadeBlockScale;
         
         fadeBlock = _instantiator.NewFadeBlock(_realm, Vector3.Lerp(transform.position, _target, _distance / 2), 4, 0);
-        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+        fadeBlock.GetComponent<SpriteRenderer>().sortingLayerName = "Effects";
         fadeBlock.transform.localScale = _fadeBlockScale;
         
         transform.position = Vector3.Lerp(transform.position, _target, _distance);

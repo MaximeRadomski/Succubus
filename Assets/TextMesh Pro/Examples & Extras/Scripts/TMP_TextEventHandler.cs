@@ -115,7 +115,7 @@ namespace TMPro
             }
             else
             {
-                m_Camera = Camera.main;
+                m_Camera = Helper.GetMainCamera();
             }
         }
 

@@ -36,7 +36,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         if (_hasInit)
             return;
         _sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-        _direction = transform.position.x > Camera.main.transform.position.x ? Direction.Right : Direction.Left;
+        _direction = transform.position.x > Helper.GetMainCamera().transform.position.x ? Direction.Right : Direction.Left;
         _originalPosition = transform.position;
         _originalScale = transform.localScale;
         _attackPosition = _originalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);

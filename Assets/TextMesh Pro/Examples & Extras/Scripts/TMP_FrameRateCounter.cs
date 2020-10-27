@@ -29,7 +29,7 @@ namespace TMPro.Examples
             if (!enabled)
                 return;
 
-            m_camera = Camera.main;
+            m_camera = Helper.GetMainCamera();
             Application.targetFrameRate = -1;
 
             GameObject frameCounter = new GameObject("Frame Counter");

@@ -18,6 +18,7 @@ public class OverBlendBhv : MonoBehaviour
     private float _loadPercent;
     private float _halfSpriteSize;
     private bool _midActionDone;
+    private Camera _mainCamera;
 
     public void SetPrivates(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, object> resultAction, bool reverse)
     {
@@ -26,10 +27,11 @@ public class OverBlendBhv : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _overBlendType = overBlendType;
         _loadPercent = 0;
+        _mainCamera = Helper.GetMainCamera();
         if (reverse)
-            _sourcePosition = new Vector3(-20.0f, 0.0f, 0.0f) + new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+            _sourcePosition = new Vector3(-20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         else
-            _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+            _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         _activePosition = new Vector3(0.0f, 0.0f, 0.0f);
         _endPosition = new Vector3(-_sourcePosition.x, 0.0f, 0.0f);
         _state = 0;

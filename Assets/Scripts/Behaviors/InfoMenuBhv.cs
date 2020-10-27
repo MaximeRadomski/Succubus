@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InfoMenuBhv : PopupBhv
 {
+    private Camera _mainCamera;
     private System.Func<bool, object> _resumeAction;
     private Instantiator _instantiator;
     //private bool _isRotated;
@@ -38,7 +39,8 @@ public class InfoMenuBhv : PopupBhv
         //    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
         //    Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
         //}
-        transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+        _mainCamera = Helper.GetMainCamera();
+        transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
         (_characterTab = GameObject.Find("CharacterTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacter;
         (_opponentTab = GameObject.Find("OpponentTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowOpponent;

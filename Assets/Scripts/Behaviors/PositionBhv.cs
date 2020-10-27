@@ -13,17 +13,26 @@ public class PositionBhv : MonoBehaviour
 
     private float _verticalMult;
     private float _horizontalMult;
+    private Camera _mainCamera;
 
     void Start()
     {
+        GetMainCamera();
         if (!DontActivateOnStart)
             UpdatePositions();   
     }
 
+    private void GetMainCamera()
+    {
+        _mainCamera = Helper.GetMainCamera();
+    }
+
     public void UpdatePositions()
     {
-        if (Camera.main.GetComponent<CameraBhv>().HasInitiated == false)
-            Camera.main.GetComponent<CameraBhv>().Init();
+        if (_mainCamera == null)
+            GetMainCamera();
+        if (_mainCamera.GetComponent<CameraBhv>().HasInitiated == false)
+            _mainCamera.GetComponent<CameraBhv>().Init();
         if (VerticalSide != CameraVerticalSide.None)
         {
             if (VerticalSide == CameraVerticalSide.MidVertical)
@@ -44,14 +53,14 @@ public class PositionBhv : MonoBehaviour
 
     private void AdjustVerticalPosition()
     {
-        transform.position = new Vector3(transform.position.x, (_verticalMult * Camera.main.orthographicSize * (Rotated ? Camera.main.aspect : 1.0f)) + YOffset, 0.0f);
-        transform.position += new Vector3(0.0f, Camera.main.transform.position.y, 0.0f);
+        transform.position = new Vector3(transform.position.x, (_verticalMult * _mainCamera.orthographicSize * (Rotated ? _mainCamera.aspect : 1.0f)) + YOffset, 0.0f);
+        transform.position += new Vector3(0.0f, _mainCamera.transform.position.y, 0.0f);
     }
 
     private void AdjustHorizontalPosition()
     {
-        transform.position = new Vector3((_horizontalMult * Camera.main.orthographicSize * (Rotated ? 1.0f : Camera.main.aspect)) + XOffset, transform.position.y, 0.0f);
-        transform.position += new Vector3(Camera.main.transform.position.x, 0.0f, 0.0f);
+        transform.position = new Vector3((_horizontalMult * _mainCamera.orthographicSize * (Rotated ? 1.0f : _mainCamera.aspect)) + XOffset, transform.position.y, 0.0f);
+        transform.position += new Vector3(_mainCamera.transform.position.x, 0.0f, 0.0f);
     }
 }
 

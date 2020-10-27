@@ -9,6 +9,11 @@ using UnityEngine;
 
 public static class Helper
 {
+    public static Camera GetMainCamera()
+    {
+        return Camera.allCameras.FirstOrDefault(c => c.name.ToLower().Contains("main"));
+    }
+
     public static Opponent UpgradeOpponentToUpperType(Opponent opponent, OpponentType opponentType)
     {
         var tmpOpponent = opponent.Clone();

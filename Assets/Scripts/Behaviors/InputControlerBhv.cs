@@ -11,11 +11,13 @@ public class InputControlerBhv : MonoBehaviour
     private SceneBhv _currentScene;
     private SoundControlerBhv _soundControler;
     private GameplayControler _gameplayControler;
+    private Camera _mainCamera;
 
     private void Start()
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
+        _mainCamera = Helper.GetMainCamera();
     }
 
     void Update()
@@ -36,7 +38,7 @@ public class InputControlerBhv : MonoBehaviour
             {
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
                 if (!_currentScene.Paused)
-                    Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+                    _mainCamera.gameObject.GetComponent<CameraBhv>().Unfocus();
                 if (gameObjectToDestroy.name.Contains("Keyboard"))
                     gameObjectToDestroy.transform.GetChild(0).GetComponent<PopupBhv>().ExitPopup();
                 else
@@ -59,9 +61,9 @@ public class InputControlerBhv : MonoBehaviour
         {
             for (int i = 0; i < Input.touchCount; i++)
             {
-                _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
+                _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.GetTouch(i).position);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, _mainCamera.transform.forward);
                 foreach (var hitInformation in hitsInformation)
                 {
                     if (hitInformation.collider != null)
@@ -101,9 +103,9 @@ public class InputControlerBhv : MonoBehaviour
                 || (_endPhase = Input.GetMouseButtonUp(0))
                 || (_doPhase = Input.GetMouseButton(0)))
             {
-                _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, _mainCamera.transform.forward);
                 foreach (var hitInformation in hitsInformation)
                 {
                     if (hitInformation.collider != null)

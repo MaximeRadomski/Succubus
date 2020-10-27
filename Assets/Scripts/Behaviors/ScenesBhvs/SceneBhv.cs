@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public abstract class SceneBhv : MonoBehaviour
@@ -15,7 +16,7 @@ public abstract class SceneBhv : MonoBehaviour
     protected virtual void Init()
     {
         Application.targetFrameRate = 60;
-        CameraBhv = Camera.main.gameObject.GetComponent<CameraBhv>();
+        CameraBhv = Helper.GetMainCamera().gameObject.GetComponent<CameraBhv>();
         NavigationService.TrySetCurrentRootScene(SceneManager.GetActiveScene().name);
         Instantiator = GetComponent<Instantiator>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();

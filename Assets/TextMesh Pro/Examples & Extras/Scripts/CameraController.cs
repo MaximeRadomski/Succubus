@@ -49,6 +49,8 @@ namespace TMPro.Examples
         private const string event_SmoothingValue = "Slider - Smoothing Value";
         private const string event_FollowDistance = "Slider - Camera Zoom";
 
+        private Camera _mainCamera;
+
 
         void Awake()
         {
@@ -68,6 +70,7 @@ namespace TMPro.Examples
         // Use this for initialization
         void Start()
         {
+            _mainCamera = Helper.GetMainCamera();
             if (CameraTarget == null)
             {
                 // If we don't have a target (assigned by the player, create a dummy in the center of the scene).
@@ -198,7 +201,7 @@ namespace TMPro.Examples
                 // Check for left mouse button to select a new CameraTarget or to reset Follow position
                 if (Input.GetMouseButton(0))
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))

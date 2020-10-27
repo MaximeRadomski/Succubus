@@ -24,4 +24,8 @@ public enum AttackType
     AirPiece = 8, //Makes your next 'param1' pieces transparent
     [Description("Forced Block")]
     ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
+    [Description("Upside Down")]
+    MirrorMirror = 10, //Reverse the camera on 'param2' (0 = x, 1 = y, 2 = xy) axis for 'param1' pieces
+    [Description("Intoxication")]
+    Intoxication = 11, //Makes you drunk for 'param1' pieces
 }

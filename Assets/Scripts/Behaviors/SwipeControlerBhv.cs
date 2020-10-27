@@ -15,6 +15,7 @@ public class SwipeControlerBhv : MonoBehaviour
     private bool _isHoldingDown;
     private int _framesBeforeHoldingDown;
     private Direction _direction;
+    private Camera _mainCamera;
 
     private float _oneTapDistance = 1.0f;
     private float _verticalSensitivity = 1.5f;
@@ -27,6 +28,7 @@ public class SwipeControlerBhv : MonoBehaviour
         _tapZoneBoundaryHorizontal = rotationFrontier.GetComponent<BoxCollider2D>().size.x / 2.0f;
         _tapZoneBoundaryVertical = rotationFrontier.GetComponent<BoxCollider2D>().size.y;
         _horizontalSensitivity = PlayerPrefsHelper.GetTouchSensitivity();
+        _mainCamera = Helper.GetMainCamera();
     }
 
     void Update()
@@ -40,7 +42,7 @@ public class SwipeControlerBhv : MonoBehaviour
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
-            _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
             Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -66,7 +68,7 @@ public class SwipeControlerBhv : MonoBehaviour
                 || (_endPhase = Input.GetMouseButtonUp(0))
                 || (_doPhase = Input.GetMouseButton(0)))
             {
-                _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
                 if (_beginPhase)
                 {
