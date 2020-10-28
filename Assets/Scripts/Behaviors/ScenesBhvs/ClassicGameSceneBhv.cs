@@ -12,7 +12,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private SpriteRenderer _opponentType;
     private bool _opponentOnCooldown;
     private float _nextCooldownTick;
-    private int _opponentAttackId;
     private IconInstanceBhv _weaknessInstance;
     private IconInstanceBhv _immunityInstance;
 
@@ -90,11 +89,22 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
         _currentOpponent = _opponents[Constants.CurrentListOpponentsId];
-        _opponentInstanceBhv.Spawn();
-        CameraBhv.Bump(4);
-        _soundControler.PlaySound(_idOpponentAppearance);
-        Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime:3.0f);
-        _opponentAttackId = 0;
+        if (Constants.NameLastScene == Constants.SettingsScene)
+        {
+            if (Constants.IsffectAttackInProgress)
+            {
+                Constants.CurrentOpponentCooldown = _currentOpponent.Cooldown + 1;
+                Constants.CurrentOpponentAttackId = Constants.CurrentOpponentAttackId - 1 < 0 ? _currentOpponent.Attacks.Count - 1 : Constants.CurrentOpponentAttackId - 1;
+            }
+        }
+        else
+        {
+            _soundControler.PlaySound(_idOpponentAppearance);
+            Constants.CurrentOpponentAttackId = 0;
+            _opponentInstanceBhv.Spawn();
+            CameraBhv.Bump(4);
+            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime: 3.0f);
+        }
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _run.CurrentRealm + "Opponents_" + _currentOpponent.Id);
         _opponentType.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
@@ -209,8 +219,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.Drill)
-            _gameplayControler.AttackDrill(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].Param1);
+        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
+            _gameplayControler.AttackDrill(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1);
         SetNextCooldownTick();
     }
 
@@ -235,15 +245,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentInstanceBhv.Attack();
         _characterInstanceBhv.TakeDamage();
         _gameplayControler.OpponentAttack(
-            _currentOpponent.Attacks[_opponentAttackId].AttackType,
-            _currentOpponent.Attacks[_opponentAttackId].Param1,
-            _currentOpponent.Attacks[_opponentAttackId].Param2,
+            _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType,
+            _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1,
+            _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2,
             _currentOpponent.Realm,
             _opponentInstanceBhv.gameObject);
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)
             spawnAfterAttack = false;
-        if (++_opponentAttackId >= _currentOpponent.Attacks.Count)
-            _opponentAttackId = 0;
+        if (++Constants.CurrentOpponentAttackId >= _currentOpponent.Attacks.Count)
+            Constants.CurrentOpponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
@@ -266,9 +276,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void HandleForcedPiece()
     {
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
+        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
-            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[_opponentAttackId].Param1, _currentOpponent.Attacks[_opponentAttackId].Param2);
+            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, _currentOpponent.Realm, _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2);
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)_currentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
@@ -375,9 +385,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[Constants.CurrentListOpponentsId].Realm.GetHashCode() * 2) + 1));
         opponentIcon.GetComponent<IconInstanceBhv>().Pop();
         ++Constants.CurrentListOpponentsId;
-        if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.ForcedPiece)
+        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
-        else if (_currentOpponent.Attacks[_opponentAttackId].AttackType == AttackType.Drill)
+        else if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
         {
             var tmpDrillTarget = GameObject.Find(Constants.GoDrillTarget);
             if (tmpDrillTarget != null)

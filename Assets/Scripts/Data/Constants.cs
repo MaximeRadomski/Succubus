@@ -182,6 +182,8 @@ public static class Constants
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static int CurrentOpponentCooldown;
+    public static int CurrentOpponentAttackId;
+    public static bool IsffectAttackInProgress = false;
 
     public static void ResetClassicGameCache()
     {

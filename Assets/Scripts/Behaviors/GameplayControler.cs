@@ -126,7 +126,7 @@ public class GameplayControler : MonoBehaviour
         _musicControler = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");
         _effectsCamera = GameObject.Find("EffectsCamera");
-        _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
+        _effectsCamera?.GetComponent<EffectsCameraBhv>().Reset();
         _panelRight = GameObject.Find("PanelRight");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
         _uiPanelRight = GameObject.Find("UiPanelRight");
@@ -1641,20 +1641,6 @@ public class GameplayControler : MonoBehaviour
                 AttackCameraEffects(type, opponentInstance, opponentRealm, param1, param2);
                 break;
         }
-        if (_characterItem != null
-            && (type == AttackType.DarkRow
-            || type == AttackType.WasteRow
-            || type == AttackType.LightRow
-            || type == AttackType.EmptyRow
-            || type == AttackType.AirPiece
-            || type == AttackType.ForcedBlock
-            || type == AttackType.MirrorMirror))
-            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer * param1;
-        else if (_characterItem != null
-            && (type == AttackType.VisionBlock
-            || type == AttackType.ForcedPiece)
-            || type == AttackType.Drill)
-            Constants.CurrentItemCooldown -= Character.ItemCooldownReducer;
         UpdateItemAndSpecialVisuals();
     }
 
@@ -1667,6 +1653,7 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     private void AttackGarbageRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
@@ -1681,6 +1668,7 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     private void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
@@ -1702,6 +1690,7 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(param);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     private void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
@@ -1709,6 +1698,7 @@ public class GameplayControler : MonoBehaviour
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
@@ -1721,6 +1711,7 @@ public class GameplayControler : MonoBehaviour
         var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, param, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (nbRows / 2));
     }
 
     public void AttackForcedPiece(GameObject opponentInstance, Realm opponentRealm, int letter, int rotation)
@@ -1740,6 +1731,7 @@ public class GameplayControler : MonoBehaviour
             StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
+                Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
                 return true;
             }, true));
         }
@@ -1804,6 +1796,7 @@ public class GameplayControler : MonoBehaviour
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
                 Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                 PlayFieldBhv.Grid[roundedX, roundedY] = null;
+                Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 1);
             }
             Destroy(drillTarget);
         }
@@ -1839,6 +1832,7 @@ public class GameplayControler : MonoBehaviour
     {
         _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = AirPieceAfterSpawn;
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool AirPieceAfterSpawn()
         {
@@ -1859,6 +1853,7 @@ public class GameplayControler : MonoBehaviour
     {
         _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = ForcedBlockAfterSpawn;
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool ForcedBlockAfterSpawn()
         {
@@ -1879,8 +1874,9 @@ public class GameplayControler : MonoBehaviour
     {
         _afterSpawnAttackCounter = nbPieces;
         _effectsCamera.SetActive(true);
-        _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param);
+        _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
+        Constants.IsffectAttackInProgress = true;
         AfterSpawn = MirrorMirrorAfterSpawn;
 
         bool MirrorMirrorAfterSpawn()
@@ -1888,6 +1884,7 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 BaseAfterSpawnEnd();
+                Constants.IsffectAttackInProgress = false;
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
                 _soundControler.PlaySound(_idTwist, 0.85f);
                 return false;

@@ -9,6 +9,7 @@ public class EffectsCameraBhv : MonoBehaviour
     private Material _textureMaterial;
     private bool _hasInit;
     private float _quadOriginalScale;
+    private Character _character;
 
     private Vector3 _intoxicatedPosition;
     private Vector2 _intoxicatedScale;
@@ -28,6 +29,7 @@ public class EffectsCameraBhv : MonoBehaviour
         _textureMaterial = _textureQuad.GetComponent<Renderer>().material;
         _quadOriginalScale = _textureQuad.transform.localScale.x;
         _hasInit = true;
+        _character = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameSceneBhv>().Character;
     }
 
     public void Reset()
@@ -46,29 +48,31 @@ public class EffectsCameraBhv : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetAttack(AttackType attackType, int param)
+    public void SetAttack(AttackType attackType, int param, int cooldown)
     {
         if (attackType == AttackType.MirrorMirror)
-            SetMirrorMirror(param);
+            SetMirrorMirror(param, cooldown);
         else if (attackType == AttackType.Intoxication)
-            SetIntoxication();
+            SetIntoxication(cooldown);
     }
 
-    private void SetMirrorMirror(int axis)
+    private void SetMirrorMirror(int axis, int cooldown)
     {
         transform.position = new Vector3(_panelGame.transform.position.x, _panelGame.transform.position.y, transform.position.z);
         float xScale = axis == 0 || axis == 2 ? -1.0f : 1.0f;
         float yScale = axis == 1 || axis == 2 ? -1.0f : 1.0f;
         transform.localScale = new Vector3(xScale, yScale, 1.0f);
+        Constants.CurrentItemCooldown -= (int)(_character.ItemCooldownReducer * cooldown);
     }
 
-    private void SetIntoxication()
+    private void SetIntoxication(int cooldown)
     {
         _textureMaterial.shader = Shader.Find("FX/Flare");
         transform.position = new Vector3(_panelGame.transform.position.x, _panelGame.transform.position.y, transform.position.z);
         _intoxicatedPosition = _textureQuad.transform.localPosition;
         _intoxicatedScale = new Vector3(_quadOriginalScale, _quadOriginalScale, 1.0f);
         _isIntoxicated = true;
+        Constants.CurrentItemCooldown -= (int)(_character.ItemCooldownReducer * (cooldown / 3));
     }
 
     private void Update()
@@ -79,11 +83,11 @@ public class EffectsCameraBhv : MonoBehaviour
 
     private void Intoxicated()
     {
-        _textureQuad.transform.localPosition = Vector3.Lerp(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.05f);
-        _textureQuad.transform.localScale = Vector3.Lerp(_textureQuad.transform.localScale, _intoxicatedScale, 0.05f);
-        if (Helper.VectorEqualsPrecision(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.01f))
+        _textureQuad.transform.localPosition = Vector3.Lerp(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.03f);
+        _textureQuad.transform.localScale = Vector3.Lerp(_textureQuad.transform.localScale, _intoxicatedScale, 0.03f);
+        if (Helper.VectorEqualsPrecision(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.1f))
             _intoxicatedPosition = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), 0.0f);
-        if (Helper.VectorEqualsPrecision(_textureQuad.transform.localScale, _intoxicatedScale, 0.01f))
+        if (Helper.VectorEqualsPrecision(_textureQuad.transform.localScale, _intoxicatedScale, 0.1f))
             _intoxicatedScale = new Vector3(Random.Range(_quadOriginalScale - 2.0f, _quadOriginalScale + 2.0f), Random.Range(_quadOriginalScale - 2.0f, _quadOriginalScale + 2.0f), 1.0f);
     }
 }

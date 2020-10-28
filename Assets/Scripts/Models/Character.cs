@@ -23,7 +23,7 @@ public class Character : Loot
     public int RealmPassiveEffect;
     public int EnemyCooldownProgressionReducer;
     public int VisionBlockReducer;
-    public int ItemCooldownReducer;
+    public float ItemCooldownReducer;
     public int ItemMaxCooldownReducer;
     public int ItemCooldownReducerOnKill;
     public int SpecialCooldownReducer;
@@ -44,7 +44,7 @@ public class Character : Loot
         RealmPassiveEffect = 1;
         EnemyCooldownProgressionReducer = 0;
         VisionBlockReducer = 1;
-        ItemCooldownReducer = 1;
+        ItemCooldownReducer = 1.0f;
         ItemMaxCooldownReducer = 0;
         ItemCooldownReducerOnKill = 0;
         SpecialCooldownReducer = 1;
