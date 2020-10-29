@@ -13,6 +13,7 @@ public abstract class GameSceneBhv : SceneBhv
     protected GameplayControler _gameplayControler;
     protected string _poppingText = "";
     protected GameObject _pauseMenu;
+    protected GameObject _panelGame;
 
     protected override void Init()
     {
@@ -27,6 +28,7 @@ public abstract class GameSceneBhv : SceneBhv
             Character = PlayerPrefsHelper.GetRunCharacter();
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
+        _panelGame = GameObject.Find("PanelGame");
     }
 
     public override void PauseOrPrevious()
@@ -48,9 +50,13 @@ public abstract class GameSceneBhv : SceneBhv
         _musicControler.SetNewVolumeLevel();
         if (resume)
         {
-            Paused = false;
             Constants.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
+            Instantiator.New321(_panelGame.transform.position, () =>
+                {
+                    Paused = false;
+                    return true;
+                });
             return true;
         }
         _pauseMenu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);

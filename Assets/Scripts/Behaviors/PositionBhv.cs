@@ -10,6 +10,7 @@ public class PositionBhv : MonoBehaviour
     public float YOffset;
     public bool DontActivateOnStart;
     public bool Rotated;
+    public GameObject _customParent = null;
 
     private float _verticalMult;
     private float _horizontalMult;
@@ -54,13 +55,19 @@ public class PositionBhv : MonoBehaviour
     private void AdjustVerticalPosition()
     {
         transform.position = new Vector3(transform.position.x, (_verticalMult * _mainCamera.orthographicSize * (Rotated ? _mainCamera.aspect : 1.0f)) + YOffset, 0.0f);
-        transform.position += new Vector3(0.0f, _mainCamera.transform.position.y, 0.0f);
+        if (_customParent == null)
+            transform.position += new Vector3(0.0f, _mainCamera.transform.position.y, 0.0f);
+        else
+            transform.position += new Vector3(0.0f, _customParent.transform.position.y, 0.0f);
     }
 
     private void AdjustHorizontalPosition()
     {
         transform.position = new Vector3((_horizontalMult * _mainCamera.orthographicSize * (Rotated ? 1.0f : _mainCamera.aspect)) + XOffset, transform.position.y, 0.0f);
-        transform.position += new Vector3(_mainCamera.transform.position.x, 0.0f, 0.0f);
+        if (_customParent == null)
+            transform.position += new Vector3(_mainCamera.transform.position.x, 0.0f, 0.0f);
+        else
+            transform.position += new Vector3(_customParent.transform.position.x, 0.0f, 0.0f);
     }
 }
 

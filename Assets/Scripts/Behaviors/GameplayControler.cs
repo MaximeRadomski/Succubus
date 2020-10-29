@@ -639,7 +639,7 @@ public class GameplayControler : MonoBehaviour
     public void Left(bool mimicPossible = true)
     {
         _leftHolded = _rightHolded = 0;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         SetTimeDirectionHolded();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -653,7 +653,7 @@ public class GameplayControler : MonoBehaviour
     public void LeftHolded()
     {
         ++_leftHolded;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         ++_timeDirectionHolded;
         if (_timeDirectionHolded < 10)
@@ -669,7 +669,7 @@ public class GameplayControler : MonoBehaviour
     public void Right(bool mimicPossible = true)
     {
         _rightHolded = _leftHolded = 0;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         SetTimeDirectionHolded();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -683,7 +683,7 @@ public class GameplayControler : MonoBehaviour
     public void RightHolded()
     {
         ++_rightHolded;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         ++_timeDirectionHolded;
         if (_timeDirectionHolded < 10)
@@ -703,7 +703,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHolded()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         if (Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
@@ -740,7 +740,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityStomp()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         bool hardDropping = true;
         while (hardDropping)
@@ -757,7 +757,7 @@ public class GameplayControler : MonoBehaviour
 
     public void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         bool hardDropping = true;
         int nbLinesDropped = 0;
@@ -881,7 +881,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Clock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
@@ -989,7 +989,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AntiClock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
             return;
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
@@ -1097,7 +1097,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Hold()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused)
             return;
         if (_holder.transform.childCount <= 0)
         {
@@ -1143,7 +1143,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Item()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         if (_characterItem != null)
         {
@@ -1156,7 +1156,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Special()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         if (_characterSpecial.Activate())
             _soundControler.PlaySound(_idSpecial);

@@ -15,6 +15,13 @@ public class Instantiator : MonoBehaviour
         _mainCamera = Helper.GetMainCamera();
     }
 
+    public void New321(Vector3 position, System.Func<bool> afterAnimation)
+    {
+        var tmp321Object = Resources.Load<GameObject>("Prefabs/321");
+        var tmp321Instance = Instantiate(tmp321Object, position, tmp321Object.transform.rotation);
+        tmp321Instance.GetComponent<A321Bhv>().Init(afterAnimation);
+    }
+
     public void NewAttackLine(Vector3 source, Vector3 target, Realm realm)
     {
         var attackLine = new GameObject("AttackLine");
