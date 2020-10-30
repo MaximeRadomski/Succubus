@@ -129,6 +129,34 @@ public class PlayerPrefsHelper : MonoBehaviour
         return buttons;
     }
 
+    public static void SaveKeyBinding(List<KeyCode> keyBinding)
+    {
+        var strKeyBinding = "";
+        foreach (var key in keyBinding)
+            strKeyBinding += key.GetHashCode() + ";";
+        PlayerPrefs.SetString(Constants.PpKeyBinding, strKeyBinding);
+    }
+
+    public static List<KeyCode> GetKeyBinding()
+    {
+        var strKeyBinding = PlayerPrefs.GetString(Constants.PpKeyBinding, Constants.PpKeyBindingDefault);
+        var keyBinding = new List<KeyCode>();
+        int i = 0;
+        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 10)
+        {
+            var separatorId = strKeyBinding.IndexOf(';');
+            if (separatorId == -1)
+                break;
+            var keyCodeHashCode = int.Parse(strKeyBinding.Substring(0, separatorId));
+            keyBinding.Add((KeyCode)keyCodeHashCode);
+            if (separatorId + 1 >= strKeyBinding.Length)
+                break;
+            strKeyBinding = strKeyBinding.Substring(separatorId + 1);
+            ++i;
+        }
+        return keyBinding;
+    }
+
     public static void AddUnlockedCharacters(Character character)
     {
         var currentUnlockedCharactersString = GetUnlockedCharactersString();

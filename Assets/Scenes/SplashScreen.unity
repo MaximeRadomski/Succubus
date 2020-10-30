@@ -455,6 +455,7 @@ MonoBehaviour:
   YOffset: 2
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &169069336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -493,7 +494,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 9098328871534416840, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -574,7 +575,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -131127381
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: -8461514266414155272, guid: d18714b0cee243942a821d09350737d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -686,6 +687,7 @@ MonoBehaviour:
   YOffset: -1.429
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &914832606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -724,7 +726,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 2027992881987474578, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1109,6 +1111,7 @@ MonoBehaviour:
   YOffset: 2
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1332838963
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1147,7 +1150,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 9098328871534416840, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1210,6 +1213,7 @@ MonoBehaviour:
   YOffset: -0.572
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1686173754
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1248,7 +1252,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: -3145627101456307842, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1271,8 +1275,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1842567409}
   - component: {fileID: 1842567408}
-  - component: {fileID: 1842567407}
   - component: {fileID: 1842567406}
+  - component: {fileID: 1842567407}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1301,16 +1305,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1842567405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &1842567408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,6 +1402,7 @@ MonoBehaviour:
   YOffset: -1.429
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1850407097
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1428,7 +1441,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 2027992881987474578, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

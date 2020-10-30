@@ -15,7 +15,7 @@ public static class Constants
     public const int NumberOfAllowedMovesBeforeLock = 15;
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
-    public static List<int> RoomDifficultyPerRealm = new List<int>() {80, 160, 320};
+    public static List<int> RoomDifficultyPerRealm = new List<int>() { 80, 160, 320 };
     public static List<int> RoomDifficultyPerRoom = new List<int>() { 10, 20, 30 };
     public static List<float> RoomDifficultyPerRarity = new List<float>() { 1.0f, 1.5f, 2.0f };
     public static Vector3 _cameraVerticalGameplayPosition = new Vector3(4.5f, 1.64f, -10.0f);
@@ -66,7 +66,9 @@ public static class Constants
     public const string PpButtonsLeftPanel = "PpButtonsLeftPanel";
     public const string PpButtonsLeftPanelDefault = "H000000D0000L0R0000d0";
     public const string PpButtonsRightPanel = "PpButtonsRightPanel";
-    public const string PpButtonsRightPanelDefault = "I0S0000D0000A0C000000";
+    public const string PpButtonsRightPanelDefault = "S0I0000D0000A0C000000";
+    public const string PpKeyBinding = "KeyLayout";
+    public static string PpKeyBindingDefault = GetDefaultKeyBinding();
     public const string PpRun = "Run";
     public const string PpRunCharacter = "RunCharacter";
     public const string PpBag = "Bag";
@@ -79,6 +81,11 @@ public static class Constants
     public const int PpFavKeyboardLayoutDefault = 0;
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;
+
+    public static string GetDefaultKeyBinding()
+    {
+        return $"{KeyCode.UpArrow.GetHashCode()};{KeyCode.DownArrow.GetHashCode()};{KeyCode.LeftArrow.GetHashCode()};{KeyCode.RightArrow.GetHashCode()};{KeyCode.C.GetHashCode()};{KeyCode.X.GetHashCode()};{KeyCode.Space.GetHashCode()};{KeyCode.D.GetHashCode()};{KeyCode.S.GetHashCode()};{KeyCode.Escape.GetHashCode()};";
+    }
 
     //  SCENES  //
     public const string SplashScreenScene = "SplashScreenScene";

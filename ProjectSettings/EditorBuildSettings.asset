@@ -35,4 +35,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StepsScene.unity
     guid: c6939264d6392e24d9135cf49ac6c952
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 2be493e1868ee174083e5a3262e27d84, type: 2}
