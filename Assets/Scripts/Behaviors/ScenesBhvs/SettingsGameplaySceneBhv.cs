@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class SettingsGameplaySceneBhv : SceneBhv
 {
+    public Sprite PcKeyboard;
+    public Sprite PcMouse;
+
     private GameObject _ghostSelector;
     private GameObject _gameplaySelector;
     private GameObject _panelLeft;
@@ -12,8 +16,14 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _gameplayChoiceSwipes;
     private GameObject _buttonsPanels;
     private GameObject _swipesPanels;
+    private GameObject _keyBindingPanel;
     private GameObject _sensitivitySelector;
     private List<GameObject> _gameplayButtons;
+    private List<KeyCode> _keyBinding;
+    private List<KeyCode> _defaultKeyBinding;
+
+    private int _listeningKeeBindingId;
+    private GameObject _listeningPopup;
 
     void Start()
     {
@@ -29,8 +39,11 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _panelRight = GameObject.Find("PanelRight");
         _buttonsPanels = GameObject.Find("ButtonsPanels");
         _swipesPanels = GameObject.Find("SwipesPanels");
+        _keyBindingPanel = GameObject.Find("KeyBindingPanel");
         _sensitivitySelector = GameObject.Find("SensitivitySelector");
         _gameplayButtons = new List<GameObject>();
+        _listeningKeeBindingId = -1;
+
         SetButtons();
 
         Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGhostColor());
@@ -43,6 +56,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft:true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft:false);
+        _keyBinding = PlayerPrefsHelper.GetKeyBinding();
+        _defaultKeyBinding = PlayerPrefsHelper.GetKeyBinding(Constants.PpKeyBindingDefault);
+        for (int i = 0; i < _keyBinding.Count; ++i)
+            UpdateKeyBindingVisual(i);
     }
 
     private void PanelsVisuals(string panelStr, GameObject panel, bool isLeft)
@@ -67,6 +84,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
+#if !UNITY_ANDROID
+        _gameplayChoiceButtons.GetComponent<SpriteRenderer>().sprite = PcKeyboard;
+        _gameplayChoiceSwipes.GetComponent<SpriteRenderer>().sprite = PcMouse;
+#endif
         GameObject.Find("SwipeType").GetComponent<ButtonBhv>().EndActionDelegate = FlipGameplaySwipe;
         GameObject.Find("0.25").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(0.25f); };
         GameObject.Find("0.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(0.5f); };
@@ -75,6 +96,17 @@ public class SettingsGameplaySceneBhv : SceneBhv
         GameObject.Find("2.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2.0f); };
         GameObject.Find("2.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2.5f); };
         GameObject.Find("3.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(3.0f); };
+
+        _keyBindingPanel.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(0); };
+        _keyBindingPanel.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(1); };
+        _keyBindingPanel.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(2); };
+        _keyBindingPanel.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(3); };
+        _keyBindingPanel.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(4); };
+        _keyBindingPanel.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(5); };
+        _keyBindingPanel.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(6); };
+        _keyBindingPanel.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(7); };
+        _keyBindingPanel.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(8); };
+        _keyBindingPanel.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(9); };
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -120,17 +152,24 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
     private void UpdateViewFromGameplayChoice(GameplayChoice gameplayChoice)
     {
+#if UNITY_ANDROID
         if (gameplayChoice == GameplayChoice.Buttons)
         {
+
             _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _buttonsPanels.GetComponent<PositionBhv>().UpdatePositions();
         }
         else
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
+            sprite.enabled = true;
+            sprite.GetComponent<BoxCollider2D>().enabled = true;
+            text.enabled = true;
             if (gameplayChoice == GameplayChoice.SwipesRightHanded)
             {
                 sprite.flipX = false;
@@ -144,6 +183,25 @@ public class SettingsGameplaySceneBhv : SceneBhv
                 text.text = $"Left Handed {Constants.MaterialLong_3_2}(click to change)";
             }
         }
+#else
+        if (gameplayChoice == GameplayChoice.Buttons) //KeyBoard
+        {
+            _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanel.GetComponent<PositionBhv>().UpdatePositions();
+        }
+        else //Mouse
+        {
+            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
+            var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
+            var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
+            sprite.enabled = false;
+            sprite.GetComponent<BoxCollider2D>().enabled = false;
+            text.enabled = false;
+        }
+#endif
     }
 
     private void FlipGameplaySwipe()
@@ -160,6 +218,65 @@ public class SettingsGameplaySceneBhv : SceneBhv
         var buttonTapped = GameObject.Find(buttonName);
         _sensitivitySelector.transform.position = buttonTapped.transform.position;
         PlayerPrefsHelper.SaveTouchSensitivity(amount);
+    }
+
+    private void SetKeyBinding(int id)
+    {
+        _listeningKeeBindingId = id;
+        Constants.EscapeLocked = true;
+        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.MaterialHell_3_2}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
+
+        object OnSetKey(bool result)
+        {
+            if (result)
+            {
+                CheckAlreadyKeyBinding(_defaultKeyBinding[_listeningKeeBindingId]);
+                _keyBinding[_listeningKeeBindingId] = _defaultKeyBinding[_listeningKeeBindingId];
+                PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
+                UpdateKeyBindingVisual(_listeningKeeBindingId);
+            }
+            _listeningKeeBindingId = -1;
+            Invoke(nameof(UnlockEscape), 0.25f);
+            return result;
+        }
+    }
+
+    private void UnlockEscape() { Constants.EscapeLocked = false; }
+
+    void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.isKey && e.rawType == EventType.KeyUp && _listeningKeeBindingId >= 0)
+        {
+            Debug.Log("Detected key code: " + e.keyCode);
+            CheckAlreadyKeyBinding(e.keyCode);
+            _keyBinding[_listeningKeeBindingId] = e.keyCode;
+            PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
+            UpdateKeyBindingVisual(_listeningKeeBindingId);
+            _listeningPopup.GetComponent<PopupBhv>().ExitPopup();
+            _listeningKeeBindingId = -1;
+            Invoke(nameof(UnlockEscape), 0.25f);
+        }
+    }
+
+    private void CheckAlreadyKeyBinding(KeyCode code)
+    {
+        for (int i = 0; i < _keyBinding.Count; ++i)
+        {
+            if (_keyBinding[i] == code)
+            {
+                _keyBinding[i] = KeyCode.None;
+                UpdateKeyBindingVisual(i);
+            }
+        }
+    }
+
+    private void UpdateKeyBindingVisual(int id)
+    {
+        var tmPro = _keyBindingPanel.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
+        var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
+        var tmpText = tmPro.text.Substring(0, separatorId);
+        tmPro.text = $"{tmpText}{(id < 9 ? "\n" : " ")}{(_keyBinding[id] == KeyCode.None ? Constants.MaterialLong_3_2 : "")}{_keyBinding[id]}";
     }
 
     private void SetGameplayButtonOnClick()
@@ -327,6 +444,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             PlayerPrefsHelper.SaveGameplayChoice(Constants.PpGameplayChoiceDefault);
             PlayerPrefsHelper.SaveButtonsLeftPanel(Constants.PpButtonsLeftPanelDefault);
             PlayerPrefsHelper.SaveButtonsRightPanel(Constants.PpButtonsRightPanelDefault);
+            PlayerPrefsHelper.SaveKeyBinding(_defaultKeyBinding);
             foreach (var gm in _gameplayButtons)
                 Destroy(gm);
             _gameplayButtons.Clear();

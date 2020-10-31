@@ -137,9 +137,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetString(Constants.PpKeyBinding, strKeyBinding);
     }
 
-    public static List<KeyCode> GetKeyBinding()
+    public static List<KeyCode> GetKeyBinding(string customStr = null)
     {
-        var strKeyBinding = PlayerPrefs.GetString(Constants.PpKeyBinding, Constants.PpKeyBindingDefault);
+        string strKeyBinding;
+        if (customStr == null)
+            strKeyBinding = PlayerPrefs.GetString(Constants.PpKeyBinding, Constants.PpKeyBindingDefault);
+        else
+            strKeyBinding = customStr;
         var keyBinding = new List<KeyCode>();
         int i = 0;
         while (!string.IsNullOrEmpty(strKeyBinding) || i >= 10)

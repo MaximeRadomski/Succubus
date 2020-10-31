@@ -43,6 +43,8 @@ public class GameplayControler : MonoBehaviour
     private GameObject _panelRight;
     private GameObject _uiPanelLeft;
     private GameObject _uiPanelRight;
+    private GameObject _panelSwipe;
+    private TMPro.TextMeshPro _inputDisplay;
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private List<GameObject> _nextPieces;
@@ -137,10 +139,14 @@ public class GameplayControler : MonoBehaviour
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
+#if UNITY_ANDROID
         if (_gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(_gameplayChoice);
         else
             UpdatePanelsPositions();
+#else
+        SetSwipeGameplayChoice((_gameplayChoice = GameplayChoice.SwipesRightHanded));
+#endif
         SetButtons();
 
         _id1Line = _soundControler.SetSound("1Line");
@@ -316,14 +322,15 @@ public class GameplayControler : MonoBehaviour
         _panelLeft.GetComponent<PositionBhv>().enabled = false;
         _panelRight.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         _panelRight.GetComponent<PositionBhv>().enabled = false;
-        var panelSwipe = GameObject.Find("PanelSwipe");
-        panelSwipe.GetComponent<PositionBhv>().HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.RightBorder : CameraHorizontalSide.LeftBorder;
-        panelSwipe.GetComponent<PositionBhv>().XOffset *= mult;
-        panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
-        panelSwipe.GetComponent<SwipeControlerBhv>().enabled = true;
-        panelSwipe.GetComponent<SwipeControlerBhv>().Init(this, panelSwipe);
-        panelSwipe.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = Item;
-        panelSwipe.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = Special;
+        _panelSwipe = GameObject.Find("PanelSwipe");
+        _panelSwipe.GetComponent<PositionBhv>().HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.RightBorder : CameraHorizontalSide.LeftBorder;
+        _panelSwipe.GetComponent<PositionBhv>().XOffset *= mult;
+        _panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
+        _panelSwipe.GetComponent<SwipeControlerBhv>().enabled = true;
+        _panelSwipe.GetComponent<SwipeControlerBhv>().Init(this, _panelSwipe);
+        _panelSwipe.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = Item;
+        _panelSwipe.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = Special;
+        _inputDisplay = _panelSwipe.transform.Find("InputDisplay").GetComponent<TMPro.TextMeshPro>();
     }
 
     private void UpdatePanelsPositions()
@@ -1304,7 +1311,7 @@ public class GameplayControler : MonoBehaviour
         return result;
     }
 
-    #region Lines
+#region Lines
 
     private void CheckForLines()
     {
@@ -1920,6 +1927,25 @@ public class GameplayControler : MonoBehaviour
             attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[x, y] = attackBlock.transform;
         }
+    }
+
+    private string _inputString = "";
+
+    public void AddFrameKeyPressOrHolded(string input)
+    {
+        if (_inputDisplay == null)
+            return;
+        if (_inputString.Length > 0)
+            _inputString += "\n";
+        _inputString += input.ToLower();
+    }
+
+    public void UpdateFrameKeysPressOrHolded()
+    {
+        if (_inputDisplay == null)
+            return;
+        _inputDisplay.text = _inputString;
+        _inputString = "";
     }
 
     #endregion

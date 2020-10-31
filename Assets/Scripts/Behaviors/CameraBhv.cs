@@ -4,6 +4,7 @@ public class CameraBhv : MonoBehaviour
 {
     public Camera Camera;
     public bool HasInitiated;
+    public bool Paused;
 
     private Vector3 _beforeFocusPosition;
     private Vector3 _targetPosition;
@@ -46,7 +47,7 @@ public class CameraBhv : MonoBehaviour
         {
             ResetBumping();
         }
-        if (_isSliding)
+        if (_isSliding && !Paused)
         {
             Sliding();
         }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class InputControlerBhv : MonoBehaviour
 {
@@ -15,25 +14,36 @@ public class InputControlerBhv : MonoBehaviour
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
 
+    // THIS IS DONE FOR BETTER PERF
+    //Faster than refecting on enums 
+    private List<string> _inputNames;
+
     private void Start()
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
+        _inputNames = new List<string>();
+        for (int i = 0; i < _keyBinding.Count; ++i)
+        {
+            _inputNames.Add(((KeyBinding)i).GetDescription());
+        }
     }
 
     void Update()
     {
         if (Constants.InputLocked)
             return;
+#if !UNITY_ANDROID
         CheckKeyboardInputs();
+#endif
         // IF BACK BUTTON //
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(_keyBinding[9]))
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(_keyBinding[9])) && !Constants.EscapeLocked)
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
         }
-        else if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyDown(_keyBinding[9]))
+        else if ((Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(_keyBinding[9])) && !Constants.EscapeLocked)
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
             _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
@@ -82,7 +92,7 @@ public class InputControlerBhv : MonoBehaviour
                         {
                             _lastDownInput = _currentInput;
                             _currentInput.BeginAction(touchPosWorld2D);
-                        }                            
+                        }
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended && _lastDownInput?.name == _currentInput.name)
                         {
                             Constants.SetLastEndActionClickedName(_currentInput.name);
@@ -124,7 +134,7 @@ public class InputControlerBhv : MonoBehaviour
                         {
                             _lastDownInput = _currentInput;
                             _currentInput.BeginAction(touchPosWorld2D);
-                        }                            
+                        }
                         else if (_endPhase && _lastDownInput?.name == _currentInput.name)
                         {
                             Constants.SetLastEndActionClickedName(_currentInput.name);
@@ -244,14 +254,16 @@ public class InputControlerBhv : MonoBehaviour
         {
             _gameplayControler.Special();
         }
+        if (Input.anyKeyDown || Input.anyKey)
+        {
+            for (int i = 0; i < _keyBinding.Count; ++i)
+            {
+                if (Input.GetKeyDown(_keyBinding[i]) || Input.GetKey(_keyBinding[i]))
+                {
+                    _gameplayControler.AddFrameKeyPressOrHolded(_inputNames[i]);
+                }
+            }
+        }
+        _gameplayControler.UpdateFrameKeysPressOrHolded();
     }
-
-    //void OnGUI()
-    //{
-    //    Event e = Event.current;
-    //    if (e.isKey)
-    //    {
-    //        Debug.Log("Detected key code: " + e.keyCode);
-    //    }
-    //}
 }

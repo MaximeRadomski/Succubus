@@ -28,11 +28,14 @@ public class StepsSceneBhv : SceneBhv
     void Start()
     {
         Init();
+        if (Constants.NameLastScene == Constants.SettingsScene)
+            PauseOrPrevious();
     }
 
     protected override void Init()
     {
         base.Init();
+        CameraBhv.Paused = Constants.NameLastScene == Constants.SettingsScene;
         _run = PlayerPrefsHelper.GetRun();
         _character = PlayerPrefsHelper.GetRunCharacter();
 
@@ -189,6 +192,7 @@ public class StepsSceneBhv : SceneBhv
         if (resume)
         {
             Paused = false;
+            CameraBhv.Paused = false;
             Constants.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
             return true;

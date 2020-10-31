@@ -174,6 +174,7 @@ public static class Constants
 
     // CACHE SAVES
     public static bool InputLocked = false;
+    public static bool EscapeLocked = false;
     public static bool DoubleClick = false;
     public static int InputLayer = 0;
     public static string LastEndActionClickedName = null;

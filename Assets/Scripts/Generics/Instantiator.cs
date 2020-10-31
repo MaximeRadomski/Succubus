@@ -114,13 +114,14 @@ public class Instantiator : MonoBehaviour
             _mainCamera.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (_mainCamera.orthographicSize - Constants.KeyboardHeight));
     }
 
-    public void NewPopupYesNo(string title, string content, string negative, string positive,
+    public GameObject NewPopupYesNo(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction, Sprite sprite = null)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite);
+        return tmpPopupInstance;
     }
 
     public void NewPopupGameplayButtons(System.Func<bool, object> resultAction)

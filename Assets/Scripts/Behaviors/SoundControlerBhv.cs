@@ -34,7 +34,7 @@ public class SoundControlerBhv : MonoBehaviour
     {
         Sounds.Add(new Sound(_currentId++, "ClickIn"));
         Sounds.Add(new Sound(_currentId++, "ClickOut"));
-#if UNITY_EDITOR
+#if !UNITY_ANDROID
 #else
         AndroidNativeAudio.makePool();
         ClickIn = AndroidNativeAudio.load(Sounds[0].Name + ".mp3");
@@ -46,7 +46,7 @@ public class SoundControlerBhv : MonoBehaviour
     {
         if (!_hasInit)
             Init();
-#if UNITY_EDITOR
+#if !UNITY_ANDROID
         Sounds.Add(new Sound(_currentId, name));
         return _currentId++;
 #else
@@ -58,7 +58,7 @@ public class SoundControlerBhv : MonoBehaviour
     {
         if (!_hasInit)
             Init();
-#if UNITY_EDITOR
+#if !UNITY_ANDROID
         _pcAudio.pitch = customRate;
         _pcAudio.PlayOneShot((AudioClip)Resources.Load("Sounds/" + Sounds[soundId].Name));
 #else
