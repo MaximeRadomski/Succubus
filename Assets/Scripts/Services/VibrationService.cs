@@ -15,8 +15,21 @@ public static class VibrationService
     public static AndroidJavaObject vibrator;
 #endif
 
+    private static bool _hasInit;
+    private static bool _vibrationEnabled;
+
+    private static void Init()
+    {
+        if (_hasInit)
+            return;
+        _vibrationEnabled = PlayerPrefsHelper.GetVibrationEnabled();
+        _hasInit = true;
+    }
+
     public static void Vibrate()
     {
+        if (!_hasInit || !_vibrationEnabled)
+            Init();
         long defaultVibrationTime = 50;
         if (isAndroid())
             vibrator.Call("vibrate", defaultVibrationTime);
@@ -29,6 +42,8 @@ public static class VibrationService
 
     public static void Vibrate(long milliseconds)
     {
+        if (!_hasInit || !_vibrationEnabled)
+            Init();
         if (isAndroid())
             vibrator.Call("vibrate", milliseconds);
 #if UNITY_ANDROID
@@ -39,6 +54,8 @@ public static class VibrationService
 
     public static void Vibrate(long[] pattern, int repeat)
     {
+        if (!_hasInit || !_vibrationEnabled)
+            Init();
         if (isAndroid())
             vibrator.Call("vibrate", pattern, repeat);
 #if UNITY_ANDROID

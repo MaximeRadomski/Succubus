@@ -375,6 +375,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return level;
     }
 
+    public static void SaveVibrationEnabled(bool enabled)
+    {
+        PlayerPrefs.SetInt(Constants.PpVibrationEnabled, enabled ? 1 : 0);
+    }
+
+    public static bool GetVibrationEnabled()
+    {
+        var enabled = PlayerPrefs.GetInt(Constants.PpVibrationEnabled, Constants.PpVibrationEnabledDefault == true ? 1 : 0);
+        return enabled == 1 ? true : false;
+    }
+
     public static void SaveMusicLevel(float level)
     {
         PlayerPrefs.SetFloat(Constants.PpMusicLevel, level);

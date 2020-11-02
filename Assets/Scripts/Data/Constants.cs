@@ -77,7 +77,9 @@ public static class Constants
     public const string PpFavKeyboardLayout = "FavKeyboard";
     public const string PpEffectsLevel = "EffectsLevel";
     public const string PpMusicLevel = "MusicLevel";
+    public const string PpVibrationEnabled = "VibrationEnabled";
     public const float PpAudioLevelDefault = 1.0f;
+    public const bool PpVibrationEnabledDefault = true;
     public const int PpFavKeyboardLayoutDefault = 0;
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;
@@ -93,6 +95,8 @@ public static class Constants
     public const string SettingsScene= "SettingsScene";
     public const string SettingsAudioScene = "SettingsAudioScene";
     public const string SettingsGameplayScene = "SettingsGameplayScene";
+    public const string SettingsDisplayScene = "SettingsDisplayScene";
+    public const string SettingsHowToPlay = "SettingsHowToPlay";
     public const string StepsScene = "StepsScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingChoiceScene = "TrainingChoiceScene";

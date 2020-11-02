@@ -7,11 +7,13 @@ public class SettingsAudioSceneBhv : SceneBhv
 {
     private GameObject _effectsLevelSelector;
     private GameObject _musicLevelSelector;
+    private GameObject _vibrationSelector;
 
     private MusicControlerBhv _musicControlerBhv;
     private SoundControlerBhv _soundControler;
 
     private int _idSpecial;
+    private float _containerSpace = 5.5f;
 
     void Start()
     {
@@ -23,15 +25,25 @@ public class SettingsAudioSceneBhv : SceneBhv
         base.Init();
         _effectsLevelSelector = GameObject.Find("EffectsLevelSelector");
         _musicLevelSelector = GameObject.Find("MusicLevelSelector");
+        _vibrationSelector = GameObject.Find("VibrationSelector");
         _musicControlerBhv = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
         _soundControler = GameObject.Find("SoundControler").GetComponent<SoundControlerBhv>();
         _idSpecial = _soundControler.SetSound("Special");
+
+#if UNITY_ANDROID
+        GameObject.Find("VibrationContainer").transform.position = new Vector3(0.0f, -_containerSpace, 0.0f);
+        GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 2);
+#endif
 
         SetButtons();
         Constants.SetLastEndActionClickedName("EffectsLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetEffectsLevel()));
         LevelChoice();
         Constants.SetLastEndActionClickedName("MusicLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetMusicLevel()));
         LevelChoice();
+#if UNITY_ANDROID
+        Constants.SetLastEndActionClickedName($"Vibration{(PlayerPrefsHelper.GetVibrationEnabled() == true ? "On" : "Off")}");
+        SetVibration(PlayerPrefsHelper.GetVibrationEnabled());
+#endif
     }
 
     private void SetButtons()
@@ -41,6 +53,8 @@ public class SettingsAudioSceneBhv : SceneBhv
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         GameObject.Find("ButtonReset").GetComponent<ButtonBhv>().EndActionDelegate = ResetDefault;
+        GameObject.Find("VibrationOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetVibration(true); };
+        GameObject.Find("VibrationOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetVibration(false); };
     }
 
     private void SetLevelsButtons(GameObject levelsContainer, string prefix)
@@ -74,6 +88,15 @@ public class SettingsAudioSceneBhv : SceneBhv
         }
     }
 
+    private void SetVibration(bool result)
+    {
+        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);
+        _vibrationSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _vibrationSelector.transform.position.y, 0.0f);
+        PlayerPrefsHelper.SaveVibrationEnabled(result);
+        if (result)
+            VibrationService.Vibrate();
+    }
+
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
@@ -93,6 +116,7 @@ public class SettingsAudioSceneBhv : SceneBhv
                 return result;
             PlayerPrefsHelper.SaveEffectsLevel(Constants.PpAudioLevelDefault);
             PlayerPrefsHelper.SaveMusicLevel(Constants.PpAudioLevelDefault);
+            PlayerPrefsHelper.SaveVibrationEnabled(Constants.PpVibrationEnabledDefault);
             Init();
             return result;
         }
