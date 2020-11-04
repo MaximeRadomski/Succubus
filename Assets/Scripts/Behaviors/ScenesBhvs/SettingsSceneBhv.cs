@@ -28,9 +28,9 @@ public class SettingsSceneBhv : SceneBhv
         _buttonContainer = GameObject.Find("ButtonContainer");
         (_buttonAudio = GameObject.Find("ButtonAudio")).GetComponent<ButtonBhv>().EndActionDelegate = GoToAudioSettings;
         (_buttonGameplay = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
-        (_buttonHowToPlay = GameObject.Find("ButtonHowToPlay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
+        (_buttonHowToPlay = GameObject.Find("ButtonHowToPlay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToHowToPlay;
 #if !UNITY_ANDROID
-        (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
+        (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToDisplaySettings;
         _buttonAudio.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Audio";
         _buttonDisplay.transform.position = _buttonHowToPlay.transform.position;
         _buttonHowToPlay.transform.position += new Vector3(0.0f, -_buttonSpacing, 0.0f);

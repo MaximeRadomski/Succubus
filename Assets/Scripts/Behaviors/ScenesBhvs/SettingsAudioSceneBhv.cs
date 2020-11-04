@@ -33,8 +33,8 @@ public class SettingsAudioSceneBhv : SceneBhv
 #if UNITY_ANDROID
         GameObject.Find("VibrationContainer").transform.position = new Vector3(0.0f, -_containerSpace, 0.0f);
         GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 2);
+        GameObject.Find("SettingsTitle").GetComponent<TMPro.TextMeshPro>().text = "Audio & Vibration";
 #endif
-
         SetButtons();
         Constants.SetLastEndActionClickedName("EffectsLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetEffectsLevel()));
         LevelChoice();
