@@ -407,4 +407,26 @@ public class PlayerPrefsHelper : MonoBehaviour
         var sensitivity = PlayerPrefs.GetFloat(Constants.PpTouchSensitivity, Constants.PpTouchSensitivityDefault);
         return sensitivity;
     }
+
+    public static void SaveFullscreen(bool enabled)
+    {
+        PlayerPrefs.SetInt(Constants.PpFullScreen, enabled ? 1 : 0);
+    }
+
+    public static bool GetFullscreen()
+    {
+        var enabled = PlayerPrefs.GetInt(Constants.PpFullScreen, Constants.PpFullScreenDefault == true ? 1 : 0);
+        return enabled == 1 ? true : false;
+    }
+
+    public static void SaveResolution(int resolutionId)
+    {
+        PlayerPrefs.SetInt(Constants.PpResolution, resolutionId);
+    }
+
+    public static int GetResolution()
+    {
+        var resolutionId = PlayerPrefs.GetInt(Constants.PpResolution, Constants.PpResolutionDefault);
+        return resolutionId;
+    }
 }

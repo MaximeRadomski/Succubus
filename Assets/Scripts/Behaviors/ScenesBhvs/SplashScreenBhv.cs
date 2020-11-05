@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SplashScreenBhv : SceneBhv
 {
@@ -16,6 +17,8 @@ public class SplashScreenBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        var resolutionService = GetComponent<ResolutionService>();
+        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution());
         _catchPhrases = new List<string>()
         {
             "Welcome, sinner",

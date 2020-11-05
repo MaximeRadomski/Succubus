@@ -63,9 +63,9 @@ public static class Constants
     public const string PpGhostPieceColorDefault = "5";
     public const string PpGameplayChoice = "GameplayChoice";
     public const int PpGameplayChoiceDefault = 0;
-    public const string PpButtonsLeftPanel = "PpButtonsLeftPanel";
+    public const string PpButtonsLeftPanel = "ButtonsLeftPanel";
     public const string PpButtonsLeftPanelDefault = "H000000D0000L0R0000d0";
-    public const string PpButtonsRightPanel = "PpButtonsRightPanel";
+    public const string PpButtonsRightPanel = "ButtonsRightPanel";
     public const string PpButtonsRightPanelDefault = "S0I0000D0000A0C000000";
     public const string PpKeyBinding = "KeyLayout";
     public static string PpKeyBindingDefault = GetDefaultKeyBinding();
@@ -83,6 +83,10 @@ public static class Constants
     public const int PpFavKeyboardLayoutDefault = 0;
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;
+    public const string PpFullScreen = "FullScreen";
+    public const bool PpFullScreenDefault = false;
+    public const string PpResolution = "Resolution";
+    public const int PpResolutionDefault = 7;
 
     public static string GetDefaultKeyBinding()
     {

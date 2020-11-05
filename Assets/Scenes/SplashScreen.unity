@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 1286873010}
   - component: {fileID: 1286873009}
   - component: {fileID: 1286873008}
+  - component: {fileID: 1286873011}
   m_Layer: 0
   m_Name: SceneBhv
   m_TagString: Untagged
@@ -1061,6 +1062,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286873011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286873007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc71846ddcb9ff34aa8ba8e1fe1b3199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1332838960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1994265290}
   HasInitiated: 0
+  Paused: 0
 --- !u!81 &1994265289
 AudioListener:
   m_ObjectHideFlags: 0
