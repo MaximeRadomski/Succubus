@@ -60,10 +60,9 @@ public class SettingsDisplaySceneBhv : SceneBhv
 
     private void SetRes(int resId)
     {
-        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);
+        PlayerPrefsHelper.SaveResolution(_resolutionService.SetResolution(resId));
+        var choiceGameObject = GameObject.Find($"Res{PlayerPrefsHelper.GetResolution()}");
         _resolutionSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, choiceGameObject.transform.position.y, 0.0f);
-        PlayerPrefsHelper.SaveResolution(resId);
-        _resolutionService.SetResolution(resId);
     }
 
     private void GoToPrevious()

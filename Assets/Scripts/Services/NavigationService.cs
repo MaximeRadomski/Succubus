@@ -48,6 +48,13 @@ public static class NavigationService
         }
     }
 
+    public static bool IsRootScene()
+    {
+        Constants.NameLastScene = SceneManager.GetActiveScene().name;
+        var lastSeparator = _path.LastIndexOf('/');
+        return string.IsNullOrEmpty(_path) || lastSeparator == 0;
+    }
+
     public static void LoadPreviousScene(string onRootPreviousScene = null)
     {
         Constants.NameLastScene = SceneManager.GetActiveScene().name;

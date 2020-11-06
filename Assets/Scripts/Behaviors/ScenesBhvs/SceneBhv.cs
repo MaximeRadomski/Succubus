@@ -24,7 +24,8 @@ public abstract class SceneBhv : MonoBehaviour
 
     public virtual void PauseOrPrevious()
     {
-        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, Previous, reverse: true);
+        if (!NavigationService.IsRootScene())
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, Previous, reverse: true);
         object Previous(bool result)
         {
             NavigationService.LoadPreviousScene();

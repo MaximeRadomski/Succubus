@@ -11,6 +11,8 @@ public class SplashScreenBhv : SceneBhv
 
     void Start()
     {
+        // [DEBUG]
+        //PlayerPrefs.DeleteAll();
         Init();
     }
 
@@ -18,7 +20,7 @@ public class SplashScreenBhv : SceneBhv
     {
         base.Init();
         var resolutionService = GetComponent<ResolutionService>();
-        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution());
+        PlayerPrefsHelper.SaveResolution(resolutionService.SetResolution(PlayerPrefsHelper.GetResolution()));
         _catchPhrases = new List<string>()
         {
             "Welcome, sinner",
@@ -56,7 +58,7 @@ public class SplashScreenBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentMusicType = MusicType.Menu;
-            NavigationService.LoadNextScene(Constants.MainMenuScene);
+            NavigationService.NewRootScene(Constants.MainMenuScene);
             return true;
         }
     }

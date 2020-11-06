@@ -84,9 +84,9 @@ public static class Constants
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;
     public const string PpFullScreen = "FullScreen";
-    public const bool PpFullScreenDefault = false;
+    public const bool PpFullScreenDefault = true;
     public const string PpResolution = "Resolution";
-    public const int PpResolutionDefault = 7;
+    public const int PpResolutionDefault = 8;
 
     public static string GetDefaultKeyBinding()
     {

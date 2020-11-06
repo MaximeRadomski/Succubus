@@ -11,7 +11,7 @@ public static class OpponentsData
             Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 2222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 3, 1),
+                //new OpponentAttack(AttackType.MirrorMirror, 3, 1),
                 new OpponentAttack(AttackType.Intoxication, 10)
                 //new OpponentAttack(AttackType.DarkRow, 2),
                 //new OpponentAttack(AttackType.WasteRow, 2, 1)

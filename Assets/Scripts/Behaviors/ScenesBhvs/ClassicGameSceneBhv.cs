@@ -36,7 +36,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Init();
         _run = PlayerPrefsHelper.GetRun();
         _stepsService = new StepsService();
-        _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         if (Constants.CurrentGameMode == GameMode.TrainingDummy
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
@@ -45,6 +44,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
+            _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
             _opponents = _currentStep.Opponents;
             Constants.CurrentItemCooldown = _run.CurrentItemCooldown;
         }
@@ -76,9 +76,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idHit = _soundControler.SetSound("Hit");
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
-        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ _run.CurrentRealm.ToString().ToLower()}\nlvl {_run.RealmLevel}";
+        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit:true);
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Character.Realm, _run.CurrentRealm);
+        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(_currentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
     }
 
     protected void NextOpponent(bool sceneInit = false)
@@ -105,7 +105,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             CameraBhv.Bump(4);
             Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime: 3.0f);
         }
-        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + _run.CurrentRealm + "Opponents_" + _currentOpponent.Id);
+        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_run?.CurrentRealm ?? Realm.Hell}Opponents_{_currentOpponent.Id}");
         _opponentType.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? _currentOpponent.HpMax : Constants.CurrentOpponentHp;
         _weaknessInstance.SetVisible(_currentOpponent.Weakness != Weakness.None);
@@ -115,7 +115,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentHpBar.UpdateContent(0, _currentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, _currentOpponent.HpMax, Direction.Up);
         _opponentCooldownBar.UpdateContent(0, 1);
-        _gameplayControler.SetGravity(_currentOpponent.GravityLevel + (_run.RealmLevel - 1));
+        _gameplayControler.SetGravity(_currentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
         StartOpponentCooldown(sceneInit);
     }
 
@@ -512,7 +512,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void OnApplicationQuit()
     {
-        if (_isVictorious)
+        if (_isVictorious || _run == null)
             return;
         _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
         _stepsService.SetVisionOnRandomStep(_run);

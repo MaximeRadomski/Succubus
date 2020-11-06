@@ -24,6 +24,7 @@ public class MainMenuSceneBhv : SceneBhv
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
+        GameObject.Find("ButtonQuit").GetComponent<ButtonBhv>().EndActionDelegate = Quit;
     }
 
     private void GoToNewAscension()
@@ -57,6 +58,17 @@ public class MainMenuSceneBhv : SceneBhv
         {
             NavigationService.LoadNextScene(Constants.SettingsScene);
             return true;
+        }
+    }
+
+    private void Quit()
+    {
+        Instantiator.NewPopupYesNo("Quit", "do you wish to quit the game?", "Nope", "Yup", OnQuit);
+        object OnQuit(bool result)
+        {
+            if (result)
+                Application.Quit();
+            return result;
         }
     }
 
