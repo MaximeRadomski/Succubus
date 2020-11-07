@@ -1782,6 +1782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 519420031}
   HasInitiated: 0
+  Paused: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
