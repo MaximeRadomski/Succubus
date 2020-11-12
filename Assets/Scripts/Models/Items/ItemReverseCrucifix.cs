@@ -12,27 +12,9 @@ public class ItemReverseCrucifix : Item
         Cooldown = 40;
     }
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
-        _gameplayControler.SceneBhv.Paused = true;
-        _gameplayControler.SceneBhv.DamageOpponent(666, gameplayControler.CharacterInstanceBhv.gameObject);
-        _gameplayControler.SceneBhv.Paused = false;
-        return true;
-    }
-
-    public void ClearFromTop(int nbRows)
-    {
-        int start = _gameplayControler.GetHighestBlock();
-        int end = start - (nbRows - 1);
-        for (int y = start; y >= end; --y)
-        {
-            if (y < 0)
-                break;
-            _gameplayControler.DeleteLine(y);
-        }
-        _gameplayControler.ClearLineSpace();
-        _gameplayControler.DropGhost();
+        _gameplayControler.SceneBhv.DamageOpponent(666, _gameplayControler.CharacterInstanceBhv.gameObject);
+        return base.Effect();
     }
 }

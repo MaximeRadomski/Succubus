@@ -13,11 +13,9 @@ public class ItemVoodooDoll : Item
         Cooldown = 1;
     }
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
         Constants.CurrentOpponentCooldown = 1000;
-        return true;
+        return base.Effect();
     }
 }

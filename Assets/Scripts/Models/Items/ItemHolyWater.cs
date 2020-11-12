@@ -13,14 +13,10 @@ public class ItemHolyWater : Item
         Cooldown = 12;
     }
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
-        _gameplayControler.SceneBhv.Paused = true;
         _gameplayControler.CheckForWasteRows(4);
         _gameplayControler.ClearLineSpace();
-        _gameplayControler.SceneBhv.Paused = false;
-        return true;
+        return base.Effect();
     }
 }

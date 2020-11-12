@@ -66,6 +66,7 @@ public class GameplayControler : MonoBehaviour
     private int _idConsecutive;
     private int _idHold;
     private int _idItem;
+    private int _idBipItem;
     private int _idLeftRightDown;
     private int _idLock;
     private int _idPerfect;
@@ -157,6 +158,7 @@ public class GameplayControler : MonoBehaviour
         _idConsecutive = _soundControler.SetSound("Consecutive");
         _idHold = _soundControler.SetSound("Hold");
         _idItem = _soundControler.SetSound("Item");
+        _idBipItem = _soundControler.SetSound("BipItem");
         _idLeftRightDown = _soundControler.SetSound("LeftRightDown");
         _idLock = _soundControler.SetSound("Lock");
         _idPerfect = _soundControler.SetSound("Perfect");
@@ -1155,8 +1157,8 @@ public class GameplayControler : MonoBehaviour
         if (_characterItem != null)
         {
             
-            if (_characterItem.Activate(Character, this))
-                _soundControler.PlaySound(_idItem);
+            if (_characterItem.Activate(Character, this, () => { _soundControler.PlaySound(_idItem); return true; }))
+                _soundControler.PlaySound(_idBipItem);
             UpdateItemAndSpecialVisuals();
         }
     }

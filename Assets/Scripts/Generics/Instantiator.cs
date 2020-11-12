@@ -22,11 +22,12 @@ public class Instantiator : MonoBehaviour
         tmp321Instance.GetComponent<A321Bhv>().Init(afterAnimation);
     }
 
-    public void NewAttackLine(Vector3 source, Vector3 target, Realm realm)
+    public GameObject NewAttackLine(Vector3 source, Vector3 target, Realm realm, bool linear = true, Sprite sprite = null, System.Func<object> onPop = null)
     {
         var attackLine = new GameObject("AttackLine");
         attackLine.AddComponent<AttackLineBhv>();
-        attackLine.GetComponent<AttackLineBhv>().Init(source, target, realm, this);
+        attackLine.GetComponent<AttackLineBhv>().Init(source, target, realm, this, linear, sprite, onPop);
+        return attackLine;
     }
 
     public GameObject NewStepsContainer()

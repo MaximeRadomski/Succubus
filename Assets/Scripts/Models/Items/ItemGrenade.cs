@@ -10,21 +10,12 @@ public class ItemGrenade : Item
         Name = ItemsData.Items[Id];
         Description = "clears your last four rows";
         Rarity = Rarity.Common;
-        Cooldown = 12;
+        Cooldown = 1/*12*/;
     }
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
-        _gameplayControler.SceneBhv.Paused = true;
-        ClearFromTop(4);
-        _gameplayControler.SceneBhv.Paused = false;
-        return true;
-    }
-
-    public void ClearFromTop(int nbRows)
-    {
+        int nbRows = 4;
         int start = _gameplayControler.GetHighestBlock();
         int end = start - (nbRows - 1);
         for (int y = start; y >= end; --y)
@@ -35,5 +26,6 @@ public class ItemGrenade : Item
         }
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
+        return base.Effect();
     }
 }

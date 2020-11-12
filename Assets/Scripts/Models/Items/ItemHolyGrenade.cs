@@ -12,11 +12,8 @@ public class ItemHolyGrenade : Item
         Cooldown = 40;
     }
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
-        _gameplayControler.SceneBhv.Paused = true;
         int end = _gameplayControler.GetHighestBlock();
         for (int y = 0; y <= end; ++y)
         {
@@ -26,7 +23,6 @@ public class ItemHolyGrenade : Item
         }
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
-        _gameplayControler.SceneBhv.Paused = false;
-        return true;
+        return base.Effect();
     }
 }

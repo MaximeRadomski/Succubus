@@ -14,14 +14,12 @@ public class ItemInnerStrength : Item
 
     private int _oldAttack;
 
-    public override bool Activate(Character character, GameplayControler gameplayControler)
+    protected override object Effect()
     {
-        if (!base.Activate(character, gameplayControler))
-            return false;
-        _oldAttack = character.Attack;
-        character.Attack = _oldAttack * 2;
-        gameplayControler.Invoke(nameof(AfterDelay), 4.0f);
-        return true;
+        _oldAttack = _character.Attack;
+        _character.Attack = _oldAttack * 2;
+        _gameplayControler.Invoke(nameof(AfterDelay), 4.0f);
+        return base.Effect();
     }
 
     private void AfterDelay()

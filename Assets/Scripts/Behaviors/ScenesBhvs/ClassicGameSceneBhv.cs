@@ -514,8 +514,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_isVictorious || _run == null)
             return;
-        _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
-        _stepsService.SetVisionOnRandomStep(_run);
-        _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
+        if (Constants.CurrentGameMode == GameMode.Ascension
+            || Constants.CurrentGameMode == GameMode.TrueAscension)
+        {
+            _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
+            _stepsService.SetVisionOnRandomStep(_run);
+            _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
+        }
     }
 }
