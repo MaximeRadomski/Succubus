@@ -33,7 +33,7 @@ public abstract class Item : Loot
         _gameplayControler.FadeBlocksOnText();
         Constants.ResetCurrentItemCooldown(character, this);
         _gameplayControler.UpdateItemAndSpecialVisuals();
-        _popPosition = new Vector3(4.5f, 4.5f, 0.0f);
+        _popPosition = new Vector3(4.5f, 6.5f, 0.0f);
         _attackLine = gameplayControler.Instantiator.NewAttackLine(gameplayControler.CharacterInstanceBhv.transform.position, _popPosition, character.Realm, linear: false,
             Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + Id.ToString("00")), Effect);
         _gameplayControler.SceneBhv.Paused = true;
