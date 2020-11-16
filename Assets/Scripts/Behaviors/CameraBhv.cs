@@ -6,7 +6,7 @@ public class CameraBhv : MonoBehaviour
     public bool HasInitiated;
     public bool Paused;
 
-    private Vector3 _beforeFocusPosition;
+    private Vector3 _originalPosition;
     private Vector3 _targetPosition;
 
     private float _initialSize;
@@ -14,6 +14,8 @@ public class CameraBhv : MonoBehaviour
     private bool _isBumbing;
     private bool _isResetBumping;
     private bool _isSliding;
+    private bool _isPoundering;
+    private bool _isResetingPosition;
 
     public void Init()
     {
@@ -21,20 +23,19 @@ public class CameraBhv : MonoBehaviour
         float desiredHalfHeight = 0.5f * unitsPerPixel * Screen.height;
         if (desiredHalfHeight > Constants.CameraSize)
             Camera.orthographicSize = desiredHalfHeight;
-        _beforeFocusPosition = transform.position;
+        _originalPosition = transform.position;
         HasInitiated = true;
         _isBumbing = false;
     }
 
     public void FocusY(float y)
     {
-        _beforeFocusPosition = transform.position;
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
     }
 
     public void Unfocus()
     {
-        transform.position = _beforeFocusPosition;
+        transform.position = _originalPosition;
     }
 
     private void Update()
@@ -51,6 +52,15 @@ public class CameraBhv : MonoBehaviour
         {
             Sliding();
         }
+        else if (_isPoundering)
+        {
+            Poundering();
+        }
+        else if (_isResetingPosition)
+        {
+            ResetingPosition();
+        }
+
     }
 
     public void Bump(int bumpPercent)
@@ -77,6 +87,33 @@ public class CameraBhv : MonoBehaviour
         {
             Camera.orthographicSize = _initialSize;
             _isResetBumping = false;
+        }
+    }
+
+    public void Pounder(int nbPixel)
+    {
+        _targetPosition = transform.position + new Vector3(0.0f, Constants.Pixel * nbPixel * 3, 0.0f);
+        _isResetingPosition = false;
+        _isPoundering = true;
+    }
+
+    private void Poundering()
+    {
+        transform.position = Vector3.Lerp(transform.position, _targetPosition, 0.25f);
+        if (Helper.FloatEqualsPrecision(transform.position.y, _targetPosition.y, 0.05f))
+        {
+            _isPoundering = false;
+            _isResetingPosition = true;
+        }
+    }
+
+    private void ResetingPosition()
+    {
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.001f);
+        if (Helper.FloatEqualsPrecision(transform.position.y, _originalPosition.y, 0.001f))
+        {
+            transform.position = _originalPosition;
+            _isResetingPosition = false;
         }
     }
 

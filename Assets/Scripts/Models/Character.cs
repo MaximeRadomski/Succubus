@@ -32,6 +32,7 @@ public class Character : Loot
     public int AirPieceOpacity;
     public bool CanMimic;
     public bool CanDoubleJump;
+    public int PiecesWeight;
 
     public Character()
     {
@@ -53,6 +54,7 @@ public class Character : Loot
         AirPieceOpacity = 0;
         CanMimic = false;
         CanDoubleJump = false;
+        PiecesWeight = 0;
     }
 
     public int GetAttack()

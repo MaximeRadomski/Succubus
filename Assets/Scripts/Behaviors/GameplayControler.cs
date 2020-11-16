@@ -796,6 +796,8 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
+        if (nbLinesDropped > 2 && Character.PiecesWeight > 0)
+            this.SceneBhv.CameraBhv.Pounder(Character.PiecesWeight);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
@@ -1156,9 +1158,11 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_characterItem != null)
         {
-            
             if (_characterItem.Activate(Character, this, () => { _soundControler.PlaySound(_idItem); return true; }))
+            {
+                this.SceneBhv.CameraBhv.Bump(4);
                 _soundControler.PlaySound(_idBipItem);
+            }
             UpdateItemAndSpecialVisuals();
         }
     }
@@ -1168,7 +1172,11 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         if (_characterSpecial.Activate())
+        {
+            this.SceneBhv.CameraBhv.Bump(4);
             _soundControler.PlaySound(_idSpecial);
+            this.CharacterInstanceBhv.Special(Character.Realm);
+        }
         UpdateItemAndSpecialVisuals();
     }
 

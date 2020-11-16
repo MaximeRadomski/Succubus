@@ -7,6 +7,7 @@ public class CharacterInstanceBhv : MonoBehaviour
     public System.Func<object> AfterDeath;
 
     private SceneBhv _sceneBhv;
+    private SpecialParticleBhv _specialParticleBhv;
     private Direction _direction;
     private Vector3 _originalPosition;
     private Vector3 _idlePositionToReach;
@@ -19,7 +20,7 @@ public class CharacterInstanceBhv : MonoBehaviour
     private Vector3 _spawnPosition;
     private bool _attacking;
     private bool _resetAttacking;
-    private bool _resetingHit;
+    private bool _resetingTransform;
     private bool _isSpawning;
     private bool _isDying;
     private SpriteRenderer _spriteRenderer;
@@ -36,6 +37,8 @@ public class CharacterInstanceBhv : MonoBehaviour
         if (_hasInit)
             return;
         _sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+        if (transform.childCount > 0)
+            _specialParticleBhv = transform.GetChild(0).GetComponent<SpecialParticleBhv>();
         _direction = transform.position.x > Helper.GetMainCamera().transform.position.x ? Direction.Right : Direction.Left;
         _originalPosition = transform.position;
         _originalScale = transform.localScale;
@@ -59,8 +62,8 @@ public class CharacterInstanceBhv : MonoBehaviour
             Attacking();
         else if (_resetAttacking)
             ResetAttacking();
-        else if (_resetingHit)
-            ResetingHit();
+        else if (_resetingTransform)
+            ResetingTransform();
         else
             Idle();
     }
@@ -72,7 +75,7 @@ public class CharacterInstanceBhv : MonoBehaviour
             _idlePositionToReach = new Vector2(Random.Range(-2 * Constants.Pixel, 2 * Constants.Pixel), Random.Range(-2 * Constants.Pixel, 2 * Constants.Pixel));
     }
 
-    private void ResetingHit()
+    private void ResetingTransform()
     {
         transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
         transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
@@ -80,7 +83,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         {
             transform.localScale = _originalScale;
             transform.position = _originalPosition;
-            _resetingHit = false;
+            _resetingTransform = false;
         }
     }
 
@@ -158,7 +161,16 @@ public class CharacterInstanceBhv : MonoBehaviour
     {
         transform.localScale = new Vector3(transform.localScale.x * _hitScale.x, _hitScale.y, _hitScale.z);
         transform.position = _originalPosition + _hitPosition;
-        _resetingHit = true;
+        _resetingTransform = true;
+    }
+
+    public void Special(Realm realm)
+    {
+        _specialParticleBhv?.Activate(realm);
+        var specialMult = 2.0f;
+        transform.localScale = new Vector3(transform.localScale.x * (_hitScale.x * specialMult), transform.localScale.y * (_hitScale.y * specialMult), _hitScale.z);
+        transform.position = _originalPosition + _hitPosition * 2;
+        _resetingTransform = true;
     }
 
     public void Die()
