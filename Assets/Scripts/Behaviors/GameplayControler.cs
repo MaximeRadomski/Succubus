@@ -616,6 +616,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
+        SpreadEffect();
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -796,6 +797,7 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
+        CurrentPiece.GetComponent<Piece>().Pounder();
         if (nbLinesDropped > 2 && Character.PiecesWeight > 0)
             this.SceneBhv.CameraBhv.Pounder(Character.PiecesWeight);
     }
@@ -1959,4 +1961,49 @@ public class GameplayControler : MonoBehaviour
     }
 
     #endregion
+
+    private void SpreadEffect()
+    {
+        var minX = 99;
+        var maxX = -99;
+        var minY = 99;
+        foreach (Transform child in CurrentPiece.transform)
+        {
+            if (child.transform.position.x < minX)
+                minX = Mathf.RoundToInt(child.transform.position.x);
+            if (child.transform.position.x > maxX)
+                maxX = Mathf.RoundToInt(child.transform.position.x);
+            if (child.transform.position.y < minY)
+                minY = Mathf.RoundToInt(child.transform.position.y);
+        }
+        minY--;
+        minX = minX < 0 ? 0 : minX;
+        maxX = maxX > 9 ? 9 : maxX;
+        minY = minY < 0 ? -1 : minY;
+        var invoqueDelay = 0.0f;
+        var xBlocks = new List<int>();
+        var previousX = -1;
+        for (int y = minY; y >= 0 && y >= minY - 4; y--)
+        {
+            if (xBlocks.Count > 0)
+                xBlocks.Clear();
+            for (int x = minX; x <= maxX; ++x)
+            {
+                if (PlayFieldBhv.Grid[x, y] != null && (x != previousX || minX == maxX))
+                    xBlocks.Add(x);
+            }
+            if (xBlocks.Count <= 0)
+                continue;
+            var randomX = xBlocks[UnityEngine.Random.Range(0, xBlocks.Count)];
+            var blockBhv = PlayFieldBhv.Grid[randomX, y].GetComponent<BlockBhv>();
+            StartCoroutine(Helper.ExecuteAfterDelay(invoqueDelay, () =>
+            {
+                if (blockBhv != null)
+                    blockBhv.Spread();
+                return true;
+            }));
+            invoqueDelay += 0.05f;
+            previousX = randomX;
+        }
+    }
 }
