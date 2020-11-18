@@ -13,7 +13,9 @@ public class SettingsAudioSceneBhv : SceneBhv
     private SoundControlerBhv _soundControler;
 
     private int _idSpecial;
+#if UNITY_ANDROID
     private float _containerSpace = 5.5f;
+#endif
 
     void Start()
     {

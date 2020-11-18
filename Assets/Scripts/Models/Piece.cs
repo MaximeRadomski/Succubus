@@ -192,12 +192,4 @@ public class Piece : MonoBehaviour
         }
         return false;
     }
-
-    public void Pounder()
-    {
-        foreach (Transform block in transform)
-        {
-            block.GetComponent<BlockBhv>()?.Pounder();
-        }
-    }
 }

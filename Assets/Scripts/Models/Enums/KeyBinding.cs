@@ -21,5 +21,7 @@ public enum KeyBinding
     [Description("Special")]
     Special = 8,
     [Description("Back / Pause")]
-    BackPause = 9
+    BackPause = 9,
+    [Description("None")]
+    None = 99
 }

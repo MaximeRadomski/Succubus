@@ -131,6 +131,7 @@ public static class Constants
     public const string GoOpponentInstance = "OpponentInstance";
     public const string GoForcedPiece = "ForcedPiece";
     public const string GoDrillTarget = "DrillTarget";
+    public const string GoMenuSelector = "MenuSelector";
 
 
     //  GAMEOBJECT VALUES  //

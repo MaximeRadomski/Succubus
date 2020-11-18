@@ -55,6 +55,7 @@ public class GameplayControler : MonoBehaviour
     private List<Vector3> _currentGhostPiecesOriginalPos;
     private GameplayChoice _gameplayChoice;
     private Color _ghostColor;
+    private KeyBinding _inputWhileLocked = KeyBinding.None;
 
     private SoundControlerBhv _soundControler;
     private MusicControlerBhv _musicControler;
@@ -505,8 +506,27 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnNewPiece(CurrentPiece);
         AfterSpawn?.Invoke();
         DropGhost();
+        CheckInputWhileLocked();
     }
     public Func<bool> AfterSpawn;
+
+    private void CheckInputWhileLocked()
+    {
+        if (_inputWhileLocked != KeyBinding.None)
+        {
+            if (_inputWhileLocked == KeyBinding.Hold)
+                Hold();
+            else if (_inputWhileLocked == KeyBinding.Clock)
+                Clock();
+            else if (_inputWhileLocked == KeyBinding.AntiClock)
+                AntiClock();
+            else if (_inputWhileLocked == KeyBinding.Left)
+                Left();
+            else if (_inputWhileLocked == KeyBinding.Right)
+                Right();
+            _inputWhileLocked = KeyBinding.None;
+        }
+    }
 
     private void UpdateNextPieces()
     {
@@ -650,7 +670,10 @@ public class GameplayControler : MonoBehaviour
     {
         _leftHolded = _rightHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        {
+            _inputWhileLocked = KeyBinding.Left;
             return;
+        }
         SetTimeDirectionHolded();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -663,9 +686,12 @@ public class GameplayControler : MonoBehaviour
     public void LeftHolded()
     {
         ++_leftHolded;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
-            return;
         ++_timeDirectionHolded;
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        {
+            _timeDirectionHolded += 10;
+            return;
+        }
         if (_timeDirectionHolded < 10)
             return;
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -680,7 +706,10 @@ public class GameplayControler : MonoBehaviour
     {
         _rightHolded = _leftHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        {
+            _inputWhileLocked = KeyBinding.Right;
             return;
+        }
         SetTimeDirectionHolded();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -693,9 +722,12 @@ public class GameplayControler : MonoBehaviour
     public void RightHolded()
     {
         ++_rightHolded;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
-            return;
         ++_timeDirectionHolded;
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        {
+            _timeDirectionHolded += 10;
+            return;
+        }
         if (_timeDirectionHolded < 10)
             return;
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -770,6 +802,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
         bool hardDropping = true;
+        CurrentPiece.GetComponent<Piece>().IsLocked = true;
         int nbLinesDropped = 0;
         while (hardDropping)
         {
@@ -797,7 +830,6 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
-        CurrentPiece.GetComponent<Piece>().Pounder();
         if (nbLinesDropped > 2 && Character.PiecesWeight > 0)
             this.SceneBhv.CameraBhv.Pounder(Character.PiecesWeight);
     }
@@ -895,7 +927,10 @@ public class GameplayControler : MonoBehaviour
     public void Clock()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        {
+            _inputWhileLocked = KeyBinding.Clock;
             return;
+        }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1003,7 +1038,10 @@ public class GameplayControler : MonoBehaviour
     public void AntiClock()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        {
+            _inputWhileLocked = KeyBinding.AntiClock;
             return;
+        }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1111,7 +1149,11 @@ public class GameplayControler : MonoBehaviour
     public void Hold()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused)
+        {
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.Hold;
             return;
+        }
         if (_holder.transform.childCount <= 0)
         {
             var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
@@ -1150,6 +1192,7 @@ public class GameplayControler : MonoBehaviour
             _characterSpecial.OnNewPiece(CurrentPiece);
             AfterSpawn?.Invoke();
             DropGhost();
+            CheckInputWhileLocked();
         }
         _soundControler.PlaySound(_idHold);
     }
@@ -1969,6 +2012,9 @@ public class GameplayControler : MonoBehaviour
         var minY = 99;
         foreach (Transform child in CurrentPiece.transform)
         {
+            var blockBhv = child.GetComponent<BlockBhv>();
+            if (blockBhv != null)
+                blockBhv.Spread(0.5f);
             if (child.transform.position.x < minX)
                 minX = Mathf.RoundToInt(child.transform.position.x);
             if (child.transform.position.x > maxX)
@@ -1980,7 +2026,8 @@ public class GameplayControler : MonoBehaviour
         minX = minX < 0 ? 0 : minX;
         maxX = maxX > 9 ? 9 : maxX;
         minY = minY < 0 ? -1 : minY;
-        var invoqueDelay = 0.0f;
+        var invoqueDelayBase = 0.05f;
+        var invoqueDelay = invoqueDelayBase;
         var xBlocks = new List<int>();
         var previousX = -1;
         for (int y = minY; y >= 0 && y >= minY - 4; y--)
@@ -1999,10 +2046,10 @@ public class GameplayControler : MonoBehaviour
             StartCoroutine(Helper.ExecuteAfterDelay(invoqueDelay, () =>
             {
                 if (blockBhv != null)
-                    blockBhv.Spread();
+                    blockBhv.Spread(0.2f);
                 return true;
             }));
-            invoqueDelay += 0.05f;
+            invoqueDelay += invoqueDelayBase;
             previousX = randomX;
         }
     }

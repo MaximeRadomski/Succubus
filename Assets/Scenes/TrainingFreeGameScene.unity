@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -1988,7 +1988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -5543,7 +5543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0

@@ -13,6 +13,11 @@ public class InputControlerBhv : MonoBehaviour
     private GameplayControler _gameplayControler;
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
+    private List<GameObject> _availableButtons;
+
+    private GameObject _menuSelector;
+    private int _currentInputLayer = -1;
+    private List<Vector2> _lastPositions;
 
     // THIS IS DONE FOR BETTER PERF
     //Faster than refecting on enums 
@@ -22,6 +27,7 @@ public class InputControlerBhv : MonoBehaviour
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
+        _menuSelector = GameObject.Find(Constants.GoMenuSelector);
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
         _inputNames = new List<string>();
@@ -36,7 +42,8 @@ public class InputControlerBhv : MonoBehaviour
         if (Constants.InputLocked)
             return;
 #if !UNITY_ANDROID
-        CheckKeyboardInputs();
+        CheckGameKeyboardInputs();
+        CheckMenuKeyboardInputs();
 #endif
         // IF BACK BUTTON //
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(_keyBinding[9])) && !Constants.EscapeLocked)
@@ -202,7 +209,7 @@ public class InputControlerBhv : MonoBehaviour
     //8: Special
     //9: Back-Pause
 
-    private void CheckKeyboardInputs()
+    private void CheckGameKeyboardInputs()
     {
         if (_gameplayControler == null)
             return;
@@ -265,5 +272,132 @@ public class InputControlerBhv : MonoBehaviour
             }
         }
         _gameplayControler.UpdateFrameKeysPressOrHolded();
+    }
+
+    private void InitMenuKeyboardInputs()
+    {
+        var allGameObjects = FindObjectsOfType<GameObject>();
+        _availableButtons = new List<GameObject>();
+        if (allGameObjects.Length > 0)
+        {
+            for (int i = allGameObjects.Length - 1; i >= 0; i--)
+            {
+                var buttonBhv = allGameObjects[i].GetComponent<ButtonBhv>();
+                if (buttonBhv != null
+                    && (buttonBhv.BeginActionDelegate != null || buttonBhv.DoActionDelegate != null || buttonBhv.EndActionDelegate != null)
+                    && buttonBhv.Layer == Constants.InputLayer)
+                    _availableButtons.Add(allGameObjects[i]);
+            }
+        }
+        if (Constants.InputLayer > _currentInputLayer)
+        {
+            if (_lastPositions == null)
+                _lastPositions = new List<Vector2>();
+            _lastPositions.Add(_menuSelector.transform.position);
+            _menuSelector.GetComponent<MenuSelectorBhv>().Reset();
+            FindNearest(Direction.Down);
+        }
+        else
+        {
+            if (_lastPositions != null && _lastPositions.Count > 1)
+            {
+                _menuSelector.transform.position = _lastPositions[_lastPositions.Count - 1];
+                _lastPositions.RemoveAt(_lastPositions.Count - 1);
+            }
+            else
+            {
+                _menuSelector.GetComponent<MenuSelectorBhv>().Reset();
+                FindNearest(Direction.Down);
+            }
+        }
+        _currentInputLayer = Constants.InputLayer;
+    }
+
+    private void CheckMenuKeyboardInputs()
+    {
+        if (_menuSelector == null)
+            return;
+        if (_gameplayControler != null)
+        {
+            if (!_gameplayControler.SceneBhv.Paused)
+                return;
+        }
+        if (_currentInputLayer != Constants.InputLayer)
+            InitMenuKeyboardInputs();
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            FindNearest(Direction.Up);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            FindNearest(Direction.Down);
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            FindNearest(Direction.Left);
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+            FindNearest(Direction.Right);
+        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(_keyBinding[0]))
+            ButtonOnSelector();
+    }
+
+    private void FindNearest(Direction direction, bool canRetry = true)
+    {
+        var minDistance = 99.0f;
+        GameObject selectedGameObject = null;
+
+        foreach (var button in _availableButtons)
+        {
+            var precision = 1.0f;
+            if ((direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision)
+                || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision)
+                || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision)
+                || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision)
+                || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
+                || !Helper.IsVisibleInsideCamera(_mainCamera, button.transform.position))
+                continue;
+            var currentDistance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
+            if (currentDistance < minDistance && currentDistance > precision)
+            {
+                minDistance = currentDistance;
+                selectedGameObject = button;
+            }
+        }
+
+        if (selectedGameObject != null)
+            _menuSelector.transform.position = selectedGameObject.transform.position;
+        else if (canRetry == true)
+        {
+            if (direction == Direction.Up)
+                _menuSelector.transform.position += new Vector3(0.0f, -50.0f, 0.0f);
+            else if (direction == Direction.Down)
+                _menuSelector.transform.position += new Vector3(0.0f, 50.0f, 0.0f);
+            else if (direction == Direction.Left)
+                _menuSelector.transform.position += new Vector3(50.0f, 0.0f, 0.0f);
+            else if (direction == Direction.Right)
+                _menuSelector.transform.position += new Vector3(-50.0f, 0.0f, 0.0f);
+            FindNearest(direction, canRetry:false);
+        }
+    }
+
+    private void ButtonOnSelector()
+    {
+        var minDistance = 99.0f;
+        GameObject selectedGameObject = null;
+
+        foreach (var button in _availableButtons)
+        {
+            var currentDistance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
+            if (currentDistance < minDistance)
+            {
+                minDistance = currentDistance;
+                selectedGameObject = button;
+            }
+        }
+
+        if (selectedGameObject != null)
+        {
+            Constants.LastEndActionClickedName = selectedGameObject.name;
+            var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
+            buttonBhv.BeginAction(selectedGameObject.transform.position);
+            buttonBhv.DoAction(selectedGameObject.transform.position);
+            buttonBhv.EndAction(selectedGameObject.transform.position);
+            
+        }
     }
 }

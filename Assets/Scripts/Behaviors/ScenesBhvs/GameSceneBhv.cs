@@ -52,6 +52,9 @@ public abstract class GameSceneBhv : SceneBhv
         {
             Constants.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
+            var menuSelector = GameObject.Find(Constants.GoMenuSelector);
+            if (menuSelector != null)
+                menuSelector.GetComponent<MenuSelectorBhv>().Reset();
             Instantiator.New321(_panelGame.transform.position, () =>
                 {
                     Paused = false;
