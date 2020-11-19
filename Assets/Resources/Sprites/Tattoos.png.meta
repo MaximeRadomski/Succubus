@@ -44,6 +44,15 @@ TextureImporter:
   - first:
       213: 8215500149782224945
     second: Tattoos_7
+  - first:
+      213: 4168872828667826416
+    second: Tattoos_6
+  - first:
+      213: 5265522426853898968
+    second: Tattoos_7
+  - first:
+      213: 8050579463907000929
+    second: Tattoos_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -105,7 +114,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,7 +126,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,7 +138,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -283,8 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d9c666e93b149150800000000000000
-      internalID: 5878353349117921747
+      spriteID: 0f0168200cfcad930800000000000000
+      internalID: 4168872828667826416
       vertices: []
       indices: 
       edges: []
@@ -304,8 +313,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13020ffcbd1530270800000000000000
-      internalID: 8215500149782224945
+      spriteID: 8daba71dfb4e21940800000000000000
+      internalID: 5265522426853898968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_8
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1624b3e5e5769bf60800000000000000
+      internalID: 8050579463907000929
       vertices: []
       indices: 
       edges: []

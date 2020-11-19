@@ -25,6 +25,8 @@ public class StepsSceneBhv : SceneBhv
 
     private Step _selectedStep;
 
+    public override Vector3? MenuSelectorBasePosition => new Vector3(0.0f, 4.0f, 0.0f);
+
     void Start()
     {
         Init();

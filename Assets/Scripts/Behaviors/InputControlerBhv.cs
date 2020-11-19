@@ -15,9 +15,9 @@ public class InputControlerBhv : MonoBehaviour
     private List<KeyCode> _keyBinding;
     private List<GameObject> _availableButtons;
 
-    private GameObject _menuSelector;
+    private MenuSelectorBhv _menuSelector;
     private int _currentInputLayer = -1;
-    private List<Vector2> _lastPositions;
+    private List<GameObject> _lastPositions;
 
     // THIS IS DONE FOR BETTER PERF
     //Faster than refecting on enums 
@@ -27,7 +27,7 @@ public class InputControlerBhv : MonoBehaviour
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
-        _menuSelector = GameObject.Find(Constants.GoMenuSelector);
+        _menuSelector = GameObject.Find(Constants.GoMenuSelector).GetComponent<MenuSelectorBhv>();
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
         _inputNames = new List<string>();
@@ -123,6 +123,11 @@ public class InputControlerBhv : MonoBehaviour
                 || (_endPhase = Input.GetMouseButtonUp(0))
                 || (_doPhase = Input.GetMouseButton(0)))
             {
+                if (!Constants.OnlyMouseInMenu)
+                {
+                    Constants.OnlyMouseInMenu = true;
+                    ResetMenuSelector();
+                }
                 _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
                 RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, _mainCamera.transform.forward);
@@ -286,31 +291,34 @@ public class InputControlerBhv : MonoBehaviour
                 if (buttonBhv != null
                     && (buttonBhv.BeginActionDelegate != null || buttonBhv.DoActionDelegate != null || buttonBhv.EndActionDelegate != null)
                     && buttonBhv.Layer == Constants.InputLayer)
+                {
+                    if (_gameplayControler == true && buttonBhv.Layer == 0)
+                        continue;
                     _availableButtons.Add(allGameObjects[i]);
+                }
             }
         }
+        _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
         if (Constants.InputLayer > _currentInputLayer)
-        {
-            if (_lastPositions == null)
-                _lastPositions = new List<Vector2>();
-            _lastPositions.Add(_menuSelector.transform.position);
-            _menuSelector.GetComponent<MenuSelectorBhv>().Reset();
-            FindNearest(Direction.Down);
-        }
+            ResetMenuSelector();
         else
         {
             if (_lastPositions != null && _lastPositions.Count > 1)
             {
-                _menuSelector.transform.position = _lastPositions[_lastPositions.Count - 1];
+                _menuSelector.MoveTo(_lastPositions[_lastPositions.Count - 1]);
                 _lastPositions.RemoveAt(_lastPositions.Count - 1);
             }
             else
-            {
-                _menuSelector.GetComponent<MenuSelectorBhv>().Reset();
-                FindNearest(Direction.Down);
-            }
+                ResetMenuSelector();
         }
         _currentInputLayer = Constants.InputLayer;
+    }
+
+    private void ResetMenuSelector()
+    {
+        _menuSelector.GetComponent<MenuSelectorBhv>().Reset(_currentScene.MenuSelectorBasePosition);
+        if (_currentScene.MenuSelectorBasePosition == null && !Constants.OnlyMouseInMenu)
+            FindNearest(Direction.Down);
     }
 
     private void CheckMenuKeyboardInputs()
@@ -338,20 +346,23 @@ public class InputControlerBhv : MonoBehaviour
 
     private void FindNearest(Direction direction, bool canRetry = true)
     {
+        Constants.OnlyMouseInMenu = false;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
 
         foreach (var button in _availableButtons)
         {
             var precision = 1.0f;
-            if ((direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision)
-                || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision)
-                || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision)
-                || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision)
+            if ((direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision / 2)
+                || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision / 2)
+                || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
+                || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision / 2)
                 || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
                 || !Helper.IsVisibleInsideCamera(_mainCamera, button.transform.position))
                 continue;
-            var currentDistance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
+            var currentHorizontalDistance = Mathf.Abs(button.transform.position.x - _menuSelector.transform.position.x);
+            var currentVerticalDistance = Mathf.Abs(button.transform.position.y - _menuSelector.transform.position.y);
+            var currentDistance = (direction == Direction.Up || direction == Direction.Down) ? ((currentHorizontalDistance * 2) + currentVerticalDistance) : (currentHorizontalDistance + (currentVerticalDistance * 2));
             if (currentDistance < minDistance && currentDistance > precision)
             {
                 minDistance = currentDistance;
@@ -360,7 +371,14 @@ public class InputControlerBhv : MonoBehaviour
         }
 
         if (selectedGameObject != null)
-            _menuSelector.transform.position = selectedGameObject.transform.position;
+        {
+            if (_lastPositions == null)
+                _lastPositions = new List<GameObject>();
+            if (_lastPositions.Count > 0)
+                _lastPositions.RemoveAt(_lastPositions.Count - 1);
+            _lastPositions.Add(selectedGameObject);
+            _menuSelector.MoveTo(selectedGameObject);
+        }
         else if (canRetry == true)
         {
             if (direction == Direction.Up)
@@ -377,13 +395,15 @@ public class InputControlerBhv : MonoBehaviour
 
     private void ButtonOnSelector()
     {
+        if (Constants.OnlyMouseInMenu)
+            return;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
 
         foreach (var button in _availableButtons)
         {
             var currentDistance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
-            if (currentDistance < minDistance)
+            if (currentDistance < minDistance && currentDistance < 1.0f)
             {
                 minDistance = currentDistance;
                 selectedGameObject = button;

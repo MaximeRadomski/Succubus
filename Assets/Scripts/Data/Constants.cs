@@ -202,6 +202,8 @@ public static class Constants
     public static int CurrentOpponentAttackId;
     public static bool IsffectAttackInProgress = false;
 
+    public static bool OnlyMouseInMenu;
+
     public static void ResetClassicGameCache()
     {
         ResetSelectedCharacterSpecialCooldown();
