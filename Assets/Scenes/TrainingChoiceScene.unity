@@ -327,6 +327,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &86176634
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -444,6 +445,7 @@ MonoBehaviour:
   YOffset: 2
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &169069336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -482,7 +484,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 9098328871534416840, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -564,7 +566,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -898376651
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 1
   m_Sprite: {fileID: -7004279444398782295, guid: d7fe11f95f98498488650f8194457364, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -645,7 +647,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -131127381
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: -8461514266414155272, guid: d18714b0cee243942a821d09350737d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -891,6 +893,7 @@ MonoBehaviour:
   YOffset: -1.429
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &914832606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -929,7 +932,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 2027992881987474578, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -975,6 +978,7 @@ MonoBehaviour:
   Paused: 0
   PauseMenu: {fileID: 0}
   Instantiator: {fileID: 0}
+  CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
 --- !u!114 &1286873009
@@ -1053,6 +1057,7 @@ MonoBehaviour:
   YOffset: 2
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1332838963
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1091,7 +1096,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 9098328871534416840, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1288,6 +1293,7 @@ MonoBehaviour:
   YOffset: -0.572
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1686173754
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1326,7 +1332,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: -3145627101456307842, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1468,6 +1474,7 @@ MonoBehaviour:
   YOffset: -1.429
   DontActivateOnStart: 0
   Rotated: 0
+  _customParent: {fileID: 0}
 --- !u!212 &1850407097
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1506,7 +1513,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1433922105
-  m_SortingLayer: -4
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 2027992881987474578, guid: bb5c7b27d2836d34899e35445a5b76c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1552,6 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1994265290}
   HasInitiated: 0
+  Paused: 0
 --- !u!81 &1994265289
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1694,6 +1702,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.75
 --- !u!212 &2034697429
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1732,7 +1741,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -898376651
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 2059665395819857453, guid: d7fe11f95f98498488650f8194457364, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1807,6 +1816,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &2080949650
 SpriteRenderer:
   m_ObjectHideFlags: 0

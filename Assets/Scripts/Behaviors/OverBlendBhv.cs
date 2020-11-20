@@ -102,6 +102,7 @@ public class OverBlendBhv : MonoBehaviour
         {
             _midActionDone = true;
             _resultAction?.Invoke(true);
+            Constants.InputLocked = false;
             EndPercent();
             return;
         }

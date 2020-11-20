@@ -250,6 +250,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &50355270
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +409,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &70661635
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -586,6 +588,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &95282622
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +819,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &142287928
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,6 +896,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &142287932
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1422,6 +1427,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &264636366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,6 +1555,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &298657188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,6 +1683,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &303270665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1811,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &315383554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,6 +2094,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &336794451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,6 +2171,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &336794455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2370,6 +2381,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &379050652
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2832,6 +2844,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.75
 --- !u!212 &471907273
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3179,6 +3192,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &538429329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3602,6 +3616,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &569604487
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3704,6 +3719,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &575377860
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3830,6 +3846,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &602671274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,6 +3923,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &602671278
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4033,6 +4051,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &608054663
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4160,6 +4179,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &645209280
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4521,6 +4541,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &697529705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4764,6 +4785,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &748610018
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5014,6 +5036,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &764213817
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5167,6 +5190,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &787318547
 GameObject:
   m_ObjectHideFlags: 0
@@ -5242,6 +5266,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &810443294
 GameObject:
   m_ObjectHideFlags: 0
@@ -5318,6 +5343,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &810443298
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5630,6 +5656,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &818322173
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6080,6 +6107,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &853613791
 GameObject:
   m_ObjectHideFlags: 0
@@ -6156,6 +6184,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &853613795
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6334,6 +6363,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &876815281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6533,6 +6563,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &876815286
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6634,6 +6665,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &924427786
 GameObject:
   m_ObjectHideFlags: 0
@@ -6873,6 +6905,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &977394130
 GameObject:
   m_ObjectHideFlags: 0
@@ -7205,6 +7238,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1016788517
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7307,6 +7341,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1034285698
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7485,6 +7520,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &1053049022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7730,6 +7766,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1058379936
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8217,6 +8254,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1186834537
 GameObject:
   m_ObjectHideFlags: 0
@@ -8426,6 +8464,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &1195013733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8759,6 +8798,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1200035544
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9081,6 +9121,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &1250431291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9480,6 +9521,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1258299664
 GameObject:
   m_ObjectHideFlags: 0
@@ -9607,6 +9649,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1289349724
 GameObject:
   m_ObjectHideFlags: 0
@@ -9837,6 +9880,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1385395989
 GameObject:
   m_ObjectHideFlags: 0
@@ -9964,6 +10008,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1387151001
 GameObject:
   m_ObjectHideFlags: 0
@@ -10039,6 +10084,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1388581144
 GameObject:
   m_ObjectHideFlags: 0
@@ -10653,6 +10699,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1504221446
 GameObject:
   m_ObjectHideFlags: 0
@@ -10780,6 +10827,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1507188854
 GameObject:
   m_ObjectHideFlags: 0
@@ -10938,6 +10986,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1508158139
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11066,6 +11115,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.75
 --- !u!212 &1514312433
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11192,6 +11242,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1538794893
 GameObject:
   m_ObjectHideFlags: 0
@@ -11610,6 +11661,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1577910646
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11737,6 +11789,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1582543476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11863,6 +11916,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1603949114
 GameObject:
   m_ObjectHideFlags: 0
@@ -11990,6 +12044,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1616665334
 GameObject:
   m_ObjectHideFlags: 0
@@ -12117,6 +12172,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1643243663
 GameObject:
   m_ObjectHideFlags: 0
@@ -12347,6 +12403,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &1665964841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12546,6 +12603,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1665964846
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12833,6 +12891,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1696183390
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13011,6 +13070,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1735341067
 GameObject:
   m_ObjectHideFlags: 0
@@ -13190,6 +13250,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1749506256
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13452,6 +13513,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1838440022
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13630,6 +13692,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1001 &1872397229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13829,6 +13892,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1872397234
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13982,6 +14046,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1914141825
 GameObject:
   m_ObjectHideFlags: 0
@@ -14211,6 +14276,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &1942268501
 GameObject:
   m_ObjectHideFlags: 0
@@ -14492,6 +14558,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1960126666
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14884,6 +14951,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1997667624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15065,6 +15133,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &2020394130
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15877,6 +15946,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &2094674139
 BoxCollider2D:
   m_ObjectHideFlags: 0

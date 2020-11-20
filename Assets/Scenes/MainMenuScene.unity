@@ -327,6 +327,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &86176634
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -573,6 +574,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.75
 --- !u!212 &275038437
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -781,6 +783,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &390089016
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1343,6 +1346,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &944535801
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1470,6 +1474,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &1270860756
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2628,6 +2633,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.5
 --- !u!212 &2080949650
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -420,6 +420,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &74994526
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -766,6 +767,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!1 &200285695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,6 +1164,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 0.75
 --- !u!212 &471907273
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1752,6 +1755,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &592126661
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2111,6 +2115,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &930307283
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2353,6 +2358,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &937616244
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2673,6 +2679,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1035309986
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2911,6 +2918,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1039178823
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3487,6 +3495,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1376742841
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3988,6 +3997,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1466072008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4691,6 +4701,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &1747976303
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5711,3 +5722,4 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5

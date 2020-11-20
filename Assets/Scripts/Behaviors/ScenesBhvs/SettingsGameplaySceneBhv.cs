@@ -222,7 +222,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
     private void SetKeyBinding(int id)
     {
-        _listeningKeeBindingId = id;
+        StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () => { _listeningKeeBindingId = id; return true; }));
         Constants.EscapeLocked = true;
         _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.MaterialHell_3_2}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
 

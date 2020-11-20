@@ -17,7 +17,8 @@ public class InputControlerBhv : MonoBehaviour
 
     private MenuSelectorBhv _menuSelector;
     private int _currentInputLayer = -1;
-    private List<GameObject> _lastPositions;
+    private List<GameObject> _lastSelectedGameObjects;
+    private GameObject _lastSelectedGameObject;
 
     // THIS IS DONE FOR BETTER PERF
     //Faster than refecting on enums 
@@ -300,13 +301,20 @@ public class InputControlerBhv : MonoBehaviour
         }
         _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
         if (Constants.InputLayer > _currentInputLayer)
+        {
+            if (_lastSelectedGameObjects == null)
+                _lastSelectedGameObjects = new List<GameObject>();
+            if (_lastSelectedGameObject != null)
+                _lastSelectedGameObjects.Add(_lastSelectedGameObject);
             ResetMenuSelector();
+        }
         else
         {
-            if (_lastPositions != null && _lastPositions.Count > 1)
+            if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
-                _menuSelector.MoveTo(_lastPositions[_lastPositions.Count - 1]);
-                _lastPositions.RemoveAt(_lastPositions.Count - 1);
+                _lastSelectedGameObject = _lastSelectedGameObjects[_lastSelectedGameObjects.Count - 1];
+                _menuSelector.MoveTo(_lastSelectedGameObject);
+                _lastSelectedGameObjects.RemoveAt(_lastSelectedGameObjects.Count - 1);
             }
             else
                 ResetMenuSelector();
@@ -316,8 +324,8 @@ public class InputControlerBhv : MonoBehaviour
 
     private void ResetMenuSelector()
     {
-        _menuSelector.GetComponent<MenuSelectorBhv>().Reset(_currentScene.MenuSelectorBasePosition);
-        if (_currentScene.MenuSelectorBasePosition == null && !Constants.OnlyMouseInMenu)
+        _menuSelector.Reset(_currentScene.MenuSelectorBasePosition);
+        if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
             FindNearest(Direction.Down);
     }
 
@@ -325,11 +333,8 @@ public class InputControlerBhv : MonoBehaviour
     {
         if (_menuSelector == null)
             return;
-        if (_gameplayControler != null)
-        {
-            if (!_gameplayControler.SceneBhv.Paused)
-                return;
-        }
+        if (_gameplayControler != null && !_gameplayControler.SceneBhv.Paused)
+            return;
         if (_currentInputLayer != Constants.InputLayer)
             InitMenuKeyboardInputs();
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -340,11 +345,11 @@ public class InputControlerBhv : MonoBehaviour
             FindNearest(Direction.Left);
         else if (Input.GetKeyDown(KeyCode.RightArrow))
             FindNearest(Direction.Right);
-        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(_keyBinding[0]))
+        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(_keyBinding[0]) || Input.GetKeyDown(KeyCode.Space))
             ButtonOnSelector();
     }
 
-    private void FindNearest(Direction direction, bool canRetry = true)
+    private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false)
     {
         Constants.OnlyMouseInMenu = false;
         var minDistance = 99.0f;
@@ -353,6 +358,10 @@ public class InputControlerBhv : MonoBehaviour
         foreach (var button in _availableButtons)
         {
             var precision = 1.0f;
+            var lastConeMult = Constants.BaseButtonVisionConeMult;
+            if (_lastSelectedGameObject != null)
+                lastConeMult = _lastSelectedGameObject.GetComponent<ButtonBhv>().ConeVisionMult;
+            visionConeMult = visionConeMult == null ? lastConeMult : visionConeMult;
             if ((direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision / 2)
                 || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision / 2)
                 || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
@@ -360,37 +369,49 @@ public class InputControlerBhv : MonoBehaviour
                 || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
                 || !Helper.IsVisibleInsideCamera(_mainCamera, button.transform.position))
                 continue;
-            var currentHorizontalDistance = Mathf.Abs(button.transform.position.x - _menuSelector.transform.position.x);
-            var currentVerticalDistance = Mathf.Abs(button.transform.position.y - _menuSelector.transform.position.y);
-            var currentDistance = (direction == Direction.Up || direction == Direction.Down) ? ((currentHorizontalDistance * 2) + currentVerticalDistance) : (currentHorizontalDistance + (currentVerticalDistance * 2));
-            if (currentDistance < minDistance && currentDistance > precision)
+            var distance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
+            if (distance < minDistance && distance > precision && IsInsideVisionCone(_menuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
             {
-                minDistance = currentDistance;
+                minDistance = distance;
                 selectedGameObject = button;
             }
         }
 
+        visionConeMult -= 0.49f;
+
         if (selectedGameObject != null)
         {
-            if (_lastPositions == null)
-                _lastPositions = new List<GameObject>();
-            if (_lastPositions.Count > 0)
-                _lastPositions.RemoveAt(_lastPositions.Count - 1);
-            _lastPositions.Add(selectedGameObject);
+            _lastSelectedGameObject = selectedGameObject;
             _menuSelector.MoveTo(selectedGameObject);
         }
-        else if (canRetry == true)
+        else if (visionConeMult != null && visionConeMult > 0)
         {
-            if (direction == Direction.Up)
-                _menuSelector.transform.position += new Vector3(0.0f, -50.0f, 0.0f);
-            else if (direction == Direction.Down)
-                _menuSelector.transform.position += new Vector3(0.0f, 50.0f, 0.0f);
-            else if (direction == Direction.Left)
-                _menuSelector.transform.position += new Vector3(50.0f, 0.0f, 0.0f);
-            else if (direction == Direction.Right)
-                _menuSelector.transform.position += new Vector3(-50.0f, 0.0f, 0.0f);
-            FindNearest(direction, canRetry:false);
+            FindNearest(direction, visionConeMult);
         }
+        else if ((visionConeMult == null || visionConeMult <= 0.0f) && retry == false)
+        {
+            var resetSize = 2.0f;
+            if (direction == Direction.Up)
+                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, -_mainCamera.orthographicSize - resetSize, 0.0f));
+            else if (direction == Direction.Down)
+                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, _mainCamera.orthographicSize + resetSize, 0.0f));
+            else if (direction == Direction.Left)
+                _menuSelector.Reset(new Vector3((_mainCamera.orthographicSize * _mainCamera.aspect) + resetSize, _menuSelector.transform.position.y, 0.0f));
+            else if (direction == Direction.Right)
+                _menuSelector.Reset(new Vector3((-_mainCamera.orthographicSize * _mainCamera.aspect) - resetSize, _menuSelector.transform.position.y, 0.0f));
+            FindNearest(direction, 0.50f, true);
+        }
+    }
+
+    private bool IsInsideVisionCone(Vector2 watcher, Vector2 target, Direction direction, float coneMult)
+    {
+        var horDistance = Mathf.Abs(watcher.x - target.x);
+        var verDistance = Mathf.Abs(watcher.y - target.y);
+        if (direction == Direction.Left || direction == Direction.Right) 
+            return verDistance <= (horDistance / coneMult) && horDistance >= (verDistance * coneMult);
+        else if (direction == Direction.Up || direction == Direction.Down)
+            return horDistance <= (verDistance / coneMult) && verDistance >= (horDistance * coneMult);
+        return false;
     }
 
     private void ButtonOnSelector()
@@ -412,6 +433,7 @@ public class InputControlerBhv : MonoBehaviour
 
         if (selectedGameObject != null)
         {
+            _menuSelector.Click();
             Constants.LastEndActionClickedName = selectedGameObject.name;
             var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
             buttonBhv.BeginAction(selectedGameObject.transform.position);

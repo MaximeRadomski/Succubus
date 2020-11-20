@@ -11,6 +11,7 @@ public class ButtonBhv : InputBhv
     public bool Disabled;
     public bool StretchDisabled;
     public bool CustomSound;
+    public float ConeVisionMult = Constants.BaseButtonVisionConeMult;
 
     private SpriteRenderer _spriteRenderer;
     private SoundControlerBhv _soundControler;

@@ -24,6 +24,7 @@ public static class Constants
     public const float MaximumEffectsMusic = 1.0f;
     public const string PiecesLetters = "IJLOSTZ";
     public const string AvailableBodyPartsIds = "000102030405060708091011";
+    public const float BaseButtonVisionConeMult = 1.5f;
 
     //  TAGS  //
     public const string TagMusic = "Music";
