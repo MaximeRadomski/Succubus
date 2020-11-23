@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MenuSelectorBhv : MonoBehaviour
 {
+    private GameObject _targetGameObject;
+    private SoundControlerBhv _soundControler;
+
     private bool _moving;
     private bool _instantMove;
     private bool _reseted;
     private bool _clickIng;
     private bool _resetingScaleAndOpacity;
-    private GameObject _targetGameObject;
     private Vector3 _targetOffset;
     private float _targetHalfWidth;
     private float _targetHalfHeight;
@@ -20,11 +22,29 @@ public class MenuSelectorBhv : MonoBehaviour
     private int _followingFrames;
     private int _maxFollowingFrames = 10;
 
+    private int _moveId;
+
 
     void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+#if UNITY_ANDROID
+        return;
+#endif
         DontDestroyOnLoad(transform.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+        GetSoundControler();
+    }
+
+    private void GetSoundControler()
+    {
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        if (_soundControler != null)
+            _moveId = _soundControler.SetSound("LeftRightDown");
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -43,10 +63,24 @@ public class MenuSelectorBhv : MonoBehaviour
         _reseted = true;
     }
 
-    public void MoveTo(GameObject target)
+    private void Update()
+    {
+        if (_clickIng)
+            Clicking();
+        else if (_moving)
+            Moving();
+        else if (_resetingScaleAndOpacity)
+            ResetingScaleAndOpacity();
+    }
+
+    public void MoveTo(GameObject target, bool soundMuted = false)
     {
         if (target == null)
             return;
+        if (_soundControler == null)
+            GetSoundControler();
+        if (_soundControler != null && !soundMuted)
+            _soundControler.PlaySound(_moveId);
         var boxCollider = target.GetComponent<BoxCollider2D>();
         _targetGameObject = target;
         _targetOffset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
@@ -59,18 +93,14 @@ public class MenuSelectorBhv : MonoBehaviour
         _reseted = false;
     }
 
-    private void Update()
-    {
-        if (_clickIng)
-            Clicking();
-        else if (_moving)
-            Moving();
-        else if (_resetingScaleAndOpacity)
-            ResetingScaleAndOpacity();
-    }
-
     private void Moving()
     {
+        if (_targetGameObject == null)
+        {
+            _moving = false;
+            ResetingScaleAndOpacity();
+            return;
+        }
         if (!_instantMove)
             transform.position = Vector3.Lerp(transform.position, _targetGameObject.transform.position + _targetOffset, 0.5f);
         else
@@ -101,8 +131,10 @@ public class MenuSelectorBhv : MonoBehaviour
         ++_followingFrames;
     }
 
-    public void Click()
+    public void Click(GameObject selectedGameObject = null)
     {
+        if (selectedGameObject != null)
+            MoveTo(selectedGameObject, soundMuted: true);
         _clickIng = true;
     }
 

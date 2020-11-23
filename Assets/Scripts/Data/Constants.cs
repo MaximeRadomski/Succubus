@@ -127,6 +127,7 @@ public static class Constants
     public const string GoButtonPlayName = "ButtonPlay";
     public const string GoButtonBackName = "ButtonBack";
     public const string GoButtonInfoName = "ButtonInfo";
+    public const string GoInputControler = "EventSystem";
     public const string GoMusicControler = "MusicControler";
     public const string GoCharacterInstance = "CharacterInstance";
     public const string GoOpponentInstance = "OpponentInstance";

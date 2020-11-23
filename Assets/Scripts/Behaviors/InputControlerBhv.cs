@@ -38,6 +38,11 @@ public class InputControlerBhv : MonoBehaviour
         }
     }
 
+    private void GetScene()
+    {
+        _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+    }
+
     void Update()
     {
         if (Constants.InputLocked)
@@ -54,7 +59,8 @@ public class InputControlerBhv : MonoBehaviour
         else if ((Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(_keyBinding[9])) && !Constants.EscapeLocked)
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
-            _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+            if (_currentScene == null)
+                GetScene();
             if (Constants.InputLayer > 0)
             {
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
@@ -280,7 +286,7 @@ public class InputControlerBhv : MonoBehaviour
         _gameplayControler.UpdateFrameKeysPressOrHolded();
     }
 
-    private void InitMenuKeyboardInputs()
+    public void InitMenuKeyboardInputs()
     {
         var allGameObjects = FindObjectsOfType<GameObject>();
         _availableButtons = new List<GameObject>();
@@ -291,7 +297,8 @@ public class InputControlerBhv : MonoBehaviour
                 var buttonBhv = allGameObjects[i].GetComponent<ButtonBhv>();
                 if (buttonBhv != null
                     && (buttonBhv.BeginActionDelegate != null || buttonBhv.DoActionDelegate != null || buttonBhv.EndActionDelegate != null)
-                    && buttonBhv.Layer == Constants.InputLayer)
+                    && buttonBhv.Layer == Constants.InputLayer
+                    && buttonBhv.GetComponent<BoxCollider2D>().enabled == true)
                 {
                     if (_gameplayControler == true && buttonBhv.Layer == 0)
                         continue;
@@ -324,9 +331,11 @@ public class InputControlerBhv : MonoBehaviour
 
     private void ResetMenuSelector()
     {
+        if (_currentScene == null)
+            GetScene();
         _menuSelector.Reset(_currentScene.MenuSelectorBasePosition);
         if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
-            FindNearest(Direction.Down);
+            FindNearest(Direction.Down, soundMuted:true);
     }
 
     private void CheckMenuKeyboardInputs()
@@ -349,20 +358,30 @@ public class InputControlerBhv : MonoBehaviour
             ButtonOnSelector();
     }
 
-    private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false)
+    private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false, bool soundMuted = false)
     {
         Constants.OnlyMouseInMenu = false;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
+        if (_mainCamera == null)
+        {
+            _mainCamera = Helper.GetMainCamera();
+            if (_mainCamera == null)
+                return;
+        }
 
         foreach (var button in _availableButtons)
         {
+            if (button == null)
+                continue;
             var precision = 1.0f;
             var lastConeMult = Constants.BaseButtonVisionConeMult;
             if (_lastSelectedGameObject != null)
                 lastConeMult = _lastSelectedGameObject.GetComponent<ButtonBhv>().ConeVisionMult;
             visionConeMult = visionConeMult == null ? lastConeMult : visionConeMult;
-            if ((direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision / 2)
+
+            if (button == null
+                || (direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision / 2)
                 || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision / 2)
                 || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
                 || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision / 2)
@@ -382,7 +401,7 @@ public class InputControlerBhv : MonoBehaviour
         if (selectedGameObject != null)
         {
             _lastSelectedGameObject = selectedGameObject;
-            _menuSelector.MoveTo(selectedGameObject);
+            _menuSelector.MoveTo(selectedGameObject, soundMuted);
         }
         else if (visionConeMult != null && visionConeMult > 0)
         {
@@ -423,7 +442,9 @@ public class InputControlerBhv : MonoBehaviour
 
         foreach (var button in _availableButtons)
         {
-            var currentDistance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
+            var boxCollider = button.GetComponent<BoxCollider2D>();
+            var offset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
+            var currentDistance = Vector2.Distance(button.transform.position + offset, _menuSelector.transform.position);
             if (currentDistance < minDistance && currentDistance < 1.0f)
             {
                 minDistance = currentDistance;
@@ -433,7 +454,7 @@ public class InputControlerBhv : MonoBehaviour
 
         if (selectedGameObject != null)
         {
-            _menuSelector.Click();
+            _menuSelector.Click(selectedGameObject);
             Constants.LastEndActionClickedName = selectedGameObject.name;
             var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
             buttonBhv.BeginAction(selectedGameObject.transform.position);

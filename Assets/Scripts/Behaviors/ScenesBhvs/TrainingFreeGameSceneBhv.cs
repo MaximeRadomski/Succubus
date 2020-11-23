@@ -56,7 +56,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _level = 1;
         _lines = 0;
         _pieces = 0;
-        Reload();
+        NavigationService.LoadBackUntil(Constants.CharSelScene);
+        //Reload();
     }
 
     private void OnDestroy()

@@ -76,7 +76,7 @@ public static class NavigationService
 
     public static void ReloadScene()
     {
-        Debug.Log("    [DEBUG]    Path = " + _path);
+        //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

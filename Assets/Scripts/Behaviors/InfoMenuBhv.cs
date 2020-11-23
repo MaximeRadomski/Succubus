@@ -63,21 +63,31 @@ public class InfoMenuBhv : PopupBhv
         _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.MaterialHell_4_3 + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
-        if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
         {
+            _characterItem = ItemsData.GetItemFromName(ItemsData.Items[2]);
             _characterFrame.transform.Find("ButtonItem").GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
             _characterFrame.transform.Find("ButtonItem").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id);
         }
         else
-            _characterFrame.transform.Find("ButtonItem").gameObject.SetActive(false);
-        var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
-        foreach (Tattoo tattoo in tattoos)
         {
-            var tmpTattooGameObject = GameObject.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
-            tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
-            tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = TattooInfo;
-            tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
-            tmpTattooGameObject.transform.parent.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
+            if ((_characterItem = PlayerPrefsHelper.GetCurrentItem()) != null)
+            {
+                _characterFrame.transform.Find("ButtonItem").GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
+                _characterFrame.transform.Find("ButtonItem").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id);
+            }
+            else
+                _characterFrame.transform.Find("ButtonItem").gameObject.SetActive(false);
+            var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
+            foreach (Tattoo tattoo in tattoos)
+            {
+                var tmpTattooGameObject = GameObject.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+                tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
+                tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = TattooInfo;
+                tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
+                tmpTattooGameObject.transform.parent.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
+            }
         }
     }
 

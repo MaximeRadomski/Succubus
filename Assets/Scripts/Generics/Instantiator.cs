@@ -156,12 +156,12 @@ public class Instantiator : MonoBehaviour
         tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
-    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction)
+    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, GameSceneBhv callingScene = null)
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPauseMeuInstance.name);
-        tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction);
+        tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction, callingScene);
         return tmpPauseMeuInstance;
     }
 

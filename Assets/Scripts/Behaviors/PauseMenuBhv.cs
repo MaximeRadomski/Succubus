@@ -12,7 +12,7 @@ public class PauseMenuBhv : PopupBhv
     //private Quaternion _cameraInitialRotation;
     private Camera _mainCamera;
 
-    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction)
+    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, GameSceneBhv callingScene)
     {
         _instantiator = instantiator;
         _resumeAction = resumeAction;
@@ -38,6 +38,22 @@ public class PauseMenuBhv : PopupBhv
                 buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Save & Quit";
         }
 
+        var buttonInfo = transform.Find("ButtonInfo");
+#if UNITY_ANDROID
+        Destroy(buttonInfo);
+#else
+        buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = () => { PauseToInfo(callingScene); };
+#endif
+
+    }
+
+    private void PauseToInfo(GameSceneBhv callingScene)
+    {
+        var inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
+        Constants.DecreaseInputLayer();
+        inputControlerBhv.InitMenuKeyboardInputs();
+        callingScene.Info();
+        Destroy(this.gameObject);
     }
 
     private void Resume()

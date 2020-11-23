@@ -35,10 +35,10 @@ public abstract class GameSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp);
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this);
     }
 
-    private void Info()
+    public void Info()
     {
         Paused = true;
         _musicControler.HalveVolume();

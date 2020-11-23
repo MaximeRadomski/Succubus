@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameplayControler : MonoBehaviour
@@ -515,7 +516,10 @@ public class GameplayControler : MonoBehaviour
         if (_inputWhileLocked != KeyBinding.None)
         {
             if (_inputWhileLocked == KeyBinding.Hold)
+            {
+                _inputWhileLocked = KeyBinding.None;
                 Hold();
+            }
             else if (_inputWhileLocked == KeyBinding.Clock)
                 Clock();
             else if (_inputWhileLocked == KeyBinding.AntiClock)
@@ -532,11 +536,8 @@ public class GameplayControler : MonoBehaviour
     {
         for (int i = 0; i < 5; ++i)
         {
-            if (_nextPieces[i].transform.childCount > 0)
-                Destroy(_nextPieces[i].transform.GetChild(0).gameObject);
-        }
-        for (int i = 0; i < 5; ++i)
-        {
+            for (int j = _nextPieces[i].transform.childCount - 1; j >= 0; --j)
+                Destroy(_nextPieces[i].transform.GetChild(j).gameObject);
             var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(_nextPieces[i].transform);
         }
@@ -636,7 +637,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
-        SpreadEffect();
+        //StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { SpreadEffect(CurrentPiece); return true; } ));
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -671,7 +672,8 @@ public class GameplayControler : MonoBehaviour
         _leftHolded = _rightHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            _inputWhileLocked = KeyBinding.Left;
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.Left;
             return;
         }
         SetTimeDirectionHolded();
@@ -707,7 +709,8 @@ public class GameplayControler : MonoBehaviour
         _rightHolded = _leftHolded = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            _inputWhileLocked = KeyBinding.Right;
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.Right;
             return;
         }
         SetTimeDirectionHolded();
@@ -928,7 +931,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
-            _inputWhileLocked = KeyBinding.Clock;
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.Clock;
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1039,7 +1043,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
-            _inputWhileLocked = KeyBinding.AntiClock;
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.AntiClock;
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1150,7 +1155,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused)
         {
-            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+            if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
             return;
         }
@@ -2005,12 +2010,12 @@ public class GameplayControler : MonoBehaviour
 
     #endregion
 
-    private void SpreadEffect()
+    private void SpreadEffect(GameObject piece)
     {
         var minX = 99;
         var maxX = -99;
         var minY = 99;
-        foreach (Transform child in CurrentPiece.transform)
+        foreach (Transform child in piece.transform)
         {
             var blockBhv = child.GetComponent<BlockBhv>();
             if (blockBhv != null)
