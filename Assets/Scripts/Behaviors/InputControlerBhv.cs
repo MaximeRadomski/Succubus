@@ -411,13 +411,13 @@ public class InputControlerBhv : MonoBehaviour
         {
             var resetSize = 2.0f;
             if (direction == Direction.Up)
-                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, -_mainCamera.orthographicSize - resetSize, 0.0f));
+                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, -_mainCamera.orthographicSize - resetSize, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Down)
-                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, _mainCamera.orthographicSize + resetSize, 0.0f));
+                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, _mainCamera.orthographicSize + resetSize, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Left)
-                _menuSelector.Reset(new Vector3((_mainCamera.orthographicSize * _mainCamera.aspect) + resetSize, _menuSelector.transform.position.y, 0.0f));
+                _menuSelector.Reset(new Vector3((_mainCamera.orthographicSize * _mainCamera.aspect) + resetSize, _menuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Right)
-                _menuSelector.Reset(new Vector3((-_mainCamera.orthographicSize * _mainCamera.aspect) - resetSize, _menuSelector.transform.position.y, 0.0f));
+                _menuSelector.Reset(new Vector3((-_mainCamera.orthographicSize * _mainCamera.aspect) - resetSize, _menuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
             FindNearest(direction, 0.50f, true);
         }
     }
