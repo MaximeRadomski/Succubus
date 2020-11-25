@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -2694,7 +2694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -3301,7 +3301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -3621,6 +3621,7 @@ MonoBehaviour:
   Camera: {fileID: 1680876403}
   HasInitiated: 0
   Paused: 0
+  IsSliding: 0
 --- !u!81 &1680876402
 AudioListener:
   m_ObjectHideFlags: 0

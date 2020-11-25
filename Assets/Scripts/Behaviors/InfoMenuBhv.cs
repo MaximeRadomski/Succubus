@@ -100,7 +100,7 @@ public class InfoMenuBhv : PopupBhv
     {
         var bodyPart = (BodyPart)int.Parse(GameObject.Find(Constants.LastEndActionClickedName).transform.parent.name.Substring("BodyPart".Length));
         var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Constants.LastEndActionClickedName.Substring("Tattoo".Length))]);
-        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower() + "\n" + Constants.MaterialHell_3_2 + clickedTattoo.GetDescription(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.MaterialHell_3_2 + "inked: " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower() + "\n" + Constants.MaterialHell_3_2 + clickedTattoo.GetDescription(), null, "Ok", null);
     }
 
     private void CharacterLore()

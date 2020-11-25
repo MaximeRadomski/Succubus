@@ -7,6 +7,7 @@ public class MenuSelectorBhv : MonoBehaviour
 {
     private GameObject _targetGameObject;
     private SoundControlerBhv _soundControler;
+    private CameraBhv _mainCameraBhv;
 
     private bool _moving;
     private bool _instantMove;
@@ -54,13 +55,20 @@ public class MenuSelectorBhv : MonoBehaviour
 
     public void Reset(Vector3? resetPosition = null)
     {
+        if (_mainCameraBhv == null ||_mainCameraBhv.gameObject == null)
+            _mainCameraBhv = Helper.GetMainCamera().GetComponent<CameraBhv>();
         if (resetPosition != null)
             this.transform.position = resetPosition.Value;
         else
-            this.transform.position = new Vector3(-10, 30.0f, 0.0f);
+            this.transform.position = new Vector3(-10, 30.0f, 0.0f) + _mainCameraBhv.transform.position;
         foreach (Transform child in transform)
+        {
             child.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            var spriteRenderer = child.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Constants.ColorPlainTransparent;
+        }
         _reseted = true;
+        _resetingScaleAndOpacity = true;
     }
 
     private void Update()
@@ -104,7 +112,14 @@ public class MenuSelectorBhv : MonoBehaviour
         if (!_instantMove)
             transform.position = Vector3.Lerp(transform.position, _targetGameObject.transform.position + _targetOffset, 0.5f);
         else
+        {
             transform.position = _targetGameObject.transform.position + _targetOffset;
+            foreach (Transform child in transform)
+            {
+                var spriteRenderer = child.GetComponent<SpriteRenderer>();
+                spriteRenderer.color = Constants.ColorPlain;
+            }
+        }
         foreach (Transform child in transform)
         {
             float localX;

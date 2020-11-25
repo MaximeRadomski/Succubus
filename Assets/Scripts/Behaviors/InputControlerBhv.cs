@@ -14,6 +14,7 @@ public class InputControlerBhv : MonoBehaviour
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
     private List<GameObject> _availableButtons;
+    private bool _hasInit;
 
     private MenuSelectorBhv _menuSelector;
     private int _currentInputLayer = -1;
@@ -26,6 +27,12 @@ public class InputControlerBhv : MonoBehaviour
 
     private void Start()
     {
+        if (!_hasInit)
+            Init();
+    }
+
+    private void Init()
+    {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
         _menuSelector = GameObject.Find(Constants.GoMenuSelector).GetComponent<MenuSelectorBhv>();
@@ -36,6 +43,7 @@ public class InputControlerBhv : MonoBehaviour
         {
             _inputNames.Add(((KeyBinding)i).GetDescription());
         }
+        _hasInit = true;
     }
 
     private void GetScene()
@@ -286,8 +294,10 @@ public class InputControlerBhv : MonoBehaviour
         _gameplayControler.UpdateFrameKeysPressOrHolded();
     }
 
-    public void InitMenuKeyboardInputs()
+    public void InitMenuKeyboardInputs(Vector3? preferedResetPos = null)
     {
+        if (!_hasInit)
+            Init();
         var allGameObjects = FindObjectsOfType<GameObject>();
         _availableButtons = new List<GameObject>();
         if (allGameObjects.Length > 0)
@@ -313,7 +323,7 @@ public class InputControlerBhv : MonoBehaviour
                 _lastSelectedGameObjects = new List<GameObject>();
             if (_lastSelectedGameObject != null)
                 _lastSelectedGameObjects.Add(_lastSelectedGameObject);
-            ResetMenuSelector();
+            ResetMenuSelector(preferedResetPos);
         }
         else
         {
@@ -324,18 +334,22 @@ public class InputControlerBhv : MonoBehaviour
                 _lastSelectedGameObjects.RemoveAt(_lastSelectedGameObjects.Count - 1);
             }
             else
-                ResetMenuSelector();
+                ResetMenuSelector(preferedResetPos);
         }
         _currentInputLayer = Constants.InputLayer;
     }
 
-    private void ResetMenuSelector()
+    private void ResetMenuSelector(Vector3? preferedResetPos = null)
     {
         if (_currentScene == null)
             GetScene();
-        _menuSelector.Reset(_currentScene.MenuSelectorBasePosition);
+        _menuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
         if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
-            FindNearest(Direction.Down, soundMuted:true);
+        {
+            if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
+                return;
+            FindNearest(Direction.Down, soundMuted: true);
+        }
     }
 
     private void CheckMenuKeyboardInputs()
@@ -345,7 +359,12 @@ public class InputControlerBhv : MonoBehaviour
         if (_gameplayControler != null && !_gameplayControler.SceneBhv.Paused)
             return;
         if (_currentInputLayer != Constants.InputLayer)
-            InitMenuKeyboardInputs();
+        {
+            if (!Constants.OnlyMouseInMenu)
+                InitMenuKeyboardInputs();
+            else if (_lastSelectedGameObjects != null)
+                _lastSelectedGameObjects.Clear();
+        }   
         if (Input.GetKeyDown(KeyCode.UpArrow))
             FindNearest(Direction.Up);
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -405,7 +424,7 @@ public class InputControlerBhv : MonoBehaviour
         }
         else if (visionConeMult != null && visionConeMult > 0)
         {
-            FindNearest(direction, visionConeMult);
+            FindNearest(direction, visionConeMult, retry);
         }
         else if ((visionConeMult == null || visionConeMult <= 0.0f) && retry == false)
         {

@@ -11,8 +11,6 @@ public abstract class SceneBhv : MonoBehaviour
     public string OnRootPreviousScene = null;
     public bool CanGoPreviousScene = true;
 
-    public virtual Vector3? MenuSelectorBasePosition => null;
-
     protected MusicControlerBhv _musicControler;
 
     protected virtual void Init()

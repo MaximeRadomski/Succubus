@@ -5,6 +5,7 @@ public class CameraBhv : MonoBehaviour
     public Camera Camera;
     public bool HasInitiated;
     public bool Paused;
+    public bool IsSliding;
 
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
@@ -13,7 +14,6 @@ public class CameraBhv : MonoBehaviour
     private float _bumpSize;
     private bool _isBumbing;
     private bool _isResetBumping;
-    private bool _isSliding;
     private bool _isPoundering;
     private bool _isResetingPosition;
 
@@ -48,7 +48,7 @@ public class CameraBhv : MonoBehaviour
         {
             ResetBumping();
         }
-        if (_isSliding && !Paused)
+        if (IsSliding && !Paused)
         {
             Sliding();
         }
@@ -120,7 +120,7 @@ public class CameraBhv : MonoBehaviour
     public void SlideToPosition(Vector3 target)
     {
         _targetPosition = new Vector3(target.x, target.y, transform.position.z);
-        _isSliding = true;
+        IsSliding = true;
     }
 
     private void Sliding()
@@ -129,7 +129,7 @@ public class CameraBhv : MonoBehaviour
         if (Helper.VectorEqualsPrecision(Camera.transform.position, _targetPosition, 0.01f))
         {
             Camera.transform.position = _targetPosition;
-            _isSliding = false;
+            IsSliding = false;
         }
     }
 }

@@ -22,10 +22,9 @@ public class StepsSceneBhv : SceneBhv
     private TMPro.TextMeshPro _lootName;
     private SpriteRenderer _characterPicture;
     private GameObject _buttonInfo;
+    private InputControlerBhv _inputControler;
 
     private Step _selectedStep;
-
-    public override Vector3? MenuSelectorBasePosition => new Vector3(0.0f, 4.0f, 0.0f);
 
     void Start()
     {
@@ -59,6 +58,7 @@ public class StepsSceneBhv : SceneBhv
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
+        _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
 
         _stepsService = new StepsService();
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
@@ -165,6 +165,7 @@ public class StepsSceneBhv : SceneBhv
                 _buttonInfo.SetActive(false);
             }
         }
+        _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
     }
 
     private void UpdateAllStepsVisuals()
