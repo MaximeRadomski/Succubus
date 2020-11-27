@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8162953352726432854}
   - component: {fileID: 8162953352726432855}
   - component: {fileID: 8162953352726432853}
+  - component: {fileID: 2910723156292981908}
   m_Layer: 0
   m_Name: Step
   m_TagString: Untagged
@@ -105,6 +106,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!61 &8162953352726432855
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,6 +145,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fee2521d48c1e44cb3d9ff95b8be3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2910723156292981908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162953352726432850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51781f134bc11af409d0539dea976c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mask: {fileID: 0}
 --- !u!1 &8162953353124532823
 GameObject:
   m_ObjectHideFlags: 0

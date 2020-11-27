@@ -9,7 +9,20 @@ using UnityEngine;
 
 public static class Helper
 {
-    public static bool IsVisibleInsideCamera(Camera camera, Vector3 position)
+    public static bool IsSpriteRendererVisible(this GameObject gameObject, GameObject mask = null)
+    {
+        var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer.maskInteraction == SpriteMaskInteraction.VisibleInsideMask && mask != null)
+        {
+            var maskBox2D = mask.GetComponent<BoxCollider2D>();
+            return spriteRenderer.isVisible
+                && gameObject.transform.position.x >= mask.transform.position.x - (maskBox2D.size.x / 2) && gameObject.transform.position.x <= mask.transform.position.x + (maskBox2D.size.x / 2)
+                && gameObject.transform.position.y >= mask.transform.position.y - (maskBox2D.size.y / 2) && gameObject.transform.position.y <= mask.transform.position.y + (maskBox2D.size.y / 2);
+        }
+        return spriteRenderer.isVisible;
+    }
+
+    public static bool IsInsideCamera(Camera camera, Vector3 position)
     {
         var halfHeight = camera.orthographicSize;
         var halfWidth = camera.orthographicSize * camera.aspect;

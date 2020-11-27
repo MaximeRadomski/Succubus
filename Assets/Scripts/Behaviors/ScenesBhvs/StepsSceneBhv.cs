@@ -14,6 +14,7 @@ public class StepsSceneBhv : SceneBhv
     private GameObject _stepsBackground;
     private GameObject _pauseMenu;
     private GameObject _playButton;
+    private GameObject _backgroundMask;
 
     private TMPro.TextMeshPro _lootTypeRarity;
     private TMPro.TextMeshPro _opponents;
@@ -59,6 +60,7 @@ public class StepsSceneBhv : SceneBhv
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
         _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
+        _backgroundMask = GameObject.Find("BackgroundMask");
 
         _stepsService = new StepsService();
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
@@ -111,6 +113,7 @@ public class StepsSceneBhv : SceneBhv
         var distance = Vector2.Distance(CameraBhv.gameObject.transform.position, _stepsBackground.transform.position);
         StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () => {
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
+            _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
             return true;
         }));
         _playButton.SetActive(_selectedStep.LootType != LootType.None);
@@ -165,7 +168,6 @@ public class StepsSceneBhv : SceneBhv
                 _buttonInfo.SetActive(false);
             }
         }
-        _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
     }
 
     private void UpdateAllStepsVisuals()
@@ -176,7 +178,7 @@ public class StepsSceneBhv : SceneBhv
         var steps = _stepsService.GetAllSteps(_run);
         foreach (Step step in steps)
         {
-            var stepInstance = Instantiator.NewStepInstance(step);
+            var stepInstance = Instantiator.NewStepInstance(step, _backgroundMask);
             stepInstance.transform.parent = _stepsContainer.transform;
             stepInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnStepClicked;
         }

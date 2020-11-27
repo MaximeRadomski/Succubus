@@ -346,8 +346,8 @@ public class InputControlerBhv : MonoBehaviour
         _menuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
         if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
         {
-            if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
-                return;
+            //if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
+            //    return;
             FindNearest(Direction.Down, soundMuted: true);
         }
     }
@@ -389,6 +389,9 @@ public class InputControlerBhv : MonoBehaviour
                 return;
         }
 
+        if (_availableButtons == null)
+            return;
+
         foreach (var button in _availableButtons)
         {
             if (button == null)
@@ -405,7 +408,8 @@ public class InputControlerBhv : MonoBehaviour
                 || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
                 || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision / 2)
                 || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
-                || !Helper.IsVisibleInsideCamera(_mainCamera, button.transform.position))
+                || !Helper.IsInsideCamera(_mainCamera, button.transform.position)
+                || (button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
                 continue;
             var distance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
             if (distance < minDistance && distance > precision && IsInsideVisionCone(_menuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
