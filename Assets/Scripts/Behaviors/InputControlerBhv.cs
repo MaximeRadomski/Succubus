@@ -408,8 +408,8 @@ public class InputControlerBhv : MonoBehaviour
                 || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
                 || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision / 2)
                 || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
-                || !Helper.IsInsideCamera(_mainCamera, button.transform.position)
-                || (button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
+                || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
+                || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
                 continue;
             var distance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
             if (distance < minDistance && distance > precision && IsInsideVisionCone(_menuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))

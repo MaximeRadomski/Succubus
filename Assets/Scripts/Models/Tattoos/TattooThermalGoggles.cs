@@ -11,7 +11,7 @@ public class TattooThermalGoggles : Tattoo
         Stat = 1;
         StatStr = null;
         Rarity = Rarity.Legendary;
-        MaxLevel = 1;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)
