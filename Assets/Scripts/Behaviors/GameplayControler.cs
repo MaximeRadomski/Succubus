@@ -113,7 +113,8 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        Destroy(PlayFieldBhv.gameObject);
+        if (PlayFieldBhv != null)
+            Destroy(PlayFieldBhv.gameObject);
         Constants.InputLocked = false;
     }
 

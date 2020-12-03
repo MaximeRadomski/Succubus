@@ -307,13 +307,15 @@ public class PlayerPrefsHelper : MonoBehaviour
             for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
             {
                 int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
-                if (availablesPartsIds.Contains(id.ToString("00")))
-                    availablesPartsIds.Remove(id * 2, 2);
+                var matchingId = availablesPartsIds.IndexOf(id.ToString("00"));
+                if (matchingId != -1 && matchingId % 2 == 0)
+                    availablesPartsIds = availablesPartsIds.Remove(matchingId, 2);
             }
             var newBodyPartId = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
             newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
             alreadyBodyPartsIds += newBodyPartStr;
             tattoosStr += nameToAdd + "L01B" + newBodyPartStr + ";";
+            Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
             PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
         
