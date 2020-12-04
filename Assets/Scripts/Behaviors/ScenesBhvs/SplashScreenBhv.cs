@@ -19,8 +19,10 @@ public class SplashScreenBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+#if !UNITY_ANDROID
         var resolutionService = GetComponent<ResolutionService>();
         PlayerPrefsHelper.SaveResolution(resolutionService.SetResolution(PlayerPrefsHelper.GetResolution()));
+#endif
         _catchPhrases = new List<string>()
         {
             "Welcome, sinner",

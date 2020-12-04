@@ -431,4 +431,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var resolutionId = PlayerPrefs.GetInt(Constants.PpResolution, Constants.PpResolutionDefault);
         return resolutionId;
     }
+
+    public static void SaveLastMaxResolution(int height)
+    {
+        PlayerPrefs.SetInt(Constants.PpLastMaxResolution, height);
+    }
+
+    public static int GetLastMaxResolution()
+    {
+        var height = PlayerPrefs.GetInt(Constants.PpLastMaxResolution, Constants.PpLastMaxResolutionDefault);
+        return height;
+    }
 }

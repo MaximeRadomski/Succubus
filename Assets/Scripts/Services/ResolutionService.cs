@@ -7,9 +7,20 @@ public class ResolutionService : MonoBehaviour
 {
     private bool _hasInit;
     private List<Resolution> _resolutions;
+    private int _maxResolutionHeight;
 
     private void Init()
     {
+        if (Screen.fullScreenMode == FullScreenMode.Windowed)
+            GetMaxResolution();
+        else
+        {
+            var lastMaxResolutionHeight = PlayerPrefsHelper.GetLastMaxResolution();
+            if (lastMaxResolutionHeight == Constants.PpLastMaxResolutionDefault)
+                _maxResolutionHeight = 1080;
+            else
+                _maxResolutionHeight = lastMaxResolutionHeight;
+        }
         GenerateResolutions(10, 10);
         if (_resolutions.Count < 9)
             GenerateResolutions(10, 5);
@@ -22,21 +33,23 @@ public class ResolutionService : MonoBehaviour
         _hasInit = true;
     }
 
+    private void GetMaxResolution()
+    {
+        _maxResolutionHeight = Screen.currentResolution.height;
+        PlayerPrefsHelper.SaveLastMaxResolution(_maxResolutionHeight);
+    }
+
     private void GenerateResolutions(int baseUnitHeight, int baseUnitWidth)
     {
         if (_resolutions != null)
             _resolutions.Clear();
         else
             _resolutions = new List<Resolution>();
-        //var maxRes = Screen.resolutions.Last();
-        var maxRes = Screen.currentResolution;
-        int height = maxRes.height;
+        int height = _maxResolutionHeight;
         _resolutions.Insert(0, new Resolution() { height = height, width = (int)(height * 0.5625f) });
         height = (height % baseUnitHeight) != height ? height - (height % baseUnitHeight) : height - baseUnitHeight;
         while (_resolutions.Count < 9 && height > 0)
         {
-            if (height == 800)
-                height = 800;
             var width = height * 0.5625f;
             var widthString = width.ToString("F3");
             widthString = widthString.Replace(',', '.');

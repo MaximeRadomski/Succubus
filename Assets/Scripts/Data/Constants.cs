@@ -88,6 +88,8 @@ public static class Constants
     public const bool PpFullScreenDefault = true;
     public const string PpResolution = "Resolution";
     public const int PpResolutionDefault = 8;
+    public const string PpLastMaxResolution = "LastMaxResolution";
+    public const int PpLastMaxResolutionDefault = 0;
 
     public static string GetDefaultKeyBinding()
     {
