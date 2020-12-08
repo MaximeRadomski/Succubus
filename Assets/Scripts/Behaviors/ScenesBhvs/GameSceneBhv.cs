@@ -147,7 +147,7 @@ public abstract class GameSceneBhv : SceneBhv
     {
         if (!string.IsNullOrEmpty(_poppingText))
         {
-            Instantiator.PopText(_poppingText, new Vector2(4.5f, 17.4f));
+            Instantiator.PopText(_poppingText, new Vector2(4.5f, _gameplayControler.CurrentPiece.transform.position.y));
             _poppingText = "";
             _gameplayControler.FadeBlocksOnText();
         }
