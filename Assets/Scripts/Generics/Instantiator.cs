@@ -56,6 +56,16 @@ public class Instantiator : MonoBehaviour
         return tmpDrillTargetInstance;
     }
 
+    public GameObject NewDrone(Realm realm, Vector3 position, GameplayControler gameControler)
+    {
+        var tmpDroneTargetObject = Resources.Load<GameObject>("Prefabs/Drone");
+        var tmpDroneTargetInstance = Instantiate(tmpDroneTargetObject, position, tmpDroneTargetObject.transform.rotation);
+        tmpDroneTargetInstance.GetComponent<DroneBhv>().Init(gameControler);
+        tmpDroneTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
+        tmpDroneTargetInstance.name = Constants.GoDrone;
+        return tmpDroneTargetInstance;
+    }
+
     public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
@@ -175,11 +185,11 @@ public class Instantiator : MonoBehaviour
         return tmpInfoMeuInstance;
     }
 
-    public GameObject PopText(string text, Vector2 position, string color = "#FFFFFF", float floatingTime = 0.0f)
+    public GameObject PopText(string text, Vector2 position, string color = "#FFFFFF", float floatingTime = 0.0f, float speed = 0.05f, float distance = 0.25f, float startFadingDistancePercent = 0.04f, float fadingSpeed = 0.1f)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color, floatingTime);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color, floatingTime, speed, distance, startFadingDistancePercent, fadingSpeed);
         return tmpPoppingTextInstance;
     }
 

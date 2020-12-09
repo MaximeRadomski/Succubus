@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -233,7 +233,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -317,7 +317,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 2191923513518390880, guid: 25c571b3e44ce5e40a9a939f61bc4be4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shadow: {fileID: 0}
+  IsMimicked: 0
 --- !u!1 &5271586075711299843
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +415,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 4627212743430372070, guid: 25c571b3e44ce5e40a9a939f61bc4be4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -440,6 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shadow: {fileID: 0}
+  IsMimicked: 0
 --- !u!1 &5957606834547273875
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +511,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -593,7 +595,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1511360000684178966, guid: 25c571b3e44ce5e40a9a939f61bc4be4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -619,6 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shadow: {fileID: 0}
+  IsMimicked: 0
 --- !u!1 &8279207919132516022
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +693,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 4627212743430372070, guid: 25c571b3e44ce5e40a9a939f61bc4be4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -716,6 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shadow: {fileID: 0}
+  IsMimicked: 0
 --- !u!1 &8372501207249423519
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,3 +774,5 @@ MonoBehaviour:
   IsAffectedByGravity: 1
   HasBlocksAffectedByGravity: 0
   RotationState: 0
+  IsMimic: 0
+  ActualColor: {r: 1, g: 1, b: 1, a: 1}

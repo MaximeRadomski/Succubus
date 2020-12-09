@@ -28,4 +28,6 @@ public enum AttackType
     MirrorMirror = 10, //Reverse the camera on 'param2' (0 = x, 1 = y, 2 = xy) axis for 'param1' pieces
     [Description("Intoxication")]
     Intoxication = 11, //Makes you drunk for 'param1' pieces
+    [Description("Drone")]
+    Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
 }

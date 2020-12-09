@@ -186,14 +186,4 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _score += 4000 * _level;
         DisplayScore();
     }
-
-    public override void PopText()
-    {
-        if (!string.IsNullOrEmpty(_poppingText))
-        {
-            Instantiator.PopText(_poppingText, new Vector2(4.5f, 17.4f));
-            _poppingText = "";
-            _gameplayControler.FadeBlocksOnText();
-        }
-    }
 }

@@ -634,6 +634,9 @@ public class GameplayControler : MonoBehaviour
             if (Character.CanDoubleJump)
                 CurrentPiece.GetComponent<Piece>().DoubleJump();
         }
+        var drone = GameObject.Find(Constants.GoDrone);
+        if (drone != null)
+            drone.GetComponent<DroneBhv>().OnPieceLocked(CurrentPiece);
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
@@ -1681,7 +1684,7 @@ public class GameplayControler : MonoBehaviour
                 AttackDarkRows(opponentInstance, param1, opponentRealm);
                 break;
             case AttackType.WasteRow:
-                AttackGarbageRows(opponentInstance, param1, opponentRealm, param2);
+                AttackWasteRows(opponentInstance, param1, opponentRealm, param2);
                 break;
             case AttackType.LightRow:
                 AttackLightRows(opponentInstance, param1, opponentRealm, param2);
@@ -1708,6 +1711,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Intoxication:
                 AttackCameraEffects(type, opponentInstance, opponentRealm, param1, param2);
                 break;
+            case AttackType.Drone:
+                AttackDrone(opponentInstance, opponentRealm, param1, param2);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -1724,13 +1730,13 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackGarbageRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
+    private void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
-        param = param < 1 ? 1 : param;
-        int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - param);
-        int emptyEnd = emptyStart + param - 1;
+        nbHole = nbHole < 1 ? 1 : nbHole;
+        int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - nbHole);
+        int emptyEnd = emptyStart + nbHole - 1;
         for (int y = 0; y < nbRows; ++y)
         {
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
@@ -1739,7 +1745,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
+    private void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idLightRows);
@@ -1747,16 +1753,16 @@ public class GameplayControler : MonoBehaviour
         {
             FillLine(y, AttackType.LightRow, opponentRealm);
         }
-        param = param < 1 ? 1 : param;
+        cooldown = cooldown < 1 ? 1 : cooldown;
         PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
         PlayFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
         var lightRowBhv = PlayFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.NbRows = nbRows;
-        lightRowBhv.Cooldown = param;
+        lightRowBhv.Cooldown = cooldown;
         var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)nbRows - 1.0f) / 2.0f));
         tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
-        lightRowBhv.UpdateCooldownText(param);
+        lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
@@ -1958,6 +1964,44 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            return true;
+        }
+    }
+
+    private void AttackDrone(GameObject opponentInstance, Realm opponentRealm, int nbRows, int rowTypeId)
+    {
+        var drone = GameObject.Find(Constants.GoDrone);
+        if (drone != null)
+        {
+            AfterSpawn = null;
+            Destroy(drone);
+        }
+        var rowType = AttackType.DarkRow;
+        if (rowTypeId >= 1 || rowTypeId <= 4)
+            rowType = (AttackType)rowTypeId;
+        var x = UnityEngine.Random.Range(0, 10);
+        if (Instantiator == null)
+            Instantiator = GetComponent<Instantiator>();
+        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, 18, 0.0f), this);
+        var nbAttacks = 0;
+        Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
+        AfterSpawn = DroneAttackAfterSpawn;
+
+        bool DroneAttackAfterSpawn()
+        {
+            if (droneInstance == null || nbAttacks == 0)
+            {
+                ++nbAttacks;
+                return false;
+            }
+            if (rowType == AttackType.WasteRow)
+                AttackWasteRows(droneInstance, nbRows, opponentRealm, 1);
+            else if (rowType == AttackType.LightRow)
+                AttackLightRows(droneInstance, nbRows, opponentRealm, 5);
+            else if (rowType == AttackType.EmptyRow)
+                AttackEmptyRows(droneInstance, nbRows, opponentRealm);
+            else
+                AttackDarkRows(droneInstance, nbRows, opponentRealm);
             return true;
         }
     }
