@@ -193,25 +193,19 @@ public class Piece : MonoBehaviour
         return false;
     }
 
-    public int GetWidth()
+    public int[] GetRangeX()
     {
         var minX = 99;
         var maxX = -99;
-        var minY = 99;
-        foreach (Transform child in piece.transform)
+        foreach (Transform child in transform)
         {
-            var blockBhv = child.GetComponent<BlockBhv>();
-            if (blockBhv != null)
-                blockBhv.Spread(0.5f);
             if (child.transform.position.x < minX)
                 minX = Mathf.RoundToInt(child.transform.position.x);
             if (child.transform.position.x > maxX)
                 maxX = Mathf.RoundToInt(child.transform.position.x);
-            if (child.transform.position.y < minY)
-                minY = Mathf.RoundToInt(child.transform.position.y);
         }
-        minY--;
         minX = minX < 0 ? 0 : minX;
         maxX = maxX > 9 ? 9 : maxX;
+        return new int[] { minX, maxX };
     }
 }

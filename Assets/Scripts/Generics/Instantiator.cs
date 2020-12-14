@@ -60,8 +60,8 @@ public class Instantiator : MonoBehaviour
     {
         var tmpDroneTargetObject = Resources.Load<GameObject>("Prefabs/Drone");
         var tmpDroneTargetInstance = Instantiate(tmpDroneTargetObject, position, tmpDroneTargetObject.transform.rotation);
-        tmpDroneTargetInstance.GetComponent<DroneBhv>().Init(gameControler);
-        tmpDroneTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
+        tmpDroneTargetInstance.GetComponent<DroneBhv>().Init(gameControler, realm);
+        //tmpDroneTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
         tmpDroneTargetInstance.name = Constants.GoDrone;
         return tmpDroneTargetInstance;
     }

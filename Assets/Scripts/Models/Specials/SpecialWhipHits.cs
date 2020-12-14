@@ -14,7 +14,7 @@ public class SpecialWhipHits : Special
         Object.Destroy(_gameplayControler.CurrentPiece ?? null);
         Object.Destroy(_gameplayControler.CurrentGhost ?? null);
         _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, "DDD");
-        _gameplayControler.Spawn();
+        _gameplayControler.Spawn(false);
         return true;
     }
 }

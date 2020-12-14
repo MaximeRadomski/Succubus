@@ -330,7 +330,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (amount == 69)
             attackText = "nice";
         if (!_isCrit)
-            _soundControler.PlaySound(_idHit);
+            PlayHit();
         else
         {
             attackText += "!";
@@ -367,6 +367,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             SetNextCooldownTick();
         }
+    }
+
+    public void PlayHit()
+    {
+        _soundControler.PlaySound(_idHit);
     }
 
     public override void OnNewPiece(GameObject lastPiece)

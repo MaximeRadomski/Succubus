@@ -481,7 +481,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void Spawn()
+    public void Spawn(bool trueSpawn = true) //A spawn from Hold != trueSpawn
     {
         if (Bag == null || Bag.Length <= 7)
             SetBag();
@@ -506,11 +506,11 @@ public class GameplayControler : MonoBehaviour
         ResetLock();
         SceneBhv.OnNewPiece(tmpLastPiece);
         _characterSpecial.OnNewPiece(CurrentPiece);
-        AfterSpawn?.Invoke();
+        AfterSpawn?.Invoke(trueSpawn);
         DropGhost();
         CheckInputWhileLocked();
     }
-    public Func<bool> AfterSpawn;
+    public Func<bool, bool> AfterSpawn; //Parameter bool trueSpawn -> not from hold)
 
     private void CheckInputWhileLocked()
     {
@@ -1171,7 +1171,7 @@ public class GameplayControler : MonoBehaviour
             Destroy(CurrentPiece.gameObject);
             if (CurrentGhost != null)
                 Destroy(CurrentGhost);
-            Spawn();
+            Spawn(false);
             _canHold = false;
         }
         else
@@ -1199,7 +1199,7 @@ public class GameplayControler : MonoBehaviour
             ResetLock();
             _canHold = false;
             _characterSpecial.OnNewPiece(CurrentPiece);
-            AfterSpawn?.Invoke();
+            AfterSpawn?.Invoke(false);
             DropGhost();
             CheckInputWhileLocked();
         }
@@ -1908,7 +1908,7 @@ public class GameplayControler : MonoBehaviour
         AfterSpawn = AirPieceAfterSpawn;
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
-        bool AirPieceAfterSpawn()
+        bool AirPieceAfterSpawn(bool trueSpawn)
         {
             if (_afterSpawnAttackCounter <= 0)
             {
@@ -1929,7 +1929,7 @@ public class GameplayControler : MonoBehaviour
         AfterSpawn = ForcedBlockAfterSpawn;
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
-        bool ForcedBlockAfterSpawn()
+        bool ForcedBlockAfterSpawn(bool trueSpawn)
         {
             if (_afterSpawnAttackCounter <= 0)
             {
@@ -1953,7 +1953,7 @@ public class GameplayControler : MonoBehaviour
         Constants.IsffectAttackInProgress = true;
         AfterSpawn = MirrorMirrorAfterSpawn;
 
-        bool MirrorMirrorAfterSpawn()
+        bool MirrorMirrorAfterSpawn(bool trueSpawn)
         {
             if (_afterSpawnAttackCounter <= 0)
             {
@@ -1976,6 +1976,7 @@ public class GameplayControler : MonoBehaviour
             AfterSpawn = null;
             Destroy(drone);
         }
+        _soundControler.PlaySound(_idBipItem);
         var rowType = AttackType.DarkRow;
         if (rowTypeId >= 1 || rowTypeId <= 4)
             rowType = (AttackType)rowTypeId;
@@ -1987,9 +1988,9 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         AfterSpawn = DroneAttackAfterSpawn;
 
-        bool DroneAttackAfterSpawn()
+        bool DroneAttackAfterSpawn(bool trueSpawn)
         {
-            if (droneInstance == null || nbAttacks == 0)
+            if (droneInstance == null || nbAttacks == 0 || !trueSpawn)
             {
                 ++nbAttacks;
                 return false;

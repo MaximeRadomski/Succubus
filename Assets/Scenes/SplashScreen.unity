@@ -900,6 +900,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  ConeVisionMult: 1.5
 --- !u!212 &944535801
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1900,6 +1901,7 @@ MonoBehaviour:
   Camera: {fileID: 1994265290}
   HasInitiated: 0
   Paused: 0
+  IsSliding: 0
 --- !u!81 &1994265289
 AudioListener:
   m_ObjectHideFlags: 0
