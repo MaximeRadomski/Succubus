@@ -1714,11 +1714,14 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Drone:
                 AttackDrone(opponentInstance, opponentRealm, param1, param2);
                 break;
+            case AttackType.Shift:
+                AttackShift(opponentInstance, opponentRealm, param1, param2);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
 
-    private void AttackDarkRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
+    public void AttackDarkRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
@@ -1730,7 +1733,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole)
+    public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
@@ -1745,7 +1748,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
+    public void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idLightRows);
@@ -1767,7 +1770,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
+    public void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
@@ -1983,28 +1986,26 @@ public class GameplayControler : MonoBehaviour
         var x = UnityEngine.Random.Range(0, 10);
         if (Instantiator == null)
             Instantiator = GetComponent<Instantiator>();
-        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, 18, 0.0f), this);
+        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, 18, 0.0f), this, nbRows);
+        droneInstance.transform.SetParent(PlayFieldBhv.transform);
         var nbAttacks = 0;
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
-        AfterSpawn = DroneAttackAfterSpawn;
+        AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   
+    }
 
-        bool DroneAttackAfterSpawn(bool trueSpawn)
-        {
-            if (droneInstance == null || nbAttacks == 0 || !trueSpawn)
-            {
-                ++nbAttacks;
-                return false;
-            }
-            if (rowType == AttackType.WasteRow)
-                AttackWasteRows(droneInstance, nbRows, opponentRealm, 1);
-            else if (rowType == AttackType.LightRow)
-                AttackLightRows(droneInstance, nbRows, opponentRealm, 5);
-            else if (rowType == AttackType.EmptyRow)
-                AttackEmptyRows(droneInstance, nbRows, opponentRealm);
-            else
-                AttackDarkRows(droneInstance, nbRows, opponentRealm);
-            return true;
-        }
+    private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows, int highestRequested)
+    {
+        _soundControler.PlaySound(_idVisionBlock);
+        nbRows = nbRows < 2 ? 2 : nbRows;
+        var currentHiest = GetHighestBlock();
+        if (currentHiest + nbRows > 19)
+            currentHiest = 19 - nbRows;
+        if (highestRequested < currentHiest)
+            currentHiest = highestRequested;
+        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, opponentRealm);
+        visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     public void SetForcedPieceOpacity(float current, float max)

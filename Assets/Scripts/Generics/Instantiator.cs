@@ -56,11 +56,11 @@ public class Instantiator : MonoBehaviour
         return tmpDrillTargetInstance;
     }
 
-    public GameObject NewDrone(Realm realm, Vector3 position, GameplayControler gameControler)
+    public GameObject NewDrone(Realm realm, Vector3 position, GameplayControler gameControler, int nbRows)
     {
         var tmpDroneTargetObject = Resources.Load<GameObject>("Prefabs/Drone");
         var tmpDroneTargetInstance = Instantiate(tmpDroneTargetObject, position, tmpDroneTargetObject.transform.rotation);
-        tmpDroneTargetInstance.GetComponent<DroneBhv>().Init(gameControler, realm);
+        tmpDroneTargetInstance.GetComponent<DroneBhv>().Init(gameControler, realm, nbRows);
         //tmpDroneTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
         tmpDroneTargetInstance.name = Constants.GoDrone;
         return tmpDroneTargetInstance;
@@ -206,6 +206,14 @@ public class Instantiator : MonoBehaviour
         var tmpVisionBlockInstance = Instantiate(tmpVisionBlockObject, position, tmpVisionBlockObject.transform.rotation);
         tmpVisionBlockInstance.GetComponent<VisionBlockBhv>().Init(nbRows, nbSeconds, opponentRealm);
         return tmpVisionBlockInstance;
+    }
+
+    public GameObject NewShiftBlock(Vector2 position, int nbRows, Realm opponentRealm)
+    {
+        var tmpShiftBlockObject = Resources.Load<GameObject>("Prefabs/ShiftBlock");
+        var tmpShiftBlockInstance = Instantiate(tmpShiftBlockObject, position, tmpShiftBlockObject.transform.rotation);
+        tmpShiftBlockInstance.GetComponent<ShiftBlockBhv>().Init(nbRows, opponentRealm);
+        return tmpShiftBlockInstance;
     }
 
     public void PopIcon(Sprite sprite, Vector2 position)

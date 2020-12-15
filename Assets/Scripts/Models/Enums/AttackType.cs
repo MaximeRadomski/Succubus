@@ -30,4 +30,6 @@ public enum AttackType
     Intoxication = 11, //Makes you drunk for 'param1' pieces
     [Description("Drone")]
     Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
+    [Description("Shift")]
+    Shift = 13, //Shift (param1) rows on the left or right, starting at (param2) row
 }
