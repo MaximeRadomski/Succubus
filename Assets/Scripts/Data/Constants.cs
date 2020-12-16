@@ -161,7 +161,7 @@ public static class Constants
     public static Color ColorHeaven3 = new Color(0.270f, 0.603f, 0.898f, 1.0f);  //459ae5
     public static Color ColorHeaven4 = new Color(0.317f, 0.807f, 0.255f, 1.0f);  //51ceff
 
-    public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+    public static Color ColorBlackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);

@@ -1715,7 +1715,7 @@ public class GameplayControler : MonoBehaviour
                 AttackDrone(opponentInstance, opponentRealm, param1, param2);
                 break;
             case AttackType.Shift:
-                AttackShift(opponentInstance, opponentRealm, param1, param2);
+                AttackShift(opponentInstance, opponentRealm, param1);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -1993,19 +1993,60 @@ public class GameplayControler : MonoBehaviour
         AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   
     }
 
-    private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows, int highestRequested)
+    private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows)
     {
         _soundControler.PlaySound(_idVisionBlock);
         nbRows = nbRows < 2 ? 2 : nbRows;
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        if (highestRequested < currentHiest)
-            currentHiest = highestRequested;
-        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, opponentRealm);
+        var startFromBottom = UnityEngine.Random.Range(0, currentHiest - nbRows);
+        if (startFromBottom < 0)
+            startFromBottom = 0;
+        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        StartCoroutine(couille(startFromBottom, nbRows));
+
+        
+
+        /*StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () =>
+        {
+            
+            return true;
+        }));*/
+    }
+
+    private IEnumerator couille(int startFromBottom, int nbRows)
+    {
+        yield return new WaitForSeconds(0.3f);
+        var direction = UnityEngine.Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
+        var xFromDirection = direction == Direction.Left ? -1 : 1;
+        for (int y = startFromBottom; y < startFromBottom + nbRows; ++y)
+        {
+            Transform cache = null;
+            var xStart = direction == Direction.Left ? 9 : 0;
+            for (int x = xStart; x != (direction == Direction.Left ? -1 : 10); x += xFromDirection)
+            {
+                if (x == xStart)
+                    cache = PlayFieldBhv.Grid[x, y];
+                if (x + xFromDirection < 0 || x + xFromDirection > 9)
+                {
+                    PlayFieldBhv.Grid[x, y] = cache;
+                    if (PlayFieldBhv.Grid[x, y] != null)
+                        PlayFieldBhv.Grid[x, y].transform.position = new Vector3(x, y, 0.0f);
+                }
+                else
+                {
+                    PlayFieldBhv.Grid[x, y] = PlayFieldBhv.Grid[x + xFromDirection, y];
+                    if (PlayFieldBhv.Grid[x, y] != null)
+                        PlayFieldBhv.Grid[x, y].transform.position += new Vector3(-xFromDirection, 0.0f, 0.0f);
+                }
+            }
+            
+        }
+        Spawn();
     }
 
     public void SetForcedPieceOpacity(float current, float max)

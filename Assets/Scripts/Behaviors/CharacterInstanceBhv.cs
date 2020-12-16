@@ -90,13 +90,13 @@ public class CharacterInstanceBhv : MonoBehaviour
     private void Dying()
     {
         if (_spriteRenderer)
-            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorTransparent, 0.05f);
-        if (_spriteRenderer != null && Helper.FloatEqualsPrecision(_spriteRenderer.color.a, Constants.ColorTransparent.a, 0.01f))
+            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorBlackTransparent, 0.05f);
+        if (_spriteRenderer != null && Helper.FloatEqualsPrecision(_spriteRenderer.color.a, Constants.ColorBlackTransparent.a, 0.01f))
         {
             for (int i = 0; i < transform.childCount; ++i)
             {
                 _spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
-                _spriteRenderer.color = Constants.ColorTransparent;
+                _spriteRenderer.color = Constants.ColorBlackTransparent;
             }
             _isDying = false;
             AfterDeath?.Invoke();

@@ -250,7 +250,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2,
             _currentOpponent.Realm,
             _opponentInstanceBhv.gameObject);
-        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)
+        if (_currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece
+            || _currentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Shift)
             spawnAfterAttack = false;
         if (++Constants.CurrentOpponentAttackId >= _currentOpponent.Attacks.Count)
             Constants.CurrentOpponentAttackId = 0;

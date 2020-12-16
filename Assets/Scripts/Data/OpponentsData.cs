@@ -13,7 +13,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 //new OpponentAttack(AttackType.MirrorMirror, 3, 1),
                 //new OpponentAttack(AttackType.Intoxication, 10)
-                new OpponentAttack(AttackType.Shift, 4, 0)
+                new OpponentAttack(AttackType.Shift, 20)
                 //new OpponentAttack(AttackType.DarkRow, 2),
                 //new OpponentAttack(AttackType.WasteRow, 2, 1)
             },
