@@ -560,7 +560,7 @@ public class GameplayControler : MonoBehaviour
 
     void Update()
     {
-        if (!_hasInit || SceneBhv.Paused)
+        if (!_hasInit || SceneBhv.Paused || CurrentPiece == null)
             return;
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
         {
@@ -2007,46 +2007,37 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
-        StartCoroutine(couille(startFromBottom, nbRows));
-
-        
-
-        /*StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () =>
+        SceneBhv.Paused = true;
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
         {
-            
-            return true;
-        }));*/
-    }
-
-    private IEnumerator couille(int startFromBottom, int nbRows)
-    {
-        yield return new WaitForSeconds(0.3f);
-        var direction = UnityEngine.Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
-        var xFromDirection = direction == Direction.Left ? -1 : 1;
-        for (int y = startFromBottom; y < startFromBottom + nbRows; ++y)
-        {
-            Transform cache = null;
-            var xStart = direction == Direction.Left ? 9 : 0;
-            for (int x = xStart; x != (direction == Direction.Left ? -1 : 10); x += xFromDirection)
+            var direction = UnityEngine.Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
+            var xFromDirection = direction == Direction.Left ? -1 : 1;
+            for (int y = startFromBottom; y < startFromBottom + nbRows; ++y)
             {
-                if (x == xStart)
-                    cache = PlayFieldBhv.Grid[x, y];
-                if (x + xFromDirection < 0 || x + xFromDirection > 9)
+                Transform cache = null;
+                var xStart = direction == Direction.Left ? 9 : 0;
+                for (int x = xStart; x != (direction == Direction.Left ? -1 : 10); x += xFromDirection)
                 {
-                    PlayFieldBhv.Grid[x, y] = cache;
-                    if (PlayFieldBhv.Grid[x, y] != null)
-                        PlayFieldBhv.Grid[x, y].transform.position = new Vector3(x, y, 0.0f);
+                    if (x == xStart)
+                        cache = PlayFieldBhv.Grid[x, y];
+                    if (x + xFromDirection < 0 || x + xFromDirection > 9)
+                    {
+                        PlayFieldBhv.Grid[x, y] = cache;
+                        if (PlayFieldBhv.Grid[x, y] != null)
+                            PlayFieldBhv.Grid[x, y].transform.position = new Vector3(x, y, 0.0f);
+                    }
+                    else
+                    {
+                        PlayFieldBhv.Grid[x, y] = PlayFieldBhv.Grid[x + xFromDirection, y];
+                        if (PlayFieldBhv.Grid[x, y] != null)
+                            PlayFieldBhv.Grid[x, y].transform.position += new Vector3(-xFromDirection, 0.0f, 0.0f);
+                    }
                 }
-                else
-                {
-                    PlayFieldBhv.Grid[x, y] = PlayFieldBhv.Grid[x + xFromDirection, y];
-                    if (PlayFieldBhv.Grid[x, y] != null)
-                        PlayFieldBhv.Grid[x, y].transform.position += new Vector3(-xFromDirection, 0.0f, 0.0f);
-                }
+
             }
-            
-        }
-        Spawn();
+            SceneBhv.Paused = false;
+            return true;
+        }));
     }
 
     public void SetForcedPieceOpacity(float current, float max)

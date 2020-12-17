@@ -231,7 +231,7 @@ public class InputControlerBhv : MonoBehaviour
 
     private void CheckGameKeyboardInputs()
     {
-        if (_gameplayControler == null)
+        if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
             return;
         if (Input.GetKeyDown(_keyBinding[0]))
         {
