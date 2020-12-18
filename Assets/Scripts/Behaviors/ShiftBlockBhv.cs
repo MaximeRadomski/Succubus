@@ -16,7 +16,7 @@ public class ShiftBlockBhv : MonoBehaviour
         _nbRows = nbRows;
         var background = transform.Find("Background");
         background.localScale = new Vector3(background.localScale.x, background.localScale.y * _nbRows, 1.0f);
-        var realmColor = (Color)Constants.GetColorFromRealm(_realm, 4);
+        var realmColor = (Color)Constants.GetColorFromRealm(Realm.Earth, 4);
         var bgColor = new Color(realmColor.r, realmColor.g, realmColor.b, 0.2f);
         _coloredTransparent = new Color(realmColor.r, realmColor.g, realmColor.b, 0.0f);
         background.GetComponent<SpriteRenderer>().color = bgColor;

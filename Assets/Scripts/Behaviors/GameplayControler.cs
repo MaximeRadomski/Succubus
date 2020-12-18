@@ -1988,7 +1988,6 @@ public class GameplayControler : MonoBehaviour
             Instantiator = GetComponent<Instantiator>();
         var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, 18, 0.0f), this, nbRows);
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
-        var nbAttacks = 0;
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   
     }
@@ -2036,6 +2035,7 @@ public class GameplayControler : MonoBehaviour
 
             }
             SceneBhv.Paused = false;
+            Spawn();
             return true;
         }));
     }

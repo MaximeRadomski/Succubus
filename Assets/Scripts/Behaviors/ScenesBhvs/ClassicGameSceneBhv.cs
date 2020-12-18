@@ -313,10 +313,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void DamageOpponent(int amount, GameObject source)
     {
         var realm = Character.Realm;
-        if (source == null)
-            source = new GameObject();
-        var sourcePosition = source.transform.position;
-        var piece = source.GetComponent<Piece>();
+        var sourcePosition = _characterInstanceBhv.transform.position;
+        Piece piece = null;
+        if (source != null)
+        {
+            sourcePosition = source.transform.position;
+            piece = source.GetComponent<Piece>();
+        }
         if (piece != null && piece.IsMimic)
         {
             realm = Helper.GetInferiorFrom(Character.Realm);
