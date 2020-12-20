@@ -146,7 +146,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = customStr;
         var keyBinding = new List<KeyCode>();
         int i = 0;
-        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 10)
+        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 15)
         {
             var separatorId = strKeyBinding.IndexOf(';');
             if (separatorId == -1)

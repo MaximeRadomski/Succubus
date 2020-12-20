@@ -16,8 +16,11 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _gameplayChoiceSwipes;
     private GameObject _buttonsPanels;
     private GameObject _swipesPanels;
-    private GameObject _keyBindingPanel;
+    private GameObject _keyBindingPanelGameplay;
+    private GameObject _keyBindingPanelMenu;
     private GameObject _sensitivitySelector;
+    private GameObject _menuSelector;
+    private InputControlerBhv _inputControlerBhv;
     private List<GameObject> _gameplayButtons;
     private List<KeyCode> _keyBinding;
     private List<KeyCode> _defaultKeyBinding;
@@ -39,10 +42,13 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _panelRight = GameObject.Find("PanelRight");
         _buttonsPanels = GameObject.Find("ButtonsPanels");
         _swipesPanels = GameObject.Find("SwipesPanels");
-        _keyBindingPanel = GameObject.Find("KeyBindingPanel");
+        _keyBindingPanelGameplay = GameObject.Find("KeyBindingPanelGameplay");
+        _keyBindingPanelMenu = GameObject.Find("KeyBindingPanelMenu");
         _sensitivitySelector = GameObject.Find("SensitivitySelector");
+        _menuSelector = GameObject.Find("MenuSelector");
         _gameplayButtons = new List<GameObject>();
         _listeningKeeBindingId = -1;
+        _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
 
         SetButtons();
 
@@ -97,16 +103,26 @@ public class SettingsGameplaySceneBhv : SceneBhv
         GameObject.Find("2.50").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(2.5f); };
         GameObject.Find("3.00").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(3.0f); };
 
-        _keyBindingPanel.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(0); };
-        _keyBindingPanel.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(1); };
-        _keyBindingPanel.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(2); };
-        _keyBindingPanel.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(3); };
-        _keyBindingPanel.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(4); };
-        _keyBindingPanel.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(5); };
-        _keyBindingPanel.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(6); };
-        _keyBindingPanel.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(7); };
-        _keyBindingPanel.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(8); };
-        _keyBindingPanel.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(9); };
+        _keyBindingPanelGameplay.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(0); };
+        _keyBindingPanelGameplay.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(1); };
+        _keyBindingPanelGameplay.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(2); };
+        _keyBindingPanelGameplay.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(3); };
+        _keyBindingPanelGameplay.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(4); };
+        _keyBindingPanelGameplay.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(5); };
+        _keyBindingPanelGameplay.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(6); };
+        _keyBindingPanelGameplay.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(7); };
+        _keyBindingPanelGameplay.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(8); };
+        _keyBindingPanelGameplay.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(1); };
+
+        _keyBindingPanelMenu.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(9); };
+        _keyBindingPanelMenu.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(10); };
+        _keyBindingPanelMenu.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(11); };
+        _keyBindingPanelMenu.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(12); };
+        _keyBindingPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(13); };
+        _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
+        _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+
+
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -157,13 +173,15 @@ public class SettingsGameplaySceneBhv : SceneBhv
         {
 
             _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _buttonsPanels.GetComponent<PositionBhv>().UpdatePositions();
         }
         else
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
@@ -188,12 +206,14 @@ public class SettingsGameplaySceneBhv : SceneBhv
         {
             _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _keyBindingPanel.GetComponent<PositionBhv>().UpdatePositions();
+            _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         }
         else //Mouse
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _keyBindingPanel.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
@@ -222,7 +242,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
     private void SetKeyBinding(int id)
     {
-        StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () => { _listeningKeeBindingId = id; return true; }));
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; return true; }));
         Constants.EscapeLocked = true;
         _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.MaterialHell_3_2}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
 
@@ -230,9 +250,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
         {
             if (result)
             {
-                CheckAlreadyKeyBinding(_defaultKeyBinding[_listeningKeeBindingId]);
+                CheckAlreadyKeyBinding(_defaultKeyBinding[_listeningKeeBindingId], _listeningKeeBindingId);
                 _keyBinding[_listeningKeeBindingId] = _defaultKeyBinding[_listeningKeeBindingId];
                 PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
+                _inputControlerBhv.GetKeyBinding();
                 UpdateKeyBindingVisual(_listeningKeeBindingId);
             }
             _listeningKeeBindingId = -1;
@@ -248,10 +269,13 @@ public class SettingsGameplaySceneBhv : SceneBhv
         Event e = Event.current;
         if (e.isKey && e.rawType == EventType.KeyUp && _listeningKeeBindingId >= 0)
         {
+            if (_listeningKeeBindingId == 14 && e.keyCode == _keyBinding[14])
+                return;
             Debug.Log("Detected key code: " + e.keyCode);
-            CheckAlreadyKeyBinding(e.keyCode);
+            CheckAlreadyKeyBinding(e.keyCode, _listeningKeeBindingId);
             _keyBinding[_listeningKeeBindingId] = e.keyCode;
             PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
+            _inputControlerBhv.GetKeyBinding();
             UpdateKeyBindingVisual(_listeningKeeBindingId);
             _listeningPopup.GetComponent<PopupBhv>().ExitPopup();
             _listeningKeeBindingId = -1;
@@ -259,9 +283,23 @@ public class SettingsGameplaySceneBhv : SceneBhv
         }
     }
 
-    private void CheckAlreadyKeyBinding(KeyCode code)
+    private void CheckAlreadyKeyBinding(KeyCode code, int keyId)
     {
-        for (int i = 0; i < _keyBinding.Count; ++i)
+        //Check for all except menu arrows
+        if (keyId >= 10 && keyId <= 13)
+        {
+            for (int i = 10; i <= 13; ++i)
+            {
+                if (_keyBinding[i] == code)
+                {
+                    _keyBinding[i] = KeyCode.None;
+                    UpdateKeyBindingVisual(i);
+                }
+            }
+            return;
+        }
+        //Check for gameplay + escape
+        for (int i = 0; i < 9; ++i)
         {
             if (_keyBinding[i] == code)
             {
@@ -269,14 +307,43 @@ public class SettingsGameplaySceneBhv : SceneBhv
                 UpdateKeyBindingVisual(i);
             }
         }
+        //Check for enter
+        if (_keyBinding[14] == code)
+        {
+            _keyBinding[14] = KeyCode.None;
+            UpdateKeyBindingVisual(14);
+        }
+        
     }
 
     private void UpdateKeyBindingVisual(int id)
     {
-        var tmPro = _keyBindingPanel.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
+        TMPro.TextMeshPro tmPro = null;
+        if (id < 9)
+            tmPro = _keyBindingPanelGameplay.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
+        else
+            tmPro = _keyBindingPanelMenu.transform.GetChild(id - 9).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
-        tmPro.text = $"{tmpText}{(id < 9 ? "\n" : " ")}{(_keyBinding[id] == KeyCode.None ? Constants.MaterialLong_3_2 : "")}{_keyBinding[id]}";
+        tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.MaterialLong_3_2 : "")}{_keyBinding[id]}";
+    }
+
+    private void SwitchKeyBindingPanels(int idPanel)
+    {
+        if (idPanel == 0)
+        {
+            _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            if (!Constants.OnlyMouseInMenu)
+                _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(9).gameObject, true);
+        }
+        else
+        {
+            _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelMenu.GetComponent<PositionBhv>().UpdatePositions();
+            if (!Constants.OnlyMouseInMenu)
+                _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(6).gameObject, true);
+        }
     }
 
     private void SetGameplayButtonOnClick()
@@ -445,6 +512,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             PlayerPrefsHelper.SaveButtonsLeftPanel(Constants.PpButtonsLeftPanelDefault);
             PlayerPrefsHelper.SaveButtonsRightPanel(Constants.PpButtonsRightPanelDefault);
             PlayerPrefsHelper.SaveKeyBinding(_defaultKeyBinding);
+            _inputControlerBhv.GetKeyBinding();
             foreach (var gm in _gameplayButtons)
                 Destroy(gm);
             _gameplayButtons.Clear();

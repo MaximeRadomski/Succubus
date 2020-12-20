@@ -155,6 +155,9 @@ TextureImporter:
   - first:
       213: -8603660126326803881
     second: ButtonsUI_26
+  - first:
+      213: 2416002227469311676
+    second: ButtonsUI_27
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -208,6 +211,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -808,7 +813,7 @@ TextureImporter:
         width: 10
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -816,6 +821,27 @@ TextureImporter:
       bones: []
       spriteID: 752391203b8a99880800000000000000
       internalID: -8603660126326803881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsUI_27
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 90
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbe5cd0b93d578120800000000000000
+      internalID: 2416002227469311676
       vertices: []
       indices: 
       edges: []

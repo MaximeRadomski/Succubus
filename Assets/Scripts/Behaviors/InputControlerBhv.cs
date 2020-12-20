@@ -36,7 +36,7 @@ public class InputControlerBhv : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
         _menuSelector = GameObject.Find(Constants.GoMenuSelector).GetComponent<MenuSelectorBhv>();
-        _keyBinding = PlayerPrefsHelper.GetKeyBinding();
+        GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
         _inputNames = new List<string>();
         for (int i = 0; i < _keyBinding.Count; ++i)
@@ -44,6 +44,11 @@ public class InputControlerBhv : MonoBehaviour
             _inputNames.Add(((KeyBinding)i).GetDescription());
         }
         _hasInit = true;
+    }
+
+    public void GetKeyBinding()
+    {
+        _keyBinding = PlayerPrefsHelper.GetKeyBinding();
     }
 
     private void GetScene()
@@ -60,11 +65,19 @@ public class InputControlerBhv : MonoBehaviour
         CheckMenuKeyboardInputs();
 #endif
         // IF BACK BUTTON //
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(_keyBinding[9])) && !Constants.EscapeLocked)
+#if UNITY_ANDROID
+        if (Input.GetKeyDown(KeyCode.Escape) && !Constants.EscapeLocked)
+#else
+        if (Input.GetKeyDown(_keyBinding[9]) && !Constants.EscapeLocked)
+#endif
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
         }
-        else if ((Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(_keyBinding[9])) && !Constants.EscapeLocked)
+#if UNITY_ANDROID
+        if (Input.GetKeyUp(KeyCode.Escape) && !Constants.EscapeLocked)
+#else
+        if (Input.GetKeyUp(_keyBinding[9]) && !Constants.EscapeLocked)
+#endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
             if (_currentScene == null)
@@ -365,15 +378,15 @@ public class InputControlerBhv : MonoBehaviour
             else if (_lastSelectedGameObjects != null)
                 _lastSelectedGameObjects.Clear();
         }   
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(_keyBinding[10]))
             FindNearest(Direction.Up);
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(_keyBinding[11]))
             FindNearest(Direction.Down);
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(_keyBinding[12]))
             FindNearest(Direction.Left);
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(_keyBinding[13]))
             FindNearest(Direction.Right);
-        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(_keyBinding[0]) || Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(_keyBinding[14]))
             ButtonOnSelector();
     }
 
