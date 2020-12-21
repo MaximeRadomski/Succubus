@@ -35,7 +35,9 @@ public class InputControlerBhv : MonoBehaviour
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
+#if !UNITY_ANDROID
         _menuSelector = GameObject.Find(Constants.GoMenuSelector).GetComponent<MenuSelectorBhv>();
+#endif
         GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
         _inputNames = new List<string>();
@@ -60,7 +62,7 @@ public class InputControlerBhv : MonoBehaviour
     {
         if (Constants.InputLocked)
             return;
-#if !UNITY_ANDROID
+#if !UNITY_ANDROID || UNITY_EDITOR
         CheckGameKeyboardInputs();
         CheckMenuKeyboardInputs();
 #endif
@@ -151,11 +153,13 @@ public class InputControlerBhv : MonoBehaviour
                 || (_endPhase = Input.GetMouseButtonUp(0))
                 || (_doPhase = Input.GetMouseButton(0)))
             {
+#if !UNITY_ANDROID
                 if (!Constants.OnlyMouseInMenu)
                 {
                     Constants.OnlyMouseInMenu = true;
                     ResetMenuSelector();
                 }
+#endif
                 _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
                 RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, _mainCamera.transform.forward);

@@ -603,7 +603,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
             AffectGravityOnBlocks(CurrentPiece);
-        CurrentPiece.GetComponent<Piece>().IsLocked = true;
+        CurrentPiece.GetComponent<Piece>().Lock();
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
         bool isTwtist = false;
@@ -641,7 +641,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
-        //StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { SpreadEffect(CurrentPiece); return true; } ));
+        SpreadEffect(CurrentPiece);
         CheckForLightRows();
         CheckForVisionBlocks();
         CheckForLines();
@@ -2091,50 +2091,38 @@ public class GameplayControler : MonoBehaviour
 
     private void SpreadEffect(GameObject piece)
     {
-        var minX = 99;
-        var maxX = -99;
-        var minY = 99;
-        foreach (Transform child in piece.transform)
+        var minMaxX = piece.GetComponent<Piece>().GetRangeX();
+        var minMaxY = piece.GetComponent<Piece>().GetRangeY();
+        if (minMaxY[0] - 1 < 0)
+            return;
+        for (int x = minMaxX[0]; x <= minMaxX[1]; x++)
         {
-            var blockBhv = child.GetComponent<BlockBhv>();
-            if (blockBhv != null)
-                blockBhv.Spread(0.5f);
-            if (child.transform.position.x < minX)
-                minX = Mathf.RoundToInt(child.transform.position.x);
-            if (child.transform.position.x > maxX)
-                maxX = Mathf.RoundToInt(child.transform.position.x);
-            if (child.transform.position.y < minY)
-                minY = Mathf.RoundToInt(child.transform.position.y);
-        }
-        minY--;
-        minX = minX < 0 ? 0 : minX;
-        maxX = maxX > 9 ? 9 : maxX;
-        minY = minY < 0 ? -1 : minY;
-        var invoqueDelayBase = 0.05f;
-        var invoqueDelay = invoqueDelayBase;
-        var xBlocks = new List<int>();
-        var previousX = -1;
-        for (int y = minY; y >= 0 && y >= minY - 4; y--)
-        {
-            if (xBlocks.Count > 0)
-                xBlocks.Clear();
-            for (int x = minX; x <= maxX; ++x)
-            {
-                if (PlayFieldBhv.Grid[x, y] != null && (x != previousX || minX == maxX))
-                    xBlocks.Add(x);
-            }
-            if (xBlocks.Count <= 0)
+            var underBlockTransform = PlayFieldBhv.Grid[x, minMaxY[0] - 1];
+            if (underBlockTransform == null)
                 continue;
-            var randomX = xBlocks[UnityEngine.Random.Range(0, xBlocks.Count)];
-            var blockBhv = PlayFieldBhv.Grid[randomX, y].GetComponent<BlockBhv>();
-            StartCoroutine(Helper.ExecuteAfterDelay(invoqueDelay, () =>
-            {
-                if (blockBhv != null)
-                    blockBhv.Spread(0.2f);
-                return true;
-            }));
-            invoqueDelay += invoqueDelayBase;
-            previousX = randomX;
+            var underBlockBhv = underBlockTransform?.GetComponent<BlockBhv>();
+            if (underBlockBhv == null)
+                continue;
+            underBlockBhv.Spread(UnityEngine.Random.Range(0.2f, 0.5f), x, minMaxY[0] - 1, this);
+            //if (xBlocks.Count > 0)
+            //    xBlocks.Clear();
+            //for (int x = minX; x <= maxX; ++x)
+            //{
+            //    if (PlayFieldBhv.Grid[x, y] != null && (x != previousX || minX == maxX))
+            //        xBlocks.Add(x);
+            //}
+            //if (xBlocks.Count <= 0)
+            //    continue;
+            //var randomX = xBlocks[UnityEngine.Random.Range(0, xBlocks.Count)];
+            //var blockBhv = PlayFieldBhv.Grid[randomX, y].GetComponent<BlockBhv>();
+            //StartCoroutine(Helper.ExecuteAfterDelay(invoqueDelay, () =>
+            //{
+            //    if (blockBhv != null)
+            //        blockBhv.SpreadDown(0.2f);
+            //    return true;
+            //}));
+            //invoqueDelay += invoqueDelayBase;
+            //previousX = randomX;
         }
     }
 }

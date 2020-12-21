@@ -23,6 +23,17 @@ public class Piece : MonoBehaviour
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
 
+    public void Lock()
+    {
+        IsLocked = true;
+        //foreach (Transform child in transform)
+        //{
+        //    int roundedX = Mathf.RoundToInt(child.position.x);
+        //    int roundedY = Mathf.RoundToInt(child.position.y);
+        //    child.gameObject.name = $"{roundedX},{roundedY}";
+        //}
+    }
+
     public void HandleOpacityOnLock(float percent)
     {
         foreach (Transform child in transform)
@@ -207,5 +218,21 @@ public class Piece : MonoBehaviour
         minX = minX < 0 ? 0 : minX;
         maxX = maxX > 9 ? 9 : maxX;
         return new int[] { minX, maxX };
+    }
+
+    public int[] GetRangeY()
+    {
+        var minY = 99;
+        var maxY = -99;
+        foreach (Transform child in transform)
+        {
+            if (child.transform.position.y < minY)
+                minY = Mathf.RoundToInt(child.transform.position.y);
+            if (child.transform.position.y > maxY)
+                maxY = Mathf.RoundToInt(child.transform.position.y);
+        }
+        minY = minY < 0 ? 0 : minY;
+        maxY = maxY > 99 ? 99 : maxY;
+        return new int[] { minY, maxY };
     }
 }

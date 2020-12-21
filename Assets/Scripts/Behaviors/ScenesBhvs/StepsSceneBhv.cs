@@ -113,7 +113,9 @@ public class StepsSceneBhv : SceneBhv
         var distance = Vector2.Distance(CameraBhv.gameObject.transform.position, _stepsBackground.transform.position);
         StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () => {
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
+#if !UNITY_ANDROID
             _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
+#endif
             return true;
         }));
         _playButton.SetActive(_selectedStep.LootType != LootType.None);

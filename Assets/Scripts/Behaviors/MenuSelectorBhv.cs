@@ -35,10 +35,11 @@ public class MenuSelectorBhv : MonoBehaviour
     {
 #if UNITY_ANDROID
         return;
-#endif
+#else
         DontDestroyOnLoad(transform.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
         GetSoundControler();
+#endif
     }
 
     private void GetSoundControler()

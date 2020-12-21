@@ -14,6 +14,7 @@ public class SettingsAudioSceneBhv : SceneBhv
 
     private int _idSpecial;
 #if UNITY_ANDROID
+    private bool _hasInit;
     private float _containerSpace = 5.5f;
 #endif
 
@@ -33,9 +34,13 @@ public class SettingsAudioSceneBhv : SceneBhv
         _idSpecial = _soundControler.SetSound("Special");
 
 #if UNITY_ANDROID
-        GameObject.Find("VibrationContainer").transform.position = new Vector3(0.0f, -_containerSpace, 0.0f);
-        GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 2);
-        GameObject.Find("SettingsTitle").GetComponent<TMPro.TextMeshPro>().text = "Audio & Vibration";
+        if (!_hasInit)
+        {
+            GameObject.Find("VibrationContainer").transform.position = new Vector3(0.0f, -_containerSpace, 0.0f);
+            GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 2);
+            GameObject.Find("SettingsTitle").GetComponent<TMPro.TextMeshPro>().text = "Audio & Vibration";
+        }
+        _hasInit = true;
 #endif
         SetButtons();
         Constants.SetLastEndActionClickedName("EffectsLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetEffectsLevel()));

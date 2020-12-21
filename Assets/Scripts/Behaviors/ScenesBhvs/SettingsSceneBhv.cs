@@ -10,7 +10,9 @@ public class SettingsSceneBhv : SceneBhv
     private GameObject _buttonHowToPlay;
     private GameObject _buttonDisplay;
 
+#if !UNITY_ANDROID
     private float _buttonSpacing = 4.6f;
+#endif
 
     void Start()
     {

@@ -87,6 +87,17 @@ public class Instantiator : MonoBehaviour
         return tmpPieceBlockInstance;
     }
 
+    public GameObject NewBlockLockEffect(int[] minMaxX, int minY)
+    {
+        var tmpParticlesObject = Resources.Load<GameObject>("Prefabs/BlockLockParticles");
+        float width = (minMaxX[1] - minMaxX[0]) + 1;
+        float half = width / 2.0f;
+        GameObject tmpParticlesInstance = Instantiate(tmpParticlesObject, new Vector3(((float)minMaxX[0] - 0.5f) + half, minY - 0.5f, 0.0f), tmpParticlesObject.transform.rotation);
+        var shadow = tmpParticlesInstance.transform.GetChild(0);
+        shadow.localScale = new Vector3(shadow.localScale.x * width, shadow.localScale.y, shadow.localScale.z);
+        return tmpParticlesInstance;
+    }
+
     public void NewGravitySquare(GameObject parent, string realm)
     {
         var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare-" + realm);
