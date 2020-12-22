@@ -32,4 +32,6 @@ public enum AttackType
     Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
     [Description("Shift")]
     Shift = 13, //Shift (param1) rows on the left or right, starting at (param2) row
+    [Description("Gate")]
+    Gate = 14, //A gate of light rows with (param1) cooldown
 }

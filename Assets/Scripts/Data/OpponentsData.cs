@@ -13,11 +13,11 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 //new OpponentAttack(AttackType.MirrorMirror, 3, 1),
                 //new OpponentAttack(AttackType.Intoxication, 10)
-                new OpponentAttack(AttackType.Shift, 4)
+                new OpponentAttack(AttackType.Gate, 1)
                 //new OpponentAttack(AttackType.DarkRow, 2),
                 //new OpponentAttack(AttackType.WasteRow, 2, 1)
             },
-            GravityLevel = 1, DifficultyWeight = 0,
+            GravityLevel = 10, DifficultyWeight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
         new Opponent()

@@ -1717,6 +1717,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Shift:
                 AttackShift(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.Gate:
+                AttackGate(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2040,6 +2043,28 @@ public class GameplayControler : MonoBehaviour
         }));
     }
 
+    public void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)
+    {
+        int lineY = GetHighestBlock() + 3;
+        if (lineY > 18)
+            return;
+        int holeStartX = UnityEngine.Random.Range(1, 7);
+        _soundControler.PlaySound(_idLightRows);
+        FillLine(lineY, AttackType.LightRow, opponentRealm, holeStartX, holeStartX + 1);
+        cooldown = cooldown < 1 ? 1 : cooldown;
+        PlayFieldBhv.Grid[0, lineY].gameObject.tag = Constants.TagLightRows;
+        PlayFieldBhv.Grid[0, lineY].gameObject.AddComponent<LightRowBlockBhv>();
+        var lightRowBhv = PlayFieldBhv.Grid[0, lineY].gameObject.GetComponent<LightRowBlockBhv>();
+        lightRowBhv.NbRows = 1;
+        lightRowBhv.Cooldown = cooldown;
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(holeStartX + 0.5f, lineY));
+        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, lineY]);
+        lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
+        lightRowBhv.UpdateCooldownText(cooldown);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), Character.Realm);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * cooldown);
+    }
+
     public void SetForcedPieceOpacity(float current, float max)
     {
         if (_forcedPieceModel == null)
@@ -2060,7 +2085,8 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (type == AttackType.WasteRow && x >= emptyStart && x <= emptyEnd)
+            if ((type == AttackType.WasteRow || type == AttackType.LightRow)
+                && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
             attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
