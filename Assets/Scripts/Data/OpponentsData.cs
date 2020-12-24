@@ -4,11 +4,27 @@ using UnityEngine;
 
 public static class OpponentsData
 {
+    static OpponentsData()
+    {
+        List<Opponent> realmOpponents = null;
+        for (int realmId = 0; realmId < Helper.EnumCount<Realm>(); ++realmId)
+        {
+            if (realmId == Realm.Hell.GetHashCode())
+                realmOpponents = HellOpponents;
+            else if (realmId == Realm.Earth.GetHashCode())
+                realmOpponents = EarthOpponents;
+            else if (realmId == Realm.Heaven.GetHashCode())
+                realmOpponents = HeavenOpponents;
+            for (int i = 0; i < realmOpponents.Count; i++)
+                realmOpponents[i].Id = i;
+        }
+    }
+
     public static List<Opponent> HellOpponents = new List<Opponent>()
     {
         new Opponent()
         {
-            Id = 0, Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
+            Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 2222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 //new OpponentAttack(AttackType.MirrorMirror, 3, 1),
@@ -22,7 +38,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 1, Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
+            Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
             HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 4, 6),
@@ -34,7 +50,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 2, Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
+            Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
             HpMax = 666, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
@@ -47,7 +63,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 3, Kind = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
+            Kind = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 40, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
@@ -55,7 +71,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 4, Kind = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
+            Kind = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
@@ -63,7 +79,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 5, Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Elite,
+            Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Elite,
             HpMax = 300, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
@@ -71,7 +87,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 6, Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
+            Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 250, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
@@ -79,7 +95,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 7, Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
+            Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 16,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 4) },
@@ -87,7 +103,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Id = 8, Kind = "Lesser Demon", Realm = Realm.Hell, Type = OpponentType.Common,
+            Kind = "Lesser Demon", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 80, Weakness = Weakness.None, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1) },
