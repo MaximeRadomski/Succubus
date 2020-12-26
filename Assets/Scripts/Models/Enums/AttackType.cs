@@ -15,7 +15,7 @@ public enum AttackType
     [Description("Empty Row")]
     EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it
     [Description("Vision Block")]
-    VisionBlock = 5, //Rows that will go over yours to hide your gameplay
+    VisionBlock = 5, //Rows that will go over yours to hide your gameplay (param1) -> nbRows, (param2) -> seconds
     [Description("Forced Piece")]
     ForcedPiece = 6, //Piece that will drop from above. param 1 = Letter or -1 for random or -2 for single block, param 2 = nbRotation or -1 for random
     [Description("Drill")]

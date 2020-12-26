@@ -1781,14 +1781,14 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int param)
+    private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbSeconds)
     {
         _soundControler.PlaySound(_idVisionBlock);
         nbRows = nbRows < 2 ? 2 : nbRows;
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, param, opponentRealm);
+        var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (nbRows / 2));

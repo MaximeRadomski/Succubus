@@ -64,18 +64,50 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 40, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 5,
+            HpMax = 40, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
             GravityLevel = 1, DifficultyWeight = 10
         },
         new Opponent()
         {
+            Kind = "Ghoul", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 3, Immunity = Immunity.xLines, XLineImmunity = 1,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.DarkRow, 1) },
+            GravityLevel = 2, DifficultyWeight = 10
+        },
+        new Opponent()
+        {
+            Kind = "Hell Hound", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 20, Weakness = Weakness.None, Cooldown = 2,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.AirPiece, 2) },
+            GravityLevel = 3, DifficultyWeight = 20
+        },
+        new Opponent()
+        {
             Kind = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 2) },
-            GravityLevel = 2, DifficultyWeight = 20
+                new OpponentAttack(AttackType.DarkRow, 3) },
+            GravityLevel = 5, DifficultyWeight = 20
+        },
+        new Opponent()
+        {
+            Kind = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 200, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.MirrorMirror, 3, 1) },
+            GravityLevel = 5, DifficultyWeight = 30
+        },
+        new Opponent()
+        {
+            Kind = "Fire Cultist", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 140, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 8,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.VisionBlock, 2, 3) },
+            GravityLevel = 1, DifficultyWeight = 40
         },
         new Opponent()
         {
