@@ -15,7 +15,6 @@ public class Opponent
     public int XLineWeakness;
     public int XLineImmunity;
     public int GravityLevel;
-    public bool TrainingOpponent;
 
     public List<OpponentAttack> Attacks;
 

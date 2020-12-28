@@ -16,7 +16,7 @@ public class TattooKinkyBoot : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.CanMimic = true;
+        character.CanDoubleJump = true;
     }
 
     public override string GetDescription()

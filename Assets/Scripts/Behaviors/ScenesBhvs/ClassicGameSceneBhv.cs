@@ -210,7 +210,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
-            NavigationService.LoadBackUntil(Constants.StepsScene);
+        {
+            if (_currentOpponent.Type == OpponentType.Champion)
+            {
+                _run.IncreaseLevel();
+                PlayerPrefsHelper.SaveRun(_run);
+            }
+                NavigationService.LoadBackUntil(Constants.StepsScene);
+        }
         return result;
     }
 

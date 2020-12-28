@@ -188,6 +188,13 @@ public class StepsService
             realmOpponents = OpponentsData.HeavenOpponents;
         int i = 0;
         var totalStepWeight = 0;
+        //DEBUG
+        if (OpponentsData.DebugEnabled)
+        {
+            stepOpponents.Add(OpponentsData.DebugOpponent);
+            return stepOpponents;
+        }
+        //DEBUG
         while (i <= 12)
         {
             plausibleOpponents = realmOpponents.FindAll(o => o.DifficultyWeight > 0 && o.DifficultyWeight <= difficultyWeight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());

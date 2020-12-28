@@ -27,10 +27,21 @@
     public Run()
     {
         CurrentRealm = Realm.Hell;
-        RealmLevel = 1;
+        RealmLevel = 0;
+        IncreaseLevel();
+    }
+
+    public void IncreaseLevel()
+    {
+        ++RealmLevel;
+        if (RealmLevel > 3 && CurrentRealm == Realm.Hell)
+            CurrentRealm = Realm.Earth;
+        else if (RealmLevel > 3 && CurrentRealm == Realm.Earth)
+            CurrentRealm = Realm.Heaven;
         MaxSteps = 6;
         CurrentStep = 0;
         X = 50;
         Y = 50;
+        Steps = null;
     }
 }

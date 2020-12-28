@@ -11,15 +11,15 @@ public enum AttackType
     [Description("Waste Row")]
     WasteRow = 2, //Standard rows with holes in it
     [Description("Light Row")]
-    LightRow = 3, //Full rows with a cooldown, each time a piece locks, it decreases the cooldown. Is destroyed after cooldown.
+    LightRow = 3, //Full rows with a cooldown, each time a piece locks, it decreases the cooldown. Is destroyed after cooldown. (param1) nbRows, (param2) cooldown
     [Description("Empty Row")]
     EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay (param1) -> nbRows, (param2) -> seconds
     [Description("Forced Piece")]
-    ForcedPiece = 6, //Piece that will drop from above. param 1 = Letter or -1 for random or -2 for single block, param 2 = nbRotation or -1 for random
+    ForcedPiece = 6, //Piece that will drop from above. (param1) = Letter or -1 for random or -2 for single block, (param2) = nbRotation or -1 for random
     [Description("Drill")]
-    Drill = 7, //Creates a hole in your pieces. param1 = number of upper blocks before hole
+    Drill = 7, //Creates a hole in your pieces. (param1) = number of upper blocks before hole
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next 'param1' pieces transparent
     [Description("Forced Block")]
@@ -31,7 +31,7 @@ public enum AttackType
     [Description("Drone")]
     Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
     [Description("Shift")]
-    Shift = 13, //Shift (param1) rows on the left or right, starting at (param2) row
+    Shift = 13, //Shift (param1) rows on the left or right
     [Description("Gate")]
     Gate = 14, //A gate of light rows with (param1) cooldown
 }
