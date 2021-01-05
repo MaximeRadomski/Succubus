@@ -104,12 +104,14 @@ public static class Constants
     public const string SettingsGameplayScene = "SettingsGameplayScene";
     public const string SettingsDisplayScene = "SettingsDisplayScene";
     public const string SettingsHowToPlay = "SettingsHowToPlay";
+    public const string StepsAscensionScene = "StepsAscensionScene";
     public const string StepsScene = "StepsScene";
     public const string GameRogueScene = "GameRogueScene";
     public const string TrainingChoiceScene = "TrainingChoiceScene";
     public const string TrainingFreeGameScene = "TrainingFreeGameScene";
     public const string ClassicGameScene = "ClassicGameScene";
     public const string CharSelScene = "CharSelScene";
+    public const string DemoEndScene = "DemoEndScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";

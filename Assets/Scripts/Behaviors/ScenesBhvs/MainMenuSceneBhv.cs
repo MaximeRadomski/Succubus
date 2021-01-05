@@ -34,7 +34,7 @@ public class MainMenuSceneBhv : SceneBhv
         {
             Constants.CurrentGameMode = GameMode.Ascension;
             if (PlayerPrefsHelper.GetRun() != null)
-                NavigationService.LoadNextScene(Constants.StepsScene);
+                NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
                 NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;

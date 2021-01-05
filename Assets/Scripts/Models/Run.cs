@@ -34,10 +34,14 @@
     public void IncreaseLevel()
     {
         ++RealmLevel;
-        if (RealmLevel > 3 && CurrentRealm == Realm.Hell)
-            CurrentRealm = Realm.Earth;
-        else if (RealmLevel > 3 && CurrentRealm == Realm.Earth)
-            CurrentRealm = Realm.Heaven;
+        if (RealmLevel > 3)
+        {
+            RealmLevel = 1;
+            if (CurrentRealm == Realm.Hell)
+                CurrentRealm = Realm.Earth;
+            else if (CurrentRealm == Realm.Earth)
+                CurrentRealm = Realm.Heaven;
+        }
         MaxSteps = 6;
         CurrentStep = 0;
         X = 50;

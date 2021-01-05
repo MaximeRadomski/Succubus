@@ -81,7 +81,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Hell Hound", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 20, Weakness = Weakness.None, Cooldown = 2,
+            HpMax = 20, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 1) },
             GravityLevel = 3, DifficultyWeight = 20
@@ -89,7 +89,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 8,
+            HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3) },
             GravityLevel = 5, DifficultyWeight = 20
@@ -97,7 +97,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 5,
+            HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 3, 1) },
             GravityLevel = 5, DifficultyWeight = 30
@@ -166,7 +166,7 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 10) },
-            GravityLevel = 1, DifficultyWeight = 50
+            GravityLevel = 1, DifficultyWeight = 40
         },
         new Opponent()
         {
@@ -229,7 +229,7 @@ public static class OpponentsData
             Kind = "Stan", Realm = Realm.Hell, Type = OpponentType.Boss,
             HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Gate, 4) },
+                new OpponentAttack(AttackType.Gate, 3) },
             GravityLevel = 10, DifficultyWeight = 150
         }
     };

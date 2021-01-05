@@ -236,4 +236,22 @@ public class StepsService
         }
         return null;
     }
+
+    public List<Opponent> GetBoss(Run run)
+    {
+        var realmOpponents = new List<Opponent>();
+        if (run.CurrentRealm == Realm.Hell)
+            realmOpponents = OpponentsData.HellOpponents;
+        else if (run.CurrentRealm == Realm.Earth)
+            realmOpponents = OpponentsData.EarthOpponents;
+        else if (run.CurrentRealm == Realm.Heaven)
+            realmOpponents = OpponentsData.HeavenOpponents;
+        var idFromEnd = 1;
+        if (run.RealmLevel == 2)
+            idFromEnd = 2; 
+        else if (run.RealmLevel == 1)
+            idFromEnd = 3;
+        var idBoss = realmOpponents.Count - idFromEnd;
+        return new List<Opponent>() { realmOpponents[idBoss] };
+    }
 }

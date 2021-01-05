@@ -113,7 +113,7 @@ public class CharSelSceneBhv : SceneBhv
             }
             else
             {
-                scene = Constants.StepsScene;
+                scene = Constants.StepsAscensionScene;
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
                 PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);

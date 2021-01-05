@@ -15,6 +15,16 @@ public class Instantiator : MonoBehaviour
         _mainCamera = Helper.GetMainCamera();
     }
 
+    public GameObject NewLevel(float margin, int realm, int layer, GameObject parent)
+    {
+        var tmpLevelObject = Resources.Load<GameObject>("Prefabs/Level");
+        var tmpLevelInstance = Instantiate(tmpLevelObject, new Vector3(parent.transform.position.x, parent.transform.position.y + margin, 0.0f), tmpLevelObject.transform.rotation);
+        tmpLevelInstance.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Levels_" + realm);
+        tmpLevelInstance.GetComponent<SpriteRenderer>().sortingOrder = layer;
+        tmpLevelInstance.transform.SetParent(parent.transform);
+        return tmpLevelInstance;
+    }
+
     public void New321(Vector3 position, System.Func<bool> afterAnimation)
     {
         var tmp321Object = Resources.Load<GameObject>("Prefabs/321");

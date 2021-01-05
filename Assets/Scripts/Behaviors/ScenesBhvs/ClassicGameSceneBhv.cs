@@ -45,7 +45,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else
         {
             _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
-            _opponents = _currentStep.Opponents;
+            if (_currentStep.LandLordVision)
+                _opponents = _stepsService.GetBoss(_run);
+            else
+                _opponents = _currentStep.Opponents;
             Constants.CurrentItemCooldown = _run.CurrentItemCooldown;
         }
         //if (_opponents.Count == 1)
@@ -211,12 +214,23 @@ public class ClassicGameSceneBhv : GameSceneBhv
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
         {
-            if (_currentOpponent.Type == OpponentType.Champion)
+            if (_currentOpponent.Type == OpponentType.Boss)
             {
                 _run.IncreaseLevel();
                 PlayerPrefsHelper.SaveRun(_run);
+                if (_run.CurrentRealm == Realm.Earth)
+                {
+                    PlayerPrefsHelper.ResetRun();
+                    NavigationService.LoadBackUntil(Constants.DemoEndScene);
+                    return false;
+                }
+                NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
             }
+            else
+            {
                 NavigationService.LoadBackUntil(Constants.StepsScene);
+            }
+            
         }
         return result;
     }

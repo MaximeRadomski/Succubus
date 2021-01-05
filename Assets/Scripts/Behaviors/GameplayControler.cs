@@ -891,7 +891,8 @@ public class GameplayControler : MonoBehaviour
                 for (int i = 0; i < CurrentGhost.transform.childCount; ++i)
                 {
                     var block = CurrentGhost.transform.GetChild(i);
-                    block.transform.localPosition = _currentGhostPiecesOriginalPos[i];
+                    if (block != null && _currentGhostPiecesOriginalPos[i] != null)
+                        block.transform.localPosition = _currentGhostPiecesOriginalPos[i];
                 }
             }
         }
