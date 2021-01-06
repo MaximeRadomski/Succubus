@@ -36,7 +36,14 @@ public class InputControlerBhv : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
 #if !UNITY_ANDROID
-        _menuSelector = GameObject.Find(Constants.GoMenuSelector).GetComponent<MenuSelectorBhv>();
+        var menuSelectorGameObject = GameObject.Find(Constants.GoMenuSelector);
+        if (menuSelectorGameObject == null)
+        {
+            if (_currentScene == null)
+                GetScene();
+            menuSelectorGameObject = _currentScene.Instantiator.NewMenuSelector();
+        }
+        _menuSelector = menuSelectorGameObject.GetComponent<MenuSelectorBhv>();
 #endif
         GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();

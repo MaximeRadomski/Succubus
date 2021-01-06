@@ -29,7 +29,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         _effectsLevelSelector = GameObject.Find("EffectsLevelSelector");
         _musicLevelSelector = GameObject.Find("MusicLevelSelector");
         _vibrationSelector = GameObject.Find("VibrationSelector");
-        _musicControlerBhv = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
+        _musicControlerBhv = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
         _soundControler = GameObject.Find("SoundControler").GetComponent<SoundControlerBhv>();
         _idSpecial = _soundControler.SetSound("Special");
 

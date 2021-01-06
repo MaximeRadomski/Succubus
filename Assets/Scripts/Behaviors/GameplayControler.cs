@@ -129,7 +129,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv = GetComponent<GameSceneBhv>();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
-        _musicControler = GameObject.Find(Constants.GoMusicControler).GetComponent<MusicControlerBhv>();
+        _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
         _panelLeft = GameObject.Find("PanelLeft");
         _effectsCamera = GameObject.Find("EffectsCamera");
         _effectsCamera?.GetComponent<EffectsCameraBhv>().Reset();

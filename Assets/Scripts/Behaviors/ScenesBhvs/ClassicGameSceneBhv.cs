@@ -218,12 +218,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 _run.IncreaseLevel();
                 PlayerPrefsHelper.SaveRun(_run);
+                //DEBUG
                 if (_run.CurrentRealm == Realm.Earth)
                 {
                     PlayerPrefsHelper.ResetRun();
-                    NavigationService.LoadBackUntil(Constants.DemoEndScene);
+                    NavigationService.LoadNextScene(Constants.DemoEndScene);
                     return false;
                 }
+                //DEBUG
                 NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
             }
             else

@@ -307,7 +307,15 @@ public class PlayerPrefsHelper : MonoBehaviour
             for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
             {
                 int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
-                var matchingId = availablesPartsIds.IndexOf(id.ToString("00"));
+                var matchingId = -1;
+                for (int j = 0; j < availablesPartsIds.Length; j += 2)
+                {
+                    if (availablesPartsIds[j] == id.ToString("00")[0] && availablesPartsIds[j + 1] == id.ToString("00")[1])
+                    {
+                        matchingId = j;
+                        break;
+                    }
+                }
                 if (matchingId != -1 && matchingId % 2 == 0)
                     availablesPartsIds = availablesPartsIds.Remove(matchingId, 2);
             }

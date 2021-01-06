@@ -609,6 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1286873010}
   - component: {fileID: 1286873009}
+  - component: {fileID: 1286873008}
   m_Layer: 0
   m_Name: SceneBhv
   m_TagString: Untagged
@@ -616,6 +617,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1286873008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286873007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e81dc9f1e234a4999c1d4dbe279da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Paused: 0
+  PauseMenu: {fileID: 0}
+  Instantiator: {fileID: 0}
+  CameraBhv: {fileID: 0}
+  OnRootPreviousScene: 
+  CanGoPreviousScene: 1
 --- !u!114 &1286873009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2621,8 +2640,8 @@ MonoBehaviour:
     congratulations !
 
 
-    thanks
-    for playing, feel free to give some feedbacks.'
+    feel
+    free to give some feedbacks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2871060d13c0dfb4d93127d5bf2103cf, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c27a870e3f72e124a90ae7b61759c776, type: 2}

@@ -197,6 +197,13 @@ public class Instantiator : MonoBehaviour
         return tmpPauseMeuInstance;
     }
 
+    public GameObject NewMenuSelector()
+    {
+        var tmpMenuSelectorObject = Resources.Load<GameObject>("Prefabs/MenuSelector");
+        var tmpMenuSelectorInstance = Instantiate(tmpMenuSelectorObject, tmpMenuSelectorObject.transform.position, tmpMenuSelectorObject.transform.rotation);
+        return tmpMenuSelectorInstance;
+    }
+
     public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, Character character, Opponent opponent)
     {
         var tmpInfoMenuObject = Resources.Load<GameObject>("Prefabs/InfoMenu");
