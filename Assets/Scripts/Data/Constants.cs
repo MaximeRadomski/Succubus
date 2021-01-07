@@ -59,7 +59,7 @@ public static class Constants
     public const string PpTrainingLevel = "TrainingLevel";
     public const string PpTrainingLines = "TrainingLines";
     public const string PpTrainingPieces = "TrainingPieces";
-    public const string PpTrainingHighScore = "TrainingHighScore";
+    public const string PpTrainingHighScoreHistory = "TrainingHighScoreHistory";
     public const string PpGhostPieceColor = "GhostPieceColor";
     public const string PpGhostPieceColorDefault = "5";
     public const string PpGameplayChoice = "GameplayChoice";
@@ -75,6 +75,7 @@ public static class Constants
     public const string PpBag = "Bag";
     public const string PpHolder = "Holder";
     public const string PpSerializeDefault = null;
+    public const int PpSerializeDefaultInt = 0;
     public const string PpFavKeyboardLayout = "FavKeyboard";
     public const string PpEffectsLevel = "EffectsLevel";
     public const string PpMusicLevel = "MusicLevel";
@@ -112,6 +113,7 @@ public static class Constants
     public const string ClassicGameScene = "ClassicGameScene";
     public const string CharSelScene = "CharSelScene";
     public const string DemoEndScene = "DemoEndScene";
+    public const string HighScoreScene = "HighScoreScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
@@ -199,6 +201,7 @@ public static class Constants
     public static GameMode CurrentGameMode;
     public static string NameLastScene;
     public static MusicType CurrentMusicType = MusicType.SplashScreen;
+    public static List<int> CurrentHighScoreContext;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;

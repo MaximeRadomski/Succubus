@@ -32,6 +32,19 @@ public class Instantiator : MonoBehaviour
         tmp321Instance.GetComponent<A321Bhv>().Init(afterAnimation);
     }
 
+    public GameObject NewScoreHistory(int score, int max, int id, GameObject parent)
+    {
+        var height = 8 * Constants.Pixel;
+        var tmpScoreHystoryObject = Resources.Load<GameObject>("Prefabs/ScoreHistory");
+        var tmpScoreHystoryInstance = Instantiate(tmpScoreHystoryObject, new Vector3(0.0f, parent.transform.position.y - (id * height), 0.0f), tmpScoreHystoryObject.transform.rotation);
+        tmpScoreHystoryInstance.transform.Find("Score").GetComponent<TMPro.TextMeshPro>().text = score.ToString();
+        var bar = tmpScoreHystoryInstance.transform.Find("Bar").GetComponent<ResourceBarBhv>();
+        bar.UpdateContent(0, max);
+        bar.UpdateContent(score, max, Direction.Up);
+        tmpScoreHystoryInstance.transform.SetParent(parent.transform);
+        return tmpScoreHystoryInstance;
+    }
+
     public GameObject NewAttackLine(Vector3 source, Vector3 target, Realm realm, bool linear = true, Sprite sprite = null, System.Func<object> onPop = null)
     {
         var attackLine = new GameObject("AttackLine");

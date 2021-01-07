@@ -50,13 +50,12 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnGameOver()
     {
-        if (_score > PlayerPrefsHelper.GetTrainingHighScore())
-            PlayerPrefsHelper.SaveTrainingHightScore(_score);
-        _score = 0;
-        _level = 1;
-        _lines = 0;
-        _pieces = 0;
-        NavigationService.LoadBackUntil(Constants.CharSelScene);
+        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces };
+        //_score = 0;
+        //_level = 1;
+        //_lines = 0;
+        //_pieces = 0;
+        NavigationService.LoadNextScene(Constants.HighScoreScene);
         //Reload();
     }
 

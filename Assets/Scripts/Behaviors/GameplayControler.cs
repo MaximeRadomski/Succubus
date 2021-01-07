@@ -1871,8 +1871,9 @@ public class GameplayControler : MonoBehaviour
             _soundControler.PlaySound(_idEmptyRows);
             int roundedX = Mathf.RoundToInt(drillTarget.transform.position.x);
             int roundedY = Mathf.RoundToInt(drillTarget.transform.position.y);
-            if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
-            {
+            var targetedGo = PlayFieldBhv.Grid[roundedX, roundedY];
+            if (targetedGo!= null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
+            {   
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
                 Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
@@ -2130,7 +2131,7 @@ public class GameplayControler : MonoBehaviour
             var underBlockBhv = underBlockTransform?.GetComponent<BlockBhv>();
             if (underBlockBhv == null)
                 continue;
-            underBlockBhv.Spread(UnityEngine.Random.Range(0.2f, 0.5f), x, minMaxY[0] - 1, this);
+            underBlockBhv.Spread(UnityEngine.Random.Range(0.1f, 0.3f), x, minMaxY[0] - 1, this);
             //if (xBlocks.Count > 0)
             //    xBlocks.Clear();
             //for (int x = minX; x <= maxX; ++x)

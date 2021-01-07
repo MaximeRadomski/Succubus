@@ -106,7 +106,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Constants.CurrentOpponentAttackId = 0;
             _opponentInstanceBhv.Spawn();
             CameraBhv.Bump(4);
-            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, 15.0f), floatingTime: 3.0f);
+            var minHeight = 9.0f;
+            var highestBlockY = _gameplayControler.GetHighestBlock();
+            if (minHeight < highestBlockY)
+                minHeight = highestBlockY + 1;
+            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, minHeight));
         }
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_run?.CurrentRealm ?? Realm.Hell}Opponents_{_currentOpponent.Id}");
         _opponentType.sprite = _currentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_currentOpponent.Realm.GetHashCode() * 3) + (_currentOpponent.Type.GetHashCode() - 1)));
@@ -373,7 +377,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
             _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(1);
             _soundControler.PlaySound(_idOpponentDeath);
-            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " defeated!", new Vector2(4.5f, 15.0f));
+            var minHeight = 9.0f;
+            var highestBlockY = _gameplayControler.GetHighestBlock();
+            if (minHeight < highestBlockY)
+                minHeight = highestBlockY + 2;
+            Instantiator.PopText(_currentOpponent.Kind.ToLower() + " defeated!", new Vector2(4.5f, minHeight));
             _opponentInstanceBhv.Die();
             _opponentOnCooldown = false;
             Constants.CurrentOpponentCooldown = 0;

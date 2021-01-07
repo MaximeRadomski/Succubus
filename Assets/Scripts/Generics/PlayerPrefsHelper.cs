@@ -74,15 +74,32 @@ public class PlayerPrefsHelper : MonoBehaviour
         return results;
     }
 
-    public static void SaveTrainingHightScore(int score)
+    public static void SaveTrainingHightScoreHistory(List<int> scoreHistory)
     {
-        PlayerPrefs.SetInt(Constants.PpTrainingHighScore, score);
+        var scoreHistoryStr = "";
+        foreach (var score in scoreHistory)
+            scoreHistoryStr += $"{score};";
+        PlayerPrefs.SetString(Constants.PpTrainingHighScoreHistory, scoreHistoryStr);
     }
 
-    public static int GetTrainingHighScore()
+    public static List<int> GetTrainingHighScoreHistory()
     {
-        var highScore = PlayerPrefs.GetInt(Constants.PpTrainingHighScore, 0);
-        return highScore;
+        var scoreHistoryStr = PlayerPrefs.GetString(Constants.PpTrainingHighScoreHistory, Constants.PpSerializeDefault);
+        int i = 0;
+        var scoreHistory = new List<int>();
+        while (!string.IsNullOrEmpty(scoreHistoryStr) || i > 15)
+        {
+            var separatorScoreId = scoreHistoryStr.IndexOf(';');
+            if (separatorScoreId == -1)
+                break;
+            var score = int.Parse(scoreHistoryStr.Substring(0, separatorScoreId));
+            scoreHistory.Add(score);
+            if (separatorScoreId + 1 >= scoreHistoryStr.Length)
+                break;
+            scoreHistoryStr = scoreHistoryStr.Substring(scoreHistoryStr.IndexOf(';') + 1);
+            ++i;
+        }
+        return scoreHistory;
     }
 
     public static void SaveGhostColor(string ghostColor)

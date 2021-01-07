@@ -6,6 +6,7 @@ public class BlockBhv : MonoBehaviour
 {
     public GameObject Shadow;
     public bool IsMimicked;
+    public bool Indestructible;
 
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
@@ -69,7 +70,8 @@ public class BlockBhv : MonoBehaviour
         if (_spriteRenderer == null)
             return;
         _spreadSpeed = spreadSpeed;
-        _originalColor = _spriteRenderer.color;
+        if (_spreading == false)
+            _originalColor = _spriteRenderer.color;
         _spreadToColor = new Color(_originalColor.r, _originalColor.g, _originalColor.b, _originalColor.a - _opacityGap);
         _opacityGapSpreadDown = _originalColor.a - (_opacityGap / 2.0f);
         _spreading = true;
@@ -84,7 +86,7 @@ public class BlockBhv : MonoBehaviour
         _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, _spreadToColor, _spreadSpeed);
         if (!_hasSpreadDown && _spriteRenderer.color.a <= _opacityGapSpreadDown)
             SpreadDown();
-        if (Helper.FloatEqualsPrecision(_spriteRenderer.color.a, _spreadToColor.a, 0.04f))
+        if (Helper.FloatEqualsPrecision(_spriteRenderer.color.a, _spreadToColor.a, 0.01f))
         {
             _spreading = false;
             _resetingSpread = true;
