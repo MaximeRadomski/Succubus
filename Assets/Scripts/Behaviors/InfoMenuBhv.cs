@@ -118,7 +118,12 @@ public class InfoMenuBhv : PopupBhv
         for (int i = 0; i < 5; ++i)
         {
             if (i < opponent.Attacks.Count)
-                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = "attack " + (i + 1) + ": " + Constants.MaterialHell_4_3 + opponent.Attacks[i].Param1 + " " + opponent.Attacks[i].AttackType.GetDescription().ToLower();
+            {
+                var prefixe = opponent.Attacks[i].AttackType.GetAttribute<PrefixeAttribute>().ToLower();
+                var suffixe = opponent.Attacks[i].AttackType.GetAttribute<SuffixeAttribute>().ToLower();
+                var param1 = !(string.IsNullOrEmpty(prefixe) && string.IsNullOrEmpty(suffixe)) ? $"({prefixe}{opponent.Attacks[i].Param1}{suffixe})" : string.Empty;
+                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"attack {(i + 1)}: {Constants.MaterialHell_4_3}{opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
+            }
             else
                 _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
         }

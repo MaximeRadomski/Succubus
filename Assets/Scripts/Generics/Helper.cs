@@ -294,6 +294,30 @@ public static class Helper
         return System.Enum.GetNames(typeof(EnumType)).Length;
     }
 
+    public static string GetAttribute<T>(this Enum value) where T : CustomAttribute
+    {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        var attribute = value.ToString();
+        var fieldInfo = value.GetType().GetRuntimeField(attribute);
+
+        if (fieldInfo == null)
+            return string.Empty;
+        var attributes = (T[])fieldInfo.GetCustomAttributes(typeof(T), false);
+
+        if (attributes.Length > 0)
+        {
+            attribute = ((CustomAttribute)attributes[0]).Attribute;
+        }
+
+        if (attribute != null)
+            return attribute;
+        return string.Empty;
+    }
+
     public static string GetDescription(this Enum value)
     {
         if (value == null)

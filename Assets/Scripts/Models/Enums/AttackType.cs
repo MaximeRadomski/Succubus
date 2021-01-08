@@ -1,37 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public enum AttackType
 {
+    //Param1 will be the one displayed between pefixes and suffixes
+
     None = 0,
+    [Prefixe("x")]
+    [Suffixe(null)]
     [Description("Dark Row")]
-    DarkRow = 1, //Full rows, can only be destroyed by doing lines (2 clear 1, 3 clear 2, 4 clear 3)
+    DarkRow = 1, //Full rows, can only be destroyed by doing lines (2 clear 1, 3 clear 2, 4 clear 3) (param1) -> nb Lines
+    [Prefixe("x")]
+    [Suffixe(null)]
     [Description("Waste Row")]
-    WasteRow = 2, //Standard rows with holes in it
+    WasteRow = 2, //Standard rows with holes in it (param1) -> nb Lines
+    [Prefixe("x")]
+    [Suffixe(null)]
     [Description("Light Row")]
     LightRow = 3, //Full rows with a cooldown, each time a piece locks, it decreases the cooldown. Is destroyed after cooldown. (param1) nbRows, (param2) cooldown
+    [Prefixe("x")]
+    [Suffixe(null)]
     [Description("Empty Row")]
-    EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it
+    EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it. (param1) -> nb Lines
+    [Prefixe(null)]
+    [Suffixe("lines")]
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay (param1) -> nbRows, (param2) -> seconds
+    [Prefixe(null)]
+    [Suffixe(null)]
     [Description("Forced Piece")]
     ForcedPiece = 6, //Piece that will drop from above. (param1) = Letter or -1 for random or -2 for single block, (param2) = nbRotation or -1 for random
+    [Prefixe(null)]
+    [Suffixe(null)]
     [Description("Drill")]
     Drill = 7, //Creates a hole in your pieces. (param1) = number of upper blocks before hole
+    [Prefixe(null)]
+    [Suffixe("next pieces")]
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next 'param1' pieces transparent
+    [Prefixe(null)]
+    [Suffixe(null)]
     [Description("Forced Block")]
     ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
+    [Prefixe(null)]
+    [Suffixe("next pieces")]
     [Description("Upside Down")]
     MirrorMirror = 10, //Reverse the camera on 'param2' (0 = x, 1 = y, 2 = xy) axis for 'param1' pieces
+    [Prefixe(null)]
+    [Suffixe("next pieces")]
     [Description("Intoxication")]
     Intoxication = 11, //Makes you drunk for 'param1' pieces
+    [Prefixe(null)]
+    [Suffixe(null)]
     [Description("Drone")]
     Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
+    [Prefixe(null)]
+    [Suffixe(null)]
     [Description("Shift")]
     Shift = 13, //Shift (param1) rows on the left or right
+    [Prefixe(null)]
+    [Suffixe("next pieces")]
     [Description("Gate")]
     Gate = 14, //A gate of light rows with (param1) cooldown
 }
