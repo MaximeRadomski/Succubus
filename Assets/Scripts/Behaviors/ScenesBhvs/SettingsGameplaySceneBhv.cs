@@ -271,7 +271,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
         {
             if (_listeningKeeBindingId == 14 && e.keyCode == _keyBinding[14])
                 return;
-            Debug.Log("Detected key code: " + e.keyCode);
+            //Debug.Log("Detected key code: " + e.keyCode);
             CheckAlreadyKeyBinding(e.keyCode, _listeningKeeBindingId);
             _keyBinding[_listeningKeeBindingId] = e.keyCode;
             PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
@@ -486,7 +486,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
         }
         if (verif.Contains("0"))
         {
-            Debug.Log("\t[DEBUG]\tverif = " + verif);
+            //Debug.Log("\t[DEBUG]\tverif = " + verif);
             Instantiator.NewPopupYesNo("Caution", "you are missing some needed buttons!", null, "Oh indeed!", null);
         }
         else

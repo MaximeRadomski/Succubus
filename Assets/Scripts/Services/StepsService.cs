@@ -114,6 +114,20 @@ public class StepsService
                 lootId = PlayerPrefsHelper.GetCurrentTattoos()[Random.Range(0, 12)].Id;
             opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
+        //DEBUG
+        if (ItemsData.DebugEnabled)
+        {
+            lootType = LootType.Item;
+            lootId = ItemsData.DebugItem.Id;
+            opponentType = OpponentType.Common;
+        }
+        if (TattoosData.DebugEnabled)
+        {
+            lootType = LootType.Tattoo;
+            lootId = TattoosData.DebugTattoo.Id;
+            opponentType = OpponentType.Common;
+        }
+        //DEBUG
         var levelDifficulty = GetDifficultyWeightFromRunLevel(run);
         var difficulty = (int)(levelDifficulty + (levelDifficulty * (0.2f * opponentType.GetHashCode())));
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, difficulty, opponentType));
@@ -177,6 +191,7 @@ public class StepsService
 
     private List<Opponent> GetOpponentsFromDifficultyWeight(Realm realm, int difficultyWeight, OpponentType opponentType)
     {
+        Debug.Log($"\t[DEBUG]\tdifficultyWeight = {difficultyWeight}");
         var realmOpponents = new List<Opponent>();
         var plausibleOpponents = new List<Opponent>();
         var stepOpponents = new List<Opponent>();

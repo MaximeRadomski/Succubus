@@ -544,7 +544,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void AddToPlayField(GameObject piece)
+    public void AddToPlayField(GameObject piece)
     {
         if (PlayFieldBhv == null)
             return;
@@ -1539,7 +1539,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private bool HasLine(int y)
+    public bool HasLine(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
@@ -2010,7 +2010,7 @@ public class GameplayControler : MonoBehaviour
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 2);
         SceneBhv.Paused = true;
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
         {

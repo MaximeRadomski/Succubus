@@ -24,7 +24,7 @@ public class IconInstanceBhv : MonoBehaviour
             return;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalScale = transform.localScale;
-        _poppingScale = new Vector3(1.1f, 1.3f, 1.0f);
+        _poppingScale = new Vector3(1.3f, 1.5f, 1.0f);
         _hasInit = true;
     }
 

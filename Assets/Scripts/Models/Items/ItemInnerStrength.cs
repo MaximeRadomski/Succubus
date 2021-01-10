@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class ItemInnerStrength : Item
 {
@@ -18,7 +19,7 @@ public class ItemInnerStrength : Item
     {
         _oldAttack = _character.Attack;
         _character.Attack = _oldAttack * 2;
-        _gameplayControler.Invoke(nameof(AfterDelay), 4.0f);
+        Task.Delay(4000).ContinueWith(t => AfterDelay());
         return base.Effect();
     }
 

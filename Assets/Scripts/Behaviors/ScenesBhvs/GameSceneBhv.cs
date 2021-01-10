@@ -75,6 +75,7 @@ public abstract class GameSceneBhv : SceneBhv
                 NavigationService.LoadBackUntil(Constants.CharSelScene);
             else
             {
+                PlayerPrefsHelper.SaveIsInFight(false);
                 PlayerPrefsHelper.ResetRun();
                 NavigationService.LoadBackUntil(Constants.MainMenuScene);
             }                
@@ -162,6 +163,7 @@ public abstract class GameSceneBhv : SceneBhv
 
     public virtual void OnGameOver()
     {
+        PlayerPrefsHelper.SaveIsInFight(false);
         Constants.CurrentMusicType = MusicType.Menu;
     }
 }

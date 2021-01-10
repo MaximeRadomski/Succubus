@@ -90,7 +90,15 @@ public class PauseMenuBhv : PopupBhv
 
     private void GiveUp()
     {
-        Constants.DecreaseInputLayer();
-        _resumeAction.Invoke(false);
+        _instantiator.NewPopupYesNo("Wait!", "do you really want to give up ?", "No", "Yes", OnGiveUp);
+
+        object OnGiveUp(bool result)
+        {
+            if (!result)
+                return result;
+            Constants.DecreaseInputLayer();
+            _resumeAction.Invoke(false);
+            return result;
+        }
     }
 }

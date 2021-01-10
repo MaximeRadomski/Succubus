@@ -29,7 +29,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.None, DamagesOnWeakness = 0, Cooldown = 10,
+            HpMax = 222, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 0, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.WasteRow, 2, 1)
@@ -107,13 +107,13 @@ public static class OpponentsData
             Kind = "Fire Cultist", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 80, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.VisionBlock, 3, 3) },
+                new OpponentAttack(AttackType.VisionBlock, 3, 5) },
             GravityLevel = 1, DifficultyWeight = 30
         },
         new Opponent()
         {
             Kind = "Ghoul Rider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.None, Cooldown = 10,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 4),
                 new OpponentAttack(AttackType.EmptyRow, 4),
@@ -123,7 +123,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 170, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 2,
+            HpMax = 170, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
             GravityLevel = 8, DifficultyWeight = 40
@@ -139,7 +139,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 16,
+            HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 4) },
             GravityLevel = 5, DifficultyWeight = 40
@@ -147,7 +147,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Snek Jailor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.None, Cooldown = 5,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2) },
             GravityLevel = 8, DifficultyWeight = 40
@@ -174,7 +174,7 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
-            GravityLevel = 10, DifficultyWeight = 60
+            GravityLevel = 10, DifficultyWeight = 50
         },
         new Opponent()
         {
@@ -182,31 +182,31 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.None, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 3) },
-            GravityLevel = 10, DifficultyWeight = 60
+            GravityLevel = 10, DifficultyWeight = 50
         },
         new Opponent()
         {
-            Kind = "Baby Cthulhu", Realm = Realm.Earth, Type = OpponentType.Elite,
-            HpMax = 999, Weakness = Weakness.None, Cooldown = 10,
+            Kind = "Baby Cthulhu", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 300, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 12) },
-            GravityLevel = 15, DifficultyWeight = 100
+            GravityLevel = 15, DifficultyWeight = 60
         },
         new Opponent()
         {
-            Kind = "Impostor", Realm = Realm.Hell, Type = OpponentType.Elite,
+            Kind = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
-            GravityLevel = 15, DifficultyWeight = 100
+            GravityLevel = 15, DifficultyWeight = 60
         },
         new Opponent()
         {
-            Kind = "Truth", Realm = Realm.Heaven, Type = OpponentType.Champion,
+            Kind = "Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 4) },
-            GravityLevel = 20, DifficultyWeight = 100
+            GravityLevel = 25, DifficultyWeight = 60
         },
         new Opponent()
         {

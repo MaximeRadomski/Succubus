@@ -212,6 +212,7 @@ public class StepsSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentMusicType = MusicType.Menu;
+            PlayerPrefsHelper.SaveIsInFight(false);
             NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return false;
         }

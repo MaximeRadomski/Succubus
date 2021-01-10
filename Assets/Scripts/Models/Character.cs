@@ -33,6 +33,7 @@ public class Character : Loot
     public bool CanMimic;
     public bool CanDoubleJump;
     public int PiecesWeight;
+    public int CumulativeCrit;
 
     public Character()
     {
@@ -55,6 +56,7 @@ public class Character : Loot
         CanMimic = false;
         CanDoubleJump = false;
         PiecesWeight = 0;
+        CumulativeCrit = 0;
     }
 
     public int GetAttack()

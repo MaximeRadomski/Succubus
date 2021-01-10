@@ -25,6 +25,8 @@ public static class Constants
     public const string PiecesLetters = "IJLOSTZ";
     public const string AvailableBodyPartsIds = "000102030405060708091011";
     public const float BaseButtonVisionConeMult = 1.5f;
+    public const float OpponentUpgradeReducedCooldown = 0.20f;
+    public const float OpponentUpgradeAddedLife = 0.15f;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -91,6 +93,7 @@ public static class Constants
     public const int PpResolutionDefault = 8;
     public const string PpLastMaxResolution = "LastMaxResolution";
     public const int PpLastMaxResolutionDefault = 0;
+    public const string PpIsInFight = "IsInFight";
 
     public static string GetDefaultKeyBinding()
     {

@@ -340,7 +340,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
             alreadyBodyPartsIds += newBodyPartStr;
             tattoosStr += nameToAdd + "L01B" + newBodyPartStr + ";";
-            Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
+            //Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
             PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
         
@@ -466,5 +466,16 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var height = PlayerPrefs.GetInt(Constants.PpLastMaxResolution, Constants.PpLastMaxResolutionDefault);
         return height;
+    }
+
+    public static void SaveIsInFight(bool isInFight)
+    {
+        PlayerPrefs.SetInt(Constants.PpIsInFight, isInFight == true ? 1 : 0);
+    }
+
+    public static bool GetIsInFight()
+    {
+        var IsInFight = PlayerPrefs.GetInt(Constants.PpIsInFight, Constants.PpSerializeDefaultInt);
+        return IsInFight == 1 ? true : false;
     }
 }

@@ -39,8 +39,8 @@ public static class Helper
     {
         var tmpOpponent = opponent.Clone();
         var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
-        tmpOpponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * 0.25f));
-        tmpOpponent.HpMax += (int)(opponent.HpMax * (typeDifference * 0.5f));
+        tmpOpponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * Constants.OpponentUpgradeReducedCooldown));
+        tmpOpponent.HpMax += (int)(opponent.HpMax * (typeDifference * Constants.OpponentUpgradeAddedLife));
         tmpOpponent.Type = opponentType;
         return tmpOpponent;
     }

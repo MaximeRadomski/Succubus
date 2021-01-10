@@ -12,6 +12,17 @@ public class MainMenuSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        if (PlayerPrefsHelper.GetRun() != null && PlayerPrefsHelper.GetIsInFight() == true)
+        {
+            PlayerPrefsHelper.SaveIsInFight(false);
+            PlayerPrefsHelper.ResetRun();
+            Constants.InputLocked = true;
+            StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () =>
+            {
+                Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
+                return false;
+            }));
+        }
         SetButtons();
     }
 

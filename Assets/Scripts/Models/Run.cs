@@ -22,7 +22,7 @@
 
     public bool CharacterEncounterAvailability;
     public int CharEncounterPercent = 5;
-    public int ItemLootPercent = 30;
+    public int ItemLootPercent = 20;
 
     public Run()
     {

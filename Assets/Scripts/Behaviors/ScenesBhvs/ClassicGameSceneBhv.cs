@@ -20,6 +20,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private Step _currentStep;
 
     private int _characterAttack;
+    private int _cumulativeCrit;
     private bool _isCrit;
     private bool _isVictorious;
 
@@ -44,6 +45,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
+            PlayerPrefsHelper.SaveIsInFight(true);
             _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
             if (_currentStep.LandLordVision)
                 _opponents = _stepsService.GetBoss(_run);
@@ -64,6 +66,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
+        _cumulativeCrit = 0;
         _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
         _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
         _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
@@ -128,6 +131,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void Victory()
     {
+        PlayerPrefsHelper.SaveIsInFight(false);
         Paused = true;
         _isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
@@ -476,8 +480,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             incomingDamages = Character.GetAttack();
             if (nbLines == 1)
                 incomingDamages += Character.SingleLineDamageBonus;
-            if (Helper.RandomDice100(Character.CritChancePercent))
+            if (Helper.RandomDice100(Character.CritChancePercent + Character.CumulativeCrit))
             {
+                _cumulativeCrit += Character.CumulativeCrit;
                 incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
