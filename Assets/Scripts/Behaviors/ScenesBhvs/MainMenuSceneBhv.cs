@@ -23,6 +23,7 @@ public class MainMenuSceneBhv : SceneBhv
                 return false;
             }));
         }
+        GameObject.Find("Version").GetComponent<TMPro.TextMeshPro>().text = $"abject\n{Application.version.ToString().ToLower()}";
         SetButtons();
     }
 

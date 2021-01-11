@@ -161,7 +161,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = PlayerPrefs.GetString(Constants.PpKeyBinding, Constants.PpKeyBindingDefault);
         else
             strKeyBinding = customStr;
-        var keyBinding = new List<KeyCode>();
+        var keyBindings = new List<KeyCode>();
         int i = 0;
         while (!string.IsNullOrEmpty(strKeyBinding) || i >= 15)
         {
@@ -169,13 +169,15 @@ public class PlayerPrefsHelper : MonoBehaviour
             if (separatorId == -1)
                 break;
             var keyCodeHashCode = int.Parse(strKeyBinding.Substring(0, separatorId));
-            keyBinding.Add((KeyCode)keyCodeHashCode);
+            keyBindings.Add((KeyCode)keyCodeHashCode);
             if (separatorId + 1 >= strKeyBinding.Length)
                 break;
             strKeyBinding = strKeyBinding.Substring(separatorId + 1);
             ++i;
         }
-        return keyBinding;
+        if (keyBindings.Count < 15)
+            keyBindings = GetKeyBinding(Constants.PpKeyBindingDefault);
+        return keyBindings;
     }
 
     public static void AddUnlockedCharacters(Character character)
