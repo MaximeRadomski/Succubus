@@ -60,10 +60,15 @@ public class Step
             if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
             {
                 opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
+                Opponents.Add(opponent);
             }
-            Opponents.Add(opponent);
+            else
+                Opponents.Add(opponent.Clone());
             nextOpponentIdStart += 2;
         }
+        var difficulty = PlayerPrefsHelper.GetDifficulty();
+        if (difficulty != Difficulty.Normal)
+            Helper.ApplyDifficulty(Opponents, difficulty);
     }
 
     public string ToParsedString()

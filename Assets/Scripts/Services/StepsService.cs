@@ -219,14 +219,19 @@ public class StepsService
                 if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
                 {
                     opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
+                    stepOpponents.Add(opponent);
                 }
-                stepOpponents.Add(opponent);
+                else
+                    stepOpponents.Add(opponent.Clone());
                 totalStepWeight += opponent.DifficultyWeight;
             }
             else
                 i = 12;
             ++i;
         }
+        var difficulty = PlayerPrefsHelper.GetDifficulty();
+        if (difficulty != Difficulty.Normal)
+                Helper.ApplyDifficulty(stepOpponents, difficulty);
         return stepOpponents;
     }
 

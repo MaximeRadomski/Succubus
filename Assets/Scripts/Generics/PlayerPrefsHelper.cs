@@ -220,6 +220,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return character;
     }
 
+    public static void SaveDifficulty(Difficulty difficulty)
+    {
+        PlayerPrefs.SetInt(Constants.PpDifficulty, difficulty.GetHashCode());
+    }
+
+    public static Difficulty GetDifficulty()
+    {
+        var difficulty = PlayerPrefs.GetInt(Constants.PpDifficulty, Constants.PpDifficultyDefault);
+        return (Difficulty)difficulty;
+    }
+
     public static void SaveCurrentOpponents(List<Opponent> opponents)
     {
         if (opponents == null)

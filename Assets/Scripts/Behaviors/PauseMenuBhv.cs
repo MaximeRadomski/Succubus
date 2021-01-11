@@ -35,7 +35,10 @@ public class PauseMenuBhv : PopupBhv
             if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene)
                 buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Abandon";
             else
+            {
                 buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Save & Quit";
+                buttonGiveUpGameObject.GetComponent<ButtonBhv>().EndActionDelegate = SaveAndQuit;
+            }
         }
 
         var buttonInfo = transform.Find("ButtonInfo");
@@ -100,5 +103,11 @@ public class PauseMenuBhv : PopupBhv
             _resumeAction.Invoke(false);
             return result;
         }
+    }
+
+    private void SaveAndQuit()
+    {
+        Constants.DecreaseInputLayer();
+        _resumeAction.Invoke(false);
     }
 }

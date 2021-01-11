@@ -1,6 +1,7 @@
 ﻿public class Run
 {
     public Realm CurrentRealm;
+    public Difficulty Difficulty;
     public int RealmLevel;
     public int MaxSteps;
     public int CurrentStep;
@@ -24,8 +25,9 @@
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 20;
 
-    public Run()
+    public Run(Difficulty difficulty)
     {
+        Difficulty = difficulty;
         CurrentRealm = Realm.Hell;
         RealmLevel = 0;
         IncreaseLevel();
@@ -42,7 +44,11 @@
             else if (CurrentRealm == Realm.Earth)
                 CurrentRealm = Realm.Heaven;
         }
-        MaxSteps = 6;
+        MaxSteps = 5;
+        if (Difficulty == Difficulty.Easy)
+            MaxSteps = 6;
+        else if (Difficulty == Difficulty.Hard)
+            MaxSteps = 4;
         CurrentStep = 0;
         X = 50;
         Y = 50;

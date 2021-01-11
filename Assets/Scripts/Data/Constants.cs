@@ -94,6 +94,8 @@ public static class Constants
     public const string PpLastMaxResolution = "LastMaxResolution";
     public const int PpLastMaxResolutionDefault = 0;
     public const string PpIsInFight = "IsInFight";
+    public const string PpDifficulty = "Difficulty";
+    public const int PpDifficultyDefault = 1;
 
     public static string GetDefaultKeyBinding()
     {
@@ -115,6 +117,7 @@ public static class Constants
     public const string TrainingFreeGameScene = "TrainingFreeGameScene";
     public const string ClassicGameScene = "ClassicGameScene";
     public const string CharSelScene = "CharSelScene";
+    public const string DifficultyScene = "DifficultyScene";
     public const string DemoEndScene = "DemoEndScene";
     public const string HighScoreScene = "HighScoreScene";
 

@@ -350,6 +350,18 @@ public static class Helper
         return value + (value % 10 == 0 ? 0 : 10 - value % 10);
     }
 
+    public static int RoundToClosestTable(int value, int table)
+    {
+        var superior = value % table == 0 ? 0 : table - value % table;
+        var inferior = value - superior;
+        if (superior == 0)
+            return value;
+        else if (superior < inferior)
+            return value + superior;
+        else
+            return value - inferior;
+    }
+
     public static bool FloatEqualsPrecision(float float1, float float2, float precision)
     {
         return float1 >= float2 - precision && float1 <= float2 + precision;
@@ -396,6 +408,30 @@ public static class Helper
                 return thickness + "RedCritical";
         }
         return thickness + "White";
+    }
+
+    public static void ApplyDifficulty(List<Opponent> opponents, Difficulty difficulty)
+    {
+        foreach (var opponent in opponents)
+        {
+            if (difficulty == Difficulty.Easy)
+            {
+                opponent.Cooldown *= 3;
+                opponent.HpMax /= 2;
+                opponent.GravityLevel -= 5;
+            }
+            else if (difficulty == Difficulty.Hard)
+            {
+                opponent.Cooldown /= 2;
+                opponent.HpMax = (int)(opponent.HpMax * 1.5f);
+                opponent.GravityLevel += 5;
+            }
+            opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
+            if (opponent.GravityLevel < 1)
+                opponent.GravityLevel = 1;
+            else if (opponent.GravityLevel > 30)
+                opponent.GravityLevel = 30;
+        }
     }
 
     public static void ReloadScene()

@@ -88,7 +88,7 @@ public class CharSelSceneBhv : SceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
         else
-            Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
             var scene = "";
@@ -113,12 +113,11 @@ public class CharSelSceneBhv : SceneBhv
             }
             else
             {
-                scene = Constants.StepsAscensionScene;
+                scene = Constants.DifficultyScene;
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
                 PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
                 PlayerPrefsHelper.ResetRun();
-                PlayerPrefsHelper.SaveRun(new Run());
             }
             NavigationService.LoadNextScene(scene);
             return true;
