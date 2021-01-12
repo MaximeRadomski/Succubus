@@ -70,8 +70,14 @@ TagManager:
   - name: Menu
     uniqueID: 2978424413
     locked: 0
+  - name: MenuTop
+    uniqueID: 3428757953
+    locked: 0
   - name: Popup
     uniqueID: 3510437667
+    locked: 0
+  - name: PopupTop
+    uniqueID: 1034691525
     locked: 0
   - name: Snack
     uniqueID: 3932137079
