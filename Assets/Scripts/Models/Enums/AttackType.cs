@@ -39,7 +39,7 @@ public enum AttackType
     [Description("Drill")]
     Drill = 7, //Creates a hole in your pieces. (param1) = number of upper blocks before hole
     [Prefixe(null)]
-    [Suffixe("next pieces")]
+    [Suffixe(" pieces")]
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next 'param1' pieces transparent
     [Prefixe(null)]
@@ -47,11 +47,11 @@ public enum AttackType
     [Description("Forced Block")]
     ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
     [Prefixe(null)]
-    [Suffixe("next pieces")]
+    [Suffixe(" pieces")]
     [Description("Upside Down")]
     MirrorMirror = 10, //Reverse the camera on 'param2' (0 = x, 1 = y, 2 = xy) axis for 'param1' pieces
     [Prefixe(null)]
-    [Suffixe("next pieces")]
+    [Suffixe(" pieces")]
     [Description("Intoxication")]
     Intoxication = 11, //Makes you drunk for 'param1' pieces
     [Prefixe(null)]
@@ -63,7 +63,7 @@ public enum AttackType
     [Description("Shift")]
     Shift = 13, //Shift (param1) rows on the left or right
     [Prefixe(null)]
-    [Suffixe("next pieces")]
+    [Suffixe(" pieces")]
     [Description("Gate")]
     Gate = 14, //A gate of light rows with (param1) cooldown
 }

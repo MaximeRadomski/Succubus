@@ -128,9 +128,9 @@ public class StepsService
             opponentType = OpponentType.Common;
         }
         //DEBUG
-        var levelDifficulty = GetDifficultyWeightFromRunLevel(run);
-        var difficulty = (int)(levelDifficulty + (levelDifficulty * (0.2f * opponentType.GetHashCode())));
-        var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromDifficultyWeight(run.CurrentRealm, difficulty, opponentType));
+        var levelWeight = GetWeightFromRunLevel(run);
+        var weight = (int)(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
+        var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
         run.Steps += newStep.ToParsedString();
     }
 
@@ -189,9 +189,9 @@ public class StepsService
         run.Steps = run.Steps.ReplaceChar(stepStartId + stepVisionValueId, '1');
     }
 
-    private List<Opponent> GetOpponentsFromDifficultyWeight(Realm realm, int difficultyWeight, OpponentType opponentType)
+    private List<Opponent> GetOpponentsFromWeight(Realm realm, int weight, OpponentType opponentType)
     {
-        Debug.Log($"\t[DEBUG]\tdifficultyWeight = {difficultyWeight}");
+        Debug.Log($"\t[DEBUG]\tweight = {weight}");
         var realmOpponents = new List<Opponent>();
         var plausibleOpponents = new List<Opponent>();
         var stepOpponents = new List<Opponent>();
@@ -212,8 +212,8 @@ public class StepsService
         //DEBUG
         while (i <= 12)
         {
-            plausibleOpponents = realmOpponents.FindAll(o => o.DifficultyWeight > 0 && o.DifficultyWeight <= difficultyWeight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
-            if (totalStepWeight < difficultyWeight && plausibleOpponents != null && plausibleOpponents.Count > 0)
+            plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
+            if (totalStepWeight < weight && plausibleOpponents != null && plausibleOpponents.Count > 0)
             {
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
                 if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
@@ -223,7 +223,7 @@ public class StepsService
                 }
                 else
                     stepOpponents.Add(opponent.Clone());
-                totalStepWeight += opponent.DifficultyWeight;
+                totalStepWeight += opponent.Weight;
             }
             else
                 i = 12;
@@ -235,13 +235,13 @@ public class StepsService
         return stepOpponents;
     }
 
-    private int GetDifficultyWeightFromRunLevel(Run run)
+    private int GetWeightFromRunLevel(Run run)
     {
         var baseWeight = 40;
-        var difficultyWeight = baseWeight;
-        difficultyWeight += (int)((baseWeight * 0.75f) * (run.RealmLevel - 1));
-        difficultyWeight *= (int)(1.50f * (run.CurrentRealm.GetHashCode() + 1));
-        return difficultyWeight;
+        var weight = baseWeight;
+        weight += (int)((baseWeight * 0.75f) * (run.RealmLevel - 1));
+        weight *= (int)(1.50f * (run.CurrentRealm.GetHashCode() + 1));
+        return weight;
     }
 
     public Step GetClosestAvailableStepFromPos(int stepX, int stepY, Run run)

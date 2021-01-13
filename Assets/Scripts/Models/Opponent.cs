@@ -20,7 +20,7 @@ public class Opponent
 
     public int DamagesOnWeakness;
     public bool IsDead;
-    public int DifficultyWeight;
+    public int Weight;
 
     public string Lore;
 
@@ -42,7 +42,7 @@ public class Opponent
         newOpponent.Attacks = Attacks;
         newOpponent.DamagesOnWeakness = DamagesOnWeakness;
         newOpponent.IsDead = IsDead;
-        newOpponent.DifficultyWeight = DifficultyWeight;
+        newOpponent.Weight = Weight;
         newOpponent.Lore = Lore;
 
         return newOpponent;

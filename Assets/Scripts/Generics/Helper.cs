@@ -416,13 +416,13 @@ public static class Helper
         {
             if (difficulty == Difficulty.Easy)
             {
-                opponent.Cooldown *= 3;
-                opponent.HpMax /= 2;
-                opponent.GravityLevel -= 5;
+                opponent.Cooldown = (int)(opponent.Cooldown * 3.0f);
+                opponent.HpMax = (int)(opponent.HpMax * 0.5f);
+                opponent.GravityLevel -= 8;
             }
             else if (difficulty == Difficulty.Hard)
             {
-                opponent.Cooldown /= 2;
+                opponent.Cooldown = (int)(opponent.Cooldown * 0.666f);
                 opponent.HpMax = (int)(opponent.HpMax * 1.5f);
                 opponent.GravityLevel += 5;
             }

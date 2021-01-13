@@ -34,7 +34,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.WasteRow, 2, 1)
             },
-            GravityLevel = 2, DifficultyWeight = 0,
+            GravityLevel = 2, Weight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
         new Opponent()
@@ -46,7 +46,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.ForcedPiece, 0, 1),
                 new OpponentAttack(AttackType.EmptyRow, 2),
                 new OpponentAttack(AttackType.ForcedPiece, -1, 1)},
-            GravityLevel = 5, DifficultyWeight = 0,
+            GravityLevel = 5, Weight = 0,
             Lore = "Older children of the dummies, his will is to honor the family duty, and prevent his little brother to murder him in order to take his place."
         },
         new Opponent()
@@ -59,7 +59,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.WasteRow, 3, 3),
                 new OpponentAttack(AttackType.EmptyRow, 3),
                 new OpponentAttack(AttackType.LightRow, 3, 20)},
-            GravityLevel = 10, DifficultyWeight = 0,
+            GravityLevel = 10, Weight = 0,
             Lore = "Matriarch of the dummy family. Her reign over the hell's forces training is one of a kind. It's said she even trained the Antichrist himself!"
         },
         new Opponent()
@@ -68,7 +68,7 @@ public static class OpponentsData
             HpMax = 40, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
-            GravityLevel = 1, DifficultyWeight = 10
+            GravityLevel = 1, Weight = 10
         },
         new Opponent()
         {
@@ -76,7 +76,7 @@ public static class OpponentsData
             HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 3, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
-            GravityLevel = 2, DifficultyWeight = 10
+            GravityLevel = 2, Weight = 10
         },
         new Opponent()
         {
@@ -84,7 +84,7 @@ public static class OpponentsData
             HpMax = 20, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 1) },
-            GravityLevel = 3, DifficultyWeight = 20
+            GravityLevel = 3, Weight = 20
         },
         new Opponent()
         {
@@ -92,7 +92,7 @@ public static class OpponentsData
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3) },
-            GravityLevel = 5, DifficultyWeight = 20
+            GravityLevel = 5, Weight = 20
         },
         new Opponent()
         {
@@ -100,7 +100,7 @@ public static class OpponentsData
             HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 3, 1) },
-            GravityLevel = 5, DifficultyWeight = 30
+            GravityLevel = 5, Weight = 30
         },
         new Opponent()
         {
@@ -108,7 +108,7 @@ public static class OpponentsData
             HpMax = 80, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 3, 5) },
-            GravityLevel = 1, DifficultyWeight = 30
+            GravityLevel = 1, Weight = 30
         },
         new Opponent()
         {
@@ -118,7 +118,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.WasteRow, 1, 4),
                 new OpponentAttack(AttackType.EmptyRow, 4),
             },
-            GravityLevel = 6, DifficultyWeight = 40
+            GravityLevel = 6, Weight = 40
         },
         new Opponent()
         {
@@ -126,7 +126,7 @@ public static class OpponentsData
             HpMax = 170, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
-            GravityLevel = 8, DifficultyWeight = 40
+            GravityLevel = 8, Weight = 40
         },
         new Opponent()
         {
@@ -134,7 +134,7 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
-            GravityLevel = 5, DifficultyWeight = 40
+            GravityLevel = 5, Weight = 40
         },
         new Opponent()
         {
@@ -142,7 +142,7 @@ public static class OpponentsData
             HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 4) },
-            GravityLevel = 5, DifficultyWeight = 40
+            GravityLevel = 5, Weight = 40
         },
         new Opponent()
         {
@@ -150,7 +150,7 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2) },
-            GravityLevel = 8, DifficultyWeight = 40
+            GravityLevel = 8, Weight = 40
         },
         new Opponent()
         {
@@ -158,7 +158,7 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.None, Cooldown = 16,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
-            GravityLevel = 1, DifficultyWeight = 50
+            GravityLevel = 1, Weight = 50
         },
         new Opponent()
         {
@@ -166,7 +166,7 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 10) },
-            GravityLevel = 1, DifficultyWeight = 40
+            GravityLevel = 1, Weight = 40
         },
         new Opponent()
         {
@@ -174,7 +174,7 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
-            GravityLevel = 10, DifficultyWeight = 50
+            GravityLevel = 10, Weight = 50
         },
         new Opponent()
         {
@@ -182,7 +182,7 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.None, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 3) },
-            GravityLevel = 10, DifficultyWeight = 50
+            GravityLevel = 10, Weight = 50
         },
         new Opponent()
         {
@@ -190,7 +190,7 @@ public static class OpponentsData
             HpMax = 300, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 12) },
-            GravityLevel = 15, DifficultyWeight = 60
+            GravityLevel = 15, Weight = 60
         },
         new Opponent()
         {
@@ -198,7 +198,7 @@ public static class OpponentsData
             HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
-            GravityLevel = 15, DifficultyWeight = 60
+            GravityLevel = 15, Weight = 60
         },
         new Opponent()
         {
@@ -206,7 +206,7 @@ public static class OpponentsData
             HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 4) },
-            GravityLevel = 25, DifficultyWeight = 60
+            GravityLevel = 25, Weight = 60
         },
         new Opponent()
         {
@@ -214,7 +214,7 @@ public static class OpponentsData
             HpMax = 500, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 3, 1) },
-            GravityLevel = 6, DifficultyWeight = 150
+            GravityLevel = 6, Weight = 150
         },
         new Opponent()
         {
@@ -222,7 +222,7 @@ public static class OpponentsData
             HpMax = 500, Weakness = Weakness.None, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 4) },
-            GravityLevel = 10, DifficultyWeight = 150
+            GravityLevel = 10, Weight = 150
         },
         new Opponent()
         {
@@ -230,7 +230,7 @@ public static class OpponentsData
             HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },
-            GravityLevel = 10, DifficultyWeight = 150
+            GravityLevel = 10, Weight = 150
         }
     };
 
