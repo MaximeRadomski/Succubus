@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public abstract class GameSceneBhv : SceneBhv
 {
     public Character Character;
+    public Opponent CurrentOpponent;
     protected List<Opponent> _opponents;
-    protected Opponent _currentOpponent;
     protected CharacterInstanceBhv _characterInstanceBhv;
 
     protected GameplayControler _gameplayControler;
@@ -42,7 +42,7 @@ public abstract class GameSceneBhv : SceneBhv
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, _currentOpponent);
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, CurrentOpponent);
     }
 
     private object ResumeGiveUp(bool resume)

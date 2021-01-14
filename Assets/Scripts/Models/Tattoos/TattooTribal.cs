@@ -8,7 +8,7 @@ public class TattooTribal : Tattoo
     {
         Id = 0;
         Name = TattoosData.Tattoos[Id];
-        Stat = 10;
+        Stat = 20;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }

@@ -10,9 +10,9 @@ public static class ItemsData
 
     public static string[] Items = { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert" };
 
-    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3] };
-    public static string[] RareItemsNames = { Items[4], Items[8] };
-    public static string[] LegendaryItemsNames = { Items[5], Items[6], Items[7] };
+    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8] };
+    public static string[] RareItemsNames = { Items[4], Items[5], Items[9] };
+    public static string[] LegendaryItemsNames = { Items[6], Items[7] };
 
     //DEBUG
     public static bool DebugEnabled = false;

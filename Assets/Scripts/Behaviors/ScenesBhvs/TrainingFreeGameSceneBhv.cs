@@ -44,7 +44,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _linesTmp.text = _lines.ToString();
         _piecesTmp.text = _pieces.ToString();
 
-        _currentOpponent = null;
+        CurrentOpponent = null;
         _gameplayControler.StartGameplay(_level, Realm.Hell, Realm.Hell);
     }
 

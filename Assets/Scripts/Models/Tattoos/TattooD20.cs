@@ -9,8 +9,8 @@ public class TattooD20 : Tattoo
     {
         Id = 9;
         Name = TattoosData.Tattoos[Id];
-        Stat = 3;
-        Rarity = Rarity.Rare;
+        Stat = 4;
+        Rarity = Rarity.Common;
         MaxLevel = 11;
     }
 
@@ -21,6 +21,6 @@ public class TattooD20 : Tattoo
 
     public override string GetDescription()
     {
-        return $"increase your critical chance by {StatToString(after: "%")}";
+        return $"increase your critical chance\nby {StatToString(after: "%")}";
     }
 }

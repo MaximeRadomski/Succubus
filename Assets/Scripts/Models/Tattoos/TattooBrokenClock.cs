@@ -8,7 +8,7 @@ public class TattooBrokenClock : Tattoo
         Id = 3;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
-        Rarity = Rarity.Legendary;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 

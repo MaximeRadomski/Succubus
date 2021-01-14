@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainMenuSceneBhv : SceneBhv
 {
+    private InputControlerBhv _inputControlerBhv;
+
     void Start()
     {
         Init();
@@ -12,6 +14,7 @@ public class MainMenuSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         if (PlayerPrefsHelper.GetRun() != null && PlayerPrefsHelper.GetIsInFight() == true)
         {
             PlayerPrefsHelper.SaveIsInFight(false);
@@ -78,6 +81,9 @@ public class MainMenuSceneBhv : SceneBhv
         Instantiator.NewPopupYesNo("Quit", "do you wish to quit the game?", "Nope", "Yup", OnQuit);
         object OnQuit(bool result)
         {
+#if !UNITY_ANDROID
+            _inputControlerBhv.MenuSelector.Reset();
+#endif
             if (result)
                 Application.Quit();
             return result;

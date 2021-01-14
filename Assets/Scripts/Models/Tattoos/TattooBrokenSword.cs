@@ -10,8 +10,8 @@ public class TattooBrokenSword : Tattoo
     {
         Id = 10;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
-        Rarity = Rarity.Rare;
+        Stat = 4;
+        Rarity = Rarity.Common;
         MaxLevel = 33;
     }
 

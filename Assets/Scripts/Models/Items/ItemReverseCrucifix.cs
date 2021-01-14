@@ -14,7 +14,10 @@ public class ItemReverseCrucifix : Item
 
     protected override object Effect()
     {
-        _gameplayControler.SceneBhv.DamageOpponent(666, _gameplayControler.CharacterInstanceBhv.gameObject);
+        int damages = 666;
+        if (_gameplayControler.SceneBhv.CurrentOpponent.Type == OpponentType.Boss)
+            damages = 66;
+        _gameplayControler.SceneBhv.DamageOpponent(damages, _gameplayControler.CharacterInstanceBhv.gameObject);
         return base.Effect();
     }
 }

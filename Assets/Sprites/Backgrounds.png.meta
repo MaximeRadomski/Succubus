@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: -6885080461081682054
     second: Backgrounds_4
+  - first:
+      213: 3552759514208409175
+    second: Backgrounds_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -70,6 +73,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -208,7 +213,7 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -216,6 +221,27 @@ TextureImporter:
       bones: []
       spriteID: a7f5e33acc74370a0800000000000000
       internalID: -6885080461081682054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_5
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 616
+        width: 130
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75618c074ffed4130800000000000000
+      internalID: 3552759514208409175
       vertices: []
       indices: 
       edges: []

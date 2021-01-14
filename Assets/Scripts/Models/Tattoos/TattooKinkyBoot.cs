@@ -10,7 +10,7 @@ public class TattooKinkyBoot : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 0;
         StatStr = "double jump";
-        Rarity = Rarity.Rare;
+        Rarity = Rarity.Legendary;
         MaxLevel = 1;
     }
 

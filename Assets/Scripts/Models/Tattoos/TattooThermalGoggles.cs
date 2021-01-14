@@ -10,7 +10,7 @@ public class TattooThermalGoggles : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         StatStr = null;
-        Rarity = Rarity.Legendary;
+        Rarity = Rarity.Rare;
         MaxLevel = 5;
     }
 

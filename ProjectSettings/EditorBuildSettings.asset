@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SettingsDisplayScene.unity
     guid: 779cef432bd21774ea7ec7a422f718c4
   - enabled: 1
+    path: Assets/Scenes/SettingsHowToPlay.unity
+    guid: 9f1f77725768ccd48a5506f3c7699ec6
+  - enabled: 1
     path: Assets/Scenes/CharSelScene.unity
     guid: 5f4465f44e6f88f428cdc80eb9305f56
   - enabled: 1

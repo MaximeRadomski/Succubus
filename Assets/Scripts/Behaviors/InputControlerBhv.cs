@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputControlerBhv : MonoBehaviour
 {
+    public MenuSelectorBhv MenuSelector;
     private Vector3 _touchPosWorld;
     private InputBhv _currentInput;
     private InputBhv _lastDownInput;
@@ -16,7 +17,6 @@ public class InputControlerBhv : MonoBehaviour
     private List<GameObject> _availableButtons;
     private bool _hasInit;
 
-    private MenuSelectorBhv _menuSelector;
     private int _currentInputLayer = -1;
     private List<GameObject> _lastSelectedGameObjects;
     private GameObject _lastSelectedGameObject;
@@ -43,7 +43,7 @@ public class InputControlerBhv : MonoBehaviour
                 GetScene();
             menuSelectorGameObject = _currentScene.Instantiator.NewMenuSelector();
         }
-        _menuSelector = menuSelectorGameObject.GetComponent<MenuSelectorBhv>();
+        MenuSelector = menuSelectorGameObject.GetComponent<MenuSelectorBhv>();
 #endif
         GetKeyBinding();
         _mainCamera = Helper.GetMainCamera();
@@ -354,7 +354,7 @@ public class InputControlerBhv : MonoBehaviour
             if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
                 _lastSelectedGameObject = _lastSelectedGameObjects[_lastSelectedGameObjects.Count - 1];
-                _menuSelector.MoveTo(_lastSelectedGameObject);
+                MenuSelector.MoveTo(_lastSelectedGameObject);
                 _lastSelectedGameObjects.RemoveAt(_lastSelectedGameObjects.Count - 1);
             }
             else
@@ -367,7 +367,7 @@ public class InputControlerBhv : MonoBehaviour
     {
         if (_currentScene == null)
             GetScene();
-        _menuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
+        MenuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
         if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
         {
             //if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
@@ -378,7 +378,7 @@ public class InputControlerBhv : MonoBehaviour
 
     private void CheckMenuKeyboardInputs()
     {
-        if (_menuSelector == null)
+        if (MenuSelector == null)
             return;
         if (_gameplayControler != null && !_gameplayControler.SceneBhv.Paused)
             return;
@@ -427,16 +427,16 @@ public class InputControlerBhv : MonoBehaviour
             visionConeMult = visionConeMult == null ? lastConeMult : visionConeMult;
 
             if (button == null
-                || (direction == Direction.Up && button.transform.position.y < _menuSelector.transform.position.y + precision / 2)
-                || (direction == Direction.Down && button.transform.position.y > _menuSelector.transform.position.y - precision / 2)
-                || (direction == Direction.Left && button.transform.position.x > _menuSelector.transform.position.x - precision / 2)
-                || (direction == Direction.Right && button.transform.position.x < _menuSelector.transform.position.x + precision / 2)
+                || (direction == Direction.Up && button.transform.position.y < MenuSelector.transform.position.y + precision / 2)
+                || (direction == Direction.Down && button.transform.position.y > MenuSelector.transform.position.y - precision / 2)
+                || (direction == Direction.Left && button.transform.position.x > MenuSelector.transform.position.x - precision / 2)
+                || (direction == Direction.Right && button.transform.position.x < MenuSelector.transform.position.x + precision / 2)
                 || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
                 || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
                 || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
                 continue;
-            var distance = Vector2.Distance(button.transform.position, _menuSelector.transform.position);
-            if (distance < minDistance && distance > precision && IsInsideVisionCone(_menuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
+            var distance = Vector2.Distance(button.transform.position, MenuSelector.transform.position);
+            if (distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
             {
                 minDistance = distance;
                 selectedGameObject = button;
@@ -448,7 +448,7 @@ public class InputControlerBhv : MonoBehaviour
         if (selectedGameObject != null)
         {
             _lastSelectedGameObject = selectedGameObject;
-            _menuSelector.MoveTo(selectedGameObject, soundMuted);
+            MenuSelector.MoveTo(selectedGameObject, soundMuted);
         }
         else if (visionConeMult != null && visionConeMult > 0)
         {
@@ -458,13 +458,13 @@ public class InputControlerBhv : MonoBehaviour
         {
             var resetSize = 2.0f;
             if (direction == Direction.Up)
-                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, -_mainCamera.orthographicSize - resetSize, 0.0f) + _mainCamera.transform.position);
+                MenuSelector.Reset(new Vector3(MenuSelector.transform.position.x, -_mainCamera.orthographicSize - resetSize, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Down)
-                _menuSelector.Reset(new Vector3(_menuSelector.transform.position.x, _mainCamera.orthographicSize + resetSize, 0.0f) + _mainCamera.transform.position);
+                MenuSelector.Reset(new Vector3(MenuSelector.transform.position.x, _mainCamera.orthographicSize + resetSize, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Left)
-                _menuSelector.Reset(new Vector3((_mainCamera.orthographicSize * _mainCamera.aspect) + resetSize, _menuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
+                MenuSelector.Reset(new Vector3((_mainCamera.orthographicSize * _mainCamera.aspect) + resetSize, MenuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
             else if (direction == Direction.Right)
-                _menuSelector.Reset(new Vector3((-_mainCamera.orthographicSize * _mainCamera.aspect) - resetSize, _menuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
+                MenuSelector.Reset(new Vector3((-_mainCamera.orthographicSize * _mainCamera.aspect) - resetSize, MenuSelector.transform.position.y, 0.0f) + _mainCamera.transform.position);
             FindNearest(direction, 0.50f, true);
         }
     }
@@ -491,7 +491,7 @@ public class InputControlerBhv : MonoBehaviour
         {
             var boxCollider = button.GetComponent<BoxCollider2D>();
             var offset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
-            var currentDistance = Vector2.Distance(button.transform.position + offset, _menuSelector.transform.position);
+            var currentDistance = Vector2.Distance(button.transform.position + offset, MenuSelector.transform.position);
             if (currentDistance < minDistance && currentDistance < 1.0f)
             {
                 minDistance = currentDistance;
@@ -501,7 +501,7 @@ public class InputControlerBhv : MonoBehaviour
 
         if (selectedGameObject != null)
         {
-            _menuSelector.Click(selectedGameObject);
+            MenuSelector.Click(selectedGameObject);
             Constants.LastEndActionClickedName = selectedGameObject.name;
             var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
             buttonBhv.BeginAction(selectedGameObject.transform.position);

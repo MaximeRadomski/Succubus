@@ -9,7 +9,7 @@ public class ItemWoodenCross : Item
         Id = 8;
         Name = ItemsData.Items[Id];
         Description = "reset the speed of the room";
-        Rarity = Rarity.Rare;
+        Rarity = Rarity.Common;
         Cooldown = 10;
     }
 

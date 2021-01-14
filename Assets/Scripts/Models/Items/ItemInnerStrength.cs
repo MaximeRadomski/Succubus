@@ -9,7 +9,7 @@ public class ItemInnerStrength : Item
         Id = 5;
         Name = ItemsData.Items[Id];
         Description = "doubles your base attack damages for 4 seconds";
-        Rarity = Rarity.Legendary;
+        Rarity = Rarity.Rare;
         Cooldown = 10;
     }
 

@@ -7,7 +7,7 @@ public class TattooCleaver : Tattoo
     {
         Id = 2;
         Name = TattoosData.Tattoos[Id];
-        Stat = 2;
+        Stat = 5;
         Rarity = Rarity.Rare;
         MaxLevel = 99;
     }

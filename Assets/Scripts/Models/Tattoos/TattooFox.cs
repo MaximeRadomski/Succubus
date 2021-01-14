@@ -7,7 +7,7 @@ public class TattooFox : Tattoo
     {
         Id = 5;
         Name = TattoosData.Tattoos[Id];
-        Stat = 2;
+        Stat = 4;
         Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
@@ -19,6 +19,6 @@ public class TattooFox : Tattoo
 
     public override string GetDescription()
     {
-        return "your item max cooldown is reduced by " + StatToString();
+        return "your items max cooldown are reduced by " + StatToString();
     }
 }

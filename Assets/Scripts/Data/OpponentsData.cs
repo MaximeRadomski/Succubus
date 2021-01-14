@@ -73,7 +73,7 @@ public static class OpponentsData
         new Opponent()
         {
             Kind = "Ghoul", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 3, Immunity = Immunity.xLines, XLineImmunity = 1,
+            HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 6, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
             GravityLevel = 2, Weight = 10
