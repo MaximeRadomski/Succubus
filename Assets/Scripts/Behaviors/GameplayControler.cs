@@ -871,16 +871,19 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void  DropGhost()
+    public void  DropGhost(float withRotationAngle = 0.0f)
     {
         if (CurrentGhost == null)
             return;
         if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity || Character.CanMimic)
         {
-            if (_currentGhostPiecesOriginalPos == null || _currentGhostPiecesOriginalPos.Count == 0)
+            if (_currentGhostPiecesOriginalPos == null || _currentGhostPiecesOriginalPos.Count == 0
+                || CurrentGhost.transform.childCount > _currentGhostPiecesOriginalPos.Count)
             {
                 if (_currentGhostPiecesOriginalPos == null)
                     _currentGhostPiecesOriginalPos = new List<Vector3>();
+                else
+                    _currentGhostPiecesOriginalPos.Clear();
                 foreach (Transform block in CurrentGhost.transform)
                 {
                     _currentGhostPiecesOriginalPos.Add(block.transform.localPosition);
@@ -894,7 +897,15 @@ public class GameplayControler : MonoBehaviour
                     if (block != null && _currentGhostPiecesOriginalPos[i] != null)
                         block.transform.localPosition = _currentGhostPiecesOriginalPos[i];
                 }
+                if (withRotationAngle != 0.0f)
+                {
+                    CurrentGhost.transform.Rotate(0.0f, 0.0f, withRotationAngle);
+                }
             }
+        }
+        else if (withRotationAngle != 0.0f)
+        {
+            CurrentGhost.transform.Rotate(0.0f, 0.0f, withRotationAngle);
         }
         bool hardDropping = true;
         if (CurrentGhost != null && CurrentPiece != null)
@@ -1031,8 +1042,8 @@ public class GameplayControler : MonoBehaviour
                 ResetLock();
                 if (!IsNextGravityFallPossible())
                     SetNextGravityFall();
-                CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
-                DropGhost();
+                //CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
+                DropGhost(withRotationAngle: -90.0f);
                 _soundControler.PlaySound(_idRotate);
                 return;
             }
@@ -1143,8 +1154,8 @@ public class GameplayControler : MonoBehaviour
                 ResetLock();
                 if (!IsNextGravityFallPossible())
                     SetNextGravityFall();
-                CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
-                DropGhost();
+                //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
+                DropGhost(withRotationAngle: 90.0f);
                 _soundControler.PlaySound(_idRotate);
                 return;
             }
@@ -1945,7 +1956,6 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform);
             _soundControler.PlaySound(_idGarbageRows);
             return true;

@@ -179,6 +179,7 @@ public class Piece : MonoBehaviour
 
                 if (!AnyChildWithPosition(roundedChildX + x, roundedChildY + y))
                 {
+                    ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
                     instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
                     AddRandomBlocks(realm, --nbBlocks, instantiator, ghost);
