@@ -54,7 +54,8 @@ public class ResolutionService : MonoBehaviour
             var widthString = width.ToString("F3");
             widthString = widthString.Replace(',', '.');
             var indexOfDot = widthString.IndexOf('.');
-            if (widthString[indexOfDot + 1] == '0' && widthString[indexOfDot + 2] == '0' && width % baseUnitWidth == 0)
+            if (widthString[indexOfDot + 1] == '0' && widthString[indexOfDot + 2] == '0' && width % baseUnitWidth == 0
+                && _resolutions[0].height != height)
                 _resolutions.Insert(0, new Resolution() { height = height, width = (int)width });
             height -= baseUnitHeight;
         }

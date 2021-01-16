@@ -116,7 +116,7 @@ public class InfoMenuBhv : PopupBhv
     {
         if (opponent == null)
             return;
-        _opponentFrame.transform.Find("OpponentKind").GetComponent<TMPro.TextMeshPro>().text = opponent.Kind;
+        _opponentFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
         _opponentFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.MaterialHell_4_3 + opponent.HpMax;
         _opponentFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.MaterialHell_4_3 + opponent.Cooldown + " seconds";
         if (opponent.Attacks.Count > 1)
@@ -135,7 +135,7 @@ public class InfoMenuBhv : PopupBhv
         }
         _opponentFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.MaterialHell_4_3 + opponent.Realm.ToString().ToLower() + "\n" +
             "- takes more damages from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n" +
-            "- attacks " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters with one more row.";
+            "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger.";
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentRealm}Opponents_" + opponent.Id);
         _opponentFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));

@@ -206,7 +206,7 @@ public class StepsService
         //DEBUG
         if (OpponentsData.DebugEnabled)
         {
-            stepOpponents.Add(OpponentsData.DebugOpponent);
+            stepOpponents.Add(OpponentsData.DebugOpponent());
             return stepOpponents;
         }
         //DEBUG

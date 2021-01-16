@@ -6,7 +6,10 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = false;
-    public static Opponent DebugOpponent = HellOpponents?.Find(o => o.Kind.Contains("Crossed"));
+    public static Opponent DebugOpponent()
+    {
+        return HellOpponents?.Find(o => o.Name.Contains("Stan")).Clone();
+    }
 
     static OpponentsData()
     {
@@ -28,7 +31,7 @@ public static class OpponentsData
     {
         new Opponent()
         {
-            Kind = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 222, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 0, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
@@ -39,7 +42,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
+            Name = "Dark Dummy", Realm = Realm.Hell, Type = OpponentType.Elite,
             HpMax = 444, Weakness = Weakness.Combos, DamagesOnWeakness = 6, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 4, 6),
@@ -51,7 +54,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
+            Name = "Mother Dummy", Realm = Realm.Hell, Type = OpponentType.Champion,
             HpMax = 666, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 30, Cooldown = 8,
             Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
@@ -64,7 +67,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
+            Name = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 40, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
@@ -72,7 +75,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Ghoul", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Ghoul", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 6, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
@@ -80,7 +83,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Hell Hound", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Hell Hound", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 20, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 1) },
@@ -88,7 +91,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
+            Name = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3) },
@@ -96,7 +99,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 3, 1) },
@@ -104,7 +107,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Fire Cultist", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Fire Cultist", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 80, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 3, 5) },
@@ -112,7 +115,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Ghoul Rider", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Ghoul Rider", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 4),
@@ -122,7 +125,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Harpy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 170, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
@@ -130,7 +133,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
@@ -138,7 +141,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 4) },
@@ -146,7 +149,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Snek Jailor", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Snek Jailor", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2) },
@@ -154,7 +157,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Crossed Demon", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Crossed Demon", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.None, Cooldown = 16,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
@@ -162,7 +165,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Bad Moose", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Bad Moose", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 10) },
@@ -170,7 +173,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Caca Demon", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Caca Demon", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
@@ -178,7 +181,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Shop Keeper", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Shop Keeper", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 15,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 3) },
@@ -186,7 +189,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Baby Cthulhu", Realm = Realm.Earth, Type = OpponentType.Common,
+            Name = "Baby Cthulhu", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 300, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 12) },
@@ -194,7 +197,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
@@ -202,7 +205,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
+            Name = "Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 4) },
@@ -210,15 +213,15 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Baphomeh", Realm = Realm.Hell, Type = OpponentType.Boss,
-            HpMax = 500, Weakness = Weakness.None, Cooldown = 10,
+            Name = "Baphomeh", Realm = Realm.Hell, Type = OpponentType.Boss,
+            HpMax = 333, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 3, 1) },
             GravityLevel = 6, Weight = 150
         },
         new Opponent()
         {
-            Kind = "Devil's Advocate", Realm = Realm.Hell, Type = OpponentType.Boss,
+            Name = "Devil's Advocate", Realm = Realm.Earth, Type = OpponentType.Boss,
             HpMax = 500, Weakness = Weakness.None, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 4) },
@@ -226,7 +229,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Kind = "Stan", Realm = Realm.Hell, Type = OpponentType.Boss,
+            Name = "Stan", Realm = Realm.Hell, Type = OpponentType.Boss,
             HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },

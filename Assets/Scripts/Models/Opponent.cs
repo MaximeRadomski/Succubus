@@ -5,7 +5,7 @@ using UnityEngine;
 public class Opponent
 {
     public int Id;
-    public string Kind;
+    public string Name;
     public int HpMax;
     public int Cooldown;
     public Realm Realm;
@@ -29,7 +29,7 @@ public class Opponent
         var newOpponent = new Opponent();
 
         newOpponent.Id = Id;
-        newOpponent.Kind = Kind;
+        newOpponent.Name = Name;
         newOpponent.HpMax = HpMax;
         newOpponent.Cooldown = Cooldown;
         newOpponent.Realm = Realm;

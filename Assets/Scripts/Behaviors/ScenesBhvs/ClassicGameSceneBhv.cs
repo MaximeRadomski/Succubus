@@ -40,7 +40,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Constants.CurrentGameMode == GameMode.TrainingDummy
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
-            _opponents = PlayerPrefsHelper.GetCurrentOpponents(null);
+            _opponents = PlayerPrefsHelper.GetCurrentOpponents(new Run(Difficulty.Normal));
             Constants.ResetCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
         }
         else
@@ -113,7 +113,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var highestBlockY = _gameplayControler.GetHighestBlock();
             if (minHeight < highestBlockY)
                 minHeight = highestBlockY + 1;
-            Instantiator.PopText(CurrentOpponent.Kind.ToLower() + " appears!", new Vector2(4.5f, minHeight));
+            Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, minHeight));
         }
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_run?.CurrentRealm ?? Realm.Hell}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
@@ -385,7 +385,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var highestBlockY = _gameplayControler.GetHighestBlock();
             if (minHeight < highestBlockY)
                 minHeight = highestBlockY + 2;
-            Instantiator.PopText(CurrentOpponent.Kind.ToLower() + " defeated!", new Vector2(4.5f, minHeight));
+            Instantiator.PopText(CurrentOpponent.Name.ToLower() + " defeated!", new Vector2(4.5f, minHeight));
             _opponentInstanceBhv.Die();
             _opponentOnCooldown = false;
             Constants.CurrentOpponentCooldown = 0;
