@@ -130,7 +130,8 @@ public class InputControlerBhv : MonoBehaviour
                         if (_currentInput == null
                             || _currentInput.Layer < currentFrameInputLayer
                             || IsTheLowestInput(_currentInput, hitsInformation)
-                            || IsUnderSprite(_currentInput, hitsInformation))
+                            || IsUnderSprite(_currentInput, hitsInformation)
+                            || (_currentInput.gameObject.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(_currentInput.gameObject, _currentInput.gameObject.GetComponent<MaskLinkerBhv>().Mask)))
                             continue;
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
                         {
@@ -179,7 +180,8 @@ public class InputControlerBhv : MonoBehaviour
                         if (_currentInput == null
                             || _currentInput.Layer < currentFrameInputLayer
                             || IsTheLowestInput(_currentInput, hitsInformation)
-                            || IsUnderSprite(_currentInput, hitsInformation))
+                            || IsUnderSprite(_currentInput, hitsInformation)
+                            || (_currentInput.gameObject.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(_currentInput.gameObject, _currentInput.gameObject.GetComponent<MaskLinkerBhv>().Mask)))
                             continue;
                         if (_beginPhase)
                         {

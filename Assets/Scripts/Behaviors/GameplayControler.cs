@@ -82,6 +82,7 @@ public class GameplayControler : MonoBehaviour
     private int _idEmptyRows;
     private int _idCleanRows;
     private int _idVisionBlock;
+    private int _idEndCooldown;
 
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
@@ -175,6 +176,7 @@ public class GameplayControler : MonoBehaviour
         _idEmptyRows = _soundControler.SetSound("EmptyRows");
         _idCleanRows = _soundControler.SetSound("CleanRows");
         _idVisionBlock = _soundControler.SetSound("VisionBlock");
+        _idEndCooldown = _soundControler.SetSound("EndCooldown");
 
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
@@ -236,7 +238,10 @@ public class GameplayControler : MonoBehaviour
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id.ToString("00"));
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                {
                     tmp.GetComponent<IconInstanceBhv>().Pop();
+                    _soundControler.PlaySound(_idEndCooldown);
+                }
             }
         }
         else
@@ -261,7 +266,7 @@ public class GameplayControler : MonoBehaviour
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
-                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
+                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop(1.7f, 2.0f);
             }
         }
         //SPECIAL
@@ -283,7 +288,10 @@ public class GameplayControler : MonoBehaviour
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
+                {
                     tmp.GetComponent<IconInstanceBhv>().Pop();
+                    _soundControler.PlaySound(_idEndCooldown);
+                }
             }
         }
         else
@@ -304,7 +312,7 @@ public class GameplayControler : MonoBehaviour
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.SelectedCharacterSpecialCooldown.ToString();
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
-                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop();
+                    tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop(1.7f, 2.0f);
             }
 
         }
@@ -558,7 +566,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!_hasInit || SceneBhv.Paused || CurrentPiece == null)
             return;
@@ -2001,7 +2009,7 @@ public class GameplayControler : MonoBehaviour
         var x = UnityEngine.Random.Range(0, 10);
         if (Instantiator == null)
             Instantiator = GetComponent<Instantiator>();
-        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, 18, 0.0f), this, nbRows);
+        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows);
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   

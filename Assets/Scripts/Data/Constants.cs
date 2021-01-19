@@ -135,6 +135,7 @@ public static class Constants
     public const string GoButtonSpecialName = "ButtonSpecial";
     public const string GoButtonAntiClockName = "ButtonAntiClock";
     public const string GoButtonClockName = "ButtonClock";
+    public const string GoButton180 = "Button180";
     public const string GoButtonPauseName = "ButtonPause";
     public const string GoButtonPlayName = "ButtonPlay";
     public const string GoButtonBackName = "ButtonBack";

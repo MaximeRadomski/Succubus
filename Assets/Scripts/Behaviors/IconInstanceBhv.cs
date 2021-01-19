@@ -48,8 +48,12 @@ public class IconInstanceBhv : MonoBehaviour
         _spriteRenderer.sprite = sprite;
     }
 
-    public void Pop()
+    public void Pop(float? customX = null, float? customY = null)
     {
+        if (customX != null)
+            _poppingScale = new Vector3(customX.Value, _poppingScale.y, _poppingScale.z);
+        if (customY != null)
+            _poppingScale = new Vector3(_poppingScale.x, customY.Value, _poppingScale.z);
         _popping = true;
     }
 

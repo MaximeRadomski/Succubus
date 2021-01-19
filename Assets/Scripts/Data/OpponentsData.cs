@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Stan")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Baphomeh")).Clone();
     }
 
     static OpponentsData()
@@ -198,7 +198,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 1,
+            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
             GravityLevel = 15, Weight = 60
@@ -216,7 +216,7 @@ public static class OpponentsData
             Name = "Baphomeh", Realm = Realm.Hell, Type = OpponentType.Boss,
             HpMax = 333, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Drone, 3, 1) },
+                new OpponentAttack(AttackType.Drone, 2, 1) },
             GravityLevel = 6, Weight = 150
         },
         new Opponent()
