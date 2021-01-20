@@ -5,10 +5,10 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Baphomeh")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Slayer")).Clone();
     }
 
     static OpponentsData()
@@ -32,7 +32,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 222, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 0, Cooldown = 10,
+            HpMax = 222, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.WasteRow, 2, 1)
@@ -198,10 +198,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 3,
+            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Drill, 0) },
-            GravityLevel = 15, Weight = 60
+                new OpponentAttack(AttackType.ForcedBlock, 1, 3) },
+            GravityLevel = 5, Weight = 60
         },
         new Opponent()
         {
@@ -210,6 +210,14 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 4) },
             GravityLevel = 25, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Boom Slayer", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 100, Weakness = Weakness.None, Cooldown = 0,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drill, 0) },
+            GravityLevel = 15, Weight = 60
         },
         new Opponent()
         {

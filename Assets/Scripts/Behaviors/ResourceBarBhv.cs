@@ -85,7 +85,9 @@ public class ResourceBarBhv : MonoBehaviour
             _isDelayingContent = true;
             _delayingSpeed = 0.0001f;
         }
-        float ratio = (float)current / max;
+        float ratio = 0;
+        if (max > 0)
+            ratio = (float)current / max;
         _instantChange.transform.localScale = new Vector3(1.0f * ratio, 1.0f, 1.0f);
         var space = _width * ((1.0f - ratio) / 2);
         _instantChange.transform.position = new Vector3(transform.position.x - space, transform.position.y, 0.0f);
