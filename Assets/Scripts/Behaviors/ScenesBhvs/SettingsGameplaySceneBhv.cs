@@ -120,7 +120,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _keyBindingPanelMenu.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(12); };
         _keyBindingPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(13); };
         _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
-        _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+        _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
+        _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
 
 
 
@@ -299,7 +300,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
             return;
         }
         //Check for gameplay + escape
-        for (int i = 0; i < 9; ++i)
+        for (int i = 0; i <= 9; ++i)
         {
             if (_keyBinding[i] == code)
             {
@@ -307,13 +308,15 @@ public class SettingsGameplaySceneBhv : SceneBhv
                 UpdateKeyBindingVisual(i);
             }
         }
-        //Check for enter
-        if (_keyBinding[14] == code)
+        //Check for Enter and 180
+        for (int i = 14; i <= 15; ++i)
         {
-            _keyBinding[14] = KeyCode.None;
-            UpdateKeyBindingVisual(14);
+            if (_keyBinding[i] == code)
+            {
+                _keyBinding[i] = KeyCode.None;
+                UpdateKeyBindingVisual(i);
+            }
         }
-        
     }
 
     private void UpdateKeyBindingVisual(int id)

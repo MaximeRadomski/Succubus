@@ -163,7 +163,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = customStr;
         var keyBindings = new List<KeyCode>();
         int i = 0;
-        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 15)
+        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 16)
         {
             var separatorId = strKeyBinding.IndexOf(';');
             if (separatorId == -1)
@@ -175,7 +175,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = strKeyBinding.Substring(separatorId + 1);
             ++i;
         }
-        if (keyBindings.Count < 15)
+        if (keyBindings.Count < 16)
             keyBindings = GetKeyBinding(Constants.PpKeyBindingDefault);
         return keyBindings;
     }

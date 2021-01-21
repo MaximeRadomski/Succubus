@@ -5,7 +5,7 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
         return HellOpponents?.Find(o => o.Name.Contains("Slayer")).Clone();
@@ -208,13 +208,13 @@ public static class OpponentsData
             Name = "Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.ForcedBlock, 1, 4) },
+                new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
             GravityLevel = 25, Weight = 60
         },
         new Opponent()
         {
             Name = "Boom Slayer", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.None, Cooldown = 0,
+            HpMax = 100, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
             GravityLevel = 15, Weight = 60

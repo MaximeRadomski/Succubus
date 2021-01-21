@@ -13,13 +13,13 @@ public class PoppingTextBhv : MonoBehaviour
     private float _startFadingDistance;
     private float _fadingSpeed;
 
-    public void Init(string text, Vector2 startingPosition, string color, float floatingTime, float speed, float distance, float startFadingDistancePercent, float fadingSpeed)
+    public void Init(string text, Vector2 startingPosition, float floatingTime, float speed, float distance, float startFadingDistancePercent, float fadingSpeed)
     {
         StartingPosition = startingPosition;
         transform.position = new Vector2(startingPosition.x, startingPosition.y);
         _positionToReach = new Vector2(startingPosition.x, startingPosition.y + distance);
         _text = GetComponent<TMPro.TextMeshPro>();
-        _text.text = "<color=" + color + ">" + text + "</color>";
+        _text.text = text;
         _colorToFade = new Color(_text.color.r, _text.color.g, _text.color.b, 0.0f);
         _floatingTime = Time.time + floatingTime;
         var nbPoppingTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);

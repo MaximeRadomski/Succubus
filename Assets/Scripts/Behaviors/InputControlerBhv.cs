@@ -307,6 +307,10 @@ public class InputControlerBhv : MonoBehaviour
         {
             _gameplayControler.Special();
         }
+        if (Input.GetKeyDown(_keyBinding[15]))
+        {
+            _gameplayControler.Rotation180();
+        }
         if (Input.anyKeyDown || Input.anyKey)
         {
             for (int i = 0; i < _keyBinding.Count; ++i)

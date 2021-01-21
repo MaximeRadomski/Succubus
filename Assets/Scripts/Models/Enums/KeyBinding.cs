@@ -22,6 +22,8 @@ public enum KeyBinding
     Special = 8,
     [Description("Back / Pause")]
     BackPause = 9,
+    [Description("Rotation 180°")]
+    Rotation180 = 10,
     [Description("None")]
     None = 99
 }

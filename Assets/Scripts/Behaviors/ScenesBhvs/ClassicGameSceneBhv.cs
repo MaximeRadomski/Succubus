@@ -122,8 +122,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (CurrentOpponent.Realm.GetHashCode() * 2)));
         _immunityInstance.SetVisible(CurrentOpponent.Immunity != Immunity.None);
         _immunityInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (CurrentOpponent.Realm.GetHashCode() * 2 + 1)));
+        _opponentHpBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 0),
+                               "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 1),
+                               $"<material=\"{CurrentOpponent.Realm.ToString().ToLower()}.4.3\">");
         _opponentHpBar.UpdateContent(0, CurrentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Up);
+        _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
+                                     "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
         _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
         StartOpponentCooldown(sceneInit);
@@ -370,11 +375,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             PlayHit();
         else
         {
-            attackText += "!";
+            attackText = $"</material>{attackText}!";
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();
-        Instantiator.PopText(attackText, _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f), !_isCrit ? ((Color)Constants.GetColorFromRealm(Character.Realm, 4)).ToHex() : Color.white.ToHex());
+        Instantiator.PopText($"<material=\"{Character.Realm.ToString().ToLower()}.4.3\">{attackText}", _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f));
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {

@@ -1175,6 +1175,60 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
     }
 
+    public void Rotation180()
+    {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        {
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.Rotation180;
+            return;
+        }
+        var currentPieceModel = CurrentPiece.GetComponent<Piece>();
+        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
+            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
+            return;
+        var rotationState = currentPieceModel.RotationState;
+        var tries = new List<List<int>>();
+        tries.Add(new List<int>() { 0, 0 });
+        tries.Add(new List<int>() { +1, 0 });
+        tries.Add(new List<int>() { -1, 0 });
+        tries.Add(new List<int>() { 0, +1 });
+        tries.Add(new List<int>() { 0, -1 });
+
+        _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
+        FadeBlocksOnLastPosition(CurrentPiece);
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, 180.0f);
+        for (int i = 0; i < 5; ++i)
+        {
+            CurrentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
+            if (IsPiecePosValid(CurrentPiece))
+            {
+                if (rotationState == RotationState.O) //O->D
+                    currentPieceModel.RotationState = RotationState.D;
+                else if (rotationState == RotationState.R) //R->L
+                    currentPieceModel.RotationState = RotationState.L;
+                else if (rotationState == RotationState.L) //L->R
+                    currentPieceModel.RotationState = RotationState.R;
+                else if (rotationState == RotationState.D) //D->O
+                    currentPieceModel.RotationState = RotationState.O;
+                if (_nextLock > 0.0f)
+                    _allowedMovesBeforeLock += 2;
+                ResetLock();
+                if (!IsNextGravityFallPossible())
+                    SetNextGravityFall();
+                //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
+                DropGhost(withRotationAngle: 180.0f);
+                _soundControler.PlaySound(_idRotate);
+                return;
+            }
+            else
+            {
+                CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
+            }
+        }
+        CurrentPiece.transform.Rotate(0.0f, 0.0f, -180.0f);
+    }
+
     public void Hold()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused)

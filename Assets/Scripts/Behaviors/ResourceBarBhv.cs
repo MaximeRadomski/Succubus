@@ -3,12 +3,14 @@
 public class ResourceBarBhv : MonoBehaviour
 {
     private TMPro.TextMeshPro _text;
+    private string _textPrefix;
     private GameObject _content;
     private GameObject _subContent;
     private SpriteRenderer _contentSpriteRenderer;
+    private SpriteRenderer _subContentSpriteRenderer;
     private float _width;
     private float? _frameHeight;
-    private bool _isSet;
+    private bool _hasInit;
 
     GameObject _instantChange;
     GameObject _delayedChange;
@@ -18,7 +20,7 @@ public class ResourceBarBhv : MonoBehaviour
 
     void Start()
     {
-        if (!_isSet)
+        if (!_hasInit)
             Init();
     }
 
@@ -45,7 +47,8 @@ public class ResourceBarBhv : MonoBehaviour
         _subContent = transform.Find("SubContent")?.gameObject;
         _contentSpriteRenderer = _content.GetComponent<SpriteRenderer>();
         _width = _contentSpriteRenderer.sprite.rect.size.x * Constants.Pixel;
-        _isSet = true;
+        _subContentSpriteRenderer = _subContent.GetComponent<SpriteRenderer>();
+        _hasInit = true;
     }
 
     public void UpdateContent(int current, int max, Direction direction = Direction.None)
@@ -77,7 +80,7 @@ public class ResourceBarBhv : MonoBehaviour
         }
 
         if (_text != null)
-            _text.text = current.ToString();
+            _text.text = (_textPrefix != null ? _textPrefix : "") + current.ToString();
         if (isDelaying)
         {
             _delayedChange.transform.localScale = _instantChange.transform.localScale;
@@ -124,5 +127,15 @@ public class ResourceBarBhv : MonoBehaviour
     {
         _contentSpriteRenderer.color = Constants.ColorPlain;
         _tiltingUp = false;
+    }
+
+    public void SetSkin(string content, string subcontent, string textPrefix = null)
+    {
+        if (!_hasInit)
+            Init();
+        _contentSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet(content);
+        _subContentSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet(subcontent);
+        if (textPrefix != null && _text != null)
+            _textPrefix = textPrefix;
     }
 }

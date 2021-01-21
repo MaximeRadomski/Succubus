@@ -226,11 +226,11 @@ public class Instantiator : MonoBehaviour
         return tmpInfoMeuInstance;
     }
 
-    public GameObject PopText(string text, Vector2 position, string color = "#FFFFFF", float floatingTime = 0.0f, float speed = 0.05f, float distance = 0.25f, float startFadingDistancePercent = 0.04f, float fadingSpeed = 0.1f)
+    public GameObject PopText(string text, Vector2 position, float floatingTime = 0.0f, float speed = 0.05f, float distance = 0.25f, float startFadingDistancePercent = 0.04f, float fadingSpeed = 0.1f)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, color, floatingTime, speed, distance, startFadingDistancePercent, fadingSpeed);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().Init(text, position, floatingTime, speed, distance, startFadingDistancePercent, fadingSpeed);
         return tmpPoppingTextInstance;
     }
 
