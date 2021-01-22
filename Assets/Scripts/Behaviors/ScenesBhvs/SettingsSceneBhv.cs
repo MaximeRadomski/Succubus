@@ -7,6 +7,7 @@ public class SettingsSceneBhv : SceneBhv
     private GameObject _buttonContainer;
     private GameObject _buttonAudio;
     private GameObject _buttonGameplay;
+    private GameObject _buttonInputs;
     private GameObject _buttonHowToPlay;
     private GameObject _buttonDisplay;
 
@@ -30,6 +31,7 @@ public class SettingsSceneBhv : SceneBhv
         _buttonContainer = GameObject.Find("ButtonContainer");
         (_buttonAudio = GameObject.Find("ButtonAudio")).GetComponent<ButtonBhv>().EndActionDelegate = GoToAudioSettings;
         (_buttonGameplay = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
+        (_buttonInputs = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
         (_buttonHowToPlay = GameObject.Find("ButtonHowToPlay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToHowToPlay;
 #if !UNITY_ANDROID
         (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToDisplaySettings;
