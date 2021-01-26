@@ -31,7 +31,7 @@ public class SettingsSceneBhv : SceneBhv
         _buttonContainer = GameObject.Find("ButtonContainer");
         (_buttonAudio = GameObject.Find("ButtonAudio")).GetComponent<ButtonBhv>().EndActionDelegate = GoToAudioSettings;
         (_buttonGameplay = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
-        (_buttonInputs = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
+        (_buttonInputs = GameObject.Find("ButtonInputs")).GetComponent<ButtonBhv>().EndActionDelegate = GoToInputsSettings;
         (_buttonHowToPlay = GameObject.Find("ButtonHowToPlay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToHowToPlay;
 #if !UNITY_ANDROID
         (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToDisplaySettings;
@@ -60,6 +60,16 @@ public class SettingsSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsGameplayScene);
+            return true;
+        }
+    }
+
+    private void GoToInputsSettings()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.SettingsInputsScene);
             return true;
         }
     }

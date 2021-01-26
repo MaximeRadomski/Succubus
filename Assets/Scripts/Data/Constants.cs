@@ -96,6 +96,10 @@ public static class Constants
     public const string PpIsInFight = "IsInFight";
     public const string PpDifficulty = "Difficulty";
     public const int PpDifficultyDefault = 1;
+    public const string PpDas = "Das";
+    public const int PpDasDefault = 10;
+    public const string PpArr = "Arr";
+    public const int PpArrDefault = 0;
 
     public static string GetDefaultKeyBinding()
     {
@@ -108,6 +112,7 @@ public static class Constants
     public const string SettingsScene= "SettingsScene";
     public const string SettingsAudioScene = "SettingsAudioScene";
     public const string SettingsGameplayScene = "SettingsGameplayScene";
+    public const string SettingsInputsScene = "SettingsInputsScene";
     public const string SettingsDisplayScene = "SettingsDisplayScene";
     public const string SettingsHowToPlay = "SettingsHowToPlay";
     public const string StepsAscensionScene = "StepsAscensionScene";

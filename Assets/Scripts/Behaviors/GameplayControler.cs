@@ -23,7 +23,10 @@ public class GameplayControler : MonoBehaviour
     private Realm _characterRealm;
     private Realm _levelRealm;
 
-    private int _timeDirectionHolded;
+    private int _das;
+    private int _dasMax;
+    private int _arr;
+    private int _arrMax;
     private float _nextGravityFall;
     private float _lockDelay;
     private float _nextLock;
@@ -184,7 +187,7 @@ public class GameplayControler : MonoBehaviour
         for (int i = 0; i < 5; ++i)
             _nextPieces.Add(GameObject.Find(Constants.GoNextPieceName + i.ToString("D2")));
         SetNextGravityFall();
-        SetTimeDirectionHolded();
+        ResetDasArr();
         PlayFieldBhv = GameObject.Find("PlayField").GetComponent<PlayFieldBhv>();
         _playFieldHeight = Constants.PlayFieldHeight;
         _playFieldWidth = Constants.PlayFieldWidth;
@@ -213,6 +216,8 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.Init(Character, this);
         CharacterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
+        _dasMax = PlayerPrefsHelper.GetDas();
+        _arrMax = PlayerPrefsHelper.GetArr();
         _hasInit = true;
     }
 
@@ -434,9 +439,10 @@ public class GameplayControler : MonoBehaviour
         _nextGravityFall = Time.time + GravityDelay;
     }
 
-    private void SetTimeDirectionHolded()
+    private void ResetDasArr()
     {
-        _timeDirectionHolded = 0;
+        _das = 0;
+        _arr = _arrMax;
     }
 
     private void SetButtons()
@@ -688,7 +694,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Left;
             return;
         }
-        SetTimeDirectionHolded();
+        ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
@@ -700,20 +706,26 @@ public class GameplayControler : MonoBehaviour
     public void LeftHolded()
     {
         ++_leftHolded;
-        ++_timeDirectionHolded;
+        ++_das;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            _timeDirectionHolded += 10;
+            _das += _dasMax;
             return;
         }
-        if (_timeDirectionHolded < 10)
+        if (_das < _dasMax)
             return;
+        if (_arr < _arrMax)
+        {
+            ++_arr;
+            return;
+        }
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        _arr = 0;
     }
 
     public void Right(bool mimicPossible = true)
@@ -725,7 +737,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Right;
             return;
         }
-        SetTimeDirectionHolded();
+        ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
@@ -737,25 +749,31 @@ public class GameplayControler : MonoBehaviour
     public void RightHolded()
     {
         ++_rightHolded;
-        ++_timeDirectionHolded;
+        ++_das;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            _timeDirectionHolded += 10;
+            _das += _dasMax;
             return;
         }
-        if (_timeDirectionHolded < 10)
+        if (_das < _dasMax)
             return;
+        if (_arr < _arrMax)
+        {
+            ++_arr;
+            return;
+        }
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHolded == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
+        _arr = 0;
     }
 
     public void DirectionReleased()
     {
-        SetTimeDirectionHolded();
+        ResetDasArr();
     }
 
     public void SoftDropHolded()

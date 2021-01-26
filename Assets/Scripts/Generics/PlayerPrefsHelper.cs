@@ -491,4 +491,26 @@ public class PlayerPrefsHelper : MonoBehaviour
         var IsInFight = PlayerPrefs.GetInt(Constants.PpIsInFight, Constants.PpSerializeDefaultInt);
         return IsInFight == 1 ? true : false;
     }
+
+    public static void SaveDas(int das)
+    {
+        PlayerPrefs.SetInt(Constants.PpDas, das);
+    }
+
+    public static int GetDas()
+    {
+        var das = PlayerPrefs.GetInt(Constants.PpDas, Constants.PpDasDefault);
+        return das;
+    }
+
+    public static void SaveArr(int arr)
+    {
+        PlayerPrefs.SetInt(Constants.PpArr, arr);
+    }
+
+    public static int GetArr()
+    {
+        var arr = PlayerPrefs.GetInt(Constants.PpArr, Constants.PpArrDefault);
+        return arr;
+    }
 }
