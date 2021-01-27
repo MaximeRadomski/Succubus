@@ -99,7 +99,9 @@ public static class Constants
     public const string PpDas = "Das";
     public const int PpDasDefault = 10;
     public const string PpArr = "Arr";
-    public const int PpArrDefault = 0;
+    public const int PpArrDefault = 2;
+    public const string PpRotationPoint = "RotationPoint";
+    public const bool PpRotationPointDefault = false;
 
     public static string GetDefaultKeyBinding()
     {
@@ -153,7 +155,7 @@ public static class Constants
     public const string GoDrillTarget = "DrillTarget";
     public const string GoDrone = "Drone";
     public const string GoMenuSelector = "MenuSelector";
-
+    public const string GoRotationPoint = "RotationPoint";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 3.1f;

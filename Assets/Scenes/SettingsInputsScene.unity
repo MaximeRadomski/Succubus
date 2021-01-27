@@ -14815,8 +14815,8 @@ MonoBehaviour:
   CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
-  PcKeyboard: {fileID: 0}
-  PcMouse: {fileID: 0}
+  PcKeyboard: {fileID: -145808401816936526, guid: 29e8a4bf352abdd4fa1ba1f513cea7e8, type: 3}
+  PcMouse: {fileID: 9047942841961285903, guid: 29e8a4bf352abdd4fa1ba1f513cea7e8, type: 3}
 --- !u!4 &1967374792
 Transform:
   m_ObjectHideFlags: 0

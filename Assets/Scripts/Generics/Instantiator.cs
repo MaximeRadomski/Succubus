@@ -32,6 +32,14 @@ public class Instantiator : MonoBehaviour
         tmp321Instance.GetComponent<A321Bhv>().Init(afterAnimation);
     }
 
+    public void NewRotationPoint(GameObject piece)
+    {
+        var tmpRotationPointObject = Resources.Load<GameObject>("Prefabs/RotationPoint");
+        var tmpRotationPointInstance = Instantiate(tmpRotationPointObject, piece.transform.position, tmpRotationPointObject.transform.rotation);
+        tmpRotationPointInstance.name = Constants.GoRotationPoint;
+        tmpRotationPointInstance.transform.SetParent(piece.transform.GetChild(0));
+    }
+
     public GameObject NewScoreHistory(int score, int max, int id, GameObject parent)
     {
         var height = 8 * Constants.Pixel;

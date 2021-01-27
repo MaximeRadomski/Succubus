@@ -6,6 +6,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _ghostSelector;
     private GameObject _dasSelector;
     private GameObject _arrSelector;
+    private GameObject _rotationPointSelector;
+
+    private Piece _tHell;
+    private Piece _iHell;
 
     void Start()
     {
@@ -18,6 +22,10 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _ghostSelector = GameObject.Find("GhostSelector");
         _dasSelector = GameObject.Find("DasSelector");
         _arrSelector = GameObject.Find("ArrSelector");
+        _rotationPointSelector = GameObject.Find("RotationPointSelector");
+
+        _tHell = GameObject.Find("T-Hell").GetComponent<Piece>();
+        _iHell = GameObject.Find("I-Hell").GetComponent<Piece>();
 
         SetButtons();
 
@@ -26,6 +34,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         DasChoice(PlayerPrefsHelper.GetDas());
         ArrChoice(PlayerPrefsHelper.GetArr());
+        RotationPointChoice(PlayerPrefsHelper.GetRotationPoint());
     }
 
     private void SetButtons()
@@ -36,17 +45,20 @@ public class SettingsGameplaySceneBhv : SceneBhv
         GameObject.Find("Ghost4").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
         GameObject.Find("Ghost5").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
 
+        GameObject.Find("Das06").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(06); };
+        GameObject.Find("Das08").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(08); };
         GameObject.Find("Das10").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(10); };
-        GameObject.Find("Das20").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(20); };
-        GameObject.Find("Das30").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(30); };
-        GameObject.Find("Das40").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(40); };
-        GameObject.Find("Das50").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(50); };
+        GameObject.Find("Das12").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(12); };
+        GameObject.Find("Das14").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(14); };
 
         GameObject.Find("Arr0").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(0); };
         GameObject.Find("Arr1").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(1); };
         GameObject.Find("Arr2").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(2); };
         GameObject.Find("Arr3").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(3); };
         GameObject.Find("Arr4").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(4); };
+
+        GameObject.Find("RotationPointOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { RotationPointChoice(false); };
+        GameObject.Find("RotationPointOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { RotationPointChoice(true); };
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         GameObject.Find("ButtonReset").GetComponent<ButtonBhv>().EndActionDelegate = ResetDefault;
@@ -62,7 +74,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
     private void DasChoice(int das)
     {
-        var choiceGameObject = GameObject.Find("Das" + das);
+        var choiceGameObject = GameObject.Find("Das" + das.ToString("00"));
         _dasSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _dasSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveDas(das);
     }
@@ -72,6 +84,23 @@ public class SettingsGameplaySceneBhv : SceneBhv
         var choiceGameObject = GameObject.Find("Arr" + arr);
         _arrSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _arrSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveArr(arr);
+    }
+
+    private void RotationPointChoice(bool enable)
+    {
+        var choiceGameObject = GameObject.Find("RotationPoint" + (enable ? "On" : "Off"));
+        _rotationPointSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _rotationPointSelector.transform.position.y, 0.0f);
+        PlayerPrefsHelper.SaveRotationPoint(enable);
+        if (enable)
+        {
+            _tHell.EnableRotationPoint(true, Instantiator);
+            _iHell.EnableRotationPoint(true, Instantiator);
+        }
+        else
+        {
+            _tHell.EnableRotationPoint(false, Instantiator);
+            _iHell.EnableRotationPoint(false, Instantiator);
+        }
     }
 
     public override void PauseOrPrevious()

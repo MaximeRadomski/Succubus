@@ -23,9 +23,10 @@ public class Piece : MonoBehaviour
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
 
-    public void Lock()
+    public void Lock(Instantiator instantiator)
     {
         IsLocked = true;
+        EnableRotationPoint(false, instantiator);
         //foreach (Transform child in transform)
         //{
         //    int roundedX = Mathf.RoundToInt(child.position.x);
@@ -235,5 +236,24 @@ public class Piece : MonoBehaviour
         minY = minY < 0 ? 0 : minY;
         maxY = maxY > 99 ? 99 : maxY;
         return new int[] { minY, maxY };
+    }
+
+    public void EnableRotationPoint(bool enable, Instantiator instantiator)
+    {
+        var child0 = transform.GetChild(0);
+        if (child0 == null)
+            return;
+        var rotationPoint = child0.Find(Constants.GoRotationPoint);
+        if (enable == true)
+        {
+            if (rotationPoint != null)
+                rotationPoint.GetComponent<SpriteRenderer>().enabled = true;
+            else
+                instantiator.NewRotationPoint(this.gameObject);
+        }
+        else if (rotationPoint != null)
+        {
+            rotationPoint.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 }

@@ -513,4 +513,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var arr = PlayerPrefs.GetInt(Constants.PpArr, Constants.PpArrDefault);
         return arr;
     }
+
+    public static void SaveRotationPoint(bool enable)
+    {
+        PlayerPrefs.SetInt(Constants.PpRotationPoint, enable ? 1 : 0);
+    }
+
+    public static bool GetRotationPoint()
+    {
+        var rotationPoint = PlayerPrefs.GetInt(Constants.PpRotationPoint, Constants.PpRotationPointDefault == true ? 1 : 0);
+        return rotationPoint == 1 ? true : false;
+    }
 }

@@ -521,6 +521,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnNewPiece(tmpLastPiece);
         _characterSpecial.OnNewPiece(CurrentPiece);
         AfterSpawn?.Invoke(trueSpawn);
+        CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
         DropGhost();
         CheckInputWhileLocked();
     }
@@ -572,7 +573,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (!_hasInit || SceneBhv.Paused || CurrentPiece == null)
             return;
@@ -617,7 +618,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
             AffectGravityOnBlocks(CurrentPiece);
-        CurrentPiece.GetComponent<Piece>().Lock();
+        CurrentPiece.GetComponent<Piece>().Lock(Instantiator);
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
         bool isTwtist = false;
@@ -1292,6 +1293,7 @@ public class GameplayControler : MonoBehaviour
             _canHold = false;
             _characterSpecial.OnNewPiece(CurrentPiece);
             AfterSpawn?.Invoke(false);
+            CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
             DropGhost();
             CheckInputWhileLocked();
         }

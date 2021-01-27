@@ -65,7 +65,7 @@ public class InputControlerBhv : MonoBehaviour
         _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Constants.InputLocked)
             return;
