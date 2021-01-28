@@ -102,6 +102,8 @@ public static class Constants
     public const int PpArrDefault = 2;
     public const string PpRotationPoint = "RotationPoint";
     public const bool PpRotationPointDefault = false;
+    public const string PpOrientation = "Orientation";
+    public const Direction PpOrientationDefault = Direction.Vertical;
 
     public static string GetDefaultKeyBinding()
     {

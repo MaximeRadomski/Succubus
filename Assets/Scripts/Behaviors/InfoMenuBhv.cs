@@ -8,8 +8,8 @@ public class InfoMenuBhv : PopupBhv
     private Camera _mainCamera;
     private System.Func<bool, object> _resumeAction;
     private Instantiator _instantiator;
-    //private bool _isRotated;
-    //private Vector3 _cameraInitialPosition;
+    private bool _isHorizontal;
+    private Vector3 _cameraInitialPosition;
     private GameObject _characterFrame;
     private GameObject _opponentFrame;
     private GameObject _characterTab;
@@ -24,7 +24,7 @@ public class InfoMenuBhv : PopupBhv
     private float _buttonOnY;
     private float _buttonOffY;
 
-    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, Character character, Opponent opponent)
+    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, Character character, Opponent opponent, bool isHorizontal)
     {
         _run = PlayerPrefsHelper.GetRun();
         _currentRealm = Realm.Hell;
@@ -34,15 +34,15 @@ public class InfoMenuBhv : PopupBhv
         _resumeAction = resumeAction;
         _character = character;
         _opponent = opponent;
-        //_isRotated = isRotated;
+        _isHorizontal = isHorizontal;
         _buttonOnY = -13.1582f;
         _buttonOffY = -12.3f;
-        //if (_isRotated)
-        //{
-        //    _cameraInitialPosition = Camera.main.transform.position;
-        //    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
-        //    Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
-        //}
+        if (_isHorizontal)
+        {
+            _cameraInitialPosition = Camera.main.transform.position;
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
+            Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
+        }
         _mainCamera = Helper.GetMainCamera();
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
@@ -182,11 +182,11 @@ public class InfoMenuBhv : PopupBhv
 
     private void Resume()
     {
-        //if (_isRotated)
-        //{
-        //    Camera.main.transform.position = _cameraInitialPosition;
-        //    Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
-        //}
+        if (_isHorizontal)
+        {
+            Camera.main.transform.position = _cameraInitialPosition;
+            Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
+        }
         Constants.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }

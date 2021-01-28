@@ -151,7 +151,12 @@ public class GameplayControler : MonoBehaviour
         if (_gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(_gameplayChoice);
         else
+        {
+            if (PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+                SetHorizontalOrientation();
             UpdatePanelsPositions();
+        }
+            
 #else
         SetSwipeGameplayChoice((_gameplayChoice = GameplayChoice.SwipesRightHanded));
 #endif
@@ -349,6 +354,45 @@ public class GameplayControler : MonoBehaviour
         _panelSwipe.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = Item;
         _panelSwipe.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = Special;
         _inputDisplay = _panelSwipe.transform.Find("InputDisplay").GetComponent<TMPro.TextMeshPro>();
+    }
+
+    public void SetHorizontalOrientation()
+    {
+        var resetRotation = new Quaternion();
+        resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
+        _mainCamera.transform.rotation = resetRotation;
+        _mainCamera.transform.Rotate(0.0f, 0.0f, 90.0f);
+        _panelLeft.GetComponent<PositionBhv>().Rotated = true;
+        _panelRight.GetComponent<PositionBhv>().Rotated = true;
+        _uiPanelLeft.transform.rotation = resetRotation;
+        _uiPanelLeft.transform.Rotate(0.0f, 0.0f, 90.0f);
+        var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
+        uiPanelLeftPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
+        uiPanelLeftPositionBhv.HorizontalSide = CameraHorizontalSide.LeftBorder;
+        uiPanelLeftPositionBhv.XOffset = uiPanelLeftPositionBhv.YOffset / 3;
+        uiPanelLeftPositionBhv.YOffset = -2.285f;
+        uiPanelLeftPositionBhv.Rotated = true;
+        uiPanelLeftPositionBhv.UpdatePositions();
+        RotatePanelChildren(_uiPanelLeft);
+        _uiPanelRight.transform.rotation = resetRotation;
+        _uiPanelRight.transform.Rotate(0.0f, 0.0f, 90.0f);
+        var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
+        uiPanelRightPositionBhv.VerticalSide = CameraVerticalSide.TopBorder;
+        uiPanelRightPositionBhv.HorizontalSide = CameraHorizontalSide.RightBorder;
+        uiPanelRightPositionBhv.XOffset = -uiPanelRightPositionBhv.YOffset;
+        uiPanelRightPositionBhv.YOffset = -2.285f;
+        uiPanelRightPositionBhv.Rotated = true;
+        uiPanelRightPositionBhv.UpdatePositions();
+        RotatePanelChildren(_uiPanelRight);
+    }
+
+    private void RotatePanelChildren(GameObject panel)
+    {
+        panel.transform.GetChild(0).transform.Rotate(0.0f, 0.0f, -90.0f);
+        panel.transform.GetChild(0).transform.position += new Vector3(-Constants.Pixel, 0.0f, 0.0f);
+        panel.transform.GetChild(1).transform.Rotate(0.0f, 0.0f, -90.0f);
+        panel.transform.GetChild(1).transform.position += new Vector3(Constants.Pixel, 0.0f, 0.0f);
     }
 
     private void UpdatePanelsPositions()

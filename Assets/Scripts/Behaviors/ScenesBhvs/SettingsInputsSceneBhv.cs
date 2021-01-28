@@ -55,6 +55,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
+        SetOrientation(PlayerPrefsHelper.GetOrientation());
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _defaultKeyBinding = PlayerPrefsHelper.GetKeyBinding(Constants.PpKeyBindingDefault);
         for (int i = 0; i < _keyBinding.Count; ++i)
@@ -110,7 +111,8 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
         _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
 
-
+        GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Vertical); };
+        GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Horizontal); };
 
         SetPanelButton(GameObject.Find("PanelLeft"));
         SetPanelButton(GameObject.Find("PanelRight"));
@@ -435,6 +437,13 @@ public class SettingsInputsSceneBhv : SceneBhv
                     addButton.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void SetOrientation(Direction orientation)
+    {
+        var combatOrientationSelector = GameObject.Find("CombatOrientationSelector");
+        combatOrientationSelector.transform.position = new Vector3(GameObject.Find(orientation.ToString()).transform.position.x, combatOrientationSelector.transform.position.y, 0.0f);
+        PlayerPrefsHelper.SaveOrientation(orientation);
     }
 
     public override void PauseOrPrevious()

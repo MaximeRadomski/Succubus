@@ -7,23 +7,23 @@ public class PauseMenuBhv : PopupBhv
 {
     private System.Func<bool, object> _resumeAction;
     private Instantiator _instantiator;
-    //private bool _isRotated;
-    //private Vector3 _cameraInitialPosition;
-    //private Quaternion _cameraInitialRotation;
+    private bool _isHorizontal;
+    private Vector3 _cameraInitialPosition;
+    private Quaternion _cameraInitialRotation;
     private Camera _mainCamera;
 
-    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, GameSceneBhv callingScene)
+    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, GameSceneBhv callingScene, bool isHorizontal)
     {
         _instantiator = instantiator;
         _resumeAction = resumeAction;
-        //_isRotated = isRotated;
-        //if (_isRotated)
-        //{
-        //    _cameraInitialPosition = Camera.main.transform.position;
-        //    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
-        //    _cameraInitialRotation = Camera.main.transform.rotation;
-        //    Camera.main.transform.rotation = transform.rotation;
-        //}
+        _isHorizontal = isHorizontal;
+        if (_isHorizontal)
+        {
+            _cameraInitialPosition = Camera.main.transform.position;
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
+            _cameraInitialRotation = Camera.main.transform.rotation;
+            Camera.main.transform.rotation = transform.rotation;
+        }
         _mainCamera = Helper.GetMainCamera();
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
@@ -64,11 +64,11 @@ public class PauseMenuBhv : PopupBhv
 
     private void Resume()
     {
-        //if (_isRotated)
-        //{
-        //    Camera.main.transform.position = _cameraInitialPosition;
-        //    Camera.main.transform.rotation = _cameraInitialRotation;
-        //}
+        if (_isHorizontal)
+        {
+            Camera.main.transform.position = _cameraInitialPosition;
+            Camera.main.transform.rotation = _cameraInitialRotation;
+        }
         Constants.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }

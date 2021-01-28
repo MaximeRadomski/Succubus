@@ -524,4 +524,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var rotationPoint = PlayerPrefs.GetInt(Constants.PpRotationPoint, Constants.PpRotationPointDefault == true ? 1 : 0);
         return rotationPoint == 1 ? true : false;
     }
+
+    public static void SaveOrientation(Direction orientation)
+    {
+        PlayerPrefs.SetInt(Constants.PpOrientation, orientation == Direction.Vertical ? 0 : 1);
+    }
+
+    public static Direction GetOrientation()
+    {
+        var orientation = PlayerPrefs.GetInt(Constants.PpOrientation, Constants.PpOrientationDefault == Direction.Vertical ? 0 : 1);
+        return orientation == 0 ? Direction.Vertical : Direction.Horizontal;
+    }
 }
