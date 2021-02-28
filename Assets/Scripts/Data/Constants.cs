@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Constants
 {
-    public const float Pixel = 0.1428f;
+    public const float Pixel = 0.14285f;
     public const float SceneWidth = 20.57f;
     public const float CameraSize = 18.2936f;
     public const float GravityDelay = 1.0f;

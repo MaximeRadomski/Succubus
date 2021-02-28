@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PopupYesNoBhv : PopupBhv
 {
@@ -31,6 +32,13 @@ public class PopupYesNoBhv : PopupBhv
             mainPicture.GetComponent<SpriteRenderer>().sprite = sprite;
             foreach (Transform child in mainPicture)
                 child.GetComponent<SpriteRenderer>().enabled = true;
+            if ((SceneManager.GetActiveScene().name == Constants.TrainingFreeGameScene
+                || SceneManager.GetActiveScene().name == Constants.ClassicGameScene)
+                && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+            {
+                mainPicture.transform.localPosition = new Vector3(0.0f, 9.5f, 0.0f);
+                transform.position += new Vector3(0.0f, -2.3f, 0.0f);
+            }
         }
     }
 
