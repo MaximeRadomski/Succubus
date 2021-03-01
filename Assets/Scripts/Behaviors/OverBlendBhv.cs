@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class OverBlendBhv : MonoBehaviour
+public class OverBlendBhv : FrameRateBehavior
 {
     private GameObject _loading;
     private GameObject _loadingBorders;
@@ -57,8 +57,7 @@ public class OverBlendBhv : MonoBehaviour
         _audioSource.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void FrameUpdate()
     {
         if (_state == 0)
         {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class SceneBhv : MonoBehaviour
+public abstract class SceneBhv : FrameRateBehavior
 {
     public bool Paused;
     public PauseMenuBhv PauseMenu;

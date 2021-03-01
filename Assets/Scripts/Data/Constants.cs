@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Constants
 {
+    public const int MaxFps = 60;
     public const float Pixel = 0.14285f;
     public const float SceneWidth = 20.57f;
     public const float CameraSize = 18.2936f;

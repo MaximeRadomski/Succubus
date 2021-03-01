@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInstanceBhv : MonoBehaviour
+public class CharacterInstanceBhv : FrameRateBehavior
 {
     public System.Func<object> AfterDeath;
 
@@ -52,7 +52,7 @@ public class CharacterInstanceBhv : MonoBehaviour
         _hasInit = true;
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (_isSpawning)
             Spawning();

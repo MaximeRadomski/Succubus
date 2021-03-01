@@ -58,6 +58,11 @@ public class HighScoreSceneBhv : SceneBhv
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
     }
 
+    public override void PauseOrPrevious()
+    {
+        GoToPrevious();
+    }
+
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);

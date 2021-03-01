@@ -297,7 +297,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         return spawnAfterAttack;
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (Paused)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputControlerBhv : MonoBehaviour
+public class InputControlerBhv : FrameRateBehavior
 {
     public MenuSelectorBhv MenuSelector;
     private Vector3 _touchPosWorld;
@@ -65,7 +65,7 @@ public class InputControlerBhv : MonoBehaviour
         _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (Constants.InputLocked)
             return;

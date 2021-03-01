@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PoppingIconBhv : MonoBehaviour
+public class PoppingIconBhv : FrameRateBehavior
 {
     public Vector2 StartingPosition;
     
@@ -23,7 +23,7 @@ public class PoppingIconBhv : MonoBehaviour
         _isMoving = true;
     }
 
-    private void Update()
+    protected override void FrameUpdate()
     {
         if (_isMoving)
             MoveAndFade();

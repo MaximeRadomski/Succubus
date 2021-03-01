@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class FrameRateBehavior : MonoBehaviour
 {
-    private int _framesPerSecond = 60;
+    private int _framesPerSecond = Constants.MaxFps;
     private float? _frameValue = null;
     private float? _lastFrameValue = null;
     protected float _frame
@@ -32,7 +32,11 @@ public abstract class FrameRateBehavior : MonoBehaviour
 
     private void SetFrameValue()
     {
-        _frameValue = 1.0f / (_framesPerSecond + 1);        
+        var twentieth = (float)Constants.MaxFps / 20.0f;
+        if (Screen.currentResolution.refreshRate >= Constants.MaxFps + twentieth)
+            _frameValue = 1.0f / (_framesPerSecond + twentieth);
+        else
+            _frameValue = 0.0f;
     }
 
     private void SetLastFrameValue()
@@ -48,5 +52,8 @@ public abstract class FrameRateBehavior : MonoBehaviour
         FrameUpdate();
     }
 
-    protected abstract void FrameUpdate();
+    protected virtual void FrameUpdate()
+    {
+
+    }
 }

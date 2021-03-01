@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System;
 
-public class AttackLineBhv : MonoBehaviour
+public class AttackLineBhv : FrameRateBehavior
 {
     private Realm _realm;
     private Instantiator _instantiator;
@@ -49,7 +49,7 @@ public class AttackLineBhv : MonoBehaviour
         _reachingTarget = true;
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (_target == null)
             return;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StretchOnAppearanceBhv : MonoBehaviour
+public class StretchOnAppearanceBhv : FrameRateBehavior
 {
     private bool _isStretching;
     private Vector3 _resetedScale;
@@ -30,7 +30,7 @@ public class StretchOnAppearanceBhv : MonoBehaviour
         transform.localScale = _stretchedScale;
     }
 
-    private void Update()
+    protected override void FrameUpdate()
     {
         if (_isStretching)
             StretchOnBegin();

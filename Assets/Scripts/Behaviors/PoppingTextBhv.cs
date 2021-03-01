@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PoppingTextBhv : MonoBehaviour
+public class PoppingTextBhv : FrameRateBehavior
 {
     public Vector2 StartingPosition;
 
@@ -30,7 +30,7 @@ public class PoppingTextBhv : MonoBehaviour
         _isMoving = true;
     }
 
-    private void Update()
+    protected override void FrameUpdate()
     {
         if (_isMoving)
             MoveAndFade();
