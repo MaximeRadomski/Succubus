@@ -63,6 +63,7 @@ public static class Constants
     public const string PpTrainingLines = "TrainingLines";
     public const string PpTrainingPieces = "TrainingPieces";
     public const string PpTrainingHighScoreHistory = "TrainingHighScoreHistory";
+    public const string PpTrainingHighScoreContext = "TrainingHighScoreContext";
     public const string PpGhostPieceColor = "GhostPieceColor";
     public const string PpGhostPieceColorDefault = "5";
     public const string PpGameplayChoice = "GameplayChoice";

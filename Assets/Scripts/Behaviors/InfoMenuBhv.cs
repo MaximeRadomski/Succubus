@@ -37,12 +37,14 @@ public class InfoMenuBhv : PopupBhv
         _isHorizontal = isHorizontal;
         _buttonOnY = -13.1582f;
         _buttonOffY = -12.3f;
+#if UNITY_ANDROID
         if (_isHorizontal)
         {
             _cameraInitialPosition = Camera.main.transform.position;
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
             Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
         }
+#endif
         _mainCamera = Helper.GetMainCamera();
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
@@ -182,11 +184,13 @@ public class InfoMenuBhv : PopupBhv
 
     private void Resume()
     {
+#if UNITY_ANDROID
         if (_isHorizontal)
         {
             Camera.main.transform.position = _cameraInitialPosition;
             Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
         }
+#endif
         Constants.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }

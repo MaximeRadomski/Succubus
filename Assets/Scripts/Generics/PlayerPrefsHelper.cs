@@ -74,7 +74,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         return results;
     }
 
-    public static void SaveTrainingHightScoreHistory(List<int> scoreHistory)
+    public static void SaveTrainingHighScoreHistory(List<int> scoreHistory)
     {
         var scoreHistoryStr = "";
         foreach (var score in scoreHistory)
@@ -100,6 +100,27 @@ public class PlayerPrefsHelper : MonoBehaviour
             ++i;
         }
         return scoreHistory;
+    }
+
+    public static void SaveTrainingHighestScoreContext(List<int> scoreContext)
+    {
+        var scoreContextStr = "";
+        foreach (var score in scoreContext)
+            scoreContextStr += $"{score};";
+        PlayerPrefs.SetString(Constants.PpTrainingHighScoreContext, scoreContextStr);
+    }
+
+    public static List<int> GetTrainingHighestScoreContext()
+    {
+        var scoreContextStr = PlayerPrefs.GetString(Constants.PpTrainingHighScoreContext, Constants.PpSerializeDefault);
+        var scoreContext = new List<int>();
+        var splits = scoreContextStr.Split(';');
+        for (int i = 0; i < splits.Length; ++i)
+        {
+            if (!string.IsNullOrEmpty(splits[i]))
+                scoreContext.Add(int.Parse(splits[i]));
+        }
+        return scoreContext;
     }
 
     public static void SaveGhostColor(string ghostColor)

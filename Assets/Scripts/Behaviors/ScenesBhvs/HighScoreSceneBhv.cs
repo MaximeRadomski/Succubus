@@ -35,22 +35,34 @@ public class HighScoreSceneBhv : SceneBhv
             if (_scoreHistory == null || _scoreHistory.Count == 0 || Constants.CurrentHighScoreContext[0] > _scoreHistory[0])
                 _title.text = "New High Score";
             _scoreHistory.Add(Constants.CurrentHighScoreContext[0]);
+
         }
         _scoreHistory.Sort();
         _scoreHistory.Reverse();
+        if (Constants.CurrentHighScoreContext != null && Constants.CurrentHighScoreContext[0] >= _scoreHistory[0])
+            PlayerPrefsHelper.SaveTrainingHighestScoreContext(Constants.CurrentHighScoreContext);
+        else if (Constants.CurrentHighScoreContext == null)
+        {
+            var highestScore = PlayerPrefsHelper.GetTrainingHighestScoreContext();
+            GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{highestScore[0]}\n{highestScore[1]}\n{highestScore[2]}\n{highestScore[3]}";
+            _title.text = "High Scores";
+        }
         for (int i = 0; i < _scoreHistory.Count; ++i)
         {
             var isCurrent = Constants.CurrentHighScoreContext != null && _scoreHistory[i] == Constants.CurrentHighScoreContext[0];
-            var tmpInstance = Instantiator.NewScoreHistory(_scoreHistory[i], _scoreHistory[0], i, _scoreHistoryContainer);
-            if (isCurrent)
+            if (i < 19)
             {
-                _tiltingBar = tmpInstance.transform.Find("Bar").GetComponent<ResourceBarBhv>();
-                tmpInstance.transform.Find("Bar").transform.Find("Content").GetComponent<SpriteRenderer>().sprite = HighLightedBar;
-                if (i != 0)
-                    _title.text = $"{Helper.GetOrdinal(i + 1)} Best Score";
+                var tmpInstance = Instantiator.NewScoreHistory(_scoreHistory[i], _scoreHistory[0], i, _scoreHistoryContainer);
+                if (isCurrent)
+                {
+                    _tiltingBar = tmpInstance.transform.Find("Bar").GetComponent<ResourceBarBhv>();
+                    tmpInstance.transform.Find("Bar").transform.Find("Content").GetComponent<SpriteRenderer>().sprite = HighLightedBar;
+                }
             }
+            if (isCurrent && i != 0)
+                _title.text = $"{Helper.GetOrdinal(i + 1)} Best Score";
         }
-        PlayerPrefsHelper.SaveTrainingHightScoreHistory(_scoreHistory);
+        PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
     }
 
     private void SetButtons()
@@ -65,6 +77,7 @@ public class HighScoreSceneBhv : SceneBhv
 
     private void GoToPrevious()
     {
+        Constants.CurrentHighScoreContext = null;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
         object OnBlend(bool result)
         {

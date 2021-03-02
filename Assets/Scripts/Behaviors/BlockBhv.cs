@@ -70,7 +70,7 @@ public class BlockBhv : MonoBehaviour
         if (_spriteRenderer == null)
             return;
         _spreadSpeed = spreadSpeed;
-        if (_spreading == false)
+        if (_spreading == false && _resetingSpread == false)
             _originalColor = _spriteRenderer.color;
         _spreadToColor = new Color(_originalColor.r, _originalColor.g, _originalColor.b, _originalColor.a - _opacityGap);
         _opacityGapSpreadDown = _originalColor.a - (_opacityGap / 2.0f);
@@ -110,7 +110,7 @@ public class BlockBhv : MonoBehaviour
     private void ResetingSpread()
     {
         _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, _originalColor, _spreadSpeed / 4);
-        if (Helper.FloatEqualsPrecision(_spriteRenderer.color.a, _spreadToColor.a, 0.01f))
+        if (Helper.FloatEqualsPrecision(_spriteRenderer.color.a, _originalColor.a, 0.01f))
         {
             _spriteRenderer.color = _originalColor;
             _resetingSpread = false;

@@ -17,6 +17,7 @@ public class PauseMenuBhv : PopupBhv
         _instantiator = instantiator;
         _resumeAction = resumeAction;
         _isHorizontal = isHorizontal;
+#if UNITY_ANDROID
         if (_isHorizontal)
         {
             _cameraInitialPosition = Camera.main.transform.position;
@@ -24,6 +25,7 @@ public class PauseMenuBhv : PopupBhv
             _cameraInitialRotation = Camera.main.transform.rotation;
             Camera.main.transform.rotation = transform.rotation;
         }
+#endif
         _mainCamera = Helper.GetMainCamera();
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonResume").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
@@ -64,11 +66,13 @@ public class PauseMenuBhv : PopupBhv
 
     private void Resume()
     {
+#if UNITY_ANDROID
         if (_isHorizontal)
         {
             Camera.main.transform.position = _cameraInitialPosition;
             Camera.main.transform.rotation = _cameraInitialRotation;
         }
+#endif
         Constants.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }

@@ -1582,7 +1582,7 @@ public class GameplayControler : MonoBehaviour
                 if (canSpawn)
                     Spawn();
                 return true;
-            }));
+            }, false));
             
         }
         else
@@ -2268,25 +2268,6 @@ public class GameplayControler : MonoBehaviour
             if (underBlockBhv == null)
                 continue;
             underBlockBhv.Spread(UnityEngine.Random.Range(0.1f, 0.3f), x, minMaxY[0] - 1, this);
-            //if (xBlocks.Count > 0)
-            //    xBlocks.Clear();
-            //for (int x = minX; x <= maxX; ++x)
-            //{
-            //    if (PlayFieldBhv.Grid[x, y] != null && (x != previousX || minX == maxX))
-            //        xBlocks.Add(x);
-            //}
-            //if (xBlocks.Count <= 0)
-            //    continue;
-            //var randomX = xBlocks[UnityEngine.Random.Range(0, xBlocks.Count)];
-            //var blockBhv = PlayFieldBhv.Grid[randomX, y].GetComponent<BlockBhv>();
-            //StartCoroutine(Helper.ExecuteAfterDelay(invoqueDelay, () =>
-            //{
-            //    if (blockBhv != null)
-            //        blockBhv.SpreadDown(0.2f);
-            //    return true;
-            //}));
-            //invoqueDelay += invoqueDelayBase;
-            //previousX = randomX;
         }
     }
 }

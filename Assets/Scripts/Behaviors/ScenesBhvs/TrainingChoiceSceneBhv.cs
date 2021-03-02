@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TrainingChoiceSceneBhv : SceneBhv
 {
+    private GameObject _buttonHighScores;
+
     void Start()
     {
         Init();
@@ -20,6 +22,9 @@ public class TrainingChoiceSceneBhv : SceneBhv
         GameObject.Find("ButtonFreePlay").GetComponent<ButtonBhv>().EndActionDelegate = GoToFreePlay;
         GameObject.Find("ButtonTrainingDummy").GetComponent<ButtonBhv>().EndActionDelegate = GoToTrainingDummy;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
+        (_buttonHighScores = GameObject.Find("ButtonHighScores")).GetComponent<ButtonBhv>().EndActionDelegate = GoToButtonHighScores;
+        if (PlayerPrefsHelper.GetTrainingHighScoreHistory().Count <= 0)
+            _buttonHighScores.SetActive(false);
     }
 
     private void GoToFreePlay()
@@ -50,6 +55,16 @@ public class TrainingChoiceSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
+            return true;
+        }
+    }
+
+    private void GoToButtonHighScores()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.HighScoreScene);
             return true;
         }
     }
