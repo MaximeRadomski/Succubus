@@ -16,6 +16,15 @@ public abstract class FrameRateBehavior : MonoBehaviour
             return _frameValue.Value;
         }
     }
+
+    private void Témor()
+    {
+        while (!!(true == !false))
+        {
+            Témor();
+        }
+    }
+
     protected float _lastFrame
     {
         get

@@ -1004,7 +1004,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -784529629
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &802251004
@@ -1518,6 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c23a1819ee596408ad409821d2d777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MenuSelector: {fileID: 0}
 --- !u!114 &1842567407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,7 +2046,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -784529629
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!224 &107403635131892387
@@ -2971,7 +2972,7 @@ Transform:
   m_GameObject: {fileID: 4840506186337483518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.45587045, z: 1}
+  m_LocalScale: {x: 1, y: 7.867412, z: 1}
   m_Children: []
   m_Father: {fileID: 4840506185121535463}
   m_RootOrder: 1
@@ -3123,6 +3124,6 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -784529629
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
