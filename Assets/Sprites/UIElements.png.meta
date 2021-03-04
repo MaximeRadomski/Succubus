@@ -80,6 +80,9 @@ TextureImporter:
   - first:
       213: -171452630345709121
     second: UIElements_18
+  - first:
+      213: -8692956992130699471
+    second: UIElements_19
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,7 +124,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 7
@@ -133,6 +136,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -565,7 +570,7 @@ TextureImporter:
         width: 13
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -573,6 +578,27 @@ TextureImporter:
       bones: []
       spriteID: fb90078bdb0ee9df0800000000000000
       internalID: -171452630345709121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_19
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 219
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13f2d444ca96c5780800000000000000
+      internalID: -8692956992130699471
       vertices: []
       indices: 
       edges: []
