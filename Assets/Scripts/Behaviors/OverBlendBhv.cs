@@ -3,6 +3,7 @@
 public class OverBlendBhv : FrameRateBehavior
 {
     private GameObject _loading;
+    private GameObject _loadingTop;
     private GameObject _loadingBorders;
     private SpriteRenderer _spriteRenderer;
     private AudioSource _audioSource;
@@ -40,6 +41,7 @@ public class OverBlendBhv : FrameRateBehavior
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _spriteRenderer.color = Constants.ColorPlainTransparent;
         _loading = transform.Find("Loading").gameObject;
+        _loadingTop = transform.Find("LoadingTop").gameObject;
         _loadingBorders = transform.Find("LoadingBorders").gameObject;
         _halfSpriteSize = _loading.GetComponent<SpriteRenderer>().size.x / 2;
         if (constantLoadingSpeed != null)
@@ -47,6 +49,7 @@ public class OverBlendBhv : FrameRateBehavior
         else
         {
             _loading.GetComponent<SpriteRenderer>().enabled = false;
+            _loadingTop.GetComponent<SpriteRenderer>().enabled = false;
             _loadingBorders.GetComponent<SpriteRenderer>().enabled = false;
         }
         _message = transform.Find("Message").GetComponent<TMPro.TextMeshPro>();
