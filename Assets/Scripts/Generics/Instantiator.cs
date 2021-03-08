@@ -271,4 +271,9 @@ public class Instantiator : MonoBehaviour
         var tmpPoppingIconInstance = Instantiate(tmpPoppingIconObject, position, tmpPoppingIconObject.transform.rotation);
         tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().SetPrivates(sprite, position + new Vector2(0.0f, +0.3f));
     }
+
+    public void NewDialogBox()
+    {
+
+    }
 }
