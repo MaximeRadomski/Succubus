@@ -269,11 +269,20 @@ public class Instantiator : MonoBehaviour
     {
         var tmpPoppingIconObject = Resources.Load<GameObject>("Prefabs/PoppingIcon");
         var tmpPoppingIconInstance = Instantiate(tmpPoppingIconObject, position, tmpPoppingIconObject.transform.rotation);
-        tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().SetPrivates(sprite, position + new Vector2(0.0f, +0.3f));
+        tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().Init(sprite, position + new Vector2(0.0f, +0.3f));
     }
 
-    public void NewDialogBox()
+    public void NewDialogBoxEncounter(string opponentName, string characterName)
     {
+        var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
+        var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
+        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(opponentName, characterName);
+    }
 
+    public void NewDialogBoxDeath(string name)
+    {
+        var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
+        var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
+        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(name);
     }
 }

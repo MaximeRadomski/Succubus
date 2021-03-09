@@ -10,7 +10,7 @@ public class PoppingIconBhv : FrameRateBehavior
     private Vector2 _positionToReach;
     private Color _colorToFade;
 
-    public void SetPrivates(Sprite sprite, Vector2 startingPosition)
+    public void Init(Sprite sprite, Vector2 startingPosition)
     {
         StartingPosition = startingPosition;
         transform.position = new Vector2(startingPosition.x, startingPosition.y);

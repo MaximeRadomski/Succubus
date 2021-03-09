@@ -35,8 +35,7 @@ public static class OpponentsData
             HpMax = 222, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
-                new OpponentAttack(AttackType.WasteRow, 2, 1)
-            },
+                new OpponentAttack(AttackType.WasteRow, 2, 1)},
             GravityLevel = 2, Weight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
