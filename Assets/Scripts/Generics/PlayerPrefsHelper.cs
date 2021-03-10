@@ -556,4 +556,10 @@ public class PlayerPrefsHelper : MonoBehaviour
         var orientation = PlayerPrefs.GetInt(Constants.PpOrientation, Constants.PpOrientationDefault == Direction.Vertical ? 0 : 1);
         return orientation == 0 ? Direction.Vertical : Direction.Horizontal;
     }
+
+    public static int GetDialogProgress(string dialogLibelle)
+    {
+        var progressId = PlayerPrefs.GetInt(dialogLibelle, Constants.PpSerializeDefaultInt);
+        return progressId;
+    }
 }
