@@ -23,6 +23,8 @@ public class Opponent
     public int Weight;
 
     public string Lore;
+    public int DialogId = 0;
+    public float DialogPitch = 1.0f;
 
     public Opponent Clone()
     {
@@ -44,6 +46,8 @@ public class Opponent
         newOpponent.IsDead = IsDead;
         newOpponent.Weight = Weight;
         newOpponent.Lore = Lore;
+        newOpponent.DialogId = DialogId;
+        newOpponent.DialogPitch = DialogPitch;
 
         return newOpponent;
     }

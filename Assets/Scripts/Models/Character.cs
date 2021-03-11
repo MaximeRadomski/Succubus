@@ -13,6 +13,8 @@ public class Character : Loot
     public Realm Realm;
 
     public string Lore;
+    public int DialogId = 0;
+    public float DialogPitch = 1.0f;
 
     //Global to all
     public int CritChancePercent;

@@ -322,6 +322,7 @@ GameObject:
   - component: {fileID: 6046906195312938301}
   - component: {fileID: 6046906195312938290}
   - component: {fileID: 6046906195312938291}
+  - component: {fileID: 265922432981006706}
   m_Layer: 0
   m_Name: ButtonNext
   m_TagString: Untagged
@@ -450,6 +451,32 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 8, y: 2.7}
+  m_EdgeRadius: 0
+--- !u!61 &265922432981006706
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046906195312938289}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.7848358, y: 5.154682}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.5714285, y: 2.5714285}
+    newSize: {x: 8.285714, y: 2.7142856}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18.012375, y: 7.5486507}
   m_EdgeRadius: 0
 --- !u!1 &6046906195314593163
 GameObject:
@@ -1700,14 +1727,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
---- !u!1 &1277773893387355546 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
-  m_PrefabInstance: {fileID: 6046906195269475353}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1277773893387355545 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
+  m_PrefabInstance: {fileID: 6046906195269475353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1277773893387355546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
   m_PrefabInstance: {fileID: 6046906195269475353}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6046906196207108269
@@ -1843,9 +1870,17 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c27a870e3f72e124a90ae7b61759c776, type: 2}
     - target: {fileID: 6634099503351920174, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_text
-      value: i want this to be a dialog box that can contain a certain amount of
-        text while still being consistent and not taking too much space. my dialogs
-        should take more than 6 lines. approximately at least!.....
+      value: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+        mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+        mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+        mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+        mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+        mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm'
       objectReference: {fileID: 0}
     - target: {fileID: 6634099503351920174, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: _SortingOrder
@@ -1929,13 +1964,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!1 &3664559306762232714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 6046906196207108269}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4615537537166119273 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 6046906196207108269}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3664559306762232714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 6046906196207108269}
   m_PrefabAsset: {fileID: 0}

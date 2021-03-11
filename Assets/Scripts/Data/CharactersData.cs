@@ -13,7 +13,8 @@ public static class CharactersData
             Attack = 10,
             Cooldown = 10,
             SpecialName = "Whip Hits", SpecialDescription = "summons 3 single cubes as your next pieces",
-            Lore = "Daughter of lust itself, she makes anyone her slave under the yoke of her whip. Perpetual torment and pleasure are her doom!"
+            Lore = "Daughter of lust itself, she makes anyone her slave under the yoke of her whip. Perpetual torment and pleasure are her doom!",
+            DialogId = 3, DialogPitch = 1.5f
         },
         new Character()
         {
