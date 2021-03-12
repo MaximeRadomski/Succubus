@@ -233,7 +233,8 @@ public static class OpponentsData
             HpMax = 500, Weakness = Weakness.None, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 4) },
-            GravityLevel = 10, Weight = 150
+            GravityLevel = 10, Weight = 150,
+            DialogId = 3, DialogPitch = 0.35f
         },
         new Opponent()
         {

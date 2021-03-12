@@ -31,6 +31,17 @@ public static class DialogData
                     "You are not here, standing before me, by choice. Yeah I know I know... Let's do it!"
                 }
             }
+        },
+        { "Devil's Advocate|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Sigh... What are you even doing here milady? I have work to do, and coming here is wasting my precious time...",
+                    "Well, I won't bother you any longer in this case. Just let me through and call it a deal !",
+                    "Do not mistake yourself. I know my priorities, I just wish you wouldn't be one..."
+                }
+            }
         }
     };
 }

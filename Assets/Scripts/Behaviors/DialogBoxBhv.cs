@@ -18,6 +18,8 @@ public class DialogBoxBhv : FrameRateBehavior
     private TMPro.TextMeshPro _content;
     private ButtonBhv _previousSentence;
     private ButtonBhv _nextSentence;
+    private Transform _pelliculeTop;
+    private Transform _pelliculeBot;
 
     private DialogSubject _subject;
     private DialogSubject _secondary;
@@ -33,6 +35,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private int _talkingCharId;
     private int _talkingFramesDelay = 2;
     private int _talkingFramesProgress;
+    private int _pelliculeMove;
 
     private System.Func<bool> _resultAction;
 
@@ -49,6 +52,8 @@ public class DialogBoxBhv : FrameRateBehavior
         _content = transform.Find("Content").GetComponent<TMPro.TextMeshPro>();
         (_previousSentence = transform.Find("ButtonPrev").GetComponent<ButtonBhv>()).EndActionDelegate = PrevSentence;
         (_nextSentence = transform.Find("ButtonNext").GetComponent<ButtonBhv>()).EndActionDelegate = NextSentence;
+        _pelliculeTop = transform.Find("PelliculeTop");
+        _pelliculeBot = transform.Find("PelliculeBot");
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
 
         _dialogLibelle = secondaryName == null ? subjectName : $"{subjectName}|{secondaryName}";
@@ -61,6 +66,7 @@ public class DialogBoxBhv : FrameRateBehavior
             _sentences = tmpSentences[PlayerPrefsHelper.GetDialogProgress(_dialogLibelle)];
 
         _sentencesId = 0;
+        _pelliculeMove = 0;
         UpdateCurrentSentence();
     }
 
@@ -118,8 +124,8 @@ public class DialogBoxBhv : FrameRateBehavior
             _titleBackground.flipX = false;
             _title.transform.position = new Vector3(Mathf.Abs(_title.transform.position.x), _title.transform.position.y, 0);
         }
-        _title.text = _currentSubject.Name;
-        _content.text = string.Empty;
+        _title.text = $"<material=\"Long{_currentSubject.Realm}.4.3\">{_currentSubject.Name}";
+        _content.text = $"<material=\"{_currentSubject.Realm.ToString().ToLower()}.4.3\">";
         _isTalking = true;
         _talkingSplit = _sentences[_sentencesId].ToLower().Split(' ');
         _talkingSplitId = 0;
@@ -149,6 +155,18 @@ public class DialogBoxBhv : FrameRateBehavior
             else
                 ++_talkingFramesProgress;
         }
+        if (_pelliculeMove >= 10)
+        {
+            _pelliculeTop.transform.position = new Vector3(0.0f, _pelliculeTop.transform.position.y, 0.0f);
+            _pelliculeBot.transform.position = new Vector3(0.0f, _pelliculeBot.transform.position.y, 0.0f);
+            _pelliculeMove = 0;
+        }
+        else
+        {
+            _pelliculeTop.transform.position = new Vector3(_pelliculeTop.transform.position.x + (2 * Constants.Pixel), _pelliculeTop.transform.position.y, 0.0f);
+            _pelliculeBot.transform.position = new Vector3(_pelliculeBot.transform.position.x - (2 * Constants.Pixel), _pelliculeBot.transform.position.y, 0.0f);
+            ++_pelliculeMove;
+        }
     }
 
     private void Talk()
@@ -156,7 +174,9 @@ public class DialogBoxBhv : FrameRateBehavior
         _content.text += _talkingSplit[_talkingSplitId][_talkingCharId];
         switch (_talkingSplit[_talkingSplitId][_talkingCharId])
         {
-            case '.': _talkingFramesProgress = -30;
+            case '.':
+                if (_talkingCharId == _talkingSplit[_talkingSplitId].Length - 1)
+                _talkingFramesProgress = -30;
                 break;
             case ',':
                 _talkingFramesProgress = -15;
@@ -170,7 +190,7 @@ public class DialogBoxBhv : FrameRateBehavior
         {
             _talkingCharId = 0;
             ++_talkingSplitId;
-            var linesSplit = _content.text.Split('\n');
+            var linesSplit = _content.text.Substring(_content.text.IndexOf('>') + 1).Split('\n');
             if (_talkingSplitId < _talkingSplit.Length && PixelsOnLine($"{linesSplit[linesSplit.Length - 1]} {_talkingSplit[_talkingSplitId]}") > (float)_maxLinePixels)
                 _content.text += '\n';
             else
@@ -210,7 +230,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private void OverrideTalk()
     {
         _isTalking = false;
-        _content.text = _sentences[_sentencesId].ToLower();
+        _content.text = $"<material=\"{_currentSubject.Realm.ToString().ToLower()}.4.3\">{_sentences[_sentencesId].ToLower()}";
     }
 
     private void PrevSentence()

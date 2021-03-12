@@ -194,7 +194,7 @@ public static class Constants
     public static string MaterialHell_4_3B = "<material=\"hell.4.3B\">";
     public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
     public static string MaterialHell_3_2B = "<material=\"hell.3.2B\">";
-    public static string MaterialLong_3_2 = "<material=\"Long.3.2\">";
+    public static string MaterialLongHell_3_2 = "<material=\"LongHell.3.2\">";
     public static string MaterialEnd = "</material>";
 
     public static object GetColorFromRealm(Realm realm, int id)

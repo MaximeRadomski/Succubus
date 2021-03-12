@@ -99,7 +99,7 @@ public class InputControlerBhv : FrameRateBehavior
                 if (gameObjectToDestroy.name.Contains("Keyboard"))
                     gameObjectToDestroy.transform.GetChild(0).GetComponent<PopupBhv>().ExitPopup();
                 else
-                    gameObjectToDestroy.GetComponent<PopupBhv>().ExitPopup();
+                    gameObjectToDestroy.GetComponent<PopupBhv>()?.ExitPopup();
                 //Constants.DecreaseInputLayer();
                 //Destroy(gameObjectToDestroy);
             }
