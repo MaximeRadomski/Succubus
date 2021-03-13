@@ -15,6 +15,7 @@ public class Opponent
     public int XLineWeakness;
     public int XLineImmunity;
     public int GravityLevel;
+    public Realm Region;
 
     public List<OpponentAttack> Attacks;
 

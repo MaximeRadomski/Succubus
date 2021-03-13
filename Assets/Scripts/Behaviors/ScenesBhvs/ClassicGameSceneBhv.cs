@@ -115,7 +115,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 minHeight = highestBlockY + 1;
             Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, minHeight));
         }
-        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_run?.CurrentRealm ?? Realm.Hell}Opponents_{CurrentOpponent.Id}");
+        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? CurrentOpponent.HpMax : Constants.CurrentOpponentHp;
         _weaknessInstance.SetVisible(CurrentOpponent.Weakness != Weakness.None);

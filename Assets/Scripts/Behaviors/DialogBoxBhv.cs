@@ -59,10 +59,14 @@ public class DialogBoxBhv : FrameRateBehavior
         _dialogLibelle = secondaryName == null ? subjectName : $"{subjectName}|{secondaryName}";
         _subject = GetSubjectFromName(subjectName);
         _secondary = GetSubjectFromName(secondaryName);
-        var tmpSentences = DialogData.DialogTree[_dialogLibelle];
-        if (tmpSentences == null)
-            _sentences = new List<string>() { "[Error]: Missing content" };
-        else
+        List<List<string>> tmpSentences = null;
+        if (!DialogData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
+        {
+            _dialogLibelle = $"{subjectName}|Any";
+            if (!DialogData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
+                _sentences = new List<string>() { "[Error]: Missing content... Go throw some rocks at at the dev!" };
+        }
+        if (tmpSentences != null)
             _sentences = tmpSentences[PlayerPrefsHelper.GetDialogProgress(_dialogLibelle)];
 
         _sentencesId = 0;
@@ -85,6 +89,7 @@ public class DialogBoxBhv : FrameRateBehavior
                 Id = tmpOpponentSubject.Id,
                 Name = tmpOpponentSubject.Name,
                 Realm = tmpOpponentSubject.Realm,
+                Region = tmpOpponentSubject.Region,
                 Type = SubjectType.Opponent,
                 DialogId = _soundControler.SetSound($"Dialog{tmpOpponentSubject.DialogId.ToString("00")}"),
                 DialogPitch = tmpOpponentSubject.DialogPitch
@@ -96,6 +101,7 @@ public class DialogBoxBhv : FrameRateBehavior
                 tmpSubject = new DialogSubject() { Id = tmpCharacterSubject.Id,
                     Name = tmpCharacterSubject.Name,
                     Realm = tmpCharacterSubject.Realm,
+                    Region = tmpCharacterSubject.Realm,
                     Type = SubjectType.Character,
                     DialogId = _soundControler.SetSound($"Dialog{tmpCharacterSubject.DialogId.ToString("00")}"),
                     DialogPitch = tmpCharacterSubject.DialogPitch
@@ -110,7 +116,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
         if (_currentSubject.Type == SubjectType.Opponent)
         {
-            _picture.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentSubject.Realm}Opponents_{_currentSubject.Id}");
+            _picture.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentSubject.Region}Opponents_{_currentSubject.Id}");
             _picture.transform.position = new Vector3(-Mathf.Abs(_picture.transform.position.x), _picture.transform.position.y, 0);
             _picture.flipX = true;
             _titleBackground.flipX = true;
@@ -174,9 +180,9 @@ public class DialogBoxBhv : FrameRateBehavior
         _content.text += _talkingSplit[_talkingSplitId][_talkingCharId];
         switch (_talkingSplit[_talkingSplitId][_talkingCharId])
         {
-            case '.':
+            case '.': case '!': case '?': case ':': case ';':
                 if (_talkingCharId == _talkingSplit[_talkingSplitId].Length - 1)
-                _talkingFramesProgress = -30;
+                    _talkingFramesProgress = -30;
                 break;
             case ',':
                 _talkingFramesProgress = -15;
@@ -269,6 +275,7 @@ public class DialogBoxBhv : FrameRateBehavior
         public string Name;
         public SubjectType Type;
         public Realm Realm;
+        public Realm Region;
         public int DialogId;
         public float DialogPitch;
     }

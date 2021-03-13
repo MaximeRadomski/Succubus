@@ -9,6 +9,16 @@ public static class DialogData
     // <P> Pause
     public static Dictionary<string, List<List<string>>> DialogTree = new Dictionary<string, List<List<string>>>()
     {
+        #region Baphomeh
+        { "Baphomeh|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Go back where you come from vermin! Those gates have remained sealed for centuries and I am here to keep it that way."
+                }
+            }
+        },
         { "Baphomeh|Ivy",
             new List<List<string>>()
             {
@@ -32,16 +42,28 @@ public static class DialogData
                 }
             }
         },
+        #endregion
+        #region Devil's Advocate
+        { "Devil's Advocate|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Have you lost your mind??? Do you have any idea how many souls I have to judge instead of cleaning your mess?"
+                }
+            }
+        },
         { "Devil's Advocate|Ivy",
             new List<List<string>>()
             {
                 new List<string>()
                 {
-                    "Sigh... What are you even doing here milady? I have work to do, and coming here is wasting my precious time...",
-                    "Well, I won't bother you any longer in this case. Just let me through and call it a deal !",
+                    "Sigh... What are you even doing here milady? I have work to do, and you are wasting my precious time...",
+                    "Well, I won't bother you any longer in that case. Just let me through and call it a deal !",
                     "Do not mistake yourself. I know my priorities, I just wish you wouldn't be one..."
                 }
             }
         }
+        #endregion
     };
 }
