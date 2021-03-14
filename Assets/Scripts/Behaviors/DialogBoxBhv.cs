@@ -7,9 +7,11 @@ public class DialogBoxBhv : FrameRateBehavior
     public List<Sprite> TitleBackgroundSprites;
     public List<Sprite> MainTopBotSprites;
     public List<Sprite> MainMidSprites;
+    public List<Sprite> Emojies;
 
     private SoundControlerBhv _soundControler;
     private SpriteRenderer _picture;
+    private SpriteRenderer _emoji;
     private SpriteRenderer _titleBackground;
     private SpriteRenderer _mainTop;
     private SpriteRenderer _mainMid;
@@ -44,6 +46,7 @@ public class DialogBoxBhv : FrameRateBehavior
         _resultAction = resultAction;
 
         _picture = transform.Find("Picture").GetComponent<SpriteRenderer>();
+        _emoji = transform.Find("Emoji").GetComponent<SpriteRenderer>();
         _titleBackground = transform.Find("TitleBackground").GetComponent<SpriteRenderer>();
         _mainTop = transform.Find("MainTop").GetComponent<SpriteRenderer>();
         _mainMid = transform.Find("MainMid").GetComponent<SpriteRenderer>();
@@ -117,18 +120,20 @@ public class DialogBoxBhv : FrameRateBehavior
         if (_currentSubject.Type == SubjectType.Opponent)
         {
             _picture.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentSubject.Region}Opponents_{_currentSubject.Id}");
-            _picture.transform.position = new Vector3(-Mathf.Abs(_picture.transform.position.x), _picture.transform.position.y, 0);
+            _picture.transform.localPosition = new Vector3(-Mathf.Abs(_picture.transform.localPosition.x), _picture.transform.localPosition.y, 0);
             _picture.flipX = true;
+            _emoji.transform.localPosition = new Vector3(-Mathf.Abs(_emoji.transform.localPosition.x), _emoji.transform.localPosition.y, 0);
             _titleBackground.flipX = true;
-            _title.transform.position = new Vector3(-Mathf.Abs(_title.transform.position.x), _title.transform.position.y, 0);
+            _title.transform.localPosition = new Vector3(-Mathf.Abs(_title.transform.localPosition.x), _title.transform.localPosition.y, 0);
         }
         else
         {
             _picture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _currentSubject.Id);
-            _picture.transform.position = new Vector3(Mathf.Abs(_picture.transform.position.x), _picture.transform.position.y, 0);
+            _picture.transform.localPosition = new Vector3(Mathf.Abs(_picture.transform.localPosition.x), _picture.transform.localPosition.y, 0);
             _picture.flipX = false;
+            _emoji.transform.localPosition = new Vector3(Mathf.Abs(_emoji.transform.localPosition.x), _emoji.transform.localPosition.y, 0);
             _titleBackground.flipX = false;
-            _title.transform.position = new Vector3(Mathf.Abs(_title.transform.position.x), _title.transform.position.y, 0);
+            _title.transform.localPosition = new Vector3(Mathf.Abs(_title.transform.localPosition.x), _title.transform.localPosition.y, 0);
         }
         _title.text = $"<material=\"Long{_currentSubject.Realm}.4.3\">{_currentSubject.Name}";
         _content.text = $"<material=\"{_currentSubject.Realm.ToString().ToLower()}.4.3\">";
@@ -142,6 +147,17 @@ public class DialogBoxBhv : FrameRateBehavior
         _mainTop.sprite = MainTopBotSprites[_currentSubject.Realm.GetHashCode()];
         _mainMid.sprite = MainMidSprites[_currentSubject.Realm.GetHashCode()];
         _mainBot.sprite = _mainTop.sprite;
+
+        if (_sentences[_sentencesId].Contains("??")) _emoji.sprite = Emojies[0];
+        else if (_sentences[_sentencesId].Contains("!!")) _emoji.sprite = Emojies[1];
+        else if (_sentences[_sentencesId].Contains("...")) _emoji.sprite = Emojies[2];
+        else _emoji.sprite = null;
+
+        if (_emoji.sprite != null)
+        {
+            _emoji.color = (Color)Constants.GetColorFromRealm(_currentSubject.Realm, 4);
+            _picture.GetComponent<IconInstanceBhv>().Pop(2.3f, 2.5f);
+        }
 
         if (_sentencesId <= 0)
             _previousSentence.DisableButton();
@@ -163,14 +179,14 @@ public class DialogBoxBhv : FrameRateBehavior
         }
         if (_pelliculeMove >= 10)
         {
-            _pelliculeTop.transform.position = new Vector3(0.0f, _pelliculeTop.transform.position.y, 0.0f);
-            _pelliculeBot.transform.position = new Vector3(0.0f, _pelliculeBot.transform.position.y, 0.0f);
+            _pelliculeTop.transform.localPosition = new Vector3(0.0f, _pelliculeTop.transform.localPosition.y, 0.0f);
+            _pelliculeBot.transform.localPosition = new Vector3(0.0f, _pelliculeBot.transform.localPosition.y, 0.0f);
             _pelliculeMove = 0;
         }
         else
         {
-            _pelliculeTop.transform.position = new Vector3(_pelliculeTop.transform.position.x + (2 * Constants.Pixel), _pelliculeTop.transform.position.y, 0.0f);
-            _pelliculeBot.transform.position = new Vector3(_pelliculeBot.transform.position.x - (2 * Constants.Pixel), _pelliculeBot.transform.position.y, 0.0f);
+            _pelliculeTop.transform.localPosition = new Vector3(_pelliculeTop.transform.localPosition.x + (2 * Constants.Pixel), _pelliculeTop.transform.localPosition.y, 0.0f);
+            _pelliculeBot.transform.localPosition = new Vector3(_pelliculeBot.transform.localPosition.x - (2 * Constants.Pixel), _pelliculeBot.transform.localPosition.y, 0.0f);
             ++_pelliculeMove;
         }
     }
