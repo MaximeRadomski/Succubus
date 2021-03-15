@@ -117,6 +117,9 @@ public class DialogBoxBhv : FrameRateBehavior
     {
         _currentSubject = _sentencesId % 2 == 0 ? _subject : _secondary;
 
+        if (_currentSubject == null)
+            ExitDialogBox();
+
         if (_currentSubject.Type == SubjectType.Opponent)
         {
             _picture.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentSubject.Region}Opponents_{_currentSubject.Id}");

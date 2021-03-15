@@ -9,6 +9,20 @@ public static class DialogData
     // <P> Pause
     public static Dictionary<string, List<List<string>>> DialogTree = new Dictionary<string, List<List<string>>>()
     {
+        #region Boom Slayer
+        { "Boom Slayer|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "RIP!!!",
+                    "RIP???",
+                    "... AND TEAR!!!",
+                    "You done?"
+                }
+            }
+        },
+        #endregion
         #region Baphomeh
         { "Baphomeh|Any",
             new List<List<string>>()
