@@ -23,6 +23,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _cumulativeCrit;
     private bool _isCrit;
     private bool _isVictorious;
+    private bool _hasStarted;
 
     private SoundControlerBhv _soundControler;
     private int _idOpponentDeath;
@@ -83,8 +84,21 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
-        NextOpponent(sceneInit:true);
+        _hasStarted = false;
+        Constants.InputLocked = true;
+        if (Constants.NameLastScene == Constants.SettingsScene)
+            AfterFightIntro();
+        else
+            Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
+    }
+
+    private bool AfterFightIntro()
+    {
+        Constants.InputLocked = false;
+        NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
+        _hasStarted = true;
+        return true;
     }
 
     protected void NextOpponent(bool sceneInit = false)
@@ -299,6 +313,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     protected override void FrameUpdate()
     {
+        if (!_hasStarted)
+            return;
         if (Paused)
         {
             SetNextCooldownTick();

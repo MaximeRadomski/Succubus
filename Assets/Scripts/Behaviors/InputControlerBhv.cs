@@ -386,7 +386,7 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (MenuSelector == null)
             return;
-        if (_gameplayControler != null && !_gameplayControler.SceneBhv.Paused)
+        if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused)
             return;
         if (_currentInputLayer != Constants.InputLayer)
         {

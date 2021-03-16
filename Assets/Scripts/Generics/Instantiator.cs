@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Instantiator : MonoBehaviour
@@ -286,5 +287,13 @@ public class Instantiator : MonoBehaviour
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
         tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(name, null, resultAction);
+    }
+
+    public void NewFightIntro(Vector3 position, Character character, List<Opponent> opponents, System.Func<bool> resultAction)
+    {
+        var tmpFightIntroObject = Resources.Load<GameObject>("Prefabs/FightIntro");
+        var tmpFightIntroInstance = Instantiate(tmpFightIntroObject, position, tmpFightIntroObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpFightIntroInstance.name);
+        tmpFightIntroInstance.GetComponent<FightIntroBhv>().Init(character, opponents, resultAction);
     }
 }

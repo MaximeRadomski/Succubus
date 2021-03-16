@@ -92,7 +92,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void NotImplemented()
     {
-        Instantiator.NewDialogBoxEncounter("Devil's Advocate", "test", null);
+        Instantiator.NewDialogBoxEncounter("Baphomeh", "Ivy", null);
         //Instantiator.NewPopupYesNo("Not Implemented", "this feature hasn't been implemented yet...\n\ncomming soon!", null, "Oh, ok!", null);
     }
 }
