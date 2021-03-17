@@ -41,10 +41,11 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private System.Func<bool> _resultAction;
 
-    public void Init(string subjectName, string secondaryName, System.Func<bool> resultAction)
+    public void Init(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction)
     {
         _resultAction = resultAction;
 
+        transform.position = new Vector3(position.x, position.y, 0.0f);
         _picture = transform.Find("Picture").GetComponent<SpriteRenderer>();
         _emoji = transform.Find("Emoji").GetComponent<SpriteRenderer>();
         _titleBackground = transform.Find("TitleBackground").GetComponent<SpriteRenderer>();

@@ -50,6 +50,7 @@ public abstract class GameSceneBhv : SceneBhv
         _musicControler.SetNewVolumeLevel();
         if (resume)
         {
+            Paused = true;
             Constants.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
             //var menuSelector = GameObject.Find(Constants.GoMenuSelector);

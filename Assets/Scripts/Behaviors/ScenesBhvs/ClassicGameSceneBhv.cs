@@ -23,7 +23,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _cumulativeCrit;
     private bool _isCrit;
     private bool _isVictorious;
-    private bool _hasStarted;
 
     private SoundControlerBhv _soundControler;
     private int _idOpponentDeath;
@@ -84,7 +83,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
-        _hasStarted = false;
+        NextOpponent(sceneInit: true);
+        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
+        
+        Paused = true;
         Constants.InputLocked = true;
         if (Constants.NameLastScene == Constants.SettingsScene)
             AfterFightIntro();
@@ -94,10 +96,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        Constants.InputLocked = false;
-        NextOpponent(sceneInit: true);
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
-        _hasStarted = true;
+        Constants.InputLocked = false;        
+        Paused = false;
+        Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, 9.0f));
         return true;
     }
 
@@ -127,7 +128,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var highestBlockY = _gameplayControler.GetHighestBlock();
             if (minHeight < highestBlockY)
                 minHeight = highestBlockY + 1;
-            Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, minHeight));
+            if (!sceneInit)
+                Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, minHeight));
         }
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
@@ -313,8 +315,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     protected override void FrameUpdate()
     {
-        if (!_hasStarted)
-            return;
         if (Paused)
         {
             SetNextCooldownTick();

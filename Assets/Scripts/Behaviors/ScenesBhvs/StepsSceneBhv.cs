@@ -238,7 +238,7 @@ public class StepsSceneBhv : SceneBhv
             if (result)
             {
                 _selectedStep.LandLordVision = false;
-                GoToStep();
+                Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, () => { GoToStep(); return true; });
             }
             return result;
         }

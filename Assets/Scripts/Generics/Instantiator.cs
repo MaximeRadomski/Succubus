@@ -273,20 +273,20 @@ public class Instantiator : MonoBehaviour
         tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().Init(sprite, position + new Vector2(0.0f, +0.3f));
     }
 
-    public void NewDialogBoxEncounter(string subjectName, string secondaryName, System.Func<bool> resultAction)
+    public void NewDialogBoxEncounter(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction)
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
-        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(subjectName, secondaryName, resultAction);
+        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, subjectName, secondaryName, resultAction);
     }
 
-    public void NewDialogBoxDeath(string name, System.Func<bool> resultAction)
+    public void NewDialogBoxDeath(Vector3 position, string name, System.Func<bool> resultAction)
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
-        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(name, null, resultAction);
+        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, name, null, resultAction);
     }
 
     public void NewFightIntro(Vector3 position, Character character, List<Opponent> opponents, System.Func<bool> resultAction)
