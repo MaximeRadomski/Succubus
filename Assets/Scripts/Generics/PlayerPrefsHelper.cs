@@ -562,4 +562,9 @@ public class PlayerPrefsHelper : MonoBehaviour
         var progressId = PlayerPrefs.GetInt(dialogLibelle, Constants.PpSerializeDefaultInt);
         return progressId;
     }
+
+    public static void SaveDialogProgress(string dialogLibelle, int id)
+    {
+        PlayerPrefs.SetInt(dialogLibelle, id);
+    }
 }

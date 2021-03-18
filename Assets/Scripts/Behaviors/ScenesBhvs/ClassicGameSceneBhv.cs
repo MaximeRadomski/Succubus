@@ -98,8 +98,28 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         Constants.InputLocked = false;        
         Paused = false;
-        Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, 9.0f));
+        OpponentAppearance();
         return true;
+    }
+
+    private void OpponentAppearance(float customY = 9.0f)
+    {
+        if (!_currentStep.LandLordVision
+            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}")
+            ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any")))
+        {
+            Paused = true;
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Appearance);
+        }
+        else
+            Appearance();
+
+        bool Appearance()
+        {
+            Paused = false;
+            Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, customY));
+            return true;
+        }
     }
 
     protected void NextOpponent(bool sceneInit = false)
@@ -129,7 +149,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (minHeight < highestBlockY)
                 minHeight = highestBlockY + 1;
             if (!sceneInit)
-                Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, minHeight));
+                OpponentAppearance(minHeight);
         }
         _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));

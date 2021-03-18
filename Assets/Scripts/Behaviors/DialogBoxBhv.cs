@@ -71,7 +71,14 @@ public class DialogBoxBhv : FrameRateBehavior
                 _sentences = new List<string>() { "[Error]: Missing content... Go throw some rocks at at the dev!" };
         }
         if (tmpSentences != null)
-            _sentences = tmpSentences[PlayerPrefsHelper.GetDialogProgress(_dialogLibelle)];
+        {
+            var id = PlayerPrefsHelper.GetDialogProgress(_dialogLibelle);
+            if (id >= tmpSentences.Count)
+                id = tmpSentences.Count - 1;
+            else
+                PlayerPrefsHelper.SaveDialogProgress(_dialogLibelle, id + 1);
+            _sentences = tmpSentences[id];
+        }
 
         _sentencesId = 0;
         _pelliculeMove = 0;
