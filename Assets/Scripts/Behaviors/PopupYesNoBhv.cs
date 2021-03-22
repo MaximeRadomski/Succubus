@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PopupYesNoBhv : PopupBhv
 {
     private System.Func<bool, object> _resultAction;
+    private ButtonBhv _buttonPositive;
+    private ButtonBhv _buttonNegative;
 
     public void Init(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction, Sprite sprite = null)
@@ -15,17 +17,17 @@ public class PopupYesNoBhv : PopupBhv
         transform.Find("Content").GetComponent<TMPro.TextMeshPro>().text = content;
         _resultAction = resultAction;
 
-        var buttonPositive = transform.Find("ButtonPositive");
-        buttonPositive.GetComponent<ButtonBhv>().EndActionDelegate = PositiveDelegate;
-        buttonPositive.transform.Find("ButtonPositiveText").GetComponent<TMPro.TextMeshPro>().text = positive;
+        _buttonPositive = transform.Find("ButtonPositive").GetComponent<ButtonBhv>();
+        _buttonPositive.EndActionDelegate = PositiveDelegate;
+        _buttonPositive.transform.Find("ButtonPositiveText").GetComponent<TMPro.TextMeshPro>().text = positive;
         if (string.IsNullOrEmpty(negative))
-            buttonPositive.transform.position = new Vector3(buttonPositive.transform.parent.position.x, buttonPositive.transform.position.y, 0.0f);
+            _buttonPositive.transform.position = new Vector3(_buttonPositive.transform.parent.position.x, _buttonPositive.transform.position.y, 0.0f);
 
-        var buttonNegative = transform.Find("ButtonNegative");
-        buttonNegative.GetComponent<ButtonBhv>().EndActionDelegate = NegativeDelegate;
-        buttonNegative.transform.Find("ButtonNegativeText").GetComponent<TMPro.TextMeshPro>().text = negative;
+        _buttonNegative = transform.Find("ButtonNegative").GetComponent<ButtonBhv>();
+        _buttonNegative.EndActionDelegate = NegativeDelegate;
+        _buttonNegative.transform.Find("ButtonNegativeText").GetComponent<TMPro.TextMeshPro>().text = negative;
         if (string.IsNullOrEmpty(negative))
-            buttonNegative.gameObject.SetActive(false);
+            _buttonNegative.gameObject.SetActive(false);
         if (sprite != null)
         {
             var mainPicture = transform.Find("MainPicture");
@@ -59,6 +61,8 @@ public class PopupYesNoBhv : PopupBhv
     public override void ExitPopup()
     {
         Constants.DecreaseInputLayer();
+        Destroy(_buttonPositive.gameObject);
+        Destroy(_buttonNegative.gameObject);
         _resultAction?.Invoke(false);
         Destroy(gameObject);
     }

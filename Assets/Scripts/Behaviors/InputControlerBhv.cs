@@ -94,12 +94,19 @@ public class InputControlerBhv : FrameRateBehavior
             if (Constants.InputLayer > 0)
             {
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
-                if (!_currentScene.Paused)
-                    _mainCamera.gameObject.GetComponent<CameraBhv>().Unfocus();
                 if (gameObjectToDestroy.name.Contains("Keyboard"))
                     gameObjectToDestroy.transform.GetChild(0).GetComponent<PopupBhv>().ExitPopup();
                 else
-                    gameObjectToDestroy.GetComponent<PopupBhv>()?.ExitPopup();
+                {
+                    var popupBhv = gameObjectToDestroy.GetComponent<PopupBhv>();
+                    var dialogBoxBhv = gameObjectToDestroy.GetComponent<DialogBoxBhv>();
+                    if (popupBhv != null)
+                        popupBhv.ExitPopup();
+                    else if (dialogBoxBhv != null)
+                        dialogBoxBhv.PrevSentence();
+                    else if (!_currentScene.Paused)
+                        _mainCamera.gameObject.GetComponent<CameraBhv>().Unfocus();
+                }
                 //Constants.DecreaseInputLayer();
                 //Destroy(gameObjectToDestroy);
             }
@@ -355,7 +362,7 @@ public class InputControlerBhv : FrameRateBehavior
                 _lastSelectedGameObjects.Add(_lastSelectedGameObject);
             ResetMenuSelector(preferedResetPos);
         }
-        else
+        else if (Constants.InputLayer < _currentInputLayer)
         {
             if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
@@ -365,6 +372,11 @@ public class InputControlerBhv : FrameRateBehavior
             }
             else
                 ResetMenuSelector(preferedResetPos);
+        }
+        else
+        {
+            _lastSelectedGameObject = null;
+            ResetMenuSelector(preferedResetPos);
         }
         _currentInputLayer = Constants.InputLayer;
     }
@@ -421,32 +433,39 @@ public class InputControlerBhv : FrameRateBehavior
 
         if (_availableButtons == null)
             return;
-
-        foreach (var button in _availableButtons)
+        else if (_availableButtons.Count > 1)
         {
-            if (button == null)
-                continue;
-            var precision = 1.0f;
-            var lastConeMult = Constants.BaseButtonVisionConeMult;
-            if (_lastSelectedGameObject != null)
-                lastConeMult = _lastSelectedGameObject.GetComponent<ButtonBhv>().ConeVisionMult;
-            visionConeMult = visionConeMult == null ? lastConeMult : visionConeMult;
-
-            if (button == null
-                || (direction == Direction.Up && button.transform.position.y < MenuSelector.transform.position.y + precision / 2)
-                || (direction == Direction.Down && button.transform.position.y > MenuSelector.transform.position.y - precision / 2)
-                || (direction == Direction.Left && button.transform.position.x > MenuSelector.transform.position.x - precision / 2)
-                || (direction == Direction.Right && button.transform.position.x < MenuSelector.transform.position.x + precision / 2)
-                || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
-                || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
-                || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
-                continue;
-            var distance = Vector2.Distance(button.transform.position, MenuSelector.transform.position);
-            if (distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
+            foreach (var button in _availableButtons)
             {
-                minDistance = distance;
-                selectedGameObject = button;
+                if (button == null)
+                    continue;
+                var precision = 1.0f;
+                var lastConeMult = Constants.BaseButtonVisionConeMult;
+                if (_lastSelectedGameObject != null)
+                    lastConeMult = _lastSelectedGameObject.GetComponent<ButtonBhv>().ConeVisionMult;
+                visionConeMult = visionConeMult == null ? lastConeMult : visionConeMult;
+
+                if (button == null
+                    || (direction == Direction.Up && button.transform.position.y < MenuSelector.transform.position.y + precision / 2)
+                    || (direction == Direction.Down && button.transform.position.y > MenuSelector.transform.position.y - precision / 2)
+                    || (direction == Direction.Left && button.transform.position.x > MenuSelector.transform.position.x - precision / 2)
+                    || (direction == Direction.Right && button.transform.position.x < MenuSelector.transform.position.x + precision / 2)
+                    || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
+                    || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
+                    || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
+                    continue;
+                var distance = Vector2.Distance(button.transform.position, MenuSelector.transform.position);
+                if (distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value)
+                    && (_lastSelectedGameObject == null || button.name != _lastSelectedGameObject.name))
+                {                        
+                    minDistance = distance;
+                    selectedGameObject = button;
+                }
             }
+        }
+        else if (_availableButtons.Count == 1)
+        {
+            selectedGameObject = _availableButtons[0];
         }
 
         visionConeMult -= 0.49f;
@@ -488,13 +507,15 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void ButtonOnSelector()
     {
-        if (Constants.OnlyMouseInMenu)
+        if (Constants.OnlyMouseInMenu || _availableButtons == null || _availableButtons.Count == 0)
             return;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
 
         foreach (var button in _availableButtons)
         {
+            if (button == null)
+                continue;
             var boxCollider = button.GetComponent<BoxCollider2D>();
             var offset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
             var currentDistance = Vector2.Distance(button.transform.position + offset, MenuSelector.transform.position);

@@ -131,6 +131,7 @@ public static class Constants
     public const string DifficultyScene = "DifficultyScene";
     public const string DemoEndScene = "DemoEndScene";
     public const string HighScoreScene = "HighScoreScene";
+    public const string GameOverScene = "GameOverScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
@@ -229,6 +230,7 @@ public static class Constants
     public static int CurrentOpponentCooldown;
     public static int CurrentOpponentAttackId;
     public static bool IsffectAttackInProgress = false;
+    public static string GameOverParams = null;
 
     public static bool OnlyMouseInMenu;
 

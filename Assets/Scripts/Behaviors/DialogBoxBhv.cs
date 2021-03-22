@@ -10,6 +10,7 @@ public class DialogBoxBhv : FrameRateBehavior
     public List<Sprite> Emojies;
 
     private SoundControlerBhv _soundControler;
+    private InputControlerBhv _inputControlerBhv;
     private SpriteRenderer _picture;
     private SpriteRenderer _emoji;
     private SpriteRenderer _titleBackground;
@@ -35,7 +36,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private string[] _talkingSplit;
     private int _talkingSplitId;
     private int _talkingCharId;
-    private int _talkingFramesDelay = 2;
+    private int _talkingFramesDelay = 1;
     private int _talkingFramesProgress;
     private int _pelliculeMove;
 
@@ -59,6 +60,7 @@ public class DialogBoxBhv : FrameRateBehavior
         _pelliculeTop = transform.Find("PelliculeTop");
         _pelliculeBot = transform.Find("PelliculeBot");
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
 
         _dialogLibelle = secondaryName == null ? subjectName : $"{subjectName}|{secondaryName}";
         _subject = GetSubjectFromName(subjectName);
@@ -266,12 +268,13 @@ public class DialogBoxBhv : FrameRateBehavior
         _content.text = $"<material=\"{_currentSubject.Realm.ToString().ToLower()}.4.3\">{_sentences[_sentencesId].ToLower()}";
     }
 
-    private void PrevSentence()
+    public void PrevSentence()
     {
         if (_sentencesId - 1 < 0)
             return;
         --_sentencesId;
         UpdateCurrentSentence();
+        _inputControlerBhv.InitMenuKeyboardInputs(_previousSentence.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
     }
 
     private void NextSentence()
@@ -284,7 +287,10 @@ public class DialogBoxBhv : FrameRateBehavior
 
         ++_sentencesId;
         if (_sentencesId < _sentences.Count)
+        {
             UpdateCurrentSentence();
+            _inputControlerBhv.InitMenuKeyboardInputs(_nextSentence.transform.position + new Vector3(0.0f, 10.0f, 0.0f));
+        }
         else
             ExitDialogBox();
     }

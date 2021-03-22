@@ -1552,6 +1552,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuSelector
       objectReference: {fileID: 0}
+    - target: {fileID: 8811942759396698182, guid: 5ef6c47ed4b5a0f479c36b7aa6500e8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8811942759396698183, guid: 5ef6c47ed4b5a0f479c36b7aa6500e8d, type: 3}
       propertyPath: m_RootOrder
       value: 9

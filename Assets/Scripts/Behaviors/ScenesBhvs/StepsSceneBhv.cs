@@ -239,6 +239,7 @@ public class StepsSceneBhv : SceneBhv
             {
                 _selectedStep.LandLordVision = false;
                 Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, () => { GoToStep(); return true; });
+                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { _inputControler.InitMenuKeyboardInputs(); return true; }));
             }
             return result;
         }

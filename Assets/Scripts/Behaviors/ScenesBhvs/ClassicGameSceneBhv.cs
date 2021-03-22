@@ -126,7 +126,18 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (Constants.CurrentListOpponentsId >= _opponents.Count)
         {
-            Victory();
+            if (CurrentOpponent.Type == OpponentType.Boss)
+            {
+                Paused = true;
+                Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
+                {
+                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+                    Victory();
+                    return true;
+                });
+            }
+            else
+                Victory();
             return;
         }
         CurrentOpponent = _opponents[Constants.CurrentListOpponentsId];
@@ -170,7 +181,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         StartOpponentCooldown(sceneInit);
     }
 
-    private void Victory()
+    private bool Victory()
     {
         PlayerPrefsHelper.SaveIsInFight(false);
         Paused = true;
@@ -182,7 +193,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
         {
             LoadBackAfterVictory(false);
-            return;
+            return false;
         }
 
         _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
@@ -252,7 +263,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             LoadBackAfterVictory(false);
         }
-
+        return true;
     }
 
     private object LoadBackAfterVictory(bool result)
@@ -377,8 +388,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
         {
+            Constants.GameOverParams = $"{CurrentOpponent.Name}|{_run.CurrentRealm}|{_run.RealmLevel}";
             PlayerPrefsHelper.ResetRun();
-            NavigationService.LoadBackUntil(Constants.MainMenuScene);
+            NavigationService.LoadNextScene(Constants.GameOverScene);
         }
     }
 

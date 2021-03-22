@@ -56,5 +56,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DemoEndScene.unity
     guid: ef62f25a7e0b2154da8b68ae946c1239
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: 694f1128028a87f409b37db599693bdf
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2be493e1868ee174083e5a3262e27d84, type: 2}
