@@ -88,9 +88,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         
         Paused = true;
         Constants.InputLocked = true;
-        if (Constants.NameLastScene == Constants.SettingsScene)
-            AfterFightIntro();
-        else
+        if (Constants.NameLastScene != Constants.SettingsScene)
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
     }
 
@@ -104,9 +102,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void OpponentAppearance(float customY = 9.0f)
     {
-        if (!_currentStep.LandLordVision
-            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}")
-            ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any")))
+        if ((_currentStep == null || !_currentStep.LandLordVision)
+            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any")))
         {
             Paused = true;
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Appearance);

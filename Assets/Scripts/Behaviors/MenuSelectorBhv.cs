@@ -56,6 +56,8 @@ public class MenuSelectorBhv : MonoBehaviour
 
     public void Reset(Vector3? resetPosition = null)
     {
+        if (_reseted)
+            return;
         if (_mainCameraBhv == null ||_mainCameraBhv.gameObject == null)
             _mainCameraBhv = Helper.GetMainCamera().GetComponent<CameraBhv>();
         if (resetPosition != null)

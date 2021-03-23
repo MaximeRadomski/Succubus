@@ -347,7 +347,7 @@ public class InputControlerBhv : FrameRateBehavior
                     && buttonBhv.Layer == Constants.InputLayer
                     && buttonBhv.GetComponent<BoxCollider2D>().enabled == true)
                 {
-                    if (_gameplayControler == true && buttonBhv.Layer == 0)
+                    if (_gameplayControler != null && buttonBhv.Layer == 0)
                         continue;
                     _availableButtons.Add(allGameObjects[i]);
                 }
@@ -399,14 +399,18 @@ public class InputControlerBhv : FrameRateBehavior
         if (MenuSelector == null)
             return;
         if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused)
+        {
+            MenuSelector.Reset();
+            _currentInputLayer = 0;
             return;
-        if (_currentInputLayer != Constants.InputLayer)
+        }
+        if (_currentInputLayer != Constants.InputLayer || _availableButtons == null || _availableButtons.Count == 0)
         {
             if (!Constants.OnlyMouseInMenu)
                 InitMenuKeyboardInputs();
             else if (_lastSelectedGameObjects != null)
                 _lastSelectedGameObjects.Clear();
-        }   
+        }
         if (Input.GetKeyDown(_keyBinding[10]))
             FindNearest(Direction.Up);
         else if (Input.GetKeyDown(_keyBinding[11]))

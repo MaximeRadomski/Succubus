@@ -99,6 +99,7 @@ public class CharacterInstanceBhv : FrameRateBehavior
                 _spriteRenderer.color = Constants.ColorBlackTransparent;
             }
             _isDying = false;
+            Constants.InputLocked = false;
             AfterDeath?.Invoke();
         }
     }
@@ -176,5 +177,6 @@ public class CharacterInstanceBhv : FrameRateBehavior
     public void Die()
     {
         _isDying = true;
+        Constants.InputLocked = true;
     }
 }
