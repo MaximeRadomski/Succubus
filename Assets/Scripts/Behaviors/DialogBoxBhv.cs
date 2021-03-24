@@ -248,7 +248,7 @@ public class DialogBoxBhv : FrameRateBehavior
                 || character == ';')
                 nbPixels += 2.0f;
             else if (character == ' ')
-                nbPixels += 1.2f;
+                nbPixels += 1.3f;
             else if (character == '('
                 || character == ')'
                 || character == '['

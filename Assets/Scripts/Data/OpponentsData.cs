@@ -114,7 +114,7 @@ public static class OpponentsData
             Name = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 70, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 3, 1) },
+                new OpponentAttack(AttackType.MirrorMirror, 2, 1) },
             GravityLevel = 5, Weight = 30
         },
         new Opponent()

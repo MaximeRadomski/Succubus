@@ -123,6 +123,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (Constants.CurrentListOpponentsId >= _opponents.Count)
         {
+            var effectsCamera = GameObject.Find("EffectsCamera");
+            if (effectsCamera != null)
+                effectsCamera.GetComponent<EffectsCameraBhv>()?.Reset();
             if (CurrentOpponent.Type == OpponentType.Boss)
             {
                 Paused = true;
