@@ -4,6 +4,13 @@ using UnityEngine;
 
 public static class CharactersData
 {
+    //DEBUG
+    public static bool DebugEnabled = false;
+    public static Character DebugCharacter()
+    {
+        return Characters?.Find(o => o.Name.Contains("Belias"));
+    }
+
     public static List<Character> Characters = new List<Character>()
     {
         //HELL
@@ -11,7 +18,7 @@ public static class CharactersData
         {
             Id = 0, Name = "Ivy", Kind = "Succubus", Realm = Realm.Hell,
             Attack = 10,
-            Cooldown = 10,
+            Cooldown = 12,
             SpecialName = "Whip Hits", SpecialDescription = "summons 3 single cubes as your next pieces",
             Lore = "Daughter of lust itself, she makes anyone her slave under the yoke of her whip. Perpetual torment and pleasure are her doom!",
             DialogId = 3, DialogPitch = 1.5f
@@ -28,7 +35,7 @@ public static class CharactersData
         {
             Id = 2, Name = "Podarge", Kind = "Harpy", Realm = Realm.Hell,
             Attack = 8,
-            Cooldown = 5,
+            Cooldown = 4,
             SpecialName = "Mine", SpecialDescription = "switches current piece with the last of the piece preview",
             Lore = "Captain of the harpies army, her eternal past of trickery and ferocity gave her enough power in order to command a troop of monsters whom are considered untamable !"
         },
@@ -36,7 +43,7 @@ public static class CharactersData
         {
             Id = 3, Name = "Belias", Kind = "Slave Demon", Realm = Realm.Hell,
             Attack = 12,
-            Cooldown = 20,
+            Cooldown = 8,
             SpecialName = "Again", SpecialDescription = "replace the next 3 pieces by the current one",
             Lore = "Once one of the hell's gatekeepers, he fell in adoration for Ivy. Many succumbed under the terrific strength of his fists. He now endlessly serves his new mistress as a bodyguard."
         },

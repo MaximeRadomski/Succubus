@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 97337228}
   - component: {fileID: 97337227}
   m_Layer: 0
-  m_Name: CharHell02
+  m_Name: Character02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1013,7 +1013,7 @@ GameObject:
   - component: {fileID: 276447721}
   - component: {fileID: 276447720}
   m_Layer: 0
-  m_Name: CharHell00
+  m_Name: Character00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2264,7 +2264,7 @@ GameObject:
   - component: {fileID: 635171509}
   - component: {fileID: 635171508}
   m_Layer: 0
-  m_Name: CharEarth00
+  m_Name: Character04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2620,7 +2620,7 @@ GameObject:
   - component: {fileID: 767772743}
   - component: {fileID: 767772742}
   m_Layer: 0
-  m_Name: CharHell01
+  m_Name: Character01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2750,7 +2750,7 @@ GameObject:
   - component: {fileID: 767934857}
   - component: {fileID: 767934856}
   m_Layer: 0
-  m_Name: CharHeaven00
+  m_Name: Character08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3602,7 +3602,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1960546628078278901, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 8248543377919322394, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3626,7 +3626,7 @@ GameObject:
   - component: {fileID: 1107153221}
   - component: {fileID: 1107153220}
   m_Layer: 0
-  m_Name: CharHell03
+  m_Name: Character03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3859,7 +3859,7 @@ GameObject:
   - component: {fileID: 1111024828}
   - component: {fileID: 1111024827}
   m_Layer: 0
-  m_Name: CharEarth02
+  m_Name: Character06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4531,7 +4531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278983158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.284, z: 0}
+  m_LocalPosition: {x: 0.429, y: -1.284, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1107153219}
@@ -4577,7 +4577,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1960546628078278901, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 57365866442116020, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5373,7 +5373,7 @@ GameObject:
   - component: {fileID: 1517214769}
   - component: {fileID: 1517214768}
   m_Layer: 0
-  m_Name: CharHeaven01
+  m_Name: Character09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5636,7 +5636,7 @@ GameObject:
   - component: {fileID: 1601181464}
   - component: {fileID: 1601181463}
   m_Layer: 0
-  m_Name: CharEarth03
+  m_Name: Character07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6407,7 +6407,7 @@ GameObject:
   - component: {fileID: 1777464607}
   - component: {fileID: 1777464606}
   m_Layer: 0
-  m_Name: CharHeaven02
+  m_Name: Character10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6891,7 +6891,7 @@ GameObject:
   - component: {fileID: 1871898469}
   - component: {fileID: 1871898468}
   m_Layer: 0
-  m_Name: CharHeaven03
+  m_Name: Character11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7347,7 +7347,7 @@ GameObject:
   - component: {fileID: 1996609719}
   - component: {fileID: 1996609718}
   m_Layer: 0
-  m_Name: CharEarth01
+  m_Name: Character05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

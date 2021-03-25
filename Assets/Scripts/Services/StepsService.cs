@@ -94,10 +94,23 @@ public class StepsService
         var lootType = LootType.None;
         var lootId = 0;
         var opponentType = OpponentType.Common;
-        if (run.CharacterEncounterAvailability && Helper.RandomDice100(run.CharEncounterPercent))
+        if (Helper.RandomDice100(run.CharEncounterPercent))
         {
             lootType = LootType.Character;
-            opponentType = OpponentType.Common;
+            var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);
+            var unlockedIds = new List<int>();
+            for (int i = 0; i < unlockedRealmString.Length; ++i)
+            {
+                if (unlockedRealmString[i] == '0')
+                    unlockedIds.Add(i + run.CurrentRealm.GetHashCode());
+            }
+            if (unlockedIds.Count == 0)
+            {
+                GenerateRandomStepAtPosition(stepX, stepY, run, character);
+                return;
+            }
+            lootId = unlockedIds[Random.Range(0, unlockedIds.Count)];
+            opponentType = OpponentType.Champion;
         }
         else if (Helper.RandomDice100(run.ItemLootPercent))
         {
@@ -125,6 +138,12 @@ public class StepsService
         {
             lootType = LootType.Tattoo;
             lootId = TattoosData.DebugTattoo.Id;
+            opponentType = OpponentType.Common;
+        }
+        if (CharactersData.DebugEnabled)
+        {
+            lootType = LootType.Character;
+            lootId = CharactersData.DebugCharacter().Id;
             opponentType = OpponentType.Common;
         }
         //DEBUG

@@ -26,6 +26,7 @@ public class StepsSceneBhv : SceneBhv
     private InputControlerBhv _inputControler;
 
     private Step _selectedStep;
+    private float _lootCenterLocalY;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class StepsSceneBhv : SceneBhv
         _run = PlayerPrefsHelper.GetRun();
         _character = PlayerPrefsHelper.GetRunCharacter();
 
+        _lootCenterLocalY = GameObject.Find("LootCenter").transform.localPosition.y;
         GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _run.CurrentRealm + " - lvl " + _run.RealmLevel;
         GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.MaxSteps - _run.CurrentStep);
         _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
@@ -128,18 +130,21 @@ public class StepsSceneBhv : SceneBhv
             {
                 rarity = Rarity.Legendary;
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _selectedStep.LootId);
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _characterPicture.transform.localPosition.y, 0.0f);
                 _lootName.text = CharactersData.Characters[_selectedStep.LootId].Name.ToLower();
             }
             else if (_selectedStep.LootType == LootType.Item)
             {
                 rarity = ItemsData.GetItemFromName(ItemsData.Items[_selectedStep.LootId]).Rarity;
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _selectedStep.LootId);
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = ItemsData.Items[_selectedStep.LootId].ToLower();
             }
             else if (_selectedStep.LootType == LootType.Tattoo)
             {
                 rarity = TattoosData.GetTattooFromName(TattoosData.Tattoos[_selectedStep.LootId]).Rarity;
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + _selectedStep.LootId);
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = TattoosData.Tattoos[_selectedStep.LootId].ToLower();
             }
             _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.MaterialHell_4_3 + rarity.ToString().ToLower();
@@ -263,7 +268,7 @@ public class StepsSceneBhv : SceneBhv
         if (_selectedStep.LootType == LootType.Character)
         {
             name = CharactersData.Characters[_selectedStep.LootId].Name;
-            cooldown = CharactersData.Characters[_selectedStep.LootId].Cooldown.ToString();
+            cooldown = $"{CharactersData.Characters[_selectedStep.LootId].Cooldown}\nattack: {CharactersData.Characters[_selectedStep.LootId].Attack}";
             description = CharactersData.Characters[_selectedStep.LootId].SpecialDescription;
         }
         else if (_selectedStep.LootType == LootType.Item)

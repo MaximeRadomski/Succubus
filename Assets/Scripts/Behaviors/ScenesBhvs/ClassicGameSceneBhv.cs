@@ -206,8 +206,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
         {
-            Instantiator.NewPopupYesNo("New Playable Character", "you unlocked a new playable character !", null, "Noice!", LoadBackAfterVictory);
             PlayerPrefsHelper.AddUnlockedCharacters((Character)loot);
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, AfterCharacterDialog);
+            bool AfterCharacterDialog() {
+                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+                Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character !", null, "Noice!", LoadBackAfterVictory);
+                return true;}
         }
         else if (loot.LootType == LootType.Item)
         {

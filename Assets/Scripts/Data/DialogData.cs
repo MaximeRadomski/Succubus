@@ -9,13 +9,96 @@ public static class DialogData
     // <P> Pause
     public static Dictionary<string, List<List<string>>> DialogTree = new Dictionary<string, List<List<string>>>()
     {
+        #region Podarge
+        { "Podarge|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Hmm yes? What is it?",
+                    "Well... Don't you know your master started a realm war against-",
+                    "Wait What!! Oh I guess I was asleep during this morning meeting... as usual... Ok ok let's pretend I was actually aware of that from the beggining!",
+                    "Well... I guess you were, weren't you?",
+                    "That's the spirit!"
+                }
+            }
+        },
+        { "Podarge|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh hi Edam!",
+                    "Podarge... Can you explain to me what are you doing here?",
+                    "Did I... Did I miss something?",
+                    "War between realms? Escaping hell? Kicking angels asses? Does it rings a bell?",
+                    "...",
+                    "...",
+                    "...",
+                    "Asleep during the morning meeting again I suppose?",
+                    "Edam...",
+                    "Sigh... Just... Just follow us and try to keep the pace. Please."
+                }
+            }
+        },
+        { "Podarge|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh hi my queen!",
+                    "Podarge!! Chilling here like nothing ever happened?",
+                    "Oh my Stan, did I miss something again?",
+                    "I still don't know how Edam keeps his calm around you...",
+                    "Well, the lust and depravity helps I guess!",
+                    "...",
+                    "...",
+                    "Will you help us getting out of hell or what?",
+                    "Oh! That's what it is about!",
+                    "Sigh... Just... Just follow us and try to keep the pace. Please."
+                }
+            }
+        },
+        #endregion
+        #region Belias
+        { "Belias|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares disturb me during my eternal suffering?",
+                    "Well... Wouldn't you want to do something else than... Suffering?",
+                    "Just doing my chores, I know my place. Now begone! Before I loose my patience.",
+                    "Even if I say to you that your mistress Ivy is sending me here to get you?",
+                    "Mistress!! Say no more! I'm coming with you little being!",
+                    "Little... being... ?"
+                }
+            }
+        },
+        { "Belias|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Mistress!! Your presence here honors me!",
+                    "Yeah yeah whatever. Come. We need you. Getting out of hell might be tricky without you!",
+                    "Getting... out of hell?",
+                    "Are you questioning my orders now?",
+                    "Oh!! No I'm not, Mistress!!",
+                    "Are you coming then?",
+                    "Yes Mistress!!"
+                }
+            }
+        },
+        #endregion
+
         #region Harpy
         { "Harpy|Edam",
             new List<List<string>>()
             {
                 new List<string>()
                 {
-                    "Master???",
+                    "Masster???",
                     "You traitor!!"
                 }
             }

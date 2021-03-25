@@ -24,7 +24,12 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
         _charButtonsContainer = GameObject.Find("CharacterButtons");        
         SetButtons();
-
+        var unlockedChars = PlayerPrefsHelper.GetUnlockedCharactersString();
+        for (int i = 2; i < unlockedChars.Length; ++i)
+        {
+            if (unlockedChars[i] == '1')
+                GameObject.Find($"Character{i.ToString("00")}").transform.GetChild(1).GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
+        }
         var lastSelectedCharacter = PlayerPrefsHelper.GetSelectedCharacterId();
         Constants.SetLastEndActionClickedName(_charButtonsContainer.transform.GetChild(lastSelectedCharacter).name);
         SelectCharacter();
