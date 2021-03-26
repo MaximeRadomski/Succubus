@@ -19,6 +19,7 @@ public class GameplayControler : MonoBehaviour
     public bool AttackIncoming;
     public PlayFieldBhv PlayFieldBhv;
     public GameObject ForcedPiece;
+    public List<GameObject> NextPieces;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -51,7 +52,6 @@ public class GameplayControler : MonoBehaviour
     private TMPro.TextMeshPro _inputDisplay;
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
-    private List<GameObject> _nextPieces;
     private Piece _forcedPieceModel;
 
     private Special _characterSpecial;
@@ -188,9 +188,9 @@ public class GameplayControler : MonoBehaviour
 
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
-        _nextPieces = new List<GameObject>();
+        NextPieces = new List<GameObject>();
         for (int i = 0; i < 5; ++i)
-            _nextPieces.Add(GameObject.Find(Constants.GoNextPieceName + i.ToString("D2")));
+            NextPieces.Add(GameObject.Find(Constants.GoNextPieceName + i.ToString("D2")));
         SetNextGravityFall();
         ResetDasArr();
         PlayFieldBhv = GameObject.Find("PlayField").GetComponent<PlayFieldBhv>();
@@ -596,10 +596,10 @@ public class GameplayControler : MonoBehaviour
     {
         for (int i = 0; i < 5; ++i)
         {
-            for (int j = _nextPieces[i].transform.childCount - 1; j >= 0; --j)
-                Destroy(_nextPieces[i].transform.GetChild(j).gameObject);
-            var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), _nextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
-            tmpPiece.transform.SetParent(_nextPieces[i].transform);
+            for (int j = NextPieces[i].transform.childCount - 1; j >= 0; --j)
+                Destroy(NextPieces[i].transform.GetChild(j).gameObject);
+            var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
+            tmpPiece.transform.SetParent(NextPieces[i].transform);
         }
     }
 
@@ -1362,7 +1362,11 @@ public class GameplayControler : MonoBehaviour
     public void Special()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        {
+            _characterSpecial.Reactivate();
+            _soundControler.PlaySound(_idSpecial);
             return;
+        }
         if (_characterSpecial.Activate())
         {
             this.SceneBhv.CameraBhv.Bump(4);

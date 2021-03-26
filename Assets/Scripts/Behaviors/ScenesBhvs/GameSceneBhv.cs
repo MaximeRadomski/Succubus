@@ -33,6 +33,8 @@ public abstract class GameSceneBhv : SceneBhv
 
     public override void PauseOrPrevious()
     {
+        if (Paused)
+            return;
         Paused = true;
         _musicControler.HalveVolume();
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);

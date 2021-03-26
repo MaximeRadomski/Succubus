@@ -23,6 +23,11 @@ public abstract class Special
         return true;
     }
 
+    public virtual void Reactivate()
+    {
+
+    }
+
     public virtual void ResetCooldown()
     {
         Constants.SelectedCharacterSpecialCooldown = _character.Cooldown;

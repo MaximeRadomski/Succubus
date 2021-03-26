@@ -36,7 +36,7 @@ public static class CharactersData
             Id = 2, Name = "Podarge", Kind = "Harpy", Realm = Realm.Hell,
             Attack = 8,
             Cooldown = 4,
-            SpecialName = "Mine", SpecialDescription = "switches current piece with the last of the piece preview",
+            SpecialName = "Swap", SpecialDescription = "switches the current piece with one of the piece preview",
             Lore = "Captain of the harpies army, her eternal past of trickery and ferocity gave her enough power in order to command a troop of monsters whom are considered untamable !"
         },
         new Character()

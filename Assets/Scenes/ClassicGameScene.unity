@@ -1266,6 +1266,7 @@ MonoBehaviour:
   AttackIncoming: 0
   PlayFieldBhv: {fileID: 0}
   ForcedPiece: {fileID: 0}
+  NextPieces: []
 --- !u!114 &331272313
 MonoBehaviour:
   m_ObjectHideFlags: 0
