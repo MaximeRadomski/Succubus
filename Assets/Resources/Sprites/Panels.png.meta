@@ -98,6 +98,9 @@ TextureImporter:
   - first:
       213: 1236168681202432289
     second: Panels_32
+  - first:
+      213: -9127170578203990889
+    second: Panels_33
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -139,7 +142,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 7
@@ -887,6 +890,27 @@ TextureImporter:
       bones: []
       spriteID: 129b885bdd0c72110800000000000000
       internalID: 1236168681202432289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panels_33
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 381
+        width: 42
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79421c987b6c55180800000000000000
+      internalID: -9127170578203990889
       vertices: []
       indices: 
       edges: []

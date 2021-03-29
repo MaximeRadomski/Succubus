@@ -2065,7 +2065,7 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f * Character.AirPieceOpacity);
+            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.1f + (0.1f * Character.AirPieceOpacity));
             CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
             _soundControler.PlaySound(_idEmptyRows);
             return true;

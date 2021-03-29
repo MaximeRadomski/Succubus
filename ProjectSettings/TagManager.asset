@@ -85,3 +85,6 @@ TagManager:
   - name: Keyboard
     uniqueID: 2680369509
     locked: 0
+  - name: Scanlines
+    uniqueID: 43650419
+    locked: 0

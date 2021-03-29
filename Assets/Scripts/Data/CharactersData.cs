@@ -18,7 +18,7 @@ public static class CharactersData
         {
             Id = 0, Name = "Ivy", Kind = "Succubus", Realm = Realm.Hell,
             Attack = 10,
-            Cooldown = 12,
+            Cooldown = 10,
             SpecialName = "Whip Hits", SpecialDescription = "summons 3 single cubes as your next pieces",
             Lore = "Daughter of lust itself, she makes anyone her slave under the yoke of her whip. Perpetual torment and pleasure are her doom!",
             DialogId = 3, DialogPitch = 1.5f
@@ -35,7 +35,7 @@ public static class CharactersData
         {
             Id = 2, Name = "Podarge", Kind = "Harpy", Realm = Realm.Hell,
             Attack = 8,
-            Cooldown = 4,
+            Cooldown = 6,
             SpecialName = "Swap", SpecialDescription = "switches the current piece with one of the piece preview",
             Lore = "Captain of the harpies army, her eternal past of trickery and ferocity gave her enough power in order to command a troop of monsters whom are considered untamable !"
         },

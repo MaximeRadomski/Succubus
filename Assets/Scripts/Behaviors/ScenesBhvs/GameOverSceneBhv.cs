@@ -42,4 +42,9 @@ public class GameOverSceneBhv : SceneBhv
             return true;
         }
     }
+
+    public override void PauseOrPrevious()
+    {
+        GoBackToMainMenu();
+    }
 }
