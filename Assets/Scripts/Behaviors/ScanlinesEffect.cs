@@ -13,10 +13,20 @@ public class ScanlinesEffect : MonoBehaviour
     private float lineWidth = 0.5f;
 
     [Range(0, 1)]
-    private float hardness = 0.7f;
+    private float hardness;
 
     [Range(0, 1)]
     private float displacementSpeed = 0.0f;
+
+    private void Start()
+    {
+        UpdateHardness();
+    }
+
+    public void UpdateHardness()
+    {
+        hardness = PlayerPrefsHelper.GetScanlinesHardness();
+    }
 
     protected Material material
     {

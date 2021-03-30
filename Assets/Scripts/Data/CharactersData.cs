@@ -44,7 +44,7 @@ public static class CharactersData
             Id = 3, Name = "Belias", Kind = "Slave Demon", Realm = Realm.Hell,
             Attack = 12,
             Cooldown = 8,
-            SpecialName = "Again", SpecialDescription = "replace the next 3 pieces by the current one",
+            SpecialName = "Hollowed", SpecialDescription = "hollows your current piece, allowing it to go through blocks",
             Lore = "Once one of the hell's gatekeepers, he fell in adoration for Ivy. Many succumbed under the terrific strength of his fists. He now endlessly serves his new mistress as a bodyguard."
         },
         //EARTH

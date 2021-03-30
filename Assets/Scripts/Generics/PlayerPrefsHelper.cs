@@ -469,6 +469,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return sensitivity;
     }
 
+    public static void SaveScanlinesHardness(float hardness)
+    {
+        PlayerPrefs.SetFloat(Constants.PpScanlinesHardness, hardness);
+    }
+
+    public static float GetScanlinesHardness()
+    {
+        var hardness = PlayerPrefs.GetFloat(Constants.PpScanlinesHardness, Constants.PpScanlinesHardnessDefault);
+        return hardness;
+    }
+
     public static void SaveFullscreen(bool enabled)
     {
         PlayerPrefs.SetInt(Constants.PpFullScreen, enabled ? 1 : 0);

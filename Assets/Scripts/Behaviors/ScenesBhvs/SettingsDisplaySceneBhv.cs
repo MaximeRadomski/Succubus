@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class SettingsDisplaySceneBhv : SceneBhv
 {
-    private GameObject _fullScreenSelector;
+    private GameObject _fullscreenSelector;
     private GameObject _resolutionSelector;
+    private GameObject _scanlinesSelector;
+
+    private GameObject _fullscreenContainer;
+    private GameObject _resolutionContainer;
+    private GameObject _scanlinesContainer;
+    private GameObject _loremIpsumContainer;
 
     private ResolutionService _resolutionService;
+    private ScanlinesEffect _scanlinesEffect;
 
     void Start()
     {
@@ -18,15 +25,30 @@ public class SettingsDisplaySceneBhv : SceneBhv
     {
         base.Init();
         _resolutionService = GetComponent<ResolutionService>();
-        _fullScreenSelector = GameObject.Find("FullscreenSelector");
+        _scanlinesEffect = CameraBhv.GetComponent<ScanlinesEffect>();
+
+        _fullscreenSelector = GameObject.Find("FullscreenSelector");
         _resolutionSelector = GameObject.Find("ResolutionSelector");
+        _scanlinesSelector = GameObject.Find("ScanlinesSelector");
+
+        _fullscreenContainer = GameObject.Find("FullscreenContainer");
+        _resolutionContainer = GameObject.Find("ResolutionContainer");
+        _scanlinesContainer = GameObject.Find("ScanlinesContainer");
+        _loremIpsumContainer = GameObject.Find("LoremIpsumContainer");
 
         SetButtons();
 
+#if !UNITY_ANDROID
         Constants.SetLastEndActionClickedName($"Res{PlayerPrefsHelper.GetResolution()}");
         SetRes(PlayerPrefsHelper.GetResolution());
         Constants.SetLastEndActionClickedName($"Fullscreen{(PlayerPrefsHelper.GetFullscreen() == true ? "On" : "Off")}");
         SetFullscreen(PlayerPrefsHelper.GetFullscreen());
+#else
+        _fullscreenContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
+        _resolutionContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
+        _loremIpsumContainer.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+#endif
+        SetScanlines(PlayerPrefsHelper.GetScanlinesHardness());
     }
 
     private void SetButtons()
@@ -47,13 +69,21 @@ public class SettingsDisplaySceneBhv : SceneBhv
         GameObject.Find("FullscreenOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetFullscreen(true); };
         GameObject.Find("FullscreenOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetFullscreen(false); };
 
+        GameObject.Find("1.0").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(1.0f); };
+        GameObject.Find("0.9").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.9f); };
+        GameObject.Find("0.8").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.8f); };
+        GameObject.Find("0.7").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.7f); };
+        GameObject.Find("0.6").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.6f); };
+        GameObject.Find("0.5").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.5f); };
+        GameObject.Find("0.4").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.4f); };
+
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
     }
 
     private void SetFullscreen(bool result)
     {
         var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);
-        _fullScreenSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _fullScreenSelector.transform.position.y, 0.0f);
+        _fullscreenSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _fullscreenSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveFullscreen(result);
         Screen.SetResolution(Screen.width, Screen.height, result);
     }
@@ -63,6 +93,15 @@ public class SettingsDisplaySceneBhv : SceneBhv
         PlayerPrefsHelper.SaveResolution(_resolutionService.SetResolution(resId));
         var choiceGameObject = GameObject.Find($"Res{PlayerPrefsHelper.GetResolution()}");
         _resolutionSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, choiceGameObject.transform.position.y, 0.0f);
+    }
+
+    private void SetScanlines(float amount)
+    {
+        var buttonName = amount.ToString("0.0").Replace(",", ".");
+        var buttonTapped = GameObject.Find(buttonName);
+        _scanlinesSelector.transform.position = buttonTapped.transform.position;
+        PlayerPrefsHelper.SaveScanlinesHardness(amount);
+        _scanlinesEffect.UpdateHardness();
     }
 
     private void GoToPrevious()

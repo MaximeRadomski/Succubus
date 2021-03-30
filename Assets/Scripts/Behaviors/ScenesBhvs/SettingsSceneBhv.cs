@@ -11,10 +11,6 @@ public class SettingsSceneBhv : SceneBhv
     private GameObject _buttonHowToPlay;
     private GameObject _buttonDisplay;
 
-#if !UNITY_ANDROID
-    private float _buttonSpacing = 4.6f;
-#endif
-
     void Start()
     {
         Init();
@@ -33,13 +29,13 @@ public class SettingsSceneBhv : SceneBhv
         (_buttonGameplay = GameObject.Find("ButtonGameplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToGameplaySettings;
         (_buttonInputs = GameObject.Find("ButtonInputs")).GetComponent<ButtonBhv>().EndActionDelegate = GoToInputsSettings;
         (_buttonHowToPlay = GameObject.Find("ButtonHowToPlay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToHowToPlay;
-#if !UNITY_ANDROID
         (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToDisplaySettings;
+#if !UNITY_ANDROID
         _buttonAudio.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Audio";
-        _buttonDisplay.transform.position = _buttonHowToPlay.transform.position;
-        _buttonHowToPlay.transform.position += new Vector3(0.0f, -_buttonSpacing, 0.0f);
-        _buttonContainer.transform.position += new Vector3(0.0f, _buttonSpacing / 2);
 #endif
+        //_buttonDisplay.transform.position = _buttonHowToPlay.transform.position;
+        //_buttonHowToPlay.transform.position += new Vector3(0.0f, -_buttonSpacing, 0.0f);
+        //_buttonContainer.transform.position += new Vector3(0.0f, _buttonSpacing / 2);
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
     }

@@ -11,6 +11,7 @@ public class Piece : MonoBehaviour
     public float YFromSpawn;
     public bool IsLocked;
     public bool IsAffectedByGravity = true;
+    public bool IsHollowed = false;
     public bool HasBlocksAffectedByGravity;
     public RotationState RotationState = RotationState.O;
     public bool IsMimic;

@@ -333,6 +333,9 @@ public class InputControlerBhv : FrameRateBehavior
 
     public void InitMenuKeyboardInputs(Vector3? preferedResetPos = null)
     {
+#if UNITY_ANDROID
+        return;
+#endif
         if (!_hasInit)
             Init();
         var allGameObjects = FindObjectsOfType<GameObject>();

@@ -479,8 +479,11 @@ public class GameplayControler : MonoBehaviour
             //Just in case, just because
             _nextGravityFall = Time.time - GravityDelay;
             return;
-        }            
-        _nextGravityFall = Time.time + GravityDelay;
+        }
+        if (CurrentPiece != null && CurrentPiece.GetComponent<Piece>().IsHollowed)
+            _nextGravityFall = Time.time + 0.1f;
+        else
+            _nextGravityFall = Time.time + GravityDelay;
     }
 
     private void ResetDasArr()
@@ -517,6 +520,8 @@ public class GameplayControler : MonoBehaviour
                 tmp.GetComponent<ButtonBhv>().BeginActionDelegate = actionDelegate;
             else if (inputType == 1)
                 tmp.GetComponent<ButtonBhv>().DoActionDelegate = actionDelegate;
+            else if (inputType == 2)
+                tmp.GetComponent<ButtonBhv>().EndActionDelegate = actionDelegate;
         }
     }
 
@@ -613,6 +618,8 @@ public class GameplayControler : MonoBehaviour
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
+            if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
+                Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
             PlayFieldBhv.Grid[roundedX, roundedY] = child;
         }
     }
@@ -825,7 +832,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
-        if (Time.time < _nextGravityFall - GravityDelay * 0.95f)
+        if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
+            return;
+        else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
             return;
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -837,7 +846,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityFall()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !CurrentPiece.GetComponent<Piece>().IsAffectedByGravity)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !CurrentPiece.GetComponent<Piece>().IsAffectedByGravity || CurrentPiece.GetComponent<Piece>().IsHollowed)
             return;
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -860,7 +869,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityStomp()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || CurrentPiece.GetComponent<Piece>().IsHollowed)
             return;
         bool hardDropping = true;
         while (hardDropping)
@@ -886,7 +895,7 @@ public class GameplayControler : MonoBehaviour
         {
             _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
             CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
-            if (IsPiecePosValid(CurrentPiece) == false)
+            if (IsPiecePosValid(CurrentPiece) == false || CurrentPiece.GetComponent<Piece>().IsHollowed)
             {
                 CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
@@ -1402,22 +1411,22 @@ public class GameplayControler : MonoBehaviour
         int id = 0;
         foreach (Transform child in piece.transform)
         {
-            if (!IsBlockPosValid(child, id, piece.transform, mimicPossible))
+            if (!IsBlockPosValid(child, id, piece.transform, mimicPossible, piece.GetComponent<Piece>()))
                 return false;
             ++id;
         }
         return true;
     }
 
-    private bool IsBlockPosValid(Transform block, int blockId, Transform piece, bool mimicPossible = false)
+    private bool IsBlockPosValid(Transform block, int blockId, Transform transformPiece, bool mimicPossible = false, Piece bhvPiece = null)
     {
         int roundedX = Mathf.RoundToInt(block.transform.position.x);
         int roundedY = Mathf.RoundToInt(block.transform.position.y);
 
         if (roundedX < 0 || roundedX >= _playFieldWidth)
         {
-            if (mimicPossible && Character.CanMimic && piece.GetComponent<Piece>().GetNbBlocksMimicked() < piece.transform.childCount)
-                roundedX = MimicBlock(block, blockId, piece);
+            if (mimicPossible && Character.CanMimic && transformPiece.GetComponent<Piece>().GetNbBlocksMimicked() < transformPiece.transform.childCount)
+                roundedX = MimicBlock(block, blockId, transformPiece);
             else
                 return false;
         }
@@ -1427,11 +1436,12 @@ public class GameplayControler : MonoBehaviour
         if (roundedY < 0 || roundedY >= _playFieldHeight)
             return false;
 
-        if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
+        if (PlayFieldBhv.Grid[roundedX, roundedY] != null && (bhvPiece == null || !bhvPiece.IsHollowed))
             return false;
 
+        //Checks piece own cubes
         var nbSamePos = 0;
-        foreach (Transform child in piece)
+        foreach (Transform child in transformPiece)
         {
             int childRoundedX = Mathf.RoundToInt(child.transform.position.x);
             int childRoundedY = Mathf.RoundToInt(child.transform.position.y);
