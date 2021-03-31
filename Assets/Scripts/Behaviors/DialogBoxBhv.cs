@@ -42,7 +42,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private System.Func<bool> _resultAction;
 
-    public void Init(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction)
+    public void Init(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction, int? customid = null)
     {
         _resultAction = resultAction;
 
@@ -74,10 +74,10 @@ public class DialogBoxBhv : FrameRateBehavior
         }
         if (tmpSentences != null)
         {
-            var id = PlayerPrefsHelper.GetDialogProgress(_dialogLibelle);
+            var id = customid != null ? PlayerPrefsHelper.GetDialogProgress(_dialogLibelle) : customid.Value;
             if (id >= tmpSentences.Count)
                 id = tmpSentences.Count - 1;
-            else
+            else if (customid == null)
                 PlayerPrefsHelper.SaveDialogProgress(_dialogLibelle, id + 1);
             _sentences = tmpSentences[id];
         }
@@ -248,7 +248,7 @@ public class DialogBoxBhv : FrameRateBehavior
                 || character == ';')
                 nbPixels += 2.0f;
             else if (character == ' ')
-                nbPixels += 1.3f;
+                nbPixels += 1.35f;
             else if (character == '('
                 || character == ')'
                 || character == '['

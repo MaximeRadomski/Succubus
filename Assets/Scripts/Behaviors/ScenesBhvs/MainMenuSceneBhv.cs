@@ -20,7 +20,7 @@ public class MainMenuSceneBhv : SceneBhv
             PlayerPrefsHelper.SaveIsInFight(false);
             PlayerPrefsHelper.ResetRun();
             Constants.InputLocked = true;
-            StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () =>
+            StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
             {
                 Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
                 return false;
@@ -92,7 +92,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void NotImplemented()
     {
-        Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "Baphomeh", "Ivy", null);
+        Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "Baphomeh", "Edam", null, 0);
         //Instantiator.NewPopupYesNo("Not Implemented", "this feature hasn't been implemented yet...\n\ncomming soon!", null, "Oh, ok!", null);
     }
 }

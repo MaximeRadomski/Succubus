@@ -198,6 +198,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         var loot = Helper.GetLootFromTypeAndId(_currentStep.LootType, _currentStep.LootId);
+        if (loot.LootType == LootType.Character)
+            PlayerPrefsHelper.AddUnlockedCharacters((Character)loot); //Done here in order to prevent generating a step with the just unlocked character
+
         _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
         if (_run.CurrentStep > Character.LandLordLateAmount)
             _stepsService.SetVisionOnRandomStep(_run);
@@ -206,7 +209,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
         {
-            PlayerPrefsHelper.AddUnlockedCharacters((Character)loot);
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, AfterCharacterDialog);
             bool AfterCharacterDialog() {
                 StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
