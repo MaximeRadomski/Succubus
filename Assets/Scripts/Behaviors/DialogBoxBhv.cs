@@ -74,7 +74,7 @@ public class DialogBoxBhv : FrameRateBehavior
         }
         if (tmpSentences != null)
         {
-            var id = customid != null ? PlayerPrefsHelper.GetDialogProgress(_dialogLibelle) : customid.Value;
+            var id = customid == null ? PlayerPrefsHelper.GetDialogProgress(_dialogLibelle) : customid.Value;
             if (id >= tmpSentences.Count)
                 id = tmpSentences.Count - 1;
             else if (customid == null)

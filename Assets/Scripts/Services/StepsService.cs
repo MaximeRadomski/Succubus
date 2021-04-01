@@ -210,7 +210,7 @@ public class StepsService
 
     private List<Opponent> GetOpponentsFromWeight(Realm realm, int weight, OpponentType opponentType)
     {
-        Debug.Log($"\t[DEBUG]\tweight = {weight}");
+        //Debug.Log($"\t[DEBUG]\tweight = {weight}");
         var realmOpponents = new List<Opponent>();
         var plausibleOpponents = new List<Opponent>();
         var stepOpponents = new List<Opponent>();
