@@ -10,7 +10,7 @@ public class ScanlinesEffect : MonoBehaviour
     private Material _material;
 
     [Range(0, 10)]
-    private float lineWidth = 0.5f;
+    private float lineWidth = 0.4f;
 
     [Range(0, 1)]
     private float hardness;

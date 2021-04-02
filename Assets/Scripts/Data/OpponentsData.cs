@@ -127,6 +127,62 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Intoxication, 5) },
+            GravityLevel = 4, Weight = 30
+        },
+        new Opponent()
+        {
+            Name = "Dark Coffee", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 60, Weakness = Weakness.Twists, DamagesOnWeakness = 50, Cooldown = 8,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.MirrorMirror, 2, 0) },
+            GravityLevel = 5, Weight = 30
+        },
+        new Opponent()
+        {
+            Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 2,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LightRow, 2, 2) },
+            GravityLevel = 1, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Giant Spider", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 99, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 2,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drone, 1, 2) },
+            GravityLevel = 7, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Tax Collector", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 50, Cooldown = 14, Immunity = Immunity.xLines, XLineImmunity = 1,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.VisionBlock, 10, 4) },
+            GravityLevel = 4, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Hell Raider", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 300, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 100, Cooldown = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
+            GravityLevel = 1, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Cat", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 77, Cooldown = 3, Immunity = Immunity.Cooldown,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.EmptyRow, 2) },
+            GravityLevel = 5, Weight = 40
+        },
+        new Opponent()
+        {
             Name = "Ghoul Rider", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
@@ -214,6 +270,15 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 3) },
             GravityLevel = 5, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "PHILL", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99999, Cooldown = 6,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Intoxication, 10) },
+            GravityLevel = 10, Weight = 60,
+            DialogId = 2, DialogPitch = 0.3f
         },
         new Opponent()
         {

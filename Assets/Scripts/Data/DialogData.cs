@@ -104,6 +104,21 @@ public static class DialogData
             }
         },
         #endregion
+        #region Jill
+        { "PHILL|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Hi!! Name's Phill!",
+                    "Hi... Phill?",
+                    "Time is dead, and meaning has no meaning.",
+                    "Excuse me?",
+                    "Existence is upside down and I reign supreme!"
+                }
+            }
+        },
+        #endregion
         #region Boom Slayer
         { "Boom Slayer|Any",
             new List<List<string>>()

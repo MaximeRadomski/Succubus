@@ -48,11 +48,11 @@ Shader "Custom/Scanlines" {
 
 			half4 frag(v2f i) : COLOR {
 				half4 color = tex2D(_MainTex, i.uv);
-				fixed lineSize = _ScreenParams.y * 0.005;
+				fixed lineSize = _ScreenParams.y * 0.0035f;
 				float displacement = ((_Time.y * 1000) * _Speed) % _ScreenParams.y;
 				float ps = displacement + (i.scr_pos.y * _ScreenParams.y / i.scr_pos.w);
 
-				return ((int)(ps / floor(_LineWidth * lineSize)) % 2 == 0) ? color : color * float4(_Hardness,_Hardness,_Hardness,1);
+				return ((int)(ps / floor(_LineWidth * lineSize)) % 4 != 0) ? color : color * float4(_Hardness,_Hardness,_Hardness,1);
 			}
 
 			ENDCG

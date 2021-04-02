@@ -29,7 +29,8 @@ public static class CharactersData
             Attack = 10,
             Cooldown = 10,
             SpecialName = "Sin's Weight", SpecialDescription = "the blocks of the next 6 pieces are individually affected by gravity",
-            Lore = "Ivy's less exuberant twin brother. He possesses dark needs which cannot be fulfilled. His army of harpies constantly hunts down hell looking for his next victims."
+            Lore = "Ivy's less exuberant twin brother. He possesses dark needs which cannot be fulfilled. His army of harpies constantly hunts down hell looking for his next victims.",
+            DialogId = 3, DialogPitch = 0.85f
         },
         new Character()
         {
@@ -37,15 +38,17 @@ public static class CharactersData
             Attack = 8,
             Cooldown = 6,
             SpecialName = "Swap", SpecialDescription = "switches the current piece with one of the piece preview",
-            Lore = "Captain of the harpies army, her eternal past of trickery and ferocity gave her enough power in order to command a troop of monsters whom are considered untamable !"
+            Lore = "Captain of the harpies army, her eternal past of trickery and ferocity gave her enough power in order to command a troop of monsters whom are considered untamable !",
+            DialogId = 4, DialogPitch = 1.8f
         },
         new Character()
         {
             Id = 3, Name = "Belias", Kind = "Slave Demon", Realm = Realm.Hell,
             Attack = 12,
-            Cooldown = 8,
+            Cooldown = 14,
             SpecialName = "Hollowed", SpecialDescription = "hollows your current piece, allowing it to go through blocks",
-            Lore = "Once one of the hell's gatekeepers, he fell in adoration for Ivy. Many succumbed under the terrific strength of his fists. He now endlessly serves his new mistress as a bodyguard."
+            Lore = "Once one of the hell's gatekeepers, he fell in adoration for Ivy. Many succumbed under the terrific strength of his fists. He now endlessly serves his new mistress as a bodyguard.",
+            DialogId = 1, DialogPitch = 0.5f
         },
         //EARTH
         new Character()
