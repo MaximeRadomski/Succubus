@@ -2109,9 +2109,9 @@ public class GameplayControler : MonoBehaviour
         _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
         Constants.IsffectAttackInProgress = true;
-        AfterSpawn = MirrorMirrorAfterSpawn;
+        AfterSpawn = CameraEffectAfterSpawn;
 
-        bool MirrorMirrorAfterSpawn(bool trueSpawn)
+        bool CameraEffectAfterSpawn(bool trueSpawn)
         {
             if (_afterSpawnAttackCounter <= 0)
             {
@@ -2141,7 +2141,7 @@ public class GameplayControler : MonoBehaviour
         var x = UnityEngine.Random.Range(0, 10);
         if (Instantiator == null)
             Instantiator = GetComponent<Instantiator>();
-        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows);
+        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   

@@ -13,8 +13,9 @@ public class DroneBhv : MonoBehaviour
     private int _nbRows;
     private Realm _realm;
 
-    public void Init(GameplayControler gameplayControler, Realm realm, int nbRows)
+    public void Init(GameplayControler gameplayControler, Realm realm, int nbRows, AttackType rowType)
     {
+        _attackType = rowType;
         _gameplayControler = gameplayControler;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Drone_" + realm.GetHashCode());

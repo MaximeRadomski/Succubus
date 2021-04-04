@@ -112,9 +112,9 @@ public static class DialogData
                 {
                     "Hi!! Name's Phill!",
                     "Hi... Phill?",
-                    "Time is dead, and meaning has no meaning.",
+                    "Time is dead, and meaning has no meaning!!",
                     "Excuse me?",
-                    "Existence is upside down and I reign supreme!"
+                    "Existence is upside down and I reign supreme!!"
                 }
             }
         },

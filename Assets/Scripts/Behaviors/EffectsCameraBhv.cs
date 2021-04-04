@@ -67,7 +67,7 @@ public class EffectsCameraBhv : MonoBehaviour
 
     private void SetIntoxication(int cooldown)
     {
-        _textureMaterial.shader = Shader.Find("FX/Flare");
+        _textureMaterial.shader = Shader.Find("Custom/CustomFlare");
         transform.position = new Vector3(_panelGame.transform.position.x, _panelGame.transform.position.y, transform.position.z);
         _intoxicatedPosition = _textureQuad.transform.localPosition;
         _intoxicatedScale = new Vector3(_quadOriginalScale, _quadOriginalScale, 1.0f);

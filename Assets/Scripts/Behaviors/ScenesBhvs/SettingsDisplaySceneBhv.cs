@@ -69,13 +69,13 @@ public class SettingsDisplaySceneBhv : SceneBhv
         GameObject.Find("FullscreenOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetFullscreen(true); };
         GameObject.Find("FullscreenOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetFullscreen(false); };
 
-        GameObject.Find("1.0").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(1.0f); };
-        GameObject.Find("0.9").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.9f); };
-        GameObject.Find("0.8").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.8f); };
-        GameObject.Find("0.7").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.7f); };
-        GameObject.Find("0.6").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.6f); };
-        GameObject.Find("0.5").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.5f); };
-        GameObject.Find("0.4").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(0.4f); };
+        GameObject.Find("Scanline7").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(7); };
+        GameObject.Find("Scanline6").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(6); };
+        GameObject.Find("Scanline5").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(5); };
+        GameObject.Find("Scanline4").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(4); };
+        GameObject.Find("Scanline3").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(3); };
+        GameObject.Find("Scanline2").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(2); };
+        GameObject.Find("Scanline1").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetScanlines(1); };
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
     }
@@ -95,12 +95,12 @@ public class SettingsDisplaySceneBhv : SceneBhv
         _resolutionSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, choiceGameObject.transform.position.y, 0.0f);
     }
 
-    private void SetScanlines(float amount)
+    private void SetScanlines(int divider)
     {
-        var buttonName = amount.ToString("0.0").Replace(",", ".");
+        var buttonName = $"Scanline{divider.ToString("0")}";
         var buttonTapped = GameObject.Find(buttonName);
         _scanlinesSelector.transform.position = buttonTapped.transform.position;
-        PlayerPrefsHelper.SaveScanlinesHardness(amount);
+        PlayerPrefsHelper.SaveScanlinesHardness(divider);
         _scanlinesEffect.UpdateHardness();
     }
 

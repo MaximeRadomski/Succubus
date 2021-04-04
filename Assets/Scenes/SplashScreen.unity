@@ -1967,9 +1967,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 49e8e4b000760b04aa1bb097a868f643, type: 3}
-  lineWidth: 0.3
-  hardness: 0.7
-  displacementSpeed: 0
 --- !u!1001 &8811942759763361792
 PrefabInstance:
   m_ObjectHideFlags: 0

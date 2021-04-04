@@ -12,6 +12,9 @@ public class ScanlinesEffect : MonoBehaviour
     [Range(0, 10)]
     private float lineWidth = 0.4f;
 
+    [Range(0, 10)]
+    private float columnWidth = 0.4f;
+
     [Range(0, 1)]
     private float hardness;
 
@@ -25,7 +28,8 @@ public class ScanlinesEffect : MonoBehaviour
 
     public void UpdateHardness()
     {
-        hardness = PlayerPrefsHelper.GetScanlinesHardness();
+        var tmpHardness = PlayerPrefsHelper.GetScanlinesHardness() / 7.0f;
+        hardness = tmpHardness;
     }
 
     protected Material material
@@ -46,6 +50,7 @@ public class ScanlinesEffect : MonoBehaviour
         if (shader == null)
             return;
         material.SetFloat("_LineWidth", lineWidth);
+        material.SetFloat("_ColumnWidth", columnWidth);
         material.SetFloat("_Hardness", hardness);
         material.SetFloat("_Speed", displacementSpeed);
         Graphics.Blit(source, destination, material, 0);

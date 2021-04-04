@@ -469,14 +469,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         return sensitivity;
     }
 
-    public static void SaveScanlinesHardness(float hardness)
+    public static void SaveScanlinesHardness(int hardness)
     {
-        PlayerPrefs.SetFloat(Constants.PpScanlinesHardness, hardness);
+        PlayerPrefs.SetInt(Constants.PpScanlinesHardness, hardness);
     }
 
-    public static float GetScanlinesHardness()
+    public static int GetScanlinesHardness()
     {
-        var hardness = PlayerPrefs.GetFloat(Constants.PpScanlinesHardness, Constants.PpScanlinesHardnessDefault);
+        var hardness = PlayerPrefs.GetInt(Constants.PpScanlinesHardness, Constants.PpScanlinesHardnessDefault);
         return hardness;
     }
 

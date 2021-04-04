@@ -11,6 +11,7 @@ public class ResourceBarBhv : MonoBehaviour
     private float _width;
     private float? _frameHeight;
     private bool _hasInit;
+    private int _textLayerId;
 
     GameObject _instantChange;
     GameObject _delayedChange;
@@ -43,6 +44,8 @@ public class ResourceBarBhv : MonoBehaviour
     private void Init()
     {
         _text = transform.Find("Text")?.GetComponent<TMPro.TextMeshPro>();
+        if (_text != null)
+            _textLayerId = _text.sortingLayerID;
         _content = transform.Find("Content")?.gameObject;
         _subContent = transform.Find("SubContent")?.gameObject;
         _contentSpriteRenderer = _content.GetComponent<SpriteRenderer>();
@@ -80,7 +83,10 @@ public class ResourceBarBhv : MonoBehaviour
         }
 
         if (_text != null)
+        {
             _text.text = (_textPrefix != null ? _textPrefix : "") + current.ToString();
+            _text.sortingLayerID = _textLayerId;
+        }
         if (isDelaying)
         {
             _delayedChange.transform.localScale = _instantChange.transform.localScale;

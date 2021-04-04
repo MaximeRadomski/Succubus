@@ -90,7 +90,7 @@ public static class Constants
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;
     public const string PpScanlinesHardness = "ScanlinesHardness";
-    public const float PpScanlinesHardnessDefault = 0.9f;
+    public const int PpScanlinesHardnessDefault = 5;
     public const string PpFullScreen = "FullScreen";
     public const bool PpFullScreenDefault = true;
     public const string PpResolution = "Resolution";

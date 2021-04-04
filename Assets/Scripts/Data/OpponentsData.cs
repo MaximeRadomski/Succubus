@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Slayer")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("PHILL")).Clone();
     }
 
     static OpponentsData()
@@ -130,7 +130,7 @@ public static class OpponentsData
             Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 5) },
+                new OpponentAttack(AttackType.Intoxication, 3) },
             GravityLevel = 4, Weight = 30
         },
         new Opponent()
@@ -146,13 +146,13 @@ public static class OpponentsData
             Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LightRow, 2, 2) },
+                new OpponentAttack(AttackType.LightRow, 2, 8) },
             GravityLevel = 1, Weight = 40
         },
         new Opponent()
         {
             Name = "Giant Spider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 99, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 2,
+            HpMax = 99, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 1, 2) },
             GravityLevel = 7, Weight = 40
@@ -162,7 +162,7 @@ public static class OpponentsData
             Name = "Tax Collector", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 50, Cooldown = 14, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.VisionBlock, 10, 4) },
+                new OpponentAttack(AttackType.VisionBlock, 10, 8) },
             GravityLevel = 4, Weight = 40
         },
         new Opponent()
@@ -274,11 +274,11 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "PHILL", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99999, Cooldown = 6,
+            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99970, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 10) },
+                new OpponentAttack(AttackType.Intoxication, 7) },
             GravityLevel = 10, Weight = 60,
-            DialogId = 2, DialogPitch = 0.3f
+            DialogId = 4, DialogPitch = 1.1f
         },
         new Opponent()
         {
