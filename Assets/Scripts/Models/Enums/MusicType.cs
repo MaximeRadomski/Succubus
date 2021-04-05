@@ -1,7 +1,10 @@
 ﻿public enum MusicType
 {
-    None,
+    None = 0,
     SplashScreen,
     Menu,
-    GameHell
+    Ascension,
+    Steps,
+    Game,
+    GameOver
 }

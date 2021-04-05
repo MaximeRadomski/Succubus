@@ -6,6 +6,8 @@ public class DifficultySceneBhv : SceneBhv
 {
     private List<GameObject> _difficultyButtons;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

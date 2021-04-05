@@ -6,6 +6,8 @@ public class MainMenuSceneBhv : SceneBhv
 {
     private InputControlerBhv _inputControlerBhv;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

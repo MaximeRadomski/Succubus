@@ -23,6 +23,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private ButtonBhv _nextSentence;
     private Transform _pelliculeTop;
     private Transform _pelliculeBot;
+    private MusicControlerBhv _musicControler;
 
     private DialogSubject _subject;
     private DialogSubject _secondary;
@@ -61,6 +62,7 @@ public class DialogBoxBhv : FrameRateBehavior
         _pelliculeBot = transform.Find("PelliculeBot");
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
+        _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
 
         _dialogLibelle = secondaryName == null ? subjectName : $"{subjectName}|{secondaryName}";
         _subject = GetSubjectFromName(subjectName);
@@ -82,6 +84,7 @@ public class DialogBoxBhv : FrameRateBehavior
             _sentences = tmpSentences[id];
         }
 
+        _musicControler.HalveVolume();
         _sentencesId = 0;
         _pelliculeMove = 0;
         UpdateCurrentSentence();
@@ -297,6 +300,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private void ExitDialogBox()
     {
+        _musicControler.SetNewVolumeLevel();
         Constants.DecreaseInputLayer();
         _resultAction?.Invoke();
         Destroy(gameObject);

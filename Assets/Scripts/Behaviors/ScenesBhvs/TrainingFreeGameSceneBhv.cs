@@ -19,6 +19,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private SoundControlerBhv _soundControler;
     private int _levelUp;
 
+    public override MusicType MusicType => MusicType.Game;
+
     void Start()
     {
         Init();

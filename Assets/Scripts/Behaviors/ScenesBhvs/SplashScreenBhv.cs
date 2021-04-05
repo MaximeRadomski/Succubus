@@ -7,6 +7,8 @@ public class SplashScreenBhv : SceneBhv
     private TMPro.TextMeshPro _catchPhrase;
     private List<string> _catchPhrases;
 
+    public override MusicType MusicType => MusicType.SplashScreen;
+
     void Start()
     {
         // [DEBUG]
@@ -57,7 +59,6 @@ public class SplashScreenBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicType.Menu;
             NavigationService.NewRootScene(Constants.MainMenuScene);
             return true;
         }

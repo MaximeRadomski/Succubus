@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameOverSceneBhv : SceneBhv
 {
+    public override MusicType MusicType => MusicType.GameOver;
+
     void Start()
     {
         Init();

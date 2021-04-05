@@ -6,6 +6,8 @@ public class TrainingChoiceSceneBhv : SceneBhv
 {
     private GameObject _buttonHighScores;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

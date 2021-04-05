@@ -11,6 +11,8 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private Piece _tHell;
     private Piece _iHell;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

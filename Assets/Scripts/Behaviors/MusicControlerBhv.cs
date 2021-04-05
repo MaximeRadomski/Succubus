@@ -72,15 +72,23 @@ public class MusicControlerBhv : MonoBehaviour
     {
         if (_isHalved)
             HalveVolume();
-        if (_currentType == Constants.CurrentMusicType)
+        var sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+        if (_currentType == sceneBhv.MusicType)
             return;
-        _currentType = Constants.CurrentMusicType;
+        _currentType = sceneBhv.MusicType;
         if (_currentType == MusicType.SplashScreen)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/SplashScreen");
         else if (_currentType == MusicType.Menu)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
-        else if (_currentType == MusicType.GameHell)
-            _audioSource.clip = (AudioClip)Resources.Load("Musics/GameHell");
+        else if (_currentType == MusicType.Game)
+        {
+            var randomId = Random.Range(0, 0);
+            _audioSource.clip = (AudioClip)Resources.Load($"Musics/Game{randomId.ToString("00")}");
+        }
+        else
+        {
+            _audioSource.clip = null;
+        }
         _audioSource.Play();
     }
 }

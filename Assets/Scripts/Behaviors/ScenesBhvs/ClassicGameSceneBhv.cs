@@ -32,6 +32,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idWeakness;
     private int _idImmunity;
 
+    public override MusicType MusicType => MusicType.Game;
+
     void Start()
     {
         Init();
@@ -274,7 +276,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private object LoadBackAfterVictory(bool result)
     {
-        Constants.CurrentMusicType = MusicType.Menu;
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             NavigationService.LoadBackUntil(Constants.CharSelScene);

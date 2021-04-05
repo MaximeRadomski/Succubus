@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DemoEndSceneBhv : SceneBhv
 {
+    public override MusicType MusicType => MusicType.None;
+
     void Start()
     {
         Init();

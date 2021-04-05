@@ -18,6 +18,8 @@ public class SettingsAudioSceneBhv : SceneBhv
     private float _containerSpace = 5.5f;
 #endif
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

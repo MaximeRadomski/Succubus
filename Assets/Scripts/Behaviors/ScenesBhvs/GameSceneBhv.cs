@@ -15,6 +15,8 @@ public abstract class GameSceneBhv : SceneBhv
     protected GameObject _pauseMenu;
     protected GameObject _panelGame;
 
+    public override MusicType MusicType => MusicType.Game;
+
     protected override void Init()
     {
         base.Init();
@@ -72,7 +74,6 @@ public abstract class GameSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicType.Menu;
             if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
                 NavigationService.LoadBackUntil(Constants.CharSelScene);
@@ -167,6 +168,5 @@ public abstract class GameSceneBhv : SceneBhv
     public virtual void OnGameOver()
     {
         PlayerPrefsHelper.SaveIsInFight(false);
-        Constants.CurrentMusicType = MusicType.Menu;
     }
 }

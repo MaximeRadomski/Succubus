@@ -28,6 +28,8 @@ public class FightIntroBhv : FrameRateBehavior
         _pelliculeBot = transform.Find("PelliculeBot");
 #if UNITY_ANDROID
         _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal;
+#else
+        _horizontal = false;
 #endif
         if (_horizontal)
         {

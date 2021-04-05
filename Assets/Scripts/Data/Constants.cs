@@ -221,7 +221,6 @@ public static class Constants
     public static List<string> InputTopLayerNames = null;
     public static GameMode CurrentGameMode;
     public static string NameLastScene;
-    public static MusicType CurrentMusicType = MusicType.SplashScreen;
     public static List<int> CurrentHighScoreContext;
 
     //CACHE CLASSIC GAME

@@ -10,6 +10,7 @@ public abstract class SceneBhv : FrameRateBehavior
     public CameraBhv CameraBhv;
     public string OnRootPreviousScene = null;
     public bool CanGoPreviousScene = true;
+    public abstract MusicType MusicType { get; }
 
     protected MusicControlerBhv _musicControler;
 

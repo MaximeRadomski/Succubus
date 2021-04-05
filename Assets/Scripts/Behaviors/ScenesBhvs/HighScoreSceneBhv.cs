@@ -11,6 +11,8 @@ public class HighScoreSceneBhv : SceneBhv
     private GameObject _scoreHistoryContainer;
     private ResourceBarBhv _tiltingBar;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();
@@ -24,7 +26,7 @@ public class HighScoreSceneBhv : SceneBhv
 
     protected override void Init()
     {
-        base.Init();
+        base.Init();    
         SetButtons();
         _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory();
         _title = GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>();

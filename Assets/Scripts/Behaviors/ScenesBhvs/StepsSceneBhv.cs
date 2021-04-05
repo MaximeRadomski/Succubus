@@ -28,6 +28,8 @@ public class StepsSceneBhv : SceneBhv
     private Step _selectedStep;
     private float _lootCenterLocalY;
 
+    public override MusicType MusicType => MusicType.Steps;
+
     void Start()
     {
         Init();
@@ -216,7 +218,6 @@ public class StepsSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
-            Constants.CurrentMusicType = MusicType.Menu;
             PlayerPrefsHelper.SaveIsInFight(false);
             NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return false;
@@ -254,7 +255,6 @@ public class StepsSceneBhv : SceneBhv
         ++_run.CurrentStep;
         _stepsService.DiscoverStepOnPos(_selectedStep.X, _selectedStep.Y, _run);
         PlayerPrefsHelper.SaveRun(_run);
-        Constants.CurrentMusicType = MusicType.GameHell;
         //PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
         Constants.ResetClassicGameCache();
         NavigationService.LoadNextScene(Constants.ClassicGameScene);

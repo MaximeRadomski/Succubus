@@ -7,6 +7,8 @@ public class CharSelSceneBhv : SceneBhv
     private GameObject _charSelector;
     private GameObject _charButtonsContainer;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();
@@ -99,7 +101,6 @@ public class CharSelSceneBhv : SceneBhv
             var scene = "";
             if (Constants.CurrentGameMode == GameMode.TrainingFree)
             {
-                Constants.CurrentMusicType = MusicType.GameHell;
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
@@ -108,7 +109,6 @@ public class CharSelSceneBhv : SceneBhv
             }
             else if (Constants.CurrentGameMode == GameMode.TrainingDummy)
             {
-                Constants.CurrentMusicType = MusicType.GameHell;
                 scene = Constants.ClassicGameScene;
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2] };
                 //DEBUG

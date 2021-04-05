@@ -25,6 +25,8 @@ public class SettingsInputsSceneBhv : SceneBhv
     private int _listeningKeeBindingId;
     private GameObject _listeningPopup;
 
+    public override MusicType MusicType => MusicType.Menu;
+
     void Start()
     {
         Init();

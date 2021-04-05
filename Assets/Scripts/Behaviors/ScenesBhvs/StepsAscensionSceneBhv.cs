@@ -16,6 +16,8 @@ public class StepsAscensionSceneBhv : SceneBhv
     private Vector3 _infoRealmTarget;
     private bool _isAnimated;
 
+    public override MusicType MusicType => MusicType.Ascension;
+
     private void Start()
     {
         Init();
@@ -24,7 +26,6 @@ public class StepsAscensionSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
-
         _run = PlayerPrefsHelper.GetRun();
         _character = PlayerPrefsHelper.GetRunCharacter();
 
