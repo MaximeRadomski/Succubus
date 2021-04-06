@@ -70,7 +70,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         {
             var lastLevel = _levelsContainer.transform.GetChild(_levelsContainer.transform.childCount - 1);
             lastLevel.GetComponent<IconInstanceBhv>().Pop();
-            Invoke(nameof(LoadStepsScene), 1.5f);
+            Invoke(nameof(LoadStepsScene), 3.0f);
             _isAnimated = false;
         }
     }

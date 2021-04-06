@@ -85,6 +85,10 @@ public class MusicControlerBhv : MonoBehaviour
             var randomId = Random.Range(0, 0);
             _audioSource.clip = (AudioClip)Resources.Load($"Musics/Game{randomId.ToString("00")}");
         }
+        else if (_currentType == MusicType.Ascension)
+        {
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/Ascension");
+        }
         else
         {
             _audioSource.clip = null;
