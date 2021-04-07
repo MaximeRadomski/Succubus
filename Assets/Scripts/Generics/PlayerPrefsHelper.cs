@@ -578,4 +578,29 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.SetInt(dialogLibelle, id);
     }
+
+    public static List<string> GetAlreadyDialog()
+    {
+        var alreadyString = PlayerPrefs.GetString(Constants.PpRunAlreadyDialog, Constants.PpRunAlreadyDialogDefault);
+        var alreadyDialogs = new List<string>();
+        if (alreadyString != null)
+        {
+            var test = alreadyString.Split('@');
+            for (int i = 0; i < test.Length; ++i)
+                alreadyDialogs.Add(test[i]);
+        }
+        return alreadyDialogs;
+    }
+
+    public static void AddToAlreadyDialog(string dialog)
+    {
+        var alreadyString = PlayerPrefs.GetString(Constants.PpRunAlreadyDialog, Constants.PpRunAlreadyDialogDefault);
+        alreadyString += $"{dialog}@";
+        PlayerPrefs.SetString(Constants.PpRunAlreadyDialog, alreadyString);
+    }
+
+    public static void ResetAlreadyDialog()
+    {
+        PlayerPrefs.SetString(Constants.PpRunAlreadyDialog, Constants.PpRunAlreadyDialogDefault);
+    }
 }

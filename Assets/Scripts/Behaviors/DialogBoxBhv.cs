@@ -84,7 +84,7 @@ public class DialogBoxBhv : FrameRateBehavior
             _sentences = tmpSentences[id];
         }
 
-        _musicControler.HalveVolume();
+        _musicControler.Play(Constants.DialogAudioClip);
         _sentencesId = 0;
         _pelliculeMove = 0;
         UpdateCurrentSentence();
@@ -300,7 +300,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private void ExitDialogBox()
     {
-        _musicControler.SetNewVolumeLevel();
+        _musicControler.ResetSceneLoadedMusic(manualReset : true);
         Constants.DecreaseInputLayer();
         _resultAction?.Invoke();
         Destroy(gameObject);

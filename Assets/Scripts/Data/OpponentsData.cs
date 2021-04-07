@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("PHILL")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Boom")).Clone();
     }
 
     static OpponentsData()
@@ -274,9 +274,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "PHILL", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99970, Cooldown = 6,
+            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99970, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 7) },
+                new OpponentAttack(AttackType.Intoxication, 6) },
             GravityLevel = 10, Weight = 60,
             DialogId = 4, DialogPitch = 1.1f
         },

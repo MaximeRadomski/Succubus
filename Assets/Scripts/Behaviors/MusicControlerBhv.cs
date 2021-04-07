@@ -62,18 +62,29 @@ public class MusicControlerBhv : MonoBehaviour
         _audioSource.Play();
     }
 
-    public void Play()
+    public void Play(string musicName = null, bool once = false)
     {
+        if (musicName != null)
+            _audioSource.clip = (AudioClip)Resources.Load($"Musics/{musicName}");
+        if (!_audioSource.isPlaying && once == false)
+            _audioSource.Play();
+        else if (once == true && musicName != null)
+            _audioSource.PlayOneShot(_audioSource.clip);
+    }
+
+    public void Play(AudioClip clip)
+    {
+        _audioSource.clip = clip;
         if (!_audioSource.isPlaying)
             _audioSource.Play();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void ResetSceneLoadedMusic(bool manualReset = false)
     {
         if (_isHalved)
             HalveVolume();
         var sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-        if (_currentType == sceneBhv.MusicType)
+        if (_currentType == sceneBhv.MusicType && !manualReset)
             return;
         _currentType = sceneBhv.MusicType;
         if (_currentType == MusicType.SplashScreen)
@@ -86,13 +97,16 @@ public class MusicControlerBhv : MonoBehaviour
             _audioSource.clip = (AudioClip)Resources.Load($"Musics/Game{randomId.ToString("00")}");
         }
         else if (_currentType == MusicType.Ascension)
-        {
             _audioSource.clip = (AudioClip)Resources.Load("Musics/Ascension");
-        }
+        else if (_currentType == MusicType.GameOver)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/Devlog");
         else
-        {
             _audioSource.clip = null;
-        }
         _audioSource.Play();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetSceneLoadedMusic();
     }
 }

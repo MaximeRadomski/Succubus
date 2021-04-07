@@ -384,7 +384,7 @@ public class InputControlerBhv : FrameRateBehavior
         _currentInputLayer = Constants.InputLayer;
     }
 
-    private void ResetMenuSelector(Vector3? preferedResetPos = null)
+    public void ResetMenuSelector(Vector3? preferedResetPos = null)
     {
         if (_currentScene == null)
             GetScene();

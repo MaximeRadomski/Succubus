@@ -28,6 +28,8 @@ public static class Constants
     public const float BaseButtonVisionConeMult = 1.5f;
     public const float OpponentUpgradeReducedCooldown = 0.20f;
     public const float OpponentUpgradeAddedLife = 0.15f;
+    public const string DialogAudioClip = "Devlog";
+    public const string IntroAudioClip = "Intro";
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -108,6 +110,8 @@ public static class Constants
     public const bool PpRotationPointDefault = false;
     public const string PpOrientation = "Orientation";
     public const Direction PpOrientationDefault = Direction.Vertical;
+    public const string PpRunAlreadyDialog = "Orientation";
+    public const string PpRunAlreadyDialogDefault = null;
 
     public static string GetDefaultKeyBinding()
     {

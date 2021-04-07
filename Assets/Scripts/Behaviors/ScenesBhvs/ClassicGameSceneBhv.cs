@@ -89,9 +89,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
         
         Paused = true;
+        _musicControler.Stop();
         Constants.InputLocked = true;
         if (Constants.NameLastScene != Constants.SettingsScene)
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
+        else
+            _musicControler.Play();
     }
 
     private bool AfterFightIntro()
@@ -104,10 +107,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void OpponentAppearance(float customY = 9.0f)
     {
+        _musicControler.Play();
+        var alreadyDialog = PlayerPrefsHelper.GetAlreadyDialog();
         if ((_currentStep == null || !_currentStep.LandLordVision)
-            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any")))
+            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any"))
+            && !alreadyDialog.Contains($"{CurrentOpponent.Name}|{Character.Name}"))
         {
             Paused = true;
+            PlayerPrefsHelper.AddToAlreadyDialog($"{CurrentOpponent.Name}|{Character.Name}");
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Appearance);
         }
         else

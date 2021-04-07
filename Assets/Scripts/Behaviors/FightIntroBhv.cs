@@ -21,11 +21,14 @@ public class FightIntroBhv : FrameRateBehavior
 
     private System.Func<bool> _resultAction;
 
+    private MusicControlerBhv _musicControler;
+
     public void Init(Character character, List<Opponent> opponents, System.Func<bool> resultAction)
     {
         _resultAction = resultAction;
         _pelliculeTop = transform.Find("PelliculeTop");
         _pelliculeBot = transform.Find("PelliculeBot");
+        _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
 #if UNITY_ANDROID
         _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal;
 #else
@@ -81,6 +84,7 @@ public class FightIntroBhv : FrameRateBehavior
         _pelliculeMove = 0;
         _opponentsIteration = 0;
         _animated = true;
+        _musicControler.Play(Constants.IntroAudioClip, once : true);
     }
 
     protected override void FrameUpdate()
@@ -122,6 +126,7 @@ public class FightIntroBhv : FrameRateBehavior
 
     private void AfterIntro()
     {
+        _musicControler.ResetSceneLoadedMusic(manualReset: true);
         Constants.DecreaseInputLayer();
         _resultAction?.Invoke();
         Destroy(gameObject);
