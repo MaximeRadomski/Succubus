@@ -17,48 +17,32 @@ public class Character : Loot
     public float DialogPitch = 1.0f;
 
     //Global to all
-    public int CritChancePercent;
-    public int CritMultiplier;
-    public int SingleLineDamageBonus;
-    public int DamagePercentBonus;
-    public int DamagePercentToInferiorRealm;
-    public int RealmPassiveEffect;
-    public int EnemyCooldownProgressionReducer;
-    public int VisionBlockReducer;
-    public float ItemCooldownReducer;
-    public int ItemMaxCooldownReducer;
-    public int ItemCooldownReducerOnKill;
-    public int SpecialCooldownReducer;
-    public int SpecialMaxCooldownReducer;
-    public int LandLordLateAmount;
-    public int AirPieceOpacity;
-    public bool CanMimic;
-    public bool CanDoubleJump;
-    public int PiecesWeight;
-    public int CumulativeCrit;
+    public int CritChancePercent = 1;
+    public int CritMultiplier = 50;
+    public int SingleLineDamageBonus = 0;
+    public int DamagePercentBonus = 0;
+    public int DamagePercentToInferiorRealm = 20;
+    public int RealmPassiveEffect = 1;
+    public int EnemyCooldownProgressionReducer = 0;
+    public int VisionBlockReducer = 1;
+    public float ItemCooldownReducer = 1.0f;
+    public int ItemMaxCooldownReducer = 0;
+    public int ItemCooldownReducerOnKill = 0;
+    public int SpecialCooldownReducer = 1;
+    public int SpecialMaxCooldownReducer = 0;
+    public int LandLordLateAmount = 1; //1 beause he does not land vision on first step
+    public int AirPieceOpacity = 0;
+    public bool CanMimic = false;
+    public bool CanDoubleJump = false;
+    public int PiecesWeight = 0;
+    public int CumulativeCrit = 0;
+    public int LoweredGravity = 0;
+    public int TWorshipPercent = 0;
+    public int IWorshipPercent = 0;
 
     public Character()
     {
         LootType = LootType.Character;
-        CritChancePercent = 1;
-        CritMultiplier = 50;
-        SingleLineDamageBonus = 0;
-        DamagePercentBonus = 0;
-        DamagePercentToInferiorRealm = 20;
-        RealmPassiveEffect = 1;
-        EnemyCooldownProgressionReducer = 0;
-        VisionBlockReducer = 1;
-        ItemCooldownReducer = 1.0f;
-        ItemMaxCooldownReducer = 0;
-        ItemCooldownReducerOnKill = 0;
-        SpecialCooldownReducer = 1;
-        SpecialMaxCooldownReducer = 0;
-        LandLordLateAmount = 1; //1 beause he does not land vision on first step
-        AirPieceOpacity = 0;
-        CanMimic = false;
-        CanDoubleJump = false;
-        PiecesWeight = 0;
-        CumulativeCrit = 0;
     }
 
     public int GetAttack()

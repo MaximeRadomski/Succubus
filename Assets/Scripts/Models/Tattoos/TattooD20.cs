@@ -21,6 +21,6 @@ public class TattooD20 : Tattoo
 
     public override string GetDescription()
     {
-        return $"increase your critical chance\nby {StatToString(after: "%")}";
+        return $"increases your critical chance\nby {StatToString(after: "%")}";
     }
 }

@@ -59,6 +59,63 @@ TextureImporter:
   - first:
       213: 6551834327628503702
     second: Tattoos_10
+  - first:
+      213: 2572880807037157038
+    second: Tattoos_11
+  - first:
+      213: -524872296438759767
+    second: Tattoos_12
+  - first:
+      213: -904079676160917133
+    second: Tattoos_13
+  - first:
+      213: 6913498644432103327
+    second: Tattoos_14
+  - first:
+      213: 730202275234785398
+    second: Tattoos_15
+  - first:
+      213: 6091080514119135838
+    second: Tattoos_16
+  - first:
+      213: 7225281450368628724
+    second: Tattoos_17
+  - first:
+      213: -3291126809499764964
+    second: Tattoos_18
+  - first:
+      213: -4618592350499447253
+    second: Tattoos_19
+  - first:
+      213: -8506825283614374459
+    second: Tattoos_20
+  - first:
+      213: -5030115117805494044
+    second: Tattoos_21
+  - first:
+      213: -1259993597339725690
+    second: Tattoos_22
+  - first:
+      213: 1249690759869517256
+    second: Tattoos_23
+  - first:
+      213: -6083575946781006465
+    second: Tattoos_24
+  - first:
+      213: 5763898027893114237
+    second: Tattoos_25
+  - first:
+      213: -4738417636742993738
+    second: Tattoos_26
+  - first:
+      213: -5386139538406527607
+    second: Tattoos_27
+  - first:
+      213: -2522074933214165135
+    second: Tattoos_28
+  - first:
+      213: 4779515496532242748
+    second: Tattoos_29
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -164,7 +221,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -185,7 +242,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -206,7 +263,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -227,7 +284,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -248,7 +305,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -269,7 +326,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -290,7 +347,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -311,7 +368,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -332,7 +389,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 203
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -353,7 +410,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 261
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -374,7 +431,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -386,6 +443,405 @@ TextureImporter:
       bones: []
       spriteID: 69ad18d9b9accea50800000000000000
       internalID: 6551834327628503702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_11
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaebed85675b4b320800000000000000
+      internalID: 2572880807037157038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_12
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aef2526d6747b8f0800000000000000
+      internalID: -524872296438759767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_13
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37147c513501473f0800000000000000
+      internalID: -904079676160917133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_14
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f972588436ea1ff50800000000000000
+      internalID: 6913498644432103327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_15
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6782d8db913322a00800000000000000
+      internalID: 730202275234785398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_16
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e52ff56a47dd78450800000000000000
+      internalID: 6091080514119135838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_17
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f7f07ba23b554460800000000000000
+      internalID: 7225281450368628724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_18
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1770099a919352d0800000000000000
+      internalID: -3291126809499764964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_19
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 29
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ed4224ab677efb0800000000000000
+      internalID: -4618592350499447253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c58ad3c97fa1f980800000000000000
+      internalID: -8506825283614374459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_21
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e0a1e773f0713ab0800000000000000
+      internalID: -5030115117805494044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_22
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6809c4bbf7a938ee0800000000000000
+      internalID: -1259993597339725690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_23
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cd4c1dff1bc75110800000000000000
+      internalID: 1249690759869517256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_24
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f75e10898ebc29ba0800000000000000
+      internalID: -6083575946781006465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_25
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75c42ac7ba7dff40800000000000000
+      internalID: 5763898027893114237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_26
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b8ec7cb342cd3eb0800000000000000
+      internalID: -4738417636742993738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_27
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98da79670a69045b0800000000000000
+      internalID: -5386139538406527607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_28
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1774ad4f53acffcd0800000000000000
+      internalID: -2522074933214165135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_29
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3177496500445240800000000000000
+      internalID: 4779515496532242748
       vertices: []
       indices: 
       edges: []

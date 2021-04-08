@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooKnuckle : Tattoo
+public class TattooWoodenWings : Tattoo
 {
-    public TattooKnuckle()
+    public TattooWoodenWings()
     {
-        Id = 4;
+        Id = 11;
         Name = TattoosData.Tattoos[Id];
-        Stat = 4;
+        Stat = 2;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.SingleLineDamageBonus += Stat;
+        character.LoweredGravity += Stat;
     }
 
     public override string GetDescription()
     {
-        return "your single lines deal " + StatToString("+") + " damages";
+        return "lowers gravity strength by " + StatToString();
     }
 }

@@ -126,11 +126,12 @@ public class GameplayControler : MonoBehaviour
     {
         if (_hasInit)
             return;
+        SceneBhv = GetComponent<GameSceneBhv>();
+        Character = SceneBhv.Character;
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
         _lockDelay = Constants.LockDelay;
-        SceneBhv = GetComponent<GameSceneBhv>();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -211,7 +212,6 @@ public class GameplayControler : MonoBehaviour
         {
             PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
-        Character = SceneBhv.Character;
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             _characterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
@@ -450,6 +450,10 @@ public class GameplayControler : MonoBehaviour
 
     public void SetGravity(int level)
     {
+        if (Character != null)
+            level -= Character.LoweredGravity;
+        if (level < 0)
+            level = 0;
         GravityDelay = Constants.GravityDelay;
         if (level == 19)
         {
@@ -529,6 +533,10 @@ public class GameplayControler : MonoBehaviour
     {
         //var tmpStr = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
         var tmpStr = "IJLOSTZ";
+        if (Helper.RandomDice100(Character.TWorshipPercent))
+            tmpStr += "T";
+        if (Helper.RandomDice100(Character.IWorshipPercent))
+            tmpStr += "I";
         if (Bag == null)
             Bag = "";
 

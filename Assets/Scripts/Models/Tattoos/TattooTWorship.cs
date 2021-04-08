@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooKnuckle : Tattoo
+public class TattooTWorship : Tattoo
 {
-    public TattooKnuckle()
+    public TattooTWorship()
     {
-        Id = 4;
+        Id = 12;
         Name = TattoosData.Tattoos[Id];
-        Stat = 4;
+        Stat = 10;
         Rarity = Rarity.Common;
-        MaxLevel = 99;
+        MaxLevel = 10;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.SingleLineDamageBonus += Stat;
+        character.TWorshipPercent += Stat;
     }
 
     public override string GetDescription()
     {
-        return "your single lines deal " + StatToString("+") + " damages";
+        return $"you get {StatToString("", "%")} more T piece";
     }
 }
