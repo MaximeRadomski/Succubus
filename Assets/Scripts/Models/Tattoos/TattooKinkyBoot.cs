@@ -21,6 +21,6 @@ public class TattooKinkyBoot : Tattoo
 
     public override string GetDescription()
     {
-        return $"allows you to {StatToString()}!";
+        return $"allows you to {StatToString()}!\n(obviously does nothing)";
     }
 }

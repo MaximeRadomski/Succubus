@@ -9,7 +9,6 @@ public class TattooThermalGoggles : Tattoo
         Id = 8;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
-        StatStr = null;
         Rarity = Rarity.Rare;
         MaxLevel = 5;
     }
@@ -21,6 +20,6 @@ public class TattooThermalGoggles : Tattoo
 
     public override string GetDescription()
     {
-        return $"you see air pieces {StatToString("+", "0%")} more distinctively";
+        return $"you see air pieces {StatToString("+", "0%")} more distinctively.";
     }
 }

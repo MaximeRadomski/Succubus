@@ -19,6 +19,6 @@ public class TattooBackspaceKey : Tattoo
 
     public override string GetDescription()
     {
-        return $"your attacks reduce your opponent cooldown progression by {StatToString()} seconds";
+        return $"your attacks reduce your opponent cooldown progression by {StatToString("", Stat == 1 ? " second" : " seconds")}.";
     }
 }

@@ -59,12 +59,14 @@ public class Piece : MonoBehaviour
         return count;
     }
 
-    public void SetColor(Color color)
+    public void SetColor(Color color, bool overVisionBlock = false)
     {
         ActualColor = color;
         foreach (Transform child in transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = color;
+            if (overVisionBlock)
+                child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 100;
             if (child.childCount > 0)
             {
                 var grandChildColor = child.GetChild(0).GetComponent<SpriteRenderer>().color;

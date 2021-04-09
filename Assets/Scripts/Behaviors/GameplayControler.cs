@@ -217,7 +217,7 @@ public class GameplayControler : MonoBehaviour
             _characterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
         else
             _characterItem = PlayerPrefsHelper.GetCurrentItem();
-        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "")));
+        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
         _characterSpecial.Init(Character, this);
         CharacterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
@@ -561,7 +561,7 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
-        CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor);
+        CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         if (_currentGhostPiecesOriginalPos != null)
             _currentGhostPiecesOriginalPos.Clear();
         if (!IsPiecePosValid(CurrentPiece))
@@ -1341,7 +1341,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
-            CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor);
+            CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             if (_currentGhostPiecesOriginalPos != null)
                 _currentGhostPiecesOriginalPos.Clear();
             if (!IsPiecePosValid(CurrentPiece))
@@ -1580,6 +1580,7 @@ public class GameplayControler : MonoBehaviour
             ++_comboCounter;
             if (_comboCounter > 1)
             {
+                CheckForDarkRows(Character.ComboDarkRow);
                 _soundControler.PlaySound(_idCombo, 1.0f + ((_comboCounter - 2) * 0.15f));
                 SceneBhv.OnCombo(_comboCounter, nbLines);
             }
@@ -1623,8 +1624,9 @@ public class GameplayControler : MonoBehaviour
         }            
     }
 
-    public void CheckForDarkRows(int nbLines)
+    public int CheckForDarkRows(int nbLines)
     {
+        int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
@@ -1634,15 +1636,18 @@ public class GameplayControler : MonoBehaviour
                     _soundControler.PlaySound(_idCleanRows);
                 hasDeletedRows = true;
                 DeleteLine(y);
+                ++nbLinesDeleted;
                 --nbLines;
             }
             if (nbLines <= 0)
-                return;
+                return nbLinesDeleted;
         }
+        return nbLinesDeleted;
     }
 
-    public void CheckForWasteRows(int nbLines)
+    public int CheckForWasteRows(int nbLines)
     {
+        int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
         for (int y = _playFieldHeight - 1; y >= 0; --y)
         {
@@ -1652,15 +1657,18 @@ public class GameplayControler : MonoBehaviour
                     _soundControler.PlaySound(_idCleanRows);
                 hasDeletedRows = true;
                 DeleteLine(y);
+                ++nbLinesDeleted;
                 --nbLines;
             }
             if (nbLines <= 0)
-                return;
+                return nbLinesDeleted;
         }
+        return nbLinesDeleted;
     }
 
-    private void CheckForLightRows()
+    public int CheckForLightRows(bool brutForceDelete = false)
     {
+        int nbLinesDeleted = 0;
         int startY;
         int nbRows;
         bool hasDeletedRows = false;
@@ -1668,8 +1676,10 @@ public class GameplayControler : MonoBehaviour
         foreach (var lightRowGameObject in allLightRows)
         {
             var lightRowBhv = lightRowGameObject.GetComponent<LightRowBlockBhv>();
-            if (lightRowBhv.IsOverOrDecreaseCooldown())
+            if (lightRowBhv.IsOverOrDecreaseCooldown() || brutForceDelete)
             {
+                if (brutForceDelete) //Otherwise, all lightrows would be destroyed
+                    brutForceDelete = false;
                 int yRounded = Mathf.RoundToInt(lightRowGameObject.transform.position.y);
                 startY = yRounded;
                 nbRows = lightRowBhv.NbRows;
@@ -1678,11 +1688,13 @@ public class GameplayControler : MonoBehaviour
                     if (hasDeletedRows == false)
                         _soundControler.PlaySound(_idCleanRows);
                     hasDeletedRows = true;
+                    ++nbLinesDeleted;
                     DeleteLine(y);
                 }
                 ClearLineSpace(startY, startY + nbRows - 1);
             }
         }
+        return nbLinesDeleted;
     }
 
     private void CheckForVisionBlocks()
@@ -1733,6 +1745,18 @@ public class GameplayControler : MonoBehaviour
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
             PlayFieldBhv.Grid[x, y] = null;
         }
+    }
+
+    public void DeleteFromBottom(int nbRows)
+    {
+        for (int y = 0; y < nbRows; ++y)
+        {
+            if (y >= Constants.PlayFieldHeight)
+                break;
+            DeleteLine(y);
+        }
+        ClearLineSpace();
+        DropGhost();
     }
 
     public void ClearLineSpace(int minY = -1, int maxY = -1)

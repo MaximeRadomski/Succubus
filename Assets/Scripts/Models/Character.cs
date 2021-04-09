@@ -29,7 +29,7 @@ public class Character : Loot
     public int ItemMaxCooldownReducer = 0;
     public int ItemCooldownReducerOnKill = 0;
     public int SpecialCooldownReducer = 1;
-    public int SpecialMaxCooldownReducer = 0;
+    public int SpecialTotalCooldownReducer = 0;
     public int LandLordLateAmount = 1; //1 beause he does not land vision on first step
     public int AirPieceOpacity = 0;
     public bool CanMimic = false;
@@ -39,6 +39,9 @@ public class Character : Loot
     public int LoweredGravity = 0;
     public int TWorshipPercent = 0;
     public int IWorshipPercent = 0;
+    public bool XRay = false;
+    public int ComboDarkRow = 0;
+    public int DeleteAfterKill = 0;
 
     public Character()
     {

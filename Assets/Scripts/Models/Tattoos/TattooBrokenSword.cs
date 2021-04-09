@@ -22,6 +22,6 @@ public class TattooBrokenSword : Tattoo
 
     public override string GetDescription()
     {
-        return $"for the duration of your current fight, doing a critical hit augments your critical hit chances by {StatToString(after:"%")} percent.";
+        return $"for the duration of your current fight, doing a critical hit augments your critical hit chances by {StatToString(after:"%")}.";
     }
 }

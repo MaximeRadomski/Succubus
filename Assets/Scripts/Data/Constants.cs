@@ -239,18 +239,22 @@ public static class Constants
 
     public static bool OnlyMouseInMenu;
 
-    public static void ResetClassicGameCache()
+    public static void ResetClassicGameCache(Character character = null)
     {
-        ResetSelectedCharacterSpecialCooldown();
+        ResetSelectedCharacterSpecialCooldown(character);
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
     }
 
-    public static void ResetSelectedCharacterSpecialCooldown()
+    public static void ResetSelectedCharacterSpecialCooldown(Character character)
     {
-        var tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
-        Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialMaxCooldownReducer;
+        Character tmpChar = character;
+        if (tmpChar == null)
+            tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialTotalCooldownReducer;
+        if (Constants.SelectedCharacterSpecialCooldown < 1)
+            Constants.SelectedCharacterSpecialCooldown = 1;
     }
 
     public static void ResetCurrentItemCooldown(Character character, Item item = null)

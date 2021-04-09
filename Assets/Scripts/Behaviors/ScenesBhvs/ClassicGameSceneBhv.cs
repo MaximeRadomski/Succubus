@@ -256,7 +256,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else if (loot.LootType == LootType.Tattoo)
         {
-            var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "");
+            var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
             var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
             var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
             var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + ((Tattoo)loot).Id);
@@ -511,6 +511,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Constants.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
             _gameplayControler.UpdateItemAndSpecialVisuals();
         }
+        if (Character.DeleteAfterKill > 0)
+            _gameplayControler.DeleteFromBottom(Character.DeleteAfterKill);
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
@@ -570,9 +572,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             if (Character.Realm == Realm.Earth && nbLines == 4)
             {
-                _gameplayControler.CheckForDarkRows(Character.RealmPassiveEffect);
-                _gameplayControler.CheckForWasteRows(Character.RealmPassiveEffect);
-                
+                int targetDestroyed = Character.RealmPassiveEffect;
+                targetDestroyed -= _gameplayControler.CheckForDarkRows(targetDestroyed);
+                if (targetDestroyed > 0)
+                    targetDestroyed -= _gameplayControler.CheckForWasteRows(targetDestroyed);
+                if (targetDestroyed > 0)
+                    _gameplayControler.CheckForLightRows(brutForceDelete : true);
+
             }
         }
         if (isB2B)
@@ -592,6 +598,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Character.Realm == Realm.Heaven)
             {
                 Constants.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
+                Constants.CurrentItemCooldown -= Character.RealmPassiveEffect;
                 _gameplayControler.UpdateItemAndSpecialVisuals();
             }
         }

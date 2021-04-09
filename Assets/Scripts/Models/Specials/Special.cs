@@ -30,7 +30,9 @@ public abstract class Special
 
     public virtual void ResetCooldown()
     {
-        Constants.SelectedCharacterSpecialCooldown = _character.Cooldown;
+        Constants.SelectedCharacterSpecialCooldown = _character.Cooldown - _character.SpecialTotalCooldownReducer;
+        if (Constants.SelectedCharacterSpecialCooldown < 1)
+            Constants.SelectedCharacterSpecialCooldown = 1;
     }
 
     public virtual void OnNewPiece(GameObject piece)

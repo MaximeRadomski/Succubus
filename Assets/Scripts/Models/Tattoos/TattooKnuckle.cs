@@ -19,6 +19,6 @@ public class TattooKnuckle : Tattoo
 
     public override string GetDescription()
     {
-        return "your single lines deal " + StatToString("+") + " damages";
+        return $"your single lines deal {StatToString("+")} damages.";
     }
 }

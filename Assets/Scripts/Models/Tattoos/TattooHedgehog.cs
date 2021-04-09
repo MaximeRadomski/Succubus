@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooCleaver : Tattoo
+public class TattooHedgehog : Tattoo
 {
-    public TattooCleaver()
+    public TattooHedgehog()
     {
-        Id = 2;
+        Id = 18;
         Name = TattoosData.Tattoos[Id];
-        Stat = 5;
+        Stat = 2;
         Rarity = Rarity.Rare;
-        MaxLevel = 99;
+        MaxLevel = 10;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.ItemCooldownReducerOnKill += Stat;
+        character.SpecialTotalCooldownReducer += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"killing an opponent reduces your item cooldown by {StatToString()}.";
+        return $"reduces your special's total cooldown by {StatToString()}.";
     }
 }

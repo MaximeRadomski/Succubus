@@ -43,6 +43,7 @@ public static class ItemsData
             return null;
         var cleanName = name.Replace(" ", "");
         cleanName = cleanName.Replace("'", "");
+        cleanName = cleanName.Replace("-", "");
         var instance = Activator.CreateInstance(Type.GetType("Item" + cleanName));
         return (Item)instance;
     }

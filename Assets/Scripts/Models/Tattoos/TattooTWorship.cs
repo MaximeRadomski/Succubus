@@ -19,6 +19,6 @@ public class TattooTWorship : Tattoo
 
     public override string GetDescription()
     {
-        return $"you get {StatToString("", "%")} more T piece";
+        return $"you get {StatToString("", "%")} more T piece.";
     }
 }

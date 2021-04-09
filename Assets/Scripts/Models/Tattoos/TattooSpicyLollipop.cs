@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooBrokenClock : Tattoo
+public class TattooSpicyLollipop : Tattoo
 {
-    public TattooBrokenClock()
+    public TattooSpicyLollipop()
     {
-        Id = 3;
+        Id = 16;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Rare;
-        MaxLevel = 99;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.LandLordLateAmount += Stat;
+        character.ComboDarkRow += Stat;
     }
 
     public override string GetDescription()
     {
-        return "landlords start to watch over their region " + StatToString("", Stat == 1 ? " step" : " steps") + " later.";
+        return $"each combo destroys {StatToString("", Stat == 1 ? " dark row" : " dark rows")}.";
     }
 }

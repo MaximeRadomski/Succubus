@@ -273,7 +273,7 @@ public class StepsSceneBhv : SceneBhv
         _stepsService.DiscoverStepOnPos(_selectedStep.X, _selectedStep.Y, _run);
         PlayerPrefsHelper.SaveRun(_run);
         //PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
-        Constants.ResetClassicGameCache();
+        Constants.ResetClassicGameCache(_character);
         NavigationService.LoadNextScene(Constants.ClassicGameScene);
     }
 
