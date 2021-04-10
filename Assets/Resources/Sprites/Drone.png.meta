@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: -6363405967764860246
     second: Drone_2
+  - first:
+      213: -3223525642366603235
+    second: Drone_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -73,6 +76,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -133,8 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a5d110e3f2eeb640800000000000000
-      internalID: 5097761365294175657
+      spriteID: 2105e09b756021930800000000000000
+      internalID: 4112356383579328530
       vertices: []
       indices: 
       edges: []
@@ -154,8 +159,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fedb2ef6ea938a1b0800000000000000
-      internalID: -5645198711544693265
+      spriteID: 7e0725bca16186180800000000000000
+      internalID: -9122016740902801177
       vertices: []
       indices: 
       edges: []
@@ -175,8 +180,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa256c1bcf3a0b7a0800000000000000
-      internalID: -6363405967764860246
+      spriteID: 5de4e0219f4c43590800000000000000
+      internalID: -7695309289240506667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_3
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d10306ad18cb343d0800000000000000
+      internalID: -3223525642366603235
       vertices: []
       indices: 
       edges: []

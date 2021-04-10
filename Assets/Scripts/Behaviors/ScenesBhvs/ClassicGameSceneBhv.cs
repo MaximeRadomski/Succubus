@@ -331,7 +331,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
-            _nextCooldownTick = Time.time + 1.0f;
+            if (Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
+                _nextCooldownTick = Time.time + 3600;
+            else
+                _nextCooldownTick = Time.time + 1.0f;
         }
     }
 
@@ -355,6 +358,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
         StartOpponentCooldown();
+        if (Character.ThornsPercent > 0)
+        {
+            var thornDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
+            DamageOpponent(thornDamages, _gameplayControler.CharacterInstanceBhv.gameObject);
+        }
         return spawnAfterAttack;
     }
 
@@ -441,7 +449,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();
-        Instantiator.PopText($"<material=\"{Character.Realm.ToString().ToLower()}.4.3\">{attackText}", _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f));
+        var damagesTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
+        var poppingTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
+        //Check for overlapping damages texts
+        for (int i = 0; i < poppingTexts.Length; ++i)
+        {
+            if (Helper.VectorEqualsPrecision(poppingTexts[i].transform.position, damagesTextPosition, 0.5f) && poppingTexts[i].transform.position.y >= damagesTextPosition.y)
+                damagesTextPosition = poppingTexts[i].transform.position + new Vector3(0.0f, -1.1f);
+        }
+        Instantiator.PopText($"<material=\"{Character.Realm.ToString().ToLower()}.4.3\">{attackText}", damagesTextPosition);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {
@@ -629,6 +645,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void OnPerfectClear()
     {
         base.OnPerfectClear();
+        if (Character.PerfectKills)
+            DamageOpponent(9999, _gameplayControler.CharacterInstanceBhv.gameObject);
     }
 
     private void OnApplicationQuit()

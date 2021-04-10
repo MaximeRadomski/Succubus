@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooTrashBin : Tattoo
+public class TattooEclipseGlasses : Tattoo
 {
-    public TattooTrashBin()
+    public TattooEclipseGlasses()
     {
-        Id = 17;
+        Id = 20;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Common;
@@ -14,11 +14,11 @@ public class TattooTrashBin : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DeleteAfterKill += Stat;
+        character.VisionBlockReducer += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"clears {StatToString("", Stat * Level == 1 ? " line" : " lines")} from the bottom after each opponent death.";
+        return $"decreases vision blocks cooldown by {StatToString("", Stat * Level == 1 ? " additional second" : " additional seconds")} each time you lock a piece.";
     }
 }

@@ -646,7 +646,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (IsNextGravityFallPossible() == false)
         {
-            if (!CurrentPiece.GetComponent<Piece>().IsLocked)
+            if (!CurrentPiece.GetComponent<Piece>().IsLocked && !Constants.InputLocked)
                 HandleLock();
         }
         else

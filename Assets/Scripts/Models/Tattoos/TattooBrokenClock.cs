@@ -19,6 +19,6 @@ public class TattooBrokenClock : Tattoo
 
     public override string GetDescription()
     {
-        return "landlords start to watch over their region " + StatToString("", Stat == 1 ? " step" : " steps") + " later.";
+        return "landlords start to watch over their region " + StatToString("", Stat * Level == 1 ? " step" : " steps") + " later.";
     }
 }

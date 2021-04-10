@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooTrashBin : Tattoo
+public class TattooCrownOfThorns : Tattoo
 {
-    public TattooTrashBin()
+    public TattooCrownOfThorns()
     {
-        Id = 17;
+        Id = 21;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
+        Stat = 20;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DeleteAfterKill += Stat;
+        character.ThornsPercent += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"clears {StatToString("", Stat * Level == 1 ? " line" : " lines")} from the bottom after each opponent death.";
+        return $"hurts your opponent everytime it attacks by {StatToString(after:"%")} of your attack.";
     }
 }

@@ -19,6 +19,6 @@ public class TattooSpicyLollipop : Tattoo
 
     public override string GetDescription()
     {
-        return $"each combo destroys {StatToString("", Stat == 1 ? " dark row" : " dark rows")}.";
+        return $"each combo destroys {StatToString("", Stat * Level == 1 ? " dark row" : " dark rows")}.";
     }
 }

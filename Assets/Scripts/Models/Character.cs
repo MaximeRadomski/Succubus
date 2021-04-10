@@ -42,6 +42,9 @@ public class Character : Loot
     public bool XRay = false;
     public int ComboDarkRow = 0;
     public int DeleteAfterKill = 0;
+    public bool HighPlayPause = false;
+    public int ThornsPercent = 0;
+    public bool PerfectKills = false;
 
     public Character()
     {

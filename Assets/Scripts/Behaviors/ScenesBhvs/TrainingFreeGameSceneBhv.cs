@@ -81,7 +81,11 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             ++_level;
             _gameplayControler.SetGravity(_level);
             _soundControler.PlaySound(_levelUp);
-            Instantiator.PopText("L   level  up   J", new Vector2(4.5f, 15.0f));
+            var maxHeight = 15.0f;
+            var highestBlockY = _gameplayControler.GetHighestBlock();
+            if (maxHeight > highestBlockY + 3)
+                maxHeight = highestBlockY + 4;
+            Instantiator.PopText("L   level  up   J", new Vector2(4.5f, maxHeight));
             CameraBhv.Bump(4);
         }
         _levelTmp.text = _level.ToString();

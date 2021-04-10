@@ -19,9 +19,9 @@ public class SpecialSwap : Special
         Constants.EscapeLocked = true;
         _selector = GameObject.Instantiate(new GameObject());
         var selectorSpriteRenderer = _selector.AddComponent<SpriteRenderer>();
-        selectorSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Drone_0");
+        selectorSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Drone_3");
         selectorSpriteRenderer.sortingLayerName = "Effects";
-        _selector.transform.position = new Vector3(_gameplayControler.NextPieces[0].transform.position.x - 3.0f, _gameplayControler.NextPieces[0].transform.position.y + 0.5f, 0.0f);
+        _selector.transform.position = new Vector3(_gameplayControler.NextPieces[0].transform.position.x - 2.7143f, _gameplayControler.NextPieces[0].transform.position.y + 0.5f, 0.0f);
         _selectedId = -1;
         _canReactivate = true;
         _gameplayControler.StartCoroutine(CustomUpdate());
