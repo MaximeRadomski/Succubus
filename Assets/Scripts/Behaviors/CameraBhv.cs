@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraBhv : MonoBehaviour
+public class CameraBhv : FrameRateBehavior
 {
     public Camera Camera;
     public bool HasInitiated;
@@ -38,7 +38,7 @@ public class CameraBhv : MonoBehaviour
         transform.position = _originalPosition;
     }
 
-    private void Update()
+    protected override void FrameUpdate()
     {
         if (_isBumbing)
         {
@@ -109,7 +109,7 @@ public class CameraBhv : MonoBehaviour
 
     private void ResetingPosition()
     {
-        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.001f);
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.01f);
         if (Helper.FloatEqualsPrecision(transform.position.y, _originalPosition.y, 0.001f))
         {
             transform.position = _originalPosition;

@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Tax Collector")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Headbanger")).Clone();
     }
 
     static OpponentsData()

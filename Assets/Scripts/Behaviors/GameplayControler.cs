@@ -926,7 +926,18 @@ public class GameplayControler : MonoBehaviour
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
         if (nbLinesDropped > 2 && Character.PiecesWeight > 0)
-            this.SceneBhv.CameraBhv.Pounder(Character.PiecesWeight);
+        {
+            Constants.InputLocked = true;
+            var currentGravityDelay = GravityDelay;
+            SetGravity(0);
+            this.SceneBhv.CameraBhv.Pounder(1);
+            StartCoroutine(Helper.ExecuteAfterDelay(0.4f, () =>
+            {
+                GravityDelay = currentGravityDelay;
+                Constants.InputLocked = true;
+                return true;
+            }));
+        }
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
