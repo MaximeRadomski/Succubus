@@ -14,6 +14,8 @@ public class GameOverSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        if (Constants.GameOverParams == null)
+            Constants.GameOverParams = "Test|Realm|99";
         var gameOverParams = Constants.GameOverParams.Split('|');
         GameObject.Find("OpponentText").GetComponent<TMPro.TextMeshPro>().text = $"by {gameOverParams[0].ToLower()}";
         GameObject.Find("RealmText").GetComponent<TMPro.TextMeshPro>().text = $"{gameOverParams[1].ToLower()}";
@@ -33,6 +35,21 @@ public class GameOverSceneBhv : SceneBhv
         }
 
         GameObject.Find("RollbackButton").GetComponent<ButtonBhv>().EndActionDelegate = GoBackToMainMenu;
+
+        var mult = (float)PlayerPrefsHelper.GetDifficulty();
+        if (mult == 0)
+            mult = 0.5f;
+        int rareAdd = (int)((float)PlayerPrefsHelper.GetRunBossVanquished() * mult);
+        int legendaryAdd = rareAdd / 2;
+        if (rareAdd >= 1)
+        {
+            var content = $"{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}rare{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{rareAdd}%{Constants.MaterialEnd}";
+            if (legendaryAdd >= 1)
+                content = $"{content}\nyour chance of finding a {Constants.MaterialHell_4_3}legendary{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{legendaryAdd}%{Constants.MaterialEnd}";
+            Instantiator.NewPopupYesNo("Rarity Boost!", content, null, "Cool!", null);
+            PlayerPrefsHelper.IncrementBonusRarePercent(rareAdd);
+            PlayerPrefsHelper.IncrementBonusLegendaryPercent(legendaryAdd);
+        }
     }
 
     private void GoBackToMainMenu()

@@ -31,6 +31,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idCrit;
     private int _idWeakness;
     private int _idImmunity;
+    private int _idTattooSound;
 
     public override MusicType MusicType => MusicType.Game;
 
@@ -84,6 +85,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idHit = _soundControler.SetSound("Hit");
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
+        _idTattooSound = _soundControler.SetSound("TattooSound");
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
@@ -221,7 +223,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, AfterCharacterDialog);
             bool AfterCharacterDialog() {
                 StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
-                Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character !", null, "Noice!", LoadBackAfterVictory);
+                Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);
                 return true;}
         }
         else if (loot.LootType == LootType.Item)
@@ -230,7 +232,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + ((Item)loot).Id);
             if (currentItem == null)
             {
-                Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear", null, "Ok", LoadBackAfterVictory, sprite);
+                Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear.", null, "Ok", LoadBackAfterVictory, sprite);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
                 Constants.ResetCurrentItemCooldown(Character, currentItem);
             }
@@ -240,7 +242,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             else
             {
-                var content = Constants.MaterialHell_3_2 + "switch your " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + " for " + Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " ?";
+                var content = Constants.MaterialHell_3_2 + "switch your " + Constants.MaterialHell_4_3 + currentItem.Name.ToLower() + Constants.MaterialHell_3_2 + " for " + Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + "?";
                 Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite);
                 object OnItemSwitch(bool result)
                 {
@@ -262,14 +264,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + ((Tattoo)loot).Id);
             if (bodyPart == BodyPart.MaxLevelReached)
             {
-                Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level", null, "Damn...", LoadBackAfterVictory, sprite);
+                Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level.", null, "Damn...", LoadBackAfterVictory, sprite);
             }
             else 
             {
+                _soundControler.PlaySound(_idTattooSound);
                 if (!tattoos.Contains(nameToCheck))
-                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked \non your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower(), null, "Ouch!", LoadBackAfterVictory, sprite);
+                    Instantiator.NewPopupYesNo("New Tattoo", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " has been inked \non your " + Constants.MaterialHell_4_3 + bodyPart.GetDescription().ToLower() + Constants.MaterialHell_3_2 + ".", null, "Ouch!", LoadBackAfterVictory, sprite);
                 else
-                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased", null, "Noice", LoadBackAfterVictory, sprite);
+                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.MaterialHell_3_2 + "your " + Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " power has been increased.", null, "Noice", LoadBackAfterVictory, sprite);
                 ((Tattoo)loot).ApplyToCharacter(Character);
                 PlayerPrefsHelper.SaveRunCharacter(Character);
             }
@@ -290,17 +293,35 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (CurrentOpponent.Type == OpponentType.Boss)
             {
+                PlayerPrefsHelper.IncrementRunBossVanquished();
+                var realmIdBeforeIncrease = _run.CurrentRealm.GetHashCode();
                 _run.IncreaseLevel();
                 PlayerPrefsHelper.SaveRun(_run);
-                //DEBUG
-                if (_run.CurrentRealm == Realm.Earth)
+                if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
-                    PlayerPrefsHelper.ResetRun();
-                    NavigationService.LoadNextScene(Constants.DemoEndScene);
-                    return false;
+                    PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
+                    var content = $"{Constants.MaterialHell_3_2}you now start your ascensions with a random item.\n(up to a {Constants.MaterialHell_4_3}{((Rarity)realmIdBeforeIncrease).ToString().ToLower()}{Constants.MaterialEnd} one).";
+                    Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", LoadNext);
                 }
-                //DEBUG
-                NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+                else
+                {
+                    return (bool)LoadNext(true);
+                }
+                
+                object LoadNext(bool result)
+                {
+                    //DEBUG
+                    if (_run.CurrentRealm == Realm.Earth)
+                    {
+                        Constants.GameOverParams = $"Abject|Hell|3";
+                        PlayerPrefsHelper.ResetRun();
+                        NavigationService.LoadNextScene(Constants.DemoEndScene);
+                        return false;
+                    }
+                    //DEBUG
+                    NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+                    return true;
+                }
             }
             else
             {

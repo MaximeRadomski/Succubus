@@ -30,6 +30,8 @@ public static class Constants
     public const float OpponentUpgradeAddedLife = 0.15f;
     public const string DialogAudioClip = "Devlog";
     public const string IntroAudioClip = "Intro";
+    public const int MaxRarePercent = 40;
+    public const int MaxLegendaryPercent = 20;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -58,6 +60,7 @@ public static class Constants
     public const string PpCurrentItem = "CurrentItem";
     public const string PpCurrentTattoos = "CurrentTattoos";
     public const string PpCurrentBodyParts = "CurrentBodyParts";
+    public const string PpCurrentMaxedOutTattoos = "CurrentMaxedOutTattoos";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
     public const string PpTrainingScore = "TrainingScore";
@@ -112,6 +115,11 @@ public static class Constants
     public const Direction PpOrientationDefault = Direction.Vertical;
     public const string PpRunAlreadyDialog = "Orientation";
     public const string PpRunAlreadyDialogDefault = null;
+    public const string PpBonusRarePercent = "BonusRarePercent";
+    public const string PpBonusLegendaryPercent = "BonusLegendaryPercent";
+    public const string PpRunBossVanquished = "RunBossVanquished";
+    public const string PpRealmBossProgression = "RealmBossProgression";
+    public const int PpRealmBossProgressionDefault = -1;
 
     public static string GetDefaultKeyBinding()
     {

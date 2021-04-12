@@ -1921,6 +1921,8 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackDarkRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
+        if (nbRows > Character.MaxDarkAndWasteLines)
+            nbRows = Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
         for (int y = 0; y < nbRows; ++y)
@@ -1933,6 +1935,8 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole)
     {
+        if (nbRows > Character.MaxDarkAndWasteLines)
+            nbRows = Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
         nbHole = nbHole < 1 ? 1 : nbHole;

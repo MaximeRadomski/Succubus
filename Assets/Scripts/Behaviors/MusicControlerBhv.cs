@@ -84,7 +84,8 @@ public class MusicControlerBhv : MonoBehaviour
         if (_isHalved)
             HalveVolume();
         var sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-        if (_currentType == sceneBhv.MusicType && !manualReset)
+        if ((_currentType == sceneBhv.MusicType && !manualReset)
+            || sceneBhv.MusicType == MusicType.Continue)
             return;
         _currentType = sceneBhv.MusicType;
         if (_currentType == MusicType.SplashScreen)

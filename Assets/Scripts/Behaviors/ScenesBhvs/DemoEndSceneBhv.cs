@@ -15,11 +15,11 @@ public class DemoEndSceneBhv : SceneBhv
     {
         base.Init();
 
-        GameObject.Find("ButtonPositive").GetComponent<ButtonBhv>().EndActionDelegate = GoBackToMainMenu;
+        GameObject.Find("ButtonPositive").GetComponent<ButtonBhv>().EndActionDelegate = GoToGamOver;
     }
 
-    private void GoBackToMainMenu()
+    private void GoToGamOver()
     {
-        NavigationService.LoadBackUntil(Constants.MainMenuScene);
+        NavigationService.LoadNextScene(Constants.GameOverScene);
     }
 }

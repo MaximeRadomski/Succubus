@@ -7,7 +7,7 @@ public class TattooTrashBin : Tattoo
     {
         Id = 17;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
+        Stat = 2;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }

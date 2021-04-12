@@ -16,7 +16,7 @@ public class SettingsDisplaySceneBhv : SceneBhv
     private ResolutionService _resolutionService;
     private ScanlinesEffect _scanlinesEffect;
 
-    public override MusicType MusicType => MusicType.Menu;
+    public override MusicType MusicType => MusicType.Continue;
 
     void Start()
     {

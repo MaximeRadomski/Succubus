@@ -10,7 +10,7 @@ public class SettingsHowToPlaySceneBhv : SceneBhv
     private int _currentPanelId;
     private InputControlerBhv _inputControlerBhv;
 
-    public override MusicType MusicType => MusicType.Menu;
+    public override MusicType MusicType => MusicType.Continue;
 
     void Start()
     {

@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Headbanger")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Warrior Soul")).Clone();
     }
 
     static OpponentsData()
@@ -106,7 +106,7 @@ public static class OpponentsData
             Name = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 3) },
+                new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 3, Weight = 20
         },
         new Opponent()

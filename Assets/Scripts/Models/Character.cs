@@ -45,6 +45,7 @@ public class Character : Loot
     public bool HighPlayPause = false;
     public int ThornsPercent = 0;
     public bool PerfectKills = false;
+    public int MaxDarkAndWasteLines = 99;
 
     public Character()
     {

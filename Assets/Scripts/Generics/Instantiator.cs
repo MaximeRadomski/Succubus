@@ -5,15 +5,18 @@ using UnityEngine;
 public class Instantiator : MonoBehaviour
 {
     private Camera _mainCamera;
+    private bool _hasInit;
 
     void Start()
     {
-        Init();
+        if (!_hasInit)
+            Init();
     }
 
     public void Init()
     {
         _mainCamera = Helper.GetMainCamera();
+        _hasInit = true;
     }
 
     public GameObject NewLevel(float margin, int realm, int layer, GameObject parent)
@@ -155,6 +158,8 @@ public class Instantiator : MonoBehaviour
 
     public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
     {
+        if (!_hasInit)
+            Init();
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
         var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpKeyboardInstance.name);
@@ -172,6 +177,8 @@ public class Instantiator : MonoBehaviour
     public GameObject NewPopupYesNo(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction, Sprite sprite = null)
     {
+        if (!_hasInit)
+            Init();
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);

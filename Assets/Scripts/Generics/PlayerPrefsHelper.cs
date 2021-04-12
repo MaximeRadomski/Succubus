@@ -330,27 +330,37 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, null);
         PlayerPrefs.SetString(Constants.PpCurrentBodyParts, null);
+        PlayerPrefs.SetString(Constants.PpCurrentMaxedOutTattoos, null);
     }
 
     public static BodyPart AddTattoo(string name)
     {
-        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
-        if (tattoosStr == null)
-            tattoosStr = "";
+        var tattoosFullStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        if (tattoosFullStr == null)
+            tattoosFullStr = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "").Replace("-", "");
-        var alreadyStart = tattoosStr.IndexOf(nameToAdd);
+        var alreadyStart = tattoosFullStr.IndexOf(nameToAdd);
         var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
         var newBodyPartStr = "";
+        var tattooModel = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + nameToAdd));
         if (alreadyStart != -1)
         {
-            var separatorLevelId = tattoosStr.Substring(alreadyStart).LastIndexOf('L');
-            var tattooModel = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(alreadyStart, separatorLevelId)));
-            int currentTattooLevel = int.Parse(tattoosStr.Substring(alreadyStart + nameToAdd.Length + 1, 2));
-            if (currentTattooLevel + 1 > tattooModel.MaxLevel)
-                return BodyPart.MaxLevelReached;
-            tattoosStr = tattoosStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
+            var tattooFullStrSplits = tattoosFullStr.Split(';');
+            for (int i = 0; i < tattooFullStrSplits.Length; ++i)
+            {
+                if (!tattooFullStrSplits[i].Contains(nameToAdd))
+                    continue;
+                var tattooStr = tattooFullStrSplits[i];
+                var separatorLevelId = tattooStr.LastIndexOf('L');
+                int currentTattooLevel = int.Parse(tattooStr.Substring(0 + nameToAdd.Length + 1, 2));
+                if (currentTattooLevel + 1 > tattooModel.MaxLevel)
+                    return BodyPart.MaxLevelReached;
+                tattoosFullStr = tattoosFullStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
+                if (currentTattooLevel == tattooModel.MaxLevel)
+                    AddMaxedOutTattoo(tattooModel.Id);
+            }
         }
         else if (alreadyBodyPartsIds.Length < Constants.AvailableBodyPartsIds.Length)
         {
@@ -373,12 +383,14 @@ public class PlayerPrefsHelper : MonoBehaviour
             var newBodyPartId = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
             newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
             alreadyBodyPartsIds += newBodyPartStr;
-            tattoosStr += nameToAdd + "L01B" + newBodyPartStr + ";";
+            tattoosFullStr += nameToAdd + "L01B" + newBodyPartStr + ";";
+            if (tattooModel.MaxLevel == 1)
+                AddMaxedOutTattoo(tattooModel.Id);
             //Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
             PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
         
-        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosStr);
+        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
         return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
     }
 
@@ -390,39 +402,69 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static List<Tattoo> GetCurrentTattoos()
     {
-        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
-        int i = 0;
+        var tattoosFullStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         var tattoosList = new List<Tattoo>();
-        while (!string.IsNullOrEmpty(tattoosStr) || i > 15)
+        if (tattoosFullStr == Constants.PpSerializeDefault)
+            return tattoosList;
+        var tattooFullStrSplits = tattoosFullStr.Split(';');
+        for (int i = 0; i < tattooFullStrSplits.Length; ++i)
         {
-            var separatorLevelId = tattoosStr.LastIndexOf('L');
+            var tattooStr = tattooFullStrSplits[i];
+            var separatorLevelId = tattooStr.LastIndexOf('L');
             if (separatorLevelId == -1)
                 break;
-            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorLevelId)));
-            tmpTattoo.Level = int.Parse(tattoosStr.Substring(separatorLevelId + 1, 2));
-            tmpTattoo.BodyPart = (BodyPart)int.Parse(tattoosStr.Substring(separatorLevelId + 4, 2));
+            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattooStr.Substring(0, separatorLevelId)));
+            tmpTattoo.Level = int.Parse(tattooStr.Substring(separatorLevelId + 1, 2));
+            tmpTattoo.BodyPart = (BodyPart)int.Parse(tattooStr.Substring(separatorLevelId + 4, 2));
             tattoosList.Add(tmpTattoo);
-            if (separatorLevelId + 1 >= tattoosStr.Length)
-                break;
-            tattoosStr = tattoosStr.Substring(tattoosStr.IndexOf(';') + 1);
-            ++i;
         }
         return tattoosList;
     }
 
     public static Tattoo GetCurrentInkedTattoo(string name)
     {
-        var tattoosStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
-        var parsedName = name.Replace(" ", "").Replace("'", "").Replace("-", "");
-        var tattooStartId = tattoosStr.IndexOf(parsedName);
-        if (tattooStartId == -1)
+        var tattoosFullStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        if (tattoosFullStr == Constants.PpSerializeDefault)
             return null;
-        tattoosStr = tattoosStr.Substring(tattooStartId);
-        var separatorLevelId = tattoosStr.LastIndexOf('L');
-        var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattoosStr.Substring(0, separatorLevelId)));
-        tmpTattoo.Level = int.Parse(tattoosStr.Substring(separatorLevelId + 1, 2));
-        tmpTattoo.BodyPart = (BodyPart)int.Parse(tattoosStr.Substring(separatorLevelId + 4, 2));
-        return tmpTattoo;
+        var parsedName = name.Replace(" ", "").Replace("'", "").Replace("-", "");
+        var tattooFullStrSplits = tattoosFullStr.Split(';');
+        for (int i = 0; i < tattooFullStrSplits.Length; ++i)
+        {
+            if (!tattooFullStrSplits[i].Contains(parsedName))
+                continue;
+            var tattooStr = tattooFullStrSplits[i];
+            var separatorLevelId = tattooStr.LastIndexOf('L');
+            var tmpTattoo = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + tattooStr.Substring(0, separatorLevelId)));
+            tmpTattoo.Level = int.Parse(tattooStr.Substring(separatorLevelId + 1, 2));
+            tmpTattoo.BodyPart = (BodyPart)int.Parse(tattooStr.Substring(separatorLevelId + 4, 2));
+            return tmpTattoo;
+        }
+        return null;
+    }
+
+    public static void AddMaxedOutTattoo(int id)
+    {
+        var alreadyString = PlayerPrefs.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpSerializeDefault);
+        if (alreadyString == null)
+            alreadyString = "";
+        alreadyString += $"{id};";
+        PlayerPrefs.SetString(Constants.PpCurrentMaxedOutTattoos, alreadyString);
+    }
+
+    public static List<int> GetMaxedOutTattoos()
+    {
+        var alreadyMaxedString = PlayerPrefs.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpRunAlreadyDialogDefault);
+        var alreadyMaxedTattoos = new List<int>();
+        if (!string.IsNullOrEmpty(alreadyMaxedString))
+        {
+            var test = alreadyMaxedString.Split(';');
+            for (int i = 0; i < test.Length; ++i)
+            {
+                if (!string.IsNullOrEmpty(test[i]))
+                    alreadyMaxedTattoos.Add(int.Parse(test[i]));
+            }
+        }
+        return alreadyMaxedTattoos;
     }
 
     public static void SaveEffectsLevel(float level)
@@ -602,5 +644,57 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void ResetAlreadyDialog()
     {
         PlayerPrefs.SetString(Constants.PpRunAlreadyDialog, Constants.PpRunAlreadyDialogDefault);
+    }
+
+    public static int GetBonusRarePercent()
+    {
+        var bonus = PlayerPrefs.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
+        return bonus;
+    }
+
+    public static void IncrementBonusRarePercent(int times)
+    {
+        var bonus = PlayerPrefs.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
+        PlayerPrefs.SetInt(Constants.PpBonusRarePercent, bonus + times);
+    }
+
+    public static int GetBonusLegendaryPercent()
+    {
+        var bonus = PlayerPrefs.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
+        return bonus;
+    }
+
+    public static void IncrementBonusLegendaryPercent(int times)
+    {
+        var bonus = PlayerPrefs.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
+        PlayerPrefs.SetInt(Constants.PpBonusLegendaryPercent, bonus + times);
+    }
+
+    public static int GetRunBossVanquished()
+    {
+        var run = PlayerPrefs.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+        return run;
+    }
+
+    public static void IncrementRunBossVanquished()
+    {
+        var run = PlayerPrefs.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+        PlayerPrefs.SetInt(Constants.PpRunBossVanquished, run + 1);
+    }
+
+    public static void ResetRunBossVanquished()
+    {
+        PlayerPrefs.SetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+    }
+
+    public static int GetRealmBossProgression()
+    {
+        var realmBossProgression = PlayerPrefs.GetInt(Constants.PpRealmBossProgression, Constants.PpRealmBossProgressionDefault);
+        return realmBossProgression;
+    }
+
+    public static void SaveRealmBossProgression(int realmId)
+    {
+        PlayerPrefs.SetInt(Constants.PpRealmBossProgression, realmId);
     }
 }

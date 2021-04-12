@@ -87,6 +87,7 @@ public class DroneBhv : MonoBehaviour
         else
             _gameplayControler.AttackDarkRows(gameObject, _nbRows, _realm);
         UpdateY();
+        _gameplayControler.UpdateItemAndSpecialVisuals();
         return true;
     }
 

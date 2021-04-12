@@ -127,6 +127,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.ResetTattoos();
                 PlayerPrefsHelper.ResetAlreadyDialog();
                 PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
+                PlayerPrefsHelper.ResetRunBossVanquished();
                 PlayerPrefsHelper.ResetRun();
             }
             NavigationService.LoadNextScene(scene);

@@ -11,7 +11,7 @@ public class SettingsSceneBhv : SceneBhv
     private GameObject _buttonHowToPlay;
     private GameObject _buttonDisplay;
 
-    public override MusicType MusicType => MusicType.Menu;
+    public override MusicType MusicType => MusicType.Continue;
 
     void Start()
     {

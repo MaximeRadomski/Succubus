@@ -124,7 +124,24 @@ public class StepsService
             if (PlayerPrefs.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)
                 lootId = TattoosData.GetRandomTattoo().Id;
             else
-                lootId = PlayerPrefsHelper.GetCurrentTattoos()[Random.Range(0, 12)].Id;
+            {
+                var firstRandomId = Random.Range(0, 12);
+                int id = firstRandomId;
+                var loop = -1;
+                while (loop < 1)
+                {
+                    var alreadyTattoo = PlayerPrefsHelper.GetCurrentTattoos()[id];
+                    if (alreadyTattoo.Level < alreadyTattoo.MaxLevel)
+                    {
+                        lootId = alreadyTattoo.Id;
+                        break;
+                    }
+                    if (id == firstRandomId)
+                        ++loop;
+                    if (++id >= 12)
+                        id = 0;
+                }
+            }
             opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         //DEBUG
