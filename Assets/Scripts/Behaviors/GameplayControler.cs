@@ -99,16 +99,33 @@ public class GameplayControler : MonoBehaviour
     private void GameOver()
     {
         _soundControler.PlaySound(_idGameOver);
-        _musicControler.Stop();
+        _musicControler.Pause();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
         CharacterInstanceBhv.TakeDamage();
-        CharacterInstanceBhv.Die();
-        Invoke(nameof(CleanPlayerPrefs), 1.0f);
-        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () => {
-            SceneBhv.OnGameOver();
-            return true;
-        }));
+        if (Character.BonusLife <= 0)
+        {
+            CharacterInstanceBhv.Die();
+            Invoke(nameof(CleanPlayerPrefs), 1.0f);
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () => {
+                SceneBhv.OnGameOver();
+                return true;
+            }));
+        }
+        else
+        {
+            Character.BonusLife--;
+            CharacterInstanceBhv.Spawn();
+            DeleteFromBottom(35);
+            Instantiator.PopText("L   rebirth   J", new Vector2(4.5f, 10.0f));
+            CurrentPiece.GetComponent<Piece>().IsLocked = false;
+            Constants.InputLocked = false;
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
+            {
+                _musicControler.Play();
+                return true;
+            }));
+        }
     }
 
     public void CleanPlayerPrefs()

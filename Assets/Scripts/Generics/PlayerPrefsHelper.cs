@@ -364,22 +364,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         }
         else if (alreadyBodyPartsIds.Length < Constants.AvailableBodyPartsIds.Length)
         {
-            var availablesPartsIds = Constants.AvailableBodyPartsIds;
-            for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
-            {
-                int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
-                var matchingId = -1;
-                for (int j = 0; j < availablesPartsIds.Length; j += 2)
-                {
-                    if (availablesPartsIds[j] == id.ToString("00")[0] && availablesPartsIds[j + 1] == id.ToString("00")[1])
-                    {
-                        matchingId = j;
-                        break;
-                    }
-                }
-                if (matchingId != -1 && matchingId % 2 == 0)
-                    availablesPartsIds = availablesPartsIds.Remove(matchingId, 2);
-            }
+            var availablesPartsIds = GetRemainingAvailablesPartsIds(alreadyBodyPartsIds);
             var newBodyPartId = UnityEngine.Random.Range(0, availablesPartsIds.Length / 2);
             newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
             alreadyBodyPartsIds += newBodyPartStr;
@@ -392,6 +377,31 @@ public class PlayerPrefsHelper : MonoBehaviour
         
         PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
         return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
+    }
+
+    public static string GetRemainingAvailablesPartsIds(string alreadyBodyPartsIds = null)
+    {
+        if (alreadyBodyPartsIds == null)
+            alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+        if (alreadyBodyPartsIds == null)
+            alreadyBodyPartsIds = "";
+        var availablesPartsIds = Constants.AvailableBodyPartsIds;
+        for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
+        {
+            int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
+            var matchingId = -1;
+            for (int j = 0; j < availablesPartsIds.Length; j += 2)
+            {
+                if (availablesPartsIds[j] == id.ToString("00")[0] && availablesPartsIds[j + 1] == id.ToString("00")[1])
+                {
+                    matchingId = j;
+                    break;
+                }
+            }
+            if (matchingId != -1 && matchingId % 2 == 0)
+                availablesPartsIds = availablesPartsIds.Remove(matchingId, 2);
+        }
+        return availablesPartsIds;
     }
 
     public static string GetCurrentTattoosString()

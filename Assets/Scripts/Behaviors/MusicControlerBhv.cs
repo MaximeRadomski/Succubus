@@ -56,6 +56,11 @@ public class MusicControlerBhv : MonoBehaviour
         _audioSource.Stop();
     }
 
+    public void Pause()
+    {
+        _audioSource.Pause();
+    }
+
     public void PlayFromStart()
     {
         _audioSource.Stop();
