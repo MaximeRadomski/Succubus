@@ -115,6 +115,7 @@ public class GameplayControler : MonoBehaviour
         else
         {
             Character.BonusLife--;
+            PlayerPrefsHelper.SaveRunCharacter(Character);
             CharacterInstanceBhv.Spawn();
             DeleteFromBottom(35);
             Instantiator.PopText("L   rebirth   J", new Vector2(4.5f, 10.0f));

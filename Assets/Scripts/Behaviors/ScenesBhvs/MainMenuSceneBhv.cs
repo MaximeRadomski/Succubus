@@ -42,6 +42,7 @@ public class MainMenuSceneBhv : SceneBhv
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
         GameObject.Find("ButtonQuit").GetComponent<ButtonBhv>().EndActionDelegate = Quit;
+        GameObject.Find("ButtonBug").GetComponent<ButtonBhv>().EndActionDelegate = ReportBug;
     }
 
     private void GoToNewAscension()
@@ -90,6 +91,11 @@ public class MainMenuSceneBhv : SceneBhv
                 Application.Quit();
             return result;
         }
+    }
+
+    private void ReportBug()
+    {
+        Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }
 
     private void NotImplemented()

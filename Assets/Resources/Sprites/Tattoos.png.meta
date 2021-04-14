@@ -116,6 +116,24 @@ TextureImporter:
   - first:
       213: 4779515496532242748
     second: Tattoos_29
+  - first:
+      213: 8758496504692955564
+    second: Tattoos_30
+  - first:
+      213: 1432900507681981771
+    second: Tattoos_31
+  - first:
+      213: -4811180080494891458
+    second: Tattoos_32
+  - first:
+      213: 1829493960299210236
+    second: Tattoos_33
+  - first:
+      213: 4391545644027605694
+    second: Tattoos_34
+  - first:
+      213: -4717442727385105251
+    second: Tattoos_35
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -221,7 +239,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -242,7 +260,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -263,7 +281,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -284,7 +302,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -305,7 +323,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -326,7 +344,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -347,7 +365,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -368,7 +386,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -389,7 +407,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 203
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -410,7 +428,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 261
-        y: 58
+        y: 87
         width: 29
         height: 29
       alignment: 0
@@ -431,7 +449,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -452,7 +470,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -473,7 +491,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -494,7 +512,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -515,7 +533,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -536,7 +554,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -557,7 +575,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -578,7 +596,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 203
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -599,7 +617,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -620,7 +638,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 261
-        y: 29
+        y: 58
         width: 29
         height: 29
       alignment: 0
@@ -641,7 +659,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -662,7 +680,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -683,7 +701,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -704,7 +722,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -725,7 +743,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -746,7 +764,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -767,7 +785,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -788,7 +806,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 203
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -809,7 +827,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -830,7 +848,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 261
-        y: 0
+        y: 29
         width: 29
         height: 29
       alignment: 0
@@ -842,6 +860,132 @@ TextureImporter:
       bones: []
       spriteID: c3177496500445240800000000000000
       internalID: 4779515496532242748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca959b0aa2e6c8970800000000000000
+      internalID: 8758496504692955564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_31
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b458cde7b6fa2e310800000000000000
+      internalID: 1432900507681981771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_32
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3eaaaf15314b3db0800000000000000
+      internalID: -4811180080494891458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_33
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf56b56501ba36910800000000000000
+      internalID: 1829493960299210236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_34
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb2fd2fee77e1fc30800000000000000
+      internalID: 4391545644027605694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_35
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9cf5f165d6488eb0800000000000000
+      internalID: -4717442727385105251
       vertices: []
       indices: 
       edges: []

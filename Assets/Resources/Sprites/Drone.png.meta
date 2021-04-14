@@ -23,6 +23,30 @@ TextureImporter:
   - first:
       213: -3223525642366603235
     second: Drone_3
+  - first:
+      213: 1371902213157426602
+    second: Drone_4
+  - first:
+      213: 6925330608835871255
+    second: Drone_5
+  - first:
+      213: -8936346841901684153
+    second: Drone_6
+  - first:
+      213: 2326313104105906880
+    second: Drone_7
+  - first:
+      213: 3336612464585399052
+    second: Drone_8
+  - first:
+      213: 2007886861881913749
+    second: Drone_9
+  - first:
+      213: 2056274229838913570
+    second: Drone_10
+  - first:
+      213: -6402413444110431300
+    second: Drone_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -86,7 +110,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -98,7 +122,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -110,7 +134,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -128,7 +152,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 57
         width: 15
         height: 19
       alignment: 0
@@ -149,7 +173,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 15
-        y: 0
+        y: 57
         width: 15
         height: 19
       alignment: 0
@@ -170,7 +194,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 30
-        y: 0
+        y: 57
         width: 15
         height: 19
       alignment: 0
@@ -190,8 +214,8 @@ TextureImporter:
       name: Drone_3
       rect:
         serializedVersion: 2
-        x: 45
-        y: 0
+        x: 0
+        y: 38
         width: 15
         height: 19
       alignment: 0
@@ -203,6 +227,174 @@ TextureImporter:
       bones: []
       spriteID: d10306ad18cb343d0800000000000000
       internalID: -3223525642366603235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_4
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 38
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa512d15bc9f90310800000000000000
+      internalID: 1371902213157426602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 38
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7124dcb2f77bb1060800000000000000
+      internalID: 6925330608835871255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 19
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a24c2e4e7bbf380800000000000000
+      internalID: -8936346841901684153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_7
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 19
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c2a19e5179b84020800000000000000
+      internalID: 2326313104105906880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_8
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 19
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0bd0c0cb570e4e20800000000000000
+      internalID: 3336612464585399052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59135af66727ddb10800000000000000
+      internalID: 2007886861881913749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_10
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 220a656748a598c10800000000000000
+      internalID: 2056274229838913570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_11
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbbcc9ed4ee0627a0800000000000000
+      internalID: -6402413444110431300
       vertices: []
       indices: 
       edges: []

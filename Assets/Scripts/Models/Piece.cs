@@ -69,7 +69,10 @@ public class Piece : MonoBehaviour
                 child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 100;
             if (child.childCount > 0)
             {
-                var grandChildColor = child.GetChild(0).GetComponent<SpriteRenderer>().color;
+                var grandChildSpriteRenderer = child.GetChild(0).GetComponent<SpriteRenderer>();
+                if (grandChildSpriteRenderer == null)
+                    continue;
+                var grandChildColor = grandChildSpriteRenderer.color;
                 grandChildColor = new Color(grandChildColor.r, grandChildColor.g, grandChildColor.b, color.a);
                 child.GetChild(0).GetComponent<SpriteRenderer>().color = grandChildColor;
             }
