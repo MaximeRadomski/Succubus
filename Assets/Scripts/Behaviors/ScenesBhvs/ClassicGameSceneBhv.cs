@@ -89,7 +89,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
-        
+
+        if (Character.SimpShield > 0)
+        {
+            for (int i = 0; i < Character.SimpShield; ++i)
+            {
+                Instantiator.NewSimpShield(new Vector3(_characterInstanceBhv.transform.position.x - 1.5f, _characterInstanceBhv.transform.position.y - 1.8f, 0.0f), Character.Realm, 3 - i);
+            }
+        }
+
         Paused = true;
         _musicControler.Stop();
         Constants.InputLocked = true;

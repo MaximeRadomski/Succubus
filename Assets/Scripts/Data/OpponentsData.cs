@@ -283,7 +283,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
+            HpMax = 1, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
             GravityLevel = 10, Weight = 60

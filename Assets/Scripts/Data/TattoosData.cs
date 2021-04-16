@@ -11,7 +11,8 @@ public static class TattoosData
     public static string[] Tattoos =
         { "Tribal", "Trinity", "Cleaver", "Broken Clock", "Knuckle", "Fox", "Black Mirror", "Kinky Boot", "Thermal Goggles", "D20",
         "Broken Sword", "Wooden Wings", "T Worship", "I Worship", "Backspace Key", "X-Ray Glasses", "Spicy Lollipop", "Trash Bin", "Hedgehog", "Handbrake",
-        "Eclipse Glasses", "Crown Of Thorns", "Perfect Score", "Heavy Weight", "Ouroboros", "SOP Sign", "Full Black", "Hell Suppo", "Earth Child", "Heaven Icon" };
+        "Eclipse Glasses", "Crown Of Thorns", "Perfect Score", "Heavy Weight", "Ouroboros", "SOP Sign", "Full Black", "Hell Suppo", "Earth Child", "Heaven Icon",
+        "Simp Shield", "Simp Worker" };
 
     public static string[] CommonTattoosNames = { Tattoos[0], Tattoos[1], Tattoos[4], Tattoos[9], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[24] };
     public static string[] RareTattoosNames = { Tattoos[2], Tattoos[3], Tattoos[5], Tattoos[8], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19] };
@@ -19,7 +20,8 @@ public static class TattoosData
 
     //DEBUG
     public static bool DebugEnabled = true;
-    public static Tattoo DebugTattoo = GetTattooFromName("Heaven Icon");
+    public static bool DebugMultitude = true;
+    public static Tattoo DebugTattoo = GetTattooFromName("Simp Shield");
 
     public static Tattoo GetRandomTattoo()
     {

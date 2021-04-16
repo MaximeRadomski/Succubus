@@ -145,19 +145,19 @@ public class StepsService
             opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         //DEBUG
-        if (ItemsData.DebugEnabled)
+        if (ItemsData.DebugEnabled && !run.Steps.Contains($"I{ItemsData.DebugItem.Id.ToString("00")}"))
         {
             lootType = LootType.Item;
             lootId = ItemsData.DebugItem.Id;
             opponentType = OpponentType.Common;
         }
-        if (TattoosData.DebugEnabled)
+        if (TattoosData.DebugEnabled && (TattoosData.DebugMultitude || !run.Steps.Contains($"T{TattoosData.DebugTattoo.Id.ToString("00")}")))
         {
             lootType = LootType.Tattoo;
             lootId = TattoosData.DebugTattoo.Id;
             opponentType = OpponentType.Common;
         }
-        if (CharactersData.DebugEnabled)
+        if (CharactersData.DebugEnabled && !run.Steps.Contains($"C{CharactersData.DebugCharacter().Id.ToString("00")}"))
         {
             lootType = LootType.Character;
             lootId = CharactersData.DebugCharacter().Id;

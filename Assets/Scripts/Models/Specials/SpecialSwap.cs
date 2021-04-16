@@ -40,10 +40,10 @@ public class SpecialSwap : Special
         }
     }
 
-    public override void Reactivate()
+    public override bool Reactivate()
     {
         if (!_canReactivate)
-            return;
+            return false;
         _canReactivate = false;
         Object.Destroy(_selector);
         _gameplayControler.CurrentPiece.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent);
@@ -53,6 +53,7 @@ public class SpecialSwap : Special
             Helper.GetSpriteFromSpriteSheet("Sprites/Drone_0"), AfterEffect);
         _gameplayControler.Instantiator.NewAttackLine(_gameplayControler.NextPieces[_selectedId].transform.position, _gameplayControler.CurrentPiece.transform.position, Realm.Hell, linear: false,
             Helper.GetSpriteFromSpriteSheet("Sprites/Drone_0"));
+        return true;
     }
 
     private object AfterEffect()

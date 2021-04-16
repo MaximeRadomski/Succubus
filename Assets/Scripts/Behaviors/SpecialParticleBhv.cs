@@ -28,7 +28,7 @@ public class SpecialParticleBhv : MonoBehaviour
         _particlesFront = transform.GetChild(0).gameObject;
         _particlesBack = transform.GetChild(1).gameObject;
 
-        _characterInstance.GetComponent<SpriteRenderer>().sortingOrder++;
+        //_characterInstance.GetComponent<SpriteRenderer>().sortingOrder++;
         _particlesFront.GetComponent<ParticleSystemRenderer>().sortingLayerID = _characterInstance.GetComponent<SpriteRenderer>().sortingLayerID;
         _particlesFront.GetComponent<ParticleSystemRenderer>().sortingOrder = _characterInstance.GetComponent<SpriteRenderer>().sortingOrder + 1;
         _particlesBack.GetComponent<ParticleSystemRenderer>().sortingLayerID = _characterInstance.GetComponent<SpriteRenderer>().sortingLayerID;
@@ -36,7 +36,7 @@ public class SpecialParticleBhv : MonoBehaviour
 
         _leftPos = new Vector3(-_maxVelocity, -3f, 0.0f);
         _rightPos = new Vector3(_maxVelocity, -3f, 0.0f);
-}
+    }
 
     public void Activate(Realm realm)
     {

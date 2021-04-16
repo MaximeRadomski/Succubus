@@ -261,7 +261,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 8));//8 = item in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 8));//8 = item in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id.ToString("00"));
@@ -286,10 +286,10 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (_characterItem != null)
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.CurrentItemCooldown.ToString();
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Constants.CurrentItemCooldown}";
                 else
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = null;
@@ -312,7 +312,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + 9));//9 = special in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 9));//9 = special in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -336,9 +336,9 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Constants.SelectedCharacterSpecialCooldown.ToString();
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Constants.SelectedCharacterSpecialCooldown}";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop(1.7f, 2.0f);
             }
@@ -1409,8 +1409,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            _characterSpecial.Reactivate();
-            _soundControler.PlaySound(_idSpecial);
+            if (_characterSpecial.Reactivate())
+                _soundControler.PlaySound(_idSpecial);
             return;
         }
         if (_characterSpecial.Activate())
@@ -2209,7 +2209,8 @@ public class GameplayControler : MonoBehaviour
         var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
-        AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;   
+        AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 1);
     }
 
     private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows)

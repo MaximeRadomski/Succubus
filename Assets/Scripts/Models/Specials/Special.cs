@@ -23,9 +23,9 @@ public abstract class Special
         return true;
     }
 
-    public virtual void Reactivate()
+    public virtual bool Reactivate()
     {
-
+        return true;
     }
 
     public virtual void ResetCooldown()

@@ -7,6 +7,7 @@ public class Character : Loot
     public string Name;
     public string Kind;
     public int Attack;
+    public int BoostAttack;
     public int Cooldown;
     public string SpecialName;
     public string SpecialDescription;
@@ -47,6 +48,7 @@ public class Character : Loot
     public bool PerfectKills = false;
     public int MaxDarkAndWasteLines = 99;
     public int BonusLife = 0;
+    public int SimpShield = 0;
 
     public Character()
     {
@@ -55,7 +57,7 @@ public class Character : Loot
 
     public int GetAttack()
     {
-        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus) + BoostAttack;
         return Mathf.RoundToInt(floatValue);
     }
 }

@@ -7,7 +7,8 @@ public class CharacterInstanceBhv : FrameRateBehavior
     public System.Func<object> AfterDeath;
 
     private SceneBhv _sceneBhv;
-    private SpecialParticleBhv _specialParticleBhv;
+    private SpecialParticleBhv _specialParticlesBhv;
+    private BoostParticlesBhv _boostParticlesBhv;
     private Direction _direction;
     private Vector3 _originalPosition;
     private Vector3 _idlePositionToReach;
@@ -38,7 +39,10 @@ public class CharacterInstanceBhv : FrameRateBehavior
             return;
         _sceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
         if (transform.childCount > 0)
-            _specialParticleBhv = transform.GetChild(0).GetComponent<SpecialParticleBhv>();
+        {
+            _specialParticlesBhv = transform.GetChild(0).GetComponent<SpecialParticleBhv>();
+            _boostParticlesBhv = transform.GetChild(1).GetComponent<BoostParticlesBhv>();
+        }
         _direction = transform.position.x > Helper.GetMainCamera().transform.position.x ? Direction.Right : Direction.Left;
         _originalPosition = transform.position;
         _originalScale = transform.localScale;
@@ -95,8 +99,9 @@ public class CharacterInstanceBhv : FrameRateBehavior
         {
             for (int i = 0; i < transform.childCount; ++i)
             {
-                _spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
-                _spriteRenderer.color = Constants.ColorBlackTransparent;
+                var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                if (spriteRenderer)
+                    spriteRenderer.color = Constants.ColorBlackTransparent;
             }
             _isDying = false;
             Constants.InputLocked = false;
@@ -167,7 +172,7 @@ public class CharacterInstanceBhv : FrameRateBehavior
 
     public void Special(Realm realm)
     {
-        _specialParticleBhv?.Activate(realm);
+        _specialParticlesBhv?.Activate(realm);
         var specialMult = 2.0f;
         transform.localScale = new Vector3(transform.localScale.x * (_hitScale.x * specialMult), transform.localScale.y * (_hitScale.y * specialMult), _hitScale.z);
         transform.position = _originalPosition + _hitPosition * 2;
@@ -178,5 +183,23 @@ public class CharacterInstanceBhv : FrameRateBehavior
     {
         _isDying = true;
         Constants.InputLocked = true;
+    }
+
+    public void Boost(Realm realm, float duration)
+    {
+        _boostParticlesBhv.Boost(realm, duration);
+        var boostMult = 2.0f;
+        transform.localScale = new Vector3(transform.localScale.x * (_hitScale.x * boostMult), transform.localScale.y * (_hitScale.y * boostMult), _hitScale.z);
+        transform.position = _originalPosition + _hitPosition * 2;
+        _resetingTransform = true;
+    }
+
+    public void Malus(Realm realm, float duration)
+    {
+        _boostParticlesBhv.Malus(realm, duration);
+        var malusMult = 0.5f;
+        transform.localScale = new Vector3(transform.localScale.x * (_hitScale.x * malusMult), transform.localScale.y * (_hitScale.y * malusMult), _hitScale.z);
+        transform.position = _originalPosition + _hitPosition * 2;
+        _resetingTransform = true;
     }
 }

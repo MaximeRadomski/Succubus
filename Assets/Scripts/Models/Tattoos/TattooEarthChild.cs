@@ -20,6 +20,6 @@ public class TattooEarthChild : Tattoo
 
     public override string GetDescription()
     {
-        return $"Change your nature to a {StatToString()} one.";
+        return $"change your nature to a {StatToString()} one.";
     }
 }
