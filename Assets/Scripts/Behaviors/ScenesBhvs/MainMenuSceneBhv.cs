@@ -40,7 +40,7 @@ public class MainMenuSceneBhv : SceneBhv
             buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
-        GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = NotImplemented;
+        GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = WannaHelp;
         GameObject.Find("ButtonQuit").GetComponent<ButtonBhv>().EndActionDelegate = Quit;
         GameObject.Find("ButtonBug").GetComponent<ButtonBhv>().EndActionDelegate = ReportBug;
     }
@@ -98,9 +98,9 @@ public class MainMenuSceneBhv : SceneBhv
         Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }
 
-    private void NotImplemented()
+    private void WannaHelp()
     {
         //Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL", "Edam", null, 0);
-        Instantiator.NewPopupYesNo("Not Implemented", "this feature hasn't been implemented yet...\n\ncomming soon!", null, "Oh, ok!", null);
+        Instantiator.NewPopupYesNo("Thanks!", "giving feedbacks, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
     }
 }

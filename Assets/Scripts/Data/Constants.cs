@@ -175,6 +175,7 @@ public static class Constants
     public const string GoDrone = "Drone";
     public const string GoMenuSelector = "MenuSelector";
     public const string GoRotationPoint = "RotationPoint";
+    public const string GoSimpShield = "SimpShield";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 3.1f;
@@ -244,6 +245,7 @@ public static class Constants
     public static int CurrentOpponentAttackId;
     public static bool IsffectAttackInProgress = false;
     public static string GameOverParams = null;
+    public static int CurrentRemainingSimpShields = 0;
 
     public static bool OnlyMouseInMenu;
 

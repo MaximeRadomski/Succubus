@@ -161,6 +161,9 @@ TextureImporter:
   - first:
       213: 3579538860762341023
     second: ButtonsUI_28
+  - first:
+      213: 6618668099957295931
+    second: ButtonsUI_29
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -224,7 +227,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -236,7 +239,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -248,7 +251,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -858,7 +861,7 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -866,6 +869,27 @@ TextureImporter:
       bones: []
       spriteID: f9e127fe0a31da130800000000000000
       internalID: 3579538860762341023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsUI_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 145
+        width: 95
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3b0a28d19b3adb50800000000000000
+      internalID: 6618668099957295931
       vertices: []
       indices: 
       edges: []

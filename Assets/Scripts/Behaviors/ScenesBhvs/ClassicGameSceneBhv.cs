@@ -90,21 +90,24 @@ public class ClassicGameSceneBhv : GameSceneBhv
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
 
-        if (Character.SimpShield > 0)
-        {
-            for (int i = 0; i < Character.SimpShield; ++i)
-            {
-                Instantiator.NewSimpShield(new Vector3(_characterInstanceBhv.transform.position.x - 1.5f, _characterInstanceBhv.transform.position.y - 1.8f, 0.0f), Character.Realm, 3 - i);
-            }
-        }
-
         Paused = true;
         _musicControler.Stop();
         Constants.InputLocked = true;
         if (Constants.NameLastScene != Constants.SettingsScene)
+        {
+            Constants.CurrentRemainingSimpShields = Character.SimpShield;
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
+        }
         else
             _musicControler.Play();
+
+        if (Constants.CurrentRemainingSimpShields > 0)
+        {
+            for (int i = 0; i < Constants.CurrentRemainingSimpShields; ++i)
+            {
+                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, new Vector3(-1.5f + (1.5f * i), -2.4f, 0.0f), Character.Realm, 3 - i);
+            }
+        }
     }
 
     private bool AfterFightIntro()
@@ -372,16 +375,30 @@ public class ClassicGameSceneBhv : GameSceneBhv
         bool spawnAfterAttack = true;
         CameraBhv.Bump(2);
         _opponentInstanceBhv.Attack();
-        _characterInstanceBhv.TakeDamage();
-        _gameplayControler.OpponentAttack(
-            CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType,
-            CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1,
-            CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2,
-            CurrentOpponent.Realm,
-            _opponentInstanceBhv.gameObject);
-        if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece
-            || CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Shift)
-            spawnAfterAttack = false;
+        if (Constants.CurrentRemainingSimpShields > 0)
+        {
+            --Constants.CurrentRemainingSimpShields;
+            var shieldObject = GameObject.Find(Constants.GoSimpShield);
+            if (shieldObject != null)
+            {
+                Instantiator.PopText("blocked", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+                _soundControler.PlaySound(_idHit);
+                shieldObject.GetComponent<CharacterInstanceBhv>().GetOS();
+            }
+        }
+        else
+        {
+            _characterInstanceBhv.TakeDamage();
+            _gameplayControler.OpponentAttack(
+                CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType,
+                CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1,
+                CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2,
+                CurrentOpponent.Realm,
+                _opponentInstanceBhv.gameObject);
+            if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece
+                || CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Shift)
+                spawnAfterAttack = false;
+        }
         if (++Constants.CurrentOpponentAttackId >= CurrentOpponent.Attacks.Count)
             Constants.CurrentOpponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);

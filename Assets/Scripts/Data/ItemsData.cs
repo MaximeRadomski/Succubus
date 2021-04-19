@@ -15,7 +15,7 @@ public static class ItemsData
     public static string[] LegendaryItemsNames = { Items[6], Items[7] };
 
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static Item DebugItem = GetItemFromName("Inner Strength");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
