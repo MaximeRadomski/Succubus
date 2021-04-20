@@ -49,6 +49,8 @@ public class Character : Loot
     public int MaxDarkAndWasteLines = 99;
     public int BonusLife = 0;
     public int SimpShield = 0;
+    public int DodgeChance = 0;
+    public int FireDamagesPercent = 0;
 
     public Character()
     {

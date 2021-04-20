@@ -6,7 +6,7 @@ using UnityEngine;
 public static class ItemsData
 {
     public static int LegendaryItemAppearancePercent = 5;
-    public static int RareItemAppearancePercent = 25;
+    public static int RareItemAppearancePercent = 20;
 
     public static string[] Items = { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert" };
 
@@ -20,12 +20,16 @@ public static class ItemsData
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {
-        var rarityRare = RareItemAppearancePercent + PlayerPrefsHelper.GetBonusRarePercent();
-        if (rarityRare > Constants.MaxRarePercent)
-            rarityRare = Constants.MaxRarePercent;
-        var rarityLegendary = LegendaryItemAppearancePercent + PlayerPrefsHelper.GetBonusLegendaryPercent();
-        if (rarityLegendary > Constants.MaxLegendaryPercent)
-            rarityLegendary = Constants.MaxLegendaryPercent;
+        var rareBonus = PlayerPrefsHelper.GetBonusRarePercent();
+        if (rareBonus > Constants.MaxRarePercent)
+            rareBonus = Constants.MaxRarePercent;
+        var rarityRare = RareItemAppearancePercent + rareBonus;
+
+        var legendaryBonus = PlayerPrefsHelper.GetBonusLegendaryPercent();
+        if (legendaryBonus > Constants.MaxLegendaryPercent)
+            legendaryBonus = Constants.MaxLegendaryPercent;
+        var rarityLegendary = LegendaryItemAppearancePercent + legendaryBonus;
+        
 
         int rarityPercent = UnityEngine.Random.Range(0, 100);
         if (rarityPercent < rarityLegendary && maxRarity >= Rarity.Legendary)

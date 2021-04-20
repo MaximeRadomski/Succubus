@@ -12,25 +12,28 @@ public static class TattoosData
         { "Tribal", "Trinity", "Cleaver", "Broken Clock", "Knuckle", "Fox", "Black Mirror", "Kinky Boot", "Thermal Goggles", "D20",
         "Broken Sword", "Wooden Wings", "T Worship", "I Worship", "Backspace Key", "X-Ray Glasses", "Spicy Lollipop", "Trash Bin", "Hedgehog", "Handbrake",
         "Eclipse Glasses", "Crown Of Thorns", "Perfect Score", "Heavy Weight", "Ouroboros", "SOP Sign", "Full Black", "Hell Suppo", "Earth Child", "Heaven Icon",
-        "Simp Shield", "Simp Worker" };
+        "Simp Shield", "Permutation", "Fire Stone"/*, "Earth Stone", "Water Stone", "Wind Stone", "Forgotten Dream", "Quad Damage", "Double Edged", "Damocles"*/ };
 
-    public static string[] CommonTattoosNames = { Tattoos[0], Tattoos[1], Tattoos[4], Tattoos[9], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[24] };
-    public static string[] RareTattoosNames = { Tattoos[2], Tattoos[3], Tattoos[5], Tattoos[8], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19] };
+    public static string[] CommonTattoosNames = { Tattoos[0], Tattoos[1], Tattoos[4], Tattoos[9], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[24], Tattoos[31], Tattoos[32]/*, Tattoos[33], Tattoos[34], Tattoos[35], Tattoos[36], Tattoos[37], Tattoos[38], Tattoos[39]*/ };
+    public static string[] RareTattoosNames = { Tattoos[2], Tattoos[3], Tattoos[5], Tattoos[8], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19], Tattoos[30] };
     public static string[] LegendaryTattoosNames = { Tattoos[6], Tattoos[7], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29] };
 
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool DebugMultitude = true;
-    public static Tattoo DebugTattoo = GetTattooFromName("Simp Shield");
+    public static Tattoo DebugTattoo = GetTattooFromName("Fire Stone");
 
     public static Tattoo GetRandomTattoo()
     {
-        var rarityRare = RareTattooAppearancePercent + PlayerPrefsHelper.GetBonusRarePercent();
-        if (rarityRare > Constants.MaxRarePercent)
-            rarityRare = Constants.MaxRarePercent;
-        var rarityLegendary = LegendaryTattooAppearancePercent + PlayerPrefsHelper.GetBonusLegendaryPercent();
-        if (rarityLegendary > Constants.MaxLegendaryPercent)
-            rarityLegendary = Constants.MaxLegendaryPercent;
+        var rareBonus = PlayerPrefsHelper.GetBonusRarePercent();
+        if (rareBonus > Constants.MaxRarePercent)
+            rareBonus = Constants.MaxRarePercent;
+        var rarityRare = RareTattooAppearancePercent + rareBonus;
+
+        var legendaryBonus = PlayerPrefsHelper.GetBonusLegendaryPercent();
+        if (legendaryBonus > Constants.MaxLegendaryPercent)
+            legendaryBonus = Constants.MaxLegendaryPercent;
+        var rarityLegendary = LegendaryTattooAppearancePercent + legendaryBonus;
 
         int rarityPercent = UnityEngine.Random.Range(0, 100);
         if (rarityPercent < rarityLegendary)

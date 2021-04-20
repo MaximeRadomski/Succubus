@@ -30,8 +30,8 @@ public static class Constants
     public const float OpponentUpgradeAddedLife = 0.15f;
     public const string DialogAudioClip = "Devlog";
     public const string IntroAudioClip = "Intro";
-    public const int MaxRarePercent = 40;
-    public const int MaxLegendaryPercent = 20;
+    public const int MaxRarePercent = 25;
+    public const int MaxLegendaryPercent = 15;
 
     //  TAGS  //
     public const string TagMusic = "Music";

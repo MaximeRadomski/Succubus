@@ -5,7 +5,8 @@ using UnityEngine;
 
 public enum BodyPart
 {
-    MaxLevelReached = -10,
+    MaxLevelReached = -100,
+    Upgrade = -10,
     None = -1,
     [Description("Left Arm")]
     LeftArm = 0,

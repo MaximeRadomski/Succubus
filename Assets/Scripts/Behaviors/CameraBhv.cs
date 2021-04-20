@@ -7,10 +7,10 @@ public class CameraBhv : FrameRateBehavior
     public bool Paused;
     public bool IsSliding;
 
+    private float _originalSize;
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
 
-    private float _initialSize;
     private float _bumpSize;
     private bool _isBumbing;
     private bool _isResetBumping;
@@ -23,6 +23,7 @@ public class CameraBhv : FrameRateBehavior
         float desiredHalfHeight = 0.5f * unitsPerPixel * Screen.height;
         if (desiredHalfHeight > Constants.CameraSize)
             Camera.orthographicSize = desiredHalfHeight;
+        _originalSize = Camera.orthographicSize;
         _originalPosition = transform.position;
         HasInitiated = true;
         _isBumbing = false;
@@ -65,8 +66,7 @@ public class CameraBhv : FrameRateBehavior
 
     public void Bump(int bumpPercent)
     {
-        _initialSize = Camera.orthographicSize;
-        _bumpSize = _initialSize - (_initialSize * Helper.MultiplierFromPercent(0.0f, bumpPercent));
+        _bumpSize = _originalSize - (_originalSize * Helper.MultiplierFromPercent(0.0f, bumpPercent));
         _isBumbing = true;
     }
 
@@ -82,10 +82,10 @@ public class CameraBhv : FrameRateBehavior
 
     private void ResetBumping()
     {
-        Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, _initialSize, 0.3f);
-        if (Helper.FloatEqualsPrecision(Camera.orthographicSize, _initialSize, 0.01f))
+        Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, _originalSize, 0.3f);
+        if (Helper.FloatEqualsPrecision(Camera.orthographicSize, _originalSize, 0.01f))
         {
-            Camera.orthographicSize = _initialSize;
+            Camera.orthographicSize = _originalSize;
             _isResetBumping = false;
         }
     }

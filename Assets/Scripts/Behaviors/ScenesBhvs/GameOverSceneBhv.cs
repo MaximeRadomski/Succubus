@@ -43,12 +43,24 @@ public class GameOverSceneBhv : SceneBhv
         int legendaryAdd = rareAdd / 2;
         if (rareAdd >= 1)
         {
-            var content = $"{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}rare{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{rareAdd}%{Constants.MaterialEnd}";
-            if (legendaryAdd >= 1)
-                content = $"{content}\nyour chance of finding a {Constants.MaterialHell_4_3}legendary{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{legendaryAdd}%{Constants.MaterialEnd}";
-            Instantiator.NewPopupYesNo("Rarity Boost!", content, null, "Cool!", null);
-            PlayerPrefsHelper.IncrementBonusRarePercent(rareAdd);
-            PlayerPrefsHelper.IncrementBonusLegendaryPercent(legendaryAdd);
+            var content = "";
+
+            var rareBonus = PlayerPrefsHelper.GetBonusRarePercent();
+            if (rareBonus < Constants.MaxRarePercent)
+                content = $"{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}rare{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{rareAdd}%{Constants.MaterialEnd}";
+            var legendaryBonus = PlayerPrefsHelper.GetBonusLegendaryPercent();
+            if (legendaryAdd >= 1 && legendaryBonus < Constants.MaxLegendaryPercent)
+            {
+                if (content != "")
+                    content += "\n";
+                content = $"{content}{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}legendary{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{legendaryAdd}%{Constants.MaterialEnd}";
+            }
+            if (content != "")
+            {
+                Instantiator.NewPopupYesNo("Rarity Boost!", content, null, "Cool!", null);
+                PlayerPrefsHelper.IncrementBonusRarePercent(rareAdd);
+                PlayerPrefsHelper.IncrementBonusLegendaryPercent(legendaryAdd);
+            }
         }
     }
 

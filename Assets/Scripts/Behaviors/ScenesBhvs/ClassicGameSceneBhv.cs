@@ -31,6 +31,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idCrit;
     private int _idWeakness;
     private int _idImmunity;
+    private int _idDodge;
     private int _idTattooSound;
 
     public override MusicType MusicType => MusicType.Game;
@@ -85,6 +86,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idHit = _soundControler.SetSound("Hit");
         _idWeakness = _soundControler.SetSound("Weakness");
         _idImmunity = _soundControler.SetSound("Immunity");
+        _idDodge = _soundControler.SetSound("LevelUp");
         _idTattooSound = _soundControler.SetSound("TattooSound");
         GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.MaterialHell_3_2B}realm:\n{ Constants.MaterialHell_4_3B}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit: true);
@@ -105,7 +107,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             for (int i = 0; i < Constants.CurrentRemainingSimpShields; ++i)
             {
-                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, new Vector3(-1.5f + (1.5f * i), -2.4f, 0.0f), Character.Realm, 3 - i);
+                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, new Vector3(-1.5f + (1.5f * i), -2.6f, 0.0f), Character.Realm, 3 - i);
             }
         }
     }
@@ -277,6 +279,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("Max Level", Constants.MaterialHell_4_3 + ((Tattoo)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " reached its maximum level.", null, "Damn...", LoadBackAfterVictory, sprite);
             }
+            else if (bodyPart == BodyPart.None)
+            {
+                Instantiator.NewPopupYesNo("Filled!", $"sadly, you don't have any place left to ink anything...", null, "But...", LoadBackAfterVictory, sprite);
+            }
             else 
             {
                 _soundControler.PlaySound(_idTattooSound);
@@ -386,6 +392,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 shieldObject.GetComponent<CharacterInstanceBhv>().GetOS();
             }
         }
+        else if (Helper.RandomDice100(Character.DodgeChance))
+        {
+            Instantiator.PopText("dodged", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+            _soundControler.PlaySound(_idDodge);
+            _characterInstanceBhv.Dodge();
+        }
         else
         {
             _characterInstanceBhv.TakeDamage();
@@ -407,7 +419,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Character.ThornsPercent > 0)
         {
             var thornDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
-            DamageOpponent(thornDamages, _gameplayControler.CharacterInstanceBhv.gameObject);
+            DamageOpponent(thornDamages == 0 ? 1 : thornDamages, _gameplayControler.CharacterInstanceBhv.gameObject);
         }
         return spawnAfterAttack;
     }
@@ -464,6 +476,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public override void DamageOpponent(int amount, GameObject source)
     {
+        if (Constants.CurrentOpponentHp <= 0)
+            return;
         var realm = Character.Realm;
         var sourcePosition = _characterInstanceBhv.transform.position;
         Piece piece = null;
@@ -642,6 +656,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     _gameplayControler.CheckForLightRows(brutForceDelete : true);
 
             }
+
+            //ELEMENTS STONES
+            if (nbLines == 3)
+            {
+                if (Character.FireDamagesPercent > 0)
+                    StartCoroutine(Burn(3));
+            }
         }
         if (isB2B)
         {
@@ -665,6 +686,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
         }
         _characterAttack += incomingDamages;
+    }
+
+    public IEnumerator Burn(int time)
+    {
+        yield return new WaitForSeconds(0.33f);
+        if (time > 0)
+        {
+            var burnDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagesPercent));
+            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null);
+            StartCoroutine(Burn(time - 1));
+        }
     }
 
     public override void OnCombo(int nbCombo, int nbLines)

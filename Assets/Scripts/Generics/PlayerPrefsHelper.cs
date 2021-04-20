@@ -358,6 +358,7 @@ public class PlayerPrefsHelper : MonoBehaviour
                 if (currentTattooLevel + 1 > tattooModel.MaxLevel)
                     return BodyPart.MaxLevelReached;
                 tattoosFullStr = tattoosFullStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
+                newBodyPartStr = "-10"; // SO FUCKING UGLY
                 if (currentTattooLevel == tattooModel.MaxLevel)
                     AddMaxedOutTattoo(tattooModel.Id);
             }

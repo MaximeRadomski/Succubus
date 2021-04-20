@@ -16,7 +16,9 @@ public class CharacterInstanceBhv : FrameRateBehavior
     private Vector3 _attackPosition;
     private Vector3 _attackScale;
     private Vector3 _hitScale;
+    private Vector3 _dodgeScale;
     private Vector3 _hitPosition;
+    private Vector3 _dodgePosition;
     private Vector3 _spawnScale;
     private Vector3 _spawnPosition;
     private bool _attacking;
@@ -50,7 +52,9 @@ public class CharacterInstanceBhv : FrameRateBehavior
         _attackPosition = OriginalPosition + new Vector3(_direction == Direction.Left ? 2.0f : -2.0f, 0.0f, 0.0f);
         _attackScale = new Vector3(1.3f, 0.75f, 1.0f);
         _hitScale = new Vector3(0.7f, 1.3f, 1.0f);
+        _dodgeScale = new Vector3(1.3f, 0.7f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.5f, 0.0f);
+        _dodgePosition = new Vector3(0.0f, -0.5f, 0.0f);
         _spawnScale = new Vector3(0.5f, 1.5f, 1.0f);
         _spawnPosition = new Vector3(0.0f, 5.0f, 0.0f);
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -170,6 +174,13 @@ public class CharacterInstanceBhv : FrameRateBehavior
     {
         transform.localScale = new Vector3(transform.localScale.x * _hitScale.x, _hitScale.y, _hitScale.z);
         transform.position = OriginalPosition + _hitPosition;
+        _resetingTransform = true;
+    }
+
+    public void Dodge()
+    {
+        transform.localScale = new Vector3(transform.localScale.x * _dodgeScale.x, transform.localScale.y * _dodgeScale.y, _dodgeScale.z);
+        transform.position = OriginalPosition + _dodgePosition;
         _resetingTransform = true;
     }
 

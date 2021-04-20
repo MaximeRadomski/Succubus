@@ -152,7 +152,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Giant Spider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 99, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 6,
+            HpMax = 99, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 1, 2) },
             GravityLevel = 5, Weight = 40
@@ -274,7 +274,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "PHILL", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 99970, Cooldown = 7,
+            HpMax = 999999, Weakness = Weakness.xLines, XLineWeakness = 1, DamagesOnWeakness = 100000, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Intoxication, 6) },
             GravityLevel = 6, Weight = 60,
