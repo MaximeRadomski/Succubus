@@ -111,6 +111,11 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
+    public virtual void StunOpponent(int seconds)
+    {
+
+    }
+
     public virtual void DamageOpponent(int amount, GameObject source)
     {
 

@@ -14,6 +14,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private float _nextCooldownTick;
     private IconInstanceBhv _weaknessInstance;
     private IconInstanceBhv _immunityInstance;
+    private WiggleBhv _stunIcon;
 
     private Run _run;
     private StepsService _stepsService;
@@ -73,6 +74,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _cumulativeCrit = 0;
         _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
         _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
+        _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
         _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
         _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
@@ -369,7 +371,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
-            if (Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
+            if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
+                || _stunIcon.IsOn)
                 _nextCooldownTick = Time.time + 3600;
             else
                 _nextCooldownTick = Time.time + 1.0f;
@@ -474,6 +477,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
     }
 
+    public override void StunOpponent(int seconds)
+    {
+        _stunIcon.AppearAndWiggle(seconds, AfterStun);
+
+        bool AfterStun()
+        {
+            SetNextCooldownTick();
+            return true;
+        }
+    }
+
     public override void DamageOpponent(int amount, GameObject source)
     {
         if (Constants.CurrentOpponentHp <= 0)
@@ -521,6 +535,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {
+            _stunIcon.Hide();
             _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
             _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(1);
             _soundControler.PlaySound(_idOpponentDeath);
@@ -662,6 +677,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 if (Character.FireDamagesPercent > 0)
                     StartCoroutine(Burn(3));
+                if (Character.EarthStun > 0)
+                    StunOpponent(Character.EarthStun);
             }
         }
         if (isB2B)

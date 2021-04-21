@@ -51,6 +51,7 @@ public class Character : Loot
     public int SimpShield = 0;
     public int DodgeChance = 0;
     public int FireDamagesPercent = 0;
+    public int EarthStun = 0;
 
     public Character()
     {
