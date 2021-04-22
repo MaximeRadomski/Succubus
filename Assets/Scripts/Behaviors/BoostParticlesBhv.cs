@@ -8,6 +8,8 @@ public class BoostParticlesBhv : MonoBehaviour
 
     public void Boost(Realm realm, float duration)
     {
+        if (GetComponent<ParticleSystem>().isPlaying)
+            GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         transform.localPosition = new Vector3(0.0f, -_y, 0.0f);
         transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         var main = GetComponent<ParticleSystem>().main;

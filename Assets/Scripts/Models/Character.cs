@@ -52,6 +52,8 @@ public class Character : Loot
     public int DodgeChance = 0;
     public int FireDamagesPercent = 0;
     public int EarthStun = 0;
+    public int WaterDamagePercent = 0;
+
 
     public Character()
     {
@@ -60,7 +62,14 @@ public class Character : Loot
 
     public int GetAttack()
     {
-        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus) + BoostAttack;
+        if (BoostAttack < 0)
+            BoostAttack = 0;
+        return GetAttackNoBoost() + BoostAttack;
+    }
+
+    public int GetAttackNoBoost()
+    {
+        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
         return Mathf.RoundToInt(floatValue);
     }
 }

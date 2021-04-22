@@ -17,7 +17,7 @@ public class ItemInnerStrength : Item
 
     protected override object Effect()
     {
-        _oldAttack = _character.Attack;
+        _oldAttack = _character.GetAttackNoBoost();
         _character.BoostAttack += _oldAttack;
         _gameplayControler.CharacterInstanceBhv.Boost(_character.Realm, 4.0f);
         Task.Delay(4000).ContinueWith(t => AfterDelay());

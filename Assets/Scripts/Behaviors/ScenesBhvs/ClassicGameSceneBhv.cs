@@ -22,6 +22,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private int _characterAttack;
     private int _cumulativeCrit;
+    private int _wetMalus;
+    private float _wetTimer;
     private bool _isCrit;
     private bool _isVictorious;
 
@@ -72,6 +74,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
         _cumulativeCrit = 0;
+        _wetTimer = -1;
         _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
         _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
         _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
@@ -439,6 +442,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             _opponentCooldownBar.Tilt();
         }
+        if (_wetTimer > 0 && Time.time > _wetTimer)
+        {
+            Character.BoostAttack -= _wetMalus;
+            _wetTimer = -1;
+        }
     }
 
     private void HandleForcedPiece()
@@ -486,6 +494,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
             SetNextCooldownTick();
             return true;
         }
+    }
+    
+    private void WetMalusOpponent(int malusPercent, float seconds)
+    {
+        _opponentInstanceBhv.Malus(CurrentOpponent.Realm, seconds);
+        _wetMalus = Mathf.RoundToInt(Character.GetAttackNoBoost() * Helper.MultiplierFromPercent(0, malusPercent));
+        Character.BoostAttack += _wetMalus;
+        _wetTimer = Time.time + seconds;
     }
 
     public override void DamageOpponent(int amount, GameObject source)
@@ -555,11 +571,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 if (CurrentOpponent.Immunity != Immunity.Cooldown)
                     Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;
-                else
-                {
-                    _immunityInstance.Pop();
-                    _soundControler.PlaySound(_idImmunity);
-                }
                 if (Constants.CurrentOpponentCooldown <= 0)
                     Constants.CurrentOpponentCooldown = 0;
                 UpdateCooldownBar(Direction.Down);
@@ -675,10 +686,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             //ELEMENTS STONES
             if (nbLines == 3)
             {
-                if (Character.FireDamagesPercent > 0)
-                    StartCoroutine(Burn(3));
                 if (Character.EarthStun > 0)
                     StunOpponent(Character.EarthStun);
+                if (Character.WaterDamagePercent > 0)
+                    WetMalusOpponent(Character.WaterDamagePercent, 4.0f);
+                if (Character.FireDamagesPercent > 0)
+                    StartCoroutine(Burn(3));
+
             }
         }
         if (isB2B)

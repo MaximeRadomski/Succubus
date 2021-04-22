@@ -28,6 +28,7 @@ public abstract class GameSceneBhv : SceneBhv
             Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         else
             Character = PlayerPrefsHelper.GetRunCharacter();
+        Character.BoostAttack = 0;
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
         _panelGame = GameObject.Find("PanelGame");

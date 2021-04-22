@@ -12,7 +12,6 @@ public class WiggleBhv : FrameRateBehavior
     private int _maxRotationTicks;
 
     private bool _isResetingScale;
-    private bool _isResetingRotation;
     private int _rotationTicks;
     private float _hideTimer;
 
@@ -59,7 +58,10 @@ public class WiggleBhv : FrameRateBehavior
         {
             Wiggling();
             if (Time.time >= _hideTimer)
+            {
                 Hide();
+                _onHide.Invoke();
+            }
         }
     }
 
