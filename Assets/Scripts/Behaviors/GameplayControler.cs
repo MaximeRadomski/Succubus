@@ -40,6 +40,7 @@ public class GameplayControler : MonoBehaviour
     private int _lastNbLinesCleared;
     private int _comboCounter;
     private int _leftHolded, _rightHolded;
+    private float _heavyWeightDelay;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -149,7 +150,7 @@ public class GameplayControler : MonoBehaviour
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
-        _lockDelay = Constants.LockDelay;
+        _lockDelay = Constants.LockDelay + (Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -166,6 +167,7 @@ public class GameplayControler : MonoBehaviour
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
+        _heavyWeightDelay = 0.4f;
 #if UNITY_ANDROID
         if (_gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(_gameplayChoice);
@@ -473,6 +475,7 @@ public class GameplayControler : MonoBehaviour
         if (level < 0)
             level = 0;
         GravityDelay = Constants.GravityDelay;
+        _lockDelay = Constants.LockDelay + (Character != null && Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
         if (level == 19)
         {
             GravityDelay = 0.0f;
@@ -949,10 +952,10 @@ public class GameplayControler : MonoBehaviour
             var currentGravityDelay = GravityDelay;
             SetGravity(0);
             this.SceneBhv.CameraBhv.Pounder(1);
-            StartCoroutine(Helper.ExecuteAfterDelay(0.4f, () =>
+            StartCoroutine(Helper.ExecuteAfterDelay(_heavyWeightDelay, () =>
             {
                 GravityDelay = currentGravityDelay;
-                Constants.InputLocked = true;
+                Constants.InputLocked = false;
                 return true;
             }));
         }
