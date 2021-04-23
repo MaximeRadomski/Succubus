@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooWindStone : Tattoo
+public class TattooForgottenDream : Tattoo
 {
-    public TattooWindStone()
+    public TattooForgottenDream()
     {
-        Id = 35;
+        Id = 36;
         Name = TattoosData.Tattoos[Id];
         Stat = 3;
         Rarity = Rarity.Common;
@@ -14,11 +14,11 @@ public class TattooWindStone : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.WindTripleBonus += Stat;
+        character.DamageFlatBonus += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"your triple lines boost your triple lines by {StatToString("+", " damages")} for the rest of the fight.";
+        return $"you deal {StatToString("+", " damages")}.";
     }
 }

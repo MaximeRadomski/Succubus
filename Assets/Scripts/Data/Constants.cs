@@ -12,7 +12,7 @@ public static class Constants
     public const int GravityDivider = 4;
     public const int LinesForLevel = 10;
     public const float LockDelay = 0.5f;
-    public const float AfterDropDelay = 0.1f;
+    public const float AfterDropDelay = 0.05f;
     public const int NumberOfAllowedMovesBeforeLock = 15;
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
@@ -217,7 +217,7 @@ public static class Constants
     {
         if (id == -1)
             return Color.black;
-        if (id == 5)
+        if (id == 5 || realm == Realm.None)
             return Color.white;
         var myActualType = typeof(Constants);
         var tmp = myActualType.GetField("Color" + realm.ToString() + id);
@@ -246,6 +246,8 @@ public static class Constants
     public static bool IsffectAttackInProgress = false;
     public static string GameOverParams = null;
     public static int CurrentRemainingSimpShields = 0;
+    public static int CumulativeCrit = 0;
+    public static int TripleLineDamageBonus = 0;
 
     public static bool OnlyMouseInMenu;
 

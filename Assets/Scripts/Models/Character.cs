@@ -22,6 +22,7 @@ public class Character : Loot
     public int CritMultiplier = 50;
     public int SingleLineDamageBonus = 0;
     public int DamagePercentBonus = 0;
+    public int DamageFlatBonus = 0;
     public int DamagePercentToInferiorRealm = 20;
     public int RealmPassiveEffect = 1;
     public int EnemyCooldownProgressionReducer = 0;
@@ -53,7 +54,7 @@ public class Character : Loot
     public int FireDamagesPercent = 0;
     public int EarthStun = 0;
     public int WaterDamagePercent = 0;
-
+    public int WindTripleBonus = 0;
 
     public Character()
     {
@@ -69,7 +70,7 @@ public class Character : Loot
 
     public int GetAttackNoBoost()
     {
-        var floatValue = Attack * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        var floatValue = (Attack + DamageFlatBonus) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
         return Mathf.RoundToInt(floatValue);
     }
 }

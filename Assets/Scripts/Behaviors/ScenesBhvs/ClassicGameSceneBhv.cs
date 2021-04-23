@@ -21,7 +21,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private Step _currentStep;
 
     private int _characterAttack;
-    private int _cumulativeCrit;
     private int _wetMalus;
     private float _wetTimer;
     private bool _isCrit;
@@ -73,7 +72,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
-        _cumulativeCrit = 0;
         _wetTimer = -1;
         _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
         _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
@@ -102,6 +100,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Constants.InputLocked = true;
         if (Constants.NameLastScene != Constants.SettingsScene)
         {
+            Constants.CumulativeCrit = 0;
+            Constants.TripleLineDamageBonus = 0;
             Constants.CurrentRemainingSimpShields = Character.SimpShield;
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
         }
@@ -498,13 +498,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
     
     private void WetMalusOpponent(int malusPercent, float seconds)
     {
-        _opponentInstanceBhv.Malus(CurrentOpponent.Realm, seconds);
+        _opponentInstanceBhv.Malus(Realm.Heaven, seconds);
         _wetMalus = Mathf.RoundToInt(Character.GetAttackNoBoost() * Helper.MultiplierFromPercent(0, malusPercent));
         Character.BoostAttack += _wetMalus;
         _wetTimer = Time.time + seconds;
     }
 
-    public override void DamageOpponent(int amount, GameObject source)
+    public override void DamageOpponent(int amount, GameObject source, Realm? textRealm = null)
     {
         if (Constants.CurrentOpponentHp <= 0)
             return;
@@ -547,7 +547,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Helper.VectorEqualsPrecision(poppingTexts[i].transform.position, damagesTextPosition, 0.5f) && poppingTexts[i].transform.position.y >= damagesTextPosition.y)
                 damagesTextPosition = poppingTexts[i].transform.position + new Vector3(0.0f, -1.1f);
         }
-        Instantiator.PopText($"<material=\"{Character.Realm.ToString().ToLower()}.4.3\">{attackText}", damagesTextPosition);
+        var realmMaterial = "";
+        if (textRealm == null || textRealm != Realm.None)
+        {
+            var tmpRealm = textRealm == null ? Character.Realm : textRealm;
+            realmMaterial = $"<material=\"{tmpRealm.ToString().ToLower()}.4.3\">";
+        }
+        Instantiator.PopText($"{realmMaterial}{attackText}", damagesTextPosition);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {
@@ -651,9 +657,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             incomingDamages = Character.GetAttack();
             if (nbLines == 1)
                 incomingDamages += Character.SingleLineDamageBonus;
-            if (Helper.RandomDice100(Character.CritChancePercent + Character.CumulativeCrit))
+            if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit))
             {
-                _cumulativeCrit += Character.CumulativeCrit;
+                Constants.CumulativeCrit += Character.CumulativeCrit;
                 incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
@@ -692,7 +698,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     WetMalusOpponent(Character.WaterDamagePercent, 4.0f);
                 if (Character.FireDamagesPercent > 0)
                     StartCoroutine(Burn(3));
-
+                if (Character.WindTripleBonus > 0)
+                {
+                    Constants.TripleLineDamageBonus += Character.WindTripleBonus;
+                    StartCoroutine(WindBoost());
+                }
             }
         }
         if (isB2B)
@@ -725,9 +735,16 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (time > 0)
         {
             var burnDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagesPercent));
-            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null);
+            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null, Realm.Hell);
             StartCoroutine(Burn(time - 1));
         }
+    }
+
+    public IEnumerator WindBoost()
+    {
+        yield return new WaitForSeconds(0.25f);
+        DamageOpponent(Constants.TripleLineDamageBonus, null, Realm.None);
+        _characterInstanceBhv.Boost(Realm.None, 1.0f);
     }
 
     public override void OnCombo(int nbCombo, int nbLines)

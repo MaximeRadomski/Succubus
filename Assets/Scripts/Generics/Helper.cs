@@ -99,8 +99,9 @@ public static class Helper
             return Realm.Heaven;
         else if (realm == Realm.Earth)
             return Realm.Hell;
-        else
+        else if (realm == Realm.Heaven)
             return Realm.Earth;
+        return Realm.None;
     }
 
     public static Realm GetInferiorFrom(Realm realm)
@@ -109,8 +110,9 @@ public static class Helper
             return Realm.Earth;
         else if (realm == Realm.Earth)
             return Realm.Heaven;
-        else
+        else if (realm == Realm.Heaven)
             return Realm.Hell;
+        return Realm.None;
     }
 
     public static int DoesListContainsSameFromName(List<GameObject> list, string name)
