@@ -55,6 +55,8 @@ public class Character : Loot
     public int EarthStun = 0;
     public int WaterDamagePercent = 0;
     public int WindTripleBonus = 0;
+    public int QuadDamage = 0;
+    public int DoubleEdgeGravity = 0;
 
     public Character()
     {

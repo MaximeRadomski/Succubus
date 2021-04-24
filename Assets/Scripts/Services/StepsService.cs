@@ -243,7 +243,8 @@ public class StepsService
         if (OpponentsData.DebugEnabled)
         {
             stepOpponents.Add(OpponentsData.DebugOpponent());
-            return stepOpponents;
+            if (OpponentsData.OnlyOpponent)
+                return stepOpponents;
         }
         //DEBUG
         while (i <= 12)

@@ -2633,9 +2633,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 49e8e4b000760b04aa1bb097a868f643, type: 3}
-  lineWidth: 0.3
-  hardness: 0.7
-  displacementSpeed: 0
 --- !u!1 &1697727288
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,7 +2898,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 549a71b1d55903740a310d5948a1650c, type: 2}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_text
-      value: I'm still learning those sick mechanics
+      value: I'm still learning those sick mechanics.
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_sharedMaterial
@@ -3173,7 +3170,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 549a71b1d55903740a310d5948a1650c, type: 2}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_text
-      value: I would like some pain please
+      value: I would like some pain please.
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_sharedMaterial

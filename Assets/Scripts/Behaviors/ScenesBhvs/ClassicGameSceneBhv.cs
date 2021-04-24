@@ -100,8 +100,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Constants.InputLocked = true;
         if (Constants.NameLastScene != Constants.SettingsScene)
         {
-            Constants.CumulativeCrit = 0;
-            Constants.TripleLineDamageBonus = 0;
             Constants.CurrentRemainingSimpShields = Character.SimpShield;
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
         }
@@ -508,6 +506,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (Constants.CurrentOpponentHp <= 0)
             return;
+        if (Character.QuadDamage > 0 && Constants.CurrentListOpponentsId == 0 && _opponents.Count >= 4)
+        {
+            amount *= Character.QuadDamage;
+            _characterInstanceBhv.Boost(Realm.None, 1.0f);
+        }
         var realm = Character.Realm;
         var sourcePosition = _characterInstanceBhv.transform.position;
         Piece piece = null;

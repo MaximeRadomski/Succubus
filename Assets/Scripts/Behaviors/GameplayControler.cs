@@ -470,6 +470,9 @@ public class GameplayControler : MonoBehaviour
 
     public void SetGravity(int level)
     {
+        if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the pupose of setting it to zero
+            level += Character.DoubleEdgeGravity;
+
         if (Character != null)
             level -= Character.LoweredGravity;
         if (level < 0)
@@ -946,7 +949,7 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
-        if (nbLinesDropped > 2 && Character.PiecesWeight > 0)
+        if (Character.PiecesWeight > 0 && nbLinesDropped > 2)
         {
             Constants.InputLocked = true;
             var currentGravityDelay = GravityDelay;

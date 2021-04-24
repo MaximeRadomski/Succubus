@@ -257,6 +257,8 @@ public static class Constants
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
+        CumulativeCrit = 0;
+        TripleLineDamageBonus = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

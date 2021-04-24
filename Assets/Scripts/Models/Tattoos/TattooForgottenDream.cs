@@ -7,7 +7,7 @@ public class TattooForgottenDream : Tattoo
     {
         Id = 36;
         Name = TattoosData.Tattoos[Id];
-        Stat = 3;
+        Stat = 2;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }
@@ -19,6 +19,6 @@ public class TattooForgottenDream : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", " damages")}.";
+        return $"you deal {StatToString("+", " base damages")}. Yup... That's it...";
     }
 }

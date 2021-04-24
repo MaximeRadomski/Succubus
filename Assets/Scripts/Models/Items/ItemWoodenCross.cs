@@ -8,9 +8,9 @@ public class ItemWoodenCross : Item
     {
         Id = 8;
         Name = ItemsData.Items[Id];
-        Description = "resets the gravity strength of the room";
+        Description = "resets the gravity level of the room";
         Rarity = Rarity.Common;
-        Cooldown = 10;
+        Cooldown = 4;
     }
 
     protected override object Effect()
