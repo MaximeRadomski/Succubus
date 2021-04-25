@@ -657,6 +657,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var incomingDamages = 0;
         if (nbLines > 0)
         {
+            if (Character.DamoclesDamages > 0 && nbLines == 4)
+                Constants.DamoclesDamages += Character.DamoclesDamages;
+
             incomingDamages = Character.GetAttack();
             if (nbLines == 1)
                 incomingDamages += Character.SingleLineDamageBonus;

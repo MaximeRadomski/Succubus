@@ -248,6 +248,7 @@ public static class Constants
     public static int CurrentRemainingSimpShields = 0;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
+    public static int DamoclesDamages = 0;
 
     public static bool OnlyMouseInMenu;
 
@@ -259,6 +260,7 @@ public static class Constants
         CurrentOpponentCooldown = 0;
         CumulativeCrit = 0;
         TripleLineDamageBonus = 0;
+        DamoclesDamages = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

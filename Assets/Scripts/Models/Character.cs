@@ -57,6 +57,7 @@ public class Character : Loot
     public int WindTripleBonus = 0;
     public int QuadDamage = 0;
     public int DoubleEdgeGravity = 0;
+    public int DamoclesDamages = 0;
 
     public Character()
     {
@@ -72,7 +73,7 @@ public class Character : Loot
 
     public int GetAttackNoBoost()
     {
-        var floatValue = (Attack + DamageFlatBonus) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamages) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
         return Mathf.RoundToInt(floatValue);
     }
 }
