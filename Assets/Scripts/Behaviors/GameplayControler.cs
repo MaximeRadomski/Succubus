@@ -2062,7 +2062,7 @@ public class GameplayControler : MonoBehaviour
             //    childSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
             //}
             var color = int.Parse(PlayerPrefsHelper.GetGhostColor()) == 3 ? 4 : 3;
-            _forcedPieceModel.SetColor((Color)Constants.GetColorFromRealm(_characterRealm, color));
+            _forcedPieceModel.SetColor((Color)Constants.GetColorFromRealm(opponentRealm, color));
             //Destroy(tmpFadeBlockSpriteRenderer.gameObject);
             if (_forcedPieceModel.Letter != "O")
             {

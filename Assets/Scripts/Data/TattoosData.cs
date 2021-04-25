@@ -21,7 +21,7 @@ public static class TattoosData
     //DEBUG
     public static bool DebugEnabled = false;
     public static bool DebugMultitude = true;
-    public static Tattoo DebugTattoo = GetTattooFromName("Damocles");
+    public static Tattoo DebugTattoo = GetTattooFromName("Heaven Icon");
 
     public static Tattoo GetRandomTattoo()
     {

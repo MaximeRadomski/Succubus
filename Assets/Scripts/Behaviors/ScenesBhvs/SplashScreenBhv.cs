@@ -11,8 +11,6 @@ public class SplashScreenBhv : SceneBhv
 
     void Start()
     {
-        // [DEBUG]
-        //PlayerPrefs.DeleteAll();
         Init();
     }
 

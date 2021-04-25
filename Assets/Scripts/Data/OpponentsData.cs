@@ -6,10 +6,10 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = false;
-    public static bool OnlyOpponent = false;
+    public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Lost Soul")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Harpy")).Clone();
     }
 
     static OpponentsData()
