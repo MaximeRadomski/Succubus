@@ -188,16 +188,16 @@ public static class Constants
     public static Color ColorHell4 = new Color(0.901f, 0.254f, 0.215f, 1.0f);  //e64137
 
     public static Color ColorEarth0 = new Color(0.039f, 0.149f, 0.223f, 1.0f);  //0a2639
-    public static Color ColorEarth1 = new Color(0.035f, 0.298f, 0.305f, 1.0f);  //094c4e
-    public static Color ColorEarth2 = new Color(0.023f, 0.454f, 0.372f, 1.0f);  //06745f
-    public static Color ColorEarth3 = new Color(0.090f, 0.623f, 0.466f, 1.0f);  //179f77
-    public static Color ColorEarth4 = new Color(0.207f, 0.796f, 0.494f, 1.0f);  //35cb7e
+    public static Color ColorEarth1 = new Color(0.035f, 0.266f, 0.274f, 1.0f);  //094446
+    public static Color ColorEarth2 = new Color(0.019f, 0.415f, 0.341f, 1.0f);  //056a57
+    public static Color ColorEarth3 = new Color(0.074f, 0.556f, 0.415f, 1.0f);  //138e6a
+    public static Color ColorEarth4 = new Color(0.121f, 0.701f, 0.403f, 1.0f);  //1fb367
 
-    public static Color ColorHeaven0 = new Color(0.164f, 0.101f, 0.286f, 1.0f);  //2a1a49
-    public static Color ColorHeaven1 = new Color(0.211f, 0.137f, 0.580f, 1.0f);  //362394
-    public static Color ColorHeaven2 = new Color(0.235f, 0.235f, 0.937f, 1.0f);  //3c3cef
-    public static Color ColorHeaven3 = new Color(0.066f, 0.517f, 0.917f, 1.0f);  //1184ea
-    public static Color ColorHeaven4 = new Color(0.117f, 0.749f, 1.000f, 1.0f);  //1ebfff
+    public static Color ColorHeaven0 = new Color(0.141f, 0.101f, 0.286f, 1.0f);  //241a49
+    public static Color ColorHeaven1 = new Color(0.215f, 0.121f, 0.545f, 1.0f);  //371f8b
+    public static Color ColorHeaven2 = new Color(0.282f, 0.188f, 0.843f, 1.0f);  //4830d7
+    public static Color ColorHeaven3 = new Color(0.039f, 0.450f, 0.819f, 1.0f);  //0a73d1
+    public static Color ColorHeaven4 = new Color(0.023f, 0.647f, 0.898f, 1.0f);  //06a5e5
 
     public static Color ColorBlackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);

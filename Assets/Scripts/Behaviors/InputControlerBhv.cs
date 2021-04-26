@@ -335,7 +335,7 @@ public class InputControlerBhv : FrameRateBehavior
     {
 #if UNITY_ANDROID
         return;
-#endif
+#else
         if (!_hasInit)
             Init();
         var allGameObjects = FindObjectsOfType<GameObject>();
@@ -382,6 +382,7 @@ public class InputControlerBhv : FrameRateBehavior
             ResetMenuSelector(preferedResetPos);
         }
         _currentInputLayer = Constants.InputLayer;
+#endif
     }
 
     public void ResetMenuSelector(Vector3? preferedResetPos = null)

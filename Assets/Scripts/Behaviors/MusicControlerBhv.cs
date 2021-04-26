@@ -97,6 +97,8 @@ public class MusicControlerBhv : MonoBehaviour
             _audioSource.clip = (AudioClip)Resources.Load("Musics/SplashScreen");
         else if (_currentType == MusicType.Menu)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/MainMenu");
+        else if (_currentType == MusicType.Steps)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/StepsScene");
         else if (_currentType == MusicType.Game)
         {
             var randomId = Random.Range(0, 0);

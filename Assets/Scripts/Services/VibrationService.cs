@@ -16,11 +16,11 @@ public static class VibrationService
 #endif
 
     private static bool _hasInit;
-    private static bool _vibrationEnabled;
+    private static bool? _vibrationEnabled;
 
-    private static void Init()
+    private static void Init(bool force = false)
     {
-        if (_hasInit)
+        if (!force && _hasInit)
             return;
         _vibrationEnabled = PlayerPrefsHelper.GetVibrationEnabled();
         _hasInit = true;
@@ -28,8 +28,10 @@ public static class VibrationService
 
     public static void Vibrate()
     {
-        if (!_hasInit || !_vibrationEnabled)
-            Init();
+        if (!_hasInit || _vibrationEnabled == null)
+            Init(force: true);
+        if (!_vibrationEnabled.HasValue || !_vibrationEnabled.Value)
+            return;
         long defaultVibrationTime = 50;
         if (isAndroid())
             vibrator.Call("vibrate", defaultVibrationTime);
@@ -42,8 +44,10 @@ public static class VibrationService
 
     public static void Vibrate(long milliseconds)
     {
-        if (!_hasInit || !_vibrationEnabled)
-            Init();
+        if (!_hasInit || _vibrationEnabled == null)
+            Init(force: true);
+        if (!_vibrationEnabled.HasValue || !_vibrationEnabled.Value)
+            return;
         if (isAndroid())
             vibrator.Call("vibrate", milliseconds);
 #if UNITY_ANDROID
@@ -54,8 +58,10 @@ public static class VibrationService
 
     public static void Vibrate(long[] pattern, int repeat)
     {
-        if (!_hasInit || !_vibrationEnabled)
-            Init();
+        if (!_hasInit || _vibrationEnabled == null)
+            Init(force: true);
+        if (!_vibrationEnabled.HasValue || !_vibrationEnabled.Value)
+            return;
         if (isAndroid())
             vibrator.Call("vibrate", pattern, repeat);
 #if UNITY_ANDROID

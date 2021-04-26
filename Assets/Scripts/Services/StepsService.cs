@@ -31,9 +31,12 @@ public class StepsService
         GenerateAdjacentSteps(run, character, originStep);
     }
 
+    private string _adjacentString;
+
     public void GenerateAdjacentSteps(Run run, Character character, Step currentStep)
     {
         var directionStr = currentStep.StepType.ToString().Substring(1);//SubString because StepType starts with a 'S'
+        _adjacentString = string.Empty;
         for (int i = 0; i < 4; ++i)
         {
             if (directionStr[i] == '0')
@@ -122,7 +125,18 @@ public class StepsService
         {
             lootType = LootType.Tattoo;
             if (PlayerPrefs.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)
-                lootId = TattoosData.GetRandomTattoo().Id;
+            {
+                var loop = -1;
+                while (loop < 1)
+                {
+                    lootId = TattoosData.GetRandomTattoo().Id;
+                    if (!_adjacentString.Contains($"T{lootId.ToString("00")}"))
+                        loop = 10;
+                    --loop;
+                    if (loop < 30)
+                        loop = 10; //Just in case of an infinite loop
+                }
+            }
             else
             {
                 var firstRandomId = Random.Range(0, 12);
@@ -167,6 +181,7 @@ public class StepsService
         var levelWeight = GetWeightFromRunLevel(run);
         var weight = (int)(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
+        _adjacentString += newStep.ToParsedString();
         run.Steps += newStep.ToParsedString();
     }
 
