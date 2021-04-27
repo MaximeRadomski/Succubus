@@ -52,7 +52,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnGameOver()
     {
-        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces };
+        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id };
         //_score = 0;
         //_level = 1;
         //_lines = 0;

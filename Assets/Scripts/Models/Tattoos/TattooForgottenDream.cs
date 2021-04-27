@@ -8,7 +8,7 @@ public class TattooForgottenDream : Tattoo
         Id = 36;
         Name = TattoosData.Tattoos[Id];
         Stat = 2;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 
