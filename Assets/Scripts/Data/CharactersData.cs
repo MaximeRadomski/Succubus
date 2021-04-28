@@ -63,14 +63,14 @@ public static class CharactersData
             Id = 5, Name = "Sir Vixid", Kind = "Dark Templar", Realm = Realm.Earth,
             Attack = 12,
             Cooldown = 20,
-            SpecialName = "Diabolus Vult", SpecialDescription = "remove the last 4 rows from the top"
+            SpecialName = "Diabolus Vult", SpecialDescription = "remove the last 2 rows from the top for a garbage one"
         },
         new Character()
         {
             Id = 6, Name = "Theresa", Kind = "Perverted Nun", Realm = Realm.Earth,
             Attack = 8,
             Cooldown = 8,
-            SpecialName = "Penitence", SpecialDescription = "remove the last 2 rows from the top for a garbage one"
+            SpecialName = "Penitence", SpecialDescription = "cancel the last piece locked on the playfield"
         },
         new Character()
         {
@@ -92,7 +92,7 @@ public static class CharactersData
             Id = 9, Name = "Enepsigos", Kind = "Fallen Angel", Realm = Realm.Heaven,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Wisdom", SpecialDescription = "peplenish 10% of enemy HP but remove two garbage rows from the top ones"
+            SpecialName = "Wisdom", SpecialDescription = "banish the current piece from existence"
         },
         new Character()
         {

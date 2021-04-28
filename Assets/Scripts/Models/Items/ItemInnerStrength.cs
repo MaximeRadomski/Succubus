@@ -8,7 +8,7 @@ public class ItemInnerStrength : Item
     {
         Id = 5;
         Name = ItemsData.Items[Id];
-        Description = "doubles your base attack damages for 4 seconds";
+        Description = "quadruples your base attack damages for 4 seconds";
         Rarity = Rarity.Rare;
         Cooldown = 10;
     }
@@ -18,7 +18,7 @@ public class ItemInnerStrength : Item
     protected override object Effect()
     {
         _oldAttack = _character.GetAttackNoBoost();
-        _character.BoostAttack += _oldAttack;
+        _character.BoostAttack += (_oldAttack * 3);
         _gameplayControler.CharacterInstanceBhv.Boost(_character.Realm, 4.0f);
         Task.Delay(4000).ContinueWith(t => AfterDelay());
         return base.Effect();
