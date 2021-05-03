@@ -1774,7 +1774,19 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null)
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.GetComponent<LinesLimiterBhv>())
+                continue;
+            Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Destroy(PlayFieldBhv.Grid[x, y].gameObject);
+            PlayFieldBhv.Grid[x, y] = null;
+        }
+    }
+
+    public void DeleteColumn(int x)
+    {
+        for (int y = 0; y < _playFieldHeight; ++y)
+        {
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.GetComponent<LinesLimiterBhv>())
                 continue;
             Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
@@ -2035,10 +2047,11 @@ public class GameplayControler : MonoBehaviour
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
                 Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
+                UpdateItemAndSpecialVisuals();
                 return true;
             }, true));
         }
-        else
+        else if (PlayFieldBhv !=  null && PlayFieldBhv.gameObject != null)
         {
             var alreadyExistingForcedPiece = GameObject.Find(Constants.GoForcedPiece);
             if (alreadyExistingForcedPiece != null)
