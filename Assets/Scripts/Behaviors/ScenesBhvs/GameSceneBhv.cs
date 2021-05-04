@@ -117,7 +117,7 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
-    public virtual void DamageOpponent(int amount, GameObject source, Realm? textRealm = null)
+    public virtual void DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
 
     }

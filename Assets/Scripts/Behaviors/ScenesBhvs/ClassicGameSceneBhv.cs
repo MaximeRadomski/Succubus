@@ -385,7 +385,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         bool spawnAfterAttack = true;
         CameraBhv.Bump(2);
         _opponentInstanceBhv.Attack();
-        if (Constants.CurrentRemainingSimpShields > 0)
+        
+        if (Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
+        {
+            Instantiator.PopText("missed", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+        }
+        else if (Constants.CurrentRemainingSimpShields > 0)
         {
             --Constants.CurrentRemainingSimpShields;
             var shieldObject = GameObject.Find(Constants.GoSimpShield);
@@ -502,7 +507,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _wetTimer = Time.time + seconds;
     }
 
-    public override void DamageOpponent(int amount, GameObject source, Realm? textRealm = null)
+    public override void DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
         if (Constants.CurrentOpponentHp <= 0)
             return;
@@ -527,7 +532,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else if (source.transform.position.x > 9)
                 sourcePosition = new Vector3(9.0f, sourcePosition.y, 0.0f);
         }
-        Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
+        if (attackLine)
+            Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
         _opponentInstanceBhv.TakeDamage();
         Constants.CurrentOpponentHp -= amount;
         CameraBhv.Bump(2);
@@ -596,9 +602,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void OnNewPiece(GameObject lastPiece)
     {
         if (_characterAttack > 0)
-        {
             DamageOpponent(_characterAttack, lastPiece);
-        }
+        else if (_characterAttack < 0)
+            Instantiator.PopText("missed", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
         _characterAttack = 0;
         _isCrit = false;
     }
@@ -655,6 +661,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         base.OnLinesCleared(nbLines, isB2B);
         var incomingDamages = 0;
+        if (nbLines > 0 && Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
+        {
+            incomingDamages = -1;
+            nbLines = 0;
+            isB2B = false;
+        }
         if (nbLines > 0)
         {
             if (Character.DamoclesDamages > 0 && nbLines == 4)
@@ -741,7 +753,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (time > 0)
         {
             var burnDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagesPercent));
-            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null, Realm.Hell);
+            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null, Realm.Hell, attackLine: false);
             StartCoroutine(Burn(time - 1));
         }
     }
@@ -749,13 +761,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public IEnumerator WindBoost()
     {
         yield return new WaitForSeconds(0.25f);
-        DamageOpponent(Constants.TripleLineDamageBonus, null, Realm.None);
+        DamageOpponent(Constants.TripleLineDamageBonus, null, Realm.None, attackLine: false);
         _characterInstanceBhv.Boost(Realm.None, 1.0f);
     }
 
     public override void OnCombo(int nbCombo, int nbLines)
     {
         base.OnCombo(nbCombo, nbLines);
+        if (_characterAttack < 0)
+            return;
         var incomingDamages = 0;
         if (Character.Realm == Realm.Hell)
             incomingDamages += (int)((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
@@ -777,6 +791,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void OnPerfectClear()
     {
         base.OnPerfectClear();
+        if (_characterAttack < 0)
+            return;
         if (Character.PerfectKills)
             DamageOpponent(9999, _gameplayControler.CharacterInstanceBhv.gameObject);
     }

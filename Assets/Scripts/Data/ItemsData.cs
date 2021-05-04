@@ -10,7 +10,7 @@ public static class ItemsData
 
     public static string[] Items = 
     /* 10 */ { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert",
-    /* 10 */ "Justice Shovel", "Flipping Coin" };
+    /* 10 */ "Justice Shovel", "Flipping Coin", "D6" };
 
     public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8], Items[10], Items[11] };
     public static string[] RareItemsNames = { Items[4], Items[5], Items[9] };

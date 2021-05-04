@@ -15,7 +15,7 @@ public class ItemFlippingCoin : Item
 
     protected override object Effect()
     {
-        _gameplayControler.SetGravity(1);
+        Constants.ChanceAttacksHappeningPercent = 50;
         return base.Effect();
     }
 }
