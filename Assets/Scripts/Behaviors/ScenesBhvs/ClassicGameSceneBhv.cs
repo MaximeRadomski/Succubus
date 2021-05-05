@@ -167,7 +167,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Victory();
             return;
         }
-        CurrentOpponent = _opponents[Constants.CurrentListOpponentsId];
+        CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();
+        if (Constants.RandomizedAttackType != AttackType.None)
+            RandomizeOpponentAttack();
+        if (Constants.HalvedCooldown)
+            HalveOpponentMaxCooldown();
         if (Constants.NameLastScene == Constants.SettingsScene)
         {
             if (Constants.IsffectAttackInProgress)
@@ -207,6 +211,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
         StartOpponentCooldown(sceneInit);
     }
+
+    public void RandomizeOpponentAttack() { CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Constants.RandomizedAttackType, 1, 2) }; }
+
+    public void HalveOpponentMaxCooldown() { CurrentOpponent.Cooldown /= 2; }
 
     private bool Victory()
     {
@@ -389,6 +397,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
         {
             Instantiator.PopText("missed", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            _soundControler.PlaySound(_idDodge);
+            _characterInstanceBhv.Dodge();
+        }
+        else if (Constants.BlockPerAttack >= 0 && ++Constants.BlockPerAttack == 3)
+        {
+            Constants.BlockPerAttack = 0;
+            Instantiator.PopText("blocked", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+            _soundControler.PlaySound(_idHit);
         }
         else if (Constants.CurrentRemainingSimpShields > 0)
         {
@@ -401,7 +417,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 shieldObject.GetComponent<CharacterInstanceBhv>().GetOS();
             }
         }
-        else if (Helper.RandomDice100(Character.DodgeChance))
+        else if (Helper.RandomDice100(Character.DodgeChance + Constants.AddedDodgeChancePercent))
         {
             Instantiator.PopText("dodged", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idDodge);
@@ -630,6 +646,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (Character.DeleteAfterKill > 0)
             _gameplayControler.DeleteFromBottom(Character.DeleteAfterKill);
+        Constants.RandomizedAttackType = AttackType.None;
+        Constants.HalvedCooldown = false;
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);

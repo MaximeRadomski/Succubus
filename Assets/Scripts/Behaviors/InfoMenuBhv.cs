@@ -99,7 +99,9 @@ public class InfoMenuBhv : PopupBhv
 
     private void ItemInfo()
     {
-        _instantiator.NewPopupYesNo(_characterItem.Name, Constants.MaterialHell_3_2 + "cooldown: " + _characterItem.Cooldown + Constants.MaterialEnd + "\n" + _characterItem.Description.ToLower(), null, "Ok", null);
+        _instantiator.NewPopupYesNo(_characterItem.Name,
+            $"{Constants.MaterialHell_3_2}{_characterItem.Description.ToLower()}\n---\n{Constants.MaterialHell_3_2}cooldown: {Constants.MaterialHell_4_3}{_characterItem.Cooldown}{Constants.MaterialEnd}",
+            null, "Ok", null);
     }
 
     private void TattooInfo()

@@ -8,7 +8,7 @@ public class ItemGrenade : Item
     {
         Id = 2;
         Name = ItemsData.Items[Id];
-        Description = "clears your last four rows";
+        Description = $"clears your last {Highlight("4 rows")}.";
         Rarity = Rarity.Common;
         Cooldown = 12;
     }

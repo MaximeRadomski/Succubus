@@ -8,7 +8,7 @@ public class ItemWoodenCross : Item
     {
         Id = 8;
         Name = ItemsData.Items[Id];
-        Description = "resets the gravity level of the room";
+        Description = $"resets the {Highlight("gravity level")} of the room.";
         Rarity = Rarity.Common;
         Cooldown = 4;
     }

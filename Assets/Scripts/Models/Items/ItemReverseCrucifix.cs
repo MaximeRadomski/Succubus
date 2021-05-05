@@ -7,9 +7,9 @@ public class ItemReverseCrucifix : Item
     {
         Id = 7;
         Name = ItemsData.Items[Id];
-        Description = "inflicts 666 damages to your opponent (except bosses)";
+        Description = $"inflicts {Highlight("666 damages")} to your opponent (66 to bosses).";
         Rarity = Rarity.Legendary;
-        Cooldown = 40;
+        Cooldown = 25;
     }
 
     protected override object Effect()

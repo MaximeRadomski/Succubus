@@ -250,6 +250,10 @@ public static class Constants
     public static int TripleLineDamageBonus = 0;
     public static int DamoclesDamages = 0;
     public static int ChanceAttacksHappeningPercent = 100;
+    public static AttackType RandomizedAttackType = AttackType.None;
+    public static bool HalvedCooldown = false;
+    public static int AddedDodgeChancePercent = 0;
+    public static int BlockPerAttack = -1;
 
     public static bool OnlyMouseInMenu;
 
@@ -263,6 +267,10 @@ public static class Constants
         TripleLineDamageBonus = 0;
         DamoclesDamages = 0;
         ChanceAttacksHappeningPercent = 100;
+        RandomizedAttackType = AttackType.None;
+        HalvedCooldown = false;
+        AddedDodgeChancePercent = 0;
+        BlockPerAttack = -1;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

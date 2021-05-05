@@ -11,7 +11,7 @@ public class ItemForbiddenCamembert : Item
     {
         Id = 9;
         Name = ItemsData.Items[Id];
-        Description = "fills every single holes";
+        Description = $"fills every {Highlight("single holes")}.";
         Rarity = Rarity.Rare;
         Cooldown = 12;
     }

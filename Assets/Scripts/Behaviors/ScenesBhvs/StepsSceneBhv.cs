@@ -293,7 +293,7 @@ public class StepsSceneBhv : SceneBhv
             var item = ItemsData.GetItemFromName(ItemsData.Items[_selectedStep.LootId]);
             name = item.Name;
             cooldown = item.Cooldown.ToString();
-            description = item.Description;
+            description = Constants.MaterialHell_3_2 + item.Description;
         }
         else if (_selectedStep.LootType == LootType.Tattoo)
         {
@@ -304,9 +304,9 @@ public class StepsSceneBhv : SceneBhv
         }
         else
             return;
-        Instantiator.NewPopupYesNo(name, (cooldown != null ?
-            (Constants.MaterialHell_3_2 + "cooldown: " + cooldown + "" + Constants.MaterialEnd + "\n")
-            : "") + description.ToLower(), null, "Ok", null);
+        Instantiator.NewPopupYesNo(name, description.ToLower() + (cooldown != null ?
+            ($"\n---\n{Constants.MaterialHell_3_2}cooldown: {Constants.MaterialHell_4_3}{cooldown}{Constants.MaterialEnd}")
+            : ""), null, "Ok", null);
     }
 
     private void OnBossTriggered()

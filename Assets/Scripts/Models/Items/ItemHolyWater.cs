@@ -8,7 +8,7 @@ public class ItemHolyWater : Item
     {
         Id = 0;
         Name = ItemsData.Items[Id];
-        Description = "clears 4 waste rows";
+        Description = $"clears {Highlight("4 waste rows")}.";
         Rarity = Rarity.Common;
         Cooldown = 12;
     }

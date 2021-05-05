@@ -8,9 +8,9 @@ public class ItemSmokeBomb : Item
     {
         Id = 4;
         Name = ItemsData.Items[Id];
-        Description = "makes you exit the confrontation";
+        Description = $"makes you {Highlight("exit")} the confrontation.";
         Rarity = Rarity.Rare;
-        Cooldown = 24;
+        Cooldown = 18;
     }
 
     protected override object Effect()

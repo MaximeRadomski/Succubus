@@ -7,9 +7,9 @@ public class ItemHolyGrenade : Item
     {
         Id = 6;
         Name = ItemsData.Items[Id];
-        Description = "clears the whole playfield";
+        Description = $"clears the {Highlight("whole playfield")}.";
         Rarity = Rarity.Legendary;
-        Cooldown = 40;
+        Cooldown = 25;
     }
 
     protected override object Effect()

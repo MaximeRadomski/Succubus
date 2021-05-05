@@ -51,4 +51,9 @@ public abstract class Item : Loot
         CancelOrEndItem();
         return true;
     }
+
+    protected string Highlight(string highlight)
+    {
+        return $"{Constants.MaterialHell_4_3}{highlight}{Constants.MaterialEnd}";
+    }
 }

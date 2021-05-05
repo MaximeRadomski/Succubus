@@ -8,7 +8,7 @@ public class ItemVoodooDoll : Item
     {
         Id = 3;
         Name = ItemsData.Items[Id];
-        Description = "bypasses your current opponent's cooldown and activates its attack";
+        Description = $"{Highlight("bypasses")} your current opponent's {Highlight("cooldown")} and activates its attack.";
         Rarity = Rarity.Common;
         Cooldown = 1;
     }

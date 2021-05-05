@@ -69,7 +69,7 @@ public static class DialogData
                     "Who dares disturb me during my eternal suffering?",
                     "Well... Wouldn't you want to do something else than... Suffering?",
                     "Just doing my chores, I know my place. Now begone! Before I loose my patience.",
-                    "Even if I say to you that your mistress Ivy is sending me here to get you?",
+                    "Even if I tell you that your mistress Ivy is sending me here to get you?",
                     "Mistress!! Say no more! I'm coming with you little being!",
                     "Little... being... ?"
                 }
