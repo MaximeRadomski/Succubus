@@ -9,7 +9,7 @@ public static class OpponentsData
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Harpy")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Tormentor")).Clone();
     }
 
     static OpponentsData()
@@ -203,7 +203,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20,
+            HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
             GravityLevel = 3, Weight = 40
@@ -227,7 +227,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Crossed Demon", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.None, Cooldown = 16,
+            HpMax = 200, Weakness = Weakness.None, Cooldown = 16, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
             GravityLevel = 1, Weight = 50

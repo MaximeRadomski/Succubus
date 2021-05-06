@@ -10,15 +10,15 @@ public static class ItemsData
 
     public static string[] Items = 
     /* 10 */ { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert",
-    /* 10 */ "Justice Shovel", "Flipping Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield" };
+    /* 10 */ "Justice Shovel", "Flipping Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield", "CRT Monitor", "Creeping Totem" };
 
-    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8], Items[11], Items[12] };
+    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8], Items[11], Items[12], Items[16], Items[17] };
     public static string[] RareItemsNames = { Items[4], Items[5], Items[9], Items[10], Items[13], Items[14], Items[15] };
     public static string[] LegendaryItemsNames = { Items[6], Items[7] };
 
     //DEBUG
     public static bool DebugEnabled = true;
-    public static Item DebugItem = GetItemFromName("Knight Shield");
+    public static Item DebugItem = GetItemFromName("Creeping Totem");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

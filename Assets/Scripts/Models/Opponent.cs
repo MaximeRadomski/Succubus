@@ -16,6 +16,7 @@ public class Opponent
     public int XLineImmunity;
     public int GravityLevel;
     public Realm Region;
+    public bool Haste;
 
     public List<OpponentAttack> Attacks;
 
@@ -42,6 +43,8 @@ public class Opponent
         newOpponent.XLineWeakness = XLineWeakness;
         newOpponent.XLineImmunity = XLineImmunity;
         newOpponent.GravityLevel = GravityLevel;
+        newOpponent.Region = Region;
+        newOpponent.Haste = Haste;
         newOpponent.Attacks = Attacks;
         newOpponent.DamagesOnWeakness = DamagesOnWeakness;
         newOpponent.IsDead = IsDead;

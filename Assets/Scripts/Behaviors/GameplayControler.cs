@@ -2107,7 +2107,7 @@ public class GameplayControler : MonoBehaviour
             int roundedX = Mathf.RoundToInt(drillTarget.transform.position.x);
             int roundedY = Mathf.RoundToInt(drillTarget.transform.position.y);
             var targetedGo = PlayFieldBhv.Grid[roundedX, roundedY];
-            if (targetedGo!= null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
+            if (targetedGo != null && targetedGo.GetChild(0)?.GetComponent<BlockBhv>()?.Indestructible == false)
             {   
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
@@ -2326,6 +2326,8 @@ public class GameplayControler : MonoBehaviour
                 && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
+            if ((type == AttackType.DarkRow || type == AttackType.LightRow))
+                attackBlock.transform.GetChild(0).GetComponent<BlockBhv>().Indestructible = true;
             attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[x, y] = attackBlock.transform;
         }

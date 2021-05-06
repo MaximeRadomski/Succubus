@@ -365,6 +365,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
+        else if (sceneInit && CurrentOpponent.Haste)
+        {
+            Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown;
+        }
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
             _gameplayControler.AttackDrill(_opponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1);
         SetNextCooldownTick();
