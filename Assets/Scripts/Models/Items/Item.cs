@@ -31,7 +31,7 @@ public abstract class Item : Loot
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        Constants.ResetCurrentItemCooldown(character, this);
+        Constants.RestartCurrentItemCooldown(character, this);
         _gameplayControler.UpdateItemAndSpecialVisuals();
         _popPosition = new Vector3(4.5f, 6.5f, 0.0f);
         _attackLine = gameplayControler.Instantiator.NewAttackLine(gameplayControler.CharacterInstanceBhv.transform.position, _popPosition, character.Realm, linear: false,

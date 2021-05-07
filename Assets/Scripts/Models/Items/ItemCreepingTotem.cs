@@ -36,7 +36,7 @@ public class ItemCreepingTotem : Item
         if (selectedY >= 0)
         {
             var centerY = Random.Range(selectedY >= 3 ? 1 : 0, selectedY - 2);
-            while (_gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetChild(0)?.GetComponent<BlockBhv>()?.Indestructible == true)
+            while (_gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
                 ++centerY;
             DestroyBlock(selectedX, centerY);
             DestroyBlock(selectedX, centerY + 1);
@@ -52,7 +52,7 @@ public class ItemCreepingTotem : Item
     {
         if (roundedX < 0 || roundedX >= Constants.PlayFieldWidth
             || roundedY < 0 || roundedY >= Constants.PlayFieldHeight
-            || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetChild(0)?.GetComponent<BlockBhv>()?.Indestructible == true)
+            || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;
         _gameplayControler.Instantiator.NewFadeBlock(Realm.Earth, new Vector3(roundedX, roundedY, 0.0f), 5, 0);
         if (_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY] != null)

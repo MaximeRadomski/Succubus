@@ -629,7 +629,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void UpdateNextPieces()
+    public void UpdateNextPieces()
     {
         for (int i = 0; i < 5; ++i)
         {
@@ -1749,7 +1749,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Light"))
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light"))
                 return false;
         }
         return true;
@@ -1757,14 +1757,14 @@ public class GameplayControler : MonoBehaviour
 
     private bool HasDarkRow(int y)
     {
-        return PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.name.Contains("Dark");
+        return PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].parent.name.Contains("Dark");
     }
 
     private bool HasWasteRow(int y)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] != null && PlayFieldBhv.Grid[x, y].gameObject.name.Contains("Waste"))
+            if (PlayFieldBhv.Grid[x, y] != null && PlayFieldBhv.Grid[x, y].parent.name.Contains("Waste"))
                 return true;
         }
         return false;
@@ -2107,7 +2107,7 @@ public class GameplayControler : MonoBehaviour
             int roundedX = Mathf.RoundToInt(drillTarget.transform.position.x);
             int roundedY = Mathf.RoundToInt(drillTarget.transform.position.y);
             var targetedGo = PlayFieldBhv.Grid[roundedX, roundedY];
-            if (targetedGo != null && targetedGo.GetChild(0)?.GetComponent<BlockBhv>()?.Indestructible == false)
+            if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
             {   
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
@@ -2325,11 +2325,11 @@ public class GameplayControler : MonoBehaviour
             if ((type == AttackType.WasteRow || type == AttackType.LightRow)
                 && x >= emptyStart && x <= emptyEnd)
                 continue;
-            var attackBlock = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
+            var attackPiece = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
             if ((type == AttackType.DarkRow || type == AttackType.LightRow))
-                attackBlock.transform.GetChild(0).GetComponent<BlockBhv>().Indestructible = true;
-            attackBlock.transform.SetParent(PlayFieldBhv.gameObject.transform);
-            PlayFieldBhv.Grid[x, y] = attackBlock.transform;
+                attackPiece.transform.GetChild(0).GetComponent<BlockBhv>().Indestructible = true;
+            attackPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
+            PlayFieldBhv.Grid[x, y] = attackPiece.transform.GetChild(0);
         }
     }
 

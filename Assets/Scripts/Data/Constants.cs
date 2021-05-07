@@ -283,7 +283,7 @@ public static class Constants
             Constants.SelectedCharacterSpecialCooldown = 1;
     }
 
-    public static void ResetCurrentItemCooldown(Character character, Item item = null)
+    public static void RestartCurrentItemCooldown(Character character, Item item = null)
     {
         Item tmpCurrentItem;
         if (item != null)

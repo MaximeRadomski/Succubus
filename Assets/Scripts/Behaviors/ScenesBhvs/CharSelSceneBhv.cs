@@ -118,7 +118,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 //PlayerPrefsHelper.ResetTattoos();
                 Constants.ResetClassicGameCache();
-                Constants.ResetCurrentItemCooldown(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
+                Constants.RestartCurrentItemCooldown(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
             }
             else
             {

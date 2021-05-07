@@ -47,7 +47,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
             _opponents = PlayerPrefsHelper.GetCurrentOpponents(new Run(Difficulty.Normal));
-            Constants.ResetCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
+            Constants.RestartCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
         }
         else
         {
@@ -117,6 +117,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
+        if (CurrentOpponent.Haste)
+            Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Constants.InputLocked = false;        
         Paused = false;
         OpponentAppearance();
@@ -209,7 +211,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                                      "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
         _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
-        StartOpponentCooldown(sceneInit);
+        StartOpponentCooldown(sceneInit, true);
     }
 
     public void RandomizeOpponentAttack() { CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Constants.RandomizedAttackType, 1, 2) }; }
@@ -258,7 +260,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("New Item", Constants.MaterialHell_4_3 + ((Item)loot).Name.ToLower() + Constants.MaterialHell_3_2 + " added to your gear.", null, "Ok", LoadBackAfterVictory, sprite);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                Constants.ResetCurrentItemCooldown(Character, currentItem);
+                _run.CurrentItemCooldown = 0;
+                PlayerPrefsHelper.SaveRun(_run);
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
@@ -273,7 +276,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     if (result)
                     {
                         PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                        Constants.ResetCurrentItemCooldown(Character, (Item)loot);
+                        _run.CurrentItemCooldown = 0;
+                        PlayerPrefsHelper.SaveRun(_run);
                     }
                     LoadBackAfterVictory(true);
                     return result;
@@ -360,14 +364,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         return result;
     }
 
-    private void StartOpponentCooldown(bool sceneInit = false)
+    private void StartOpponentCooldown(bool sceneInit = false, bool first = false)
     {
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
-        else if (sceneInit && CurrentOpponent.Haste)
+        if (first && CurrentOpponent.Haste)
         {
-            Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            if (!sceneInit)
+                Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
             Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown;
         }
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
