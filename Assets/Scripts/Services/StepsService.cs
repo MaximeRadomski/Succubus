@@ -121,6 +121,12 @@ public class StepsService
             lootId = ItemsData.GetRandomItem().Id;
             opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
+        else if (Helper.RandomDice100(run.ResourceLootPercent))
+        {
+            lootType = LootType.Resource;
+            lootId = run.CurrentRealm.GetHashCode();
+            opponentType = OpponentType.Common;
+        }
         else
         {
             lootType = LootType.Tattoo;
@@ -175,6 +181,12 @@ public class StepsService
         {
             lootType = LootType.Character;
             lootId = CharactersData.DebugCharacter().Id;
+            opponentType = OpponentType.Common;
+        }
+        if (ResourcesData.DebugEnabled)
+        {
+            lootType = LootType.Resource;
+            lootId = ResourcesData.DebugResource.Id;
             opponentType = OpponentType.Common;
         }
         //DEBUG

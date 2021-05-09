@@ -66,6 +66,14 @@ public class StepsSceneBhv : SceneBhv
         _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         _backgroundMask = GameObject.Find("BackgroundMask");
 
+        var resources = _run.GetRunResources();
+        for (int i = 0; i < resources.Count; ++i)
+        {
+            if (resources[i] <= 0)
+                GameObject.Find($"Resource{i}").SetActive(false);
+            else
+                GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
+        }
         _stepsService = new StepsService();
         _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
@@ -141,6 +149,13 @@ public class StepsSceneBhv : SceneBhv
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _selectedStep.LootId);
                 _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = ItemsData.Items[_selectedStep.LootId].ToLower();
+            }
+            else if (_selectedStep.LootType == LootType.Resource)
+            {
+                rarity = Rarity.Common;
+                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Resources_" + _selectedStep.LootId);
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
+                _lootName.text = ResourcesData.Resources[_selectedStep.LootId].ToLower();
             }
             else if (_selectedStep.LootType == LootType.Tattoo)
             {
@@ -294,6 +309,13 @@ public class StepsSceneBhv : SceneBhv
             name = item.Name;
             cooldown = item.Cooldown.ToString();
             description = Constants.MaterialHell_3_2 + item.Description;
+        }
+        else if (_selectedStep.LootType == LootType.Resource)
+        {
+            var resource = ResourcesData.GetResourceFromName(ResourcesData.Resources[_selectedStep.LootId]);
+            name = resource.Name;
+            cooldown = null;
+            description = Constants.MaterialHell_3_2 + resource.Description;
         }
         else if (_selectedStep.LootType == LootType.Tattoo)
         {

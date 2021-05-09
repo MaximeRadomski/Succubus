@@ -40,6 +40,8 @@ public class StepInstanceBhv : MonoBehaviour
             rarity = Rarity.Legendary;
         else if (step.LootType == LootType.Item)
             rarity = ItemsData.GetItemFromName(ItemsData.Items[step.LootId]).Rarity;
+        else if (step.LootType == LootType.Resource)
+            rarity = Rarity.Common;
         else if (step.LootType == LootType.Tattoo)
             rarity = TattoosData.GetTattooFromName(TattoosData.Tattoos[step.LootId]).Rarity;
         _stepOpponent.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (6 + rarity.GetHashCode()));

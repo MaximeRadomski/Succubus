@@ -5,7 +5,7 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {

@@ -42,7 +42,7 @@ public class Step
             if (lootLetter == ((LootType)i).ToString().Substring(0, 1))
                 LootType = (LootType)i;
         }
-        LootId = int.Parse(parsedString.Substring(parsedString.IndexOf(LootType.ToString()[0]) + 1, 2));
+        LootId = int.Parse(parsedString.Substring(parsedString.IndexOf('V') + 3, 2));
         //Opponents (ugly part)
         var realmOpponents = new List<Opponent>();
         if (Realm == Realm.Hell)

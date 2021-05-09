@@ -23,6 +23,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _characterAttack;
     private int _wetMalus;
     private float _wetTimer;
+    private float _timeStopTimer;
     private bool _isCrit;
     private bool _isVictorious;
 
@@ -73,6 +74,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
         }
         _wetTimer = -1;
+        _timeStopTimer = -1;
         _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
         _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
         _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
@@ -284,6 +286,18 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 }
             }
         }
+        else if (loot.LootType == LootType.Resource)
+        {
+            var amount = 2;
+            if (_run.Difficulty == Difficulty.Easy)
+                amount = 1;
+            else if (_run.Difficulty == Difficulty.Hard)
+                amount = 3;
+            _run.AlterResource(((Resource)loot).Id, amount);
+            PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
+            PlayerPrefsHelper.SaveRun(_run);
+            Instantiator.NewPopupYesNo("Resources", $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.MaterialHell_3_2} added to your resources.", null, "Ka-Ching!", LoadBackAfterVictory);
+        }
         else if (loot.LootType == LootType.Tattoo)
         {
             var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
@@ -382,6 +396,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void SetNextCooldownTick()
     {
+        if (_timeStopTimer > 0)
+            return;
         if (Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
         {
             _opponentOnCooldown = false;
@@ -396,6 +412,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 _nextCooldownTick = Time.time + 1.0f;
         }
+    }
+
+    public void StopTime(int seconds)
+    {
+        _gameplayControler.SetGravity(0);
+        _nextCooldownTick = Time.time + 3600;
+        _timeStopTimer = Time.time + seconds;
     }
 
     public override bool OpponentAttack()
@@ -476,6 +499,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Character.BoostAttack -= _wetMalus;
             _wetTimer = -1;
         }
+        if (_timeStopTimer > 0 && Time.time > _timeStopTimer)
+        {
+            _gameplayControler.SetGravity(CurrentOpponent.GravityLevel);
+            _nextCooldownTick = Time.time + 1;
+            _timeStopTimer = -1;
+            var maxHeight = 15.0f;
+            var highestBlockY = _gameplayControler.GetHighestBlock();
+            if (maxHeight > highestBlockY + 3)
+                maxHeight = highestBlockY + 4;
+            Instantiator.PopText("and time keeps\nmoving on", new Vector2(4.5f, maxHeight));
+        }
     }
 
     private void HandleForcedPiece()
@@ -492,6 +526,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }
+    }
+
+    public void RestartOpponentCooldown()
+    {
+        Constants.CurrentOpponentCooldown = 0;
+        UpdateCooldownBar(Direction.Down);
+        _opponentOnCooldown = true;
+        _nextCooldownTick = Time.time + 1.0f;
+        _gameplayControler.AttackIncoming = false;
     }
 
     private void UpdateCooldownBar(Direction direction)

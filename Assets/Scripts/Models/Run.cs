@@ -1,4 +1,6 @@
-﻿public class Run
+﻿using System.Collections.Generic;
+
+public class Run
 {
     public Realm CurrentRealm;
     public Difficulty Difficulty;
@@ -6,6 +8,7 @@
     public int MaxSteps;
     public int CurrentStep;
     public int CurrentItemCooldown;
+    public string ResourcesLooted;
     public string Steps;
     public int X, Y;
     // Character starts at X50 Y50 because coordinates are stored in two digits and coordinates under zero could mean up to 3 digits
@@ -24,6 +27,7 @@
     public bool CharacterEncounterAvailability;
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 25;
+    public int ResourceLootPercent = 25;
 
     public Run(Difficulty difficulty)
     {
@@ -53,5 +57,38 @@
         X = 50;
         Y = 50;
         Steps = null;
+    }
+
+    public List<int> GetRunResources()
+    {
+        var resourcesStr = ResourcesLooted;
+        var resources = new List<int>();
+        if (!string.IsNullOrEmpty(resourcesStr))
+        {
+            var resourcesStrSplit = resourcesStr.Split(';');
+            for (int i = 0; i < resourcesStrSplit.Length; ++i)
+            {
+                if (!string.IsNullOrEmpty(resourcesStrSplit[i]))
+                    resources.Add(int.Parse(resourcesStrSplit[i]));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ResourcesData.Resources.Length; ++i)
+                resources.Add(0);
+        }
+        return resources;
+    }
+
+    public void AlterResource(int resourceId, int amount)
+    {
+        var resources = GetRunResources();
+        resources[resourceId] += amount;
+        var resourcesStr = "";
+        foreach (int resource in resources)
+        {
+            resourcesStr += $"{resource};";
+        }
+        ResourcesLooted = resourcesStr;
     }
 }

@@ -708,4 +708,37 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.SetInt(Constants.PpRealmBossProgression, realmId);
     }
+
+    public static List<int> GetTotalResources()
+    {
+        var resourcesStr = PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpSerializeDefault);
+        var resources = new List<int>();
+        if (!string.IsNullOrEmpty(resourcesStr))
+        {
+            var resourcesStrSplit = resourcesStr.Split(';');
+            for (int i = 0; i < ResourcesData.Resources.Length; ++i)
+            {
+                if (!string.IsNullOrEmpty(resourcesStrSplit[i]))
+                    resources.Add(int.Parse(resourcesStrSplit[i]));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ResourcesData.Resources.Length; ++i)
+                    resources.Add(0);
+        }
+        return resources;
+    }
+
+    public static void AlterResource(int resourceId, int amount)
+    {
+        var resources = GetTotalResources();
+        resources[resourceId] += amount;
+        var resourcesStr = "";
+        foreach (int resource in resources)
+        {
+            resourcesStr += $"{resource};";
+        }
+        PlayerPrefs.SetString(Constants.PpTotalResources, resourcesStr);
+    }
 }

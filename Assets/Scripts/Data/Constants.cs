@@ -120,6 +120,7 @@ public static class Constants
     public const string PpRunBossVanquished = "RunBossVanquished";
     public const string PpRealmBossProgression = "RealmBossProgression";
     public const int PpRealmBossProgressionDefault = -1;
+    public const string PpTotalResources = "TotalResources";
 
     public static string GetDefaultKeyBinding()
     {
@@ -254,6 +255,7 @@ public static class Constants
     public static bool HalvedCooldown = false;
     public static int AddedDodgeChancePercent = 0;
     public static int BlockPerAttack = -1;
+    public static float BonusLockDelay = 0.0f;
 
     public static bool OnlyMouseInMenu;
 
@@ -271,6 +273,7 @@ public static class Constants
         HalvedCooldown = false;
         AddedDodgeChancePercent = 0;
         BlockPerAttack = -1;
+        BonusLockDelay = 0.0f;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

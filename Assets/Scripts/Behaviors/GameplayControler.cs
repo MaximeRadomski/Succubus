@@ -10,6 +10,7 @@ public class GameplayControler : MonoBehaviour
 {
     public GameSceneBhv SceneBhv;
     public float GravityDelay;
+    public int GravityLevel;
     public GameObject CurrentPiece;
     public GameObject CurrentGhost;
     public string Bag;
@@ -150,7 +151,7 @@ public class GameplayControler : MonoBehaviour
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
-        _lockDelay = Constants.LockDelay + (Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
+        SetLockDelay();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -477,8 +478,9 @@ public class GameplayControler : MonoBehaviour
             level -= Character.LoweredGravity;
         if (level < 0)
             level = 0;
+        GravityLevel = level;
         GravityDelay = Constants.GravityDelay;
-        _lockDelay = Constants.LockDelay + (Character != null && Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
+        SetLockDelay();
         if (level == 19)
         {
             GravityDelay = 0.0f;
@@ -487,7 +489,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay - (Constants.LockDelay * 0.04f * levelAfter20);
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20);
         }
         else
         {
@@ -498,6 +500,11 @@ public class GameplayControler : MonoBehaviour
             }
         }
         //Debug.Log("\t[DEBUG]\tGRAVITY = \"" + level + ": " + GravityDelay + "\"");
+    }
+
+    public void SetLockDelay()
+    {
+        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + (Character != null && Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -878,7 +885,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityFall()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !CurrentPiece.GetComponent<Piece>().IsAffectedByGravity || CurrentPiece.GetComponent<Piece>().IsHollowed)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !CurrentPiece.GetComponent<Piece>().IsAffectedByGravity || CurrentPiece.GetComponent<Piece>().IsHollowed || GravityLevel <= 0)
             return;
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
