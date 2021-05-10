@@ -23,8 +23,13 @@ public class BlockBhv : MonoBehaviour
     public void Start()
     {
         Shadow = transform.GetChild(0).gameObject;
-        Shadow.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
-        Shadow.GetComponent<SpriteRenderer>().sortingOrder = -2;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        var shadowRenderer = Shadow.GetComponent<SpriteRenderer>();
+        shadowRenderer.sprite = _spriteRenderer.sprite;
+        shadowRenderer.sortingOrder = -2;
+        shadowRenderer.flipX = _spriteRenderer.flipX;
+        shadowRenderer.flipY = _spriteRenderer.flipY;
+        shadowRenderer.transform.rotation = _spriteRenderer.transform.rotation;
         _hasSpreadDown = false;
     }
 

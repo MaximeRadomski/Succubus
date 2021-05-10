@@ -111,6 +111,8 @@ public static class Constants
     public const int PpArrDefault = 2;
     public const string PpRotationPoint = "RotationPoint";
     public const bool PpRotationPointDefault = false;
+    public const string PpClassicPieces = "ClassicPieces";
+    public const bool PpClassicPiecesDefault = false;
     public const string PpOrientation = "Orientation";
     public const Direction PpOrientationDefault = Direction.Vertical;
     public const string PpRunAlreadyDialog = "Orientation";
@@ -207,11 +209,6 @@ public static class Constants
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
     public static Color ColorBlack = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
-    public static string MaterialHell_4_3 = "<material=\"hell.4.3\">";
-    public static string MaterialHell_4_3B = "<material=\"hell.4.3B\">";
-    public static string MaterialHell_3_2 = "<material=\"hell.3.2\">";
-    public static string MaterialHell_3_2B = "<material=\"hell.3.2B\">";
-    public static string MaterialLongHell_3_2 = "<material=\"LongHell.3.2\">";
     public static string MaterialEnd = "</material>";
 
     public static object GetColorFromRealm(Realm realm, int id)
@@ -223,6 +220,18 @@ public static class Constants
         var myActualType = typeof(Constants);
         var tmp = myActualType.GetField("Color" + realm.ToString() + id);
         return tmp.GetValue(myActualType);
+    }
+
+    public static string GetMaterial(Realm realm, TextType type, TextCode code)
+    {
+        var realmStr = realm.ToString();
+        var typeStr = "";
+        if (type == TextType.AbjectLong)
+            typeStr = "Long";
+        else
+            realmStr = realmStr.ToLower();
+        var material = $"<material=\"{typeStr}{realmStr}{code.GetDescription()}\">";
+        return material;
     }
 
     // CACHE SAVES
@@ -240,6 +249,7 @@ public static class Constants
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;
     public static int CurrentItemCooldown;
+    public static int CurrentItemUses;
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static int CurrentOpponentCooldown;
@@ -256,6 +266,7 @@ public static class Constants
     public static int AddedDodgeChancePercent = 0;
     public static int BlockPerAttack = -1;
     public static float BonusLockDelay = 0.0f;
+    public static bool TruthResurection = false;
 
     public static bool OnlyMouseInMenu;
 
@@ -274,6 +285,7 @@ public static class Constants
         AddedDodgeChancePercent = 0;
         BlockPerAttack = -1;
         BonusLockDelay = 0.0f;
+        TruthResurection = false;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

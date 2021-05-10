@@ -47,13 +47,13 @@ public class GameOverSceneBhv : SceneBhv
 
             var rareBonus = PlayerPrefsHelper.GetBonusRarePercent();
             if (rareBonus < Constants.MaxRarePercent)
-                content = $"{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}rare{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{rareAdd}%{Constants.MaterialEnd}";
+                content = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your chance of finding a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}rare{Constants.MaterialEnd} loot is increased by {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{rareAdd}%{Constants.MaterialEnd}";
             var legendaryBonus = PlayerPrefsHelper.GetBonusLegendaryPercent();
             if (legendaryAdd >= 1 && legendaryBonus < Constants.MaxLegendaryPercent)
             {
                 if (content != "")
                     content += "\n";
-                content = $"{content}{Constants.MaterialHell_3_2}your chance of finding a {Constants.MaterialHell_4_3}legendary{Constants.MaterialEnd} loot is increased by {Constants.MaterialHell_4_3}{legendaryAdd}%{Constants.MaterialEnd}";
+                content = $"{content}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your chance of finding a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}legendary{Constants.MaterialEnd} loot is increased by {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{legendaryAdd}%{Constants.MaterialEnd}";
             }
             if (content != "")
             {

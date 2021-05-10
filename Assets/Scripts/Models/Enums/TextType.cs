@@ -1,23 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public enum TextType
 {
-    Normal = 0,
-    Magical = 1,
-    Rare = 2,
-    Legendary = 3,
-    Hp = 4,
-    Pa = 5,
-    Pm = 6,
-    Gold = 7,
-    Xp = 8,
-    HpCritical = 9
+    AbjectLong,
+    succubus3x5    
 }
 
-public enum TextThickness
+public enum TextCode
 {
-    Long,
-    Thick
+    [Description(".2.1")]
+    c21,
+    [Description(".2.1B")]
+    c21B,
+    [Description(".3.2")]
+    c32,
+    [Description(".3.2B")]
+    c32B,
+    [Description(".4.3")]
+    c43,
+    [Description(".4.3B")]
+    c43B,
+    [Description(".4.3.2")]
+    c432
 }

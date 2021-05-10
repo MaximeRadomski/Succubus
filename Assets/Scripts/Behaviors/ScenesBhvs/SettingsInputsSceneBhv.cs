@@ -228,7 +228,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     {
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; return true; }));
         Constants.EscapeLocked = true;
-        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.MaterialHell_3_2}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
+        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
 
         object OnSetKey(bool result)
         {
@@ -311,7 +311,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             tmPro = _keyBindingPanelMenu.transform.GetChild(id - 9).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
-        tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.MaterialLongHell_3_2 : "")}{_keyBinding[id]}";
+        tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) : "")}{_keyBinding[id]}";
     }
 
     private void SwitchKeyBindingPanels(int idPanel)

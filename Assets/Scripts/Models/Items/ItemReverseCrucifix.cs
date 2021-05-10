@@ -17,7 +17,7 @@ public class ItemReverseCrucifix : Item
         int damages = 666;
         if (_gameplayControler.SceneBhv.CurrentOpponent.Type == OpponentType.Boss)
             damages = 66;
-        _gameplayControler.SceneBhv.DamageOpponent(damages, _gameplayControler.CharacterInstanceBhv.gameObject);
+        _gameplayControler.SceneBhv.DamageOpponent(damages, _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Hell);
         return base.Effect();
     }
 }

@@ -8,6 +8,7 @@ public class Run
     public int MaxSteps;
     public int CurrentStep;
     public int CurrentItemCooldown;
+    public int CurrentItemUses;
     public string ResourcesLooted;
     public string Steps;
     public int X, Y;
@@ -27,7 +28,9 @@ public class Run
     public bool CharacterEncounterAvailability;
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 25;
-    public int ResourceLootPercent = 25;
+    public int ResourceLootPercent = 20;
+
+    public int DeathScytheAscension = 0;
 
     public Run(Difficulty difficulty)
     {

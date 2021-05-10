@@ -27,6 +27,6 @@ public abstract class Tattoo : Loot
             stat = (Stat * Level).ToString();
         else
             stat = StatStr;
-        return $"{Constants.MaterialHell_4_3}{before}{stat}{after}{Constants.MaterialEnd}";
+        return $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{before}{stat}{after}{Constants.MaterialEnd}";
     }
 }

@@ -164,8 +164,8 @@ public class StepsSceneBhv : SceneBhv
                 _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = TattoosData.Tattoos[_selectedStep.LootId].ToLower();
             }
-            _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.MaterialHell_4_3 + rarity.ToString().ToLower();
-            _opponents.text = "opponents\n" + Constants.MaterialHell_4_3 + ((OpponentType)rarity.GetHashCode()).ToString().ToLower();
+            _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + rarity.ToString().ToLower();
+            _opponents.text = "opponents\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + ((OpponentType)rarity.GetHashCode()).ToString().ToLower();
             _opponentType.sprite = rarity == Rarity.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_run.CurrentRealm.GetHashCode() * 3) + (rarity.GetHashCode() - 1)));
             _lootPicture.GetComponent<IconInstanceBhv>().Pop();
         }
@@ -185,7 +185,7 @@ public class StepsSceneBhv : SceneBhv
             {
                 _lootPicture.sprite = null;
                 _lootName.text = " - ";
-                _lootTypeRarity.text = " - \n" + Constants.MaterialHell_4_3 + " - ";
+                _lootTypeRarity.text = " - \n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + " - ";
                 _opponents.text = _lootTypeRarity.text;
                 _opponentType.sprite = null;
                 _characterPicture.gameObject.SetActive(false);
@@ -300,34 +300,34 @@ public class StepsSceneBhv : SceneBhv
         if (_selectedStep.LootType == LootType.Character)
         {
             name = CharactersData.Characters[_selectedStep.LootId].Name;
-            cooldown = $"{CharactersData.Characters[_selectedStep.LootId].Cooldown}\nattack: {CharactersData.Characters[_selectedStep.LootId].Attack}";
+            cooldown = $"{CharactersData.Characters[_selectedStep.LootId].Cooldown}\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}attack: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{CharactersData.Characters[_selectedStep.LootId].Attack}";
             description = CharactersData.Characters[_selectedStep.LootId].SpecialDescription;
         }
         else if (_selectedStep.LootType == LootType.Item)
         {
             var item = ItemsData.GetItemFromName(ItemsData.Items[_selectedStep.LootId]);
             name = item.Name;
-            cooldown = item.Cooldown.ToString();
-            description = Constants.MaterialHell_3_2 + item.Description;
+            cooldown = item.Cooldown >= 0 ? item.Cooldown.ToString() : null;
+            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + item.GetDescription();
         }
         else if (_selectedStep.LootType == LootType.Resource)
         {
             var resource = ResourcesData.GetResourceFromName(ResourcesData.Resources[_selectedStep.LootId]);
             name = resource.Name;
             cooldown = null;
-            description = Constants.MaterialHell_3_2 + resource.Description;
+            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + resource.Description;
         }
         else if (_selectedStep.LootType == LootType.Tattoo)
         {
             var tattoo = TattoosData.GetTattooFromName(TattoosData.Tattoos[_selectedStep.LootId]);
             name = tattoo.Name;
             cooldown = null;
-            description = Constants.MaterialHell_3_2 + tattoo.GetDescription();
+            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + tattoo.GetDescription();
         }
         else
             return;
         Instantiator.NewPopupYesNo(name, description.ToLower() + (cooldown != null ?
-            ($"\n---\n{Constants.MaterialHell_3_2}cooldown: {Constants.MaterialHell_4_3}{cooldown}{Constants.MaterialEnd}")
+            ($"\n---\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}cooldown: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{cooldown}{Constants.MaterialEnd}")
             : ""), null, "Ok", null);
     }
 

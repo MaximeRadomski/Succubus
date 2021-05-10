@@ -387,34 +387,6 @@ public static class Helper
             && (color1.b >= color2.b - precision && color1.b <= color2.b + precision)
             && (color1.a >= color2.a - precision && color1.a <= color2.a + precision);
     }
-    public static string MaterialFromTextType(int id, TextThickness thickness)
-    {
-        TextType tmpType = (TextType)id;
-        switch (tmpType)
-        {
-            case TextType.Normal:
-                return thickness + "White";
-            case TextType.Magical:
-                return thickness + "Blue";
-            case TextType.Rare:
-                return thickness + "Yellow";
-            case TextType.Legendary:
-                return thickness + "Orange";
-            case TextType.Hp:
-                return thickness + "Red";
-            case TextType.Pa:
-                return thickness + "Blue";
-            case TextType.Pm:
-                return thickness + "Green";
-            case TextType.Gold:
-                return thickness + "Gold";
-            case TextType.Xp:
-                return thickness + "Orange";
-            case TextType.HpCritical:
-                return thickness + "RedCritical";
-        }
-        return thickness + "White";
-    }
 
     public static void ApplyDifficulty(List<Opponent> opponents, Difficulty difficulty)
     {

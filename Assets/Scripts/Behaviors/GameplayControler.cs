@@ -17,6 +17,7 @@ public class GameplayControler : MonoBehaviour
     public Instantiator Instantiator;
     public Character Character;
     public CharacterInstanceBhv CharacterInstanceBhv;
+    public Item CharacterItem;
     public bool AttackIncoming;
     public PlayFieldBhv PlayFieldBhv;
     public GameObject ForcedPiece;
@@ -42,6 +43,7 @@ public class GameplayControler : MonoBehaviour
     private int _comboCounter;
     private int _leftHolded, _rightHolded;
     private float _heavyWeightDelay;
+    private Vector3? _itemTextDefaultLocalPos;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -57,7 +59,6 @@ public class GameplayControler : MonoBehaviour
     private Piece _forcedPieceModel;
 
     private Special _characterSpecial;
-    private Item _characterItem;
     private List<Vector3> _currentGhostPiecesOriginalPos;
     private GameplayChoice _gameplayChoice;
     private Color _ghostColor;
@@ -98,14 +99,25 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.PauseOrPrevious();
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         _soundControler.PlaySound(_idGameOver);
         _musicControler.Pause();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
         CharacterInstanceBhv.TakeDamage();
-        if (Character.BonusLife <= 0)
+        if (Character.BonusLife > 0)
+        {
+            Character.BonusLife--;
+            PlayerPrefsHelper.SaveRunCharacter(Character);
+            Resurect();
+        }
+        else if (Constants.TruthResurection)
+        {
+            Constants.TruthResurection = false;
+            Resurect();
+        }
+        else
         {
             CharacterInstanceBhv.Die();
             Invoke(nameof(CleanPlayerPrefs), 1.0f);
@@ -114,13 +126,12 @@ public class GameplayControler : MonoBehaviour
                 return true;
             }));
         }
-        else
+
+        void Resurect()
         {
-            Character.BonusLife--;
-            PlayerPrefsHelper.SaveRunCharacter(Character);
             CharacterInstanceBhv.Spawn();
-            DeleteFromBottom(35);
-            Instantiator.PopText("L   rebirth   J", new Vector2(4.5f, 10.0f));
+            DeleteFromBottom(39);
+            Instantiator.PopText("J   resurection   L", new Vector2(4.5f, 10.0f));
             CurrentPiece.GetComponent<Piece>().IsLocked = false;
             Constants.InputLocked = false;
             StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
@@ -235,9 +246,9 @@ public class GameplayControler : MonoBehaviour
         }
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
-            _characterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
+            CharacterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
         else
-            _characterItem = PlayerPrefsHelper.GetCurrentItem();
+            CharacterItem = PlayerPrefsHelper.GetCurrentItem();
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
         _characterSpecial.Init(Character, this);
         CharacterInstanceBhv.Spawn();
@@ -250,7 +261,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        if (_characterItem != null && Constants.CurrentItemCooldown <= 0)
+        if (CharacterItem != null && (Constants.CurrentItemCooldown <= 0 || CharacterItem.IsUsesBased))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -264,10 +275,24 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 8));//8 = item in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 0));//8 = item in sprite sheet | 0 = empty
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
-                tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + _characterItem.Id.ToString("00"));
+                if (_itemTextDefaultLocalPos == null)
+                    _itemTextDefaultLocalPos = tmp.transform.GetChild(0).localPosition;
+                if (CharacterItem.IsUsesBased)
+                {
+                    tmp.transform.GetChild(0).position = tmp.transform.position + new Vector3(-1.284f, 1.261f, 0.0f);
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = (Color)Constants.GetColorFromRealm(Character.Realm, 4);
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{Constants.CurrentItemUses}";
+                }
+                else
+                {
+                    tmp.transform.GetChild(0).position = tmp.transform.position + _itemTextDefaultLocalPos.Value;
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = Color.white;
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
+                }
+                    
+                tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + CharacterItem.Id.ToString("00"));
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                 {
                     tmp.GetComponent<IconInstanceBhv>().Pop();
@@ -291,7 +316,7 @@ public class GameplayControler : MonoBehaviour
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                if (_characterItem != null)
+                if (CharacterItem != null)
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Constants.CurrentItemCooldown}";
                 else
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
@@ -1407,9 +1432,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
-        if (_characterItem != null)
+        if (CharacterItem != null)
         {
-            if (_characterItem.Activate(Character, this, () => { _soundControler.PlaySound(_idItem); return true; }))
+            if (CharacterItem.Activate(Character, this, () => { _soundControler.PlaySound(_idItem); return true; }))
             {
                 this.SceneBhv.CameraBhv.Bump(4);
                 _soundControler.PlaySound(_idBipItem);
@@ -1976,7 +2001,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
-    public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole)
+    public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole, bool fromPlayer = false)
     {
         if (nbRows > Character.MaxDarkAndWasteLines)
             nbRows = Character.MaxDarkAndWasteLines;
@@ -1990,7 +2015,8 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        if (!fromPlayer)
+            Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
@@ -2287,7 +2313,7 @@ public class GameplayControler : MonoBehaviour
         }));
     }
 
-    public void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)
+    private void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)
     {
         int lineY = GetHighestBlock() + 3;
         if (lineY > 18)
@@ -2333,7 +2359,7 @@ public class GameplayControler : MonoBehaviour
                 && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackPiece = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
-            if ((type == AttackType.DarkRow || type == AttackType.LightRow))
+            if (type == AttackType.DarkRow || type == AttackType.LightRow)
                 attackPiece.transform.GetChild(0).GetComponent<BlockBhv>().Indestructible = true;
             attackPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[x, y] = attackPiece.transform.GetChild(0);

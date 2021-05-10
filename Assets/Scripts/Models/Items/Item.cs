@@ -9,6 +9,8 @@ public abstract class Item : Loot
     public string Name;
     public string Description;
     public int Cooldown;
+    public bool IsUsesBased = false;
+    public int Uses;
 
     protected Character _character;
     protected GameplayControler _gameplayControler;
@@ -27,11 +29,12 @@ public abstract class Item : Loot
         _character = character;
         _gameplayControler = gameplayControler;
         _soundFunc = soundFunc;
-        if (Constants.CurrentItemCooldown > 0)
+        if (Constants.CurrentItemCooldown > 0 || (IsUsesBased && Constants.CurrentItemUses == 0))
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
         Constants.RestartCurrentItemCooldown(character, this);
+        --Constants.CurrentItemUses;
         _gameplayControler.UpdateItemAndSpecialVisuals();
         _popPosition = new Vector3(4.5f, 6.5f, 0.0f);
         _attackLine = gameplayControler.Instantiator.NewAttackLine(gameplayControler.CharacterInstanceBhv.transform.position, _popPosition, character.Realm, linear: false,
@@ -52,8 +55,13 @@ public abstract class Item : Loot
         return true;
     }
 
+    public virtual string GetDescription()
+    {
+        return Description;
+    }
+
     protected string Highlight(string highlight)
     {
-        return $"{Constants.MaterialHell_4_3}{highlight}{Constants.MaterialEnd}";
+        return $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{highlight}{Constants.MaterialEnd}";
     }
 }

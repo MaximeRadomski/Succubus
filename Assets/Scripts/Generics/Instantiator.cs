@@ -5,6 +5,7 @@ using UnityEngine;
 public class Instantiator : MonoBehaviour
 {
     private Camera _mainCamera;
+    private bool _isClassic;
     private bool _hasInit;
 
     void Start()
@@ -16,6 +17,7 @@ public class Instantiator : MonoBehaviour
     public void Init()
     {
         _mainCamera = Helper.GetMainCamera();
+        _isClassic = PlayerPrefsHelper.GetClassicPieces();
         _hasInit = true;
     }
 
@@ -103,6 +105,11 @@ public class Instantiator : MonoBehaviour
 
     public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
+        if (_isClassic)
+        {
+            var ghost = realm.Contains("Ghost") ? "Ghost" : "";
+            realm = "Classic" + ghost;
+        }
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
         var pieceModel = tmpPieceObject.GetComponent<Piece>();
         GameObject tmpPieceInstance = null;
@@ -135,14 +142,20 @@ public class Instantiator : MonoBehaviour
 
     public void NewGravitySquare(GameObject parent, string realm)
     {
-        var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare-" + realm);
+        var realmStr = "" + realm;
+        if (_isClassic)
+            realmStr = "Classic";
+        var tmpSquareObject = Resources.Load<GameObject>("Prefabs/GravitySquare-" + realmStr);
         var tmpSquareInstance = Instantiate(tmpSquareObject, parent.transform.position, tmpSquareObject.transform.rotation);
         tmpSquareInstance.transform.SetParent(parent.transform);
     }
 
     public GameObject NewFadeBlock(Realm realm, Vector3 position, int startColor, int endColor)
     {
-        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + realm);
+        var realmStr = "" + realm;
+        if (_isClassic)
+            realmStr = "Classic";
+        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + realmStr);
         var tmpPieceInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
         tmpPieceInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor, realm);
         return tmpPieceInstance;

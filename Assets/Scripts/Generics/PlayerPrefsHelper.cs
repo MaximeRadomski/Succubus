@@ -610,6 +610,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return rotationPoint == 1 ? true : false;
     }
 
+    public static void SaveClassicPieces(bool enable)
+    {
+        PlayerPrefs.SetInt(Constants.PpClassicPieces, enable ? 1 : 0);
+    }
+
+    public static bool GetClassicPieces()
+    {
+        var classicPieces = PlayerPrefs.GetInt(Constants.PpClassicPieces, Constants.PpClassicPiecesDefault == true ? 1 : 0);
+        return classicPieces == 1 ? true : false;
+    }
+
     public static void SaveOrientation(Direction orientation)
     {
         PlayerPrefs.SetInt(Constants.PpOrientation, orientation == Direction.Vertical ? 0 : 1);

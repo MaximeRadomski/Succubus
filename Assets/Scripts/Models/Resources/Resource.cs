@@ -16,6 +16,6 @@ public abstract class Resource : Loot
 
     protected string Highlight(string highlight)
     {
-        return $"{Constants.MaterialHell_4_3}{highlight}{Constants.MaterialEnd}";
+        return $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{highlight}{Constants.MaterialEnd}";
     }
 }

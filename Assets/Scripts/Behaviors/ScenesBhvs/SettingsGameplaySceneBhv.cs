@@ -7,9 +7,12 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private GameObject _dasSelector;
     private GameObject _arrSelector;
     private GameObject _rotationPointSelector;
+    private GameObject _classicPiecesSelector;
 
     private Piece _tHell;
     private Piece _iHell;
+
+    private TMPro.TextMeshPro _unpleasedDev;
 
     public override MusicType MusicType => MusicType.Continue;
 
@@ -25,9 +28,12 @@ public class SettingsGameplaySceneBhv : SceneBhv
         _dasSelector = GameObject.Find("DasSelector");
         _arrSelector = GameObject.Find("ArrSelector");
         _rotationPointSelector = GameObject.Find("RotationPointSelector");
+        _classicPiecesSelector = GameObject.Find("ClassicPiecesSelector");
 
         _tHell = GameObject.Find("T-Hell").GetComponent<Piece>();
         _iHell = GameObject.Find("I-Hell").GetComponent<Piece>();
+
+        _unpleasedDev = GameObject.Find("UnpleasedDev").GetComponent<TMPro.TextMeshPro>();
 
         SetButtons();
 
@@ -36,7 +42,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         DasChoice(PlayerPrefsHelper.GetDas());
         ArrChoice(PlayerPrefsHelper.GetArr());
-        RotationPointChoice(PlayerPrefsHelper.GetRotationPoint());
+        ClassicPiecesChoice(PlayerPrefsHelper.GetClassicPieces());
     }
 
     private void SetButtons()
@@ -61,6 +67,9 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         GameObject.Find("RotationPointOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { RotationPointChoice(false); };
         GameObject.Find("RotationPointOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { RotationPointChoice(true); };
+
+        GameObject.Find("ClassicPiecesOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { ClassicPiecesChoice(false); };
+        GameObject.Find("ClassicPiecesOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { ClassicPiecesChoice(true); };
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         GameObject.Find("ButtonReset").GetComponent<ButtonBhv>().EndActionDelegate = ResetDefault;
@@ -103,6 +112,27 @@ public class SettingsGameplaySceneBhv : SceneBhv
             _tHell.EnableRotationPoint(false, Instantiator);
             _iHell.EnableRotationPoint(false, Instantiator);
         }
+    }
+
+    private void ClassicPiecesChoice(bool enable)
+    {
+        var choiceGameObject = GameObject.Find("ClassicPieces" + (enable ? "On" : "Off"));
+        _classicPiecesSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _classicPiecesSelector.transform.position.y, 0.0f);
+        PlayerPrefsHelper.SaveClassicPieces(enable);
+        Instantiator.Init();
+        var tmpTHell = this.Instantiator.NewPiece("T", "Hell", _tHell.transform.position, true);
+        var tmpIHell = this.Instantiator.NewPiece("I", "Hell", _iHell.transform.position, true);
+        tmpIHell.transform.position = _iHell.transform.position;
+        Destroy(_tHell.gameObject);
+        Destroy(_iHell.gameObject);
+        _tHell = tmpTHell.GetComponent<Piece>();
+        _iHell = tmpIHell.GetComponent<Piece>();
+        RotationPointChoice(PlayerPrefsHelper.GetRotationPoint());
+
+        if (enable)
+            _unpleasedDev.enabled = true;
+        else
+            _unpleasedDev.enabled = false;
     }
 
     public override void PauseOrPrevious()
