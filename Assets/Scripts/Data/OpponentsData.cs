@@ -169,7 +169,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Hell Raider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 300, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 100, Cooldown = 10,
+            HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 100, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
             GravityLevel = 1, Weight = 40
@@ -203,7 +203,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Tormentor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 20, Haste = true,
+            HpMax = 200, Weakness = Weakness.Combos, DamagesOnWeakness = 5, Cooldown = 15, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
             GravityLevel = 3, Weight = 40
@@ -230,7 +230,7 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.None, Cooldown = 16, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
-            GravityLevel = 1, Weight = 50
+            GravityLevel = 1, Weight = 40
         },
         new Opponent()
         {
@@ -238,14 +238,14 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 10) },
-            GravityLevel = 1, Weight = 40
+            GravityLevel = 1, Weight = 30
         },
         new Opponent()
         {
             Name = "Caca Demon", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 15,
+            HpMax = 180, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
+                new OpponentAttack(AttackType.ForcedPiece, 3, 0) },
             GravityLevel = 6, Weight = 50
         },
         new Opponent()
@@ -267,7 +267,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 8,
+            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
             GravityLevel = 3, Weight = 60

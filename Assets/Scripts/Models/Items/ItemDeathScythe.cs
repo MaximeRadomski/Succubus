@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemDeathScythe : Item
 {
     private int favor = 0;
-    private int unfavor = 100;
+    private int unfavor = 20;
 
     public ItemDeathScythe()
     {

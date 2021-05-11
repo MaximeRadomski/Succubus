@@ -123,6 +123,7 @@ public static class Constants
     public const string PpRealmBossProgression = "RealmBossProgression";
     public const int PpRealmBossProgressionDefault = -1;
     public const string PpTotalResources = "TotalResources";
+    public const string PpBoughtTreeNodes = "BoughtTreeNodes";
 
     public static string GetDefaultKeyBinding()
     {
@@ -145,6 +146,7 @@ public static class Constants
     public const string TrainingFreeGameScene = "TrainingFreeGameScene";
     public const string ClassicGameScene = "ClassicGameScene";
     public const string CharSelScene = "CharSelScene";
+    public const string TreeScene = "TreeScene";
     public const string DifficultyScene = "DifficultyScene";
     public const string DemoEndScene = "DemoEndScene";
     public const string HighScoreScene = "HighScoreScene";

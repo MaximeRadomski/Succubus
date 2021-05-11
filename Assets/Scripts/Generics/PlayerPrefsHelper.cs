@@ -752,4 +752,23 @@ public class PlayerPrefsHelper : MonoBehaviour
         }
         PlayerPrefs.SetString(Constants.PpTotalResources, resourcesStr);
     }
+
+    public static string GetBoughtTreeNodes()
+    {
+        var boughtTreeNodes = PlayerPrefs.GetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
+        if (string.IsNullOrEmpty(boughtTreeNodes))
+            boughtTreeNodes = "";
+        return boughtTreeNodes;
+    }
+
+    public static void ResetBoughtTreeNodes()
+    {
+        PlayerPrefs.SetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
+    }
+
+    public static void AddBoughtTreeNode(string nodeName)
+    {
+        var alreadyBoughtTreeNodesStr = GetBoughtTreeNodes();
+        PlayerPrefs.SetString(Constants.PpBoughtTreeNodes, $"{alreadyBoughtTreeNodesStr}{nodeName} ");
+    }
 }
