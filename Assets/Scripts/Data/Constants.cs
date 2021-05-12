@@ -123,7 +123,9 @@ public static class Constants
     public const string PpRealmBossProgression = "RealmBossProgression";
     public const int PpRealmBossProgressionDefault = -1;
     public const string PpTotalResources = "TotalResources";
+    public const string PpTotalResourcesDefault = "34;26;50";
     public const string PpBoughtTreeNodes = "BoughtTreeNodes";
+    public const string PpRealmTree = "RealmTree";
 
     public static string GetDefaultKeyBinding()
     {
@@ -204,12 +206,12 @@ public static class Constants
     public static Color ColorHeaven3 = new Color(0.039f, 0.450f, 0.819f, 1.0f);  //0a73d1
     public static Color ColorHeaven4 = new Color(0.023f, 0.647f, 0.898f, 1.0f);  //06a5e5
 
-    public static Color ColorBlackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
     public static Color ColorBlack = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+    public static Color ColorBlackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
     public static string MaterialEnd = "</material>";
 

@@ -18,7 +18,7 @@ public static class ItemsData
     public static string[] LegendaryItemsNames = { Items[6], Items[7], Items[23], Items[24], Items[25] };
 
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static Item DebugItem = GetItemFromName("Death Scythe");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)

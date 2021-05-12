@@ -722,7 +722,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static List<int> GetTotalResources()
     {
-        var resourcesStr = PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpSerializeDefault);
+        var resourcesStr = PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
         var resources = new List<int>();
         if (!string.IsNullOrEmpty(resourcesStr))
         {

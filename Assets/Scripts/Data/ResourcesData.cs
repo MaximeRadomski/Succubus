@@ -8,7 +8,7 @@ public static class ResourcesData
     public static string[] Resources = { "Sin", "Skull", "Soul" };
 
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static Resource DebugResource = GetResourceFromName("Sin");
 
     public static Resource GetResourceFromName(string name)

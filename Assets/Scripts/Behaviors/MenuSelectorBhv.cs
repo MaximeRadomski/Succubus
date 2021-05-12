@@ -95,8 +95,8 @@ public class MenuSelectorBhv : MonoBehaviour
         var boxCollider = target.GetComponent<BoxCollider2D>();
         _targetGameObject = target;
         _targetOffset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
-        _targetHalfWidth = boxCollider.size.x / 2;
-        _targetHalfHeight = boxCollider.size.y / 2;
+        _targetHalfWidth = (boxCollider.size.x / 2) + boxCollider.edgeRadius;
+        _targetHalfHeight = (boxCollider.size.y / 2) + boxCollider.edgeRadius;
         _moving = true;
         _followingFrames = 0;
         if (_reseted == true)

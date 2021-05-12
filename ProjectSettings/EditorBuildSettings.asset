@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SettingsHowToPlay.unity
     guid: 9f1f77725768ccd48a5506f3c7699ec6
   - enabled: 1
+    path: Assets/Scenes/TreeScene.unity
+    guid: ec87e84ccbcc04e48a4aedab7c1a8797
+  - enabled: 1
     path: Assets/Scenes/CharSelScene.unity
     guid: 5f4465f44e6f88f428cdc80eb9305f56
   - enabled: 1

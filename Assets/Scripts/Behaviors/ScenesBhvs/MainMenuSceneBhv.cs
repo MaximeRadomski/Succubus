@@ -55,10 +55,10 @@ public class MainMenuSceneBhv : SceneBhv
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
             {
-                if (PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpSerializeDefault) == Constants.PpSerializeDefault)
+                if (PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault) == null)
                     NavigationService.LoadNextScene(Constants.CharSelScene);
                 else
-                    NavigationService.LoadNextScene(Constants.CharSelScene);
+                    NavigationService.LoadNextScene(Constants.TreeScene);
             }
             return true;
         }

@@ -11,3 +11,5 @@ public abstract class CustomAttribute : Attribute
 public class PrefixeAttribute : CustomAttribute { public PrefixeAttribute(string attribute) { Attribute = attribute; } }
 
 public class SuffixeAttribute : CustomAttribute { public SuffixeAttribute(string attribute) { Attribute = attribute; } }
+
+public class TitleAttribute : CustomAttribute { public TitleAttribute(string attribute) { Attribute = attribute; } }

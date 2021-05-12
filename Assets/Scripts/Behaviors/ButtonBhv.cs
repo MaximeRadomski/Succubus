@@ -44,6 +44,11 @@ public class ButtonBhv : InputBhv
         _pressedColor = new Color(_spriteRenderer.color.r * 0.7f, _spriteRenderer.color.g * 0.7f, _spriteRenderer.color.b * 0.7f, 1.0f);
     }
 
+    public void SetResetedColor(Color color)
+    {
+        _resetedColor = color;
+    }
+
     public override void BeginAction(Vector2 initialTouchPosition)
     {
         if (_soundControler == null)
