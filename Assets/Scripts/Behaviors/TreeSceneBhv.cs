@@ -126,12 +126,14 @@ public class TreeSceneBhv : SceneBhv
             if (!result || !canBuy)
                 return false;
             PlayerPrefsHelper.AlterResource(node.Realm.GetHashCode(), -node.Price);
-            PlayerPrefsHelper.AddBoughtTreeNode(node.Name);
+            PlayerPrefsHelper.AddBoughtTreeNode(node.Name, node.Type);
             UpdateResources();
             UpdateTreeNodes();
             return true;
         }
     }
+
+
 
     private void ResetTreeNodes()
     {
@@ -139,10 +141,15 @@ public class TreeSceneBhv : SceneBhv
         var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 10 : 0;
         var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 10 : 0;
         var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 10 : 0;
+        if (Constants.DemoMode)
+        {
+            earthResourceAsked = 0;
+            heavenResourceAsked = 0;
+        }
         var price = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}\n---\nprice: " +
-            $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[Realm.Hell.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
-            $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[Realm.Earth.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
-            $"{Constants.GetMaterial(Realm.Heaven, TextType.succubus3x5, TextCode.c43)}{heavenResourceAsked} {ResourcesData.Resources[Realm.Heaven.GetHashCode()].ToLower()}{Constants.MaterialEnd}";
+        $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[Realm.Hell.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
+        $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[Realm.Earth.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
+        $"{Constants.GetMaterial(Realm.Heaven, TextType.succubus3x5, TextCode.c43)}{heavenResourceAsked} {ResourcesData.Resources[Realm.Heaven.GetHashCode()].ToLower()}{Constants.MaterialEnd}";
         var positive = "Pay";
         var negative = "Cancel";
         var canBuy = true;

@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ClassicGameSceneBhv : GameSceneBhv
 {
-    private CharacterInstanceBhv _opponentInstanceBhv;
+    public CharacterInstanceBhv OpponentInstanceBhv;
+
     private ResourceBarBhv _opponentHpBar;
     private ResourceBarBhv _opponentCooldownBar;
     private SpriteRenderer _opponentType;
@@ -17,6 +18,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private WiggleBhv _stunIcon;
 
     private Run _run;
+    private RealmTree _realmTree;
     private StepsService _stepsService;
     private Step _currentStep;
 
@@ -43,6 +45,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         Init();
         _run = PlayerPrefsHelper.GetRun();
+        _realmTree = PlayerPrefsHelper.GetRealmTree();
         _stepsService = new StepsService();
         if (Constants.CurrentGameMode == GameMode.TrainingDummy
             || Constants.CurrentGameMode == GameMode.TrainingFree)
@@ -81,8 +84,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
         _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
         _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
-        _opponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
-        _opponentInstanceBhv.AfterDeath = AfterOpponentDeath;
+        OpponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
+        OpponentInstanceBhv.AfterDeath = AfterOpponentDeath;
         _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
         _nextCooldownTick = Time.time + 3600;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
@@ -121,7 +124,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private bool AfterFightIntro()
     {
         if (CurrentOpponent.Haste)
-            Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Constants.InputLocked = false;        
         Paused = false;
         OpponentAppearance();
@@ -173,8 +176,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
         CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();
+        CurrentOpponent.Cooldown += _realmTree.CooldownBrake;
         if (Constants.RandomizedAttackType != AttackType.None)
             RandomizeOpponentAttack();
+        if (Constants.CurrentOpponentChangedRealm != Realm.None)
+            AlterOpponentRealm(Constants.CurrentOpponentChangedRealm, fromNextOpponent: true);
         if (Constants.HalvedCooldown)
             HalveOpponentMaxCooldown();
         if (Constants.NameLastScene == Constants.SettingsScene)
@@ -189,7 +195,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             _soundControler.PlaySound(_idOpponentAppearance);
             Constants.CurrentOpponentAttackId = 0;
-            _opponentInstanceBhv.Spawn();
+            OpponentInstanceBhv.Spawn();
             CameraBhv.Bump(4);
             var minHeight = 9.0f;
             var highestBlockY = _gameplayControler.GetHighestBlock();
@@ -198,7 +204,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (!sceneInit)
                 OpponentAppearance(minHeight);
         }
-        _opponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
+        OpponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
         Constants.CurrentOpponentHp = Constants.CurrentOpponentHp <= 0 ? CurrentOpponent.HpMax : Constants.CurrentOpponentHp;
         _weaknessInstance.SetVisible(CurrentOpponent.Weakness != Weakness.None);
@@ -220,6 +226,21 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public void RandomizeOpponentAttack() { CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Constants.RandomizedAttackType, 1, 2) }; }
 
     public void HalveOpponentMaxCooldown() { CurrentOpponent.Cooldown /= 2; }
+
+    public void AlterOpponentRealm(Realm newRealm, bool fromNextOpponent = false)
+    {
+        CurrentOpponent.Realm = newRealm;
+        if (fromNextOpponent)
+            return;
+        _opponentHpBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 0),
+                               "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 1),
+                               $"<material=\"{CurrentOpponent.Realm.ToString().ToLower()}.4.3\">");
+        _opponentHpBar.UpdateContent(0, CurrentOpponent.HpMax);
+        _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Up);
+        _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
+                                     "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
+        _opponentCooldownBar.UpdateContent(0, 1);
+    }
 
     private bool Victory()
     {
@@ -245,7 +266,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_run.CurrentStep > Character.LandLordLateAmount)
             _stepsService.SetVisionOnRandomStep(_run);
         _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
-        _run.CurrentItemCooldown = Constants.CurrentItemCooldown;
+        _run.CurrentItemCooldown = Constants.CurrentItemCooldown - _realmTree.PosthumousItem;
         _run.CurrentItemUses = Constants.CurrentItemUses;
         PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
@@ -371,7 +392,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 object LoadNext(bool result)
                 {
                     //DEBUG
-                    if (_run.CurrentRealm == Realm.Earth)
+                    if (Constants.DemoMode && _run.CurrentRealm == Realm.Earth)
                     {
                         Constants.GameOverParams = $"Abject|Hell|3";
                         PlayerPrefsHelper.ResetRun();
@@ -400,11 +421,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (first && CurrentOpponent.Haste)
         {
             if (!sceneInit)
-                Instantiator.PopText("haste", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+                Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
             Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown;
         }
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
-            _gameplayControler.AttackDrill(_opponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1);
+            _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1);
         SetNextCooldownTick();
     }
 
@@ -439,11 +460,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         bool spawnAfterAttack = true;
         CameraBhv.Bump(2);
-        _opponentInstanceBhv.Attack();
+        OpponentInstanceBhv.Attack();
         
         if (Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
         {
-            Instantiator.PopText("missed", _opponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            Instantiator.PopText("missed", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idDodge);
             _characterInstanceBhv.Dodge();
         }
@@ -478,7 +499,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1,
                 CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2,
                 CurrentOpponent.Realm,
-                _opponentInstanceBhv.gameObject);
+                OpponentInstanceBhv.gameObject);
             if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece
                 || CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Shift)
                 spawnAfterAttack = false;
@@ -530,7 +551,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
-            _gameplayControler.AttackForcedPiece(_opponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2);
+            _gameplayControler.AttackForcedPiece(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2);
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)CurrentOpponent.Cooldown);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
@@ -584,7 +605,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     
     private void WetMalusOpponent(int malusPercent, float seconds)
     {
-        _opponentInstanceBhv.Malus(Realm.Heaven, seconds);
+        OpponentInstanceBhv.Malus(Realm.Heaven, seconds);
         _wetMalus = Mathf.RoundToInt(Character.GetAttackNoBoost() * Helper.MultiplierFromPercent(0, malusPercent));
         Character.BoostAttack += _wetMalus;
         _wetTimer = Time.time + seconds;
@@ -616,8 +637,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 sourcePosition = new Vector3(9.0f, sourcePosition.y, 0.0f);
         }
         if (attackLine)
-            Instantiator.NewAttackLine(sourcePosition, _opponentInstanceBhv.gameObject.transform.position, realm);
-        _opponentInstanceBhv.TakeDamage();
+            Instantiator.NewAttackLine(sourcePosition, OpponentInstanceBhv.gameObject.transform.position, realm);
+        OpponentInstanceBhv.TakeDamage();
         Constants.CurrentOpponentHp -= amount;
         CameraBhv.Bump(2);
         var attackText = "-" + amount;
@@ -676,7 +697,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (minHeight < highestBlockY)
             minHeight = highestBlockY + 2;
         Instantiator.PopText(CurrentOpponent.Name.ToLower() + " defeated!", new Vector2(4.5f, minHeight));
-        _opponentInstanceBhv.Die();
+        OpponentInstanceBhv.Die();
         _opponentOnCooldown = false;
         Constants.CurrentOpponentCooldown = 0;
         UpdateCooldownBar(Direction.Down);
@@ -690,7 +711,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override void OnNewPiece(GameObject lastPiece)
     {
         if (_characterAttack > 0)
-            DamageOpponent(_characterAttack, lastPiece);
+        {
+            var bossHateBonusPercent = 0;
+            if (CurrentOpponent.Type == OpponentType.Boss)
+                bossHateBonusPercent = _realmTree.BossHate;
+            DamageOpponent((int)(_characterAttack * Helper.MultiplierFromPercent(1.0f, bossHateBonusPercent)), lastPiece);
+        }
         else if (_characterAttack < 0)
             Instantiator.PopText("missed", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
         _characterAttack = 0;
@@ -765,7 +791,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             incomingDamages = Character.GetAttack();
             if (nbLines == 1)
                 incomingDamages += Character.SingleLineDamageBonus;
-            if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit))
+            if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit + _realmTree.CriticalPrecision))
             {
                 Constants.CumulativeCrit += Character.CumulativeCrit;
                 incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));

@@ -169,7 +169,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Hell Raider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 4, DamagesOnWeakness = 100, Cooldown = 10,
+            HpMax = 200, Weakness = Weakness.Twists, DamagesOnWeakness = 40, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
             GravityLevel = 1, Weight = 40

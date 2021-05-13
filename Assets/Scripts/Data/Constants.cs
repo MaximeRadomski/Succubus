@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Constants
 {
+    public const bool DemoMode = true;
+
     public const int MaxFps = 60;
     public const float Pixel = 0.14285f;
     public const float SceneWidth = 20.57f;
@@ -123,7 +125,7 @@ public static class Constants
     public const string PpRealmBossProgression = "RealmBossProgression";
     public const int PpRealmBossProgressionDefault = -1;
     public const string PpTotalResources = "TotalResources";
-    public const string PpTotalResourcesDefault = "34;26;50";
+    public const string PpTotalResourcesDefault = "999;999;999";
     public const string PpBoughtTreeNodes = "BoughtTreeNodes";
     public const string PpRealmTree = "RealmTree";
 
@@ -249,18 +251,21 @@ public static class Constants
     public static GameMode CurrentGameMode;
     public static string NameLastScene;
     public static List<int> CurrentHighScoreContext;
+    public static bool OnlyMouseInMenu;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;
     public static int CurrentItemCooldown;
     public static int CurrentItemUses;
+    public static bool IsffectAttackInProgress = false;
+    public static string GameOverParams = null;
+    public static int CurrentOpponentAttackId;
+    public static int CurrentRemainingSimpShields = 0;
+
+    //Reset before each fight
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static int CurrentOpponentCooldown;
-    public static int CurrentOpponentAttackId;
-    public static bool IsffectAttackInProgress = false;
-    public static string GameOverParams = null;
-    public static int CurrentRemainingSimpShields = 0;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
     public static int DamoclesDamages = 0;
@@ -271,8 +276,8 @@ public static class Constants
     public static int BlockPerAttack = -1;
     public static float BonusLockDelay = 0.0f;
     public static bool TruthResurection = false;
-
-    public static bool OnlyMouseInMenu;
+    public static Realm CurrentOpponentChangedRealm = Realm.None;
+    public static int HeightLimiter = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -290,6 +295,7 @@ public static class Constants
         BlockPerAttack = -1;
         BonusLockDelay = 0.0f;
         TruthResurection = false;
+        CurrentOpponentChangedRealm = Realm.None;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

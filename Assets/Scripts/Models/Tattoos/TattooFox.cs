@@ -7,7 +7,7 @@ public class TattooFox : Tattoo
     {
         Id = 5;
         Name = TattoosData.Tattoos[Id];
-        Stat = 2;
+        Stat = 1;
         Rarity = Rarity.Rare;
         MaxLevel = 99;
     }

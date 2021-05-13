@@ -6,7 +6,7 @@ public class RealmTree
     public int CooldownBrake;
     public int CriticalPrecision;
     public int PosthumousItem;
-    public int LockDelay;
+    public float LockDelay;
     public int LifeRoulette;
     public int BossHate;
     public int Shadowing;

@@ -22,6 +22,7 @@ public class GameplayControler : MonoBehaviour
     public PlayFieldBhv PlayFieldBhv;
     public GameObject ForcedPiece;
     public List<GameObject> NextPieces;
+    private RealmTree _realmTree;
 
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -101,6 +102,7 @@ public class GameplayControler : MonoBehaviour
 
     public void GameOver()
     {
+        var run = PlayerPrefsHelper.GetRun();
         _soundControler.PlaySound(_idGameOver);
         _musicControler.Pause();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
@@ -117,6 +119,18 @@ public class GameplayControler : MonoBehaviour
             Constants.TruthResurection = false;
             Resurect();
         }
+        else if (!run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        {
+            run.LifeRouletteOnce = true;
+            PlayerPrefsHelper.SaveRun(run);
+            Resurect("life roulette");
+        }
+        else if (!run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        {
+            run.RepentanceOnce = true;
+            PlayerPrefsHelper.SaveRun(run);
+            Resurect("repentance");
+        }
         else
         {
             CharacterInstanceBhv.Die();
@@ -127,11 +141,12 @@ public class GameplayControler : MonoBehaviour
             }));
         }
 
-        void Resurect()
+        void Resurect(string resurectionDefault = null)
         {
             CharacterInstanceBhv.Spawn();
             DeleteFromBottom(39);
-            Instantiator.PopText("J   resurection   L", new Vector2(4.5f, 10.0f));
+            var resurectionStr = resurectionDefault != null ? resurectionDefault : "resurection";
+            Instantiator.PopText(resurectionStr, new Vector2(4.5f, 10.0f));
             CurrentPiece.GetComponent<Piece>().IsLocked = false;
             Constants.InputLocked = false;
             StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
@@ -162,7 +177,6 @@ public class GameplayControler : MonoBehaviour
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
-        SetLockDelay();
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -248,7 +262,11 @@ public class GameplayControler : MonoBehaviour
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             CharacterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
         else
+        {
             CharacterItem = PlayerPrefsHelper.GetCurrentItem();
+            _realmTree = PlayerPrefsHelper.GetRealmTree();
+        }
+        SetLockDelay();
         _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
         _characterSpecial.Init(Character, this);
         CharacterInstanceBhv.Spawn();
@@ -514,7 +532,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20);
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
         }
         else
         {
@@ -529,7 +547,10 @@ public class GameplayControler : MonoBehaviour
 
     public void SetLockDelay()
     {
-        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + (Character != null && Character.PiecesWeight > 0 ? _heavyWeightDelay : 0.0f);
+        var pieceWeightBonusLockDelay = 0.0f;
+        if (Character != null && Character.PiecesWeight > 0)
+            pieceWeightBonusLockDelay = _heavyWeightDelay;
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -2403,5 +2424,10 @@ public class GameplayControler : MonoBehaviour
                 continue;
             underBlockBhv.Spread(UnityEngine.Random.Range(0.1f, 0.3f), x, minMaxY[0] - 1, this);
         }
+    }
+
+    public void ReducePlayHeight(int heightToReduce)
+    {
+
     }
 }

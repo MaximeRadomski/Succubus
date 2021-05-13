@@ -31,6 +31,8 @@ public class Run
     public int ResourceLootPercent = 20;
 
     public int DeathScytheAscension = 0;
+    public bool LifeRouletteOnce = false;
+    public bool RepentanceOnce = false;
 
     public Run(Difficulty difficulty)
     {
@@ -56,6 +58,8 @@ public class Run
             MaxSteps = 6;
         else if (Difficulty == Difficulty.Hard)
             MaxSteps = 4;
+        var realmTree = PlayerPrefsHelper.GetRealmTree();
+        MaxSteps += realmTree.Shadowing;
         CurrentStep = 0;
         X = 50;
         Y = 50;

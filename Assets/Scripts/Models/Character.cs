@@ -73,7 +73,7 @@ public class Character : Loot
 
     public int GetAttackNoBoost()
     {
-        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamages) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamages + PlayerPrefsHelper.GetRealmTree().AttackBoost) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
         return Mathf.RoundToInt(floatValue);
     }
 }

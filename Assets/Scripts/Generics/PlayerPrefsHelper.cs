@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
 {
-
     public static void SaveRun(Run run)
     {
         PlayerPrefs.SetString(Constants.PpRun, JsonUtility.ToJson(run));
@@ -764,11 +763,45 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void ResetBoughtTreeNodes()
     {
         PlayerPrefs.SetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
+        ResetRealmTree();
     }
 
-    public static void AddBoughtTreeNode(string nodeName)
+    public static void AddBoughtTreeNode(string nodeName, NodeType nodeType)
     {
         var alreadyBoughtTreeNodesStr = GetBoughtTreeNodes();
         PlayerPrefs.SetString(Constants.PpBoughtTreeNodes, $"{alreadyBoughtTreeNodesStr}{nodeName} ");
+
+        var realmTree = GetRealmTree();
+        switch (nodeType)
+        {
+            case NodeType.AttackBoost: realmTree.AttackBoost += 1; break;
+            case NodeType.CooldownBrake: realmTree.CooldownBrake += 1; break;
+            case NodeType.CriticalPrecision: realmTree.CriticalPrecision += 2; break;
+            case NodeType.PosthumousItem: realmTree.PosthumousItem += 1; break;
+            case NodeType.LockDelay: realmTree.LockDelay += 0.25f; break;
+            case NodeType.LifeRoulette: realmTree.LifeRoulette += 50; break;
+            case NodeType.BossHate: realmTree.BossHate += 10; break;
+            case NodeType.Shadowing: realmTree.Shadowing += 1; break;
+            case NodeType.Repentance: realmTree.Repentance += 1; break;
+        }
+        SaveRealmTree(realmTree);
+    }
+
+    public static void SaveRealmTree(RealmTree realmTree)
+    {
+        PlayerPrefs.SetString(Constants.PpRealmTree, JsonUtility.ToJson(realmTree));
+    }
+
+    public static RealmTree GetRealmTree()
+    {
+        var realmTree = JsonUtility.FromJson<RealmTree>(PlayerPrefs.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault));
+        if (realmTree == null)
+            return new RealmTree();
+        return realmTree;
+    }
+
+    public static void ResetRealmTree()
+    {
+        SaveRealmTree(null);
     }
 }
