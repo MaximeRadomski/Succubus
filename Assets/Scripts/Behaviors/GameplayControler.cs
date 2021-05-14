@@ -46,6 +46,7 @@ public class GameplayControler : MonoBehaviour
     private int _leftHolded, _rightHolded;
     private float _heavyWeightDelay;
     private Vector3? _itemTextDefaultLocalPos;
+    private bool _lastLockTwist;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -798,6 +799,7 @@ public class GameplayControler : MonoBehaviour
             if (isTwtist)
                 _soundControler.PlaySound(_idTwist);
         }
+        _lastLockTwist = isTwtist;
         if (CurrentPiece != null)
         {
             AddToPlayField(CurrentPiece);
@@ -811,6 +813,12 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
+        --Constants.HeightLimiterResetLines;
+        if (Constants.HeightLimiterResetLines == 0)
+        {
+            ResetPlayHeight();
+            Constants.HeightLimiterResetLines = -1;
+        }
         SpreadEffect(CurrentPiece);
         CheckForLightRows();
         CheckForVisionBlocks();
@@ -1703,7 +1711,13 @@ public class GameplayControler : MonoBehaviour
             UpdateItemAndSpecialVisuals();
             StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
                 ClearLineSpace();
-                if (AttackIncoming)
+
+                if (nbLines >= 4
+                || (_lastLockTwist && nbLines >= 2)
+                || _comboCounter > 3)
+                    StartCoroutine(Reflect());
+
+                if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
                 {
                     AttackIncoming = false;
                     //Debug.Log(DateTime.Now + "CheckForLine (line)");
@@ -1720,7 +1734,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnLinesCleared(nbLines, false);
             SceneBhv.PopText();
             _comboCounter = 0;
-            if (AttackIncoming)
+            if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
             {
                 AttackIncoming = false;
                 //Debug.Log(DateTime.Now + "CheckForLine (no line)");
@@ -2455,8 +2469,65 @@ public class GameplayControler : MonoBehaviour
             _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
         else
             _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Constants.HeightLimiter + heightToReduce, Character.Realm);
+        CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
+        if (CurrentPiece.transform.position.y > 19.0f)
+            CurrentPiece.transform.position += new Vector3(0.0f, -(int)(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce);
         Constants.HeightLimiter += heightToReduce;
         ClearLineSpace();
+    }
+
+    public void ResetPlayHeight()
+    {
+        Destroy(_heightLimiter);
+        Constants.HeightLimiter = 0;
+        ClearLineSpace();
+    }
+
+    public IEnumerator Reflect()
+    {
+        for (int y = 19; y >= Constants.HeightLimiter - 10; --y)
+        {
+            bool atLeastOne = false;
+            int diagX = 0;
+            int diagY = y;
+            while (diagY <= 19 && diagX <= 9)
+            {
+                if (diagY >= Constants.HeightLimiter && PlayFieldBhv.Grid[diagX, diagY] != null)
+                {
+                    var reflectName = "ReflectBlock";
+                    Realm? realm = null;
+                    if (PlayFieldBhv.Grid[diagX, diagY].parent.name.Contains(Realm.Hell.ToString()))
+                    {
+                        reflectName += Realm.Hell.ToString();
+                        realm = Realm.Hell;
+                    }
+                    else if (PlayFieldBhv.Grid[diagX, diagY].parent.name.Contains(Realm.Earth.ToString()))
+                    {
+                        reflectName += Realm.Earth.ToString();
+                        realm = Realm.Earth;
+                    }
+                    else if (PlayFieldBhv.Grid[diagX, diagY].parent.name.Contains(Realm.Heaven.ToString()))
+                    {
+                        reflectName += Realm.Heaven.ToString();
+                        realm = Realm.Earth;
+                    }
+                    else if (PlayFieldBhv.Grid[diagX, diagY].parent.name.Contains("Classic"))
+                    {
+                        reflectName += "Classic";
+                        realm = Realm.None;
+                    }
+                    if (realm != null)
+                        {
+                            Instantiator.NewReflectBlock(reflectName, new Vector3(diagX, diagY, 0.0f), color: (Color)Constants.GetColorFromRealm(realm.Value, 4));
+                            atLeastOne = true;
+                        }
+                }
+                ++diagY;
+                ++diagX;
+            }
+            if (atLeastOne)
+                yield return new WaitForSeconds(0.01f);
+        }
     }
 }

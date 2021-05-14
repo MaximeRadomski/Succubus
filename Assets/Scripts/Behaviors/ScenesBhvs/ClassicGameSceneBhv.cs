@@ -786,7 +786,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (nbLines > 0)
         {
             if (Character.DamoclesDamages > 0 && nbLines == 4)
+            {
                 Constants.DamoclesDamages += Character.DamoclesDamages;
+                _characterInstanceBhv.Boost(Character.Realm, 0.25f);
+            }
 
             incomingDamages = Character.GetAttack();
             if (nbLines == 1)

@@ -10,7 +10,7 @@ public class ItemTheHierophant : Item
         Name = ItemsData.Items[Id];
         Description = $"lock time gets longer by {Highlight("1 second")} for the duration of fight.";
         Rarity = Rarity.Rare;
-        Cooldown = 14;
+        Cooldown = 8;
     }
 
     protected override object Effect()

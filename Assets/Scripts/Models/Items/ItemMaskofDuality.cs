@@ -10,7 +10,7 @@ public class ItemMaskofDuality : Item
         Name = ItemsData.Items[Id];
         Description = $"either deals {Highlight("4 times ")} your damages, or attacks you with {Highlight("4 garbage lines")}.";
         Rarity = Rarity.Common;
-        Cooldown = 4;
+        Cooldown = 6;
     }
 
     protected override object Effect()

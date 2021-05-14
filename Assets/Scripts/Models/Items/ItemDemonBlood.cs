@@ -10,7 +10,7 @@ public class ItemDemonBlood : Item
         Name = ItemsData.Items[Id];
         Description = $"clears {Highlight("4 dark rows")}.";
         Rarity = Rarity.Common;
-        Cooldown = 12;
+        Cooldown = 8;
     }
 
     protected override object Effect()

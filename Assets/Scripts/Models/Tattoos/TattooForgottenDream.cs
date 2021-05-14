@@ -19,6 +19,6 @@ public class TattooForgottenDream : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", " base damages")}.\nYup... That's it...";
+        return $"you deal {StatToString("+", " base damages")}.\nyup... that's it...";
     }
 }

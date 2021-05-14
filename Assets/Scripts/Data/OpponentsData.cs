@@ -322,7 +322,8 @@ public static class OpponentsData
             HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },
-            GravityLevel = 10, Weight = 150
+            GravityLevel = 10, Weight = 150,
+            DialogId = 1, DialogPitch = 0.75f
         }
     };
 

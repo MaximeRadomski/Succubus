@@ -27,7 +27,7 @@ public class Run
 
     public bool CharacterEncounterAvailability;
     public int CharEncounterPercent = 5;
-    public int ItemLootPercent = 25;
+    public int ItemLootPercent = 20;
     public int ResourceLootPercent = 20;
 
     public int DeathScytheAscension = 0;

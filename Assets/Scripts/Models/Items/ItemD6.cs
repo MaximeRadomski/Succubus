@@ -10,7 +10,7 @@ public class ItemD6 : Item
         Name = ItemsData.Items[Id];
         Description = $"{Highlight("randomizes")} your opponent attack type to another one.";
         Rarity = Rarity.Common;
-        Cooldown = 6;
+        Cooldown = 8;
     }
 
     protected override object Effect()

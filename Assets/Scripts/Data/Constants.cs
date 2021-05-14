@@ -279,6 +279,7 @@ public static class Constants
     public static bool TruthResurection = false;
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
+    public static int HeightLimiterResetLines = -1;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -298,6 +299,7 @@ public static class Constants
         TruthResurection = false;
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
+        HeightLimiterResetLines = -1;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

@@ -7,13 +7,14 @@ public abstract class GameSceneBhv : SceneBhv
 {
     public Character Character;
     public Opponent CurrentOpponent;
+
     protected List<Opponent> _opponents;
     protected CharacterInstanceBhv _characterInstanceBhv;
 
     protected GameplayControler _gameplayControler;
-    protected string _poppingText = "";
     protected GameObject _pauseMenu;
     protected GameObject _panelGame;
+    protected string _poppingText = "";
 
     public override MusicType MusicType => MusicType.Game;
 

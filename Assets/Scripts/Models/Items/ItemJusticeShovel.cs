@@ -10,7 +10,7 @@ public class ItemJusticeShovel : Item
         Name = ItemsData.Items[Id];
         Description = $"clears {Highlight("2")} random adjacent {Highlight("columns")} of the playfield.";
         Rarity = Rarity.Rare;
-        Cooldown = 10;
+        Cooldown = 14;
     }
 
     protected override object Effect()

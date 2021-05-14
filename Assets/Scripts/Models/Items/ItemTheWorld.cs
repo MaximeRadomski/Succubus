@@ -10,7 +10,7 @@ public class ItemTheWorld : Item
         Name = ItemsData.Items[Id];
         Description = $"stops the time for {Highlight("9 seconds")} (opponent cooldown + gravity).";
         Rarity = Rarity.Rare;
-        Cooldown = 6;
+        Cooldown = 8;
     }
 
     protected override object Effect()

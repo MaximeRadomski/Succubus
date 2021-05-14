@@ -10,7 +10,7 @@ public class ItemEliacube : Item
         Name = ItemsData.Items[Id];
         Description = $"resets your opponent {Highlight("cooldown")}.";
         Rarity = Rarity.Common;
-        Cooldown = 5;
+        Cooldown = 7;
     }
 
     protected override object Effect()

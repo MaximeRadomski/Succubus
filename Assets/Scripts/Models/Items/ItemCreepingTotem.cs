@@ -10,7 +10,7 @@ public class ItemCreepingTotem : Item
         Name = ItemsData.Items[Id];
         Description = $"deals {Highlight("4 times")} your damages to your opponent, but create a hole in your playfield.";
         Rarity = Rarity.Common;
-        Cooldown = 2;
+        Cooldown = 6;
     }
 
     protected override object Effect()

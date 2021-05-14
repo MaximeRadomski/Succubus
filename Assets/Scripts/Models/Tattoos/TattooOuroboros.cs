@@ -8,8 +8,8 @@ public class TattooOuroboros : Tattoo
         Id = 24;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
-        Rarity = Rarity.Common;
-        MaxLevel = 4;
+        Rarity = Rarity.Rare;
+        MaxLevel = 1;
     }
 
     public override void ApplyToCharacter(Character character)

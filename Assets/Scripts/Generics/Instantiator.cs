@@ -156,9 +156,17 @@ public class Instantiator : MonoBehaviour
         if (_isClassic)
             realmStr = "Classic";
         var tmpBlockObject = Resources.Load<GameObject>("Prefabs/FadeBlock" + realmStr);
-        var tmpPieceInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
-        tmpPieceInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor, realm);
-        return tmpPieceInstance;
+        var tmpBlockInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
+        tmpBlockInstance.GetComponent<FadeBlockBhv>().Init(startColor, endColor, realm);
+        return tmpBlockInstance;
+    }
+
+    public GameObject NewReflectBlock(string name, Vector3 position, float speed = 0.05f, Color? color = null)
+    {
+        var tmpBlockObject = Resources.Load<GameObject>("Prefabs/" + name);
+        var tmpBlockInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
+        tmpBlockInstance.GetComponent<FadeOnAppearanceBhv>().Init(speed, color);
+        return tmpBlockInstance;
     }
 
     public void EditViaKeyboard()

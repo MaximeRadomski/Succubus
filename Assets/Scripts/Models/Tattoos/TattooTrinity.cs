@@ -7,7 +7,7 @@ public class TattooTrinity : Tattoo
     {
         Id = 1;
         Name = TattoosData.Tattoos[Id];
-        Stat = 30;
+        Stat = 10;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }

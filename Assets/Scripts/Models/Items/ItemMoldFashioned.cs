@@ -10,7 +10,7 @@ public class ItemMoldFashioned : Item
         Name = ItemsData.Items[Id];
         Description = $"{Highlight("halves")} your opponent remaining health, but also {Highlight("halves")} its max cooldown.";
         Rarity = Rarity.Rare;
-        Cooldown = 10;
+        Cooldown = 14;
     }
 
     protected override object Effect()
