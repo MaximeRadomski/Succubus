@@ -125,7 +125,7 @@ public static class Constants
     public const string PpRealmBossProgression = "RealmBossProgression";
     public const int PpRealmBossProgressionDefault = -1;
     public const string PpTotalResources = "TotalResources";
-    public const string PpTotalResourcesDefault = "999;999;999";
+    public const string PpTotalResourcesDefault = null;
     public const string PpBoughtTreeNodes = "BoughtTreeNodes";
     public const string PpRealmTree = "RealmTree";
 
@@ -214,6 +214,7 @@ public static class Constants
     public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
     public static Color ColorBlack = new Color(0.0f, 0.0f, 0.0f, 1.0f);
     public static Color ColorBlackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+    public static Color ColorBlackSemiTransparent = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
     public static string MaterialEnd = "</material>";
 
@@ -296,6 +297,7 @@ public static class Constants
         BonusLockDelay = 0.0f;
         TruthResurection = false;
         CurrentOpponentChangedRealm = Realm.None;
+        HeightLimiter = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

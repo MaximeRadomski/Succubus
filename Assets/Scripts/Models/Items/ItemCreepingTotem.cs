@@ -16,7 +16,7 @@ public class ItemCreepingTotem : Item
     protected override object Effect()
     {
         var highestX = -1;
-        var highestY = -1;
+        var highestY = Constants.HeightLimiter - 1;
         for (int x = 0; x < Constants.PlayFieldWidth; ++x)
         {
             var highestYOnX = _gameplayControler.GetHighestBlockOnX(x);
@@ -33,9 +33,9 @@ public class ItemCreepingTotem : Item
             selectedY = highestY;
             selectedX = highestX;
         }
-        if (selectedY >= 0)
+        if (selectedY >= Constants.HeightLimiter)
         {
-            var centerY = Random.Range(selectedY >= 3 ? 1 : 0, selectedY - 2);
+            var centerY = Random.Range(selectedY >= Constants.HeightLimiter + 3 ? Constants.HeightLimiter + 1 : Constants.HeightLimiter, selectedY - 2);
             while (_gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
                 ++centerY;
             DestroyBlock(selectedX, centerY);
@@ -51,7 +51,7 @@ public class ItemCreepingTotem : Item
     private void DestroyBlock(int roundedX, int roundedY)
     {
         if (roundedX < 0 || roundedX >= Constants.PlayFieldWidth
-            || roundedY < 0 || roundedY >= Constants.PlayFieldHeight
+            || roundedY < Constants.HeightLimiter || roundedY >= Constants.PlayFieldHeight
             || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;
         _gameplayControler.Instantiator.NewFadeBlock(Realm.Earth, new Vector3(roundedX, roundedY, 0.0f), 5, 0);

@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayControler : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class GameplayControler : MonoBehaviour
     private GameObject _mainCamera;
     private List<GameObject> _gameplayButtons;
     private Piece _forcedPieceModel;
+    private GameObject _heightLimiter;
 
     private Special _characterSpecial;
     private List<Vector3> _currentGhostPiecesOriginalPos;
@@ -522,6 +524,23 @@ public class GameplayControler : MonoBehaviour
         if (level < 0)
             level = 0;
         GravityLevel = level;
+        
+        Realm realm;
+        Difficulty difficulty;
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        {
+            realm = Realm.Hell;
+            difficulty = Difficulty.Normal;
+        }
+        else
+        {
+            var run = PlayerPrefsHelper.GetRun();
+            realm = run.CurrentRealm;
+            difficulty = run.Difficulty;
+        }        
+        GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{difficulty.ToString().ToLower()}\ngrav:  {GravityLevel}";
+
         GravityDelay = Constants.GravityDelay;
         SetLockDelay();
         if (level == 19)
@@ -1529,7 +1548,7 @@ public class GameplayControler : MonoBehaviour
         if (roundedX == -1)
             return false;
 
-        if (roundedY < 0 || roundedY >= _playFieldHeight)
+        if (roundedY < Constants.HeightLimiter || roundedY >= _playFieldHeight)
             return false;
 
         if (PlayFieldBhv.Grid[roundedX, roundedY] != null && (bhvPiece == null || !bhvPiece.IsHollowed))
@@ -1630,7 +1649,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentGhost != null)
             Destroy(CurrentGhost);
         int nbLines = 0;
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             if (HasLine(y))
             {
@@ -1716,7 +1735,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             if (HasDarkRow(y))
             {
@@ -1737,7 +1756,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             if (HasWasteRow(y))
             {
@@ -1837,7 +1856,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteColumn(int x)
     {
-        for (int y = 0; y < _playFieldHeight; ++y)
+        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.GetComponent<LinesLimiterBhv>())
                 continue;
@@ -1849,7 +1868,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteFromBottom(int nbRows)
     {
-        for (int y = 0; y < nbRows; ++y)
+        for (int y = Constants.HeightLimiter; y < nbRows; ++y)
         {
             if (y >= Constants.PlayFieldHeight)
                 break;
@@ -1861,22 +1880,26 @@ public class GameplayControler : MonoBehaviour
 
     public void ClearLineSpace(int minY = -1, int maxY = -1)
     {
+        if (minY == -1)
+            minY = Constants.HeightLimiter - 1;
+        if (maxY == -1)
+            maxY = Constants.HeightLimiter - 1;
         int highestBlock = _playFieldHeight - 1;
-        for (int y = 0; y < _playFieldHeight; ++y)
+        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
         {
-            if (y == 0)
+            if (y == Constants.HeightLimiter)
                 highestBlock = GetHighestBlock();
-            if (y > highestBlock || highestBlock == -1)
+            if (y > highestBlock || highestBlock == Constants.HeightLimiter - 1)
                 break;
             if (HasFullLineSpace(y))
             {
-                if (maxY != -1 && minY != -1
+                if (maxY != Constants.HeightLimiter - 1 && minY != Constants.HeightLimiter - 1
                     && (y < minY || y > maxY))
                     continue;
                 DropAllAboveLines(y);
-                y = -1;
-                if (maxY != -1 && minY != -1 && --maxY < minY)
-                    maxY = minY = -2;
+                y = Constants.HeightLimiter - 1;
+                if (maxY != Constants.HeightLimiter - 1 && minY != Constants.HeightLimiter - 1 && --maxY < minY)
+                    maxY = minY = Constants.HeightLimiter - 2;
             }
         }
         foreach (Transform child in PlayFieldBhv.transform)
@@ -1889,7 +1912,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlock()
     {
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             if (!HasFullLineSpace(y))
                 return y;
@@ -1899,7 +1922,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlockOnX(int x)
     {
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return y;
@@ -1919,7 +1942,7 @@ public class GameplayControler : MonoBehaviour
 
     private bool HasFullColumnSpace(int x)
     {
-        for (int y = 0; y < _playFieldHeight; ++y)
+        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return false;
@@ -1945,7 +1968,7 @@ public class GameplayControler : MonoBehaviour
 
     private void IncreaseAllAboveLines(int nbRows)
     {
-        for (int y = _playFieldHeight - 1; y >= 0; --y)
+        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
         {
             for (int x = 0; x < _playFieldWidth; ++x)
             {
@@ -2014,7 +2037,7 @@ public class GameplayControler : MonoBehaviour
             nbRows = Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
-        for (int y = 0; y < nbRows; ++y)
+        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
         {
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
@@ -2031,7 +2054,7 @@ public class GameplayControler : MonoBehaviour
         nbHole = nbHole < 1 ? 1 : nbHole;
         int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - nbHole);
         int emptyEnd = emptyStart + nbHole - 1;
-        for (int y = 0; y < nbRows; ++y)
+        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
         {
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
@@ -2044,18 +2067,18 @@ public class GameplayControler : MonoBehaviour
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idLightRows);
-        for (int y = 0; y < nbRows; ++y)
+        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
         {
             FillLine(y, AttackType.LightRow, opponentRealm);
         }
         cooldown = cooldown < 1 ? 1 : cooldown;
-        PlayFieldBhv.Grid[0, 0].gameObject.tag = Constants.TagLightRows;
-        PlayFieldBhv.Grid[0, 0].gameObject.AddComponent<LightRowBlockBhv>();
-        var lightRowBhv = PlayFieldBhv.Grid[0, 0].gameObject.GetComponent<LightRowBlockBhv>();
+        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.tag = Constants.TagLightRows;
+        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.AddComponent<LightRowBlockBhv>();
+        var lightRowBhv = PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.NbRows = nbRows;
         lightRowBhv.Cooldown = cooldown;
-        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, ((float)nbRows - 1.0f) / 2.0f));
-        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, 0]);
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + Constants.HeightLimiter));
+        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Constants.HeightLimiter]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
@@ -2184,7 +2207,7 @@ public class GameplayControler : MonoBehaviour
                     break;
             }
             y -= 1 + deepness; //At least 1 in order to be really bothering
-            y = y < 0 ? 0 : y;
+            y = y < Constants.HeightLimiter ? Constants.HeightLimiter : y;
             if (Instantiator == null)
                 Instantiator = GetComponent<Instantiator>();
             Instantiator.NewDrillTarget(opponentRealm, new Vector3(x, y, 0.0f));
@@ -2293,9 +2316,9 @@ public class GameplayControler : MonoBehaviour
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        var startFromBottom = UnityEngine.Random.Range(0, currentHiest - nbRows);
-        if (startFromBottom < 0)
-            startFromBottom = 0;
+        var startFromBottom = UnityEngine.Random.Range(Constants.HeightLimiter, currentHiest - nbRows);
+        if (startFromBottom < Constants.HeightLimiter)
+            startFromBottom = Constants.HeightLimiter;
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
@@ -2428,6 +2451,12 @@ public class GameplayControler : MonoBehaviour
 
     public void ReducePlayHeight(int heightToReduce)
     {
-
+        if (_heightLimiter == null)
+            _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
+        else
+            _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Constants.HeightLimiter + heightToReduce, Character.Realm);
+        IncreaseAllAboveLines(heightToReduce);
+        Constants.HeightLimiter += heightToReduce;
+        ClearLineSpace();
     }
 }

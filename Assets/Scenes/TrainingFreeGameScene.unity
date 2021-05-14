@@ -1288,6 +1288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneBhv: {fileID: 0}
   GravityDelay: 0
+  GravityLevel: 0
   CurrentPiece: {fileID: 0}
   CurrentGhost: {fileID: 0}
   Bag: 
@@ -6313,7 +6314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Name
-      value: InfoLoremIpsum
+      value: InfoFight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}

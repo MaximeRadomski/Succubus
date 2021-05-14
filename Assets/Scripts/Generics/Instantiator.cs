@@ -325,4 +325,13 @@ public class Instantiator : MonoBehaviour
         tmpShieldInstance.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{6 + realm.GetHashCode()}");
         tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = sortingId;
     }
+
+    public GameObject NewHeightLimiter(int height, Realm realm, Transform parent)
+    {
+        var tmpLimiterObject = Resources.Load<GameObject>("Prefabs/HeightLimiter");
+        var tmpLimiterInstance = Instantiate(tmpLimiterObject, new Vector3(4.5f, 0.0f, 0.0f), tmpLimiterObject.transform.rotation);
+        tmpLimiterInstance.transform.SetParent(parent);
+        tmpLimiterInstance.GetComponent<HeightLimiterBhv>().Set(height, realm);
+        return tmpLimiterInstance;
+    }
 }

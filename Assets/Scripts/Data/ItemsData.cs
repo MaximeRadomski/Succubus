@@ -15,7 +15,7 @@ public static class ItemsData
 
     public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8], Items[11], Items[12], Items[16], Items[17], Items[21], Items[22], Items[26] };
     public static string[] RareItemsNames = { Items[4], Items[5], Items[9], Items[10], Items[13], Items[14], Items[15], Items[18], Items[19], Items[20] };
-    public static string[] LegendaryItemsNames = { Items[6], Items[7], Items[23], Items[24], Items[25] };
+    public static string[] LegendaryItemsNames = { Items[6], Items[7], Items[23], Items[24], Items[25], Items[27] };
 
     //DEBUG
     public static bool DebugEnabled = true;

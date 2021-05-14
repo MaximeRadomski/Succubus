@@ -79,7 +79,7 @@ public class TreeSceneBhv : SceneBhv
                 node.Bought = false;
                 node.Locked = false;
                 var iconid = 3 + (node.Realm.GetHashCode() * 6) + (node.Branch * 2);
-                nodeRenderer.color = Constants.ColorPlainSemiTransparent;
+                nodeRenderer.color = Constants.ColorBlackSemiTransparent;
                 nodeRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TreeIcons_{iconid}");
                 node.Instance.GetComponent<ButtonBhv>().SetResetedColor(nodeRenderer.color);
             }

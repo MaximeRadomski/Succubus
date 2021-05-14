@@ -20,7 +20,7 @@ public class ItemGrenade : Item
         int end = start - (nbRows - 1);
         for (int y = start; y >= end; --y)
         {
-            if (y < 0)
+            if (y < Constants.HeightLimiter)
                 break;
             _gameplayControler.DeleteLine(y);
         }

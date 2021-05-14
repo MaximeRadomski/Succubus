@@ -239,7 +239,7 @@ public class Piece : MonoBehaviour
             if (child.transform.position.y > maxY)
                 maxY = Mathf.RoundToInt(child.transform.position.y);
         }
-        minY = minY < 0 ? 0 : minY;
+        minY = minY < Constants.HeightLimiter ? Constants.HeightLimiter : minY;
         maxY = maxY > 99 ? 99 : maxY;
         return new int[] { minY, maxY };
     }
