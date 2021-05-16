@@ -39,7 +39,8 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
         {
             _isFading = false;
             _renderer.color = _fadeColor;
-            Destroy(gameObject);
+            if (gameObject != null)
+                Destroy(gameObject);
         }
     }
 }

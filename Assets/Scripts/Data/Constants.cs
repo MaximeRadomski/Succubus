@@ -32,6 +32,7 @@ public static class Constants
     public const float OpponentUpgradeAddedLife = 0.15f;
     public const string DialogAudioClip = "Devlog";
     public const string IntroAudioClip = "Intro";
+    public const string VictoryAudioClip = "Victory";
     public const int MaxRarePercent = 25;
     public const int MaxLegendaryPercent = 15;
 
@@ -222,8 +223,12 @@ public static class Constants
     {
         if (id == -1)
             return Color.black;
-        if (id == 5 || realm == Realm.None)
+        if (id == 5)
             return Color.white;
+        else if (realm == Realm.None)
+        {
+            return new Color(1.0f, 1.0f, 1.0f, (1.0f / 7) * (id + 1));
+        }
         var myActualType = typeof(Constants);
         var tmp = myActualType.GetField("Color" + realm.ToString() + id);
         return tmp.GetValue(myActualType);

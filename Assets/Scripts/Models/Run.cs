@@ -25,7 +25,7 @@ public class Run
     // Example (without spaces) = X00 Y00 R0 T00 D0 V0 I00 O00 01 02 03 04 05 06 07 08 ;
     // 1110
 
-    public bool CharacterEncounterAvailability;
+    public bool CharacterEncounterAvailability = true;
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 20;
     public int ResourceLootPercent = 20;

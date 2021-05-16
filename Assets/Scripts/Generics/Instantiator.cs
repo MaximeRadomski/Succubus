@@ -164,6 +164,8 @@ public class Instantiator : MonoBehaviour
     public GameObject NewReflectBlock(string name, Vector3 position, float speed = 0.05f, Color? color = null)
     {
         var tmpBlockObject = Resources.Load<GameObject>("Prefabs/" + name);
+        if (tmpBlockObject == null)
+            return null;
         var tmpBlockInstance = Instantiate(tmpBlockObject, position, tmpBlockObject.transform.rotation);
         tmpBlockInstance.GetComponent<FadeOnAppearanceBhv>().Init(speed, color);
         return tmpBlockInstance;
@@ -341,5 +343,57 @@ public class Instantiator : MonoBehaviour
         tmpLimiterInstance.transform.SetParent(parent);
         tmpLimiterInstance.GetComponent<HeightLimiterBhv>().Set(height, realm);
         return tmpLimiterInstance;
+    }
+
+    public void NewLockPieceEffects(Transform piece)
+    {
+        var reflectName = "ReflectBlock";
+        Realm realm = Realm.None;
+        if (piece.name.Contains(Realm.Hell.ToString()))
+        {
+            reflectName += Realm.Hell.ToString();
+            realm = Realm.Hell;
+        }
+        else if (piece.name.Contains(Realm.Earth.ToString()))
+        {
+            reflectName += Realm.Earth.ToString();
+            realm = Realm.Earth;
+        }
+        else if (piece.name.Contains(Realm.Heaven.ToString()))
+        {
+            reflectName += Realm.Heaven.ToString();
+            realm = Realm.Earth;
+        }
+        else if (piece.name.Contains("Classic"))
+        {
+            reflectName += "Classic";
+            realm = Realm.None;
+        }
+
+        var tmpParticlesObject = Resources.Load<GameObject>("Prefabs/LockPieceParticle");
+        foreach (Transform child in piece)
+        {
+            int roundedX = Mathf.RoundToInt(child.position.x);
+            int roundedY = Mathf.RoundToInt(child.position.y);
+            NewReflectBlock(reflectName, new Vector3(roundedX, roundedY, 0.0f), speed: 0.1f, color: (Color)Constants.GetColorFromRealm(realm, realm == Realm.None ? 2 : 4));
+        }
+        for (int x = 0; x < 10; ++x)
+        {
+            var maxY = Constants.HeightLimiter - 1;
+            foreach (Transform child in piece)
+            {
+                int roundedX = Mathf.RoundToInt(child.position.x);
+                int roundedY = Mathf.RoundToInt(child.position.y);
+                if (roundedX != x)
+                    continue;
+                if (roundedY > maxY)
+                    maxY = roundedY;
+            }
+            if (maxY > Constants.HeightLimiter - 1)
+            {
+                var tmpParticlesInstance = Instantiate(tmpParticlesObject, new Vector3(x, maxY + 0.75f, 0.0f), tmpParticlesObject.transform.rotation);
+                tmpParticlesInstance.GetComponent<LockPieceParticleBhv>().Init(realm);
+            }
+        }
     }
 }

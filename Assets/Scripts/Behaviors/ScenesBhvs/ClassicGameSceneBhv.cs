@@ -97,7 +97,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idImmunity = _soundControler.SetSound("Immunity");
         _idDodge = _soundControler.SetSound("LevelUp");
         _idTattooSound = _soundControler.SetSound("TattooSound");
-        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43B)}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
+        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(_run?.CurrentRealm ?? Realm.Hell, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(_run?.CurrentRealm ?? Realm.Hell, TextType.succubus3x5, TextCode.c43B)}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
 
@@ -249,6 +249,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
+        _musicControler.Play(Constants.VictoryAudioClip, once: true);
 
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)

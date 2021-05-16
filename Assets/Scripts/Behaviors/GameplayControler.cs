@@ -122,13 +122,13 @@ public class GameplayControler : MonoBehaviour
             Constants.TruthResurection = false;
             Resurect();
         }
-        else if (!run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        else if (Constants.CurrentGameMode != GameMode.TrainingFree && Constants.CurrentGameMode != GameMode.TrainingDummy && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
         {
             run.LifeRouletteOnce = true;
             PlayerPrefsHelper.SaveRun(run);
             Resurect("life roulette");
         }
-        else if (!run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        else if (Constants.CurrentGameMode != GameMode.TrainingFree && Constants.CurrentGameMode != GameMode.TrainingDummy && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
         {
             run.RepentanceOnce = true;
             PlayerPrefsHelper.SaveRun(run);
@@ -138,7 +138,8 @@ public class GameplayControler : MonoBehaviour
         {
             CharacterInstanceBhv.Die();
             Invoke(nameof(CleanPlayerPrefs), 1.0f);
-            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () => {
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
+            {
                 SceneBhv.OnGameOver();
                 return true;
             }));
@@ -774,6 +775,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().HasBlocksAffectedByGravity)
             AffectGravityOnBlocks(CurrentPiece);
+        Instantiator.NewLockPieceEffects(CurrentPiece.transform);
         CurrentPiece.GetComponent<Piece>().Lock(Instantiator);
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
@@ -1860,7 +1862,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.GetComponent<LinesLimiterBhv>())
+            if (PlayFieldBhv.Grid[x, y] == null)
                 continue;
             Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
@@ -1872,7 +1874,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
         {
-            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].gameObject.GetComponent<LinesLimiterBhv>())
+            if (PlayFieldBhv.Grid[x, y] == null)
                 continue;
             Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
@@ -2518,10 +2520,10 @@ public class GameplayControler : MonoBehaviour
                         realm = Realm.None;
                     }
                     if (realm != null)
-                        {
-                            Instantiator.NewReflectBlock(reflectName, new Vector3(diagX, diagY, 0.0f), color: (Color)Constants.GetColorFromRealm(realm.Value, 4));
-                            atLeastOne = true;
-                        }
+                    {
+                        Instantiator.NewReflectBlock(reflectName, new Vector3(diagX, diagY, 0.0f), color: (Color)Constants.GetColorFromRealm(realm.Value, 4));
+                        atLeastOne = true;
+                    }
                 }
                 ++diagY;
                 ++diagX;
