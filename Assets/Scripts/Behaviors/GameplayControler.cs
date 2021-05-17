@@ -541,7 +541,7 @@ public class GameplayControler : MonoBehaviour
             realm = run.CurrentRealm;
             difficulty = run.Difficulty;
         }        
-        GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{difficulty.ToString().ToLower()}\ngrav:  {GravityLevel}";
+        GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{difficulty.ToString().ToLower()}\ngrav: {GravityLevel}";
 
         GravityDelay = Constants.GravityDelay;
         SetLockDelay();

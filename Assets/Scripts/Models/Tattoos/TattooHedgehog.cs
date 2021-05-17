@@ -7,7 +7,7 @@ public class TattooHedgehog : Tattoo
     {
         Id = 18;
         Name = TattoosData.Tattoos[Id];
-        Stat = 2;
+        Stat = 1;
         Rarity = Rarity.Rare;
         MaxLevel = 10;
     }

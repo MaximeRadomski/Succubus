@@ -249,7 +249,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
-        _musicControler.Play(Constants.VictoryAudioClip, once: true);
 
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
@@ -277,11 +276,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                 _run.CharacterEncounterAvailability = false;
                 PlayerPrefsHelper.SaveRun(_run);
+                _musicControler.Play(Constants.VictoryAudioClip, once: true);
                 Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);
                 return true;}
         }
         else if (loot.LootType == LootType.Item)
         {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + ((Item)loot).Id);
             if (currentItem == null)
@@ -319,6 +320,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else if (loot.LootType == LootType.Resource)
         {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var amount = 2;
             if (_run.Difficulty == Difficulty.Easy)
                 amount = 1;
@@ -331,6 +333,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else if (loot.LootType == LootType.Tattoo)
         {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
             var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
             var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
@@ -356,6 +359,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
             LoadBackAfterVictory(false);
         }
         return true;
@@ -374,8 +378,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 var realmIdBeforeIncrease = _run.CurrentRealm.GetHashCode();
                 _run.IncreaseLevel();
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
-                _run.CurrentItemUses = currentItem.Uses;
-                if (currentItem.Name == ItemsData.Items[25])
+                if (currentItem != null)
+                    _run.CurrentItemUses = currentItem.Uses;
+                if (currentItem != null && currentItem.Name == ItemsData.Items[25])
                     ++_run.DeathScytheAscension;
                 PlayerPrefsHelper.SaveRun(_run);
                 if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())

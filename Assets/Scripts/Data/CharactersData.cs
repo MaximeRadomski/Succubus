@@ -8,7 +8,7 @@ public static class CharactersData
     public static bool DebugEnabled = false;
     public static Character DebugCharacter()
     {
-        return Characters?.Find(o => o.Name.Contains("Belias"));
+        return Characters?.Find(o => o.Name.Contains("Podarge"));
     }
 
     public static List<Character> Characters = new List<Character>()

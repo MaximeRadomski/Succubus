@@ -97,7 +97,7 @@ public class StepsService
         var lootType = LootType.None;
         var lootId = 0;
         var opponentType = OpponentType.Common;
-        if (Helper.RandomDice100(run.CharEncounterPercent) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability)
+        if (Helper.RandomDice100(run.CharEncounterPercent) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 3)
         {
             lootType = LootType.Character;
             var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);

@@ -75,7 +75,7 @@ public class StepsSceneBhv : SceneBhv
                 GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
         }
         _stepsService = new StepsService();
-        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (9 * _character.Realm.GetHashCode())));
+        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (10 * _character.Realm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
         if (string.IsNullOrEmpty(_run.Steps))
         {
