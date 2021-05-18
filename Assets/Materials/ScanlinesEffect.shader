@@ -61,9 +61,9 @@ Shader "Custom/Scanlines" {
 				if (xHardness > 1)
 					xHardness = 1;
 
-				if ((int)(psY / floor(_LineWidth * lineSizeY)) % 4 == 0)
+				if ((uint)(psY / floor(_LineWidth * lineSizeY)) % 4 == 0)
 					return color * float4(_Hardness, _Hardness, _Hardness, 1);
-				else if ((int)(psX / floor(_ColumnWidth * lineSizeY)) % 4 == 0)
+				else if ((uint)(psX / floor(_ColumnWidth * lineSizeY)) % 4 == 0)
 					return color * float4(xHardness, xHardness, xHardness, 1);
 				else
 					return color;

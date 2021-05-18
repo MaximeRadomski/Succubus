@@ -136,7 +136,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _musicControler.Play();
         var alreadyDialog = PlayerPrefsHelper.GetAlreadyDialog();
         if ((_currentStep == null || !_currentStep.LandLordVision)
-            && (DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any"))
+            && (DialogsData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogsData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any"))
             && !alreadyDialog.Contains($"{CurrentOpponent.Name}|{Character.Name}"))
         {
             Paused = true;

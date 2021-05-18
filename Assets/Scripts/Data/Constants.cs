@@ -129,6 +129,8 @@ public static class Constants
     public const string PpTotalResourcesDefault = null;
     public const string PpBoughtTreeNodes = "BoughtTreeNodes";
     public const string PpRealmTree = "RealmTree";
+    public const string PpVersion = "Version";
+    public const string PpVersionDefault = "Alpha.01.004";
 
     public static string GetDefaultKeyBinding()
     {

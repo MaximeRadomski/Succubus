@@ -68,10 +68,10 @@ public class DialogBoxBhv : FrameRateBehavior
         _subject = GetSubjectFromName(subjectName);
         _secondary = GetSubjectFromName(secondaryName);
         List<List<string>> tmpSentences = null;
-        if (!DialogData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
+        if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
         {
             _dialogLibelle = $"{subjectName}|Any";
-            if (!DialogData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
+            if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
                 _sentences = new List<string>() { "[Error]: Missing content... Go throw some rocks at at the dev!" };
         }
         if (tmpSentences != null)
@@ -212,7 +212,7 @@ public class DialogBoxBhv : FrameRateBehavior
         _content.text += _talkingSplit[_talkingSplitId][_talkingCharId];
         switch (_talkingSplit[_talkingSplitId][_talkingCharId])
         {
-            case '.': case '!': case '?': case ':': case ';':
+            case '.': case '!': case '?': case ':': case ';': case ']':
                 if (_talkingCharId == _talkingSplit[_talkingSplitId].Length - 1)
                     _talkingFramesProgress = -30;
                 break;

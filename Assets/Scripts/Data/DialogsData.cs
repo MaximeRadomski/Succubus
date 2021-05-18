@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DialogData
+public static class DialogsData
 {
     // ' ' separates words (no pause).
     // '. ' Pause
@@ -17,7 +17,11 @@ public static class DialogData
                 {
                     "Hmm yes? What is it?",
                     "Well... Don't you know your master started a realm war against-",
-                    "Wait What!! Oh I guess I was asleep during this morning meeting... as usual... Ok ok let's pretend I was actually aware of that from the beggining!",
+                    "Wait What!! Oh I guess I was asleep during this morning meeting...",
+                    "...",
+                    "as... as usual... ",
+                    "...",
+                    "Ok ok let's pretend I was actually aware of that from the beggining!",
                     "Well... I guess you were, weren't you?",
                     "That's the spirit!"
                 }
@@ -37,7 +41,7 @@ public static class DialogData
                     "...",
                     "Asleep during the morning meeting again I suppose?",
                     "Edam...",
-                    "Sigh... Just... Just follow us and try to keep the pace. Please."
+                    "[ Sigh ]\nJust... Just follow us and try to keep the pace. Please."
                 }
             }
         },
@@ -54,8 +58,8 @@ public static class DialogData
                     "...",
                     "...",
                     "Will you help us getting out of hell or what?",
-                    "Oh! That's what it is about!",
-                    "Sigh... Just... Just follow us and try to keep the pace. Please."
+                    "Oh! That's what it is about?",
+                    "[ Sigh ]\nJust... Just follow us and try to keep the pace. Please."
                 }
             }
         },
@@ -70,7 +74,7 @@ public static class DialogData
                     "Well... Wouldn't you want to do something else than... Suffering?",
                     "Just doing my chores, I know my place. Now begone! Before I loose my patience.",
                     "Even if I tell you that your mistress Ivy is sending me here to get you?",
-                    "Mistress!! Say no more! I'm coming with you little being!",
+                    "Mistress!! She talked about me? Say no more! I'm coming with you little being!",
                     "Little... being... ?"
                 }
             }
@@ -80,12 +84,12 @@ public static class DialogData
             {
                 new List<string>()
                 {
-                    "Mistress!! Your presence here honors me!",
+                    "Mistress!! Oh mistress! Your presence here honors me!",
                     "Yeah yeah whatever. Come. We need you. Getting out of hell might be tricky without you!",
                     "Getting... out of hell?",
                     "Are you questioning my orders now?",
-                    "Oh!! No I'm not, Mistress!!",
-                    "Are you coming then?",
+                    "Oh!! No I'm not, Mistress!! But, what is your father opinion on this matter?",
+                    "Belias. My patience has its limits.",
                     "Yes Mistress!!"
                 }
             }
@@ -174,7 +178,8 @@ public static class DialogData
             {
                 new List<string>()
                 {
-                    "Go back where you come from vermin! Those gates have remained sealed for centuries and I am here to keep it that way."
+                    "Go back where you come from vermin! Those gates have remained sealed for centuries and I am here to keep it that way.",
+                    "Vermin?"
                 }
             }
         },
@@ -208,7 +213,28 @@ public static class DialogData
                 {
                     "My lord. Orders are orders. Nothing personal.",
                     "Be a good pawn Baphomeh, and show me what you got!",
-                    "Snort..."
+                    "[ Snort ]"
+                }
+            }
+        },
+        { "Baphomeh|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Brother. Did Mistress Ivy sent you?",
+                    "She did. Will it be a problem?",
+                    "I know you seek vengeance, and I won't stop you trying to defeat me once again. But you already know how it always ends.",
+                    "This is about to change big brother. Now come, I'll show you what my exile made of me!!"
+                },
+                new List<string>()
+                {
+                    "Brother. Did Mistress Ivy sent you?",
+                    "Shut up you. I'm here to continue our fight.",
+                    "Continue? What are you meaning??",
+                    "That I finally have an opportunity to kick your hairy butt over and over.",
+                    "Wait... this seems familiar...",
+                    "You bet it does!!"
                 }
             }
         },
@@ -253,7 +279,7 @@ public static class DialogData
                     "Hmm... Why am I not surprised to see you here milady?",
                     "Might be linked to the fact that we have already done it several times maybe!!",
                     "Wait... No!!! The amulet ?",
-                    "Haha, seeing you this surprised each time is pleasing!!"
+                    "Haha, seeing you this surprised each time is so pleasing!!"
                 }
             }
         },
@@ -276,9 +302,24 @@ public static class DialogData
                 },
                 new List<string>()
                 {
-                    "Edam... Seeing you here seems like a deja vu ! I guess I've already failed before didn't I ?",
+                    "Edam... Seeing you here seems like a deja vu! I guess I've already failed before didn't I?",
                     "Haha! You've been a pleasing opponent so far don't worry.",
                     "I see... I hate this smile of yours. Let me put an end to it!!"
+                }
+            }
+        },
+        { "Devil's Advocate|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Are you kidding me?",
+                    "?",
+                    "Of all the twins' fidels, they sent you? against me??",
+                    "Hmm... Who are you again?",
+                    "What?",
+                    "...",
+                    "[ intelligible scream !! ]"
                 }
             }
         },
@@ -329,7 +370,7 @@ public static class DialogData
                 new List<string>()
                 {
                     "Ah Ivy, I've been waiting for you.",
-                    "Don't tell me this like it's nothing...",
+                    "Don't tell me that like it's nothing...",
                     "I'm getting used to it by now. Now make your father proud and show him your progress."
                 },
                 new List<string>()
@@ -354,10 +395,10 @@ public static class DialogData
                 new List<string>()
                 {
                     "Son. Still rejecting your nature?",
-                    "I came here to... Wait! You remember our fight?",
+                    "I came here to- Wait!! You remember our fight?",
                     "Do you think a simple trick like this amulet would let me unaware of what's happening?",
                     "You call that a simple trick? It seems to be well enough for all the simple minded we fight each time!",
-                    "Don't underestimate your overlord!!"
+                    "Do not underestimate your overlord!!"
                 },
                 new List<string>()
                 {

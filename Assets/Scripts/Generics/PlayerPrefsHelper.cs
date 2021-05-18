@@ -804,4 +804,15 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         SaveRealmTree(null);
     }
+
+    public static void SaveVersion(string version)
+    {
+        PlayerPrefs.SetString(Constants.PpVersion, version);
+    }
+
+    public static string GetVersion()
+    {
+        var version = PlayerPrefs.GetString(Constants.PpVersion, Constants.PpSerializeDefault);
+        return version;
+    }
 }
