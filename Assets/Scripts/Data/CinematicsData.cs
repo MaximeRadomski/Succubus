@@ -18,7 +18,7 @@ public static class CinematicsData
                 "Then from the earth, they came, and worshipped the gods realms.",
                 "Thus began the age of men, but soon, Hell will fade, and only Heaven will remain.",
 
-                "Humans forgot about the balance, fought over holiness, letting darkness into darkness.",
+                "But Humans forgot about the balance, fought over holiness, letting darkness into darkness.",
                 "Without proper worshipping, Hell became too crowded, the hordes of the overlord began to suffocate.",
 
                 "Facing this unbalanced fight, Ivy first born of evil, started a crusade against Heaven.",

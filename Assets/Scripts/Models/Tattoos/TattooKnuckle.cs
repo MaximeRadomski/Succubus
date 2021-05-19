@@ -7,7 +7,7 @@ public class TattooKnuckle : Tattoo
     {
         Id = 4;
         Name = TattoosData.Tattoos[Id];
-        Stat = 4;
+        Stat = 2;
         Rarity = Rarity.Common;
         MaxLevel = 99;
     }

@@ -64,11 +64,11 @@ public class SplashScreenBhv : SceneBhv
         if (lastSavedVersion == null || !int.TryParse(lastSavedVersion[0], out var main))
         {
             PlayerPrefs.DeleteAll();
-            Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
         }
         else if (int.Parse(lastSavedVersion[0]) < int.Parse(currentVersion[0]))
         {
-
+            PlayerPrefs.DeleteAll();
+            Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
         }
         else if (int.Parse(lastSavedVersion[1]) < int.Parse(currentVersion[1]))
         {

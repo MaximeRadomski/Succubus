@@ -101,7 +101,7 @@ public class InfoMenuBhv : PopupBhv
     {
         var cooldown = _characterItem.Cooldown >= 0 ? _characterItem.Cooldown.ToString() : null;
         _instantiator.NewPopupYesNo(_characterItem.Name,
-            $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_characterItem.GetDescription().ToLower()}" + (cooldown != null ?
+            $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_characterItem.GetDescription()}" + (cooldown != null ?
             ($"\n---\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}cooldown: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{cooldown}{Constants.MaterialEnd}")
             : ""),
             null, "Ok", null);

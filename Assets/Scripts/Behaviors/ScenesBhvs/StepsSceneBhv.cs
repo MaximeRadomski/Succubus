@@ -326,7 +326,7 @@ public class StepsSceneBhv : SceneBhv
         }
         else
             return;
-        Instantiator.NewPopupYesNo(name, description.ToLower() + (cooldown != null ?
+        Instantiator.NewPopupYesNo(name, description + (cooldown != null ?
             ($"\n---\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}cooldown: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{cooldown}{Constants.MaterialEnd}")
             : ""), null, "Ok", null);
     }
