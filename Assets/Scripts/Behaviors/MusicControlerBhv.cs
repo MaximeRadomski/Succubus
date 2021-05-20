@@ -106,8 +106,12 @@ public class MusicControlerBhv : MonoBehaviour
         }
         else if (_currentType == MusicType.Ascension)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/Ascension");
+        else if (_currentType == MusicType.Boss)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/Boss");
         else if (_currentType == MusicType.GameOver)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/Devlog");
+        else if (_currentType == MusicType.Lore)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/Lore");
         else
             _audioSource.clip = null;
         _audioSource.Play();

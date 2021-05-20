@@ -4,8 +4,10 @@
     Continue,
     SplashScreen,
     Menu,
+    Lore,
     Ascension,
     Steps,
     Game,
+    Boss,
     GameOver
 }

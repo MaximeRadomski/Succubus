@@ -41,7 +41,7 @@ public static class DialogsData
                     "...",
                     "Asleep during the morning meeting again I suppose?",
                     "Edam...",
-                    "[ Sigh ]\nJust... Just follow us and try to keep the pace. Please."
+                    "[ Sigh ] \nJust... Just follow us and try to keep the pace. Please."
                 }
             }
         },
@@ -59,7 +59,7 @@ public static class DialogsData
                     "...",
                     "Will you help us getting out of hell or what?",
                     "Oh! That's what it is about?",
-                    "[ Sigh ]\nJust... Just follow us and try to keep the pace. Please."
+                    "[ Sigh ] \nJust... Just follow us and try to keep the pace. Please."
                 }
             }
         },
@@ -350,7 +350,7 @@ public static class DialogsData
                 {
                     "Daughter. Seeing you here fills my heart with sadness...",
                     "Haha don't even try it. I know I have no place in your heart!",
-                    "...\nWhat are you doing here Ivy?",
+                    "... \nWhat are you doing here Ivy?",
                     "Don't you see what's happening father? All those lost souls? Hell being incapable of doing its work, the humans not believing in us anymore?",
                     "What is your point?",
                     "You've grown weak! Hell's strength has grown weak, you know we need more fidels, we are losing this war against heaven!",

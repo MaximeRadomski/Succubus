@@ -7,7 +7,7 @@ public class TattooDoubleEdged : Tattoo
     {
         Id = 38;
         Name = TattoosData.Tattoos[Id];
-        Stat = 4;
+        Stat = 2;
         Rarity = Rarity.Rare;
         MaxLevel = 5;
     }

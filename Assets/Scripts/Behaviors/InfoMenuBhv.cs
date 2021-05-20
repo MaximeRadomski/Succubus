@@ -147,9 +147,9 @@ public class InfoMenuBhv : PopupBhv
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
         _opponentFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
         _opponentFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + 
-            (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.ToString().ToLower() : opponent.Weakness.ToString().ToLower());
+            (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
         _opponentFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
-            (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.ToString().ToLower() : opponent.Immunity.ToString().ToLower());
+            (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.GetDescription().ToLower() : opponent.Immunity.GetDescription().ToLower());
     }
 
     private void OpponentLore()

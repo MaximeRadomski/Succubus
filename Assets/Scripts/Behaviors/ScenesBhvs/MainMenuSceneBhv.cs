@@ -57,7 +57,7 @@ public class MainMenuSceneBhv : SceneBhv
             {
                 var totalResources = PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
                 if (string.IsNullOrEmpty(totalResources))
-                    NavigationService.LoadNextScene(Constants.CharSelScene);
+                    NavigationService.LoadNextScene(Constants.LoreScene);
                 else
                     NavigationService.LoadNextScene(Constants.TreeScene);
             }

@@ -39,14 +39,28 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idDodge;
     private int _idTattooSound;
 
-    public override MusicType MusicType => MusicType.Game;
+    public override MusicType MusicType => GetMusicType();
+
+    private MusicType GetMusicType()
+    {
+        if (_stepsService == null)
+            _stepsService = new StepsService();
+        if (_run == null)
+            _run = PlayerPrefsHelper.GetRun();
+        var currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+        if (currentStep.LandLordVision)
+            return MusicType.Boss;
+        return MusicType.Game;
+    }
 
     void Start()
     {
         Init();
-        _run = PlayerPrefsHelper.GetRun();
+        if (_run == null)
+            _run = PlayerPrefsHelper.GetRun();
         _realmTree = PlayerPrefsHelper.GetRealmTree();
-        _stepsService = new StepsService();
+        if (_stepsService == null)
+            _stepsService = new StepsService();
         if (Constants.CurrentGameMode == GameMode.TrainingDummy
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
