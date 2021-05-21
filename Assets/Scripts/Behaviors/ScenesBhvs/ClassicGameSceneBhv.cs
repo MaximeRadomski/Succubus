@@ -288,8 +288,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, AfterCharacterDialog);
             bool AfterCharacterDialog() {
                 StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
-                _run.CharacterEncounterAvailability = false;
-                PlayerPrefsHelper.SaveRun(_run);
                 _musicControler.Play(Constants.VictoryAudioClip, once: true);
                 Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);
                 return true;}
@@ -412,7 +410,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 object LoadNext(bool result)
                 {
                     //DEBUG
-                    if (Constants.DemoMode && _run.CurrentRealm == Realm.Earth)
+                    if (Constants.BetaMode && _run.CurrentRealm == Realm.Earth)
                     {
                         Constants.GameOverParams = $"Abject|Hell|3";
                         PlayerPrefsHelper.ResetRun();

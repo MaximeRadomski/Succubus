@@ -100,6 +100,7 @@ public class StepsService
         if (Helper.RandomDice100(run.CharEncounterPercent) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 2)
         {
             lootType = LootType.Character;
+            run.CharacterEncounterAvailability = false;
             var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);
             var unlockedIds = new List<int>();
             for (int i = 0; i < unlockedRealmString.Length; ++i)

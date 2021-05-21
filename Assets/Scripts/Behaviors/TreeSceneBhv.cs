@@ -141,7 +141,7 @@ public class TreeSceneBhv : SceneBhv
         var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 10 : 0;
         var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 10 : 0;
         var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 10 : 0;
-        if (Constants.DemoMode)
+        if (Constants.BetaMode)
         {
             earthResourceAsked = 0;
             heavenResourceAsked = 0;

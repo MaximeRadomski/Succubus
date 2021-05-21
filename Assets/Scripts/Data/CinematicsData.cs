@@ -22,7 +22,7 @@ public static class CinematicsData
                 "Without proper worshipping, Hell became too crowded, the hordes of the overlord began to suffocate.",
 
                 "Facing this unbalanced fight, Ivy first born of evil, started a crusade against Heaven.",
-                "Thus began the age of Sin, an everlasting fight to re-establish a balance between realms.",
+                "Thus began an everlasting fight to re-establish a balance between realms.",
 
                 "She, and her twin brother Edam, stole one of their father relics, the Time Amulet.",
                 "A cursed artefact, so powerful it could rollback time until its owner acquisition.",

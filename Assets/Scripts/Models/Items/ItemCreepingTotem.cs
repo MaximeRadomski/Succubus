@@ -28,7 +28,7 @@ public class ItemCreepingTotem : Item
         }
         var selectedX = Random.Range(0, Constants.PlayFieldWidth);
         var selectedY = _gameplayControler.GetHighestBlockOnX(selectedX);
-        if (selectedY < 3 && highestY >= 3)
+        if (selectedY < Constants.HeightLimiter + 3 && highestY >= Constants.HeightLimiter + 3)
         {
             selectedY = highestY;
             selectedX = highestX;
@@ -36,7 +36,7 @@ public class ItemCreepingTotem : Item
         if (selectedY >= Constants.HeightLimiter)
         {
             var centerY = Random.Range(selectedY >= Constants.HeightLimiter + 3 ? Constants.HeightLimiter + 1 : Constants.HeightLimiter, selectedY - 2);
-            while (_gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
+            while (centerY < 0 || _gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
                 ++centerY;
             DestroyBlock(selectedX, centerY);
             DestroyBlock(selectedX, centerY + 1);

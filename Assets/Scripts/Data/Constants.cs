@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Constants
 {
-    public const bool DemoMode = true;
+    public const bool BetaMode = true;
 
     public const int MaxFps = 60;
     public const float Pixel = 0.14285f;

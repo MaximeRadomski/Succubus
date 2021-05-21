@@ -664,7 +664,10 @@ public class GameplayControler : MonoBehaviour
             _currentGhostPiecesOriginalPos.Clear();
         if (!IsPiecePosValid(CurrentPiece))
         {
-            GameOver();
+            CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+            Instantiator.NewLockPieceEffects(CurrentPiece.transform);
+            if (!IsPiecePosValid(CurrentPiece))
+                GameOver();
         }
         PlayerPrefsHelper.SaveBag(Bag);
         Bag = Bag.Remove(0, 1);
@@ -1463,7 +1466,10 @@ public class GameplayControler : MonoBehaviour
                 _currentGhostPiecesOriginalPos.Clear();
             if (!IsPiecePosValid(CurrentPiece))
             {
-                GameOver();
+                CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+                Instantiator.NewLockPieceEffects(CurrentPiece.transform);
+                if (!IsPiecePosValid(CurrentPiece))
+                    GameOver();
             }
             _allowedMovesBeforeLock = 0;
             SetNextGravityFall();
