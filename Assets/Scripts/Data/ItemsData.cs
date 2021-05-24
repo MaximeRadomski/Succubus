@@ -19,7 +19,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = false;
-    public static Item DebugItem = GetItemFromName("Creeping Totem");
+    public static Item DebugItem = GetItemFromName("D6");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

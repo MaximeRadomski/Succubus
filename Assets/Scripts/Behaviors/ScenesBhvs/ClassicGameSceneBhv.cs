@@ -237,7 +237,22 @@ public class ClassicGameSceneBhv : GameSceneBhv
         StartOpponentCooldown(sceneInit, true);
     }
 
-    public void RandomizeOpponentAttack() { CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Constants.RandomizedAttackType, 1, 2) }; }
+    public void RandomizeOpponentAttack()
+    {
+        if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)
+            Destroy(_gameplayControler.ForcedPiece);
+        else if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
+        {
+            var tmpDrillTarget = GameObject.Find(Constants.GoDrillTarget);
+            if (tmpDrillTarget != null)
+                Destroy(tmpDrillTarget);
+        }
+
+        CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Constants.RandomizedAttackType, 1, 2) };
+        Constants.CurrentOpponentAttackId = 0;
+        if (Constants.RandomizedAttackType == AttackType.Drill)
+            _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, true);
+    }
 
     public void HalveOpponentMaxCooldown() { CurrentOpponent.Cooldown /= 2; }
 
@@ -263,6 +278,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
+        Constants.ResetClassicGameCache();
 
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
@@ -443,7 +459,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown;
         }
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
-            _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1);
+            _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, true);
         SetNextCooldownTick();
     }
 

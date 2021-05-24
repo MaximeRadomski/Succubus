@@ -2196,10 +2196,10 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void AttackDrill(GameObject opponentInstance, Realm opponentRealm, int deepness)
+    public void AttackDrill(GameObject opponentInstance, Realm opponentRealm, int deepness, bool fromStart = false)
     {
         var drillTarget = GameObject.Find(Constants.GoDrillTarget);
-        if (drillTarget != null)
+        if (drillTarget != null && !fromStart)
         {
             drillTarget.name += "(Old)";
             _soundControler.PlaySound(_idEmptyRows);
@@ -2216,7 +2216,7 @@ public class GameplayControler : MonoBehaviour
             }
             Destroy(drillTarget);
         }
-        else
+        else if (drillTarget == null && fromStart)
         {
             var x = UnityEngine.Random.Range(0, 10);
             var firstXTried = x;

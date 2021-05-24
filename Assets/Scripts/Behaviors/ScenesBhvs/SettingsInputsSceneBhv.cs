@@ -176,13 +176,13 @@ public class SettingsInputsSceneBhv : SceneBhv
             {
                 sprite.flipX = false;
                 GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = false;
-                text.text = $"Right Handed {Constants.MaterialLongHell_3_2}(click to change)";
+                text.text = $"Right Handed {Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}(click to change)";
             }
             else
             {
                 sprite.flipX = true;
                 GameObject.Find("GameplaySwipes").GetComponent<SpriteRenderer>().flipX = true;
-                text.text = $"Left Handed {Constants.MaterialLongHell_3_2}(click to change)";
+                text.text = $"Left Handed {Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}(click to change)";
             }
         }
 #else

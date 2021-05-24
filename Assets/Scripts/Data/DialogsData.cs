@@ -107,6 +107,16 @@ public static class DialogsData
                 }
             }
         },
+        { "Harpy|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "You??",
+                    "This is awkward..."
+                }
+            }
+        },
         #endregion
         #region Jill
         { "PHILL|Any",

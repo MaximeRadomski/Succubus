@@ -101,6 +101,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void ReportBug()
     {
+        Application.OpenURL("https://discord.gg/dJG9KHVhCn");
         Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }
 
