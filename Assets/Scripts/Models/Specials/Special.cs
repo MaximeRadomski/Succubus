@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Special
 {
+    public bool IsReactivable = false;
+    public bool CanReactivate;
+
     protected Character _character;
     protected GameplayControler _gameplayControler;
 

@@ -469,9 +469,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         if (Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
         {
-            _opponentOnCooldown = false;
-            _nextCooldownTick = Time.time + 3600;
-            _gameplayControler.AttackIncoming = true;
+            OpponentAttackIncoming();
         }
         else
         {
@@ -481,6 +479,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
                 _nextCooldownTick = Time.time + 1.0f;
         }
+    }
+
+    public void OpponentAttackIncoming()
+    {
+        _opponentOnCooldown = false;
+        _nextCooldownTick = Time.time + 3600;
+        _gameplayControler.AttackIncoming = true;
     }
 
     public void StopTime(int seconds)

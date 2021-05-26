@@ -348,7 +348,7 @@ public class GameplayControler : MonoBehaviour
             }
         }
         //SPECIAL
-        if (Constants.SelectedCharacterSpecialCooldown <= 0)
+        if (Constants.SelectedCharacterSpecialCooldown <= 0 || (_characterSpecial.IsReactivable && _characterSpecial.CanReactivate))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -1503,8 +1503,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
-            if (_characterSpecial.Reactivate())
+            if (_characterSpecial.IsReactivable && _characterSpecial.CanReactivate && _characterSpecial.Reactivate())
                 _soundControler.PlaySound(_idSpecial);
+            UpdateItemAndSpecialVisuals();
             return;
         }
         if (_characterSpecial.Activate())

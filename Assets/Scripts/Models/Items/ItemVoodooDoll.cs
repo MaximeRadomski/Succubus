@@ -15,7 +15,7 @@ public class ItemVoodooDoll : Item
 
     protected override object Effect()
     {
-        Constants.CurrentOpponentCooldown = 1000;
+        ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).OpponentAttackIncoming();
         return base.Effect();
     }
 }

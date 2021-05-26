@@ -328,8 +328,8 @@ public static class DialogsData
                     "Of all the twins' fidels, they sent you? against me??",
                     "Hmm... Who are you again?",
                     "What?",
-                    "...",
-                    "[ intelligible scream !! ]"
+                    "What?",
+                    "[ intelligible scream ]"
                 }
             }
         },

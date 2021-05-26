@@ -7,7 +7,11 @@ public class SpecialSwap : Special
     private GameObject _selector;
     private int _selectedId;
     private float _customUpdateDelay = 0.25f;
-    private bool _canReactivate;
+
+    public SpecialSwap()
+    {
+        IsReactivable = true;
+    }
 
     public override bool Activate()
     {
@@ -23,7 +27,7 @@ public class SpecialSwap : Special
         selectorSpriteRenderer.sortingLayerName = "Effects";
         _selector.transform.position = new Vector3(_gameplayControler.NextPieces[0].transform.position.x - 2.7143f, _gameplayControler.NextPieces[0].transform.position.y + 0.5f, 0.0f);
         _selectedId = -1;
-        _canReactivate = true;
+        CanReactivate = true;
         _gameplayControler.StartCoroutine(CustomUpdate());
         return true;
     }
@@ -42,9 +46,9 @@ public class SpecialSwap : Special
 
     public override bool Reactivate()
     {
-        if (!_canReactivate)
+        if (!CanReactivate)
             return false;
-        _canReactivate = false;
+        CanReactivate = false;
         Object.Destroy(_selector);
         _gameplayControler.CurrentPiece.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent);
         _gameplayControler.NextPieces[_selectedId].transform.GetChild(0).GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent);
