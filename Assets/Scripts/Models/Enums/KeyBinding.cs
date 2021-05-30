@@ -22,8 +22,18 @@ public enum KeyBinding
     Special = 8,
     [Description("Back / Pause")]
     BackPause = 9,
-    [Description("Rotation 180°")]
-    Rotation180 = 10,
+    [Description("Menu Up")]
+    MenuUp = 10,
+    [Description("Menu Down")]
+    MenuDown = 11,
+    [Description("Menu Left")]
+    MenuLeft = 12,
+    [Description("Menu Right")]
+    MenuRight = 13,
+    [Description("Menu Select")]
+    MenuSelect = 14,
+    [Description("Rotation 180")]
+    Rotation180 = 15,
     [Description("None")]
     None = 99
 }

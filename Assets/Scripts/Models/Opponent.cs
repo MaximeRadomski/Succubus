@@ -7,7 +7,7 @@ public class Opponent
     public int Id;
     public string Name;
     public int HpMax;
-    public int Cooldown;
+    public float Cooldown;
     public Realm Realm;
     public Weakness Weakness;
     public Immunity Immunity;

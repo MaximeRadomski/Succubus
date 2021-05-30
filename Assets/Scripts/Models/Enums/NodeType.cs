@@ -9,7 +9,7 @@ public enum NodeType
     [Description("+1 attack damage.")]
     AttackBoost,
     [Title("Cooldown Brake")]
-    [Description("+1 second added to opponents cooldowns.")]
+    [Description("+0.666 second added to opponents cooldowns.")]
     CooldownBrake,
     [Title("Critical Precision")]
     [Description("+2% critical chance.")]

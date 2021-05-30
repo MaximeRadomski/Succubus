@@ -54,7 +54,7 @@ public class ResourceBarBhv : MonoBehaviour
         _hasInit = true;
     }
 
-    public void UpdateContent(int current, int max, Direction direction = Direction.None)
+    public void UpdateContent(float current, float max, Direction direction = Direction.None)
     {
         bool isDelaying;
         if (current < 0)

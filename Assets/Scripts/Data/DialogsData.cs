@@ -281,7 +281,7 @@ public static class DialogsData
                 {
                     "Wait, something's weird... What is happening milady?",
                     "Wondering about my deeds my dear ?",
-                    "It just feels like... I'm already bored of it even it hasn't begun... Have you done something against the time continuum???",
+                    "It just feels like... I'm already bored of it even if it hasn't begun... Have you done something against the time continuum???",
                     "Hehehe!!!"
                 },
                 new List<string>()

@@ -274,7 +274,7 @@ public static class Constants
     //Reset before each fight
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
-    public static int CurrentOpponentCooldown;
+    public static float CurrentOpponentCooldown;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
     public static int DamoclesDamages = 0;

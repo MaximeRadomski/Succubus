@@ -102,12 +102,12 @@ public class MainMenuSceneBhv : SceneBhv
     private void ReportBug()
     {
         Application.OpenURL("https://discord.gg/dJG9KHVhCn");
-        Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
+        //Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }
 
     private void WannaHelp()
     {
         //Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL", "Edam", null, 0);
-        Instantiator.NewPopupYesNo("Thanks!", "giving feedbacks, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
+        Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedbacks, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
     }
 }

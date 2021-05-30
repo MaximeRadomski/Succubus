@@ -311,7 +311,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             tmPro = _keyBindingPanelMenu.transform.GetChild(id - 9).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
-        tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) : "")}{_keyBinding[id]}";
+        tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_keyBinding[id]}";
     }
 
     private void SwitchKeyBindingPanels(int idPanel)

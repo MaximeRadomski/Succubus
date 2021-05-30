@@ -190,7 +190,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
         CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();
-        CurrentOpponent.Cooldown += _realmTree.CooldownBrake;
+        CurrentOpponent.Cooldown += (_realmTree.CooldownBrake * 0.666f);
         if (Constants.RandomizedAttackType != AttackType.None)
             RandomizeOpponentAttack();
         if (Constants.CurrentOpponentChangedRealm != Realm.None)
