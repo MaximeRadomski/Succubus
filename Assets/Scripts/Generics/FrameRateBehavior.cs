@@ -41,9 +41,8 @@ public abstract class FrameRateBehavior : MonoBehaviour
 
     private void SetFrameValue()
     {
-        var twentieth = (float)Constants.MaxFps / 20.0f;
-        if (Screen.currentResolution.refreshRate >= Constants.MaxFps + twentieth)
-            _frameValue = 1.0f / (_framesPerSecond + twentieth);
+        if (Screen.currentResolution.refreshRate >= Constants.MaxFps + 1)
+            _frameValue = 1.0f / (_framesPerSecond + 1);
         else
             _frameValue = 0.0f;
     }
@@ -55,6 +54,7 @@ public abstract class FrameRateBehavior : MonoBehaviour
 
     void Update()
     {
+        NormalUpdate();
         if (Time.time < _lastFrame + _frame)
             return;
         _lastFrame = Time.time;
@@ -62,6 +62,11 @@ public abstract class FrameRateBehavior : MonoBehaviour
     }
 
     protected virtual void FrameUpdate()
+    {
+
+    }
+
+    protected virtual void NormalUpdate()
     {
 
     }

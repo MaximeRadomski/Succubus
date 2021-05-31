@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BackgroundBhv : MonoBehaviour
+public class BackgroundBhv : FrameRateBehavior
 {
     private Vector2 _positionToReach;
     private bool _isMoving;
@@ -32,7 +32,7 @@ public class BackgroundBhv : MonoBehaviour
         _positionToReach = new Vector2(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (_isMoving)
             Move();

@@ -151,7 +151,7 @@ public class SwipeControlerBhv : MonoBehaviour
             ++_framesBeforeHoldingDown;
             if (_framesBeforeHoldingDown < 10)
                 return;
-            _gameplayControler.SoftDropHolded();
+            _gameplayControler.SoftDropHeld();
             if (!_isHoldingDown)
             {
                 _reBeginPos = currentPos;

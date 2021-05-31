@@ -43,7 +43,7 @@ public class GameplayControler : MonoBehaviour
     private Vector3 _lastCurrentPieceValidPosition;
     private int _lastNbLinesCleared;
     private int _comboCounter;
-    private int _leftHolded, _rightHolded;
+    private int _leftHeld, _rightHeld;
     private float _heavyWeightDelay;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
@@ -597,12 +597,12 @@ public class GameplayControler : MonoBehaviour
     private void SetButtons()
     {
         LookForAllPossibleButton(Constants.GoButtonLeftName, () => { Left(); }, 0);
-        LookForAllPossibleButton(Constants.GoButtonLeftName, LeftHolded, 1);
+        LookForAllPossibleButton(Constants.GoButtonLeftName, LeftHeld, 1);
         LookForAllPossibleButton(Constants.GoButtonLeftName, DirectionReleased, 2);
         LookForAllPossibleButton(Constants.GoButtonRightName, () => { Right(); }, 0);
-        LookForAllPossibleButton(Constants.GoButtonRightName, RightHolded, 1);
+        LookForAllPossibleButton(Constants.GoButtonRightName, RightHeld, 1);
         LookForAllPossibleButton(Constants.GoButtonRightName, DirectionReleased, 2);
-        LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHolded, 1);
+        LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHeld, 1);
         LookForAllPossibleButton(Constants.GoButtonHoldName, Hold, 0);
         LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonAntiClockName, AntiClock, 0);
@@ -856,7 +856,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Left(bool mimicPossible = true)
     {
-        _leftHolded = _rightHolded = 0;
+        _leftHeld = _rightHeld = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -872,9 +872,9 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    public void LeftHolded()
+    public void LeftHeld()
     {
-        ++_leftHolded;
+        ++_leftHeld;
         ++_das;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
@@ -891,7 +891,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHolded == 0)
+        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHeld == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
         _arr = 0;
@@ -899,7 +899,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Right(bool mimicPossible = true)
     {
-        _rightHolded = _leftHolded = 0;
+        _rightHeld = _leftHeld = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -915,9 +915,9 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
-    public void RightHolded()
+    public void RightHeld()
     {
-        ++_rightHolded;
+        ++_rightHeld;
         ++_das;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
         {
@@ -934,7 +934,7 @@ public class GameplayControler : MonoBehaviour
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
-        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHolded == 0)
+        if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHeld == 0)
             _soundControler.PlaySound(_idLeftRightDown);
         DropGhost();
         _arr = 0;
@@ -945,7 +945,7 @@ public class GameplayControler : MonoBehaviour
         ResetDasArr();
     }
 
-    public void SoftDropHolded()
+    public void SoftDropHeld()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
@@ -1450,13 +1450,13 @@ public class GameplayControler : MonoBehaviour
         }
         else
         {
-            var tmpHolded = _holder.transform.GetChild(0);
-            var pieceLetter = tmpHolded.GetComponent<Piece>().Letter;
+            var tmpHeld = _holder.transform.GetChild(0);
+            var pieceLetter = tmpHeld.GetComponent<Piece>().Letter;
             var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
-            Destroy(tmpHolded.gameObject);
+            Destroy(tmpHeld.gameObject);
             if (CurrentGhost != null)
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
@@ -2435,7 +2435,7 @@ public class GameplayControler : MonoBehaviour
 
     private string _inputString = "";
 
-    public void AddFrameKeyPressOrHolded(string input)
+    public void AddFrameKeyPressOrHeld(string input)
     {
         if (_inputDisplay == null)
             return;
@@ -2444,7 +2444,7 @@ public class GameplayControler : MonoBehaviour
         _inputString += input.ToLower();
     }
 
-    public void UpdateFrameKeysPressOrHolded()
+    public void UpdateFrameKeysPressOrHeld()
     {
         if (_inputDisplay == null)
             return;

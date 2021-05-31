@@ -70,6 +70,15 @@ public class InputControlerBhv : FrameRateBehavior
         if (Constants.InputLocked)
             return;
 #if !UNITY_ANDROID || UNITY_EDITOR
+        CheckFrameDependentGameKeyboardInputs();
+#endif
+    }
+
+    protected override void NormalUpdate()
+    {
+        if (Constants.InputLocked)
+            return;
+#if !UNITY_ANDROID || UNITY_EDITOR
         CheckGameKeyboardInputs();
         CheckMenuKeyboardInputs();
 #endif
@@ -262,6 +271,21 @@ public class InputControlerBhv : FrameRateBehavior
     //8: Special
     //9: Back-Pause
 
+    private void CheckFrameDependentGameKeyboardInputs()
+    {
+        if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
+            return;
+        if (Input.GetKey(_keyBinding[2]))
+        {
+            _gameplayControler.LeftHeld();
+        }
+        if (Input.GetKey(_keyBinding[3]))
+        {
+            _gameplayControler.RightHeld();
+        }
+        HandleFrameKeysPressOrHeld();
+    }
+
     private void CheckGameKeyboardInputs()
     {
         if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
@@ -272,15 +296,11 @@ public class InputControlerBhv : FrameRateBehavior
         }
         if (Input.GetKey(_keyBinding[1]))
         {
-            _gameplayControler.SoftDropHolded();
+            _gameplayControler.SoftDropHeld();
         }
         if (Input.GetKeyDown(_keyBinding[2]))
         {
             _gameplayControler.Left();
-        }
-        if (Input.GetKey(_keyBinding[2]))
-        {
-            _gameplayControler.LeftHolded();
         }
         if (Input.GetKeyUp(_keyBinding[2]) || Input.GetKeyUp(_keyBinding[3]))
         {
@@ -289,10 +309,6 @@ public class InputControlerBhv : FrameRateBehavior
         if (Input.GetKeyDown(_keyBinding[3]))
         {
             _gameplayControler.Right();
-        }
-        if (Input.GetKey(_keyBinding[3]))
-        {
-            _gameplayControler.RightHolded();
         }
         if (Input.GetKeyDown(_keyBinding[4]))
         {
@@ -318,17 +334,22 @@ public class InputControlerBhv : FrameRateBehavior
         {
             _gameplayControler.Rotation180();
         }
+        HandleFrameKeysPressOrHeld();
+    }
+
+    private void HandleFrameKeysPressOrHeld()
+    {
         if (Input.anyKeyDown || Input.anyKey)
         {
             for (int i = 0; i < _keyBinding.Count; ++i)
             {
                 if (Input.GetKeyDown(_keyBinding[i]) || Input.GetKey(_keyBinding[i]))
                 {
-                    _gameplayControler.AddFrameKeyPressOrHolded(_inputNames[i]);
+                    _gameplayControler.AddFrameKeyPressOrHeld(_inputNames[i]);
                 }
             }
         }
-        _gameplayControler.UpdateFrameKeysPressOrHolded();
+        _gameplayControler.UpdateFrameKeysPressOrHeld();
     }
 
     public void InitMenuKeyboardInputs(Vector3? preferedResetPos = null)
