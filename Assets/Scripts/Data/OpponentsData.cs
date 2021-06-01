@@ -9,7 +9,7 @@ public static class OpponentsData
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Boom Slayer")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Giant Spider")).Clone();
     }
 
     static OpponentsData()

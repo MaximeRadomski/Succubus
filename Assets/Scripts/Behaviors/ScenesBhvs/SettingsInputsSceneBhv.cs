@@ -416,6 +416,7 @@ public class SettingsInputsSceneBhv : SceneBhv
                     var save = PlayerPrefsHelper.GetButtonsRightPanel();
                     save = save.ReplaceChar(childId, '0');
                     PlayerPrefsHelper.SaveButtonsRightPanel(save);
+                    break;
                 }
             }
             PanelButtonsVisibility(_panelRight, _gameplayButtons);

@@ -607,6 +607,7 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonAntiClockName, AntiClock, 0);
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
+        LookForAllPossibleButton(Constants.GoButton180, Rotation180, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
     }

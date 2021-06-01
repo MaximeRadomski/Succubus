@@ -155,6 +155,8 @@ public static class Helper
             return 'I';
         else if (gameplayButton == Constants.GoButtonSpecialName)
             return 'S';
+        else if (gameplayButton == Constants.GoButton180)
+            return '1';
         return '0';
     }
 
@@ -178,6 +180,8 @@ public static class Helper
             return Constants.GoButtonItemName;
         else if (letter == 'S')
             return Constants.GoButtonSpecialName;
+        else if (letter == '1')
+            return Constants.GoButton180;
         return null;
     }
 

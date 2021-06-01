@@ -47,6 +47,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _stepsService = new StepsService();
         if (_run == null)
             _run = PlayerPrefsHelper.GetRun();
+        if (_run == null)
+            return MusicType.Game;
         var currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         if (currentStep.LandLordVision)
             return MusicType.Boss;
@@ -473,6 +475,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
+            //if (Constants.CurrentOpponentCooldown >= CurrentOpponent.Cooldown - 1.0f)
+            //{
+            //    var maxHeight = 15.0f;
+            //    var highestBlockY = _gameplayControler.GetHighestBlock();
+            //    if (maxHeight > highestBlockY + 3)
+            //        maxHeight = highestBlockY + 4;
+            //    Instantiator.PopText($"coming:\n{CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType}", new Vector2(4.5f, maxHeight));
+            //}
+
             if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
                 || _stunIcon.IsOn)
                 _nextCooldownTick = Time.time + 3600;

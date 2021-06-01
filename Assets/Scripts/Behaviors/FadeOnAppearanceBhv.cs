@@ -9,6 +9,7 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
     public Color FadeColor;
 
     private SpriteRenderer _renderer;
+    private TMPro.TextMeshPro _textRenderer;
 
     private bool _isFading;
 
@@ -21,9 +22,15 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
     public void Init(float speed, Color? color)
     {
         _renderer = gameObject.GetComponent<SpriteRenderer>();
-        if (color != null)
+        _textRenderer = gameObject.GetComponent<TMPro.TextMeshPro>();
+        if (color != null && _renderer != null)
             _renderer.color = color.Value;
-        FadeColor = new Color(_renderer.color.r, _renderer.color.g, _renderer.color.b, 0.0f);
+        if (color != null && _textRenderer != null)
+            _textRenderer.color = color.Value;
+        if (_renderer != null)
+            FadeColor = new Color(_renderer.color.r, _renderer.color.g, _renderer.color.b, 0.0f);
+        else if (_textRenderer != null)
+            FadeColor = new Color(_textRenderer.color.r, _textRenderer.color.g, _textRenderer.color.b, 0.0f);
         Speed = speed;
         Fade();
     }
@@ -41,11 +48,21 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
 
     private void Fading()
     {
-        _renderer.color = Color.Lerp(_renderer.color, FadeColor, Speed);
-        if (Helper.FloatEqualsPrecision(_renderer.color.a, FadeColor.a, 0.005f))
+        if (_renderer != null)
+            _renderer.color = Color.Lerp(_renderer.color, FadeColor, Speed);
+        if (_textRenderer != null)
+            _textRenderer.color = Color.Lerp(_textRenderer.color, FadeColor, Speed);
+        if (_renderer != null && Helper.FloatEqualsPrecision(_renderer.color.a, FadeColor.a, 0.005f))
         {
             _isFading = false;
             _renderer.color = FadeColor;
+            if (gameObject != null)
+                Destroy(gameObject);
+        }
+        if (_textRenderer != null && Helper.FloatEqualsPrecision(_textRenderer.color.a, FadeColor.a, 0.005f))
+        {
+            _isFading = false;
+            _textRenderer.color = FadeColor;
             if (gameObject != null)
                 Destroy(gameObject);
         }

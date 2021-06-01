@@ -39,6 +39,8 @@ public class LoreSceneBhv : SceneBhv
         _pelliculeMove = 0;
         _hasInit = true;
 
+        GameObject.Find("Background").GetComponent<ButtonBhv>().EndActionDelegate = SkipLoreBecauseYouDontLikeLoreThusAreAHorribleHumanBeing;
+
         StartCoroutine(NextCinematic());
     }
 
@@ -100,8 +102,20 @@ public class LoreSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            NavigationService.NewRootScene(Constants.CharSelScene);
+            NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
+        }
+    }
+
+    private void SkipLoreBecauseYouDontLikeLoreThusAreAHorribleHumanBeing()
+    {
+        this.Instantiator.NewPopupYesNo("Don't like lore?", "would you like to skip the cinematic?", "No", "Yes", OnSkipResult);
+
+        object OnSkipResult(bool result)
+        {
+            if (result)
+                LoadNext();
+            return result;
         }
     }
 }
