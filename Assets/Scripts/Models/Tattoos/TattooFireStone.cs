@@ -8,7 +8,7 @@ public class TattooFireStone : Tattoo
         Id = 32;
         Name = TattoosData.Tattoos[Id];
         Stat = 20;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 

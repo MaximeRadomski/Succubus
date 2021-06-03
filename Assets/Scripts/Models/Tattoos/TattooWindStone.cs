@@ -8,7 +8,7 @@ public class TattooWindStone : Tattoo
         Id = 35;
         Name = TattoosData.Tattoos[Id];
         Stat = 3;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 

@@ -1699,7 +1699,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idConsecutive);
             }
             _lastNbLinesCleared = nbLines;
-            SceneBhv.OnLinesCleared(nbLines, isB2B);
+            SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial.OnLinesCleared(nbLines, isB2B);
 
             ++_comboCounter;
@@ -1741,7 +1741,7 @@ public class GameplayControler : MonoBehaviour
         }
         else
         {
-            SceneBhv.OnLinesCleared(nbLines, false);
+            SceneBhv.OnLinesCleared(nbLines, false, _lastLockTwist);
             SceneBhv.PopText();
             _comboCounter = 0;
             if (AttackIncoming && Constants.HeightLimiterResetLines < 0)

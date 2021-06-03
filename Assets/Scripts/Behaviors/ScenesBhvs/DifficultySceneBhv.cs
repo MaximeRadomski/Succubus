@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class DifficultySceneBhv : SceneBhv
 {
+    private GameObject _easy;
+    private GameObject _normal;
+    private GameObject _hard;
+    private GameObject _infernal;
+
     private TMPro.TextMeshPro _difficultyLibelle;
     private TMPro.TextMeshPro _difficulty;
     private TMPro.TextMeshPro _resources;
@@ -11,6 +16,8 @@ public class DifficultySceneBhv : SceneBhv
     private TMPro.TextMeshPro _cooldowns;
     private TMPro.TextMeshPro _hpMax;
     private TMPro.TextMeshPro _gravity;
+
+    private float _yOffset = 4.0f;
 
     public override MusicType MusicType => MusicType.Menu;
 
@@ -30,9 +37,10 @@ public class DifficultySceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        GameObject.Find(Difficulty.Easy.ToString()).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(0); };
-        GameObject.Find(Difficulty.Normal.ToString()).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(1); };
-        GameObject.Find(Difficulty.Hard.ToString()).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(2); };
+        (_easy = GameObject.Find(Difficulty.Easy.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(0); };
+        (_normal = GameObject.Find(Difficulty.Normal.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(1); };
+        (_hard = GameObject.Find(Difficulty.Hard.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(2); };
+        (_infernal = GameObject.Find(Difficulty.Infernal.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(3); };
 
         _difficultyLibelle = GameObject.Find("DifficultyLibelle").GetComponent<TMPro.TextMeshPro>();
         _difficulty = GameObject.Find("Difficulty").GetComponent<TMPro.TextMeshPro>();
@@ -41,6 +49,15 @@ public class DifficultySceneBhv : SceneBhv
         _cooldowns = GameObject.Find("Cooldowns").GetComponent<TMPro.TextMeshPro>();
         _hpMax = GameObject.Find("HpMax").GetComponent<TMPro.TextMeshPro>();
         _gravity = GameObject.Find("Gravity").GetComponent<TMPro.TextMeshPro>();
+
+        if (PlayerPrefsHelper.GetInfernalUnlocked())
+        {
+            GameObject.Find("SelectADifficulty").transform.position = new Vector3(50.0f, 50.0f, 0.0f);
+            _easy.transform.position += new Vector3(0.0f, _yOffset, 0.0f);
+            _normal.transform.position = _easy.transform.position + new Vector3(0.0f, -(_easy.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_normal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+            _hard.transform.position = _normal.transform.position + new Vector3(0.0f, -(_normal.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_hard.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+            _infernal.transform.position = _hard.transform.position + new Vector3(0.0f, -(_hard.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_infernal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+        }
 
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         GameObject.Find(Constants.GoButtonPlayName).GetComponent<ButtonBhv>().EndActionDelegate = Play;
@@ -86,6 +103,16 @@ public class DifficultySceneBhv : SceneBhv
             _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd}Shorter";
             _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd}Higher";
             _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd}Stronger";
+        }
+        else if (difficulty == Difficulty.Infernal)
+        {
+            _difficultyLibelle.text = $"I'm all about unfair challenge.";
+            _difficulty.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Difficulty: {Constants.MaterialEnd}{difficulty}";
+            _resources.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Resources: {Constants.MaterialEnd}x4";
+            _realmSteps.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Realm steps: {Constants.MaterialEnd}3";
+            _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd}What?";
+            _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd}Yes";
+            _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd}Stomp";
         }
         PlayerPrefsHelper.SaveDifficulty(difficulty);
     }

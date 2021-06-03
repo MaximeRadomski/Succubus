@@ -10,7 +10,7 @@ public class ItemWoodenCross : Item
         Name = ItemsData.Items[Id];
         Description = $"resets the {Highlight("gravity level")} of the room.";
         Rarity = Rarity.Common;
-        Cooldown = 4;
+        Cooldown = 10;
     }
 
     protected override object Effect()

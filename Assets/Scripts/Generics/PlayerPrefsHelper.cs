@@ -815,4 +815,16 @@ public class PlayerPrefsHelper : MonoBehaviour
         var version = PlayerPrefs.GetString(Constants.PpVersion, Constants.PpSerializeDefault);
         return version;
     }
+
+    public static void SaveInfernalUnlocked(bool unlocked)
+    {
+        PlayerPrefs.SetInt(Constants.PpInfernalUnlocked, unlocked ? 1 : 0);
+    }
+
+    public static bool GetInfernalUnlocked()
+    {
+        var randomItemMaxRarity = PlayerPrefsHelper.GetRealmBossProgression();
+        var unlocked = PlayerPrefs.GetInt(Constants.PpInfernalUnlocked, 0);
+        return unlocked == 1 || randomItemMaxRarity >= 0 ? true : false;
+    }
 }

@@ -8,7 +8,7 @@ public class TattooEarthStone : Tattoo
         Id = 33;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 

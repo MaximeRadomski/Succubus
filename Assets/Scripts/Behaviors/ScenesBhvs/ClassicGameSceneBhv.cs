@@ -103,7 +103,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         OpponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
         OpponentInstanceBhv.AfterDeath = AfterOpponentDeath;
         _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
-        _nextCooldownTick = Time.time + 3600;
+        _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _idOpponentDeath = _soundControler.SetSound("OpponentDeath");
         _idOpponentAppearance = _soundControler.SetSound("OpponentAppearance");
@@ -430,6 +430,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     //DEBUG
                     if (Constants.BetaMode && _run.CurrentRealm == Realm.Earth)
                     {
+                        if (_run.Difficulty == Difficulty.Hard)
+                            PlayerPrefsHelper.SaveInfernalUnlocked(true);
                         Constants.GameOverParams = $"Abject|Hell|3";
                         PlayerPrefsHelper.ResetRun();
                         NavigationService.LoadNextScene(Constants.DemoEndScene);
@@ -486,23 +488,23 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
             if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
                 || _stunIcon.IsOn)
-                _nextCooldownTick = Time.time + 3600;
+                _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
             else
-                _nextCooldownTick = Time.time + 1.0f;
+                _nextCooldownTick = Time.time + Constants.OpponentCooldownIncrement;
         }
     }
 
     public void OpponentAttackIncoming()
     {
         _opponentOnCooldown = false;
-        _nextCooldownTick = Time.time + 3600;
+        _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
         _gameplayControler.AttackIncoming = true;
     }
 
     public void StopTime(int seconds)
     {
         _gameplayControler.SetGravity(0);
-        _nextCooldownTick = Time.time + 3600;
+        _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
         _timeStopTimer = Time.time + seconds;
     }
 
@@ -587,7 +589,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_timeStopTimer > 0 && Time.time > _timeStopTimer)
         {
             _gameplayControler.SetGravity(CurrentOpponent.GravityLevel);
-            _nextCooldownTick = Time.time + 1;
+            _nextCooldownTick = Time.time + Constants.OpponentCooldownIncrement;
             _timeStopTimer = -1;
             var maxHeight = 15.0f;
             var highestBlockY = _gameplayControler.GetHighestBlock();
@@ -606,7 +608,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
-            ++Constants.CurrentOpponentCooldown;
+            Constants.CurrentOpponentCooldown += Constants.OpponentCooldownIncrement;
             _gameplayControler.SetForcedPieceOpacity((float)Constants.CurrentOpponentCooldown, (float)CurrentOpponent.Cooldown);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
@@ -618,7 +620,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Constants.CurrentOpponentCooldown = 0;
         UpdateCooldownBar(Direction.Down);
         _opponentOnCooldown = true;
-        _nextCooldownTick = Time.time + 1.0f;
+        _nextCooldownTick = Time.time + Constants.OpponentCooldownIncrement;
         _gameplayControler.AttackIncoming = false;
     }
 
@@ -802,10 +804,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         return true;
     }
 
-    public override void OnPieceLocked(string pieceLetter)
+    public override void OnPieceLocked(string pieceLetterTwist)
     {
-        base.OnPieceLocked(pieceLetter);
-        if (string.IsNullOrEmpty(pieceLetter))
+        base.OnPieceLocked(pieceLetterTwist);
+        if (string.IsNullOrEmpty(pieceLetterTwist))
             return;
         var incomingDamages = 0;
         if (CurrentOpponent.Weakness == Weakness.Twists)
@@ -823,9 +825,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _characterAttack += incomingDamages;
     }
 
-    public override void OnLinesCleared(int nbLines, bool isB2B)
+    public override void OnLinesCleared(int nbLines, bool isB2B, bool lastLockIsTwist)
     {
-        base.OnLinesCleared(nbLines, isB2B);
+        base.OnLinesCleared(nbLines, isB2B, lastLockIsTwist);
         var incomingDamages = 0;
         if (nbLines > 0 && Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
         {
@@ -853,6 +855,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Helper.IsSuperiorByRealm(Character.Realm, CurrentOpponent.Realm))
                 incomingDamages = (int)(incomingDamages * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamages *= nbLines;
+            if (lastLockIsTwist)
+                incomingDamages *= 2;
             if (CurrentOpponent.Weakness == Weakness.xLines && CurrentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();

@@ -8,7 +8,7 @@ public class TattooWaterStone : Tattoo
         Id = 34;
         Name = TattoosData.Tattoos[Id];
         Stat = 40;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 99;
     }
 

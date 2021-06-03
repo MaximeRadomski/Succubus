@@ -35,6 +35,8 @@ public static class Constants
     public const string VictoryAudioClip = "Victory";
     public const int MaxRarePercent = 25;
     public const int MaxLegendaryPercent = 15;
+    public const float OpponentCooldownIncrement = 0.05f;
+    public const float OpponentCooldownOneHour = 3600.0f;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -131,6 +133,7 @@ public static class Constants
     public const string PpRealmTree = "RealmTree";
     public const string PpVersion = "Version";
     public const string PpVersionDefault = "Alpha.01.004";
+    public const string PpInfernalUnlocked = "InfernalUnlocked";
 
     public static string GetDefaultKeyBinding()
     {

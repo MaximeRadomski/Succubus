@@ -129,9 +129,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 3) },
+                new OpponentAttack(AttackType.Intoxication, 5) },
             GravityLevel = 3, Weight = 30
         },
         new Opponent()
@@ -251,9 +251,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Shop Keeper", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.None, Cooldown = 15,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.AirPiece, 3) },
+                new OpponentAttack(AttackType.AirPiece, 2) },
             GravityLevel = 6, Weight = 50
         },
         new Opponent()
@@ -310,10 +310,11 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Devil's Advocate", Realm = Realm.Earth, Type = OpponentType.Boss,
-            HpMax = 500, Weakness = Weakness.None, Cooldown = 4,
+            HpMax = 500, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Shift, 4) },
-            GravityLevel = 10, Weight = 150,
+                new OpponentAttack(AttackType.Shift, 4),
+                new OpponentAttack(AttackType.Shift, 2)},
+            GravityLevel = 14, Weight = 150,
             DialogId = 3, DialogPitch = 0.35f
         },
         new Opponent()

@@ -112,10 +112,10 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         DisplayScore();
     }
 
-    public override void OnLinesCleared(int nbLines, bool isB2B)
+    public override void OnLinesCleared(int nbLines, bool isB2B, bool lastLockIsTwist)
     {
         var tmpAdded = 0;
-        if (_poppingText.Contains("twist"))
+        if (lastLockIsTwist)
         {
             if (nbLines == 0)
                 tmpAdded = 400 * _level;

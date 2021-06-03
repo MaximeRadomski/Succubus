@@ -97,10 +97,10 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
-    public virtual void OnPieceLocked(string pieceLetter)
+    public virtual void OnPieceLocked(string pieceLetterTwist)
     {
-        if (!string.IsNullOrEmpty(pieceLetter))
-            _poppingText += pieceLetter + " twist";
+        if (!string.IsNullOrEmpty(pieceLetterTwist))
+            _poppingText += pieceLetterTwist + " twist";
     }
 
     public virtual void OnSoftDrop()
@@ -123,9 +123,9 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
-    public virtual void OnLinesCleared(int nbLines, bool isB2B)
+    public virtual void OnLinesCleared(int nbLines, bool isB2B, bool lastLockIsTwist)
     {
-        if (_poppingText.Contains("twist"))
+        if (lastLockIsTwist)
         {
             if (nbLines == 1)
                 _poppingText += " single";
