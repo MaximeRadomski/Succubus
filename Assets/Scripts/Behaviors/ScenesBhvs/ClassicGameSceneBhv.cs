@@ -191,8 +191,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Victory();
             return;
         }
-        CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();
-        CurrentOpponent.Cooldown += (_realmTree.CooldownBrake * 0.666f);
+        CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();        
         if (Constants.RandomizedAttackType != AttackType.None)
             RandomizeOpponentAttack();
         if (Constants.CurrentOpponentChangedRealm != Realm.None)
@@ -356,6 +355,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 amount = 1;
             else if (_run.Difficulty == Difficulty.Hard)
                 amount = 3;
+            else if (_run.Difficulty == Difficulty.Infernal)
+                amount = 4;
             _run.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.SaveRun(_run);
@@ -498,7 +499,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         _opponentOnCooldown = false;
         _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
-        _gameplayControler.AttackIncoming = true;
+        StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () => { _gameplayControler.AttackIncoming = true; return true; }, lockInputWhile: false));
     }
 
     public void StopTime(int seconds)

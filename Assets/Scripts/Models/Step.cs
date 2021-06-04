@@ -67,8 +67,7 @@ public class Step
             nextOpponentIdStart += 2;
         }
         var difficulty = PlayerPrefsHelper.GetDifficulty();
-        if (difficulty != Difficulty.Normal)
-            Helper.ApplyDifficulty(Opponents, difficulty);
+        Helper.ApplyDifficulty(Opponents, difficulty);
     }
 
     public string ToParsedString()

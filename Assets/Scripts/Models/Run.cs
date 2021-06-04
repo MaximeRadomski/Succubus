@@ -58,6 +58,8 @@ public class Run
             MaxSteps = 6;
         else if (Difficulty == Difficulty.Hard)
             MaxSteps = 4;
+        else if (Difficulty == Difficulty.Infernal)
+            MaxSteps = 3;
         var realmTree = PlayerPrefsHelper.GetRealmTree();
         MaxSteps += realmTree.Shadowing;
         CurrentStep = 0;

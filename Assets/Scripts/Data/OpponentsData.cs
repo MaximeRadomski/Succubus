@@ -5,11 +5,11 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Giant Spider")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Hell Raider")).Clone();
     }
 
     static OpponentsData()
@@ -163,7 +163,7 @@ public static class OpponentsData
             Name = "Tax Collector", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 50, Cooldown = 14, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.VisionBlock, 10, 8) },
+                new OpponentAttack(AttackType.VisionBlock, 10, 5) },
             GravityLevel = 3, Weight = 40
         },
         new Opponent()
@@ -177,7 +177,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Cat", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 77, Cooldown = 3, Immunity = Immunity.Cooldown,
+            HpMax = 77, Cooldown = 5, Immunity = Immunity.Cooldown,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.EmptyRow, 2) },
             GravityLevel = 3, Weight = 40

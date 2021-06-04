@@ -14,6 +14,8 @@ public static class Constants
     public const int GravityDivider = 4;
     public const int LinesForLevel = 10;
     public const float LockDelay = 0.5f;
+    public const float OpponentCooldownIncrement = 0.05f;
+    public const float OpponentCooldownOneHour = 3600.0f;
     public const float AfterDropDelay = 0.05f;
     public const int NumberOfAllowedMovesBeforeLock = 15;
     public const int PlayFieldHeight = 40;
@@ -35,8 +37,7 @@ public static class Constants
     public const string VictoryAudioClip = "Victory";
     public const int MaxRarePercent = 25;
     public const int MaxLegendaryPercent = 15;
-    public const float OpponentCooldownIncrement = 0.05f;
-    public const float OpponentCooldownOneHour = 3600.0f;
+    
 
     //  TAGS  //
     public const string TagMusic = "Music";

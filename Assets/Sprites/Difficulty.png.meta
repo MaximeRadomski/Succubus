@@ -118,7 +118,7 @@ TextureImporter:
       name: Difficulty_0
       rect:
         serializedVersion: 2
-        x: 15
+        x: 23
         y: 100
         width: 37
         height: 38
@@ -139,7 +139,7 @@ TextureImporter:
       name: Difficulty_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 8
         y: 77
         width: 67
         height: 22
@@ -160,7 +160,7 @@ TextureImporter:
       name: Difficulty_2
       rect:
         serializedVersion: 2
-        x: 8
+        x: 16
         y: 39
         width: 51
         height: 37
@@ -181,9 +181,9 @@ TextureImporter:
       name: Difficulty_3
       rect:
         serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
-        width: 51
+        width: 83
         height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

@@ -295,8 +295,7 @@ public class StepsService
             ++i;
         }
         var difficulty = PlayerPrefsHelper.GetDifficulty();
-        if (difficulty != Difficulty.Normal)
-                Helper.ApplyDifficulty(stepOpponents, difficulty);
+        Helper.ApplyDifficulty(stepOpponents, difficulty);
         return stepOpponents;
     }
 

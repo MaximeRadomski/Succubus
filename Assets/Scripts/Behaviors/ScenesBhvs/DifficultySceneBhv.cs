@@ -54,9 +54,9 @@ public class DifficultySceneBhv : SceneBhv
         {
             GameObject.Find("SelectADifficulty").transform.position = new Vector3(50.0f, 50.0f, 0.0f);
             _easy.transform.position += new Vector3(0.0f, _yOffset, 0.0f);
-            _normal.transform.position = _easy.transform.position + new Vector3(0.0f, -(_easy.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_normal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
-            _hard.transform.position = _normal.transform.position + new Vector3(0.0f, -(_normal.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_hard.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
-            _infernal.transform.position = _hard.transform.position + new Vector3(0.0f, -(_hard.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 4) - (_infernal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+            _normal.transform.position = _easy.transform.position + new Vector3(0.0f, -(_easy.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_normal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+            _hard.transform.position = _normal.transform.position + new Vector3(0.0f, -(_normal.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_hard.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
+            _infernal.transform.position = _hard.transform.position + new Vector3(0.0f, -(_hard.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_infernal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
         }
 
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;

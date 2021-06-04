@@ -1018,7 +1018,7 @@ public class GameplayControler : MonoBehaviour
                 CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
                 CurrentPiece.GetComponent<Piece>().IsLocked = true;
-                Invoke(nameof(Lock), Constants.AfterDropDelay);
+                Invoke(nameof(Lock), 0.1f);
                 string columns = "";
                 int yMin = Mathf.RoundToInt(CurrentPiece.transform.position.y);
                 foreach (Transform child in CurrentPiece.transform)
@@ -1131,10 +1131,10 @@ public class GameplayControler : MonoBehaviour
                 hardDropping = false;
             }
         }
-        DropForcedPiece();
+        DropForcedPieceAsShadow();
     }
 
-    private void DropForcedPiece()
+    private void DropForcedPieceAsShadow()
     {
         if (ForcedPiece == null)
             return;
@@ -2144,7 +2144,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
             _soundControler.PlaySound(_idTwist);
-            StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
                 Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
@@ -2152,7 +2152,7 @@ public class GameplayControler : MonoBehaviour
                 return true;
             }, true));
         }
-        else if (PlayFieldBhv !=  null && PlayFieldBhv.gameObject != null)
+        else if (PlayFieldBhv != null && PlayFieldBhv.gameObject != null)
         {
             var alreadyExistingForcedPiece = GameObject.Find(Constants.GoForcedPiece);
             if (alreadyExistingForcedPiece != null)
@@ -2194,7 +2194,7 @@ public class GameplayControler : MonoBehaviour
                 }
             }
             ForcedPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
-            DropForcedPiece();
+            DropForcedPieceAsShadow();
         }
     }
 
@@ -2260,7 +2260,7 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.05f + (0.1f * Character.AirPieceOpacity));
+            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.10f + (0.1f * Character.AirPieceOpacity));
             CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
             _soundControler.PlaySound(_idEmptyRows);
             return true;

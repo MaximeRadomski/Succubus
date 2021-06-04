@@ -394,8 +394,10 @@ public static class Helper
 
     public static void ApplyDifficulty(List<Opponent> opponents, Difficulty difficulty)
     {
+        var realmTree = PlayerPrefsHelper.GetRealmTree();
         foreach (var opponent in opponents)
         {
+            opponent.Cooldown += (realmTree.CooldownBrake * 0.666f);
             if (difficulty == Difficulty.Easy)
             {
                 opponent.Cooldown = (int)(opponent.Cooldown * 3.0f);
@@ -406,13 +408,22 @@ public static class Helper
             {
                 opponent.Cooldown = (int)(opponent.Cooldown * 0.666f);
                 opponent.HpMax = (int)(opponent.HpMax * 1.5f);
-                opponent.GravityLevel += 5;
+                opponent.GravityLevel += 8;
             }
-            opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
+            else if (difficulty == Difficulty.Infernal)
+            {
+                opponent.Cooldown = (int)(opponent.Cooldown * 0.333f);
+                opponent.HpMax = (int)(opponent.HpMax * 2.0f);
+                opponent.GravityLevel += 16;
+            }
+            if (opponent.Cooldown < 0.5f)
+                opponent.Cooldown = 0.5f;
+            if (difficulty != Difficulty.Normal)
+                opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
             if (opponent.GravityLevel < 1)
                 opponent.GravityLevel = 1;
-            else if (opponent.GravityLevel > 30)
-                opponent.GravityLevel = 30;
+            else if (opponent.GravityLevel > 25)
+                opponent.GravityLevel = 25;
         }
     }
 
