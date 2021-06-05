@@ -18,6 +18,7 @@ public static class Constants
     public const float OpponentCooldownOneHour = 3600.0f;
     public const float AfterDropDelay = 0.05f;
     public const int NumberOfAllowedMovesBeforeLock = 15;
+    public const int MaxResetMovesBeforeLock = 2;
     public const int PlayFieldHeight = 40;
     public const int PlayFieldWidth = 10;
     public static List<int> RoomDifficultyPerRealm = new List<int>() { 80, 160, 320 };
@@ -270,12 +271,12 @@ public static class Constants
     public static int SelectedCharacterSpecialCooldown;
     public static int CurrentItemCooldown;
     public static int CurrentItemUses;
-    public static bool IsffectAttackInProgress = false;
     public static string GameOverParams = null;
     public static int CurrentOpponentAttackId;
     public static int CurrentRemainingSimpShields = 0;
 
     //Reset before each fight
+    public static AttackType IsffectAttackInProgress = AttackType.None;
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static float CurrentOpponentCooldown;
@@ -296,6 +297,7 @@ public static class Constants
     public static void ResetClassicGameCache(Character character = null)
     {
         ResetSelectedCharacterSpecialCooldown(character);
+        IsffectAttackInProgress = AttackType.None;
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;

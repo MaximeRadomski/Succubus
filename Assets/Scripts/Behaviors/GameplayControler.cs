@@ -36,6 +36,7 @@ public class GameplayControler : MonoBehaviour
     private float _lockDelay;
     private float _nextLock;
     private int _allowedMovesBeforeLock;
+    private int _allowedResetMovesBeforeLock;
     private bool _canHold;
     private bool _hasInit;
     private int _playFieldHeight;
@@ -660,7 +661,10 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
-        CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+        if (Constants.IsffectAttackInProgress == AttackType.Intoxication)
+            CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+        else
+            CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         if (_currentGhostPiecesOriginalPos != null)
             _currentGhostPiecesOriginalPos.Clear();
         if (!IsPiecePosValid(CurrentPiece))
@@ -674,6 +678,7 @@ public class GameplayControler : MonoBehaviour
         Bag = Bag.Remove(0, 1);
         UpdateNextPieces();
         _allowedMovesBeforeLock = 0;
+        _allowedResetMovesBeforeLock = 0;
         _canHold = true;
         SetNextGravityFall();
         ResetLock();
@@ -1473,6 +1478,7 @@ public class GameplayControler : MonoBehaviour
                     GameOver();
             }
             _allowedMovesBeforeLock = 0;
+            _allowedResetMovesBeforeLock = 0;
             SetNextGravityFall();
             ResetLock();
             _canHold = false;
@@ -1531,8 +1537,11 @@ public class GameplayControler : MonoBehaviour
         {
             if (_nextLock > 0.0f && !isGravity)
                 ++_allowedMovesBeforeLock;
-            else if (isGravity)
+            else if (isGravity && _allowedResetMovesBeforeLock < Constants.MaxResetMovesBeforeLock)
+            {
                 _allowedMovesBeforeLock = 0;
+                ++_allowedResetMovesBeforeLock;
+            }
             ResetLock();
             return true;
         }
@@ -2293,17 +2302,24 @@ public class GameplayControler : MonoBehaviour
         _effectsCamera.SetActive(true);
         _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
-        Constants.IsffectAttackInProgress = true;
+        Constants.IsffectAttackInProgress = attackType;
         AfterSpawn = CameraEffectAfterSpawn;
+        if (attackType == AttackType.Intoxication)
+            SetGravity(1);
 
         bool CameraEffectAfterSpawn(bool trueSpawn)
         {
             if (_afterSpawnAttackCounter <= 0)
             {
                 BaseAfterSpawnEnd();
-                Constants.IsffectAttackInProgress = false;
+                if (Constants.IsffectAttackInProgress == AttackType.Intoxication)
+                {
+                    CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+                    SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
+                }
+                Constants.IsffectAttackInProgress = AttackType.None;
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
-                _soundControler.PlaySound(_idTwist, 0.85f);
+                _soundControler.PlaySound(_idTwist, 0.85f);                    
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);

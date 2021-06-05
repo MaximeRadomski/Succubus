@@ -200,7 +200,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             HalveOpponentMaxCooldown();
         if (Constants.NameLastScene == Constants.SettingsScene)
         {
-            if (Constants.IsffectAttackInProgress)
+            if (Constants.IsffectAttackInProgress != AttackType.None)
             {
                 Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + 1;
                 Constants.CurrentOpponentAttackId = Constants.CurrentOpponentAttackId - 1 < 0 ? CurrentOpponent.Attacks.Count - 1 : Constants.CurrentOpponentAttackId - 1;
@@ -472,10 +472,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_timeStopTimer > 0)
             return;
-        if (Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
-        {
+        if (!Paused && Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
             OpponentAttackIncoming();
-        }
         else
         {
             //if (Constants.CurrentOpponentCooldown >= CurrentOpponent.Cooldown - 1.0f)

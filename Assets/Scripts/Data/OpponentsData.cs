@@ -9,7 +9,7 @@ public static class OpponentsData
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Hell Raider")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Headbanger")).Clone();
     }
 
     static OpponentsData()
@@ -129,9 +129,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 5,
+            HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 5) },
+                new OpponentAttack(AttackType.Intoxication, 4) },
             GravityLevel = 3, Weight = 30
         },
         new Opponent()
