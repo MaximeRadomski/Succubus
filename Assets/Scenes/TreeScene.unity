@@ -251,6 +251,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1851050
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +380,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &35747378
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +968,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &391820986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1097,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &403402836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1226,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!21 &479958839
 Material:
   serializedVersion: 6
@@ -1554,6 +1559,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &576413842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,6 +1750,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &641638827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,6 +1879,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &641929535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2008,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &693711521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,6 +2137,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &754906117
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,6 +2369,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!21 &836636169
 Material:
   serializedVersion: 6
@@ -2589,6 +2600,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &884789981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,6 +2809,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &953387881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,6 +2938,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1049602963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,6 +3222,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1111992102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3521,6 +3536,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1219652583
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,6 +3665,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1232643526
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,6 +3794,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1310921294
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,6 +3873,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 1
 --- !u!212 &1310921298
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4034,6 +4053,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1339121793
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,6 +4285,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1391570572
 GameObject:
   m_ObjectHideFlags: 0
@@ -4535,6 +4556,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1434796708
 GameObject:
   m_ObjectHideFlags: 0
@@ -4613,6 +4635,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1434796712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4792,6 +4815,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!21 &1435885905
 Material:
   serializedVersion: 6
@@ -5205,6 +5229,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1573058612
 GameObject:
   m_ObjectHideFlags: 0
@@ -5333,6 +5358,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1592072026
 GameObject:
   m_ObjectHideFlags: 0
@@ -5644,6 +5670,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1680876400
 GameObject:
   m_ObjectHideFlags: 0
@@ -6050,6 +6077,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1844560463
 GameObject:
   m_ObjectHideFlags: 0
@@ -6442,6 +6470,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1966032250
 GameObject:
   m_ObjectHideFlags: 0
@@ -6652,6 +6681,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1975540350
 GameObject:
   m_ObjectHideFlags: 0
@@ -7076,3 +7106,4 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0

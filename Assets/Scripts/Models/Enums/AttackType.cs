@@ -17,7 +17,7 @@ public enum AttackType
     [Prefixe("x")]
     [Suffixe(null)]
     [Description("Waste Row")]
-    WasteRow = 2, //Standard rows with holes in it (param1) -> nb Lines
+    WasteRow = 2, //Standard rows with holes in it (param1) -> nb Lines, param2 -> nb holes
     [Prefixe("x")]
     [Suffixe(null)]
     [Description("Light Row")]

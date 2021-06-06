@@ -165,7 +165,7 @@ public class Piece : MonoBehaviour
             _canMimicAlterBlocksAffectedByGravity = true;
     }
 
-    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost)
+    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost, Color ghostColor)
     {
         int remainingBlocks = nbBlocks;
         var id = Random.Range(0, transform.childCount);
@@ -188,8 +188,9 @@ public class Piece : MonoBehaviour
                 {
                     ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
-                    instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
-                    AddRandomBlocks(realm, --nbBlocks, instantiator, ghost);
+                    var shadowBlock = instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
+                    shadowBlock.GetComponent<SpriteRenderer>().color = Constants.IsffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
+                    AddRandomBlocks(realm, --nbBlocks, instantiator, ghost, ghostColor);
                     return;
                 }
             }

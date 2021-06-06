@@ -472,7 +472,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_timeStopTimer > 0)
             return;
-        if (!Paused && Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
+        if (!Paused && _opponentOnCooldown && Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown)
             OpponentAttackIncoming();
         else
         {

@@ -269,10 +269,10 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void CheckAlreadyKeyBinding(KeyCode code, int keyId)
     {
-        //Check for all except menu arrows
-        if (keyId >= 10 && keyId <= 13)
+        //Check for menu controls
+        if (keyId >= 10 && keyId <= 14)
         {
-            for (int i = 10; i <= 13; ++i)
+            for (int i = 10; i <= 14; ++i)
             {
                 if (_keyBinding[i] == code)
                 {
@@ -291,8 +291,8 @@ public class SettingsInputsSceneBhv : SceneBhv
                 UpdateKeyBindingVisual(i);
             }
         }
-        //Check for Enter and 180
-        for (int i = 14; i <= 15; ++i)
+        //Check for 180
+        for (int i = 15; i <= 15; ++i)
         {
             if (_keyBinding[i] == code)
             {

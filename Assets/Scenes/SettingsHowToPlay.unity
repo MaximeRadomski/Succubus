@@ -1150,6 +1150,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 1
 --- !u!212 &208002109
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6170,6 +6171,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1720146899
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7170,6 +7172,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1996755794
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7400,6 +7403,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &2034697429
 SpriteRenderer:
   m_ObjectHideFlags: 0

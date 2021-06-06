@@ -415,7 +415,7 @@ public class InputControlerBhv : FrameRateBehavior
         {
             //if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
             //    return;
-            FindNearest(Direction.Down, soundMuted: true);
+            FindNearest(Direction.Down, soundMuted: true, reset: true);
         }
     }
 
@@ -448,8 +448,10 @@ public class InputControlerBhv : FrameRateBehavior
             ButtonOnSelector();
     }
 
-    private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false, bool soundMuted = false)
+    private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false, bool soundMuted = false, bool reset = false)
     {
+        if (Constants.OnlyMouseInMenu)
+            direction = Direction.Down;
         Constants.OnlyMouseInMenu = false;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
@@ -464,6 +466,7 @@ public class InputControlerBhv : FrameRateBehavior
             return;
         else if (_availableButtons.Count > 1)
         {
+            var hasMenuSelectorResetButton = false;
             foreach (var button in _availableButtons)
             {
                 if (button == null)
@@ -483,8 +486,13 @@ public class InputControlerBhv : FrameRateBehavior
                     || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
                     || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
                     continue;
+                if (reset && button.GetComponent<ButtonBhv>().IsMenuSelectorResetButton && button.GetComponent<ButtonBhv>().Layer == Constants.InputLayer)
+                {
+                    hasMenuSelectorResetButton = true;
+                    selectedGameObject = button;
+                }
                 var distance = Vector2.Distance(button.transform.position, MenuSelector.transform.position);
-                if (distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value)
+                if (hasMenuSelectorResetButton == false && distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value)
                     && (_lastSelectedGameObject == null || button.name != _lastSelectedGameObject.name))
                 {                        
                     minDistance = distance;
@@ -537,7 +545,11 @@ public class InputControlerBhv : FrameRateBehavior
     private void ButtonOnSelector()
     {
         if (Constants.OnlyMouseInMenu || _availableButtons == null || _availableButtons.Count == 0)
+        {
+            if (Constants.OnlyMouseInMenu)
+                FindNearest(Direction.Down);
             return;
+        }
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
 

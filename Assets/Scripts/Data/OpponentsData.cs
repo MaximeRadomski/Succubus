@@ -5,11 +5,11 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
-    public static bool OnlyOpponent = true;
+    public static bool DebugEnabled = false;
+    public static bool OnlyOpponent = false;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Headbanger")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Truth")).Clone();
     }
 
     static OpponentsData()
@@ -131,7 +131,8 @@ public static class OpponentsData
             Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 4) },
+                new OpponentAttack(AttackType.Intoxication, 4),
+            new OpponentAttack(AttackType.WasteRow, 1, 2)},
             GravityLevel = 3, Weight = 30
         },
         new Opponent()

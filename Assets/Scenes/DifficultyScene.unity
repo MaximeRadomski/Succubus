@@ -1305,6 +1305,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &576413842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2017,6 +2018,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1111992102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2796,6 +2798,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1378190063
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,6 +3121,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 1
 --- !u!212 &1434796712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4073,6 +4077,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1731378306
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,6 +4140,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!4 &1731378309
 Transform:
   m_ObjectHideFlags: 0

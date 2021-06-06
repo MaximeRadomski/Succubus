@@ -275,9 +275,10 @@ public class StepsService
                 return stepOpponents;
         }
         //DEBUG
+        var minSingleOpponentWeight = Random.Range(0, 2) == 0 ? 0 : 30;
         while (i <= 12)
         {
-            plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
+            plausibleOpponents = realmOpponents.FindAll(o => o.Weight > minSingleOpponentWeight && o.Weight <= weight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
             if (totalStepWeight < weight && plausibleOpponents != null && plausibleOpponents.Count > 0)
             {
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
@@ -292,6 +293,7 @@ public class StepsService
             }
             else
                 i = 12;
+            minSingleOpponentWeight = 0;
             ++i;
         }
         var difficulty = PlayerPrefsHelper.GetDifficulty();
