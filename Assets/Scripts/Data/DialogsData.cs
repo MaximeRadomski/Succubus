@@ -167,7 +167,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "It wasn't me I swear!! I was in admin the whole time!!",
-                    "The fuck you're talking about?",
+                    "The fuck are you talking about?",
                     "Well, your loss then!!"
                 }
             }

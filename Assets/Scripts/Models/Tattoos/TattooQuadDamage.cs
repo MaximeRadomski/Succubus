@@ -19,6 +19,6 @@ public class TattooQuadDamage : Tattoo
 
     public override string GetDescription()
     {
-        return $"if you face more than {StatToString(after: " enemies")}, you make {StatToString("x", " more damages")} to the first one.";
+        return $"if you face more than {StatToString(after: " enemies")}, you deal {StatToString("x", " more damage")} to the first one.";
     }
 }

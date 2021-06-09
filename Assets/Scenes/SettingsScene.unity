@@ -328,6 +328,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &86176634
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -907,6 +908,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &541084118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1483,6 +1485,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1309335038
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1970,7 +1973,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 73a9e5f2ee4a5814fbe564721f576d95, type: 2}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_text
-      value: Inputs
+      value: Input
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_sharedMaterial
@@ -2204,6 +2207,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1674902892
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2746,6 +2750,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &2034697429
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2895,6 +2900,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!212 &2080949650
 SpriteRenderer:
   m_ObjectHideFlags: 0

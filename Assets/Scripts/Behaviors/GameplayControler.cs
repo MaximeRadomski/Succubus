@@ -2308,7 +2308,7 @@ public class GameplayControler : MonoBehaviour
         Constants.IsffectAttackInProgress = attackType;
         AfterSpawn = CameraEffectAfterSpawn;
         if (attackType == AttackType.Intoxication)
-            SetGravity(1);
+            SetGravity(5);
 
         bool CameraEffectAfterSpawn(bool trueSpawn)
         {

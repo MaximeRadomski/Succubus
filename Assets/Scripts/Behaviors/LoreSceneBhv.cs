@@ -24,6 +24,7 @@ public class LoreSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        CameraBhv.Init();
         _pelliculeTop = GameObject.Find("PelliculeTop").transform;
         _pelliculeBot = GameObject.Find("PelliculeBot").transform;
 

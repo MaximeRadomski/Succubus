@@ -108,6 +108,6 @@ public class MainMenuSceneBhv : SceneBhv
     private void WannaHelp()
     {
         //Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL", "Edam", null, 0);
-        Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedbacks, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
+        Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedback, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
     }
 }

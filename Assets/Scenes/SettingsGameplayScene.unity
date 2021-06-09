@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 549a71b1d55903740a310d5948a1650c, type: 2}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_text
-      value: 'Auto Repeate Rate (frames/seconds):'
+      value: 'Auto Repeat Rate (frames/seconds):'
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007234, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_sharedMaterial
@@ -775,6 +775,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &244712747
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1022,6 +1023,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &267705422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1456,6 +1458,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &471907273
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2340,6 +2343,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &570515800
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2834,6 +2838,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &711829981
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2988,6 +2993,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1001 &796757128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3348,6 +3354,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &912132865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3565,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1001 &1195013733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3913,6 +3921,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1202127605
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4263,6 +4272,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1271758929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4510,6 +4520,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1296132134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5044,6 +5055,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1514312429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5122,6 +5134,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 0.75
+  IsMenuSelectorResetButton: 0
 --- !u!212 &1514312433
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5725,6 +5738,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!1 &1625548217
 GameObject:
   m_ObjectHideFlags: 0
@@ -6113,6 +6127,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1691873828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6360,6 +6375,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1767366231
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6395,7 +6411,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -6607,6 +6623,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1775816982
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6850,6 +6867,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1809083295
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7097,6 +7115,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1831098261
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7446,6 +7465,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1919613304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7693,6 +7713,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1953222592
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8002,6 +8023,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1968073123
 BoxCollider2D:
   m_ObjectHideFlags: 0

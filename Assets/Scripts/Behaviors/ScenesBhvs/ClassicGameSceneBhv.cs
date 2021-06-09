@@ -74,7 +74,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             PlayerPrefsHelper.SaveIsInFight(true);
             _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
             if (_currentStep.LandLordVision)
+            {
                 _opponents = _stepsService.GetBoss(_run);
+                Helper.ApplyDifficulty(_opponents, _run.Difficulty);
+            }
             else
                 _opponents = _currentStep.Opponents;
             Constants.CurrentItemCooldown = _run.CurrentItemCooldown;

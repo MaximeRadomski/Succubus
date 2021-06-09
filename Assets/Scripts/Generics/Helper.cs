@@ -416,8 +416,8 @@ public static class Helper
                 opponent.HpMax = (int)(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 16;
             }
-            if (opponent.Cooldown < 0.5f)
-                opponent.Cooldown = 0.5f;
+            if (opponent.Cooldown < 1.0f)
+                opponent.Cooldown = 1.0f;
             if (difficulty != Difficulty.Normal)
                 opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
             if (opponent.GravityLevel < 1)

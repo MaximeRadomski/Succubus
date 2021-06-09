@@ -81,7 +81,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Lost Soul", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 40, Weakness = Weakness.None, Cooldown = 5,
+            HpMax = 40, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
             GravityLevel = 1, Weight = 10
@@ -89,7 +89,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Ghoul", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 30, Weakness = Weakness.Consecutive, DamagesOnWeakness = 20, Cooldown = 6, Immunity = Immunity.xLines, XLineImmunity = 1,
+            HpMax = 30, Weakness = Weakness.xLines, XLineWeakness = 2, DamagesOnWeakness = 20, Cooldown = 6, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
             GravityLevel = 2, Weight = 10
@@ -105,7 +105,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 10,
+            HpMax = 100, Weakness = Weakness.Combos, DamagesOnWeakness = 10, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 3, Weight = 20
@@ -212,9 +212,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Iron Maid", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 15,
+            HpMax = 180, Weakness = Weakness.Twists, DamagesOnWeakness = 20, Cooldown = 18,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 4) },
+                new OpponentAttack(AttackType.DarkRow, 3) },
             GravityLevel = 3, Weight = 40
         },
         new Opponent()
