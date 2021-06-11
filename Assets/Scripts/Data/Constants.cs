@@ -282,7 +282,7 @@ public static class Constants
     public static float CurrentOpponentCooldown;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
-    public static int DamoclesDamages = 0;
+    public static int DamoclesDamage = 0;
     public static int ChanceAttacksHappeningPercent = 100;
     public static AttackType RandomizedAttackType = AttackType.None;
     public static bool HalvedCooldown = false;
@@ -303,7 +303,7 @@ public static class Constants
         CurrentOpponentCooldown = 0;
         CumulativeCrit = 0;
         TripleLineDamageBonus = 0;
-        DamoclesDamages = 0;
+        DamoclesDamage = 0;
         ChanceAttacksHappeningPercent = 100;
         RandomizedAttackType = AttackType.None;
         HalvedCooldown = false;

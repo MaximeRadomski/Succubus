@@ -19,6 +19,6 @@ public class TattooWindStone : Tattoo
 
     public override string GetDescription()
     {
-        return $"your triple lines boost your triple lines by {StatToString("+", " damages")} for the rest of the fight.";
+        return $"your triple lines boost your triple lines by {StatToString("+", " damage")} for the rest of the fight.";
     }
 }

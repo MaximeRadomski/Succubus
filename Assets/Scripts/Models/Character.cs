@@ -51,13 +51,13 @@ public class Character : Loot
     public int BonusLife = 0;
     public int SimpShield = 0;
     public int DodgeChance = 0;
-    public int FireDamagesPercent = 0;
+    public int FireDamagePercent = 0;
     public int EarthStun = 0;
     public int WaterDamagePercent = 0;
     public int WindTripleBonus = 0;
     public int QuadDamage = 0;
     public int DoubleEdgeGravity = 0;
-    public int DamoclesDamages = 0;
+    public int DamoclesDamage = 0;
 
     public Character()
     {
@@ -73,7 +73,7 @@ public class Character : Loot
 
     public int GetAttackNoBoost()
     {
-        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamages + PlayerPrefsHelper.GetRealmTree().AttackBoost) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamage + PlayerPrefsHelper.GetRealmTree().AttackBoost) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
         return Mathf.RoundToInt(floatValue);
     }
 }

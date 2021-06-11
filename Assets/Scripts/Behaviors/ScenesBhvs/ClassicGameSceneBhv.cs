@@ -565,8 +565,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         StartOpponentCooldown();
         if (Character.ThornsPercent > 0)
         {
-            var thornDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
-            DamageOpponent(thornDamages == 0 ? 1 : thornDamages, _gameplayControler.CharacterInstanceBhv.gameObject);
+            var thornDamage = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
+            DamageOpponent(thornDamage == 0 ? 1 : thornDamage, _gameplayControler.CharacterInstanceBhv.gameObject);
         }
         return spawnAfterAttack;
     }
@@ -706,13 +706,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();
-        var damagesTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
+        var damageTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
         var poppingTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
-        //Check for overlapping damages texts
+        //Check for overlapping damage texts
         for (int i = 0; i < poppingTexts.Length; ++i)
         {
-            if (Helper.VectorEqualsPrecision(poppingTexts[i].transform.position, damagesTextPosition, 0.5f) && poppingTexts[i].transform.position.y >= damagesTextPosition.y)
-                damagesTextPosition = poppingTexts[i].transform.position + new Vector3(0.0f, -1.1f);
+            if (Helper.VectorEqualsPrecision(poppingTexts[i].transform.position, damageTextPosition, 0.5f) && poppingTexts[i].transform.position.y >= damageTextPosition.y)
+                damageTextPosition = poppingTexts[i].transform.position + new Vector3(0.0f, -1.1f);
         }
         var realmMaterial = "";
         if (textRealm == null || textRealm != Realm.None)
@@ -720,7 +720,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var tmpRealm = textRealm == null ? Character.Realm : textRealm;
             realmMaterial = $"<material=\"{tmpRealm.ToString().ToLower()}.4.3\">";
         }
-        Instantiator.PopText($"{realmMaterial}{attackText}", damagesTextPosition);
+        Instantiator.PopText($"{realmMaterial}{attackText}", damageTextPosition);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
         if (Constants.CurrentOpponentHp <= 0)
         {
@@ -811,65 +811,65 @@ public class ClassicGameSceneBhv : GameSceneBhv
         base.OnPieceLocked(pieceLetterTwist);
         if (string.IsNullOrEmpty(pieceLetterTwist))
             return;
-        var incomingDamages = 0;
+        var incomingDamage = 0;
         if (CurrentOpponent.Weakness == Weakness.Twists)
         {
             _weaknessInstance.Pop();
             _soundControler.PlaySound(_idWeakness);
-            incomingDamages += CurrentOpponent.DamagesOnWeakness;
+            incomingDamage += CurrentOpponent.DamageOnWeakness;
         }
         if (CurrentOpponent.Immunity == Immunity.Twists)
         {
             _immunityInstance.Pop();
             _soundControler.PlaySound(_idImmunity);
-            incomingDamages = 0;
+            incomingDamage = 0;
         }
-        _characterAttack += incomingDamages;
+        _characterAttack += incomingDamage;
     }
 
     public override void OnLinesCleared(int nbLines, bool isB2B, bool lastLockIsTwist)
     {
         base.OnLinesCleared(nbLines, isB2B, lastLockIsTwist);
-        var incomingDamages = 0;
+        var incomingDamage = 0;
         if (nbLines > 0 && Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
         {
-            incomingDamages = -1;
+            incomingDamage = -1;
             nbLines = 0;
             isB2B = false;
         }
         if (nbLines > 0)
         {
-            if (Character.DamoclesDamages > 0 && nbLines == 4)
+            if (Character.DamoclesDamage > 0 && nbLines == 4)
             {
-                Constants.DamoclesDamages += Character.DamoclesDamages;
+                Constants.DamoclesDamage += Character.DamoclesDamage;
                 _characterInstanceBhv.Boost(Character.Realm, 0.25f);
             }
 
-            incomingDamages = Character.GetAttack();
+            incomingDamage = Character.GetAttack();
             if (nbLines == 1)
-                incomingDamages += Character.SingleLineDamageBonus;
+                incomingDamage += Character.SingleLineDamageBonus;
             if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit + _realmTree.CriticalPrecision))
             {
                 Constants.CumulativeCrit += Character.CumulativeCrit;
-                incomingDamages += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
+                incomingDamage += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
             if (Helper.IsSuperiorByRealm(Character.Realm, CurrentOpponent.Realm))
-                incomingDamages = (int)(incomingDamages * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
-            incomingDamages *= nbLines;
+                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
+            incomingDamage *= nbLines;
             if (lastLockIsTwist)
-                incomingDamages *= 2;
+                incomingDamage *= 2;
             if (CurrentOpponent.Weakness == Weakness.xLines && CurrentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();
                 _soundControler.PlaySound(_idWeakness);
-                incomingDamages += CurrentOpponent.DamagesOnWeakness;
+                incomingDamage += CurrentOpponent.DamageOnWeakness;
             }
             if (CurrentOpponent.Immunity == Immunity.xLines && CurrentOpponent.XLineImmunity == nbLines)
             {
                 _immunityInstance.Pop();
                 _soundControler.PlaySound(_idImmunity);
-                incomingDamages = 0;
+                incomingDamage = 0;
             }
             if (Character.Realm == Realm.Earth && nbLines == 4)
             {
@@ -889,7 +889,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     StunOpponent(Character.EarthStun);
                 if (Character.WaterDamagePercent > 0)
                     WetMalusOpponent(Character.WaterDamagePercent, 4.0f);
-                if (Character.FireDamagesPercent > 0)
+                if (Character.FireDamagePercent > 0)
                     StartCoroutine(Burn(3));
                 if (Character.WindTripleBonus > 0)
                 {
@@ -904,13 +904,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 _weaknessInstance.Pop();
                 _soundControler.PlaySound(_idWeakness);
-                incomingDamages += CurrentOpponent.DamagesOnWeakness;
+                incomingDamage += CurrentOpponent.DamageOnWeakness;
             }
             if (CurrentOpponent.Immunity == Immunity.Consecutive)
             {
                 _immunityInstance.Pop();
                 _soundControler.PlaySound(_idImmunity);
-                incomingDamages = 0;
+                incomingDamage = 0;
             }
             if (Character.Realm == Realm.Heaven)
             {
@@ -919,7 +919,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 _gameplayControler.UpdateItemAndSpecialVisuals();
             }
         }
-        _characterAttack += incomingDamages;
+        _characterAttack += incomingDamage;
     }
 
     public IEnumerator Burn(int time)
@@ -927,8 +927,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         yield return new WaitForSeconds(0.33f);
         if (time > 0)
         {
-            var burnDamages = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagesPercent));
-            DamageOpponent(burnDamages == 0 ? 1 : burnDamages, null, Realm.Hell, attackLine: false);
+            var burnDamage = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagePercent));
+            DamageOpponent(burnDamage == 0 ? 1 : burnDamage, null, Realm.Hell, attackLine: false);
             StartCoroutine(Burn(time - 1));
         }
     }
@@ -945,22 +945,22 @@ public class ClassicGameSceneBhv : GameSceneBhv
         base.OnCombo(nbCombo, nbLines);
         if (_characterAttack < 0)
             return;
-        var incomingDamages = 0;
+        var incomingDamage = 0;
         if (Character.Realm == Realm.Hell)
-            incomingDamages += (int)((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
+            incomingDamage += (int)((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
         if (CurrentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();
             _soundControler.PlaySound(_idWeakness);
-            incomingDamages += CurrentOpponent.DamagesOnWeakness * (nbCombo - 1);
+            incomingDamage += CurrentOpponent.DamageOnWeakness * (nbCombo - 1);
         }
         if (CurrentOpponent.Immunity == Immunity.Combos)
         {
             _immunityInstance.Pop();
             _soundControler.PlaySound(_idImmunity);
-            incomingDamages = 0;
+            incomingDamage = 0;
         }
-        _characterAttack += incomingDamages;
+        _characterAttack += incomingDamage;
     }
 
     public override void OnPerfectClear()

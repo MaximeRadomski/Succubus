@@ -8,7 +8,7 @@ public class ItemAtlasEffigy : Item
     {
         Id = 27;
         Name = ItemsData.Items[Id];
-        Description = $"{Highlight("+50% damages")} until the end of the fight, but your playfield is {Highlight("reduced")} in height by {Highlight("5 blocks")}.";
+        Description = $"{Highlight("+50% damage")} until the end of the fight, but your playfield is {Highlight("reduced")} in height by {Highlight("5 blocks")}.";
         Rarity = Rarity.Legendary;
         Cooldown = 16;
     }

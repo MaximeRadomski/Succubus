@@ -19,6 +19,6 @@ public class TattooTrinity : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damages to your inferior nature.";
+        return $"you deal {StatToString("+", "%")} damage to your inferior nature.";
     }
 }

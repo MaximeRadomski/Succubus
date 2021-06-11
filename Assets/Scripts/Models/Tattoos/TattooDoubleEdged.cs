@@ -20,6 +20,6 @@ public class TattooDoubleEdged : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", " base damages")}, but the gravity also gain {StatToString("+", " levels")}.";
+        return $"you deal {StatToString("+", " base damage")}, but the gravity also gain {StatToString("+", " levels")}.";
     }
 }

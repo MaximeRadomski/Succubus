@@ -8,7 +8,7 @@ public class ItemSunJuice : Item
     {
         Id = 24;
         Name = ItemsData.Items[Id];
-        Description = $"removes {Highlight("8 lines")} from the top.\n{Highlight("5 uses")}, no cooldown. Replenishes when you ascend.";
+        Description = $"removes {Highlight("8 lines")} from the top.\n{Highlight("5 uses")}, no cooldown. replenishes when you ascend.";
         Rarity = Rarity.Legendary;
         Cooldown = -1;
         IsUsesBased = true;

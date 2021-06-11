@@ -19,6 +19,6 @@ public class TattooWaterStone : Tattoo
 
     public override string GetDescription()
     {
-        return $"your triple lines wet your opponent, making him receiving {StatToString("+", "%")} damages for 4 seconds.";
+        return $"your triple lines wet your opponent, making him receiving {StatToString("+", "%")} damage for 4 seconds.";
     }
 }

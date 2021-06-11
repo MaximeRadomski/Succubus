@@ -20,7 +20,7 @@ public class Opponent
 
     public List<OpponentAttack> Attacks;
 
-    public int DamagesOnWeakness;
+    public int DamageOnWeakness;
     public bool IsDead;
     public int Weight;
 
@@ -46,7 +46,7 @@ public class Opponent
         newOpponent.Region = Region;
         newOpponent.Haste = Haste;
         newOpponent.Attacks = Attacks;
-        newOpponent.DamagesOnWeakness = DamagesOnWeakness;
+        newOpponent.DamageOnWeakness = DamageOnWeakness;
         newOpponent.IsDead = IsDead;
         newOpponent.Weight = Weight;
         newOpponent.Lore = Lore;

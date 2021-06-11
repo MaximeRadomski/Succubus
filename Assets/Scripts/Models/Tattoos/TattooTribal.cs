@@ -20,6 +20,6 @@ public class TattooTribal : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damages.";
+        return $"you deal {StatToString("+", "%")} damage.";
     }
 }

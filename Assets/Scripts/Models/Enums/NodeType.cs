@@ -24,7 +24,7 @@ public enum NodeType
     [Description("+50% chance of reviving once.")]
     LifeRoulette,
     [Title("Boss Hate")]
-    [Description("+10% damages on bosses.")]
+    [Description("+10% damage on bosses.")]
     BossHate,
     [Title("Shadowing")]
     [Description("+1 possible step per zone.")]

@@ -14,7 +14,7 @@ public class TattooDamocles : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DamoclesDamages += Stat;
+        character.DamoclesDamage += Stat;
     }
 
     public override string GetDescription()

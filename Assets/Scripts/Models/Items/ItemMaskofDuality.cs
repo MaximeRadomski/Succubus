@@ -8,7 +8,7 @@ public class ItemMaskofDuality : Item
     {
         Id = 22;
         Name = ItemsData.Items[Id];
-        Description = $"either deals {Highlight("4 times ")} your damages, or attacks you with {Highlight("4 garbage lines")}.";
+        Description = $"either deals {Highlight("4 times ")} your damage, or attacks you with {Highlight("4 garbage lines")}.";
         Rarity = Rarity.Common;
         Cooldown = 6;
     }

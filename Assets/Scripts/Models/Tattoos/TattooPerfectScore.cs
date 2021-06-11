@@ -19,6 +19,6 @@ public class TattooPerfectScore : Tattoo
 
     public override string GetDescription()
     {
-        return $"your perfect-clears deal {StatToString(after:" damages")} to the opponent.";
+        return $"your perfect-clears deal {StatToString(after:" damage")} to the opponent.";
     }
 }

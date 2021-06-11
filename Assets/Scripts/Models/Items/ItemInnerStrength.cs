@@ -8,7 +8,7 @@ public class ItemInnerStrength : Item
     {
         Id = 5;
         Name = ItemsData.Items[Id];
-        Description = $"{Highlight("quadruples")} your base attack damages for {Highlight("4 seconds")}.";
+        Description = $"{Highlight("quadruples")} your base attack damage for {Highlight("4 seconds")}.";
         Rarity = Rarity.Rare;
         Cooldown = 10;
     }
