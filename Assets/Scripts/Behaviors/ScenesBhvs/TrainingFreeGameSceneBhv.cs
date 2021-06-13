@@ -18,12 +18,14 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     private SoundControlerBhv _soundControler;
     private int _levelUp;
+    private bool _isRestarting = false;
 
     public override MusicType MusicType => MusicType.Game;
 
     void Start()
     {
         Init();
+        GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = AskRestartTraining;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _levelUp = _soundControler.SetSound("LevelUp");
 
@@ -63,13 +65,30 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     private void OnDestroy()
     {
-        PlayerPrefsHelper.SaveTraining(_score, _level, _lines, _pieces);
+        if (!_isRestarting)
+            PlayerPrefsHelper.SaveTraining(_score, _level, _lines, _pieces);
     }
 
-    private void Reload()
+    public void AskRestartTraining()
     {
+        Paused = true;
+        this.Instantiator.NewPopupYesNo("Restart", "would you like to restart this game?", "No", "Yes", RestartTraining);
+    }
+
+    private object RestartTraining(bool result)
+    {
+        Paused = false;
+        if (!result)
+            return false;
+        _isRestarting = true;
+        PlayerPrefsHelper.ResetTraining();
+        PlayerPrefsHelper.SaveCurrentOpponents(null);
+        Constants.ResetClassicGameCache();
+        Constants.CurrentItemCooldown = 0;
+        if (GameObject.Find("PlayField") != null)
+            Destroy(GameObject.Find("PlayField"));
         NavigationService.ReloadScene();
-        _musicControler.PlayFromStart();
+        return true;
     }
 
     public override void OnNewPiece(GameObject lastPiece)

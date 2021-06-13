@@ -40,6 +40,7 @@ public abstract class GameSceneBhv : SceneBhv
         if (Paused)
             return;
         Paused = true;
+        CameraBhv.Paused = true;
         _musicControler.HalveVolume();
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);
     }
@@ -54,6 +55,7 @@ public abstract class GameSceneBhv : SceneBhv
     private object ResumeGiveUp(bool resume)
     {
         _musicControler.SetNewVolumeLevel();
+        CameraBhv.Paused = false;
         if (resume)
         {
             Paused = true;

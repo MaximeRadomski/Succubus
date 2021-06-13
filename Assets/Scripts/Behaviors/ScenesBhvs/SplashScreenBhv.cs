@@ -70,16 +70,21 @@ public class SplashScreenBhv : SceneBhv
             PlayerPrefs.DeleteAll();
             Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
         }
-        else if (int.Parse(lastSavedVersion[1]) < int.Parse(currentVersion[1]))
+#if !UNITY_ANDROID
+        //Check under 01.02.031: Changed the keybinding mapping after the add of the "restart training" button
+        else if (IsUnder(lastSavedVersion, 1, 2, 31))
         {
-
+            PlayerPrefs.DeleteKey(Constants.PpKeyBinding);
+            Instantiator.NewPopupYesNo("Old mapping", "your last installed version had and outdated controls mapping. your controls has been reseted to their default value.", null, "Ok", null);
         }
-        else if (int.Parse(lastSavedVersion[2]) < int.Parse(currentVersion[2]))
-        {
-
-        }
+#endif
 
         PlayerPrefsHelper.SaveVersion(Application.version);
+    }
+
+    private bool IsUnder(string[] version, int main, int second, int third)
+    {
+        return int.Parse(version[0]) <= main && int.Parse(version[1]) <= second && int.Parse(version[2]) < third;
     }
 
     private void GoToMainMenu()

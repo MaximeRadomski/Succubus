@@ -58,7 +58,7 @@ public class StepsSceneBhv : SceneBhv
         _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
         _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _character.Id);
         _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        _buttonInfo = GameObject.Find("ButtonInfo");
+        _buttonInfo = GameObject.Find(Constants.GoButtonInfoName);
         _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");

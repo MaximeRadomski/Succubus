@@ -292,6 +292,7 @@ MonoBehaviour:
   DontActivateOnStart: 0
   Rotated: 0
   _customParent: {fileID: 0}
+  KeepUpdating: 1
 --- !u!1 &128632311382675028
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +674,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &8135851739668194359
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2404,6 +2406,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &4959160761561029802
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3020,6 +3023,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &866163539854299667
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3567,6 +3571,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &6790232298116391987
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3803,6 +3808,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &3414708183846309471
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3944,6 +3950,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &7944605757690202179
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4974,6 +4981,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &65563973159590495
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5198,6 +5206,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &4545770489781069398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5350,6 +5359,7 @@ MonoBehaviour:
   DontActivateOnStart: 0
   Rotated: 0
   _customParent: {fileID: 0}
+  KeepUpdating: 1
 --- !u!1 &4804039156863731738
 GameObject:
   m_ObjectHideFlags: 0
@@ -5452,6 +5462,7 @@ MonoBehaviour:
   DontActivateOnStart: 0
   Rotated: 0
   _customParent: {fileID: 0}
+  KeepUpdating: 1
 --- !u!1 &4922611049123806826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,6 +5853,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1659069785845794397
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6173,6 +6185,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &3200194345432209833
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6963,6 +6976,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &8484823790331019029
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7670,6 +7684,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &7453489832823138472
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7811,6 +7826,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &6448932752460556648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8122,6 +8138,7 @@ MonoBehaviour:
   DontActivateOnStart: 0
   Rotated: 0
   _customParent: {fileID: 0}
+  KeepUpdating: 1
 --- !u!1 &6929161287408165532
 GameObject:
   m_ObjectHideFlags: 0
@@ -8551,6 +8568,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1505796933427029935
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8877,6 +8895,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &1480344606171608534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9209,6 +9228,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &7532966320841972083
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9567,6 +9587,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &5623923262802767491
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9944,6 +9965,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &619021518503791303
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10168,6 +10190,7 @@ MonoBehaviour:
   DontActivateOnStart: 0
   Rotated: 0
   _customParent: {fileID: 0}
+  KeepUpdating: 1
 --- !u!1 &8924566455857954324
 GameObject:
   m_ObjectHideFlags: 0

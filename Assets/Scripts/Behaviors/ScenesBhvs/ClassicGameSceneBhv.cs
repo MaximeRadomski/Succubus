@@ -667,7 +667,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public override void DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
-        if (Constants.CurrentOpponentHp <= 0)
+        if (Constants.CurrentOpponentHp <= 0 && CurrentOpponent.IsDead)
             return;
         if (Character.QuadDamage > 0 && Constants.CurrentListOpponentsId == 0 && _opponents.Count >= 4)
         {
@@ -752,6 +752,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             minHeight = highestBlockY + 2;
         Instantiator.PopText(CurrentOpponent.Name.ToLower() + " defeated!", new Vector2(4.5f, minHeight));
         OpponentInstanceBhv.Die();
+        CurrentOpponent.IsDead = true;
         _opponentOnCooldown = false;
         Constants.CurrentOpponentCooldown = 0;
         UpdateCooldownBar(Direction.Down);
@@ -878,7 +879,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (targetDestroyed > 0)
                     targetDestroyed -= _gameplayControler.CheckForWasteRows(targetDestroyed);
                 if (targetDestroyed > 0)
-                    _gameplayControler.CheckForLightRows(brutForceDelete : true);
+                    targetDestroyed -= _gameplayControler.CheckForLightRows(brutForceDelete: targetDestroyed);
 
             }
 

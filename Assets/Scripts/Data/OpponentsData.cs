@@ -6,10 +6,10 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = false;
-    public static bool OnlyOpponent = false;
+    public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Truth")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Hell Raider")).Clone();
     }
 
     static OpponentsData()
@@ -170,7 +170,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Hell Raider", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 40, Cooldown = 10,
+            HpMax = 140, Weakness = Weakness.Twists, DamageOnWeakness = 40, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
             GravityLevel = 1, Weight = 40
@@ -199,7 +199,8 @@ public static class OpponentsData
             HpMax = 170, Weakness = Weakness.Twists, DamageOnWeakness = 20, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
-            GravityLevel = 5, Weight = 40
+            GravityLevel = 5, Weight = 40,
+            DialogId = 4, DialogPitch = 1.3f
         },
         new Opponent()
         {
@@ -244,7 +245,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Caca Demon", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 180, Weakness = Weakness.Consecutive, DamageOnWeakness = 20, Cooldown = 8,
+            HpMax = 120, Weakness = Weakness.Consecutive, DamageOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, 3, 0) },
             GravityLevel = 6, Weight = 50

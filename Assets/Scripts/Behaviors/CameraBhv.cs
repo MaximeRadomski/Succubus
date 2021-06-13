@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraBhv : FrameRateBehavior
 {
     public Camera Camera;
+    public List<PositionBhv> _controlPanels = null;
     public bool HasInitiated;
     public bool Paused;
     public bool IsSliding;
@@ -27,6 +30,26 @@ public class CameraBhv : FrameRateBehavior
         _originalPosition = transform.position;
         HasInitiated = true;
         _isBumbing = false;
+        if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene
+            || SceneManager.GetActiveScene().name == Constants.TrainingFreeGameScene)
+        {
+            _controlPanels = new List<PositionBhv>();
+            _controlPanels.Add(GameObject.Find("UiPanelLeft").GetComponent<PositionBhv>());
+            _controlPanels.Add(GameObject.Find("UiPanelRight").GetComponent<PositionBhv>());
+#if UNITY_ANDROID
+            if (PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons)
+            {
+                _controlPanels.Add(GameObject.Find("PanelLeft").GetComponent<PositionBhv>());
+                _controlPanels.Add(GameObject.Find("PanelRight").GetComponent<PositionBhv>());
+            }
+            else
+            {
+                _controlPanels.Add(GameObject.Find("PanelSwipe").GetComponent<PositionBhv>());
+            }
+#else
+            _controlPanels.Add(GameObject.Find("PanelSwipe").GetComponent<PositionBhv>());
+#endif
+        }
     }
 
     public void FocusY(float y)
@@ -49,19 +72,23 @@ public class CameraBhv : FrameRateBehavior
         {
             ResetBumping();
         }
-        if (IsSliding && !Paused)
+        if (!Paused)
         {
-            Sliding();
+            if (IsSliding)
+            {
+                Sliding();
+            }
+            else if (_isPoundering)
+            {
+                Poundering();
+                UpdateControlPanels();
+            }
+            else if (_isResetingPosition)
+            {
+                ResetingPosition();
+                UpdateControlPanels();
+            }
         }
-        else if (_isPoundering)
-        {
-            Poundering();
-        }
-        else if (_isResetingPosition)
-        {
-            ResetingPosition();
-        }
-
     }
 
     public void Bump(int bumpPercent)
@@ -90,8 +117,9 @@ public class CameraBhv : FrameRateBehavior
         }
     }
 
-    public void Pounder(int nbPixel)
+    public void Pounder(float nbPixel)
     {
+        Debug.Log($"Strength: {nbPixel.ToString("00.00")}");
         _targetPosition = transform.position + new Vector3(0.0f, Constants.Pixel * nbPixel * 3, 0.0f);
         _isResetingPosition = false;
         _isPoundering = true;
@@ -114,6 +142,16 @@ public class CameraBhv : FrameRateBehavior
         {
             transform.position = _originalPosition;
             _isResetingPosition = false;
+        }
+    }
+
+    private void UpdateControlPanels()
+    {
+        if (_controlPanels == null)
+            return;
+        foreach (var positionBhv in _controlPanels)
+        {
+            positionBhv.UpdatePositions();
         }
     }
 

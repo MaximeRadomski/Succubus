@@ -43,7 +43,7 @@ public class PauseMenuBhv : PopupBhv
             }
         }
 
-        var buttonInfo = transform.Find("ButtonInfo");
+        var buttonInfo = transform.Find(Constants.GoButtonInfoName);
 #if UNITY_ANDROID
         Destroy(buttonInfo.gameObject);
 #else

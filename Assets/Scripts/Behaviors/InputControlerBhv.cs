@@ -86,7 +86,7 @@ public class InputControlerBhv : FrameRateBehavior
 #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape) && !Constants.EscapeLocked)
 #else
-        if (Input.GetKeyDown(_keyBinding[9]) && !Constants.EscapeLocked)
+        if (Input.GetKeyDown(_keyBinding[15]) && !Constants.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
@@ -94,7 +94,7 @@ public class InputControlerBhv : FrameRateBehavior
 #if UNITY_ANDROID
         if (Input.GetKeyUp(KeyCode.Escape) && !Constants.EscapeLocked)
 #else
-        if (Input.GetKeyUp(_keyBinding[9]) && !Constants.EscapeLocked)
+        if (Input.GetKeyUp(_keyBinding[15]) && !Constants.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
@@ -330,9 +330,16 @@ public class InputControlerBhv : FrameRateBehavior
         {
             _gameplayControler.Special();
         }
-        if (Input.GetKeyDown(_keyBinding[15]))
+        if (Input.GetKeyDown(_keyBinding[9]))
         {
             _gameplayControler.Rotation180();
+        }
+        if (Input.GetKeyDown(_keyBinding[16]))
+        {
+            if (_currentScene == null)
+                GetScene();
+            if (_currentScene is TrainingFreeGameSceneBhv trainingScene)
+                trainingScene.AskRestartTraining();
         }
         HandleFrameKeysPressOrHeld();
     }

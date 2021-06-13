@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PositionBhv : MonoBehaviour
+public class PositionBhv : FrameRateBehavior
 {
     public CameraVerticalSide VerticalSide;
     public CameraHorizontalSide HorizontalSide;
@@ -11,6 +11,7 @@ public class PositionBhv : MonoBehaviour
     public bool DontActivateOnStart;
     public bool Rotated;
     public GameObject _customParent = null;
+    public bool KeepUpdating = false;
 
     private float _verticalMult;
     private float _horizontalMult;
@@ -26,6 +27,12 @@ public class PositionBhv : MonoBehaviour
     private void GetMainCamera()
     {
         _mainCamera = Helper.GetMainCamera();
+    }
+
+    protected override void FrameUpdate()
+    {
+        if (KeepUpdating)
+            UpdatePositions();
     }
 
     public void UpdatePositions()

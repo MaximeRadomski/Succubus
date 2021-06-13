@@ -45,7 +45,6 @@ public class GameplayControler : MonoBehaviour
     private int _lastNbLinesCleared;
     private int _comboCounter;
     private int _leftHeld, _rightHeld;
-    private float _heavyWeightDelay;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
 
@@ -198,7 +197,6 @@ public class GameplayControler : MonoBehaviour
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
-        _heavyWeightDelay = 0.4f;
 #if UNITY_ANDROID
         if (_gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(_gameplayChoice);
@@ -570,9 +568,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        if (Character != null && Character.PiecesWeight > 0)
-            pieceWeightBonusLockDelay = _heavyWeightDelay;
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
+        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -1040,19 +1036,8 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
-        if (Character.PiecesWeight > 0 && nbLinesDropped > 2)
-        {
-            Constants.InputLocked = true;
-            var currentGravityDelay = GravityDelay;
-            SetGravity(0);
-            this.SceneBhv.CameraBhv.Pounder(1);
-            StartCoroutine(Helper.ExecuteAfterDelay(_heavyWeightDelay, () =>
-            {
-                GravityDelay = currentGravityDelay;
-                Constants.InputLocked = false;
-                return true;
-            }));
-        }
+        if (Character.PiecesWeight > 0 && nbLinesDropped > 1)
+            this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
@@ -1702,7 +1687,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idPerfect);
 
             if (nbLines >= 2)
-                CheckForDarkRows(nbLines - 1);
+                CheckForDarkRows(nbLines);
 
             bool isB2B = false;
             if (nbLines > 1 && nbLines == _lastNbLinesCleared)
@@ -1809,32 +1794,27 @@ public class GameplayControler : MonoBehaviour
         return nbLinesDeleted;
     }
 
-    public int CheckForLightRows(bool brutForceDelete = false)
+    public int CheckForLightRows(int brutForceDelete = 0)
     {
         int nbLinesDeleted = 0;
-        int startY;
-        int nbRows;
         bool hasDeletedRows = false;
         var allLightRows = GameObject.FindGameObjectsWithTag(Constants.TagLightRows);
         foreach (var lightRowGameObject in allLightRows)
         {
             var lightRowBhv = lightRowGameObject.GetComponent<LightRowBlockBhv>();
-            if (lightRowBhv.IsOverOrDecreaseCooldown() || brutForceDelete)
+            if (brutForceDelete > 0 || lightRowBhv.IsOverOrDecreaseCooldown())
             {
-                if (brutForceDelete) //Otherwise, all lightrows would be destroyed
-                    brutForceDelete = false;
                 int yRounded = Mathf.RoundToInt(lightRowGameObject.transform.position.y);
-                startY = yRounded;
-                nbRows = lightRowBhv.NbRows;
-                for (int y = yRounded; y < yRounded + lightRowBhv.NbRows; ++y)
+                int startY = yRounded;
+                int nbRows = lightRowBhv.NbRows;
+                if (DeleteLightRow(yRounded, lightRowBhv) > 0 && hasDeletedRows == false)
                 {
-                    if (hasDeletedRows == false)
-                        _soundControler.PlaySound(_idCleanRows);
+                    _soundControler.PlaySound(_idCleanRows);
                     hasDeletedRows = true;
-                    ++nbLinesDeleted;
-                    DeleteLine(y);
                 }
                 ClearLineSpace(startY, startY + nbRows - 1);
+                if (brutForceDelete > 0 && --brutForceDelete == 0)
+                    return nbLinesDeleted;
             }
         }
         return nbLinesDeleted;
@@ -1880,6 +1860,12 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteLine(int y)
     {
+        LightRowBlockBhv lightRowBlockBhv = null;
+        if (PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.TryGetComponent<LightRowBlockBhv>(out lightRowBlockBhv) != false)
+        {
+            DeleteLightRow(y, lightRowBlockBhv);
+            return;
+        }
         for (int x = 0; x < _playFieldWidth; ++x)
         {
             if (PlayFieldBhv.Grid[x, y] == null)
@@ -1888,6 +1874,24 @@ public class GameplayControler : MonoBehaviour
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
             PlayFieldBhv.Grid[x, y] = null;
         }
+    }
+
+    private int DeleteLightRow(int yRounded, LightRowBlockBhv lightRowBhv)
+    {
+        int nbLinesDeleted = 0;
+        for (int y = yRounded; y < yRounded + lightRowBhv.NbRows; ++y)
+        {
+            ++nbLinesDeleted;
+            for (int x = 0; x < _playFieldWidth; ++x)
+            {
+                if (PlayFieldBhv.Grid[x, y] == null)
+                    continue;
+                Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+                Destroy(PlayFieldBhv.Grid[x, y].gameObject);
+                PlayFieldBhv.Grid[x, y] = null;
+            }
+        }
+        return nbLinesDeleted;
     }
 
     public void DeleteColumn(int x)
@@ -2308,7 +2312,7 @@ public class GameplayControler : MonoBehaviour
         Constants.IsffectAttackInProgress = attackType;
         AfterSpawn = CameraEffectAfterSpawn;
         if (attackType == AttackType.Intoxication)
-            SetGravity(5);
+            SetGravity(8);
 
         bool CameraEffectAfterSpawn(bool trueSpawn)
         {

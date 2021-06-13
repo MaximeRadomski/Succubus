@@ -7,9 +7,9 @@ public class TattooHeavyWeight : Tattoo
     {
         Id = 23;
         Name = TattoosData.Tattoos[Id];
-        Stat = 50;
+        Stat = 20;
         Rarity = Rarity.Legendary;
-        MaxLevel = 3;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)
@@ -21,6 +21,6 @@ public class TattooHeavyWeight : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damage, but each time you hard drop a piece from more than 2 lines, it blocks your gameplay!";
+        return $"you deal {StatToString("+", "%")} damage, but each time you hard drop a piece from more than 1 lines, it pounds your gameplay!";
     }
 }

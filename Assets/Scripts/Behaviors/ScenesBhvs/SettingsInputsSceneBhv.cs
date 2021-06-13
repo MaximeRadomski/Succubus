@@ -111,7 +111,8 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(13); };
         _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
         _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
-        _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+        _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(16); };
+        _keyBindingPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
 
         GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Vertical); };
         GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Horizontal); };
@@ -270,9 +271,9 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void CheckAlreadyKeyBinding(KeyCode code, int keyId)
     {
         //Check for menu controls
-        if (keyId >= 10 && keyId <= 14)
+        if (keyId >= 10 && keyId <= 16)
         {
-            for (int i = 10; i <= 14; ++i)
+            for (int i = 10; i <= 16; ++i)
             {
                 if (_keyBinding[i] == code)
                 {
@@ -284,15 +285,6 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
         //Check for gameplay + escape
         for (int i = 0; i <= 9; ++i)
-        {
-            if (_keyBinding[i] == code)
-            {
-                _keyBinding[i] = KeyCode.None;
-                UpdateKeyBindingVisual(i);
-            }
-        }
-        //Check for 180
-        for (int i = 15; i <= 15; ++i)
         {
             if (_keyBinding[i] == code)
             {

@@ -61,6 +61,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetInt(Constants.PpTrainingLevel, 1);
         PlayerPrefs.SetInt(Constants.PpTrainingLines, 0);
         PlayerPrefs.SetInt(Constants.PpTrainingPieces, 0);
+        PlayerPrefs.Save();
     }
 
     public static List<int> GetTraining()
@@ -627,8 +628,12 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static Direction GetOrientation()
     {
+#if UNITY_ANDROID
         var orientation = PlayerPrefs.GetInt(Constants.PpOrientation, Constants.PpOrientationDefault == Direction.Vertical ? 0 : 1);
         return orientation == 0 ? Direction.Vertical : Direction.Horizontal;
+#else
+        return Direction.Vertical;
+#endif
     }
 
     public static int GetDialogProgress(string dialogLibelle)
