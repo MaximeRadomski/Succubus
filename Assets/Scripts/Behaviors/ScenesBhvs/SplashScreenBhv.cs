@@ -75,7 +75,7 @@ public class SplashScreenBhv : SceneBhv
         else if (IsUnder(lastSavedVersion, 1, 2, 31))
         {
             PlayerPrefs.DeleteKey(Constants.PpKeyBinding);
-            Instantiator.NewPopupYesNo("Old mapping", "your last installed version had and outdated controls mapping. your controls has been reseted to their default value.", null, "Ok", null);
+            Instantiator.NewPopupYesNo("Outdated input", "your previous installation had outdated input mapping. your controls have been reset to their default values.", null, "Ok", null);
         }
 #endif
 

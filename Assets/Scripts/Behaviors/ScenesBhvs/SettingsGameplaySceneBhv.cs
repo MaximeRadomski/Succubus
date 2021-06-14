@@ -53,11 +53,11 @@ public class SettingsGameplaySceneBhv : SceneBhv
         GameObject.Find("Ghost4").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
         GameObject.Find("Ghost5").GetComponent<ButtonBhv>().EndActionDelegate = GhostColorChoice;
 
+        GameObject.Find("Das04").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(04); };
         GameObject.Find("Das06").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(06); };
         GameObject.Find("Das08").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(08); };
         GameObject.Find("Das10").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(10); };
         GameObject.Find("Das12").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(12); };
-        GameObject.Find("Das14").GetComponent<ButtonBhv>().EndActionDelegate = () => { DasChoice(14); };
 
         GameObject.Find("Arr0").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(0); };
         GameObject.Find("Arr1").GetComponent<ButtonBhv>().EndActionDelegate = () => { ArrChoice(1); };

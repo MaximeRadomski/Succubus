@@ -437,7 +437,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         if (_run.Difficulty == Difficulty.Hard)
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);
                         Constants.GameOverParams = $"Abject|Hell|3";
-                        PlayerPrefsHelper.ResetRun();
+                        PlayerPrefsHelper.EndlessRun(_run);
                         NavigationService.LoadNextScene(Constants.DemoEndScene);
                         return false;
                     }

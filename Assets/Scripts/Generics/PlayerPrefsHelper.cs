@@ -25,6 +25,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         SaveRun(null);
     }
 
+    public static void EndlessRun(Run run)
+    {
+        run.IsEndless = true;
+        run.CurrentRealm = Realm.Hell;
+        run.RealmLevel = 1;
+        SaveRun(run);
+    }
+
     public static void SaveBag(string bag)
     {
         PlayerPrefs.SetString(Constants.PpBag, bag);

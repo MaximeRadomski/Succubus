@@ -12,6 +12,7 @@ public class Run
     public string ResourcesLooted;
     public string Steps;
     public int X, Y;
+    public bool IsEndless;
     // Character starts at X50 Y50 because coordinates are stored in two digits and coordinates under zero could mean up to 3 digits
     // X = X
     // Y = Y

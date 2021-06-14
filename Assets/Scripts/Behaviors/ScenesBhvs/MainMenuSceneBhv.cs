@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuSceneBhv : SceneBhv
 {
     private InputControlerBhv _inputControlerBhv;
+    private Run _currentRun;
 
     public override MusicType MusicType => MusicType.Menu;
 
@@ -17,10 +18,12 @@ public class MainMenuSceneBhv : SceneBhv
     {
         base.Init();
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
-        if (PlayerPrefsHelper.GetRun() != null && PlayerPrefsHelper.GetIsInFight() == true)
+        _currentRun = PlayerPrefsHelper.GetRun();
+        if (_currentRun != null && PlayerPrefsHelper.GetIsInFight() == true)
         {
             PlayerPrefsHelper.SaveIsInFight(false);
             PlayerPrefsHelper.ResetRun();
+            _currentRun = null;
             Constants.InputLocked = true;
             StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
             {
@@ -36,8 +39,13 @@ public class MainMenuSceneBhv : SceneBhv
     {
         var buttonAscension = GameObject.Find("ButtonNewAscension");
         buttonAscension.GetComponent<ButtonBhv>().EndActionDelegate = GoToNewAscension;
-        if (PlayerPrefsHelper.GetRun() != null)
-            buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
+        if (_currentRun != null)
+        {
+            if (_currentRun.IsEndless)
+                buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Endless Ascension";
+            else
+                buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
+        }
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = WannaHelp;
@@ -51,7 +59,7 @@ public class MainMenuSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentGameMode = GameMode.Ascension;
-            if (PlayerPrefsHelper.GetRun() != null)
+            if (_currentRun != null)
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
             {

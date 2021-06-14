@@ -9,7 +9,7 @@ public static class OpponentsData
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Hell Raider")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("PHILL")).Clone();
     }
 
     static OpponentsData()
@@ -173,7 +173,7 @@ public static class OpponentsData
             HpMax = 140, Weakness = Weakness.Twists, DamageOnWeakness = 40, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
-            GravityLevel = 1, Weight = 40
+            GravityLevel = 5, Weight = 40
         },
         new Opponent()
         {

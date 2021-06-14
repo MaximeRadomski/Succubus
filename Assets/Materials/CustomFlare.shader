@@ -2,7 +2,7 @@ Shader "Custom/CustomFlare"
 {
     Properties{
     _MainTex("Particle Texture", 2D) = "black" {}
-    _FogColor("Fog Color", Color) = (0.50, 0.50, 0.50, 1.0)
+    _FogColor("Fog Color", Color) = (0.35, 0.35, 0.35, 1.0)
     }
         SubShader{
             Tags {

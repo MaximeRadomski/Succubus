@@ -83,8 +83,8 @@ public class EffectsCameraBhv : MonoBehaviour
 
     private void Intoxicated()
     {
-        _textureQuad.transform.localPosition = Vector3.Lerp(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.03f);
-        _textureQuad.transform.localScale = Vector3.Lerp(_textureQuad.transform.localScale, _intoxicatedScale, 0.03f);
+        _textureQuad.transform.localPosition = Vector3.Lerp(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.01f);
+        _textureQuad.transform.localScale = Vector3.Lerp(_textureQuad.transform.localScale, _intoxicatedScale, 0.01f);
         if (Helper.VectorEqualsPrecision(_textureQuad.transform.localPosition, _intoxicatedPosition, 0.1f))
             _intoxicatedPosition = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), 0.0f);
         if (Helper.VectorEqualsPrecision(_textureQuad.transform.localScale, _intoxicatedScale, 0.1f))
