@@ -58,6 +58,9 @@ TagManager:
   - name: UI Mid
     uniqueID: 1268422405
     locked: 0
+  - name: Effects
+    uniqueID: 2434238011
+    locked: 0
   - name: ButtonsBackground
     uniqueID: 1473627549
     locked: 0
@@ -66,9 +69,6 @@ TagManager:
     locked: 0
   - name: Buttons
     uniqueID: 3396590645
-    locked: 0
-  - name: Effects
-    uniqueID: 2434238011
     locked: 0
   - name: Default
     uniqueID: 0
