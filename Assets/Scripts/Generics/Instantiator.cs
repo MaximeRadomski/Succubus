@@ -74,11 +74,11 @@ public class Instantiator : MonoBehaviour
         return tmpStepsContainerInstance;
     }
 
-    public GameObject NewStepInstance(Step step, GameObject mask)
+    public GameObject NewStepInstance(Step step, GameObject mask, Run run)
     {
         var tmpStepObject = Resources.Load<GameObject>("Prefabs/Step");
         var tmpStepInstance = Instantiate(tmpStepObject, Helper.TransformFromStepCoordinates(step.X, step.Y), tmpStepObject.transform.rotation);
-        tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step);
+        tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step, run);
         tmpStepInstance.transform.name = step.X + "_" + step.Y;
         tmpStepInstance.GetComponent<MaskLinkerBhv>().Mask = mask;
         return tmpStepInstance;

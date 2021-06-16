@@ -50,7 +50,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_run == null)
             return MusicType.Game;
         var currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
-        if (currentStep.LandLordVision)
+        if (currentStep != null && currentStep.LandLordVision)
             return MusicType.Boss;
         return MusicType.Game;
     }
@@ -434,12 +434,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     //DEBUG
                     if (Constants.BetaMode && _run.CurrentRealm == Realm.Earth)
                     {
-                        if (_run.Difficulty == Difficulty.Hard)
-                            PlayerPrefsHelper.SaveInfernalUnlocked(true);
-                        Constants.GameOverParams = $"Abject|Hell|3";
-                        PlayerPrefsHelper.EndlessRun(_run);
-                        NavigationService.LoadNextScene(Constants.DemoEndScene);
-                        return false;
+                        //if (_run.Difficulty == Difficulty.Hard)
+                        //    PlayerPrefsHelper.SaveInfernalUnlocked(true);
+                        //Constants.GameOverParams = $"Abject|Hell|3";
+                        //PlayerPrefsHelper.EndlessRun(_run);
+                        //NavigationService.LoadNextScene(Constants.DemoEndScene);
+                        //return false;
                     }
                     //DEBUG
                     NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
@@ -488,7 +488,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             //    Instantiator.PopText($"coming:\n{CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType}", new Vector2(4.5f, maxHeight));
             //}
 
-            if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 15)
+            if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 17)
                 || _stunIcon.IsOn)
                 _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
             else

@@ -23,6 +23,12 @@ TextureImporter:
   - first:
       213: -3415832725872259541
     second: Backgrounds_6
+  - first:
+      213: -6863342994735617074
+    second: Backgrounds_7
+  - first:
+      213: -2721424335638461485
+    second: Backgrounds_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -170,7 +176,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 501
-        y: 760
+        y: 304
         width: 240
         height: 151
       alignment: 0
@@ -191,7 +197,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 745
-        y: 768
+        y: 312
         width: 222
         height: 135
       alignment: 0
@@ -212,7 +218,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 501
-        y: 503
+        y: 655
         width: 256
         height: 256
       alignment: 0
@@ -233,7 +239,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 758
-        y: 616
+        y: 760
         width: 130
         height: 151
       alignment: 0
@@ -253,8 +259,8 @@ TextureImporter:
       name: Backgrounds_6
       rect:
         serializedVersion: 2
-        x: 501
-        y: 239
+        x: 758
+        y: 543
         width: 143
         height: 216
       alignment: 0
@@ -266,6 +272,48 @@ TextureImporter:
       bones: []
       spriteID: b2eca32db368890d0800000000000000
       internalID: -3415832725872259541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_7
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 152
+        width: 240
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecb2e1be8e180c0a0800000000000000
+      internalID: -6863342994735617074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_8
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 0
+        width: 240
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d38a274cfe8b3ad0800000000000000
+      internalID: -2721424335638461485
       vertices: []
       indices: 
       edges: []

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class StepsSceneBhv : SceneBhv
 {
+    public List<Sprite> _backgroundSprites;
+
     private Run _run;
     private Character _character;
     private StepsService _stepsService;
@@ -63,6 +65,7 @@ public class StepsSceneBhv : SceneBhv
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
+        _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + (_run.CurrentRealm.GetHashCode() * 10)));
         _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         _backgroundMask = GameObject.Find("BackgroundMask");
 
@@ -75,8 +78,9 @@ public class StepsSceneBhv : SceneBhv
                 GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
         }
         _stepsService = new StepsService();
-        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (10 * _character.Realm.GetHashCode())));
+        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (10 * _run.CurrentRealm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
+        _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[_run.CurrentRealm.GetHashCode()];
         if (string.IsNullOrEmpty(_run.Steps))
         {
             _stepsService.GenerateOriginSteps(_run, _character);
@@ -173,7 +177,7 @@ public class StepsSceneBhv : SceneBhv
         {
             if (x == _run.X && y == _run.Y)
             {
-                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_2");
+                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + (_run.CurrentRealm.GetHashCode() * 10)));
                 _lootName.text = "current location";
                 _lootTypeRarity.text = "";
                 _opponents.text = "";
@@ -202,7 +206,7 @@ public class StepsSceneBhv : SceneBhv
         var steps = _stepsService.GetAllSteps(_run);
         foreach (Step step in steps)
         {
-            var stepInstance = Instantiator.NewStepInstance(step, _backgroundMask);
+            var stepInstance = Instantiator.NewStepInstance(step, _backgroundMask, _run);
             stepInstance.transform.parent = _stepsContainer.transform;
             stepInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnStepClicked;
         }
