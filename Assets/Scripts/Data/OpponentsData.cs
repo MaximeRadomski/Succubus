@@ -5,11 +5,11 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Crossed Demon")).Clone();
+        return HellOpponents?.Find(o => o.Name.Contains("Bass Sinner")).Clone();
     }
 
     static OpponentsData()
@@ -148,7 +148,7 @@ public static class OpponentsData
             Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LightRow, 2, 8) },
+                new OpponentAttack(AttackType.Partition, 4) },
             GravityLevel = 1, Weight = 40
         },
         new Opponent()

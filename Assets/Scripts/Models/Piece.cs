@@ -189,7 +189,7 @@ public class Piece : MonoBehaviour
                     ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
                     var shadowBlock = instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
-                    shadowBlock.GetComponent<SpriteRenderer>().color = Constants.IsffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
+                    shadowBlock.GetComponent<SpriteRenderer>().color = Constants.IsEffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
                     AddRandomBlocks(realm, --nbBlocks, instantiator, ghost, ghostColor);
                     return;
                 }

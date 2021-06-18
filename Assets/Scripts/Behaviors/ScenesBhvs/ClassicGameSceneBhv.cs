@@ -28,6 +28,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private float _timeStopTimer;
     private bool _isCrit;
     private bool _isVictorious;
+    private bool _isTraining;
 
     private SoundControlerBhv _soundControler;
     private int _idOpponentDeath;
@@ -66,6 +67,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Constants.CurrentGameMode == GameMode.TrainingDummy
             || Constants.CurrentGameMode == GameMode.TrainingFree)
         {
+            _isTraining = true;
             _opponents = PlayerPrefsHelper.GetCurrentOpponents(new Run(Difficulty.Normal));
             Constants.RestartCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
         }
@@ -116,7 +118,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _idImmunity = _soundControler.SetSound("Immunity");
         _idDodge = _soundControler.SetSound("LevelUp");
         _idTattooSound = _soundControler.SetSound("TattooSound");
-        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(_run?.CurrentRealm ?? Realm.Hell, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(_run?.CurrentRealm ?? Realm.Hell, TextType.succubus3x5, TextCode.c43B)}{ (_run?.CurrentRealm.ToString().ToLower() ?? Realm.Hell.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
+        var realm = _isTraining ? Realm.Hell : _run?.CurrentRealm ?? Realm.Hell;
+        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
 
@@ -203,7 +206,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             HalveOpponentMaxCooldown();
         if (Constants.NameLastScene == Constants.SettingsScene)
         {
-            if (Constants.IsffectAttackInProgress != AttackType.None)
+            if (Constants.IsEffectAttackInProgress != AttackType.None)
             {
                 Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + 1;
                 Constants.CurrentOpponentAttackId = Constants.CurrentOpponentAttackId - 1 < 0 ? CurrentOpponent.Attacks.Count - 1 : Constants.CurrentOpponentAttackId - 1;

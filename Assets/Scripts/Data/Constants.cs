@@ -194,6 +194,7 @@ public static class Constants
     public const string GoMenuSelector = "MenuSelector";
     public const string GoRotationPoint = "RotationPoint";
     public const string GoSimpShield = "SimpShield";
+    public const string GoPartition = "Partition";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 3.1f;
@@ -276,7 +277,7 @@ public static class Constants
     public static int CurrentRemainingSimpShields = 0;
 
     //Reset before each fight
-    public static AttackType IsffectAttackInProgress = AttackType.None;
+    public static AttackType IsEffectAttackInProgress = AttackType.None;
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static float CurrentOpponentCooldown;
@@ -297,7 +298,7 @@ public static class Constants
     public static void ResetClassicGameCache(Character character = null)
     {
         ResetSelectedCharacterSpecialCooldown(character);
-        IsffectAttackInProgress = AttackType.None;
+        IsEffectAttackInProgress = AttackType.None;
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;

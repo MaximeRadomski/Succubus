@@ -255,7 +255,7 @@ public class StepsSceneBhv : SceneBhv
     {
         if (_selectedStep.LandLordVision)
         {
-            Instantiator.NewPopupYesNo("Landlord Vision", "this area is under the landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
+            Instantiator.NewPopupYesNo("Landlord Vision", "this area is under landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
             return;
         }
         object OnLandLordVisionStep(bool result)

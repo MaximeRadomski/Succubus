@@ -599,6 +599,7 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonRightName, () => { Right(); }, 0);
         LookForAllPossibleButton(Constants.GoButtonRightName, RightHeld, 1);
         LookForAllPossibleButton(Constants.GoButtonRightName, DirectionReleased, 2);
+        LookForAllPossibleButton(Constants.GoButtonDownName, Down, 0);
         LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHeld, 1);
         LookForAllPossibleButton(Constants.GoButtonHoldName, Hold, 0);
         LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
@@ -657,7 +658,7 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
-        if (Constants.IsffectAttackInProgress == AttackType.Intoxication)
+        if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         else
             CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -865,6 +866,15 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Left;
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.Left)
+            {
+                partitionBhv.NextNote();
+                return;
+            }
+        }
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -908,6 +918,15 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Right;
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.Right)
+            {
+                partitionBhv.NextNote();
+                return;
+            }
+        }
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -945,6 +964,19 @@ public class GameplayControler : MonoBehaviour
     public void DirectionReleased()
     {
         ResetDasArr();
+    }
+
+    public void Down()
+    {
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.SoftDrop)
+            {
+                partitionBhv.NextNote();
+                return;
+            }
+        }
     }
 
     public void SoftDropHeld()
@@ -1007,6 +1039,15 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.SoftDrop)
+            {
+                partitionBhv.NextNote();
+                return;
+            }
+        }
         bool hardDropping = true;
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         int nbLinesDropped = 0;
@@ -1452,7 +1493,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
-            if (Constants.IsffectAttackInProgress == AttackType.Intoxication)
+            if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
                 CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -2067,6 +2108,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Gate:
                 AttackGate(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.Partition:
+                AttackPartition(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2309,7 +2353,7 @@ public class GameplayControler : MonoBehaviour
         _effectsCamera.SetActive(true);
         _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
-        Constants.IsffectAttackInProgress = attackType;
+        Constants.IsEffectAttackInProgress = attackType;
         AfterSpawn = CameraEffectAfterSpawn;
         if (attackType == AttackType.Intoxication)
             SetGravity(8);
@@ -2319,12 +2363,12 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 BaseAfterSpawnEnd();
-                if (Constants.IsffectAttackInProgress == AttackType.Intoxication)
+                if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
                 {
                     CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
                     SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
                 }
-                Constants.IsffectAttackInProgress = AttackType.None;
+                Constants.IsEffectAttackInProgress = AttackType.None;
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
                 _soundControler.PlaySound(_idTwist, 0.85f);                    
                 return false;
@@ -2368,7 +2412,7 @@ public class GameplayControler : MonoBehaviour
             startFromBottom = Constants.HeightLimiter;
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 2);
         SceneBhv.Paused = true;
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
@@ -2422,8 +2466,22 @@ public class GameplayControler : MonoBehaviour
         tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, lineY]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), opponentRealm);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * cooldown);
+    }
+
+    private void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes)
+    {
+        Constants.IsEffectAttackInProgress = AttackType.Partition;
+        SetGravity(4);
+        var halfPixel = Constants.Pixel / 2.0f;
+        float y = GetHighestBlock() + 3.0f + halfPixel;
+        if (y > 15.0f + halfPixel)
+            y = 15.0f + halfPixel;
+        _soundControler.PlaySound(_idVisionBlock);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, y, 0.0f), opponentRealm);
+        Instantiator.NewPartition(new Vector3(4.5f, y), opponentRealm, nbNotes);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbNotes);
     }
 
     public void SetForcedPieceOpacity(float current, float max)

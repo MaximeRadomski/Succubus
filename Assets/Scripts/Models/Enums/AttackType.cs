@@ -66,4 +66,8 @@ public enum AttackType
     [Suffixe(" pieces")]
     [Description("Gate")]
     Gate = 14, //A gate of light rows with (param1) cooldown
+    [Prefixe(null)]
+    [Suffixe(" notes")]
+    [Description("Partition")]
+    Partition = 15, //A music partition with (param1) notes
 }
