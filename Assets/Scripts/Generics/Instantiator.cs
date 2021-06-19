@@ -288,7 +288,7 @@ public class Instantiator : MonoBehaviour
         return tmpVisionBlockInstance;
     }
 
-    public GameObject NewPartition(Vector2 position, Realm opponentRealm, int nbPieces)
+    public GameObject NewPartition(Vector2 position, Realm opponentRealm, int nbPieces, GameplayControler gameplayControler, int airLines)
     {
         var tmpOldPartition = GameObject.Find(Constants.GoPartition);
         if (tmpOldPartition != null)
@@ -296,7 +296,7 @@ public class Instantiator : MonoBehaviour
 
         var tmpPartitionObject = Resources.Load<GameObject>("Prefabs/Partition");
         var tmpPartitionInstance = Instantiate(tmpPartitionObject, position, tmpPartitionObject.transform.rotation);
-        tmpPartitionInstance.GetComponent<MusicPartitionBhv>().Init(opponentRealm, nbPieces, this);
+        tmpPartitionInstance.GetComponent<MusicPartitionBhv>().Init(opponentRealm, nbPieces, this, gameplayControler, airLines);
         tmpPartitionInstance.name = Constants.GoPartition;
         return tmpPartitionInstance;
     }

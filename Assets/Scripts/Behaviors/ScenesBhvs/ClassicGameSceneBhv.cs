@@ -240,8 +240,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
                                      "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
-        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
+        ResetToOpponentGravity();
         StartOpponentCooldown(sceneInit, true);
+    }
+
+    public void ResetToOpponentGravity()
+    {
+        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
     }
 
     public void RandomizeOpponentAttack()
@@ -593,7 +598,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (_timeStopTimer > 0 && Time.time > _timeStopTimer)
         {
-            _gameplayControler.SetGravity(CurrentOpponent.GravityLevel);
+            ResetToOpponentGravity();
             _nextCooldownTick = Time.time + Constants.OpponentCooldownIncrement;
             _timeStopTimer = -1;
             var maxHeight = 15.0f;
@@ -603,6 +608,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Instantiator.PopText("and time keeps\nmoving on", new Vector2(4.5f, maxHeight));
         }
     }
+
+    
 
     private void HandleForcedPiece()
     {

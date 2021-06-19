@@ -146,9 +146,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 2,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Partition, 4) },
+                new OpponentAttack(AttackType.Partition, 2, 1),
+                new OpponentAttack(AttackType.Partition, 3, 1) },
             GravityLevel = 1, Weight = 40
         },
         new Opponent()

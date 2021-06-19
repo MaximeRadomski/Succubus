@@ -869,11 +869,8 @@ public class GameplayControler : MonoBehaviour
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.Left)
-            {
-                partitionBhv.NextNote();
-                return;
-            }
+            partitionBhv.NextNote(KeyBinding.Left);
+            return;
         }
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -921,11 +918,8 @@ public class GameplayControler : MonoBehaviour
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.Right)
-            {
-                partitionBhv.NextNote();
-                return;
-            }
+            partitionBhv.NextNote(KeyBinding.Right);
+            return;
         }
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -971,11 +965,8 @@ public class GameplayControler : MonoBehaviour
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.SoftDrop)
-            {
-                partitionBhv.NextNote();
-                return;
-            }
+            partitionBhv.NextNote(KeyBinding.SoftDrop);
+            return;
         }
     }
 
@@ -987,6 +978,14 @@ public class GameplayControler : MonoBehaviour
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
             return;
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            if (partitionBhv.GetLastKeyBinding() == KeyBinding.SoftDrop)
+            {
+                return;
+            }
+        }
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -1042,11 +1041,8 @@ public class GameplayControler : MonoBehaviour
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-            if (partitionBhv.GetCurrentKeyBinding() == KeyBinding.SoftDrop)
-            {
-                partitionBhv.NextNote();
-                return;
-            }
+            partitionBhv.NextNote(KeyBinding.SoftDrop);
+            return;
         }
         bool hardDropping = true;
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
@@ -1191,6 +1187,12 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Clock;
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.Clock);
+            return;
+        }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1301,6 +1303,12 @@ public class GameplayControler : MonoBehaviour
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.AntiClock;
+            return;
+        }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.AntiClock);
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1467,6 +1475,12 @@ public class GameplayControler : MonoBehaviour
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
+            return;
+        }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.Hold);
             return;
         }
         if (_holder.transform.childCount <= 0)
@@ -2109,7 +2123,7 @@ public class GameplayControler : MonoBehaviour
                 AttackGate(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.Partition:
-                AttackPartition(opponentInstance, opponentRealm, param1);
+                AttackPartition(opponentInstance, opponentRealm, param1, param2);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2470,7 +2484,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * cooldown);
     }
 
-    private void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes)
+    private void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
     {
         Constants.IsEffectAttackInProgress = AttackType.Partition;
         SetGravity(4);
@@ -2480,7 +2494,7 @@ public class GameplayControler : MonoBehaviour
             y = 15.0f + halfPixel;
         _soundControler.PlaySound(_idVisionBlock);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, y, 0.0f), opponentRealm);
-        Instantiator.NewPartition(new Vector3(4.5f, y), opponentRealm, nbNotes);
+        Instantiator.NewPartition(new Vector3(4.5f, y), opponentRealm, nbNotes, this, airLines);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbNotes);
     }
 

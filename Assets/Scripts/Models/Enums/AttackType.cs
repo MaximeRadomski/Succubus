@@ -69,5 +69,5 @@ public enum AttackType
     [Prefixe(null)]
     [Suffixe(" notes")]
     [Description("Partition")]
-    Partition = 15, //A music partition with (param1) notes
+    Partition = 15, //A music partition with (param1) notes, with (param2) air lines thrown if failed
 }
