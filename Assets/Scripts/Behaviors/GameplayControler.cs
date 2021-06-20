@@ -725,11 +725,17 @@ public class GameplayControler : MonoBehaviour
         if (PlayFieldBhv == null)
             return;
         piece.transform.SetParent(PlayFieldBhv.gameObject.transform);
-        foreach (Transform child in piece.transform)
+        for (int i = piece.transform.childCount - 1; i >= 0; --i)
         {
+            var child = piece.transform.GetChild(i);
             int roundedX = Mathf.RoundToInt(child.transform.position.x);
             int roundedY = Mathf.RoundToInt(child.transform.position.y);
 
+            if (roundedY >= Constants.PlayFieldHeight)
+            {
+                Destroy(child.gameObject);
+                continue;
+            }
             if (PlayFieldBhv.Grid[roundedX, roundedY] != null)
                 Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
             PlayFieldBhv.Grid[roundedX, roundedY] = child;
@@ -857,7 +863,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void Left(bool mimicPossible = true)
+    public void Left(bool mimicPossible = true, bool canTriggerPartition = true)
     {
         _leftHeld = _rightHeld = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
@@ -868,6 +874,8 @@ public class GameplayControler : MonoBehaviour
         }
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
+            if (!canTriggerPartition)
+                return;
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
             partitionBhv.NextNote(KeyBinding.Left);
             return;
@@ -885,7 +893,7 @@ public class GameplayControler : MonoBehaviour
     {
         ++_leftHeld;
         ++_das;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -906,7 +914,7 @@ public class GameplayControler : MonoBehaviour
         _arr = 0;
     }
 
-    public void Right(bool mimicPossible = true)
+    public void Right(bool mimicPossible = true, bool canTriggerPartition = true)
     {
         _rightHeld = _leftHeld = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
@@ -917,10 +925,13 @@ public class GameplayControler : MonoBehaviour
         }
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
+            if (!canTriggerPartition)
+                return;
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
             partitionBhv.NextNote(KeyBinding.Right);
             return;
         }
+
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -934,7 +945,7 @@ public class GameplayControler : MonoBehaviour
     {
         ++_rightHeld;
         ++_das;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -962,6 +973,8 @@ public class GameplayControler : MonoBehaviour
 
     public void Down()
     {
+        if (SceneBhv.Paused)
+            return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -972,20 +985,12 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
             return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
-        {
-            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-            if (partitionBhv.GetLastKeyBinding() == KeyBinding.SoftDrop)
-            {
-                return;
-            }
-        }
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -1538,6 +1543,12 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
             return;
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.Item);
+            return;
+        }
         if (CharacterItem != null)
         {
             if (CharacterItem.Activate(Character, this, () => { _soundControler.PlaySound(_idItem); return true; }))
@@ -1556,6 +1567,12 @@ public class GameplayControler : MonoBehaviour
             if (_characterSpecial.IsReactivable && _characterSpecial.CanReactivate && _characterSpecial.Reactivate())
                 _soundControler.PlaySound(_idSpecial);
             UpdateItemAndSpecialVisuals();
+            return;
+        }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.Special);
             return;
         }
         if (_characterSpecial.Activate())
@@ -2063,8 +2080,10 @@ public class GameplayControler : MonoBehaviour
 
     private void IncreaseAllAboveLines(int nbRows)
     {
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = GetHighestBlock(); y >= Constants.HeightLimiter; --y)
         {
+            if (y + nbRows >= _playFieldHeight)
+                return;
             for (int x = 0; x < _playFieldWidth; ++x)
             {
                 if (PlayFieldBhv.Grid[x, y] != null)
@@ -2484,7 +2503,7 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * cooldown);
     }
 
-    private void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
+    public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
     {
         Constants.IsEffectAttackInProgress = AttackType.Partition;
         SetGravity(4);
@@ -2558,7 +2577,10 @@ public class GameplayControler : MonoBehaviour
             return;
         for (int x = minMaxX[0]; x <= minMaxX[1]; x++)
         {
-            var underBlockTransform = PlayFieldBhv.Grid[x, minMaxY[0] - 1];
+            var y = minMaxY[0] - 1;
+            if (y >= Constants.PlayFieldHeight)
+                continue;
+            var underBlockTransform = PlayFieldBhv.Grid[x, y];
             if (underBlockTransform == null)
                 continue;
             var underBlockBhv = underBlockTransform?.GetComponent<BlockBhv>();

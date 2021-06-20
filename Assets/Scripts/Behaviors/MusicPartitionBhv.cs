@@ -77,10 +77,10 @@ public class MusicPartitionBhv : MonoBehaviour
             _notes[_id].SpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{6 + _notes[_id].SpriteId + (_notes[_id].Realm.GetHashCode() * 6)}");
         if (_id >= _notes.Count)
         {
-            Constants.IsEffectAttackInProgress = AttackType.None;
             ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).ResetToOpponentGravity();
             StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () =>
             {
+                Constants.IsEffectAttackInProgress = AttackType.None;
                 Destroy(gameObject);
                 return true;
             }, lockInputWhile: false));

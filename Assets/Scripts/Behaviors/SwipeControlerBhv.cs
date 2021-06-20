@@ -8,6 +8,7 @@ public class SwipeControlerBhv : MonoBehaviour
     private bool _beginPhase, _doPhase, _endPhase;
     private Vector2 _beginPos;
     private Vector2 _reBeginPos;
+    private int _reBeginsCount;
     private GameplayControler _gameplayControler;
     private Vector2 _rotationFrontier;
     private float _tapZoneBoundaryHorizontal;
@@ -96,6 +97,7 @@ public class SwipeControlerBhv : MonoBehaviour
     {
         _beginPos = touchPosWorld2D;
         _reBeginPos = _beginPos;
+        _reBeginsCount = 0;
         _framesBeforeHoldingDown = 0;
         _direction = Direction.None;
     }
@@ -139,11 +141,12 @@ public class SwipeControlerBhv : MonoBehaviour
         {
             var canMimic = Helper.FloatEqualsPrecision(_beginPos.x, _reBeginPos.x, 0.01f);
             if (currentPos.x > _reBeginPos.x)
-                _gameplayControler.Right(canMimic);
+                _gameplayControler.Right(canMimic, _reBeginsCount == 0);
             else
-                _gameplayControler.Left(canMimic);
+                _gameplayControler.Left(canMimic, _reBeginsCount == 0);
             //Debug.Log("beginX = " + _beginPos.x + "\treBeginX = " + _reBeginPos.x);
             _reBeginPos = currentPos;
+            ++_reBeginsCount;
         }
         else if (_isHoldingDown
             || (Vector2.Distance(new Vector2(0.0f, _beginPos.y), new Vector2(0.0f, currentPos.y)) > _verticalSensitivity && currentPos.y < _beginPos.y && _direction == Direction.Vertical))

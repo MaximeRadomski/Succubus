@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ResourceBarBhv : MonoBehaviour
+public class ResourceBarBhv : FrameRateBehavior
 {
     private TMPro.TextMeshPro _text;
     private string _textPrefix;
@@ -25,7 +25,7 @@ public class ResourceBarBhv : MonoBehaviour
             Init();
     }
 
-    void Update()
+    protected override void FrameUpdate()
     {
         if (_isDelayingContent)
         {

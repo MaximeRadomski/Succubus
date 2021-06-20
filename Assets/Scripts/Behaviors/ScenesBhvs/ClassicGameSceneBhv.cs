@@ -208,8 +208,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (Constants.IsEffectAttackInProgress != AttackType.None)
             {
-                Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + 1;
                 Constants.CurrentOpponentAttackId = Constants.CurrentOpponentAttackId - 1 < 0 ? CurrentOpponent.Attacks.Count - 1 : Constants.CurrentOpponentAttackId - 1;
+                Constants.IsEffectAttackInProgress = AttackType.None;
+                Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown;
+                UpdateCooldownBar(Direction.Up);
+                OpponentAttackIncoming();
             }
         }
         else
@@ -499,7 +502,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if ((Character.HighPlayPause && _gameplayControler.GetHighestBlock() >= 17)
                 || _stunIcon.IsOn)
                 _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
-            else
+            else if (_opponentOnCooldown)
                 _nextCooldownTick = Time.time + Constants.OpponentCooldownIncrement;
         }
     }
