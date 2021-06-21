@@ -27,7 +27,7 @@ public enum AttackType
     [Description("Empty Row")]
     EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it. (param1) -> nb Lines
     [Prefixe(null)]
-    [Suffixe("lines")]
+    [Suffixe(" lines")]
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay (param1) -> nbRows, (param2) -> seconds
     [Prefixe(null)]
@@ -70,4 +70,8 @@ public enum AttackType
     [Suffixe(" notes")]
     [Description("Partition")]
     Partition = 15, //A music partition with (param1) notes, with (param2) air lines thrown if failed
+    [Prefixe(null)]
+    [Suffixe(" lines")]
+    [Description("Shrink")]
+    Shrink = 16, //Shrinks playfield by (param)
 }

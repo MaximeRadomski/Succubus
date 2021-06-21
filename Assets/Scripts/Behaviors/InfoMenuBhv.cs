@@ -141,8 +141,9 @@ public class InfoMenuBhv : PopupBhv
                 _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
         }
         _opponentFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Realm.ToString().ToLower() + "\n" +
-            "- takes more damage from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n" +
-            "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger.";
+            "- takes more damage from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n";
+        //+
+        //   "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger."
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
         _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
         _opponentFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));

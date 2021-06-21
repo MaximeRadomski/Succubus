@@ -30,6 +30,8 @@ public class StepsSceneBhv : SceneBhv
     private Step _selectedStep;
     private float _lootCenterLocalY;
 
+    private float _lastSelectedInput = -1;
+
     public override MusicType MusicType => MusicType.Steps;
 
     void Start()
@@ -86,7 +88,7 @@ public class StepsSceneBhv : SceneBhv
             _stepsService.GenerateOriginSteps(_run, _character);
             PlayerPrefsHelper.SaveRun(_run);
         }
-        else if (_run.CurrentStep == _run.MaxSteps)
+        else if (_run.CurrentStep >= _run.MaxSteps)
             _stepsService.SetVisionOnAllSteps(_run);
         UpdateAllStepsVisuals();
         FocusOnSelected(_run.X, _run.Y);
@@ -121,6 +123,12 @@ public class StepsSceneBhv : SceneBhv
 
     private void FocusOnSelected(int x, int y)
     {
+        if (_selectedStep != null && _selectedStep.X == x && _selectedStep.Y == y && _lastSelectedInput >= Time.time - 0.2f)
+        {
+            GoToStep();
+            return;
+        }
+        _lastSelectedInput = Time.time;
         _selectedStep = _stepsService.GetStepOnPos(x, y, _run.Steps);
         _selector.transform.position = Helper.TransformFromStepCoordinates(_selectedStep.X, _selectedStep.Y);
         if (x == _run.X && y == _run.Y)

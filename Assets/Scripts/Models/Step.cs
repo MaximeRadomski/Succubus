@@ -56,7 +56,8 @@ public class Step
         var opponentType = (OpponentType)(Helper.GetLootFromTypeAndId(LootType, LootId)?.Rarity.GetHashCode() ?? OpponentType.Common.GetHashCode());
         while (nextOpponentIdStart <= parsedString.Length && parsedString[nextOpponentIdStart] != ';')
         {
-            var opponent = realmOpponents[int.Parse(parsedString.Substring(nextOpponentIdStart, 2))];
+            var idOpponent = int.Parse(parsedString.Substring(nextOpponentIdStart, 2));
+            var opponent = realmOpponents[idOpponent >= realmOpponents.Count ? realmOpponents.Count - 1 : idOpponent];
             if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
             {
                 opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);

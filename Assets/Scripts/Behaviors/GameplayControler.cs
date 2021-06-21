@@ -51,6 +51,7 @@ public class GameplayControler : MonoBehaviour
     private GameObject _spawner;
     private GameObject _holder;
     private GameObject _effectsCamera;
+    private GameObject _panelGame;
     private GameObject _panelLeft;
     private GameObject _panelRight;
     private GameObject _uiPanelLeft;
@@ -184,12 +185,18 @@ public class GameplayControler : MonoBehaviour
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
+        _panelGame = GameObject.Find("PanelGame");
+        _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
         _panelLeft = GameObject.Find("PanelLeft");
+        _panelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + (_levelRealm.GetHashCode() * 11)}");
         _effectsCamera = GameObject.Find("EffectsCamera");
         _effectsCamera?.GetComponent<EffectsCameraBhv>().Reset();
         _panelRight = GameObject.Find("PanelRight");
+        _panelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + (_levelRealm.GetHashCode() * 11)}");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
+        _uiPanelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + (_levelRealm.GetHashCode() * 11)}");
         _uiPanelRight = GameObject.Find("UiPanelRight");
+        _uiPanelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + (_levelRealm.GetHashCode() * 11)}");
         _mainCamera = GameObject.Find("Main Camera");
         CharacterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
@@ -413,6 +420,7 @@ public class GameplayControler : MonoBehaviour
         _panelRight.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         _panelRight.GetComponent<PositionBhv>().enabled = false;
         _panelSwipe = GameObject.Find("PanelSwipe");
+        _panelSwipe.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{4 + (_levelRealm.GetHashCode() * 11)}");
         _panelSwipe.GetComponent<PositionBhv>().HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.RightBorder : CameraHorizontalSide.LeftBorder;
         _panelSwipe.GetComponent<PositionBhv>().XOffset *= mult;
         _panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
@@ -2144,6 +2152,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Partition:
                 AttackPartition(opponentInstance, opponentRealm, param1, param2);
                 break;
+            case AttackType.Shrink:
+                AttackShrink(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2517,6 +2528,13 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbNotes);
     }
 
+    public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLines)
+    {
+        _soundControler.PlaySound(_idDarkRows);
+        ReducePlayHeight(nbLines, afterLock: true);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
+    }
+
     public void SetForcedPieceOpacity(float current, float max)
     {
         if (_forcedPieceModel == null)
@@ -2590,13 +2608,14 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void ReducePlayHeight(int heightToReduce)
+    public void ReducePlayHeight(int heightToReduce, bool afterLock = false)
     {
         if (_heightLimiter == null)
             _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
         else
             _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Constants.HeightLimiter + heightToReduce, Character.Realm);
-        CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
+        if (!afterLock)
+            CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
         if (CurrentPiece.transform.position.y > 19.0f)
             CurrentPiece.transform.position += new Vector3(0.0f, -(int)(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce);

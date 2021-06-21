@@ -32,6 +32,7 @@ public class StepInstanceBhv : MonoBehaviour
             _step.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Steps_" + (run.CurrentRealm.GetHashCode() * 16));
         }
         _stepVision.enabled = step.LandLordVision;
+        _stepVision.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (1 + (run.CurrentRealm.GetHashCode() * 10)));
         _stepLoot.enabled = step.LootType != LootType.None;
         _stepLoot.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + step.LootType.GetHashCode() + (run.CurrentRealm.GetHashCode() * 10)));
         _stepOpponent.enabled = _stepLoot.enabled;

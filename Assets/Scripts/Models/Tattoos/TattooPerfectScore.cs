@@ -7,9 +7,9 @@ public class TattooPerfectScore : Tattoo
     {
         Id = 22;
         Name = TattoosData.Tattoos[Id];
-        Stat = 9999;
+        Stat = 100;
         Rarity = Rarity.Legendary;
-        MaxLevel = 1;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)

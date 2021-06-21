@@ -304,10 +304,10 @@ public class StepsService
     private int GetWeightFromRunLevel(Run run)
     {
         var baseWeight = 40;
-        var weight = baseWeight;
-        weight += (int)((baseWeight * 0.75f) * (run.RealmLevel - 1));
-        weight *= (int)(1.50f * (run.CurrentRealm.GetHashCode() + 1));
-        return weight;
+        float weight = baseWeight;
+        weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
+        weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());
+        return (int)weight;
     }
 
     public Step GetClosestAvailableStepFromPos(int stepX, int stepY, Run run)

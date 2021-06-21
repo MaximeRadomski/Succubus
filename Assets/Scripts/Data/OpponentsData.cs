@@ -5,7 +5,7 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
@@ -331,7 +331,58 @@ public static class OpponentsData
         }
     };
 
-    public static List<Opponent> EarthOpponents = new List<Opponent>();
+    public static List<Opponent> EarthOpponents = new List<Opponent>(){
+        new Opponent()
+        {
+            Name = "Beginner monk", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 80, Weakness = Weakness.None, Cooldown = 8, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 2, 3) },
+            GravityLevel = 5, Weight = 10
+        },
+        new Opponent()
+        {
+            Name = "Monk", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 4, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.EmptyRow, 2),
+                new OpponentAttack(AttackType.DarkRow, 3) },
+            GravityLevel = 8, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Nun", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 4, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.MirrorMirror, 2, 2),
+                new OpponentAttack(AttackType.Shift, 6) },
+            GravityLevel = 8, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Living bible", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 10, Weakness = Weakness.None, Cooldown = 10, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Shrink, 2) },
+            GravityLevel = 10, Weight = 5
+        },
+        new Opponent()
+        {
+            Name = "Punished sinner", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 1, 5) },
+            GravityLevel = 10, Weight = 30
+        },
+        new Opponent()
+        {
+            Name = "Chorists", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 100, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 8, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Partition, 5, 2) },
+            GravityLevel = 10, Weight = 40
+        },
+    };
 
     public static List<Opponent> HeavenOpponents = new List<Opponent>();
 }

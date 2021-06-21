@@ -22,6 +22,7 @@ public class ItemSmokeBomb : Item
         stepsService.GenerateAdjacentSteps(run, _character, currentStep);
         run.X = tmpStep.X;
         run.Y = tmpStep.Y;
+        --run.CurrentStep;
         PlayerPrefsHelper.SaveRun(run);
         _gameplayControler.CleanPlayerPrefs();
         NavigationService.LoadBackUntil(Constants.StepsScene);
