@@ -12,6 +12,25 @@ public class SplashScreenBhv : SceneBhv
     void Start()
     {
         Init();
+        //DatabaseService.PostHighScore(new HighScoreDto("NotAbject", "A BIG NUMBER", 2), OnAdd);
+        //DatabaseService.GetHighScore("Abject", OnGet);
+        DatabaseService.GetHighScores((List<HighScoreDto> result) =>
+        {
+            Debug.Log("HighScores Gotten");
+            return true;
+        });
+
+        object OnAdd(bool result)
+        {
+            Debug.Log("HighScore Sent");
+            return result;
+        }
+
+        object OnGet(HighScoreDto highScore)
+        {
+            Debug.Log("HighScore Gotten");
+            return highScore;
+        }
     }
 
     protected override void Init()

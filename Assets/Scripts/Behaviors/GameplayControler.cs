@@ -47,6 +47,7 @@ public class GameplayControler : MonoBehaviour
     private int _leftHeld, _rightHeld;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
+    private bool _isTraining;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -123,13 +124,13 @@ public class GameplayControler : MonoBehaviour
             Constants.TruthResurection = false;
             Resurect();
         }
-        else if (Constants.CurrentGameMode != GameMode.TrainingFree && Constants.CurrentGameMode != GameMode.TrainingDummy && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        else if (!_isTraining && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
         {
             run.LifeRouletteOnce = true;
             PlayerPrefsHelper.SaveRun(run);
             Resurect("life roulette");
         }
-        else if (Constants.CurrentGameMode != GameMode.TrainingFree && Constants.CurrentGameMode != GameMode.TrainingDummy && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        else if (!_isTraining && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
         {
             run.RepentanceOnce = true;
             PlayerPrefsHelper.SaveRun(run);
@@ -177,6 +178,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (_hasInit)
             return;
+        if (Constants.CurrentGameMode == GameMode.TrainingFree
+            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            _isTraining = true;
         SceneBhv = GetComponent<GameSceneBhv>();
         Character = SceneBhv.Character;
         SetGravity(level);
@@ -186,7 +190,10 @@ public class GameplayControler : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
         _panelGame = GameObject.Find("PanelGame");
-        _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
+        if (!_isTraining)
+            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
+        else
+            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{1 + (_levelRealm.GetHashCode() * 11)}");
         _panelLeft = GameObject.Find("PanelLeft");
         _panelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + (_levelRealm.GetHashCode() * 11)}");
         _effectsCamera = GameObject.Find("EffectsCamera");
@@ -268,8 +275,7 @@ public class GameplayControler : MonoBehaviour
         {
             PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        if (_isTraining)
             CharacterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
         else
         {
@@ -536,8 +542,7 @@ public class GameplayControler : MonoBehaviour
         
         Realm realm;
         Difficulty difficulty;
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        if (_isTraining)
         {
             realm = Realm.Hell;
             difficulty = Difficulty.Normal;

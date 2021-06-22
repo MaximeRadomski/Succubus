@@ -197,7 +197,7 @@ public static class Constants
     public const string GoPartition = "Partition";
 
     //  GAMEOBJECT VALUES  //
-    public const float KeyboardHeight = 3.1f;
+    public const float KeyboardHeight = 14.000f + 1.0f;
 
     //  COLORS  //
     public static Color ColorHell0 = new Color(0.188f, 0.039f, 0.168f, 1.0f);  //300a2b

@@ -6,6 +6,7 @@ public class MainMenuSceneBhv : SceneBhv
 {
     private InputControlerBhv _inputControlerBhv;
     private Run _currentRun;
+    private int _menuClickCount;
 
     public override MusicType MusicType => MusicType.Menu;
 
@@ -46,11 +47,14 @@ public class MainMenuSceneBhv : SceneBhv
             else
                 buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
         }
+        _menuClickCount = 0;
+        GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = MenuClick;
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = WannaHelp;
         GameObject.Find("ButtonQuit").GetComponent<ButtonBhv>().EndActionDelegate = Quit;
         GameObject.Find("ButtonBug").GetComponent<ButtonBhv>().EndActionDelegate = ReportBug;
+        GameObject.Find("Version").GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
     }
 
     private void GoToNewAscension()
@@ -117,5 +121,14 @@ public class MainMenuSceneBhv : SceneBhv
     {
         //Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL", "Edam", null, 0);
         Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedback, reporting bugs, and talking about the game around you are some stuff you can do!\n(just don't harass your friends about it too much)", null, "Ok", null);
+    }
+
+    private void MenuClick()
+    {
+        ++_menuClickCount;
+        if (_menuClickCount == 69)
+        {
+            Instantiator.NewPopupYesNo("Nice!", "congratulations!\nyou successfully clicked the game name 69 times!", null, "Ok", null);
+        }
     }
 }

@@ -342,7 +342,7 @@ public class InputControlerBhv : FrameRateBehavior
         {
             if (_currentScene == null)
                 GetScene();
-            if (_currentScene is TrainingFreeGameSceneBhv trainingScene)
+            if (_currentScene is TrainingFreeGameSceneBhv trainingScene && Constants.InputLayer == 0)
                 trainingScene.AskRestartTraining();
         }
         HandleFrameKeysPressOrHeld();

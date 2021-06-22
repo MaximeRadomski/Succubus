@@ -85,11 +85,11 @@ TagManager:
   - name: PopupTop
     uniqueID: 1034691525
     locked: 0
-  - name: Snack
-    uniqueID: 3932137079
-    locked: 0
   - name: Keyboard
     uniqueID: 2680369509
+    locked: 0
+  - name: Snack
+    uniqueID: 3932137079
     locked: 0
   - name: Scanlines
     uniqueID: 43650419
