@@ -9,5 +9,6 @@
     Steps,
     Game,
     Boss,
-    GameOver
+    GameOver,
+    Account
 }

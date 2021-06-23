@@ -12,25 +12,30 @@ public class SplashScreenBhv : SceneBhv
     void Start()
     {
         Init();
-        //DatabaseService.PostHighScore(new HighScoreDto("NotAbject", "A BIG NUMBER", 2), OnAdd);
-        //DatabaseService.GetHighScore("Abject", OnGet);
-        DatabaseService.GetHighScores((List<HighScoreDto> result) =>
-        {
-            Debug.Log("HighScores Gotten");
-            return true;
-        });
 
-        object OnAdd(bool result)
-        {
-            Debug.Log("HighScore Sent");
-            return result;
-        }
-
-        object OnGet(HighScoreDto highScore)
-        {
-            Debug.Log("HighScore Gotten");
-            return highScore;
-        }
+        //var highScores = new List<HighScoreDto>()
+        //{
+        //    new HighScoreDto("Abject", 1000000, 0),
+        //    new HighScoreDto("Coco", 15000, 1),
+        //    new HighScoreDto("Waga", 135498, 2),
+        //    new HighScoreDto("Taüff", 8465, 3),
+        //    new HighScoreDto("Segah", 98646, 4),
+        //    new HighScoreDto("Oldo", 8764, 5),
+        //    new HighScoreDto("Alka", 666666666, 6)
+        //};
+        //Instantiator.NewLoading();
+        //DatabaseService.PutHighScores(highScores, () =>
+        //{
+        //    DatabaseService.GetHighScores((List<HighScoreDto> results) =>
+        //    {
+        //        _catchPhrase.text = "";
+        //        foreach (var result in results)
+        //        {
+        //            _catchPhrase.text += $"{result.PlayerNameId}: {result.Score}\n";
+        //            Helper.ResumeLoading();
+        //        }
+        //    });
+        //});
     }
 
     protected override void Init()

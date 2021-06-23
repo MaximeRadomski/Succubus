@@ -416,4 +416,15 @@ public class Instantiator : MonoBehaviour
             }
         }
     }
+
+    public GameObject NewLoading()
+    {
+        if (_mainCamera == null)
+            _mainCamera = Helper.GetMainCamera();
+        var pos = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
+        var tmpLoadingObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoLoading}");
+        var tmpLoadingInstance = Instantiate(tmpLoadingObject, pos, tmpLoadingObject.transform.rotation);
+        tmpLoadingInstance.name = Constants.GoLoading;
+        return tmpLoadingInstance;
+    }
 }

@@ -51,6 +51,9 @@ EditorBuildSettings:
     path: Assets/Scenes/HighScoreScene.unity
     guid: 42bbbc2987c5a424d9ef3be817f21bcf
   - enabled: 1
+    path: Assets/Scenes/OnlineScoreScene.unity
+    guid: 7db428edf77959d4eb82f58534e7a872
+  - enabled: 1
     path: Assets/Scenes/ClassicGameScene.unity
     guid: e2d0ca083f7a94d46b156327b1103c50
   - enabled: 1
@@ -65,5 +68,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOverScene.unity
     guid: 694f1128028a87f409b37db599693bdf
+  - enabled: 1
+    path: Assets/Scenes/AccountScene.unity
+    guid: be025324d76c80545a3a9a2ce418039f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2be493e1868ee174083e5a3262e27d84, type: 2}

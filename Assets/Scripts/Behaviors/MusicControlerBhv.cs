@@ -112,6 +112,8 @@ public class MusicControlerBhv : MonoBehaviour
             _audioSource.clip = (AudioClip)Resources.Load("Musics/Devlog");
         else if (_currentType == MusicType.Lore)
             _audioSource.clip = (AudioClip)Resources.Load("Musics/Lore");
+        else if (_currentType == MusicType.Account)
+            _audioSource.clip = (AudioClip)Resources.Load("Musics/Account");
         else
             _audioSource.clip = null;
         _audioSource.Play();

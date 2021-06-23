@@ -164,6 +164,7 @@ public static class Constants
     public const string HighScoreScene = "HighScoreScene";
     public const string GameOverScene = "GameOverScene";
     public const string LoreScene = "LoreScene";
+    public const string OnlineScoreScene = "OnlineScoreScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
@@ -195,6 +196,7 @@ public static class Constants
     public const string GoRotationPoint = "RotationPoint";
     public const string GoSimpShield = "SimpShield";
     public const string GoPartition = "Partition";
+    public const string GoLoading = "Loading";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;
