@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AccountSceneBhv;
 
 public class InputKeyBhv : PopupBhv
 {
@@ -11,6 +12,7 @@ public class InputKeyBhv : PopupBhv
     //private GameObject _keyHover;
     private ButtonBhv _buttonBhv;
     private TMPro.TextMeshPro _target;
+    private Identifier _identifier;
     private TMPro.TextMeshPro _textMeshLower;
     private TMPro.TextMeshPro _textMeshUpper;
     private SpriteRenderer _spriteRenderer;
@@ -21,12 +23,15 @@ public class InputKeyBhv : PopupBhv
     private int _pressedDelCount;
     private float _maxWidth;
     private bool _isUpperCase;
+    private bool _isPassword;
 
-    public void SetPrivates(TMPro.TextMeshPro target, float maxWidth = -1)
+    public void SetPrivates(TMPro.TextMeshPro target, Identifier identifier, bool isPassword, float maxWidth = -1)
     {
         _target = target;
-        _originalTargetText = target.text;
+        _originalTargetText = identifier.Text;
         _maxWidth = maxWidth;
+        _identifier = identifier;
+        _isPassword = isPassword;
         _keyboard = this.transform.parent.gameObject;
         //_keyHover = _keyboard.transform.Find("KeyHover").gameObject;
         _buttonBhv = GetComponent<ButtonBhv>();
@@ -92,7 +97,7 @@ public class InputKeyBhv : PopupBhv
 
     public void ChangeLayout()
     {
-        PlayerPrefs.SetInt(Constants.PpFavKeyboardLayout, _layoutId);
+        EncryptedPlayerPrefs.SetInt(Constants.PpFavKeyboardLayout, _layoutId);
         for (int i = 0; i < _keyboard.transform.childCount; ++i)
         {
             var inputKeyBhv = _keyboard.transform.GetChild(i).GetComponent<InputKeyBhv>();
@@ -159,8 +164,14 @@ public class InputKeyBhv : PopupBhv
 
     private void Del()
     {
-        if (_target.text.Length > 0)
-            _target.text = _target.text.Substring(0, _target.text.Length - 1);
+        if (_identifier.Text.Length > 0)
+        {
+            _identifier.Text = _identifier.Text.Substring(0, _target.text.Length - 1);
+            if (_isPassword)
+                _target.text = ToPassword(_identifier.Text);
+            else
+                _target.text = _identifier.Text;
+        }
     }
 
     #endregion
@@ -180,7 +191,11 @@ public class InputKeyBhv : PopupBhv
 
     private void Cancel()
     {
-        _target.text = _originalTargetText;
+        _identifier.Text = _originalTargetText;
+        if (_isPassword)
+            _target.text = ToPassword(_identifier.Text, full: true);
+        else
+            _target.text = _identifier.Text;
         ExitPopup();
     }
 
@@ -190,6 +205,8 @@ public class InputKeyBhv : PopupBhv
 
     private void Validate()
     {
+        if (_isPassword)
+            _target.text = ToPassword(_identifier.Text, full: true);
         ExitPopup();
     }
 
@@ -207,12 +224,29 @@ public class InputKeyBhv : PopupBhv
 
     private void AddLetter()
     {
-        if (_lowerCase == " " && _target.text.EndsWith(" "))
+        if (_lowerCase == " " && _identifier.Text.EndsWith(" "))
             return;
-        _target.text += _isUpperCase ? _upperCase : _lowerCase;
+        _identifier.Text += _isUpperCase ? _upperCase : _lowerCase;
+        if (_isPassword)
+            _target.text = ToPassword(_identifier.Text);
+        else
+            _target.text = _identifier.Text;
         if (_maxWidth > 0 && _target.renderedWidth > _maxWidth)
             Del();
     }
 
     #endregion
+
+    private string ToPassword(string text, bool full = false)
+    {
+        var textPass = "";
+        for (int i = 0; i < text.Length; ++i)
+        {
+            if (i == text.Length - 1 && !full)
+                textPass += text[i].ToString();
+            else
+                textPass += "+";
+        }
+        return textPass;
+    }
 }

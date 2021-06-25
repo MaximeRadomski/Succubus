@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable]
 public class AccountDto
 {
-    public string PlayerNameId;
-    public string Password;
+    public string Id_PlayerName;
+    public string Key_Password;
     public string SecretQuestion;
     public string SecretAnswer;
 }

@@ -91,15 +91,15 @@ public class SplashScreenBhv : SceneBhv
         }
         else if (int.Parse(lastSavedVersion[0]) < int.Parse(currentVersion[0]))
         {
-            PlayerPrefs.DeleteAll();
-            Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
+            //PlayerPrefs.DeleteAll();
+            //Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
         }
 #if !UNITY_ANDROID
-        //Check under 01.02.031: Changed the keybinding mapping after the add of the "restart training" button
-        else if (IsUnder(lastSavedVersion, 1, 2, 31))
+        //Check under 01.03.001: Secured PlayerPrefs. Reset all !!!
+        else if (IsUnder(lastSavedVersion, 1, 3, 1))
         {
-            PlayerPrefs.DeleteKey(Constants.PpKeyBinding);
-            Instantiator.NewPopupYesNo("Outdated input", "your previous installation had outdated input mapping. your controls have been reset to their default values.", null, "Ok", null);
+            PlayerPrefs.DeleteAll();
+            Instantiator.NewPopupYesNo("New Data Management", "your previous installation had outdated data management. your data have been reset to its default values.", null, "Ok", null);
         }
 #endif
 
@@ -108,7 +108,9 @@ public class SplashScreenBhv : SceneBhv
 
     private bool IsUnder(string[] version, int main, int second, int third)
     {
-        return int.Parse(version[0]) <= main && int.Parse(version[1]) <= second && int.Parse(version[2]) < third;
+        var intVersion = (int.Parse(version[0]) * 100000) + (int.Parse(version[1]) * 1000) + (int.Parse(version[2]));
+        var intToCheck = (main * 100000) + (second * 1000) + (third);
+        return intVersion < intToCheck;
     }
 
     private void GoToMainMenu()

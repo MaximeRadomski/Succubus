@@ -11,7 +11,7 @@ public static class HighScoresService
 
     public static void PutHighScore(HighScoreDto highScore, Action onResolved)
     {
-        RestClient.Put<HighScoreDto>(DatabaseService.SetTableAndId(TableHighScores, highScore.PlayerNameId), highScore).Then(r =>
+        RestClient.Put<HighScoreDto>(DatabaseService.SetTableAndId(TableHighScores, highScore.Id_PlayerName), highScore).Then(r =>
         {
             onResolved.Invoke();
         });
@@ -19,7 +19,7 @@ public static class HighScoresService
 
     public static void PutHighScores(List<HighScoreDto> highScores, Action onResolved, int i = 0)
     {
-        RestClient.Put<HighScoreDto>(DatabaseService.SetTableAndId(TableHighScores, highScores[i].PlayerNameId), highScores[i]).Then(r =>
+        RestClient.Put<HighScoreDto>(DatabaseService.SetTableAndId(TableHighScores, highScores[i].Id_PlayerName), highScores[i]).Then(r =>
         {
             if (++i < highScores.Count)
                 PutHighScores(highScores, onResolved, i);

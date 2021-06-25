@@ -197,6 +197,9 @@ TextureImporter:
   - first:
       213: -2205303505593828948
     second: ButtonsUI_40
+  - first:
+      213: -3579869659112634422
+    second: ButtonsUI_41
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1154,6 +1157,27 @@ TextureImporter:
       bones: []
       spriteID: ca9f72755203561e0800000000000000
       internalID: -2205303505593828948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsUI_41
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 84
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac78462138fb15ec0800000000000000
+      internalID: -3579869659112634422
       vertices: []
       indices: 
       edges: []

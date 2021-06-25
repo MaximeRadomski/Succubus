@@ -27,7 +27,7 @@ public static class CharactersData
         {
             Id = 1, Name = "Edam", Kind = "Incubus", Realm = Realm.Hell,
             Attack = 8,
-            Cooldown = 10,
+            Cooldown = 8,
             SpecialName = "Sin's Weight", SpecialDescription = "the blocks of the next 6 pieces are individually affected by gravity.",
             Lore = "Ivy's less exuberant twin brother. He possesses dark needs which cannot be fulfilled. His army of harpies constantly hunts down hell looking for his next victims.",
             DialogId = 3, DialogPitch = 0.85f

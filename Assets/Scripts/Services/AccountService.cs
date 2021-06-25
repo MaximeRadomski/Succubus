@@ -10,7 +10,7 @@ public static class AccountService
 
     public static void PutAccount(AccountDto Account, Action onResolved)
     {
-        RestClient.Put<AccountDto>(DatabaseService.SetTableAndId(TableAccounts, Account.PlayerNameId), Account).Then(r =>
+        RestClient.Put<AccountDto>(DatabaseService.SetTableAndId(TableAccounts, Account.Id_PlayerName), Account).Then(r =>
         {
             onResolved.Invoke();
         });
@@ -20,8 +20,10 @@ public static class AccountService
     {
         RestClient.Get(DatabaseService.SetTableAndId(TableAccounts, playerNameId)).Then(returnValue =>
         {
-            var Account = JsonUtility.FromJson<AccountDto>(returnValue.Text);
-            resultAction.Invoke(Account);
+            AccountDto account = null;
+            if (!string.IsNullOrEmpty(returnValue.Text) && returnValue.Text != "null")
+                account = JsonUtility.FromJson<AccountDto>(returnValue.Text);
+            resultAction.Invoke(account);
         });
     }
 }

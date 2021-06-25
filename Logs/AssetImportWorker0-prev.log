@@ -1,0 +1,201 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.0f1 (3721df5a8b28) revision 3613151'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'fr' Physical Memory: 16132 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.2.0f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Program Files/Unity/Succubus
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+52220
+Successfully changed project path to: C:/Program Files/Unity/Succubus
+C:/Program Files/Unity/Succubus
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 46.13 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.0f1 (3721df5a8b28)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.0f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Succubus/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 620 (ID=0x3ea0)
+    Vendor:   
+    VRAM:     8066 MB
+    Driver:   25.20.100.6577
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.0f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.0f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56588
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001214 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 44.96 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.099 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001052 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 46.86 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.098 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.39 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2111 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.9 MB.
+System memory in use after: 95.1 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2561.
+Total: 3.210800 ms (FindLiveObjects: 0.390100 ms CreateObjectMapping: 0.124800 ms MarkObjects: 2.663300 ms  DeleteObjects: 0.030800 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Materials/BoostParticle.mat
+  artifactKey: Guid(7706f7a9f6f386c49b4747518761fc52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/BoostParticle.mat using Guid(7706f7a9f6f386c49b4747518761fc52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4837c5b982c710f04b9596a71ecee71') in 0.133486 seconds
+  Import took 0.137428 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000643 seconds.
+  path: Assets/Materials/SpecialParticle.mat
+  artifactKey: Guid(0b6956e961f77834fb9b62a14aa5d1c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/SpecialParticle.mat using Guid(0b6956e961f77834fb9b62a14aa5d1c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ca493b60826211187766ac86e45f46d') in 0.014327 seconds
+  Import took 0.019469 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001002 seconds.
+  path: Assets/Materials/BoostParticle 1.mat
+  artifactKey: Guid(6a1a2a7eda9e33e42a12197d2107b057) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/BoostParticle 1.mat using Guid(6a1a2a7eda9e33e42a12197d2107b057) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2edeae80bfd520696651590e2b580209') in 0.016200 seconds
+  Import took 0.022518 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.187416 seconds.
+  path: Assets/Scripts/Services
+  artifactKey: Guid(7e6de20e9f13a8f4796cf1c564849ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Services using Guid(7e6de20e9f13a8f4796cf1c564849ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89eb74cddff970e979a88bd2854b4845') in 0.002962 seconds
+  Import took 0.006844 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.010734 seconds.
+  path: Assets/Scripts/Services
+  artifactKey: Guid(7e6de20e9f13a8f4796cf1c564849ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Services using Guid(7e6de20e9f13a8f4796cf1c564849ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89eb74cddff970e979a88bd2854b4845') in 0.002972 seconds
+  Import took 0.007934 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.446451 seconds.
+  path: Assets/Scripts/Services/AccountService.cs
+  artifactKey: Guid(650926ca6ce8fff47a94e63c7ca06d63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Services/AccountService.cs using Guid(650926ca6ce8fff47a94e63c7ca06d63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '949c4cf320d0d88b20aabe9ebc59a14c') in 0.016250 seconds
+  Import took 0.024490 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.045539 seconds.
+  path: Assets/Scripts/Services/AccountService.cs
+  artifactKey: Guid(650926ca6ce8fff47a94e63c7ca06d63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Services/AccountService.cs using Guid(650926ca6ce8fff47a94e63c7ca06d63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '949c4cf320d0d88b20aabe9ebc59a14c') in 0.012208 seconds
+  Import took 0.022843 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 349.279974 seconds.
+  path: Assets/Scripts/Services/EncryptedPlayerPrefs.cs
+  artifactKey: Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Services/EncryptedPlayerPrefs.cs using Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48435ee4d436bf03f5922d098312c575') in 0.006336 seconds
+  Import took 0.014250 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000879 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.63 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.938 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.50 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 96.9 MB.
+System memory in use after: 97.0 MB.
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2604.
+Total: 3.195800 ms (FindLiveObjects: 0.347200 ms CreateObjectMapping: 0.170700 ms MarkObjects: 2.656100 ms  DeleteObjects: 0.020300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000871 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.036 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.44 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 97.2 MB.
+System memory in use after: 97.4 MB.
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2606.
+Total: 3.131100 ms (FindLiveObjects: 0.399200 ms CreateObjectMapping: 0.127800 ms MarkObjects: 2.565200 ms  DeleteObjects: 0.037000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1441.589888 seconds.
+  path: Assets/Scripts/Generics/EncryptedPlayerPrefs.cs
+  artifactKey: Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Generics/EncryptedPlayerPrefs.cs using Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4bd88cd386c76225cc1b3e5549a65ca') in 0.016049 seconds
+  Import took 0.024293 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.032084 seconds.
+  path: Assets/Scripts/Generics/EncryptedPlayerPrefs.cs
+  artifactKey: Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Generics/EncryptedPlayerPrefs.cs using Guid(e9a911ae5356a3243962cd3bff15631d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4bd88cd386c76225cc1b3e5549a65ca') in 0.005951 seconds
+  Import took 0.012074 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

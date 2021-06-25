@@ -12,10 +12,10 @@ public class EncryptedPlayerPrefs
 
 
     // Modify this key in this file :
-    private static string privateKey = "9ETrEsWaFRach3gexaDr";
+    private static string privateKey = "8BNzOlOtLAxrq9uqpdBp";
 
     // Add some values to this array before using EncryptedPlayerPrefs
-    public static string[] keys;
+    public static string[] keys = new string[] { "78Imaonr", "BY6IvzIx", "bdI8pNZ0", "pOgb6jhs", "hul4lETi", "ie4j5trI", "AUI45uDk", "UI3ak45u", "Pe4rGI87", "AuD6O8he", "aui8ty62", "ABJECT69" };
 
 
     public static string Md5(string strToEncrypt)
@@ -36,11 +36,15 @@ public class EncryptedPlayerPrefs
         return hashString.PadLeft(32, '0');
     }
 
+    public static string Md5WithKey(string strToEncrypt)
+    {
+        return Md5(strToEncrypt + privateKey);
+    }
+
     public static void SaveEncryption(string key, string type, string value)
     {
         int keyIndex = Random.Range(0, keys.Length);
         string secretKey = keys[keyIndex];
-        string check = Md5(type + "_" + privateKey + "_" + secretKey + "_" + value);
         string check = Md5(key + "_" + type + "_" + privateKey + "_" + secretKey + "_" + value);
         PlayerPrefs.SetString(key + "_encryption_check", check);
         PlayerPrefs.SetInt(key + "_used_key", keyIndex);
@@ -50,7 +54,6 @@ public class EncryptedPlayerPrefs
     {
         int keyIndex = PlayerPrefs.GetInt(key + "_used_key");
         string secretKey = keys[keyIndex];
-        string check = Md5(type + "_" + privateKey + "_" + secretKey + "_" + value);
         string check = Md5(key + "_" + type + "_" + privateKey + "_" + secretKey + "_" + value);
         if (!PlayerPrefs.HasKey(key + "_encryption_check")) return false;
         string storedCheck = PlayerPrefs.GetString(key + "_encryption_check");

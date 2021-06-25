@@ -54,7 +54,7 @@ public class MainMenuSceneBhv : SceneBhv
         GameObject.Find("ButtonWannaHelp?").GetComponent<ButtonBhv>().EndActionDelegate = WannaHelp;
         GameObject.Find("ButtonQuit").GetComponent<ButtonBhv>().EndActionDelegate = Quit;
         GameObject.Find("ButtonBug").GetComponent<ButtonBhv>().EndActionDelegate = ReportBug;
-        GameObject.Find("Version").GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
+        GameObject.Find("ButtonAccount").GetComponent<ButtonBhv>().EndActionDelegate = GoToAccount;
     }
 
     private void GoToNewAscension()
@@ -67,7 +67,7 @@ public class MainMenuSceneBhv : SceneBhv
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
             {
-                var totalResources = PlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
+                var totalResources = EncryptedPlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
                 if (string.IsNullOrEmpty(totalResources))
                     NavigationService.LoadNextScene(Constants.LoreScene);
                 else
@@ -115,6 +115,16 @@ public class MainMenuSceneBhv : SceneBhv
     {
         Application.OpenURL("https://discord.gg/dJG9KHVhCn");
         //Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
+    }
+
+    private void GoToAccount()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.AccountScene);
+            return true;
+        }
     }
 
     private void WannaHelp()

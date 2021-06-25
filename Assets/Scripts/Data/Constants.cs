@@ -165,6 +165,7 @@ public static class Constants
     public const string GameOverScene = "GameOverScene";
     public const string LoreScene = "LoreScene";
     public const string OnlineScoreScene = "OnlineScoreScene";
+    public const string AccountScene = "AccountScene";
 
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";

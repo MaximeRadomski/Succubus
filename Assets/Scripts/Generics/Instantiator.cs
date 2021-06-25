@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static AccountSceneBhv;
 
 public class Instantiator : MonoBehaviour
 {
@@ -171,15 +172,12 @@ public class Instantiator : MonoBehaviour
         return tmpBlockInstance;
     }
 
-    public void EditViaKeyboard()
+    public void EditViaKeyboard(GameObject target, Identifier identifier, bool isPassword = false)
     {
-        var target = GameObject.Find(Constants.LastEndActionClickedName);
-        if (target == null)
-            return;
-        ShowKeyboard(target.GetComponent<TMPro.TextMeshPro>(), target.GetComponent<BoxCollider2D>().size.x);
+        ShowKeyboard(target.GetComponent<TMPro.TextMeshPro>(), identifier, isPassword, target.GetComponent<BoxCollider2D>().size.x);
     }
 
-    public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
+    public void ShowKeyboard(TMPro.TextMeshPro target, Identifier identifier, bool isPassword, float maxWidth = -1)
     {
         if (!_hasInit)
             Init();
@@ -190,7 +188,7 @@ public class Instantiator : MonoBehaviour
         {
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
             if (inputKeyBhv != null)
-                inputKeyBhv.SetPrivates(target, maxWidth);
+                inputKeyBhv.SetPrivates(target, identifier, isPassword, maxWidth);
         }
         tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
         if (target.transform.position.y < -_mainCamera.orthographicSize + Constants.KeyboardHeight)

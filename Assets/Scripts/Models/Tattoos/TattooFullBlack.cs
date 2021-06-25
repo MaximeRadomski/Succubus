@@ -16,9 +16,9 @@ public class TattooFullBlack : Tattoo
     {
         character.BonusLife += Stat;
 
-        var tattoosFullStr = PlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoosFullStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         var nameToAdd = Name.Replace(" ", "").Replace("'", "").Replace("-", "");
-        var alreadyBodyPartsIds = PlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+        var alreadyBodyPartsIds = EncryptedPlayerPrefs.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
         var availablesPartsIds = PlayerPrefsHelper.GetRemainingAvailablesPartsIds(alreadyBodyPartsIds);
@@ -30,8 +30,8 @@ public class TattooFullBlack : Tattoo
             tattoosFullStr += nameToAdd + "L01B" + newBodyPartStr + ";";
         }
         PlayerPrefsHelper.AddMaxedOutTattoo(Id);
-        PlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
-        PlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
+        EncryptedPlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
+        EncryptedPlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
 
     }
 
