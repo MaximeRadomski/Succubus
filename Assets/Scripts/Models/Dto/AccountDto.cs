@@ -10,4 +10,12 @@ public class AccountDto
     public string Key_Password;
     public string SecretQuestion;
     public string SecretAnswer;
+
+    public AccountDto(string playerName, string password, string secretquestion, string secretanswer)
+    {
+        Id_PlayerName = playerName;
+        Key_Password = password;
+        SecretQuestion = secretquestion;
+        SecretAnswer = secretanswer;
+    }
 }

@@ -15,6 +15,7 @@ public class InputControlerBhv : FrameRateBehavior
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
     private List<GameObject> _availableButtons;
+    private InputKeyBhv _anyInputKey;
     private bool _hasInit;
 
     private int _currentInputLayer = -1;
@@ -72,6 +73,15 @@ public class InputControlerBhv : FrameRateBehavior
 #if !UNITY_ANDROID || UNITY_EDITOR
         CheckFrameDependentGameKeyboardInputs();
 #endif
+    }
+
+    void OnGUI()
+    {
+        if (!Constants.KeyboardUp)
+            return;
+        if (_anyInputKey == null)
+            _anyInputKey = GameObject.Find(Constants.GoKeyboard).transform.Find("InputKeyShift").GetComponent<InputKeyBhv>();
+        CheckKeyBoardTextInputs();
     }
 
     protected override void NormalUpdate()
@@ -402,7 +412,12 @@ public class InputControlerBhv : FrameRateBehavior
             if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
                 _lastSelectedGameObject = _lastSelectedGameObjects[_lastSelectedGameObjects.Count - 1];
-                MenuSelector.MoveTo(_lastSelectedGameObject);
+                if (_mainCamera == null)
+                    _mainCamera = Helper.GetMainCamera();
+                if (Helper.IsInsideCamera(_mainCamera, _lastSelectedGameObject.transform.position))
+                    MenuSelector.MoveTo(_lastSelectedGameObject);
+                else
+                    ResetMenuSelector(preferedResetPos);
                 _lastSelectedGameObjects.RemoveAt(_lastSelectedGameObjects.Count - 1);
             }
             else
@@ -419,6 +434,8 @@ public class InputControlerBhv : FrameRateBehavior
 
     public void ResetMenuSelector(Vector3? preferedResetPos = null)
     {
+        if (!_hasInit)
+            Init();
         if (_currentScene == null)
             GetScene();
         MenuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
@@ -432,7 +449,7 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void CheckMenuKeyboardInputs()
     {
-        if (MenuSelector == null)
+        if (MenuSelector == null || Constants.KeyboardUp)
             return;
         if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused)
         {
@@ -457,6 +474,33 @@ public class InputControlerBhv : FrameRateBehavior
             FindNearest(Direction.Right);
         else if (Input.GetKeyDown(_keyBinding[14]))
             ButtonOnSelector();
+    }
+
+    private void CheckKeyBoardTextInputs()
+    {
+        Event e = Event.current;
+        if (e.isKey && e.rawType == EventType.KeyDown && e.keyCode != KeyCode.None)
+        {
+            if (e.keyCode == KeyCode.Delete || e.keyCode == KeyCode.Backspace || e.keyCode == KeyCode.Clear)
+                _anyInputKey.Del();
+            else if (e.keyCode == KeyCode.CapsLock)
+                _anyInputKey.Shift();
+            else if (e.keyCode == KeyCode.LeftShift || e.keyCode == KeyCode.RightShift)
+                _anyInputKey.Shift(isUpper: true);
+            else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter || e.keyCode == KeyCode.Tab)
+                _anyInputKey.Validate();
+            else if (KeyCodeService.ForbiddenTextKeys.Contains(e.keyCode))
+                return;
+            else
+            {
+                _anyInputKey.AddLetter(KeyCodeService.KeyCodeToString(e.keyCode));
+            }                
+        }
+        else if (e.isKey && e.rawType == EventType.KeyUp && e.keyCode != KeyCode.None)
+        {
+            if (e.keyCode == KeyCode.LeftShift || e.keyCode == KeyCode.RightShift)
+                _anyInputKey.Shift(isUpper: false);
+        }
     }
 
     private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false, bool soundMuted = false, bool reset = false)

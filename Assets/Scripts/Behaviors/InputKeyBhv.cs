@@ -7,11 +7,11 @@ public class InputKeyBhv : PopupBhv
 {
     public Vector3[] LayoutPositions;
     public Sprite[] Sprites;
+    public TMPro.TextMeshPro Target;
 
     private GameObject _keyboard;
     //private GameObject _keyHover;
     private ButtonBhv _buttonBhv;
-    private TMPro.TextMeshPro _target;
     private Identifier _identifier;
     private TMPro.TextMeshPro _textMeshLower;
     private TMPro.TextMeshPro _textMeshUpper;
@@ -24,14 +24,16 @@ public class InputKeyBhv : PopupBhv
     private float _maxWidth;
     private bool _isUpperCase;
     private bool _isPassword;
+    private bool _isSigns;
 
     public void SetPrivates(TMPro.TextMeshPro target, Identifier identifier, bool isPassword, float maxWidth = -1)
     {
-        _target = target;
+        Target = target;
         _originalTargetText = identifier.Text;
         _maxWidth = maxWidth;
         _identifier = identifier;
         _isPassword = isPassword;
+        _isSigns = false;
         _keyboard = this.transform.parent.gameObject;
         //_keyHover = _keyboard.transform.Find("KeyHover").gameObject;
         _buttonBhv = GetComponent<ButtonBhv>();
@@ -51,7 +53,7 @@ public class InputKeyBhv : PopupBhv
         }
         else if (name.Contains("Shift"))
         {
-            _buttonBhv.EndActionDelegate = Shift;
+            _buttonBhv.EndActionDelegate = () => Shift();
         }
         else if (name.Contains("Del"))
         {
@@ -62,6 +64,10 @@ public class InputKeyBhv : PopupBhv
         else if (name.Contains("Close"))
         {
             _buttonBhv.EndActionDelegate = ExitPopup;
+        }
+        else if (name.Contains("Abc!#1"))
+        {
+            _buttonBhv.EndActionDelegate = NumbersSingsLayout;
         }
         else if (name.Contains("Cancel"))
         {
@@ -79,7 +85,7 @@ public class InputKeyBhv : PopupBhv
             _textMeshUpper.text = _upperCase;
             _isUpperCase = false;
             UpdateTextMesh();
-            _buttonBhv.EndActionDelegate = AddLetter;
+            _buttonBhv.EndActionDelegate = () => AddLetter();
         }
         else
         {
@@ -89,7 +95,7 @@ public class InputKeyBhv : PopupBhv
             _textMeshUpper.text = _upperCase;
             _isUpperCase = false;
             UpdateTextMesh();
-            _buttonBhv.EndActionDelegate = AddLetter;
+            _buttonBhv.EndActionDelegate = () => AddLetter();
         }
     }
 
@@ -106,6 +112,25 @@ public class InputKeyBhv : PopupBhv
         }
     }
 
+    public void NumbersSingsLayout()
+    {
+        _isSigns = !_isSigns;
+        var layout = 3;
+        if (_isSigns)
+            _upperCase = "ABC";
+        else
+        {
+            _upperCase = "!#1";
+            layout = _layoutId;
+        }
+        for (int i = 0; i < _keyboard.transform.childCount; ++i)
+        {
+            var inputKeyBhv = _keyboard.transform.GetChild(i).GetComponent<InputKeyBhv>();
+            if (inputKeyBhv != null)
+                inputKeyBhv.GoToLayoutPosition(layout);
+        }
+    }
+
     public void GoToLayoutPosition(int idLayout)
     {
         transform.position = LayoutPositions[idLayout] + _keyboard.transform.position;
@@ -115,9 +140,12 @@ public class InputKeyBhv : PopupBhv
 
     #region Shift
 
-    private void Shift()
+    public void Shift(bool? isUpper = null)
     {
-        _isUpperCase = !_isUpperCase;
+        if (isUpper == null)
+            _isUpperCase = !_isUpperCase;
+        else
+            _isUpperCase = isUpper.Value;
         if (_isUpperCase)
             _spriteRenderer.sprite = Sprites[1];
         else
@@ -162,15 +190,15 @@ public class InputKeyBhv : PopupBhv
         _pressedDelCount = 0;
     }
 
-    private void Del()
+    public void Del()
     {
         if (_identifier.Text.Length > 0)
         {
-            _identifier.Text = _identifier.Text.Substring(0, _target.text.Length - 1);
+            _identifier.Text = _identifier.Text.Substring(0, Target.text.Length - 1);
             if (_isPassword)
-                _target.text = ToPassword(_identifier.Text);
+                Target.text = ToPassword(_identifier.Text);
             else
-                _target.text = _identifier.Text;
+                Target.text = _identifier.Text;
         }
     }
 
@@ -182,6 +210,7 @@ public class InputKeyBhv : PopupBhv
     {
         Helper.GetMainCamera().gameObject.GetComponent<CameraBhv>().Unfocus();
         Constants.DecreaseInputLayer();
+        Constants.KeyboardUp = false;
         Destroy(_keyboard.gameObject);
     }
 
@@ -189,13 +218,13 @@ public class InputKeyBhv : PopupBhv
 
     #region Cancel
 
-    private void Cancel()
+    public void Cancel()
     {
         _identifier.Text = _originalTargetText;
         if (_isPassword)
-            _target.text = ToPassword(_identifier.Text, full: true);
+            Target.text = ToPassword(_identifier.Text, full: true);
         else
-            _target.text = _identifier.Text;
+            Target.text = _identifier.Text;
         ExitPopup();
     }
 
@@ -203,10 +232,10 @@ public class InputKeyBhv : PopupBhv
 
     #region Validate
 
-    private void Validate()
+    public void Validate()
     {
         if (_isPassword)
-            _target.text = ToPassword(_identifier.Text, full: true);
+            Target.text = ToPassword(_identifier.Text, full: true);
         ExitPopup();
     }
 
@@ -222,16 +251,19 @@ public class InputKeyBhv : PopupBhv
         _textMeshLower.enabled = !_isUpperCase;
     }
 
-    private void AddLetter()
+    public void AddLetter(string specificLetter = null)
     {
         if (_lowerCase == " " && _identifier.Text.EndsWith(" "))
             return;
-        _identifier.Text += _isUpperCase ? _upperCase : _lowerCase;
-        if (_isPassword)
-            _target.text = ToPassword(_identifier.Text);
+        if (specificLetter == null)
+            _identifier.Text += _isUpperCase ? _upperCase : _lowerCase;
         else
-            _target.text = _identifier.Text;
-        if (_maxWidth > 0 && _target.renderedWidth > _maxWidth)
+            _identifier.Text += _isUpperCase ? specificLetter.ToUpper(): specificLetter.ToLower();
+        if (_isPassword)
+            Target.text = ToPassword(_identifier.Text);
+        else
+            Target.text = _identifier.Text;
+        if (_maxWidth > 0 && Target.renderedWidth > _maxWidth)
             Del();
     }
 

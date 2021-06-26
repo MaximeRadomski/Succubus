@@ -10,6 +10,7 @@ public class AccountSceneBhv : SceneBhv
     private Identifier _password1;
     private Identifier _password2;
     private Identifier _securityAnswer;
+    private AccountDto _recoveryUser;
 
     private TMPro.TextMeshPro _securityQuestion;
     private int _idSecurityQuestion;
@@ -19,6 +20,10 @@ public class AccountSceneBhv : SceneBhv
     private GameObject _panelConnect;
     private GameObject _panelCreateAccount;
     private GameObject _panelRecovery;
+    private GameObject _panelNewPassword;
+    private GameObject _panelConnected;
+
+    private List<List<TMPro.TextMeshPro>> _resetsLists;
 
     private int _minPlayerNameCharacters = 3;
     private int _minPasswordCharacters = 10;
@@ -32,51 +37,110 @@ public class AccountSceneBhv : SceneBhv
     {
         base.Init();
         _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
+        _resetsLists = new List<List<TMPro.TextMeshPro>>();
         InitPanelConnect();
         InitPanelCreateAccount();
-        InitPanelRecovery();
+        InitPanelsRecovery();
+        InitPanelConnected();
         _currentPanel = _panelConnect;
-    }
-
-    private void InitPanelConnect()
-    {
-        _panelConnect = GameObject.Find("PanelConnect");
-        _playerNameId = new Identifier("");
-        _password1 = new Identifier("");
-        var playerNameIdText = GameObject.Find("PlayerNameIdTextConnect");
-        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
-        var passwordText = GameObject.Find("PasswordTextConnect");
-        passwordText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText, _password1, isPassword: true);
-        GameObject.Find("Login").GetComponent<ButtonBhv>().EndActionDelegate = Login;
-        GameObject.Find("OrCreateAccount").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(1);
-    }
-
-    private void InitPanelCreateAccount()
-    {
-        _panelCreateAccount = GameObject.Find("PanelCreateAccount");
         _playerNameId = new Identifier("");
         _password1 = new Identifier("");
         _password2 = new Identifier("");
         _securityAnswer = new Identifier("");
-        var playerNameIdText = GameObject.Find("PlayerNameIdTextCreate");
-        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
-        var passwordText1 = GameObject.Find("PasswordText1Create");
-        passwordText1.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText1, _password1, isPassword: true);
-        var passwordText2 = GameObject.Find("PasswordText2Create");
-        passwordText2.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText2, _password2, isPassword: true);
-        _securityQuestion = GameObject.Find("SecurityQuestionCreate").GetComponent<TMPro.TextMeshPro>();
-        var previousQuestion = GameObject.Find("PreviousQuestion");
-        var nextQuestion = GameObject.Find("NextQuestion");
-        var SecurityAnswerCreate = GameObject.Find("SecurityAnswerCreate");
-        SecurityAnswerCreate.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(SecurityAnswerCreate, _securityAnswer);
+        GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPrevious(true);
 
-        GameObject.Find("Create").GetComponent<ButtonBhv>().EndActionDelegate = CreateAccount;
-        GameObject.Find("BackToConnectCreate").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(0);
+        var lastSaved = PlayerPrefsHelper.GetLastSavedCredentials();
+        if (lastSaved != null)
+        {
+            _playerNameId.Text = lastSaved.Id_PlayerName;
+            _password1.Text = lastSaved.Key_Password;
+            Login();
+        }
     }
 
-    private void InitPanelRecovery()
+    private void InitPanelConnect()
     {
+        var resetList = new List<TMPro.TextMeshPro>();
+        _panelConnect = GameObject.Find("PanelConnect");
+        var playerNameIdText = GameObject.Find("PlayerNameIdTextConnect");
+        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
+        resetList.Add(playerNameIdText.GetComponent<TMPro.TextMeshPro>());
+        var passwordText = GameObject.Find("PasswordTextConnect");
+        passwordText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText, _password1, isPassword: true);
+        resetList.Add(passwordText.GetComponent<TMPro.TextMeshPro>());
+        GameObject.Find("Login").GetComponent<ButtonBhv>().EndActionDelegate = Login;
+        GameObject.Find("OrCreateAccount").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(1);
+        _resetsLists.Add(resetList);
+    }
+
+    private void InitPanelCreateAccount()
+    {
+        var resetList = new List<TMPro.TextMeshPro>();
+        _panelCreateAccount = GameObject.Find("PanelCreateAccount");
+        var playerNameIdText = GameObject.Find("PlayerNameIdTextCreate");
+        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
+        resetList.Add(playerNameIdText.GetComponent<TMPro.TextMeshPro>());
+        var passwordText1 = GameObject.Find("PasswordText1Create");
+        passwordText1.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText1, _password1, isPassword: true);
+        resetList.Add(passwordText1.GetComponent<TMPro.TextMeshPro>());
+        var passwordText2 = GameObject.Find("PasswordText2Create");
+        passwordText2.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText2, _password2, isPassword: true);
+        resetList.Add(passwordText2.GetComponent<TMPro.TextMeshPro>());
+        _securityQuestion = GameObject.Find("SecurityQuestionCreate").GetComponent<TMPro.TextMeshPro>();
+        _idSecurityQuestion = -1;
+        AlterSecurityQuestion(1);
+        GameObject.Find("PreviousQuestion").GetComponent<ButtonBhv>().EndActionDelegate = () => AlterSecurityQuestion(1);
+        GameObject.Find("NextQuestion").GetComponent<ButtonBhv>().EndActionDelegate = () => AlterSecurityQuestion(-1);
+        var securityAnswerCreate = GameObject.Find("SecurityAnswerCreate");
+        securityAnswerCreate.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(securityAnswerCreate, _securityAnswer);
+        resetList.Add(securityAnswerCreate.GetComponent<TMPro.TextMeshPro>());
+        GameObject.Find("Create").GetComponent<ButtonBhv>().EndActionDelegate = CreateAccount;
+        GameObject.Find("BackToConnectCreate").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(0);
+        _resetsLists.Add(resetList);
+    }
+
+    private void AlterSecurityQuestion(int i)
+    {
+        _idSecurityQuestion += i;
+        if (_idSecurityQuestion < 0)
+            _idSecurityQuestion = Helper.EnumCount<SecurityQuestion>() - 1;
+        else if (_idSecurityQuestion >= Helper.EnumCount<SecurityQuestion>())
+            _idSecurityQuestion = 0;
+        _securityQuestion.text = ((SecurityQuestion)_idSecurityQuestion).GetDescription().ToLower();
+    }
+
+    private void InitPanelsRecovery()
+    {
+        var resetList = new List<TMPro.TextMeshPro>();
         _panelRecovery = GameObject.Find("PanelRecovery");
+        var securityAnswerRecovery = GameObject.Find("SecurityAnswerRecovery");
+        securityAnswerRecovery.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(securityAnswerRecovery, _securityAnswer);
+        resetList.Add(securityAnswerRecovery.GetComponent<TMPro.TextMeshPro>());
+        GameObject.Find("ResetRecovery").GetComponent<ButtonBhv>().EndActionDelegate = VerifySecurityQuestion;
+        GameObject.Find("BackToConnectRecovery").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(0);
+        _resetsLists.Add(resetList);
+
+        resetList.Clear();
+        _panelNewPassword = GameObject.Find("PanelNewPassword");
+        var passwordText1 = GameObject.Find("PasswordText1NewPassword");
+        passwordText1.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText1, _password1, isPassword: true);
+        resetList.Add(passwordText1.GetComponent<TMPro.TextMeshPro>());
+        var passwordText2 = GameObject.Find("PasswordText2NewPassword");
+        passwordText2.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText2, _password2, isPassword: true);
+        resetList.Add(passwordText2.GetComponent<TMPro.TextMeshPro>());
+        GameObject.Find("ResetNewPassword").GetComponent<ButtonBhv>().EndActionDelegate = PutNewPassword;
+        GameObject.Find("BackToConnectNewPassword").GetComponent<ButtonBhv>().EndActionDelegate = () => ShowPanel(0);
+        _resetsLists.Add(resetList);
+    }
+
+    private void InitPanelConnected()
+    {
+        _panelConnected = GameObject.Find("PanelConnected");
+        GameObject.Find("Disconnect").GetComponent<ButtonBhv>().EndActionDelegate = () =>
+        {
+            PlayerPrefsHelper.SetLastSavedCredentials(null);
+            ShowPanel(0);
+        };
     }
 
     private void ShowPanel(int param)
@@ -86,10 +150,24 @@ public class AccountSceneBhv : SceneBhv
             newPanel = _panelCreateAccount;
         else if (param == 2)
             newPanel = _panelRecovery;
+        else if (param == 3)
+            newPanel = _panelNewPassword;
+        else if (param == 4)
+            newPanel = _panelConnected;
         newPanel.transform.position = _currentPanel.transform.position;
         _currentPanel.transform.position = new Vector3(50.0f + (param * 20.0f), 50.0f, 0.0f);
         _currentPanel = newPanel;
+        _playerNameId.Text = "";
+        _password1.Text = "";
+        _password2.Text = "";
+        _securityAnswer.Text = "";
+        if (param < _resetsLists.Count)
+        {
+            foreach (var textMesh in _resetsLists[param])
+                textMesh.text = "";
+        }
         _inputControler.ResetMenuSelector();
+        //StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () => { _inputControler.ResetMenuSelector(); return true; }));
     }
 
     private void Login()
@@ -110,25 +188,93 @@ public class AccountSceneBhv : SceneBhv
             }
             else if (EncryptedPlayerPrefs.Md5WithKey(_password1.Text) != account.Key_Password)
             {
-                Instantiator.NewPopupYesNo("Error", $"incorrect password.", "Forgot?", "Ok", OnIncorrectPassword);
+                Instantiator.NewPopupYesNo("Error", $"incorrect password.", "Forgot?", "Ok", (result) =>
+                {
+                    if (result)
+                        return true;
+                    _recoveryUser = account;
+                    GameObject.Find("SecurityQuestionRecovery").GetComponent<TMPro.TextMeshPro>().text = _recoveryUser.SecretQuestion.ToLower();
+                    ShowPanel(2);
+                    return false;
+                });
                 return;
             }
             else
-                Instantiator.NewPopupYesNo("Connected", $"welcome back {account.Id_PlayerName.ToLower()}.", null, "Ok", null);
+            {
+                PlayerPrefsHelper.SetLastSavedCredentials(new AccountDto(_playerNameId.Text, _password1.Text, null, null));
+                Instantiator.NewPopupYesNo("Connected", $"welcome back {account.Id_PlayerName.ToLower()}.", null, "Ok", (result) =>
+                {
+                    GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.Id_PlayerName;
+                    ShowPanel(4);
+                    return true;
+                });
+            }
         });
-    }
-
-    private object OnIncorrectPassword(bool result)
-    {
-        if (result)
-            return true;
-        ShowPanel(2);
-        return false;
     }
 
     private void CreateAccount()
     {
+        if (string.IsNullOrEmpty(_playerNameId.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_playerNameId.Text) || _playerNameId.Text.Length < _minPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {_minPlayerNameCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrEmpty(_password2.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
+        Instantiator.NewLoading();
+        AccountService.GetAccount(_playerNameId.Text, (account) =>
+        {
+            if (account != null && account.Id_PlayerName == _playerNameId.Text)
+            {
+                Helper.ResumeLoading();
+                Instantiator.NewPopupYesNo("Error", $"already existing account with this player name.", null, "Ok", null);
+                return;
+            }
+            AccountService.PutAccount(new AccountDto(_playerNameId.Text, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), ((SecurityQuestion)_idSecurityQuestion).GetDescription(), EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower())), () =>
+            {
+                Helper.ResumeLoading();
+                ShowPanel(0);
+                Instantiator.NewPopupYesNo("Success", $"your account was successfully created.", null, "Ok", null);
+            });
+        });
+    }
+
+    private void VerifySecurityQuestion()
+    {
+        if (string.IsNullOrEmpty(_securityAnswer.Text)) { Instantiator.NewPopupYesNo("Security Answer", "you must enter an answer.", null, "Ok", null); return; }
+        var encryptedAnswer = EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower());
+        if (encryptedAnswer != _recoveryUser.SecretAnswer) { Instantiator.NewPopupYesNo("Security Answer", "your answer is different from the one you set up.", null, "Ok", null); return; }
+
+        if (encryptedAnswer == _recoveryUser.SecretAnswer)
+            ShowPanel(3);
+    }
+
+    private void PutNewPassword()
+    {
+        if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrEmpty(_password2.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
+
+        AccountService.PutAccount(new AccountDto(_recoveryUser.Id_PlayerName, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer), () =>
+        {
+            Helper.ResumeLoading();
+            ShowPanel(0);
+            Instantiator.NewPopupYesNo("Success", $"your password was successfully modified.", null, "Ok", null);
+        });
+    }
+
+    private object GoToPrevious(bool result)
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadPreviousScene();
+            return true;
+        }
+        return true;
     }
 
     public class Identifier

@@ -839,4 +839,23 @@ public class PlayerPrefsHelper : MonoBehaviour
         var unlocked = EncryptedPlayerPrefs.GetInt(Constants.PpInfernalUnlocked, 0);
         return unlocked == 1 || randomItemMaxRarity >= 0 ? true : false;
     }
+
+    public static AccountDto GetLastSavedCredentials()
+    {
+        var credentials = PlayerPrefs.GetString(Constants.PpLastSavedCredentials, Constants.PpSerializeDefault);
+        if (credentials == null)
+            return null;
+        var splits = credentials.Split('|');
+        if (splits == null || splits.Length < 2)
+            return null;
+        return new AccountDto(splits[0], splits[1], "", "");
+    }
+
+    public static void SetLastSavedCredentials(AccountDto account)
+    {
+        if (account == null)
+            PlayerPrefs.SetString(Constants.PpLastSavedCredentials, null);
+        var credentials = $"{account.Id_PlayerName}|{account.Key_Password}";
+        PlayerPrefs.SetString(Constants.PpLastSavedCredentials, credentials);
+    }
 }

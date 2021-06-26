@@ -232,16 +232,16 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Brother. Did Mistress Ivy sent you?",
+                    "Brother. Did Mistress Ivy send you?",
                     "She did. Will it be a problem?",
                     "I know you seek vengeance, and I won't stop you trying to defeat me once again. But you already know how it always ends.",
                     "This is about to change big brother. Now come, I'll show you what my exile made of me!!"
                 },
                 new List<string>()
                 {
-                    "Brother. Did Mistress Ivy sent you?",
-                    "Shut up you. I'm here to continue our fight.",
-                    "Continue? What are you meaning??",
+                    "Brother. Did Mistress Ivy send you?",
+                    "Shut up, you. I'm here to continue our fight.",
+                    "Continue? What do you mean??",
                     "That I finally have an opportunity to kick your hairy butt over and over.",
                     "Wait... this seems familiar...",
                     "You bet it does!!"

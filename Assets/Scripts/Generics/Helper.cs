@@ -436,6 +436,15 @@ public static class Helper
 
     public static void ResumeLoading()
     {
-        GameObject.Destroy(GameObject.Find(Constants.GoLoading));
+        Constants.InputLocked = false;
+        var i = 0;
+        while (i < 10)
+        {
+            var gameObject = GameObject.Find(Constants.GoLoading);
+            if (gameObject == null)
+                i = 10;
+            GameObject.Destroy(gameObject);
+            ++i;
+        }
     }
 }

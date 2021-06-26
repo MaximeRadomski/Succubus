@@ -183,7 +183,9 @@ public class Instantiator : MonoBehaviour
             Init();
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
         var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
+        tmpKeyboardInstance.name = Constants.GoKeyboard;
         Constants.IncreaseInputLayer(tmpKeyboardInstance.name);
+        Constants.KeyboardUp = true;
         for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
         {
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
@@ -419,6 +421,7 @@ public class Instantiator : MonoBehaviour
     {
         if (_mainCamera == null)
             _mainCamera = Helper.GetMainCamera();
+        Constants.InputLocked = true;
         var pos = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         var tmpLoadingObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoLoading}");
         var tmpLoadingInstance = Instantiate(tmpLoadingObject, pos, tmpLoadingObject.transform.rotation);

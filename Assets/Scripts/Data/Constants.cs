@@ -136,6 +136,7 @@ public static class Constants
     public const string PpVersion = "Version";
     public const string PpVersionDefault = "Alpha.01.004";
     public const string PpInfernalUnlocked = "InfernalUnlocked";
+    public const string PpLastSavedCredentials = "LastSavedCredentials";
 
     public static string GetDefaultKeyBinding()
     {
@@ -198,6 +199,7 @@ public static class Constants
     public const string GoSimpShield = "SimpShield";
     public const string GoPartition = "Partition";
     public const string GoLoading = "Loading";
+    public const string GoKeyboard = "Keyboard";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;
@@ -270,6 +272,7 @@ public static class Constants
     public static string NameLastScene;
     public static List<int> CurrentHighScoreContext;
     public static bool OnlyMouseInMenu;
+    public static bool KeyboardUp;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;
