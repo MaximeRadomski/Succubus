@@ -423,9 +423,9 @@ public class Instantiator : MonoBehaviour
             _mainCamera = Helper.GetMainCamera();
         Constants.InputLocked = true;
         var pos = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
-        var tmpLoadingObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoLoading}");
+        var tmpLoadingObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoRestLoading}");
         var tmpLoadingInstance = Instantiate(tmpLoadingObject, pos, tmpLoadingObject.transform.rotation);
-        tmpLoadingInstance.name = Constants.GoLoading;
+        tmpLoadingInstance.name = Constants.GoRestLoading;
         return tmpLoadingInstance;
     }
 }

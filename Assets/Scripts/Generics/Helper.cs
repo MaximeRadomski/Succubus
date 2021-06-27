@@ -440,10 +440,11 @@ public static class Helper
         var i = 0;
         while (i < 10)
         {
-            var gameObject = GameObject.Find(Constants.GoLoading);
+            var gameObject = GameObject.Find(Constants.GoRestLoading);
             if (gameObject == null)
                 i = 10;
-            GameObject.Destroy(gameObject);
+            var test = gameObject.GetComponent<LoadingBhv>();
+            test.ForceDestroy();
             ++i;
         }
     }

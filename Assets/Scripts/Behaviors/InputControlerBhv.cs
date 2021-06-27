@@ -438,7 +438,7 @@ public class InputControlerBhv : FrameRateBehavior
             Init();
         if (_currentScene == null)
             GetScene();
-        MenuSelector.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
+        MenuSelector?.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
         if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
         {
             //if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)

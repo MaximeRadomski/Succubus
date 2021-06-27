@@ -854,7 +854,10 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void SetLastSavedCredentials(AccountDto account)
     {
         if (account == null)
+        {
             PlayerPrefs.SetString(Constants.PpLastSavedCredentials, null);
+            return;
+        }
         var credentials = $"{account.Id_PlayerName}|{account.Key_Password}";
         PlayerPrefs.SetString(Constants.PpLastSavedCredentials, credentials);
     }

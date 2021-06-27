@@ -38,7 +38,8 @@ public static class Constants
     public const string VictoryAudioClip = "Victory";
     public const int MaxRarePercent = 25;
     public const int MaxLegendaryPercent = 15;
-    
+    public const float ServerCallTimeout = 8.0f;
+
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -198,7 +199,7 @@ public static class Constants
     public const string GoRotationPoint = "RotationPoint";
     public const string GoSimpShield = "SimpShield";
     public const string GoPartition = "Partition";
-    public const string GoLoading = "Loading";
+    public const string GoRestLoading = "RestLoading";
     public const string GoKeyboard = "Keyboard";
 
     //  GAMEOBJECT VALUES  //

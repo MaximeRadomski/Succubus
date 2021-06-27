@@ -258,6 +258,7 @@ public class AccountSceneBhv : SceneBhv
         if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
         if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
+        Instantiator.NewLoading();
         AccountService.PutAccount(new AccountDto(_recoveryUser.Id_PlayerName, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer), () =>
         {
             Helper.ResumeLoading();
