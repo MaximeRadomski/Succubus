@@ -1431,7 +1431,7 @@ GameObject:
   - component: {fileID: 1147423516}
   - component: {fileID: 1147423515}
   m_Layer: 0
-  m_Name: ButtonHighScores
+  m_Name: ButtonOnlineScores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1495,6 +1495,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &1147423517
@@ -2193,6 +2194,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &2034697429

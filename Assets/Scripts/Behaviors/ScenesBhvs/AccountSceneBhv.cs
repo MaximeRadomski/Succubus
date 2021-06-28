@@ -6,7 +6,7 @@ public class AccountSceneBhv : SceneBhv
 {
     public override MusicType MusicType => MusicType.Account;
 
-    private Identifier _playerNameId;
+    private Identifier _playerName;
     private Identifier _password1;
     private Identifier _password2;
     private Identifier _securityAnswer;
@@ -25,9 +25,6 @@ public class AccountSceneBhv : SceneBhv
 
     private List<List<TMPro.TextMeshPro>> _resetsLists;
 
-    private int _minPlayerNameCharacters = 3;
-    private int _minPasswordCharacters = 10;
-
     void Start()
     {
         Init();
@@ -43,19 +40,19 @@ public class AccountSceneBhv : SceneBhv
         InitPanelsRecovery();
         InitPanelConnected();
         _currentPanel = _panelConnect;
-        _playerNameId = new Identifier("");
+        _playerName = new Identifier("");
         _password1 = new Identifier("");
         _password2 = new Identifier("");
         _securityAnswer = new Identifier("");
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPrevious(true);
 
-        var lastSaved = PlayerPrefsHelper.GetLastSavedCredentials();
-        if (lastSaved != null)
+        AccountService.CheckAccount(this.Instantiator, (account) =>
         {
-            _playerNameId.Text = lastSaved.Id_PlayerName;
-            _password1.Text = lastSaved.Key_Password;
-            Login();
-        }
+            if (account == null)
+                return;
+            GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
+            ShowPanel(4);
+        });
     }
 
     private void InitPanelConnect()
@@ -63,7 +60,7 @@ public class AccountSceneBhv : SceneBhv
         var resetList = new List<TMPro.TextMeshPro>();
         _panelConnect = GameObject.Find("PanelConnect");
         var playerNameIdText = GameObject.Find("PlayerNameIdTextConnect");
-        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
+        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerName);
         resetList.Add(playerNameIdText.GetComponent<TMPro.TextMeshPro>());
         var passwordText = GameObject.Find("PasswordTextConnect");
         passwordText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText, _password1, isPassword: true);
@@ -78,7 +75,7 @@ public class AccountSceneBhv : SceneBhv
         var resetList = new List<TMPro.TextMeshPro>();
         _panelCreateAccount = GameObject.Find("PanelCreateAccount");
         var playerNameIdText = GameObject.Find("PlayerNameIdTextCreate");
-        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerNameId);
+        playerNameIdText.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(playerNameIdText, _playerName);
         resetList.Add(playerNameIdText.GetComponent<TMPro.TextMeshPro>());
         var passwordText1 = GameObject.Find("PasswordText1Create");
         passwordText1.GetComponent<ButtonBhv>().EndActionDelegate = () => Instantiator.EditViaKeyboard(passwordText1, _password1, isPassword: true);
@@ -138,7 +135,7 @@ public class AccountSceneBhv : SceneBhv
         _panelConnected = GameObject.Find("PanelConnected");
         GameObject.Find("Disconnect").GetComponent<ButtonBhv>().EndActionDelegate = () =>
         {
-            PlayerPrefsHelper.SetLastSavedCredentials(null);
+            PlayerPrefsHelper.SaveLastSavedCredentials(null);
             ShowPanel(0);
         };
     }
@@ -157,7 +154,7 @@ public class AccountSceneBhv : SceneBhv
         newPanel.transform.position = _currentPanel.transform.position;
         _currentPanel.transform.position = new Vector3(50.0f + (param * 20.0f), 50.0f, 0.0f);
         _currentPanel = newPanel;
-        _playerNameId.Text = "";
+        _playerName.Text = "";
         _password1.Text = "";
         _password2.Text = "";
         _securityAnswer.Text = "";
@@ -172,13 +169,13 @@ public class AccountSceneBhv : SceneBhv
 
     private void Login()
     {
-        if (string.IsNullOrEmpty(_playerNameId.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_playerNameId.Text) || _playerNameId.Text.Length < _minPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {_minPlayerNameCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrEmpty(_playerName.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_playerName.Text) || _playerName.Text.Length < AccountService.MinPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {AccountService.MinPlayerNameCharacters} characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
 
         Instantiator.NewLoading();
-        AccountService.GetAccount(_playerNameId.Text, (account) =>
+        AccountService.GetAccount(_playerName.Text, (account) =>
         {
             Helper.ResumeLoading();
             if (account == null)
@@ -186,7 +183,7 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Error", $"no account found with this player name.", null, "Ok", null);
                 return;
             }
-            else if (EncryptedPlayerPrefs.Md5WithKey(_password1.Text) != account.Key_Password)
+            else if (EncryptedPlayerPrefs.Md5WithKey(_password1.Text) != account.Password)
             {
                 Instantiator.NewPopupYesNo("Error", $"incorrect password.", "Forgot?", "Ok", (result) =>
                 {
@@ -201,10 +198,10 @@ public class AccountSceneBhv : SceneBhv
             }
             else
             {
-                PlayerPrefsHelper.SetLastSavedCredentials(new AccountDto(_playerNameId.Text, _password1.Text, null, null));
-                Instantiator.NewPopupYesNo("Connected", $"welcome back {account.Id_PlayerName.ToLower()}.", null, "Ok", (result) =>
+                PlayerPrefsHelper.SaveLastSavedCredentials(new AccountDto(_playerName.Text, _password1.Text, null, null));
+                Instantiator.NewPopupYesNo("Connected", $"welcome back {account.PlayerName.ToLower()}.", null, "Ok", (result) =>
                 {
-                    GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.Id_PlayerName;
+                    GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
                     ShowPanel(4);
                     return true;
                 });
@@ -214,24 +211,24 @@ public class AccountSceneBhv : SceneBhv
 
     private void CreateAccount()
     {
-        if (string.IsNullOrEmpty(_playerNameId.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_playerNameId.Text) || _playerNameId.Text.Length < _minPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {_minPlayerNameCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrEmpty(_playerName.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_playerName.Text) || _playerName.Text.Length < AccountService.MinPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {AccountService.MinPlayerNameCharacters} characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password2.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
         if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
         Instantiator.NewLoading();
-        AccountService.GetAccount(_playerNameId.Text, (account) =>
+        AccountService.GetAccount(_playerName.Text, (account) =>
         {
-            if (account != null && account.Id_PlayerName == _playerNameId.Text)
+            if (account != null && account.PlayerName == _playerName.Text)
             {
                 Helper.ResumeLoading();
                 Instantiator.NewPopupYesNo("Error", $"already existing account with this player name.", null, "Ok", null);
                 return;
             }
-            AccountService.PutAccount(new AccountDto(_playerNameId.Text, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), ((SecurityQuestion)_idSecurityQuestion).GetDescription(), EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower())), () =>
+            AccountService.PutAccount(new AccountDto(_playerName.Text, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), ((SecurityQuestion)_idSecurityQuestion).GetDescription(), EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower())), () =>
             {
                 Helper.ResumeLoading();
                 ShowPanel(0);
@@ -253,13 +250,13 @@ public class AccountSceneBhv : SceneBhv
     private void PutNewPassword()
     {
         if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password2.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
-        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < _minPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {_minPasswordCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_password2.Text) || _password2.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
         if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
         Instantiator.NewLoading();
-        AccountService.PutAccount(new AccountDto(_recoveryUser.Id_PlayerName, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer), () =>
+        AccountService.PutAccount(new AccountDto(_recoveryUser.PlayerName, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer), () =>
         {
             Helper.ResumeLoading();
             ShowPanel(0);

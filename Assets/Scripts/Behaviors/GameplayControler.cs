@@ -48,6 +48,7 @@ public class GameplayControler : MonoBehaviour
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
     private bool _isTraining;
+    private bool _isFreeTraining;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -180,7 +181,10 @@ public class GameplayControler : MonoBehaviour
             return;
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        {
             _isTraining = true;
+            _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree;
+        }
         SceneBhv = GetComponent<GameSceneBhv>();
         Character = SceneBhv.Character;
         SetGravity(level);
@@ -190,7 +194,7 @@ public class GameplayControler : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
         _panelGame = GameObject.Find("PanelGame");
-        if (!_isTraining)
+        if (!_isFreeTraining)
             _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
         else
             _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{1 + (_levelRealm.GetHashCode() * 11)}");

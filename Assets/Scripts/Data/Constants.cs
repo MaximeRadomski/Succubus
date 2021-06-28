@@ -75,6 +75,7 @@ public static class Constants
     public const string PpTrainingLevel = "TrainingLevel";
     public const string PpTrainingLines = "TrainingLines";
     public const string PpTrainingPieces = "TrainingPieces";
+    public const string PpVerif = "Verif";
     public const string PpTrainingHighScoreHistory = "TrainingHighScoreHistory";
     public const string PpTrainingHighScoreContext = "TrainingHighScoreContext";
     public const string PpGhostPieceColor = "GhostPieceColor";

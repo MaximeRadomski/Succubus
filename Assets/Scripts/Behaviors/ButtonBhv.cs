@@ -11,6 +11,7 @@ public class ButtonBhv : InputBhv
     public bool Disabled;
     public bool StretchDisabled;
     public bool CustomSound;
+    public bool VibratesOnClick = false;
     public float ConeVisionMult = Constants.BaseButtonVisionConeMult;
     public bool IsMenuSelectorResetButton;
 
@@ -56,6 +57,8 @@ public class ButtonBhv : InputBhv
             SetPrivates();
         if (!CustomSound)
             _soundControler.PlaySound(_soundControler.ClickIn);
+        if (VibratesOnClick)
+            VibrationService.Vibrate(30);
         if (!StretchDisabled)
         {
             _isStretching = true;

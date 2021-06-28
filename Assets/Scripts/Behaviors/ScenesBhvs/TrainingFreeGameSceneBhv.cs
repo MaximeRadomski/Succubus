@@ -10,6 +10,14 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private int _lines;
     private int _pieces;
 
+    private List<int> _verif;
+    /* _verif
+     * _verif[0] = soft drops * 8
+     * _verif[1] = lines / 3
+     * _verif[2] = combos * 4
+     * _verif[3] = perfect clears / 20
+     */
+
     private TMPro.TextMeshPro _scoreTmp;
     private TMPro.TextMeshPro _levelTmp;
     private TMPro.TextMeshPro _nextTmp;
@@ -30,6 +38,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _levelUp = _soundControler.SetSound("LevelUp");
 
         var results = PlayerPrefsHelper.GetTraining();
+        _verif = PlayerPrefsHelper.GetVerif();
         _score = results[0];
         _level = results[1];
         _lines = results[2];
@@ -54,7 +63,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnGameOver()
     {
-        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id };
+        var verif = (_verif[0] / 8) + (_verif[1] * 3) + (_verif[2] / 4) + (_verif[3] * 20);
+        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id,  verif};
         //_score = 0;
         //_level = 1;
         //_lines = 0;
@@ -66,7 +76,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private void OnDestroy()
     {
         if (!_isRestarting)
-            PlayerPrefsHelper.SaveTraining(_score, _level, _lines, _pieces);
+            PlayerPrefsHelper.SaveTraining(_score, _level, _lines, _pieces, _verif);
     }
 
     public void AskRestartTraining()
@@ -121,13 +131,17 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnSoftDrop()
     {
-        _score += 1;
+        var toAdd = 1;
+        _score += toAdd;
+        _verif[0] += toAdd * 8;
         DisplayScore();
     }
 
     public override void OnHardDrop(int nbLines)
     {
-        _score += (2 * nbLines);
+        var toAdd = 2 * nbLines;
+        _score += toAdd;
+        _verif[0] += toAdd * 8;
         DisplayScore();
     }
 
@@ -171,6 +185,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         }
 
         _score += tmpAdded;
+        _verif[1] += tmpAdded / 3;
         DisplayScore();
 
         _lines += nbLines;
@@ -181,6 +196,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         var tmpAdded = 50 * nbCombo * _level;
         _score += tmpAdded;
+        _verif[2] += tmpAdded * 4;
         DisplayScore();
 
         _poppingText += "\n*" + nbCombo + " combo";
@@ -188,9 +204,9 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     private void DisplayScore()
     {
-        if (_score <= 99999999)
+        if (_score <= 999999999)
             _scoreTmp.text = _score.ToString();
-        else if (_score > 99999999 && _score <= 999999999)
+        else if (_score > 999999999 && _score <= 999999999)
         {
             var tmpScore = (_score / 1000).ToString();
             _scoreTmp.text = tmpScore.Insert(3, ".") + "m";
@@ -207,7 +223,9 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         if (_poppingText.Length > 0)
             _poppingText += "\n";
         _poppingText += "<b>perfect clear!</b>";
-        _score += 4000 * _level;
+        var toAdd = 4000 * _level;
+        _score += toAdd;
+        _verif[3] += toAdd / 20;
         DisplayScore();
     }
 }

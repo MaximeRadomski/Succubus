@@ -11,6 +11,7 @@ public static class DatabaseService
 
     private static readonly string ProjectId = "infidhells";
     private static readonly string DatabaseURL = $"https://{ProjectId}-default-rtdb.europe-west1.firebasedatabase.app/";
+    private static readonly string SystemTable = "System";
 
     public static string SetTableAndId(string tableName, string id)
     {
@@ -20,5 +21,16 @@ public static class DatabaseService
     public static string SetTable(string tableName)
     {
         return $"{DatabaseURL}{tableName}.json";
+    }
+
+    public static void GetLastUpdatedVersion(Action<string> thenAction)
+    {
+        RestClient.Get(SetTableAndId(SystemTable, "LastUpdatedVersion")).Then(returnValue =>
+        {
+            string version = null;
+            if (!string.IsNullOrEmpty(returnValue.Text) && returnValue.Text != "null")
+                version = returnValue.Text.Replace("\"", "");
+            thenAction.Invoke(version);
+        });
     }
 }

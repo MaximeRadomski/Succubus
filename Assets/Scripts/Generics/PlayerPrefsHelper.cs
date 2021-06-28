@@ -55,12 +55,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         return holder;
     }
 
-    public static void SaveTraining(int score, int level, int lines, int pieces)
+    public static void SaveTraining(int score, int level, int lines, int pieces, List<int> verif)
     {
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingScore, score);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLevel, level);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLines, lines);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingPieces, pieces);
+        EncryptedPlayerPrefs.SetString(Constants.PpVerif, verif.ToParsedString(';'));
     }
 
     public static void ResetTraining()
@@ -69,6 +70,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLevel, 1);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLines, 0);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingPieces, 0);
+        EncryptedPlayerPrefs.SetString(Constants.PpVerif, null);
     }
 
     public static List<int> GetTraining()
@@ -79,6 +81,16 @@ public class PlayerPrefsHelper : MonoBehaviour
         results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingLines, 0));
         results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingPieces, 0));
         return results;
+    }
+
+    public static List<int> GetVerif()
+    {
+        var parsedVerif = EncryptedPlayerPrefs.GetString(Constants.PpVerif, Constants.PpSerializeDefault);
+        if (string.IsNullOrEmpty(parsedVerif))
+            return new List<int>() { 0, 0, 0, 0};
+        var verifArray = parsedVerif.Split(';');
+        var verifList = verifArray.ToIntList();
+        return verifList;
     }
 
     public static void SaveTrainingHighScoreHistory(List<int> scoreHistory)
@@ -851,14 +863,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         return new AccountDto(splits[0], splits[1], "", "");
     }
 
-    public static void SetLastSavedCredentials(AccountDto account)
+    public static void SaveLastSavedCredentials(AccountDto account)
     {
         if (account == null)
         {
             PlayerPrefs.SetString(Constants.PpLastSavedCredentials, null);
             return;
         }
-        var credentials = $"{account.Id_PlayerName}|{account.Key_Password}";
+        var credentials = $"{account.PlayerName}|{account.Password}";
         PlayerPrefs.SetString(Constants.PpLastSavedCredentials, credentials);
     }
 }

@@ -448,4 +448,26 @@ public static class Helper
             ++i;
         }
     }
+
+    public static string ToParsedString<T>(this List<T> source, char separator)
+    {
+        var parsedSource = "";
+        for (int i = 0; i < source.Count; ++i)
+        {
+            parsedSource += source[i].ToString();
+            if (i < source.Count - 1)
+                parsedSource += separator.ToString();
+        }
+        return parsedSource;
+    }
+
+    public static List<int> ToIntList(this string[] source)
+    {
+        var list = new List<int>();
+        foreach (var sourceItem in source)
+        {
+            list.Add(int.Parse(sourceItem));
+        }
+        return list;
+    }
 }

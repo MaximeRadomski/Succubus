@@ -33,6 +33,10 @@ public class HighScoreSceneBhv : SceneBhv
         _scoreHistoryContainer = GameObject.Find("ScoreHistoryContainer");
         if (Constants.CurrentHighScoreContext != null)
         {
+            if (!Helper.FloatEqualsPrecision(Constants.CurrentHighScoreContext[0], Constants.CurrentHighScoreContext[5], Constants.CurrentHighScoreContext[0] * 0.005f))
+            {
+                return;
+            }
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.CurrentHighScoreContext[0]}\n{Constants.CurrentHighScoreContext[1]}\n{Constants.CurrentHighScoreContext[2]}\n{Constants.CurrentHighScoreContext[3]}";
             if (Constants.CurrentHighScoreContext.Count > 4)
                 GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Constants.CurrentHighScoreContext[4]);

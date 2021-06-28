@@ -45,7 +45,9 @@ public class SplashScreenBhv : SceneBhv
         var resolutionService = GetComponent<ResolutionService>();
         PlayerPrefsHelper.SaveResolution(resolutionService.SetResolution(PlayerPrefsHelper.GetResolution()));
 #endif
-        CheckVersion();
+        var canCheckOnlineVersionRightAway = CheckLastInstalledVersion();
+        if (canCheckOnlineVersionRightAway)
+            CheckLastUpdatedVersion();
         _catchPhrases = new List<string>()
         {
             "Welcome, sinner",
@@ -77,7 +79,7 @@ public class SplashScreenBhv : SceneBhv
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = GoToMainMenu;
     }
 
-    private void CheckVersion()
+    private bool CheckLastInstalledVersion()
     {
         var lastSavedVersionStr = PlayerPrefsHelper.GetVersion();
         string[] lastSavedVersion = null;
@@ -96,20 +98,48 @@ public class SplashScreenBhv : SceneBhv
         }
 #if !UNITY_ANDROID
         //Check under 01.03.001: Secured PlayerPrefs. Reset all !!!
-        else if (IsUnder(lastSavedVersion, 1, 3, 1))
+        else if (IsUnder(lastSavedVersion, new string[] { "1", "03", "001" }))
         {
             PlayerPrefs.DeleteAll();
-            Instantiator.NewPopupYesNo("New Data Management", "your previous installation had outdated data management. your data have been reset to its default values.", null, "Ok", null);
+            Instantiator.NewPopupYesNo("New Data Management", "your previous installation had outdated data management. your data have been reset to its default values.", null, "Ok", (result) =>
+            {
+                CheckLastUpdatedVersion();
+                return true;
+            });
+            return false;
         }
 #endif
 
         PlayerPrefsHelper.SaveVersion(Application.version);
+        return true;
     }
 
-    private bool IsUnder(string[] version, int main, int second, int third)
+    private void CheckLastUpdatedVersion()
     {
-        var intVersion = (int.Parse(version[0]) * 100000) + (int.Parse(version[1]) * 1000) + (int.Parse(version[2]));
-        var intToCheck = (main * 100000) + (second * 1000) + (third);
+        DatabaseService.GetLastUpdatedVersion((lastUpdatedVersionStr) =>
+        {
+            if (string.IsNullOrEmpty(lastUpdatedVersionStr))
+                return;
+            string[] lastUpdatedVersion = null;
+            lastUpdatedVersion = lastUpdatedVersionStr.Split('.');
+            var currentVersion = Application.version.Split('.');
+            if (IsUnder(currentVersion, lastUpdatedVersion))
+            {
+                Instantiator.NewPopupYesNo("Update", "a new update is available!\nredirecting to download page?", "Not now", "Sure", (goOnline) =>
+                {
+                    if (!goOnline)
+                        return false;
+                    Application.OpenURL("https://abject.itch.io/infidhells/");
+                    return true;
+                });
+            }
+        });
+    }
+
+    private bool IsUnder(string[] version1, string[] version2)
+    {
+        var intVersion = (int.Parse(version1[0]) * 100000) + (int.Parse(version1[1]) * 1000) + (int.Parse(version1[2]));
+        var intToCheck = (int.Parse(version2[0]) * 100000) + (int.Parse(version2[1]) * 1000) + (int.Parse(version2[2]));
         return intVersion < intToCheck;
     }
 
