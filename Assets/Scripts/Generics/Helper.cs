@@ -454,19 +454,23 @@ public static class Helper
         var parsedSource = "";
         for (int i = 0; i < source.Count; ++i)
         {
-            parsedSource += source[i].ToString();
+
+            if (source[i] is float tmpFloat)
+                parsedSource += tmpFloat.ToString();
+            else
+                parsedSource += source[i].ToString();
             if (i < source.Count - 1)
                 parsedSource += separator.ToString();
         }
         return parsedSource;
     }
 
-    public static List<int> ToIntList(this string[] source)
+    public static List<float> ToFloatList(this string[] source)
     {
-        var list = new List<int>();
+        var list = new List<float>();
         foreach (var sourceItem in source)
         {
-            list.Add(int.Parse(sourceItem));
+            list.Add(float.Parse(sourceItem));
         }
         return list;
     }

@@ -10,12 +10,13 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private int _lines;
     private int _pieces;
 
-    private List<int> _verif;
+    private List<float> _verif;
     /* _verif
      * _verif[0] = soft drops * 8
      * _verif[1] = lines / 3
      * _verif[2] = combos * 4
      * _verif[3] = perfect clears / 20
+     * _verif[4] = levels * 4
      */
 
     private TMPro.TextMeshPro _scoreTmp;
@@ -63,8 +64,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnGameOver()
     {
-        var verif = (_verif[0] / 8) + (_verif[1] * 3) + (_verif[2] / 4) + (_verif[3] * 20);
-        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id,  verif};
+        var verif = (_verif[0] / 8.0f) + (_verif[1] * 3.0f) + (_verif[2] / 4.0f) + (_verif[3] * 20.0f);
+        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id, (int)verif, (int)(_verif[4] / 4) };
         //_score = 0;
         //_level = 1;
         //_lines = 0;
@@ -108,6 +109,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         if (_lines >= _level * Constants.LinesForLevel)
         {
             ++_level;
+            _verif[4] += 4;
             _gameplayControler.SetGravity(_level);
             _soundControler.PlaySound(_levelUp);
             var maxHeight = 15.0f;

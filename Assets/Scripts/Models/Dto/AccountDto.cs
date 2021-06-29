@@ -18,6 +18,7 @@ public class AccountDto
         Password = password;
         SecretQuestion = secretquestion;
         SecretAnswer = secretanswer;
+
         CreationDate = DateTime.UtcNow.ToString();
     }
 }

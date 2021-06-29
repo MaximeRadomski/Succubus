@@ -55,7 +55,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         return holder;
     }
 
-    public static void SaveTraining(int score, int level, int lines, int pieces, List<int> verif)
+    public static void SaveTraining(int score, int level, int lines, int pieces, List<float> verif)
     {
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingScore, score);
         EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLevel, level);
@@ -83,13 +83,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         return results;
     }
 
-    public static List<int> GetVerif()
+    public static List<float> GetVerif()
     {
         var parsedVerif = EncryptedPlayerPrefs.GetString(Constants.PpVerif, Constants.PpSerializeDefault);
         if (string.IsNullOrEmpty(parsedVerif))
-            return new List<int>() { 0, 0, 0, 0};
+            return new List<float>() { 0.0f, 0.0f, 0.0f, 0.0f, 4.0f};
         var verifArray = parsedVerif.Split(';');
-        var verifList = verifArray.ToIntList();
+        var verifList = verifArray.ToFloatList();
         return verifList;
     }
 
@@ -121,23 +121,24 @@ public class PlayerPrefsHelper : MonoBehaviour
         return scoreHistory;
     }
 
-    public static void SaveTrainingHighestScoreContext(List<int> scoreContext)
+    public static void SaveTrainingHighestScoreContext(List<int> scoreContext, string encryptedScore)
     {
         var scoreContextStr = "";
-        foreach (var score in scoreContext)
-            scoreContextStr += $"{score};";
+        for (int i = 0; i <= 4; ++i)
+            scoreContextStr += $"{scoreContext[i]};";
+        scoreContextStr += encryptedScore;
         EncryptedPlayerPrefs.SetString(Constants.PpTrainingHighScoreContext, scoreContextStr);
     }
 
-    public static List<int> GetTrainingHighestScoreContext()
+    public static List<string> GetTrainingHighestScoreContext()
     {
         var scoreContextStr = EncryptedPlayerPrefs.GetString(Constants.PpTrainingHighScoreContext, Constants.PpSerializeDefault);
-        var scoreContext = new List<int>();
+        var scoreContext = new List<string>();
         var splits = scoreContextStr.Split(';');
         for (int i = 0; i < splits.Length; ++i)
         {
             if (!string.IsNullOrEmpty(splits[i]))
-                scoreContext.Add(int.Parse(splits[i]));
+                scoreContext.Add(splits[i]);
         }
         return scoreContext;
     }

@@ -1495,6 +1495,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &1147423517
@@ -1558,7 +1559,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1286873010}
   - component: {fileID: 1286873009}
-  - component: {fileID: 1286873008}
   m_Layer: 0
   m_Name: SceneBhv
   m_TagString: Untagged
@@ -1566,25 +1566,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1286873008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286873007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ead91fb9dd73904aa82f35c843cd2f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Paused: 0
-  PauseMenu: {fileID: 0}
-  Instantiator: {fileID: 0}
-  CameraBhv: {fileID: 0}
-  OnRootPreviousScene: 
-  CanGoPreviousScene: 1
-  HighLightedBar: {fileID: -6915908940411072511, guid: c6a10fe5654d14947a493acc19e0cd7d, type: 3}
 --- !u!114 &1286873009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2193,6 +2174,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &2034697429

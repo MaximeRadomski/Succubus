@@ -32,7 +32,9 @@ public static class HighScoresService
     {
         RestClient.Get(DatabaseService.SetTableAndId(TableHighScores, playerNameId)).Then(returnValue =>
         {
-            var highScore = JsonUtility.FromJson<HighScoreDto>(returnValue.Text);
+            HighScoreDto highScore = null;
+            if (!string.IsNullOrEmpty(returnValue.Text) && returnValue.Text != "null")
+                highScore = JsonUtility.FromJson<HighScoreDto>(returnValue.Text);
             resultAction.Invoke(highScore);
         });
     }

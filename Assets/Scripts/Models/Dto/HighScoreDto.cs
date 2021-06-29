@@ -7,15 +7,24 @@ using UnityEngine;
 public class HighScoreDto
 {
     public string Id_PlayerName;
-    public int Score;
+    public string Score;
+    public string Level;
+    public string Lines;
+    public string Pieces;
+    public string CharacterId;
     public string Key_Score;
-    public int CharacterId;
+    public string CreationDate;
 
-    public HighScoreDto(string playerNameId, int score, int characterId)
+    public HighScoreDto(string playerNameId, string score, string level, string lines, string pieces, string characterId, string encryptedScore)
     {
         Id_PlayerName = playerNameId;
         Score = score;
-        Key_Score = EncryptedPlayerPrefs.Md5WithKey(score.ToString());
+        Level = level;
+        Lines = lines;
+        Pieces = pieces;
         CharacterId = characterId;
+        Key_Score = encryptedScore;
+
+        CreationDate = DateTime.UtcNow.ToString();
     }
 }
