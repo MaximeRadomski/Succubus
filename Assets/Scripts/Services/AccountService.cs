@@ -43,7 +43,7 @@ public static class AccountService
         GetAccount(lastSaved.PlayerName, (account) =>
         {
             Helper.ResumeLoading();
-            if (account == null || EncryptedPlayerPrefs.Md5WithKey(lastSaved.Password) != account.Password)
+            if (account == null || Mock.Md5WithKey(lastSaved.Password, account.Type) != account.Password)
             {
                 PlayerPrefsHelper.SaveLastSavedCredentials(null);
                 instantiator.NewPopupYesNo("Error", "couldn't log you in with your saved credentials. please reconnect manually.", null, "Ok", (result) =>

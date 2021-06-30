@@ -36,6 +36,7 @@ public class HighScoreSceneBhv : SceneBhv
         _scoreHistoryContainer = GameObject.Find("ScoreHistoryContainer");
         var scoreValueStr = "";
         var encryptedScore = "";
+        var type = UnityEngine.Random.Range(0, Mock.test.Count);
         if (Constants.CurrentHighScoreContext != null)
         {
             if (!Helper.FloatEqualsPrecision(Constants.CurrentHighScoreContext[0], Constants.CurrentHighScoreContext[5], Constants.CurrentHighScoreContext[0] * 0.005f)
@@ -48,7 +49,7 @@ public class HighScoreSceneBhv : SceneBhv
             else
             {
                 scoreValueStr = Constants.CurrentHighScoreContext[0].ToString();
-                encryptedScore = EncryptedPlayerPrefs.Md5WithKey(Constants.CurrentHighScoreContext[0].ToString());
+                encryptedScore = Mock.Md5WithKey(Constants.CurrentHighScoreContext[0].ToString(), type);
             }
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{scoreValueStr}\n{Constants.CurrentHighScoreContext[1]}\n{Constants.CurrentHighScoreContext[2]}\n{Constants.CurrentHighScoreContext[3]}";
             if (Constants.CurrentHighScoreContext.Count > 4)
@@ -63,15 +64,14 @@ public class HighScoreSceneBhv : SceneBhv
         _scoreHistory.Reverse();
         if (Constants.CurrentHighScoreContext != null && Constants.CurrentHighScoreContext[0] >= _scoreHistory[0])
         {
-            PlayerPrefsHelper.SaveTrainingHighestScoreContext(Constants.CurrentHighScoreContext, encryptedScore);
+            PlayerPrefsHelper.SaveTrainingHighestScore(Constants.CurrentHighScoreContext, encryptedScore, type);
             TrySendLocalHighest(null);
         }
         else if (Constants.CurrentHighScoreContext == null)
         {
-            var _highestScore = PlayerPrefsHelper.GetTrainingHighestScoreContext();
-            GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{_highestScore[0]}\n{_highestScore[1]}\n{_highestScore[2]}\n{_highestScore[3]}";
-            if (_highestScore.Count > 4)
-                GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highestScore[4]);
+            var _highestScore = PlayerPrefsHelper.GetTrainingHighestScore();
+            GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{_highestScore.Score}\n{_highestScore.Level}\n{_highestScore.Lines}\n{_highestScore.Pieces}";
+            GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highestScore.CharacterId);
             _title.text = "High Scores";
         }
         UpdateScoreList();
@@ -126,27 +126,37 @@ public class HighScoreSceneBhv : SceneBhv
                 afterTrySend?.Invoke();
                 return;
             }
-            //IF Better account score ouside of local scores
-            HighScoresService.GetHighScore(account.PlayerName, (result) =>
+            HighScoresService.GetHighScore(account.PlayerName, (onlineScore) =>
             {
-                var highestScore = PlayerPrefsHelper.GetTrainingHighestScoreContext();
-                if (result != null && int.Parse(result.Score) > int.Parse(highestScore[0]))
+                var highestScore = PlayerPrefsHelper.GetTrainingHighestScore();
+                //IF Better account score outside of local scores
+                if (onlineScore != null && onlineScore.Score > highestScore.Score)
                 {
                     Debug.Log("Higher Score Received");
                     _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory();
-                    _scoreHistory.Add(int.Parse(result.Score));
+                    _scoreHistory.Add(onlineScore.Score);
                     PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
-                    PlayerPrefsHelper.SaveTrainingHighestScoreContext(new List<int>() { int.Parse(result.Score), int.Parse(result.Level), int.Parse(result.Lines), int.Parse(result.Pieces), int.Parse(result.CharacterId) }, result.Key_Score);
+                    PlayerPrefsHelper.SaveTrainingHighestScore(new List<int>() { onlineScore.Score, onlineScore.Level, onlineScore.Lines, onlineScore.Pieces, onlineScore.CharacterId }, onlineScore.Checksum, onlineScore.Type);
                     UpdateScoreList();
                     afterTrySend?.Invoke();
                     return;
                 }
-
-                HighScoresService.PutHighScore(new HighScoreDto(account.PlayerName, highestScore[0], highestScore[1], highestScore[2], highestScore[3], highestScore[4], highestScore[5]), () =>
+                //If same account score outside of local scores (in order to prevent rewriting everytime the date of the best score)
+                else if (onlineScore != null && onlineScore.Score == highestScore.Score)
                 {
-                    Debug.Log("HighScore Sent");
+                    Debug.Log("Same Score Received");
                     afterTrySend?.Invoke();
-                });
+                    return;
+                }
+                else
+                {
+                    HighScoresService.PutHighScore(new HighScoreDto(account.PlayerName, highestScore.Score, highestScore.Level, highestScore.Lines, highestScore.Pieces, highestScore.CharacterId, highestScore.Type, highestScore.Checksum), () =>
+                    {
+                        Debug.Log("HighScore Sent");
+                        afterTrySend?.Invoke();
+                    });
+                    return;
+                }
             });
         });
     }

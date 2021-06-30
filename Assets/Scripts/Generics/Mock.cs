@@ -2,21 +2,31 @@ using UnityEngine;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
 
-public class EncryptedPlayerPrefs
+public class Mock
 {
-
     // Encrypted PlayerPrefs
     // Written by Sven Magnus
     // MD5 code by Matthew Wegner (from [url]http://www.unifycommunity.com/wiki/index.php?title=MD5[/url])
 
-
     // Modify this key in this file :
-    private static string privateKey = "8BNzOlOtLAxrq9uqpdBp";
+    private static string checksum = "8BNzOlOtLAxrq9uqpdBp";
 
     // Add some values to this array before using EncryptedPlayerPrefs
-    public static string[] keys = new string[] { "78Imaonr", "BY6IvzIx", "bdI8pNZ0", "pOgb6jhs", "hul4lETi", "ie4j5trI", "AUI45uDk", "UI3ak45u", "Pe4rGI87", "AuD6O8he", "aui8ty62", "ABJECT69" };
+    public static List<string> test;
 
+    public static void Init()
+    {
+        test = new List<string>();
+        for (int i = 0; i < 12; ++i)
+        {
+            var go = GameObject.Find($"test{i}");
+            var str = go.GetComponent<ParameterBhv>().String;
+            str = str.Replace("$", (((int)go.transform.position.x) / go.layer).ToString()).Replace("£", (((int)go.transform.position.y) / go.layer).ToString());
+            test.Add(str);
+        }
+    }
 
     public static string Md5(string strToEncrypt)
     {
@@ -36,25 +46,29 @@ public class EncryptedPlayerPrefs
         return hashString.PadLeft(32, '0');
     }
 
-    public static string Md5WithKey(string strToEncrypt)
+    public static string Md5WithKey(string strToEncrypt, int type)
     {
-        return Md5(strToEncrypt + privateKey);
+        return Md5(strToEncrypt + test[type]);
     }
 
     public static void SaveEncryption(string key, string type, string value)
     {
-        int keyIndex = Random.Range(0, keys.Length);
-        string secretKey = keys[keyIndex];
-        string check = Md5(key + "_" + type + "_" + privateKey + "_" + secretKey + "_" + value);
+        if (test == null || test.Count <= 0)
+            Init();
+        int keyIndex = Random.Range(0, test.Count);
+        string secretKey = test[keyIndex];
+        string check = Md5(key + "_" + type + "_" + checksum + "_" + secretKey + "_" + value);
         PlayerPrefs.SetString(key + "_encryption_check", check);
         PlayerPrefs.SetInt(key + "_used_key", keyIndex);
     }
 
     public static bool CheckEncryption(string key, string type, string value)
     {
+        if (test == null || test.Count <= 0)
+            Init();
         int keyIndex = PlayerPrefs.GetInt(key + "_used_key");
-        string secretKey = keys[keyIndex];
-        string check = Md5(key + "_" + type + "_" + privateKey + "_" + secretKey + "_" + value);
+        string secretKey = test[keyIndex];
+        string check = Md5(key + "_" + type + "_" + checksum + "_" + secretKey + "_" + value);
         if (!PlayerPrefs.HasKey(key + "_encryption_check")) return false;
         string storedCheck = PlayerPrefs.GetString(key + "_encryption_check");
         return storedCheck == check;

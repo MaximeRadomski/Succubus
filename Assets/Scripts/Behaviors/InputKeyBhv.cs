@@ -103,7 +103,7 @@ public class InputKeyBhv : PopupBhv
 
     public void ChangeLayout()
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpFavKeyboardLayout, _layoutId);
+        Mock.SetInt(Constants.PpFavKeyboardLayout, _layoutId);
         for (int i = 0; i < _keyboard.transform.childCount; ++i)
         {
             var inputKeyBhv = _keyboard.transform.GetChild(i).GetComponent<InputKeyBhv>();

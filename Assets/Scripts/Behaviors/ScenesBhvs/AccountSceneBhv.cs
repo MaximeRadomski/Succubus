@@ -183,7 +183,7 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Error", $"no account found with this player name.", null, "Ok", null);
                 return;
             }
-            else if (EncryptedPlayerPrefs.Md5WithKey(_password1.Text) != account.Password)
+            else if (Mock.Md5WithKey(_password1.Text, account.Type) != account.Password)
             {
                 Instantiator.NewPopupYesNo("Error", $"incorrect password.", "Forgot?", "Ok", (result) =>
                 {
@@ -198,7 +198,7 @@ public class AccountSceneBhv : SceneBhv
             }
             else
             {
-                PlayerPrefsHelper.SaveLastSavedCredentials(new AccountDto(_playerName.Text, _password1.Text, null, null));
+                PlayerPrefsHelper.SaveLastSavedCredentials(new AccountDto(_playerName.Text, _password1.Text, null, null, account.Type, account.Checksum));
                 Instantiator.NewPopupYesNo("Connected", $"welcome back {account.PlayerName.ToLower()}.", null, "Ok", (result) =>
                 {
                     GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
@@ -228,7 +228,8 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Error", $"already existing account with this player name.", null, "Ok", null);
                 return;
             }
-            AccountService.PutAccount(new AccountDto(_playerName.Text, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), ((SecurityQuestion)_idSecurityQuestion).GetDescription(), EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower())), () =>
+            var type = Random.Range(0, Mock.test.Count);
+            AccountService.PutAccount(new AccountDto(_playerName.Text, Mock.Md5WithKey(_password1.Text, type), ((SecurityQuestion)_idSecurityQuestion).GetDescription(), Mock.Md5WithKey(_securityAnswer.Text.ToLower(), type), type, Mock.Md5WithKey(_playerName.Text.ToLower(), type)), () =>
             {
                 Helper.ResumeLoading();
                 ShowPanel(0);
@@ -240,7 +241,7 @@ public class AccountSceneBhv : SceneBhv
     private void VerifySecurityQuestion()
     {
         if (string.IsNullOrEmpty(_securityAnswer.Text)) { Instantiator.NewPopupYesNo("Security Answer", "you must enter an answer.", null, "Ok", null); return; }
-        var encryptedAnswer = EncryptedPlayerPrefs.Md5WithKey(_securityAnswer.Text.ToLower());
+        var encryptedAnswer = Mock.Md5WithKey(_securityAnswer.Text.ToLower(), _recoveryUser.Type);
         if (encryptedAnswer != _recoveryUser.SecretAnswer) { Instantiator.NewPopupYesNo("Security Answer", "your answer is different from the one you set up.", null, "Ok", null); return; }
 
         if (encryptedAnswer == _recoveryUser.SecretAnswer)
@@ -256,7 +257,7 @@ public class AccountSceneBhv : SceneBhv
         if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
         Instantiator.NewLoading();
-        AccountService.PutAccount(new AccountDto(_recoveryUser.PlayerName, EncryptedPlayerPrefs.Md5WithKey(_password1.Text), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer), () =>
+        AccountService.PutAccount(new AccountDto(_recoveryUser.PlayerName, Mock.Md5WithKey(_password1.Text, _recoveryUser.Type), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer, _recoveryUser.Type, _recoveryUser.Checksum), () =>
         {
             Helper.ResumeLoading();
             ShowPanel(0);

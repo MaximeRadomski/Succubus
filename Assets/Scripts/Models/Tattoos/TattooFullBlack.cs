@@ -16,9 +16,9 @@ public class TattooFullBlack : Tattoo
     {
         character.BonusLife += Stat;
 
-        var tattoosFullStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         var nameToAdd = Name.Replace(" ", "").Replace("'", "").Replace("-", "");
-        var alreadyBodyPartsIds = EncryptedPlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+        var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
         var availablesPartsIds = PlayerPrefsHelper.GetRemainingAvailablesPartsIds(alreadyBodyPartsIds);
@@ -30,8 +30,8 @@ public class TattooFullBlack : Tattoo
             tattoosFullStr += nameToAdd + "L01B" + newBodyPartStr + ";";
         }
         PlayerPrefsHelper.AddMaxedOutTattoo(Id);
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
+        Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
+        Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
 
     }
 

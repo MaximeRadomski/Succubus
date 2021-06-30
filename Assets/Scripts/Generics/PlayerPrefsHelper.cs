@@ -9,12 +9,12 @@ public class PlayerPrefsHelper : MonoBehaviour
 {
     public static void SaveRun(Run run)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpRun, JsonUtility.ToJson(run));
+        Mock.SetString(Constants.PpRun, JsonUtility.ToJson(run));
     }
 
     public static Run GetRun()
     {
-        var run = JsonUtility.FromJson<Run>(EncryptedPlayerPrefs.GetString(Constants.PpRun, Constants.PpSerializeDefault));
+        var run = JsonUtility.FromJson<Run>(Mock.GetString(Constants.PpRun, Constants.PpSerializeDefault));
         if (run == null)
             return null;
         return run;
@@ -57,35 +57,35 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveTraining(int score, int level, int lines, int pieces, List<float> verif)
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingScore, score);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLevel, level);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLines, lines);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingPieces, pieces);
-        EncryptedPlayerPrefs.SetString(Constants.PpVerif, verif.ToParsedString(';'));
+        Mock.SetInt(Constants.PpTrainingScore, score);
+        Mock.SetInt(Constants.PpTrainingLevel, level);
+        Mock.SetInt(Constants.PpTrainingLines, lines);
+        Mock.SetInt(Constants.PpTrainingPieces, pieces);
+        Mock.SetString(Constants.PpVerif, verif.ToParsedString(';'));
     }
 
     public static void ResetTraining()
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingScore, 0);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLevel, 1);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingLines, 0);
-        EncryptedPlayerPrefs.SetInt(Constants.PpTrainingPieces, 0);
-        EncryptedPlayerPrefs.SetString(Constants.PpVerif, null);
+        Mock.SetInt(Constants.PpTrainingScore, 0);
+        Mock.SetInt(Constants.PpTrainingLevel, 1);
+        Mock.SetInt(Constants.PpTrainingLines, 0);
+        Mock.SetInt(Constants.PpTrainingPieces, 0);
+        Mock.SetString(Constants.PpVerif, null);
     }
 
     public static List<int> GetTraining()
     {
         var results = new List<int>();
-        results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingScore, 0));
-        results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingLevel, 1));
-        results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingLines, 0));
-        results.Add(EncryptedPlayerPrefs.GetInt(Constants.PpTrainingPieces, 0));
+        results.Add(Mock.GetInt(Constants.PpTrainingScore, 0));
+        results.Add(Mock.GetInt(Constants.PpTrainingLevel, 1));
+        results.Add(Mock.GetInt(Constants.PpTrainingLines, 0));
+        results.Add(Mock.GetInt(Constants.PpTrainingPieces, 0));
         return results;
     }
 
     public static List<float> GetVerif()
     {
-        var parsedVerif = EncryptedPlayerPrefs.GetString(Constants.PpVerif, Constants.PpSerializeDefault);
+        var parsedVerif = Mock.GetString(Constants.PpVerif, Constants.PpSerializeDefault);
         if (string.IsNullOrEmpty(parsedVerif))
             return new List<float>() { 0.0f, 0.0f, 0.0f, 0.0f, 4.0f};
         var verifArray = parsedVerif.Split(';');
@@ -98,12 +98,12 @@ public class PlayerPrefsHelper : MonoBehaviour
         var scoreHistoryStr = "";
         foreach (var score in scoreHistory)
             scoreHistoryStr += $"{score};";
-        EncryptedPlayerPrefs.SetString(Constants.PpTrainingHighScoreHistory, scoreHistoryStr);
+        Mock.SetString(Constants.PpTrainingHighScoreHistory, scoreHistoryStr);
     }
 
     public static List<int> GetTrainingHighScoreHistory()
     {
-        var scoreHistoryStr = EncryptedPlayerPrefs.GetString(Constants.PpTrainingHighScoreHistory, Constants.PpSerializeDefault);
+        var scoreHistoryStr = Mock.GetString(Constants.PpTrainingHighScoreHistory, Constants.PpSerializeDefault);
         int i = 0;
         var scoreHistory = new List<int>();
         while (!string.IsNullOrEmpty(scoreHistoryStr) || i > 15)
@@ -121,26 +121,18 @@ public class PlayerPrefsHelper : MonoBehaviour
         return scoreHistory;
     }
 
-    public static void SaveTrainingHighestScoreContext(List<int> scoreContext, string encryptedScore)
+    public static void SaveTrainingHighestScore(List<int> scoreContext, string encryptedScore, int type)
     {
-        var scoreContextStr = "";
-        for (int i = 0; i <= 4; ++i)
-            scoreContextStr += $"{scoreContext[i]};";
-        scoreContextStr += encryptedScore;
-        EncryptedPlayerPrefs.SetString(Constants.PpTrainingHighScoreContext, scoreContextStr);
+        var score = new HighScoreDto("", scoreContext[0], scoreContext[1], scoreContext[2], scoreContext[3], scoreContext[4], type, encryptedScore);
+        Mock.SetString(Constants.PpTrainingHighestScore, JsonUtility.ToJson(score));
     }
 
-    public static List<string> GetTrainingHighestScoreContext()
+    public static HighScoreDto GetTrainingHighestScore()
     {
-        var scoreContextStr = EncryptedPlayerPrefs.GetString(Constants.PpTrainingHighScoreContext, Constants.PpSerializeDefault);
-        var scoreContext = new List<string>();
-        var splits = scoreContextStr.Split(';');
-        for (int i = 0; i < splits.Length; ++i)
-        {
-            if (!string.IsNullOrEmpty(splits[i]))
-                scoreContext.Add(splits[i]);
-        }
-        return scoreContext;
+        var score = JsonUtility.FromJson<HighScoreDto>(Mock.GetString(Constants.PpTrainingHighestScore, Constants.PpSerializeDefault));
+        if (score == null)
+            return null;
+        return score;
     }
 
     public static void SaveGhostColor(string ghostColor)
@@ -230,34 +222,34 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveUnlockedCharacters(string unlockedCharacters)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpUnlockedCharacters, unlockedCharacters);
+        Mock.SetString(Constants.PpUnlockedCharacters, unlockedCharacters);
     }
 
     public static string GetUnlockedCharactersString()
     {
-        var unlockedCharacters = EncryptedPlayerPrefs.GetString(Constants.PpUnlockedCharacters, Constants.PpUnlockedCharactersDefault);
+        var unlockedCharacters = Mock.GetString(Constants.PpUnlockedCharacters, Constants.PpUnlockedCharactersDefault);
         return unlockedCharacters;
     }
 
     public static void SaveSelectedCharacter(int selectedCharacter)
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpSelectedCharacter, selectedCharacter);
+        Mock.SetInt(Constants.PpSelectedCharacter, selectedCharacter);
     }
 
     public static int GetSelectedCharacterId()
     {
-        var selectedCharacter = EncryptedPlayerPrefs.GetInt(Constants.PpSelectedCharacter, Constants.PpSelectedCharacterDefault);
+        var selectedCharacter = Mock.GetInt(Constants.PpSelectedCharacter, Constants.PpSelectedCharacterDefault);
         return selectedCharacter;
     }
 
     public static void SaveRunCharacter(Character character)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpRunCharacter, JsonUtility.ToJson(character));
+        Mock.SetString(Constants.PpRunCharacter, JsonUtility.ToJson(character));
     }
 
     public static Character GetRunCharacter()
     {
-        var character = JsonUtility.FromJson<Character>(EncryptedPlayerPrefs.GetString(Constants.PpRunCharacter, Constants.PpSerializeDefault));
+        var character = JsonUtility.FromJson<Character>(Mock.GetString(Constants.PpRunCharacter, Constants.PpSerializeDefault));
         if (character == null)
             return CharactersData.Characters[GetSelectedCharacterId()];
         return character;
@@ -278,7 +270,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         if (opponents == null)
         {
-            EncryptedPlayerPrefs.SetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
+            Mock.SetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
             return;
         }
         var opponentsStr = "";
@@ -286,12 +278,12 @@ public class PlayerPrefsHelper : MonoBehaviour
         {
             opponentsStr += opponent.Realm.GetHashCode() + ":" + opponent.Id + ";";
         }
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentOpponents, opponentsStr);
+        Mock.SetString(Constants.PpCurrentOpponents, opponentsStr);
     }
 
     public static List<Opponent> GetCurrentOpponents(Run run)
     {
-        var opponentsStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
+        var opponentsStr = Mock.GetString(Constants.PpCurrentOpponents, Constants.PpSerializeDefault);
         int i = 0;
         var opponentsList = new List<Opponent>();
         while (!string.IsNullOrEmpty(opponentsStr) || i > 15)
@@ -320,23 +312,23 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void ResetCurrentItem()
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+        Mock.SetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
     }
 
     public static void SaveCurrentItem(string itemName)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentItem, itemName);
+        Mock.SetString(Constants.PpCurrentItem, itemName);
     }
 
     public static string GetCurrentItemName()
     {
-        var itemName = EncryptedPlayerPrefs.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+        var itemName = Mock.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
         return itemName;
     }
 
     public static Item GetCurrentItem()
     {
-        var itemName = EncryptedPlayerPrefs.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
+        var itemName = Mock.GetString(Constants.PpCurrentItem, Constants.PpSerializeDefault);
         if (string.IsNullOrEmpty(itemName))
             return null;
         else
@@ -348,19 +340,19 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void ResetTattoos()
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentTattoos, null);
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentBodyParts, null);
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentMaxedOutTattoos, null);
+        Mock.SetString(Constants.PpCurrentTattoos, null);
+        Mock.SetString(Constants.PpCurrentBodyParts, null);
+        Mock.SetString(Constants.PpCurrentMaxedOutTattoos, null);
     }
 
     public static BodyPart AddTattoo(string name)
     {
-        var tattoosFullStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         if (tattoosFullStr == null)
             tattoosFullStr = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "").Replace("-", "");
         var alreadyStart = tattoosFullStr.IndexOf(nameToAdd);
-        var alreadyBodyPartsIds = EncryptedPlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+        var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
         var newBodyPartStr = "";
@@ -393,17 +385,17 @@ public class PlayerPrefsHelper : MonoBehaviour
             if (tattooModel.MaxLevel == 1)
                 AddMaxedOutTattoo(tattooModel.Id);
             //Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
-            EncryptedPlayerPrefs.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
+            Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
 
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
+        Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
         return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
     }
 
     public static string GetRemainingAvailablesPartsIds(string alreadyBodyPartsIds = null)
     {
         if (alreadyBodyPartsIds == null)
-            alreadyBodyPartsIds = EncryptedPlayerPrefs.GetString(Constants.PpCurrentBodyParts);
+            alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)
             alreadyBodyPartsIds = "";
         var availablesPartsIds = Constants.AvailableBodyPartsIds;
@@ -427,13 +419,13 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static string GetCurrentTattoosString()
     {
-        var tattoos = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoos = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         return tattoos;
     }
 
     public static List<Tattoo> GetCurrentTattoos()
     {
-        var tattoosFullStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         var tattoosList = new List<Tattoo>();
         if (tattoosFullStr == Constants.PpSerializeDefault)
             return tattoosList;
@@ -454,7 +446,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static Tattoo GetCurrentInkedTattoo(string name)
     {
-        var tattoosFullStr = EncryptedPlayerPrefs.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         if (tattoosFullStr == Constants.PpSerializeDefault)
             return null;
         var parsedName = name.Replace(" ", "").Replace("'", "").Replace("-", "");
@@ -475,16 +467,16 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void AddMaxedOutTattoo(int id)
     {
-        var alreadyString = EncryptedPlayerPrefs.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpSerializeDefault);
+        var alreadyString = Mock.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpSerializeDefault);
         if (alreadyString == null)
             alreadyString = "";
         alreadyString += $"{id};";
-        EncryptedPlayerPrefs.SetString(Constants.PpCurrentMaxedOutTattoos, alreadyString);
+        Mock.SetString(Constants.PpCurrentMaxedOutTattoos, alreadyString);
     }
 
     public static List<int> GetMaxedOutTattoos()
     {
-        var alreadyMaxedString = EncryptedPlayerPrefs.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpRunAlreadyDialogDefault);
+        var alreadyMaxedString = Mock.GetString(Constants.PpCurrentMaxedOutTattoos, Constants.PpRunAlreadyDialogDefault);
         var alreadyMaxedTattoos = new List<int>();
         if (!string.IsNullOrEmpty(alreadyMaxedString))
         {
@@ -588,12 +580,12 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveIsInFight(bool isInFight)
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpIsInFight, isInFight == true ? 1 : 0);
+        Mock.SetInt(Constants.PpIsInFight, isInFight == true ? 1 : 0);
     }
 
     public static bool GetIsInFight()
     {
-        var IsInFight = EncryptedPlayerPrefs.GetInt(Constants.PpIsInFight, Constants.PpSerializeDefaultInt);
+        var IsInFight = Mock.GetInt(Constants.PpIsInFight, Constants.PpSerializeDefaultInt);
         return IsInFight == 1 ? true : false;
     }
 
@@ -694,59 +686,59 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static int GetBonusRarePercent()
     {
-        var bonus = EncryptedPlayerPrefs.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
+        var bonus = Mock.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
         return bonus;
     }
 
     public static void IncrementBonusRarePercent(int times)
     {
-        var bonus = EncryptedPlayerPrefs.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
-        EncryptedPlayerPrefs.SetInt(Constants.PpBonusRarePercent, bonus + times);
+        var bonus = Mock.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
+        Mock.SetInt(Constants.PpBonusRarePercent, bonus + times);
     }
 
     public static int GetBonusLegendaryPercent()
     {
-        var bonus = EncryptedPlayerPrefs.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
+        var bonus = Mock.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
         return bonus;
     }
 
     public static void IncrementBonusLegendaryPercent(int times)
     {
-        var bonus = EncryptedPlayerPrefs.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
-        EncryptedPlayerPrefs.SetInt(Constants.PpBonusLegendaryPercent, bonus + times);
+        var bonus = Mock.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
+        Mock.SetInt(Constants.PpBonusLegendaryPercent, bonus + times);
     }
 
     public static int GetRunBossVanquished()
     {
-        var run = EncryptedPlayerPrefs.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+        var run = Mock.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
         return run;
     }
 
     public static void IncrementRunBossVanquished()
     {
-        var run = EncryptedPlayerPrefs.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
-        EncryptedPlayerPrefs.SetInt(Constants.PpRunBossVanquished, run + 1);
+        var run = Mock.GetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+        Mock.SetInt(Constants.PpRunBossVanquished, run + 1);
     }
 
     public static void ResetRunBossVanquished()
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
+        Mock.SetInt(Constants.PpRunBossVanquished, Constants.PpSerializeDefaultInt);
     }
 
     public static int GetRealmBossProgression()
     {
-        var realmBossProgression = EncryptedPlayerPrefs.GetInt(Constants.PpRealmBossProgression, Constants.PpRealmBossProgressionDefault);
+        var realmBossProgression = Mock.GetInt(Constants.PpRealmBossProgression, Constants.PpRealmBossProgressionDefault);
         return realmBossProgression;
     }
 
     public static void SaveRealmBossProgression(int realmId)
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpRealmBossProgression, realmId);
+        Mock.SetInt(Constants.PpRealmBossProgression, realmId);
     }
 
     public static List<int> GetTotalResources()
     {
-        var resourcesStr = EncryptedPlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
+        var resourcesStr = Mock.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
         var resources = new List<int>();
         if (!string.IsNullOrEmpty(resourcesStr))
         {
@@ -774,12 +766,12 @@ public class PlayerPrefsHelper : MonoBehaviour
         {
             resourcesStr += $"{resource};";
         }
-        EncryptedPlayerPrefs.SetString(Constants.PpTotalResources, resourcesStr);
+        Mock.SetString(Constants.PpTotalResources, resourcesStr);
     }
 
     public static string GetBoughtTreeNodes()
     {
-        var boughtTreeNodes = EncryptedPlayerPrefs.GetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
+        var boughtTreeNodes = Mock.GetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
         if (string.IsNullOrEmpty(boughtTreeNodes))
             boughtTreeNodes = "";
         return boughtTreeNodes;
@@ -787,14 +779,14 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void ResetBoughtTreeNodes()
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
+        Mock.SetString(Constants.PpBoughtTreeNodes, Constants.PpSerializeDefault);
         ResetRealmTree();
     }
 
     public static void AddBoughtTreeNode(string nodeName, NodeType nodeType)
     {
         var alreadyBoughtTreeNodesStr = GetBoughtTreeNodes();
-        EncryptedPlayerPrefs.SetString(Constants.PpBoughtTreeNodes, $"{alreadyBoughtTreeNodesStr}{nodeName} ");
+        Mock.SetString(Constants.PpBoughtTreeNodes, $"{alreadyBoughtTreeNodesStr}{nodeName} ");
 
         var realmTree = GetRealmTree();
         switch (nodeType)
@@ -814,12 +806,12 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveRealmTree(RealmTree realmTree)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpRealmTree, JsonUtility.ToJson(realmTree));
+        Mock.SetString(Constants.PpRealmTree, JsonUtility.ToJson(realmTree));
     }
 
     public static RealmTree GetRealmTree()
     {
-        var realmTree = JsonUtility.FromJson<RealmTree>(EncryptedPlayerPrefs.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault));
+        var realmTree = JsonUtility.FromJson<RealmTree>(Mock.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault));
         if (realmTree == null)
             return new RealmTree();
         return realmTree;
@@ -832,24 +824,24 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveVersion(string version)
     {
-        EncryptedPlayerPrefs.SetString(Constants.PpVersion, version);
+        Mock.SetString(Constants.PpVersion, version);
     }
 
     public static string GetVersion()
     {
-        var version = EncryptedPlayerPrefs.GetString(Constants.PpVersion, Constants.PpSerializeDefault);
+        var version = Mock.GetString(Constants.PpVersion, Constants.PpSerializeDefault);
         return version;
     }
 
     public static void SaveInfernalUnlocked(bool unlocked)
     {
-        EncryptedPlayerPrefs.SetInt(Constants.PpInfernalUnlocked, unlocked ? 1 : 0);
+        Mock.SetInt(Constants.PpInfernalUnlocked, unlocked ? 1 : 0);
     }
 
     public static bool GetInfernalUnlocked()
     {
         var randomItemMaxRarity = GetRealmBossProgression();
-        var unlocked = EncryptedPlayerPrefs.GetInt(Constants.PpInfernalUnlocked, 0);
+        var unlocked = Mock.GetInt(Constants.PpInfernalUnlocked, 0);
         return unlocked == 1 || randomItemMaxRarity >= 0 ? true : false;
     }
 
@@ -861,7 +853,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         var splits = credentials.Split('|');
         if (splits == null || splits.Length < 2)
             return null;
-        return new AccountDto(splits[0], splits[1], "", "");
+        return new AccountDto(splits[0], splits[1], "", "", -1, "");
     }
 
     public static void SaveLastSavedCredentials(AccountDto account)

@@ -131,7 +131,7 @@ public class StepsService
         else
         {
             lootType = LootType.Tattoo;
-            if (EncryptedPlayerPrefs.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)
+            if (Mock.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)
             {
                 var loop = -1;
                 while (loop < 1)

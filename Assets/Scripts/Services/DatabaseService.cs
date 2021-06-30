@@ -9,8 +9,7 @@ public static class DatabaseService
 {
     public static fsSerializer Serializer = new fsSerializer();
 
-    private static readonly string ProjectId = "infidhells";
-    private static readonly string DatabaseURL = $"https://{ProjectId}-default-rtdb.europe-west1.firebasedatabase.app/";
+    private static readonly string DatabaseURL = $"https://{Application.productName}-default-rtdb.europe-west1.firebasedatabase.app/";
     private static readonly string SystemTable = "System";
 
     public static string SetTableAndId(string tableName, string id)

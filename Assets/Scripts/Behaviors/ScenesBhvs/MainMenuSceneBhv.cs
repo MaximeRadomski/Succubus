@@ -67,7 +67,7 @@ public class MainMenuSceneBhv : SceneBhv
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
             {
-                var totalResources = EncryptedPlayerPrefs.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
+                var totalResources = Mock.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
                 if (string.IsNullOrEmpty(totalResources))
                     NavigationService.LoadNextScene(Constants.LoreScene);
                 else

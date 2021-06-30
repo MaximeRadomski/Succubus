@@ -474,4 +474,20 @@ public static class Helper
         }
         return list;
     }
+
+    public static void VarMockTest()
+    {
+        GameObject.Find($"zi{'z'}i").name = $"{'t'}{"es"}{'t'}{0}";
+        GameObject.Find($"c{'a'}ca").name = $"{'t'}{"es"}{'t'}{1}";
+        GameObject.Find($"pro{'u'}t").name = $"{'t'}{"es"}{'t'}{2}";
+        GameObject.Find($"bo{'u'}din").name = $"{'t'}{"es"}{'t'}{3}";
+        GameObject.Find($"sa{'l'}ope{'t'}te").name = $"{'t'}{"es"}{'t'}{4}";
+        GameObject.Find($"os{'k'}our").name = $"{'t'}{"es"}{'t'}{5}";
+        GameObject.Find($"mi{'t'}subis{'h'}i").name = $"{'t'}{"es"}{'t'}{6}";
+        GameObject.Find($"salu{'t'}mon{'p'}ote").name = $"{'t'}{"es"}{'t'}{7}";
+        GameObject.Find($"jes{'u'}isle{'v'}omi").name = $"{'t'}{"es"}{'t'}{8}";
+        GameObject.Find($"Je{'a'}n-Ba{'p'}tiste").name = $"{'t'}{"es"}{'t'}{9}";
+        GameObject.Find($"Su{'p'}er").name = $"{'t'}{"es"}{'t'}{10}";
+        GameObject.Find($"C{'o'}ol").name = $"{'t'}{"es"}{'t'}{11}";
+    }
 }
