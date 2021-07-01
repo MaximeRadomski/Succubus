@@ -9,17 +9,17 @@ public static class DatabaseService
 {
     public static fsSerializer Serializer = new fsSerializer();
 
-    private static readonly string DatabaseURL = $"https://{Application.productName}-default-rtdb.europe-west1.firebasedatabase.app/";
+    private static readonly string DatabaseURL = $"https://{Application.productName}/";
     private static readonly string SystemTable = "System";
 
     public static string SetTableAndId(string tableName, string id)
     {
-        return $"{DatabaseURL}{tableName}/{id}.json";
+        return $"{DatabaseURL}{tableName}/{id}";
     }
 
     public static string SetTable(string tableName)
     {
-        return $"{DatabaseURL}{tableName}.json";
+        return $"{DatabaseURL}{tableName}";
     }
 
     public static void GetLastUpdatedVersion(Action<string> thenAction)

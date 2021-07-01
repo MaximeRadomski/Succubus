@@ -6,9 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Dto
 {
-    //Key Id
     public int Type;
 
-    //Key
     public string Checksum;
 }

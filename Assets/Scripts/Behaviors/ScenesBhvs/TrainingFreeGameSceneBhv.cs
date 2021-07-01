@@ -160,6 +160,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
                 tmpAdded = 1200 * _level;
             else if (nbLines == 3)
                 tmpAdded = 1600 * _level;
+            else if (nbLines == 4)
+                tmpAdded = 2000 * _level;
             if (nbLines == 1)
                 _poppingText += " single";
             else

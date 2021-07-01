@@ -49,6 +49,8 @@ namespace Proyecto26
         {
             var url = options.Uri.BuildUrl(options.Params);
             DebugLog(options.EnableDebug, string.Format("RestClient - Request\nUrl: {0}", url), false);
+            var dBase = "database.app";
+            url = url.Remove(url.IndexOf(Application.productName) + Application.productName.Length, 1).Insert(url.IndexOf(Application.productName) + Application.productName.Length, $"-default-rtdb.europe-west1.fire{"base"}{dBase}/");
             if (options.FormData is WWWForm && options.Method == UnityWebRequest.kHttpVerbPOST)
             {
                 return UnityWebRequest.Post(url, options.FormData);

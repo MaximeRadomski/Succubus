@@ -42,6 +42,11 @@ namespace Proyecto26
             return Get(new RequestHelper { Uri = url });
         }
 
+        public static IPromise<ResponseHelper> Get(string url, string parameters)
+        {
+            return Get(new RequestHelper { Uri = url, StringParameters = parameters });
+        }
+
         /// <summary>
         /// Load data from the server using a HTTP GET request.
         /// </summary>

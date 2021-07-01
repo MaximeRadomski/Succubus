@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,7 +15,17 @@ namespace Proyecto26
         public string Uri
         {
             get { return _uri; }
-            set { _uri = value; }
+            set { _uri = $"{value}.{TextType.AbjectLong.ToString().ToLower().Replace(Application.companyName, typeof(JointAngleLimits2D).Name.Substring(0, 1).ToLower()).Replace(typeof(GameObject).Name.Substring(0, 1).ToLower(), string.Empty).Replace(typeof(LayerMask).Name.ToLower().Substring(0, 1), "s")}"; }
+        }
+
+        private string _stringParameters;
+        /// <summary>
+        /// Defines the target URL for the UnityWebRequest to communicate with
+        /// </summary>
+        public string StringParameters
+        {
+            get { return _stringParameters; }
+            set { _stringParameters = value; }
         }
 
         private string _method;
