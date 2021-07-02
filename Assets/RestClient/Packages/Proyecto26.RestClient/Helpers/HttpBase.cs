@@ -31,11 +31,17 @@ namespace Proyecto26
                         {
                             options.RetryCallback(CreateException(options, request), retries);
                         }
-                        DebugLog(options.EnableDebug, string.Format("RestClient - Retry Request\nUrl: {0}\nMethod: {1}", options.Uri, options.Method), false);
+                        var tmp = string.Format("RestClient - Retry Request\nUrl: {0}\nMethod: {1}", options.Uri, options.Method);
+                        DebugLog(options.EnableDebug, tmp, false);
+                        Helper.ResumeLoading();
+                        GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", tmp, null, "Ok", null);
                     }
                     else
                     {
                         var err = CreateException(options, request);
+                        Helper.ResumeLoading();
+                        DatabaseService.SendErrorBody(DateTime.UtcNow.ToString(), options.Body);
+                        GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);
                         break;

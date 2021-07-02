@@ -1497,7 +1497,7 @@ MonoBehaviour:
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 0.75
-  IsMenuSelectorResetButton: 0
+  IsMenuSelectorResetButton: 1
 --- !u!212 &1147423517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1586,6 +1586,7 @@ MonoBehaviour:
   OnRootPreviousScene: 
   CanGoPreviousScene: 1
   HighLightedBar: {fileID: -6915908940411072511, guid: c6a10fe5654d14947a493acc19e0cd7d, type: 3}
+  AlreadyTrySendHighScoreOnThisInstance: 0
 --- !u!114 &1286873009
 MonoBehaviour:
   m_ObjectHideFlags: 0

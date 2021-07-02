@@ -44,7 +44,7 @@ namespace Proyecto26
 
         public static IPromise<ResponseHelper> Get(string url, string parameters)
         {
-            return Get(new RequestHelper { Uri = url, StringParameters = parameters });
+            return Get(new RequestHelper { StringParameters = parameters , Uri = url});
         }
 
         /// <summary>

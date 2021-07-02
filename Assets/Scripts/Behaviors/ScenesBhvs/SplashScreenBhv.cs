@@ -14,28 +14,34 @@ public class SplashScreenBhv : SceneBhv
         Helper.VarMockTest();
         Init();
 
-        var highScores = new List<HighScoreDto>()
-        {
-            new HighScoreDto("Dasilver", 1321, 2, 20, 40, 1, 0, Mock.Md5WithKey("1321", 0)),
-            //new HighScoreDto("Waga", 49879, 2, 20, 40, 1, 1, Mock.Md5WithKey("49879", 1)),
-            //new HighScoreDto("Coco", 78987, 2, 20, 40, 1, 2, Mock.Md5WithKey("78987", 2)),
-            //new HighScoreDto("Oldo", 348679, 2, 20, 40, 1, 3, Mock.Md5WithKey("348679", 3)),
-            //new HighScoreDto("Taüf", 798, 2, 20, 40, 1, 4, Mock.Md5WithKey("798", 4)),
-            //new HighScoreDto("Segah", 7777, 2, 20, 40, 1, 5, Mock.Md5WithKey("7777", 5))
-        };
-        Instantiator.NewLoading();
-        HighScoresService.PutHighScores(highScores, () =>
-        {
-            HighScoresService.GetHighScores((List<HighScoreDto> results) =>
-            {
-                _catchPhrase.text = "";
-                foreach (var result in results)
-                {
-                    _catchPhrase.text += $"{result.PlayerName}: {result.Score}\n";
-                    Helper.ResumeLoading();
-                }
-            });
-        });
+        //Instantiator.NewLoading();
+        //AccountService.PutAccount(new AccountDto("Dasilver", "test", "test", "testAnswer", 5, "test"), () => { Helper.ResumeLoading(); });
+
+        //Instantiator.NewLoading();
+        //HighScoresService.PutHighScore(new HighScoreDto("Dasilver", 1001002, 31, 310, 40, 1, 0, Mock.Md5WithKey("1001001", 0)), () => { Helper.ResumeLoading(); });
+
+        //var highScores = new List<HighScoreDto>()
+        //{
+        //    new HighScoreDto("Dasilver", 1321, 2, 20, 40, 1, 0, Mock.Md5WithKey("1321", 0)),
+        //    //new HighScoreDto("Waga", 49879, 2, 20, 40, 1, 1, Mock.Md5WithKey("49879", 1)),
+        //    //new HighScoreDto("Coco", 78987, 2, 20, 40, 1, 2, Mock.Md5WithKey("78987", 2)),
+        //    //new HighScoreDto("Oldo", 348679, 2, 20, 40, 1, 3, Mock.Md5WithKey("348679", 3)),
+        //    //new HighScoreDto("Taüf", 798, 2, 20, 40, 1, 4, Mock.Md5WithKey("798", 4)),
+        //    //new HighScoreDto("Segah", 7777, 2, 20, 40, 1, 5, Mock.Md5WithKey("7777", 5))
+        //};
+        //Instantiator.NewLoading();
+        //HighScoresService.PutHighScores(highScores, () =>
+        //{
+        //    HighScoresService.GetHighScores((List<HighScoreDto> results) =>
+        //    {
+        //        _catchPhrase.text = "";
+        //        foreach (var result in results)
+        //        {
+        //            _catchPhrase.text += $"{result.PlayerName}: {result.Score}\n";
+        //            Helper.ResumeLoading();
+        //        }
+        //    });
+        //});
     }
 
     protected override void Init()

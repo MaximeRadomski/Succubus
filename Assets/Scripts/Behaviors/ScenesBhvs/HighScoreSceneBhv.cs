@@ -21,7 +21,7 @@ public class HighScoreSceneBhv : SceneBhv
         Init();
     }
 
-    private void Update()
+    protected override void FrameUpdate()
     {
         if (_tiltingBar != null)
             _tiltingBar.Tilt();
@@ -78,12 +78,15 @@ public class HighScoreSceneBhv : SceneBhv
         if (Constants.CurrentHighScoreContext != null)
             PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
         GameObject.Find("ButtonOnlineScores").GetComponent<ButtonBhv>().EndActionDelegate = GoToHighScores;
+        TrySendLocalHighest(null);
     }
 
     private void UpdateScoreList()
     {
         _scoreHistory.Sort();
         _scoreHistory.Reverse();
+        foreach (Transform child in _scoreHistoryContainer.transform)
+            Destroy(child.gameObject);
         for (int i = 0; i < _scoreHistory.Count; ++i)
         {
             var isCurrent = Constants.CurrentHighScoreContext != null && _scoreHistory[i] == Constants.CurrentHighScoreContext[0];
@@ -148,15 +151,31 @@ public class HighScoreSceneBhv : SceneBhv
                     afterTrySend?.Invoke();
                     return;
                 }
-                else
+                //If exact same score and 
+                HighScoresService.CheckCloneScore(highestScore, (clones) =>
                 {
+                    if (clones != null)
+                    {
+                        foreach (var clone in clones)
+                        {
+                            if (clone.PlayerName != account.PlayerName
+                            && clone.Lines == highestScore.Lines
+                            && clone.Level == highestScore.Level
+                            && clone.Pieces == highestScore.Pieces)
+                            {
+                                Debug.Log("CLONE from another player Received");
+                                afterTrySend?.Invoke();
+                                return;
+                            }
+                        }                        
+                    }
                     HighScoresService.PutHighScore(new HighScoreDto(account.PlayerName, highestScore.Score, highestScore.Level, highestScore.Lines, highestScore.Pieces, highestScore.CharacterId, highestScore.Type, highestScore.Checksum), () =>
                     {
                         Debug.Log("HighScore Sent");
                         afterTrySend?.Invoke();
                     });
                     return;
-                }
+                });
             });
         });
     }

@@ -11,6 +11,8 @@ public static class DatabaseService
 
     private static readonly string DatabaseURL = $"https://{Application.productName}/";
     private static readonly string SystemTable = "System";
+    private static readonly string LogsTable = "Logs";
+    private static readonly string BlackList = "BlackList";
 
     public static string SetTableAndId(string tableName, string id)
     {
@@ -30,6 +32,23 @@ public static class DatabaseService
             if (!string.IsNullOrEmpty(returnValue.Text) && returnValue.Text != "null")
                 version = returnValue.Text.Replace("\"", "");
             thenAction.Invoke(version);
+        });
+    }
+
+    public static void SendErrorBody(string id, object content)
+    {
+        id = id.Replace(" ", "").Replace("/", "-");
+        RestClient.Put<object>(SetTableAndId(LogsTable, $"Error_{id}"), content).Then(r =>
+        {
+            var name = "";
+            if (content is AccountDto account)
+                name = account.PlayerName;
+            else if (content is HighScoreDto highScore)
+                name = highScore.PlayerName;
+            RestClient.Put<object>(SetTableAndId(BlackList, name), content).Then(r =>
+            {
+
+            });
         });
     }
 }

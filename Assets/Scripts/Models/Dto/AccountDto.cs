@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public class AccountDto : Dto
 {
-    //Checksum
     public string PlayerName;
     public string Password;
     public string SecretQuestion;

@@ -123,7 +123,8 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveTrainingHighestScore(List<int> scoreContext, string encryptedScore, int type)
     {
-        var score = new HighScoreDto("", scoreContext[0], scoreContext[1], scoreContext[2], scoreContext[3], scoreContext[4], type, encryptedScore);
+        var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
+        var score = new HighScoreDto(lastCredentials != null && lastCredentials.PlayerName != null ? lastCredentials.PlayerName : "", scoreContext[0], scoreContext[1], scoreContext[2], scoreContext[3], scoreContext[4], type, encryptedScore);
         Mock.SetString(Constants.PpTrainingHighestScore, JsonUtility.ToJson(score));
     }
 

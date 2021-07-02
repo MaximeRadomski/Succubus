@@ -442,7 +442,10 @@ public static class Helper
         {
             var gameObject = GameObject.Find(Constants.GoRestLoading);
             if (gameObject == null)
+            {
                 i = 10;
+                break;
+            }
             var test = gameObject.GetComponent<LoadingBhv>();
             test.ForceDestroy();
             ++i;
@@ -489,5 +492,23 @@ public static class Helper
         GameObject.Find($"Je{'a'}n-Ba{'p'}tiste").name = $"{'t'}{"es"}{'t'}{9}";
         GameObject.Find($"Su{'p'}er").name = $"{'t'}{"es"}{'t'}{10}";
         GameObject.Find($"C{'o'}ol").name = $"{'t'}{"es"}{'t'}{11}";
+    }
+
+    public static string ToSpacedIntString(this int score)
+    {
+        var scoreStr = score.ToString();
+        var returnStr = "";
+        var third = 0;
+        for (int i = scoreStr.Length - 1; i >= 0; --i)
+        {
+            returnStr = returnStr.Insert(0, scoreStr[i].ToString());
+            ++third;
+            if (third == 3)
+            {
+                third = 0;
+                returnStr = returnStr.Insert(0, " ");
+            }
+        }
+        return returnStr;
     }
 }
