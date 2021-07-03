@@ -39,11 +39,16 @@ public static class HighScoresService
         });
     }
 
-    public static void GetHighScores(int lastHighest, Action<List<HighScoreDto>> resultAction = null, int range = 5)
+    public static void GetHighScores(int lastHighest, int range, Action<List<HighScoreDto>> resultAction = null)
     {
         var param = $"?orderBy=\"Score\"&endAt={lastHighest}&limitToLast={range}";
         RestClient.Get(DatabaseService.SetTable(TableHighScores), param).Then(response =>
         {
+            if (response.Text == null || response.Text == "null")
+            {
+                resultAction.Invoke(null);
+                return;
+            }
             var responseJson = response.Text; // Using the FullSerializer library: https://github.com/jacobdufault/fullserializer
                                               // to serialize more complex types (a Dictionary, in this case)
             var data = fsJsonParser.Parse(responseJson);

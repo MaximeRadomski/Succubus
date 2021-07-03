@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using static AccountSceneBhv;
@@ -32,11 +33,19 @@ public class Instantiator : MonoBehaviour
         return tmpLevelInstance;
     }
 
-    public void New321(Vector3 position, System.Func<bool> afterAnimation)
+    public void New321(Vector3 position, Action afterAnimation)
     {
         var tmp321Object = Resources.Load<GameObject>("Prefabs/321");
         var tmp321Instance = Instantiate(tmp321Object, position, tmp321Object.transform.rotation);
-        tmp321Instance.GetComponent<A321Bhv>().Init(afterAnimation);
+        tmp321Instance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
+    }
+
+    public void NewBackgroundPiece(Vector3 position, Action afterAnimation)
+    {
+        var tmpBackgroundPieceObject = Resources.Load<GameObject>("Prefabs/BackgroundPiece");
+        var tmpBackgroundPieceInstance = Instantiate(tmpBackgroundPieceObject, position, tmpBackgroundPieceObject.transform.rotation);
+        DontDestroyOnLoad(tmpBackgroundPieceInstance);
+        tmpBackgroundPieceInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
     }
 
     public void NewRotationPoint(GameObject piece)

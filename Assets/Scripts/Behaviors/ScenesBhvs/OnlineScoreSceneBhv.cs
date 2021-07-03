@@ -7,7 +7,9 @@ public class OnlineScoreSceneBhv : SceneBhv
     public override MusicType MusicType => MusicType.Boss;
 
     private int _currentPage;
-    private List<int> _currentHighests;
+    private int _lastHighest;
+    private List<HighScoreDto> _highScores;
+    private int _range;
 
     private TMPro.TextMeshPro _page;
     private List<GameObject> _scoreGo;
@@ -25,10 +27,12 @@ public class OnlineScoreSceneBhv : SceneBhv
         GameObject.Find("ButtonPrevious").GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPage(_currentPage - 1);
         GameObject.Find("ButtonFindMe").GetComponent<ButtonBhv>().EndActionDelegate = FindMe;
         _page = GameObject.Find("Page").GetComponent<TMPro.TextMeshPro>();
+        _highScores = new List<HighScoreDto>();
+        _range = 10;
         _scoreGo = new List<GameObject>();
         for (int i = 0; i < 5; ++i)
             _scoreGo.Add(GameObject.Find($"OnlineScore{i}"));
-        _currentHighests = new List<int>() { 999999999 };
+        _lastHighest = 999999999;
         GoToPage(_currentPage);
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPrevious(true);
     }
@@ -40,7 +44,7 @@ public class OnlineScoreSceneBhv : SceneBhv
         _page.text = $"Page {i + 1}";
         var comingFromNext = i > _currentPage;
         _currentPage = i;
-        UpdateList(comingFromNext);
+        UpdateList();
     }
 
     private void FindMe()
@@ -48,37 +52,56 @@ public class OnlineScoreSceneBhv : SceneBhv
 
     }
 
-    private void UpdateList(bool comingFromNext = false)
+    private void UpdateList()
     {
-        Instantiator.NewLoading();
-        HighScoresService.GetHighScores(_currentHighests[_currentPage], (list) =>
+        if (_highScores.Count <= (_currentPage * 5))
         {
-            Helper.ResumeLoading();
-            if (list == null || list.Count == 0)
+            Instantiator.NewLoading();
+            HighScoresService.GetHighScores(_lastHighest, _range, (list) =>
             {
-                GoToPage(_currentPage - 1);
-                return;
-            }
-            if (_currentPage >= _currentHighests.Count)
-                _currentHighests.Add(list[list.Count].Score - 1);
-            for (int i = 0; i < 5; ++i)
-            {
-                if (i <= list.Count)
+                Helper.ResumeLoading();
+                if (list == null || list.Count == 0)
                 {
-                    _scoreGo[i].SetActive(true);
-                    _scoreGo[i].transform.Find("Position").GetComponent<TMPro.TextMeshPro>().text = $"{(_currentPage * 5) + i + 1}";
-                    _scoreGo[i].transform.Find("Character00").GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + list[i].CharacterId);
-                    _scoreGo[i].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = $"{list[i].PlayerName}";
-                    _scoreGo[i].transform.Find("Score").GetComponent<TMPro.TextMeshPro>().text = $"{list[i].Score.ToSpacedIntString()}";
-                    _scoreGo[i].transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = $"{list[i].Level}";
-                    _scoreGo[i].transform.Find("Lines").GetComponent<TMPro.TextMeshPro>().text = $"{list[i].Lines}";
-                    _scoreGo[i].transform.Find("Pieces").GetComponent<TMPro.TextMeshPro>().text = $"{list[i].Pieces}";
-
+                    GoToPage(_currentPage - 1);
+                    return;
                 }
-                else
-                    _scoreGo[i].SetActive(false);
+                foreach (var onlineScore in list)
+                {
+                    _highScores.Add(onlineScore);
+                }
+                _lastHighest = list[list.Count - 1].Score - 1;
+                DisplayList();
+            });
+        }
+        else
+        {
+            DisplayList();
+        }
+        
+    }
+
+    private void DisplayList()
+    {
+        var maxPage = (_currentPage * 5) + 5;
+        int i = 0;
+        for (int h = _currentPage * 5; h < maxPage; ++h)
+        {
+            if (h < _highScores.Count)
+            {
+                _scoreGo[i].SetActive(true);
+                _scoreGo[i].transform.Find("Position").GetComponent<TMPro.TextMeshPro>().text = $"{(_currentPage * 5) + h + 1}";
+                _scoreGo[i].transform.Find("Character00").GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highScores[h].CharacterId);
+                _scoreGo[i].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].PlayerName}";
+                _scoreGo[i].transform.Find("Score").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Score.ToSpacedIntString()}";
+                _scoreGo[i].transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Level}";
+                _scoreGo[i].transform.Find("Lines").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Lines}";
+                _scoreGo[i].transform.Find("Pieces").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Pieces}";
+
             }
-        });
+            else
+                _scoreGo[i].SetActive(false);
+            ++i;
+        }
     }
 
     private object GoToPrevious(bool result)

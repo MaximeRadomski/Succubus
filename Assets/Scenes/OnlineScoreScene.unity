@@ -1689,7 +1689,7 @@ MonoBehaviour:
   StretchDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
-  ConeVisionMult: 1.5
+  ConeVisionMult: 0.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &1184881431
 BoxCollider2D:

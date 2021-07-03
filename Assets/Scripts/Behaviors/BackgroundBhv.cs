@@ -36,12 +36,12 @@ public class BackgroundBhv : FrameRateBehavior
     {
         if (_isMoving)
             Move();
-        if (!!_fadeBlocksMuted)
+        if (!_fadeBlocksMuted)
         {
             ++_i;
-            if (_i >= 10)
+            if (_i >= 40)
             {
-                _instantiator.NewFadeBlock(Realm.Hell, new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), 2, -1);
+                _instantiator.NewBackgroundPiece(new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), null);
                 _i = 0;
             }
         }

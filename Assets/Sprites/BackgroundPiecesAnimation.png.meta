@@ -1,0 +1,1416 @@
+fileFormatVersion: 2
+guid: b97f4a5cbf6e40b47ae7ee7201f59e49
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5054066618479734390
+    second: BackgroundPiecesAnimation_0
+  - first:
+      213: -402731129435989434
+    second: BackgroundPiecesAnimation_1
+  - first:
+      213: 1615329846355851346
+    second: BackgroundPiecesAnimation_2
+  - first:
+      213: -1032658284917897967
+    second: BackgroundPiecesAnimation_3
+  - first:
+      213: -2320025993933893440
+    second: BackgroundPiecesAnimation_4
+  - first:
+      213: -5277765215066712735
+    second: BackgroundPiecesAnimation_5
+  - first:
+      213: -6190819709790928974
+    second: BackgroundPiecesAnimation_6
+  - first:
+      213: 4894032053766622215
+    second: BackgroundPiecesAnimation_7
+  - first:
+      213: -6971908393509782042
+    second: BackgroundPiecesAnimation_8
+  - first:
+      213: -8705657547986057189
+    second: BackgroundPiecesAnimation_9
+  - first:
+      213: -6126467499047112674
+    second: BackgroundPiecesAnimation_10
+  - first:
+      213: -1030738948413129794
+    second: BackgroundPiecesAnimation_11
+  - first:
+      213: 285883387352887077
+    second: BackgroundPiecesAnimation_12
+  - first:
+      213: -7487482321258139430
+    second: BackgroundPiecesAnimation_13
+  - first:
+      213: 8210230773770256461
+    second: BackgroundPiecesAnimation_14
+  - first:
+      213: -3390128360919390216
+    second: BackgroundPiecesAnimation_15
+  - first:
+      213: -3421608029195022006
+    second: BackgroundPiecesAnimation_16
+  - first:
+      213: -1605335408123099531
+    second: BackgroundPiecesAnimation_17
+  - first:
+      213: 6697526105214689942
+    second: BackgroundPiecesAnimation_18
+  - first:
+      213: 8075043552331997261
+    second: BackgroundPiecesAnimation_19
+  - first:
+      213: -5107951373831222083
+    second: BackgroundPiecesAnimation_20
+  - first:
+      213: 8640907830755882983
+    second: BackgroundPiecesAnimation_21
+  - first:
+      213: 7281969247925185661
+    second: BackgroundPiecesAnimation_22
+  - first:
+      213: -8951894783251638189
+    second: BackgroundPiecesAnimation_23
+  - first:
+      213: -721328714334875622
+    second: BackgroundPiecesAnimation_24
+  - first:
+      213: -8183440282579193999
+    second: BackgroundPiecesAnimation_25
+  - first:
+      213: 2800719079842639782
+    second: BackgroundPiecesAnimation_26
+  - first:
+      213: -4766194664111185088
+    second: BackgroundPiecesAnimation_27
+  - first:
+      213: 1681324906417776530
+    second: BackgroundPiecesAnimation_28
+  - first:
+      213: -8223677137250952174
+    second: BackgroundPiecesAnimation_29
+  - first:
+      213: 3703873607045358497
+    second: BackgroundPiecesAnimation_30
+  - first:
+      213: 842117133577009819
+    second: BackgroundPiecesAnimation_31
+  - first:
+      213: -311101543640573469
+    second: BackgroundPiecesAnimation_32
+  - first:
+      213: 7342308399326607728
+    second: BackgroundPiecesAnimation_33
+  - first:
+      213: -2498715133727969207
+    second: BackgroundPiecesAnimation_34
+  - first:
+      213: -1193850625282244678
+    second: BackgroundPiecesAnimation_35
+  - first:
+      213: 6822484709311425213
+    second: BackgroundPiecesAnimation_36
+  - first:
+      213: -3231306712775570015
+    second: BackgroundPiecesAnimation_37
+  - first:
+      213: 4590252802571090554
+    second: BackgroundPiecesAnimation_38
+  - first:
+      213: -2074996886732632187
+    second: BackgroundPiecesAnimation_39
+  - first:
+      213: 8994103681027379918
+    second: BackgroundPiecesAnimation_40
+  - first:
+      213: 8969527523896271552
+    second: BackgroundPiecesAnimation_41
+  - first:
+      213: -3319305175030209522
+    second: BackgroundPiecesAnimation_42
+  - first:
+      213: 5685071868958607223
+    second: BackgroundPiecesAnimation_43
+  - first:
+      213: -4743736675042765994
+    second: BackgroundPiecesAnimation_44
+  - first:
+      213: 1551861921181818788
+    second: BackgroundPiecesAnimation_45
+  - first:
+      213: -7162133363728786629
+    second: BackgroundPiecesAnimation_46
+  - first:
+      213: -2237568692972202854
+    second: BackgroundPiecesAnimation_47
+  - first:
+      213: -5075356150530835950
+    second: BackgroundPiecesAnimation_48
+  - first:
+      213: 2264879309303236820
+    second: BackgroundPiecesAnimation_49
+  - first:
+      213: -3181881240631583571
+    second: BackgroundPiecesAnimation_50
+  - first:
+      213: 4968921176175846425
+    second: BackgroundPiecesAnimation_51
+  - first:
+      213: -5103000697898210446
+    second: BackgroundPiecesAnimation_52
+  - first:
+      213: -642804496141916592
+    second: BackgroundPiecesAnimation_53
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 7
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67ee4a9dfc6a32640800000000000000
+      internalID: 5054066618479734390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ad9f9eb26396af0800000000000000
+      internalID: -402731129435989434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_2
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2587027dfedca6610800000000000000
+      internalID: 1615329846355851346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_3
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 115ca19d2c24ba1f0800000000000000
+      internalID: -1032658284917897967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_4
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c0d5e986ac9dcfd0800000000000000
+      internalID: -2320025993933893440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_5
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 165190cef7c91c6b0800000000000000
+      internalID: -5277765215066712735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_6
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bfbc69364ac51aa0800000000000000
+      internalID: -6190819709790928974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_7
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70c822429381be340800000000000000
+      internalID: 4894032053766622215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_8
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6edf84e314ece3f90800000000000000
+      internalID: -6971908393509782042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_9
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b18c71ca59a4f2780800000000000000
+      internalID: -8705657547986057189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10325fd44a6afaa0800000000000000
+      internalID: -6126467499047112674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_11
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbfca3336412b1f0800000000000000
+      internalID: -1030738948413129794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_12
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52faa561d69a7f300800000000000000
+      internalID: 285883387352887077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_13
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0346bcf7e171890800000000000000
+      internalID: -7487482321258139430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_14
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d408e8a936990f170800000000000000
+      internalID: 8210230773770256461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_15
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f72c68a738d3f0d0800000000000000
+      internalID: -3390128360919390216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_16
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a41d43b30a10480d0800000000000000
+      internalID: -3421608029195022006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_17
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5764775a3f3b8b9e0800000000000000
+      internalID: -1605335408123099531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_18
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6922a37f18462fc50800000000000000
+      internalID: 6697526105214689942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_19
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d40ae82d351501070800000000000000
+      internalID: 8075043552331997261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_20
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbc42d0e949ec19b0800000000000000
+      internalID: -5107951373831222083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_21
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e7781df3ebaae770800000000000000
+      internalID: 8640907830755882983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_22
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7c26ef0370ce0560800000000000000
+      internalID: 7281969247925185661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_23
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3581d91bf1b74c380800000000000000
+      internalID: -8951894783251638189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_24
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a10d7c72b535df5f0800000000000000
+      internalID: -721328714334875622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_25
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17fae34bb649e6e80800000000000000
+      internalID: -8183440282579193999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_26
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 119
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6afedad0a272ed620800000000000000
+      internalID: 2800719079842639782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0436a4394331bddb0800000000000000
+      internalID: -4766194664111185088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_28
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2976c072814455710800000000000000
+      internalID: 1681324906417776530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_29
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21cd7aee631afdd80800000000000000
+      internalID: -8223677137250952174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_30
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a322e0fb6dc66330800000000000000
+      internalID: 3703873607045358497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_31
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9ab02e321dcfab00800000000000000
+      internalID: 842117133577009819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_32
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e95a3a5bcebeabf0800000000000000
+      internalID: -311101543640573469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_33
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 079ba35869e15e560800000000000000
+      internalID: 7342308399326607728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_34
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 940704b13d7c25dd0800000000000000
+      internalID: -2498715133727969207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_35
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abf7c2d7e279e6fe0800000000000000
+      internalID: -1193850625282244678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_36
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbaaa0032b55eae50800000000000000
+      internalID: 6822484709311425213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_37
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ad4da83aa71823d0800000000000000
+      internalID: -3231306712775570015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_38
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7abd7e8a9ad3bf30800000000000000
+      internalID: 4590252802571090554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_39
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58f824843512433e0800000000000000
+      internalID: -2074996886732632187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_40
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec29ba425a971dc70800000000000000
+      internalID: 8994103681027379918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_41
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c22de8a2c92a7c70800000000000000
+      internalID: 8969527523896271552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_42
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e04653d97857fe1d0800000000000000
+      internalID: -3319305175030209522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_43
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77708d77ebe65ee40800000000000000
+      internalID: 5685071868958607223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_44
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6535510a0acda2eb0800000000000000
+      internalID: -4743736675042765994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_45
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af5f78f132598510800000000000000
+      internalID: 1551861921181818788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_46
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3bd8fcf6adfa9c90800000000000000
+      internalID: -7162133363728786629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_47
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a945bdef02f82f0e0800000000000000
+      internalID: -2237568692972202854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_48
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21af303b876b099b0800000000000000
+      internalID: -5075356150530835950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_49
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d8c6226bb77e6f10800000000000000
+      internalID: 2264879309303236820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_50
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dacdca6bedfa7d3d0800000000000000
+      internalID: -3181881240631583571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_51
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 914a0e6bb7725f440800000000000000
+      internalID: 4968921176175846425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_52
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27be431f6ef7e29b0800000000000000
+      internalID: -5103000697898210446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundPiecesAnimation_53
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 0
+        width: 7
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 056ef6b67bc4417f0800000000000000
+      internalID: -642804496141916592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

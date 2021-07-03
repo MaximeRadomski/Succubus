@@ -67,7 +67,6 @@ public abstract class GameSceneBhv : SceneBhv
             Instantiator.New321(_panelGame.transform.position, () =>
                 {
                     Paused = false;
-                    return true;
                 });
             return true;
         }
