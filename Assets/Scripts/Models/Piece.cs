@@ -184,7 +184,7 @@ public class Piece : MonoBehaviour
                 int roundedChildX = Mathf.RoundToInt(child.position.x);
                 int roundedChildY = Mathf.RoundToInt(child.position.y);
 
-                if (!AnyChildWithPosition(roundedChildX + x, roundedChildY + y))
+                if (!AnyChildWithPosition(roundedChildX + x, roundedChildY + y) && roundedChildX >= 0 && roundedChildX < Constants.PlayFieldWidth)
                 {
                     ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);

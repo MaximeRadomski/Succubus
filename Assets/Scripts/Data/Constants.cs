@@ -50,6 +50,7 @@ public static class Constants
     public const string TagPoppingText = "PoppingText";
     public const string TagLightRows = "LightRows";
     public const string TagVisionBlock = "VisionBlock";
+    public const string TagOverBlend = "OverBlend";
 
     // UNITS OF MEASURE //
     public const int HourInMinutes = 60;

@@ -58,6 +58,8 @@ public class MusicPartitionBhv : MonoBehaviour
 
     public void NextNote(KeyBinding pressedNote = KeyBinding.None)
     {
+        if (_id >= _notes.Count)
+            return;
         if (pressedNote != KeyBinding.None && pressedNote != _notes[_id].KeyBinding)
         {
             _gameplayControler.CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);

@@ -430,6 +430,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &86176634
@@ -782,6 +783,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &274888166
@@ -912,6 +914,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &275038437
@@ -1042,6 +1045,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &328909021
@@ -1164,7 +1168,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -131127381
   m_SortingLayer: -8
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: -8461514266414155272, guid: d18714b0cee243942a821d09350737d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1252,6 +1256,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &390089016
@@ -1572,6 +1577,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1001 &847159010
@@ -1955,6 +1961,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &944535801
@@ -2084,6 +2091,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &1270860756
@@ -3352,6 +3360,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 0.5
   IsMenuSelectorResetButton: 1
 --- !u!212 &2080949650

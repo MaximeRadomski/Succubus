@@ -237,6 +237,9 @@ public class Instantiator : MonoBehaviour
     public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,
         System.Func<bool, object> resultAction, bool reverse = false)
     {
+        var already = GameObject.FindGameObjectsWithTag(Constants.TagOverBlend);
+        if (already != null && already.Length > 0 && already[0].GetComponent<OverBlendBhv>().State < 2 && !already[0].GetComponent<OverBlendBhv>().HasResulted)
+            return;
         var tmpOverBlendObject = Resources.Load<GameObject>("Prefabs/OverBlend");
         var tmpOverBlendInstance = Instantiate(tmpOverBlendObject, tmpOverBlendObject.transform.position, tmpOverBlendObject.transform.rotation);
         tmpOverBlendInstance.GetComponent<OverBlendBhv>().SetPrivates(overBlendType, message, constantLoadingSpeed, resultAction, reverse);

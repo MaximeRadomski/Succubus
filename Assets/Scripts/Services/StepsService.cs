@@ -26,7 +26,18 @@ public class StepsService
     public void GenerateOriginSteps(Run run, Character character)
     {
         run.Steps = "";
-        var originStep = new Step(50, 50, run.CurrentRealm, StepType.S1111, true, false, LootType.None, 0, null);
+        var first = StepType.S0000;
+        bool isOk = false;
+        while (!isOk)
+        {
+            first = (StepType)Random.Range(3, Helper.EnumCount<StepType>());
+            if (first != StepType.S0001
+                && first != StepType.S0010
+                && first != StepType.S0100
+                && first != StepType.S1000)
+                isOk = true;
+        }        
+        var originStep = new Step(50, 50, run.CurrentRealm, first, true, false, LootType.None, 0, null);
         run.Steps += originStep.ToParsedString();
         GenerateAdjacentSteps(run, character, originStep);
     }
@@ -72,7 +83,7 @@ public class StepsService
                     minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
-        var chancePercentageToHaveAnExit = 70;
+        var chancePercentageToHaveAnExit = 80;
         for (int i = 0; i < 4; ++i)
         {
             if (minimumExit[i] == '1' || minimumExit[i] == '.')
@@ -338,6 +349,6 @@ public class StepsService
         else if (run.RealmLevel == 1)
             idFromEnd = 3;
         var idBoss = realmOpponents.Count - idFromEnd;
-        return new List<Opponent>() { realmOpponents[idBoss] };
+        return new List<Opponent>() { realmOpponents[idBoss].Clone() };
     }
 }

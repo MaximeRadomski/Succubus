@@ -27,6 +27,8 @@ public static class NavigationService
 
     public static void LoadNextScene(string name)
     {
+        if (name == SceneManager.GetActiveScene().name)
+            return;
         Constants.NameLastScene = SceneManager.GetActiveScene().name;
         _path += "/" + name;
         //Debug.Log("    [DEBUG]    Path = " + _path);

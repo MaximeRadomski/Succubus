@@ -62,10 +62,16 @@ public class HighScoreSceneBhv : SceneBhv
         }
         _scoreHistory.Sort();
         _scoreHistory.Reverse();
+        var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
         if (Constants.CurrentHighScoreContext != null && Constants.CurrentHighScoreContext[0] >= _scoreHistory[0])
         {
             PlayerPrefsHelper.SaveTrainingHighestScore(Constants.CurrentHighScoreContext, encryptedScore, type);
             TrySendLocalHighest(null);
+        }
+        else if (Constants.CurrentHighScoreContext != null && lastCredentials != null && lastCredentials.PlayerName != null)
+        {
+            var notHighestScoreButStill = new HighScoreDto(lastCredentials.PlayerName, Constants.CurrentHighScoreContext[0], Constants.CurrentHighScoreContext[1], Constants.CurrentHighScoreContext[2], Constants.CurrentHighScoreContext[3], Constants.CurrentHighScoreContext[4], type, encryptedScore);
+            TrySendLocalHighest(null, notHighestScoreButStill);
         }
         else if (Constants.CurrentHighScoreContext == null)
         {
@@ -114,7 +120,7 @@ public class HighScoreSceneBhv : SceneBhv
         GoToPrevious();
     }
 
-    private void TrySendLocalHighest(Action afterTrySend)
+    private void TrySendLocalHighest(Action afterTrySend, HighScoreDto thisOneInstead = null)
     {
         if (AlreadyTrySendHighScoreOnThisInstance == true)
         {
@@ -132,6 +138,8 @@ public class HighScoreSceneBhv : SceneBhv
             HighScoresService.GetHighScore(account.PlayerName, (onlineScore) =>
             {
                 var highestScore = PlayerPrefsHelper.GetTrainingHighestScore();
+                if (thisOneInstead != null)
+                    highestScore = thisOneInstead;
                 //IF Better account score outside of local scores
                 if (onlineScore != null && onlineScore.Score > highestScore.Score)
                 {

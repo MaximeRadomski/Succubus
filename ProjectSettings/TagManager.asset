@@ -12,6 +12,7 @@ TagManager:
   - LightRows
   - PoppingText
   - VisionBlock
+  - OverBlend
   layers:
   - Default
   - TransparentFX

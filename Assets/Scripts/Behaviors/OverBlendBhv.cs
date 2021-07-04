@@ -2,6 +2,9 @@
 
 public class OverBlendBhv : FrameRateBehavior
 {
+    public int State; // 0:Start | 1:LoadingStart | 2: LoadingEnd | 3:End
+    public bool HasResulted = false;
+
     private GameObject _loading;
     private GameObject _loadingTop;
     private GameObject _loadingBorders;
@@ -14,7 +17,6 @@ public class OverBlendBhv : FrameRateBehavior
     private Vector3 _sourcePosition;
     private Vector3 _endPosition;
     private Vector3 _activePosition;
-    private int _state; // 0:Start | 1:LoadingStart | 2: LoadingEnd | 3:End
     private float? _constantLoadingSpeed;
     private float _loadPercent;
     private float _halfSpriteSize;
@@ -35,7 +37,7 @@ public class OverBlendBhv : FrameRateBehavior
             _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         _activePosition = new Vector3(0.0f, 0.0f, 0.0f);
         _endPosition = new Vector3(-_sourcePosition.x, 0.0f, 0.0f);
-        _state = 0;
+        State = 0;
         _constantLoadingSpeed = constantLoadingSpeed;
         _resultAction = resultAction;
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -62,7 +64,7 @@ public class OverBlendBhv : FrameRateBehavior
 
     protected override void FrameUpdate()
     {
-        if (_state == 0)
+        if (State == 0)
         {
             transform.position = Vector3.Lerp(transform.position, _activePosition, 0.25f);
             _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlain, 0.2f);
@@ -70,16 +72,16 @@ public class OverBlendBhv : FrameRateBehavior
             {
                 transform.position = _activePosition;
                 _spriteRenderer.color = Constants.ColorPlain;
-                _state = 1;
+                State = 1;
                 if (_overBlendType == OverBlendType.StartActionLoadingEnd)
-                    _resultAction?.Invoke(true);
+                    HasResulted = (bool)_resultAction?.Invoke(true);
             }
         }
-        else if (_state == 1)
+        else if (State == 1)
         {
             AddLoadingPercent(_constantLoadingSpeed);
         }
-        else if (_state == 2)
+        else if (State == 2)
         {
             transform.position = Vector3.Lerp(transform.position, _endPosition, 0.25f);
             _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainTransparent, 0.1f);
@@ -87,13 +89,13 @@ public class OverBlendBhv : FrameRateBehavior
             {
                 transform.position = _endPosition;
                 _spriteRenderer.color = Constants.ColorPlainTransparent;
-                _state = 3;
+                State = 3;
             }
         }
-        else if (_state == 3)
+        else if (State == 3)
         {
             if (_overBlendType == OverBlendType.StartLoadingEndAction)
-                _resultAction?.Invoke(true);
+                HasResulted = (bool)_resultAction?.Invoke(true);
             ExitOverBlend();
         }
     }
@@ -103,7 +105,7 @@ public class OverBlendBhv : FrameRateBehavior
         if (percentToAdd == null && _overBlendType == OverBlendType.StartLoadMidActionEnd)
         {
             _midActionDone = true;
-            _resultAction?.Invoke(true);
+            HasResulted = (bool)_resultAction?.Invoke(true);
             Constants.InputLocked = false;
             EndPercent();
             return;
@@ -117,20 +119,20 @@ public class OverBlendBhv : FrameRateBehavior
         {
             _midActionDone = true;
             Constants.InputLocked = false;
-            _resultAction?.Invoke(true);
+            HasResulted = (bool)_resultAction?.Invoke(true);
         }
     }
 
     public void EndPercent()
     {
-        _state = 2;
+        State = 2;
         if (_overBlendType == OverBlendType.StartLoadingActionEnd)
-            _resultAction?.Invoke(true);
+            HasResulted = (bool)_resultAction?.Invoke(true);
     }
 
     public virtual void ExitOverBlend()
     {
-        _state = -1;
+        State = -1;
         Constants.InputLocked = false;
         Destroy(gameObject);
     }
