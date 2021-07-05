@@ -49,6 +49,7 @@ public class GameplayControler : MonoBehaviour
     private bool _lastLockTwist;
     private bool _isTraining;
     private bool _isFreeTraining;
+    private bool _hasAlteredPiecePositionAfterResume;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -215,6 +216,7 @@ public class GameplayControler : MonoBehaviour
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
+        _hasAlteredPiecePositionAfterResume = false;
 #if UNITY_ANDROID
         if (_gameplayChoice != GameplayChoice.Buttons)
             SetSwipeGameplayChoice(_gameplayChoice);
@@ -675,6 +677,14 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
+        if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastPiecePosition != null && Constants.OnResumeLastPieceRotation != null)
+        {
+            CurrentPiece.transform.position = Constants.OnResumeLastPiecePosition.Value;
+            CurrentPiece.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
+            CurrentGhost.transform.position = Constants.OnResumeLastPiecePosition.Value;
+            CurrentGhost.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
+            _hasAlteredPiecePositionAfterResume = true;
+        }
         if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         else

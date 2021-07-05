@@ -303,6 +303,8 @@ public static class Constants
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
     public static int HeightLimiterResetLines = -1;
+    public static Vector3? OnResumeLastPiecePosition;
+    public static Quaternion? OnResumeLastPieceRotation;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -324,6 +326,8 @@ public static class Constants
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
         HeightLimiterResetLines = -1;
+        OnResumeLastPiecePosition = null;
+        OnResumeLastPieceRotation = null;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

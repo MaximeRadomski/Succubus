@@ -145,6 +145,8 @@ public class HighScoreSceneBhv : SceneBhv
                 {
                     Debug.Log("Higher Score Received");
                     _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory();
+                    if (_scoreHistory.Contains(onlineScore.Score))
+                        return;
                     _scoreHistory.Add(onlineScore.Score);
                     PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
                     PlayerPrefsHelper.SaveTrainingHighestScore(new List<int>() { onlineScore.Score, onlineScore.Level, onlineScore.Lines, onlineScore.Pieces, onlineScore.CharacterId }, onlineScore.Checksum, onlineScore.Type);

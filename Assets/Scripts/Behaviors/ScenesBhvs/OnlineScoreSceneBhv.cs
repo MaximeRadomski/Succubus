@@ -9,8 +9,8 @@ public class OnlineScoreSceneBhv : SceneBhv
     private int _currentPage;
     private int _lastHighest;
     private List<HighScoreDto> _highScores;
-    private int _range = 2;
-    private int _bigRange = 100;
+    private int _range = 50;
+    private int _bigRange = 200;
     private int _listItemDisplay = 5;
     private AccountDto _account;
     private bool _reachedEndOfOnlineScores;

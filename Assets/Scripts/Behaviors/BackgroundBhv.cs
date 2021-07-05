@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class BackgroundBhv : FrameRateBehavior
 {
+    public bool BackgroundParticles = true;
+
     private Vector2 _positionToReach;
     private bool _isMoving;
     private Instantiator _instantiator;
     private int _i;
-    private bool _fadeBlocksMuted;
     private Camera _mainCamera;
 
     void Start()
@@ -20,7 +21,6 @@ public class BackgroundBhv : FrameRateBehavior
     private void Init()
     {
         NewPositionToReach();
-        SceneManager.sceneLoaded += OnSceneLoaded;
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _i = 0;
         _isMoving = true;
@@ -36,7 +36,7 @@ public class BackgroundBhv : FrameRateBehavior
     {
         if (_isMoving)
             Move();
-        if (!_fadeBlocksMuted)
+        if (BackgroundParticles)
         {
             ++_i;
             if (_i >= 40)
@@ -54,13 +54,5 @@ public class BackgroundBhv : FrameRateBehavior
         {
             NewPositionToReach();
         }
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == Constants.StepsScene)
-            _fadeBlocksMuted = true;
-        else
-            _fadeBlocksMuted = false;
     }
 }

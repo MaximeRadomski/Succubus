@@ -96,9 +96,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         PlayerPrefsHelper.SaveCurrentOpponents(null);
         Constants.ResetClassicGameCache();
         Constants.CurrentItemCooldown = 0;
-        if (GameObject.Find("PlayField") != null)
-            Destroy(GameObject.Find("PlayField"));
         NavigationService.ReloadScene();
+        _gameplayControler.CleanPlayerPrefs();
         return true;
     }
 

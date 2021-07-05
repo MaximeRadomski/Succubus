@@ -42,6 +42,8 @@ public abstract class GameSceneBhv : SceneBhv
         Paused = true;
         CameraBhv.Paused = true;
         _musicControler.HalveVolume();
+        Constants.OnResumeLastPiecePosition = _gameplayControler.CurrentPiece.transform.position;
+        Constants.OnResumeLastPieceRotation = _gameplayControler.CurrentPiece.transform.rotation;
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);
     }
 
