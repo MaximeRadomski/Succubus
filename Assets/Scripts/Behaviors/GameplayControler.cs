@@ -47,7 +47,7 @@ public class GameplayControler : MonoBehaviour
     private int _leftHeld, _rightHeld;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
-    private bool _isTraining;
+    private bool? _isTraining;
     private bool _isFreeTraining;
     private bool _hasAlteredPiecePositionAfterResume;
 
@@ -126,13 +126,13 @@ public class GameplayControler : MonoBehaviour
             Constants.TruthResurection = false;
             Resurect();
         }
-        else if (!_isTraining && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        else if (!_isTraining.Value && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
         {
             run.LifeRouletteOnce = true;
             PlayerPrefsHelper.SaveRun(run);
             Resurect("life roulette");
         }
-        else if (!_isTraining && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
         {
             run.RepentanceOnce = true;
             PlayerPrefsHelper.SaveRun(run);
@@ -176,16 +176,21 @@ public class GameplayControler : MonoBehaviour
         Constants.InputLocked = false;
     }
 
-    private void Init(int level, Realm characterRealm, Realm levelRealm)
+    private void SetTraining()
     {
-        if (_hasInit)
-            return;
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
         {
             _isTraining = true;
             _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree;
         }
+    }
+
+    private void Init(int level, Realm characterRealm, Realm levelRealm)
+    {
+        if (_hasInit)
+            return;
+        SetTraining();
         SceneBhv = GetComponent<GameSceneBhv>();
         Character = SceneBhv.Character;
         SetGravity(level);
@@ -281,7 +286,7 @@ public class GameplayControler : MonoBehaviour
         {
             PlayFieldBhv.Grid = new Transform[_playFieldWidth, _playFieldHeight];
         }
-        if (_isTraining)
+        if (_isTraining.Value)
             CharacterItem = ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]);
         else
         {
@@ -540,6 +545,9 @@ public class GameplayControler : MonoBehaviour
         if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the pupose of setting it to zero
             level += Character.DoubleEdgeGravity;
 
+        if (_isTraining == null)
+            SetTraining();
+
         if (Character != null)
             level -= Character.LoweredGravity;
         if (level < 0)
@@ -548,7 +556,7 @@ public class GameplayControler : MonoBehaviour
         
         Realm realm;
         Difficulty difficulty;
-        if (_isTraining)
+        if (_isTraining.Value)
         {
             realm = Realm.Hell;
             difficulty = Difficulty.Normal;
@@ -683,8 +691,10 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
             CurrentGhost.transform.position = Constants.OnResumeLastPiecePosition.Value;
             CurrentGhost.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
-            _hasAlteredPiecePositionAfterResume = true;
         }
+        if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastForcedBlocks != null)
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Constants.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
+        _hasAlteredPiecePositionAfterResume = true;
         if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         else

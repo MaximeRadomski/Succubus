@@ -44,6 +44,8 @@ public abstract class GameSceneBhv : SceneBhv
         _musicControler.HalveVolume();
         Constants.OnResumeLastPiecePosition = _gameplayControler.CurrentPiece.transform.position;
         Constants.OnResumeLastPieceRotation = _gameplayControler.CurrentPiece.transform.rotation;
+        if (_gameplayControler.CurrentPiece.transform.childCount > 4)
+            Constants.OnResumeLastForcedBlocks = _gameplayControler.CurrentPiece.transform.childCount - 4;
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);
     }
 

@@ -136,6 +136,7 @@ public class Instantiator : MonoBehaviour
         var tmpPieceBlockObject = tmpPieceObject.transform.GetChild(0);
         GameObject tmpPieceBlockInstance = Instantiate(tmpPieceBlockObject.gameObject, spawnPosition, tmpPieceBlockObject.rotation);
         tmpPieceBlockInstance.transform.SetParent(parent);
+        tmpPieceBlockInstance.name = "Forced";
         return tmpPieceBlockInstance;
     }
 

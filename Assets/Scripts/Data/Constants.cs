@@ -305,6 +305,7 @@ public static class Constants
     public static int HeightLimiterResetLines = -1;
     public static Vector3? OnResumeLastPiecePosition;
     public static Quaternion? OnResumeLastPieceRotation;
+    public static int? OnResumeLastForcedBlocks;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -328,6 +329,7 @@ public static class Constants
         HeightLimiterResetLines = -1;
         OnResumeLastPiecePosition = null;
         OnResumeLastPieceRotation = null;
+        OnResumeLastForcedBlocks = null;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
