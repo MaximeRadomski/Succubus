@@ -10,6 +10,13 @@ namespace Proyecto26
     {
         public static IEnumerator CreateRequestAndRetry(RequestHelper options, Action<RequestException, ResponseHelper> callback)
         {
+            if (Constants.NetworkErrorCount >= Constants.ServerCallOfflineMax)
+            {
+                if (Constants.NetworkErrorCount == Constants.ServerCallOfflineMax)
+                    GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", "too many failed attempts were made to connect to the server. the game will continue in offline mode.", null, "Ok", null);
+                ++Constants.NetworkErrorCount;
+                yield break;
+            }
             var retries = 0;
             do
             {
@@ -41,7 +48,10 @@ namespace Proyecto26
                         var err = CreateException(options, request);
                         Helper.ResumeLoading();
                         DatabaseService.SendErrorBody(DateTime.UtcNow.ToString(), options.Body);
-                        GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
+                        if (!err.IsNetworkError)
+                            GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
+                        else
+                            ++Constants.NetworkErrorCount;
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);
                         break;

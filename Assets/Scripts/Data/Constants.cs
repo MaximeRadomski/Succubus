@@ -39,6 +39,7 @@ public static class Constants
     public const int MaxRarePercent = 25;
     public const int MaxLegendaryPercent = 15;
     public const float ServerCallTimeout = 8.0f;
+    public const int ServerCallOfflineMax = 3;
 
 
     //  TAGS  //
@@ -264,6 +265,7 @@ public static class Constants
     }
 
     // CACHE SAVES
+    public static int NetworkErrorCount = 0;
     public static bool InputLocked = false;
     public static bool EscapeLocked = false;
     public static bool DoubleClick = false;

@@ -5,7 +5,8 @@ using UnityEngine;
 public class ItemDeathScythe : Item
 {
     private int favor = 0;
-    private int unfavor = 20;
+    private int unfavor = 0;
+    private int percentBonus = 20;
 
     public ItemDeathScythe()
     {
@@ -21,16 +22,18 @@ public class ItemDeathScythe : Item
     private void GetFavorUnfavor()
     {
         var run = PlayerPrefsHelper.GetRun();
-        favor = run.DeathScytheAscension * 100;
+        favor = run.DeathScytheAscension * percentBonus;
         if (favor > 100)
             favor = 100;
         unfavor = 100 - favor;
+        if (unfavor < 0)
+            unfavor = 0;
     }
 
     public override string GetDescription()
     {
         GetFavorUnfavor();
-        return $"{Highlight($"{favor}%")} chance of killing your opponent, {Highlight($"{unfavor}%")} chance of killing you. switches 20% in your favor each time you ascend.\nbreaks on use.";
+        return $"{Highlight($"{favor}%")} chance of killing your opponent, {Highlight($"{unfavor}%")} chance of killing you. switches {percentBonus}% in your favor each time you ascend.\nbreaks on use.";
     }
 
     protected override object Effect()

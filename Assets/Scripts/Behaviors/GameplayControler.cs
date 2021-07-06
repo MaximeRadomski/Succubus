@@ -184,6 +184,11 @@ public class GameplayControler : MonoBehaviour
             _isTraining = true;
             _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree;
         }
+        else
+        {
+            _isTraining = false;
+            _isFreeTraining = false;
+        }
     }
 
     private void Init(int level, Realm characterRealm, Realm levelRealm)
