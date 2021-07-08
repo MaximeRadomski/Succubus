@@ -47,6 +47,13 @@ public class Instantiator : MonoBehaviour
         DontDestroyOnLoad(tmpBackgroundPieceInstance);
         tmpBackgroundPieceInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
     }
+    public void NewBackgroundLine(Vector3 position, Action afterAnimation)
+    {
+        var tmpBackgroundPieceObject = Resources.Load<GameObject>("Prefabs/BackgroundLine");
+        var tmpBackgroundPieceInstance = Instantiate(tmpBackgroundPieceObject, position, tmpBackgroundPieceObject.transform.rotation);
+        DontDestroyOnLoad(tmpBackgroundPieceInstance);
+        tmpBackgroundPieceInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
+    }
 
     public void NewRotationPoint(GameObject piece)
     {
