@@ -146,7 +146,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 4,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 2, 1),
                 new OpponentAttack(AttackType.Partition, 3, 1) },

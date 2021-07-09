@@ -16,6 +16,7 @@ public class Piece : MonoBehaviour
     public RotationState RotationState = RotationState.O;
     public bool IsMimic;
     public Color ActualColor = Constants.ColorPlain;
+    public bool IsClassic;
 
     private Vector3 _originalScale = new Vector3(1.0f, 1.0f, 1.0f);
     private Vector3 _doubleJumpScale = new Vector3(1.5f, 1.5f, 1.0f);
@@ -261,6 +262,14 @@ public class Piece : MonoBehaviour
         else if (rotationPoint != null)
         {
             rotationPoint.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+
+    public void ApplyClassicBlocksNoRotation()
+    {
+        foreach (Transform child in transform)
+        {
+            child.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
     }
 }

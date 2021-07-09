@@ -445,12 +445,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     //DEBUG
                     if (Constants.BetaMode && _run.CurrentRealm == Realm.Earth)
                     {
-                        //if (_run.Difficulty == Difficulty.Hard)
-                        //    PlayerPrefsHelper.SaveInfernalUnlocked(true);
-                        //Constants.GameOverParams = $"Abject|Hell|3";
-                        //PlayerPrefsHelper.EndlessRun(_run);
-                        //NavigationService.LoadNextScene(Constants.DemoEndScene);
-                        //return false;
+                        if (_run.Difficulty == Difficulty.Hard)
+                            PlayerPrefsHelper.SaveInfernalUnlocked(true);
+                        Constants.GameOverParams = $"Abject|Hell|3";
+                        PlayerPrefsHelper.EndlessRun(_run);
+                        NavigationService.LoadNextScene(Constants.DemoEndScene);
+                        return false;
                     }
                     //DEBUG
                     NavigationService.LoadBackUntil(Constants.StepsAscensionScene);

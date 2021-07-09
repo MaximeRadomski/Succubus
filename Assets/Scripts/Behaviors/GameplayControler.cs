@@ -1025,6 +1025,15 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    public void SoftDropStomp()
+    {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+            return;
+        if (CurrentPiece.GetComponent<Piece>().IsHollowed)
+            return;
+        GravityStomp();
+    }
+
     public void SoftDropHeld()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
@@ -1334,6 +1343,8 @@ public class GameplayControler : MonoBehaviour
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
                 DropGhost(withRotationAngle: -90.0f);
                 _soundControler.PlaySound(_idRotate);
+                if (currentPieceModel.IsClassic)
+                    currentPieceModel.ApplyClassicBlocksNoRotation();
                 return;
             }
             else
@@ -1452,6 +1463,8 @@ public class GameplayControler : MonoBehaviour
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost(withRotationAngle: 90.0f);
                 _soundControler.PlaySound(_idRotate);
+                if (currentPieceModel.IsClassic)
+                    currentPieceModel.ApplyClassicBlocksNoRotation();
                 return;
             }
             else

@@ -102,7 +102,6 @@ public class SplashScreenBhv : SceneBhv
             //PlayerPrefs.DeleteAll();
             //Instantiator.NewPopupYesNo("Old version", "your last installed version was outdated. your saved preferences and progression have been restored to their default value.", null, "Ok", null);
         }
-#if !UNITY_ANDROID
         //Check under 01.03.001: Secured PlayerPrefs. Reset all !!!
         else if (IsUnder(lastSavedVersion, new string[] { "1", "03", "001" }))
         {
@@ -114,7 +113,6 @@ public class SplashScreenBhv : SceneBhv
             });
             return false;
         }
-#endif
 
         PlayerPrefsHelper.SaveVersion(Application.version);
         return true;

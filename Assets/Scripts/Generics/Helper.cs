@@ -408,15 +408,15 @@ public static class Helper
             }
             else if (difficulty == Difficulty.Hard)
             {
-                opponent.Cooldown = (int)(opponent.Cooldown * 0.666f);
-                opponent.HpMax = (int)(opponent.HpMax * 1.5f);
+                opponent.Cooldown = (int)(opponent.Cooldown * 0.75f);
+                opponent.HpMax = (int)(opponent.HpMax * 1.25f);
                 opponent.GravityLevel += 8;
             }
             else if (difficulty == Difficulty.Infernal)
             {
-                opponent.Cooldown = (int)(opponent.Cooldown * 0.333f);
-                opponent.HpMax = (int)(opponent.HpMax * 2.0f);
-                opponent.GravityLevel += 16;
+                opponent.Cooldown = (int)(opponent.Cooldown * 0.5f);
+                opponent.HpMax = (int)(opponent.HpMax * 1.5f);
+                opponent.GravityLevel += 12;
             }
             if (opponent.Cooldown < 1.0f)
                 opponent.Cooldown = 1.0f;
