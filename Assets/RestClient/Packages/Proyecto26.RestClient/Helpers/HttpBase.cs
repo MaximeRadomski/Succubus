@@ -47,7 +47,7 @@ namespace Proyecto26
                     {
                         var err = CreateException(options, request);
                         Helper.ResumeLoading();
-                        DatabaseService.SendErrorBody(DateTime.UtcNow.ToString(), options.Body);
+                        DatabaseService.SendErrorBody(Helper.DateFormat(DateTime.Now), options.Body);
                         if (!err.IsNetworkError)
                             GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
                         else
@@ -63,17 +63,17 @@ namespace Proyecto26
 
         private static UnityWebRequest CreateRequest(RequestHelper options)
         {
-            var url = options.Uri.BuildUrl(options.Params);
-            DebugLog(options.EnableDebug, string.Format("RestClient - Request\nUrl: {0}", url), false);
+            var cache = options.Uri.BuildUrl(options.Params);
+            DebugLog(options.EnableDebug, string.Format("RestClient - Request\nUrl: {0}", cache), false);
             var dBase = "database.app";
-            url = url.Remove(url.IndexOf(Application.productName) + Application.productName.Length, 1).Insert(url.IndexOf(Application.productName) + Application.productName.Length, $"-default-rtdb.europe-west1.fire{"base"}{dBase}/");
+            cache = cache.Remove(cache.IndexOf(Application.productName.ToLower()) + Application.productName.ToLower().Length, 1).Insert(cache.IndexOf(Application.productName.ToLower()) + Application.productName.ToLower().Length, $"-default-rtdb.europe-west1.fire{"base"}{dBase}/");
             if (options.FormData is WWWForm && options.Method == UnityWebRequest.kHttpVerbPOST)
             {
-                return UnityWebRequest.Post(url, options.FormData);
+                return UnityWebRequest.Post(cache, options.FormData);
             }
             else
             {
-                return new UnityWebRequest(url, options.Method);
+                return new UnityWebRequest(cache, options.Method);
             }
         }
 

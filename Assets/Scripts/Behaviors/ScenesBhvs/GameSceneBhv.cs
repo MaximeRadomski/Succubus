@@ -108,6 +108,11 @@ public abstract class GameSceneBhv : SceneBhv
             _poppingText += pieceLetterTwist + " twist";
     }
 
+    public virtual void OnSoftDropStomp(int linesStomped)
+    {
+
+    }
+
     public virtual void OnSoftDrop()
     {
 

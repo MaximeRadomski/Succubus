@@ -9,7 +9,7 @@ public static class DatabaseService
 {
     public static fsSerializer Serializer = new fsSerializer();
 
-    private static readonly string DatabaseURL = $"https://{Application.productName}/";
+    private static readonly string DatabaseURL = $"https://{Application.productName.ToLower()}/";
     private static readonly string SystemTable = "System";
     private static readonly string LogsTable = "Logs";
     private static readonly string BlackList = "BlackList";

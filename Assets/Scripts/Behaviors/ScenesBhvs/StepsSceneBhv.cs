@@ -123,7 +123,7 @@ public class StepsSceneBhv : SceneBhv
 
     private void FocusOnSelected(int x, int y)
     {
-        if (_selectedStep != null && _selectedStep.X == x && _selectedStep.Y == y && _lastSelectedInput >= Time.time - 0.2f)
+        if (_selectedStep != null && _selectedStep.X == x && _selectedStep.Y == y && _lastSelectedInput >= Time.time - 0.2f && _selectedStep.LootType != LootType.None)
         {
             GoToStep();
             return;

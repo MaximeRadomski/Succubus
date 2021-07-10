@@ -130,6 +130,14 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         base.OnPieceLocked(pieceLetter);
     }
 
+    public override void OnSoftDropStomp(int linesStomped)
+    {
+        var toAdd = 1 * linesStomped;
+        _score += toAdd;
+        _verif[0] += toAdd * 8;
+        DisplayScore();
+    }
+
     public override void OnSoftDrop()
     {
         var toAdd = 1;

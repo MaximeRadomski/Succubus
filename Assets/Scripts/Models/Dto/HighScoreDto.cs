@@ -27,6 +27,6 @@ public class HighScoreDto : Dto
         Type = type;
         Checksum = checkSum;
 
-        CreationDate = DateTime.UtcNow.ToString();
+        CreationDate = Helper.DateFormat(DateTime.Now);
     }
 }

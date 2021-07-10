@@ -511,4 +511,9 @@ public static class Helper
         }
         return returnStr;
     }
+
+    public static string DateFormat(DateTime dateTime)
+    {
+        return $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day} {dateTime.ToString("HH:mm:ss")}";
+    }
 }

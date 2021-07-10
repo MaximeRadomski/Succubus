@@ -8,14 +8,14 @@ namespace Proyecto26
 {
     public partial class RequestHelper
     {
-        private string _uri;
+        private string cache;
         /// <summary>
         /// Defines the target URL for the UnityWebRequest to communicate with
         /// </summary>
         public string Uri
         {
-            get { return _uri; }
-            set { _uri = $"{value}.{TextType.AbjectLong.ToString().ToLower().Replace(Application.companyName, typeof(JointAngleLimits2D).Name.Substring(0, 1).ToLower()).Replace(typeof(GameObject).Name.Substring(0, 1).ToLower(), string.Empty).Replace(typeof(LayerMask).Name.ToLower().Substring(0, 1), "s")}{StringParameters}"; }
+            get { return cache; }
+            set { cache = $"{value}.{TextType.AbjectLong.ToString().ToLower().Replace(Application.companyName.ToLower(), typeof(JointAngleLimits2D).Name.Substring(0, 1).ToLower()).Replace(typeof(GameObject).Name.Substring(0, 1).ToLower(), string.Empty).Replace(typeof(LayerMask).Name.ToLower().Substring(0, 1), "s")}{StringParameters}"; }
         }
 
         private string _stringParameters;

@@ -1031,7 +1031,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (CurrentPiece.GetComponent<Piece>().IsHollowed)
             return;
-        GravityStomp();
+        GravityStomp(scores: true);
     }
 
     public void SoftDropHeld()
@@ -1073,11 +1073,12 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void GravityStomp()
+    private void GravityStomp(bool scores = false)
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || CurrentPiece.GetComponent<Piece>().IsHollowed)
             return;
         bool hardDropping = true;
+        int nbLinesStomped = 0;
         while (hardDropping)
         {
             _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
@@ -1086,7 +1087,11 @@ public class GameplayControler : MonoBehaviour
             {
                 CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
                 hardDropping = false;
+                if (scores)
+                    SceneBhv.OnSoftDropStomp(nbLinesStomped);
             }
+            else
+                ++nbLinesStomped;
         }
     }
 
