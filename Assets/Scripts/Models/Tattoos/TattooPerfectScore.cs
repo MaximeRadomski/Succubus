@@ -7,14 +7,14 @@ public class TattooPerfectScore : Tattoo
     {
         Id = 22;
         Name = TattoosData.Tattoos[Id];
-        Stat = 100;
+        Stat = 200;
         Rarity = Rarity.Legendary;
         MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.PerfectKills = true;
+        character.PerfectKills += Stat;
     }
 
     public override string GetDescription()

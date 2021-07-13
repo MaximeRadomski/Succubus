@@ -43,7 +43,6 @@ public class GameplayControler : MonoBehaviour
     private int _playFieldWidth;
     private Vector3 _lastCurrentPieceValidPosition;
     private int _lastNbLinesCleared;
-    private int _comboCounter;
     private int _leftHeld, _rightHeld;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
@@ -1831,12 +1830,12 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial.OnLinesCleared(nbLines, isB2B);
 
-            ++_comboCounter;
-            if (_comboCounter > 1)
+            ++Constants.ComboCounter;
+            if (Constants.ComboCounter > 1)
             {
                 CheckForDarkRows(Character.ComboDarkRow);
-                _soundControler.PlaySound(_idCombo, 1.0f + ((_comboCounter - 2) * 0.15f));
-                SceneBhv.OnCombo(_comboCounter, nbLines);
+                _soundControler.PlaySound(_idCombo, 1.0f + ((Constants.ComboCounter - 2) * 0.15f));
+                SceneBhv.OnCombo(Constants.ComboCounter, nbLines);
             }
 
             if (GetHighestBlock() == -1) //PERFECT
@@ -1853,7 +1852,7 @@ public class GameplayControler : MonoBehaviour
 
                 if (nbLines >= 4
                 || (_lastLockTwist && nbLines >= 2)
-                || _comboCounter > 3)
+                || Constants.ComboCounter > 3)
                     StartCoroutine(Reflect());
 
                 if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
@@ -1872,7 +1871,7 @@ public class GameplayControler : MonoBehaviour
         {
             SceneBhv.OnLinesCleared(nbLines, false, _lastLockTwist);
             SceneBhv.PopText();
-            _comboCounter = 0;
+            Constants.ComboCounter = 0;
             if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
             {
                 AttackIncoming = false;

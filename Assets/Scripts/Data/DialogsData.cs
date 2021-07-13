@@ -88,7 +88,7 @@ public static class DialogsData
                     "Yeah yeah whatever. Come. We need you. Getting out of hell might be tricky without you!",
                     "Getting... out of hell?",
                     "Are you questioning my orders now?",
-                    "Oh!! No I'm not, Mistress!! But, what is your father opinion on this matter?",
+                    "Oh!! No I'm not, Mistress!! But, what is your father's opinion on this matter?",
                     "Belias. My patience has its limits.",
                     "Yes Mistress!!"
                 }

@@ -46,7 +46,7 @@ public class Character : Loot
     public int DeleteAfterKill = 0;
     public bool HighPlayPause = false;
     public int ThornsPercent = 0;
-    public bool PerfectKills = false;
+    public int PerfectKills = 0;
     public int MaxDarkAndWasteLines = 99;
     public int BonusLife = 0;
     public int SimpShield = 0;

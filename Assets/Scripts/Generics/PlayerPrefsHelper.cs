@@ -691,6 +691,11 @@ public class PlayerPrefsHelper : MonoBehaviour
         return bonus;
     }
 
+    public static void SaveBonusRarePercent(int amount)
+    {
+        Mock.SetInt(Constants.PpBonusRarePercent, amount);
+    }
+
     public static void IncrementBonusRarePercent(int times)
     {
         var bonus = Mock.GetInt(Constants.PpBonusRarePercent, Constants.PpSerializeDefaultInt);
@@ -701,6 +706,11 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var bonus = Mock.GetInt(Constants.PpBonusLegendaryPercent, Constants.PpSerializeDefaultInt);
         return bonus;
+    }
+
+    public static void SaveBonusLegendaryPercent(int amount)
+    {
+        Mock.SetInt(Constants.PpBonusLegendaryPercent, amount);
     }
 
     public static void IncrementBonusLegendaryPercent(int times)
@@ -866,5 +876,22 @@ public class PlayerPrefsHelper : MonoBehaviour
         }
         var credentials = $"{account.PlayerName}|{account.Password}";
         PlayerPrefs.SetString(Constants.PpLastSavedCredentials, credentials);
+    }
+
+    public static void IncrementNumberRunWithoutCharacterEncounter()
+    {
+        var nbRuns = GetNumberRunWithoutCharacterEncounter();
+        Mock.SetInt(Constants.PpNumberRunsWithoutCharacterEncounter, nbRuns + 1);
+    }
+
+    public static void ResetNumberRunWithoutCharacterEncounter()
+    {
+        Mock.SetInt(Constants.PpNumberRunsWithoutCharacterEncounter, -1);
+    }
+
+    public static int GetNumberRunWithoutCharacterEncounter()
+    {
+        var nbRuns = Mock.GetInt(Constants.PpNumberRunsWithoutCharacterEncounter, Constants.PpSerializeDefaultInt);
+        return nbRuns;
     }
 }

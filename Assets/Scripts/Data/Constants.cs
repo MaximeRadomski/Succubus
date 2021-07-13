@@ -73,6 +73,7 @@ public static class Constants
     public const string PpCurrentMaxedOutTattoos = "CurrentMaxedOutTattoos";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
+    public const string PpNumberRunsWithoutCharacterEncounter = "NumberRunsWithoutCharacterEncounter";
     public const string PpTrainingScore = "TrainingScore";
     public const string PpTrainingLevel = "TrainingLevel";
     public const string PpTrainingLines = "TrainingLines";
@@ -292,6 +293,7 @@ public static class Constants
     public static int CurrentListOpponentsId;
     public static int CurrentOpponentHp;
     public static float CurrentOpponentCooldown;
+    public static int ComboCounter = 0;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
     public static int DamoclesDamage = 0;

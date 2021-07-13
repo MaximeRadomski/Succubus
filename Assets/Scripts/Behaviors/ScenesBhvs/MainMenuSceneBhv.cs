@@ -22,15 +22,17 @@ public class MainMenuSceneBhv : SceneBhv
         _currentRun = PlayerPrefsHelper.GetRun();
         if (_currentRun != null && PlayerPrefsHelper.GetIsInFight() == true)
         {
-            //PlayerPrefsHelper.SaveIsInFight(false);
-            //PlayerPrefsHelper.ResetRun();
-            //_currentRun = null;
-            //Constants.InputLocked = true;
-            //StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
-            //{
-            //    Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
-            //    return false;
-            //}));
+            PlayerPrefsHelper.SaveIsInFight(false);
+            if (_currentRun.RealmLevel > 1)
+                PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
+            PlayerPrefsHelper.ResetRun();
+            _currentRun = null;
+            Constants.InputLocked = true;
+            StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
+            {
+                Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
+                return false;
+            }));
         }
         GameObject.Find("Version").GetComponent<TMPro.TextMeshPro>().text = $"abject\n{Application.version.ToString().ToLower()}";
         SetButtons();

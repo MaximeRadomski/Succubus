@@ -43,6 +43,13 @@ public class Run
         IncreaseLevel();
     }
 
+    public int GetCharEncounterPercent()
+    {
+        var bonusPercent = PlayerPrefsHelper.GetNumberRunWithoutCharacterEncounter() * 5;
+        return CharEncounterPercent + bonusPercent;
+    }
+        
+
     public void IncreaseLevel()
     {
         ++RealmLevel;

@@ -654,6 +654,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else
         {
             Constants.GameOverParams = $"{CurrentOpponent.Name}|{_run.CurrentRealm}|{_run.RealmLevel}";
+            if (_run.RealmLevel > 1)
+                PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             PlayerPrefsHelper.ResetRun();
             NavigationService.LoadNextScene(Constants.GameOverScene);
         }
@@ -982,8 +984,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         base.OnPerfectClear();
         if (_characterAttack < 0)
             return;
-        if (Character.PerfectKills)
-            DamageOpponent(9999, _gameplayControler.CharacterInstanceBhv.gameObject);
+        if (Character.PerfectKills > 0)
+            DamageOpponent(Character.PerfectKills, _gameplayControler.CharacterInstanceBhv.gameObject);
     }
 
     private void OnApplicationQuit()
