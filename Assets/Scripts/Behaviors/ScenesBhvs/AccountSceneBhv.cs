@@ -202,20 +202,7 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Connected", $"welcome back {account.PlayerName.ToLower()}.", null, "Ok", (result) =>
                 {
                     GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
-                    ProgressionService.GetProgression(account.PlayerName, (onlineProgression) =>
-                    {
-                        if (onlineProgression != null)
-                        {
-                            PlayerPrefsHelper.SaveUnlockedCharacters(onlineProgression.UnlockedCharacters);
-                            var realmTree = JsonUtility.FromJson<RealmTree>(onlineProgression.RealmTree);
-                            if (realmTree == null)
-                                realmTree = new RealmTree();
-                            PlayerPrefsHelper.SaveRealmTree(realmTree);
-                            PlayerPrefsHelper.SaveBonusRarePercent(onlineProgression.BonusRarePercent);
-                            PlayerPrefsHelper.SaveBonusLegendaryPercent(onlineProgression.BonusLegendaryPercent);
-                            PlayerPrefsHelper.SaveRealmBossProgression(onlineProgression.RealmBossProgression);
-                        }
-                    });
+                    ProgressionService.GetAndApplyOnlineProgression(account.PlayerName);
                     ShowPanel(4);
                     return true;
                 });

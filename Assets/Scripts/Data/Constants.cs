@@ -142,6 +142,7 @@ public static class Constants
     public const string PpVersionDefault = "Alpha.01.004";
     public const string PpInfernalUnlocked = "InfernalUnlocked";
     public const string PpLastSavedCredentials = "LastSavedCredentials";
+    public const string PpOfflineProgression = "OfflineProgression";
 
     public static string GetDefaultKeyBinding()
     {

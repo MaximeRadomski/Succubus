@@ -16,7 +16,19 @@ public class ProgressionService : MonoBehaviour
         });
     }
 
-    public static void GetProgression(string playerNameId, Action<ProgressionDto> resultAction)
+    public static void GetAndApplyOnlineProgression(string playerNameId)
+    {
+        GetProgression(playerNameId, (onlineProgression) =>
+        {
+            if (onlineProgression != null)
+            {
+                SaveOfflineProgression();
+                ApplyProgression(onlineProgression);
+            }
+        });
+    }
+
+    private static void GetProgression(string playerNameId, Action<ProgressionDto> resultAction)
     {
         RestClient.Get(DatabaseService.SetTableAndId(TableProgressions, playerNameId)).Then(returnValue =>
         {
@@ -25,5 +37,30 @@ public class ProgressionService : MonoBehaviour
                 progression = JsonUtility.FromJson<ProgressionDto>(returnValue.Text);
             resultAction.Invoke(progression);
         });
+    }
+    
+    private static void SaveOfflineProgression()
+    {
+        var offlineProgression = new ProgressionDto()
+        {
+            UnlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString(),
+            RealmTree = Mock.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault),
+            BonusRarePercent = PlayerPrefsHelper.GetBonusRarePercent(),
+            BonusLegendaryPercent = PlayerPrefsHelper.GetBonusLegendaryPercent(),
+            RealmBossProgression = PlayerPrefsHelper.GetRealmBossProgression()
+        };
+        PlayerPrefsHelper.SaveOfflineProgression(offlineProgression);
+    }
+
+    private static void ApplyProgression(ProgressionDto onlineProgression)
+    {
+        PlayerPrefsHelper.SaveUnlockedCharacters(onlineProgression.UnlockedCharacters);
+        var realmTree = JsonUtility.FromJson<RealmTree>(onlineProgression.RealmTree);
+        if (realmTree == null)
+            realmTree = new RealmTree();
+        PlayerPrefsHelper.SaveRealmTree(realmTree);
+        PlayerPrefsHelper.SaveBonusRarePercent(onlineProgression.BonusRarePercent);
+        PlayerPrefsHelper.SaveBonusLegendaryPercent(onlineProgression.BonusLegendaryPercent);
+        PlayerPrefsHelper.SaveRealmBossProgression(onlineProgression.RealmBossProgression);
     }
 }
