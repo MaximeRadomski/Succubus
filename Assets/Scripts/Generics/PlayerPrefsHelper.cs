@@ -7,19 +7,6 @@ using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
 {
-    public static void SaveOfflineProgression(ProgressionDto offlineProgression)
-    {
-        Mock.SetString(Constants.PpOfflineProgression, JsonUtility.ToJson(offlineProgression));
-    }
-
-    public static ProgressionDto GetOfflineProgression()
-    {
-        var offlineProgression = JsonUtility.FromJson<ProgressionDto>(Mock.GetString(Constants.PpOfflineProgression, Constants.PpSerializeDefault));
-        if (offlineProgression == null)
-            return null;
-        return offlineProgression;
-    }
-
     public static void SaveRun(Run run)
     {
         Mock.SetString(Constants.PpRun, JsonUtility.ToJson(run));

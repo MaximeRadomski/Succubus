@@ -142,7 +142,6 @@ public static class Constants
     public const string PpVersionDefault = "Alpha.01.004";
     public const string PpInfernalUnlocked = "InfernalUnlocked";
     public const string PpLastSavedCredentials = "LastSavedCredentials";
-    public const string PpOfflineProgression = "OfflineProgression";
 
     public static string GetDefaultKeyBinding()
     {
@@ -267,6 +266,7 @@ public static class Constants
     }
 
     // CACHE SAVES
+    public static bool HasStartedBySplashScreen = false;
     public static int NetworkErrorCount = 0;
     public static bool InputLocked = false;
     public static bool EscapeLocked = false;

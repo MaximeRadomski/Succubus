@@ -514,6 +514,32 @@ public static class Helper
 
     public static string DateFormat(DateTime dateTime)
     {
-        return $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day} {dateTime.ToString("HH:mm:ss")}";
+        return $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day} {dateTime.ToString("HH mm ss")}";
+    }
+
+    public static int CountChar(this string str, char c)
+    {
+        int count = 0;
+        for (int i = 0; i < str.Length; ++i)
+        {
+            if (str[i] == c)
+                ++count;
+        }
+        return count;
+    }
+
+    public static int NodesBought(this RealmTree tree)
+    {
+        var count = 0;
+        count += tree.AttackBoost;
+        count += tree.CooldownBrake;
+        count += tree.CriticalPrecision / 2;
+        count += tree.PosthumousItem;
+        count += (int)(tree.LockDelay / 0.25f);
+        count += tree.LifeRoulette / 50;
+        count += tree.BossHate / 10;
+        count += tree.Shadowing;
+        count += tree.Repentance;
+        return count;
     }
 }

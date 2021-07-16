@@ -16,19 +16,7 @@ public class ProgressionService : MonoBehaviour
         });
     }
 
-    public static void GetAndApplyOnlineProgression(string playerNameId)
-    {
-        GetProgression(playerNameId, (onlineProgression) =>
-        {
-            if (onlineProgression != null)
-            {
-                SaveOfflineProgression();
-                ApplyProgression(onlineProgression);
-            }
-        });
-    }
-
-    private static void GetProgression(string playerNameId, Action<ProgressionDto> resultAction)
+    public static void GetProgression(string playerNameId, Action<ProgressionDto> resultAction)
     {
         RestClient.Get(DatabaseService.SetTableAndId(TableProgressions, playerNameId)).Then(returnValue =>
         {
@@ -38,21 +26,8 @@ public class ProgressionService : MonoBehaviour
             resultAction.Invoke(progression);
         });
     }
-    
-    private static void SaveOfflineProgression()
-    {
-        var offlineProgression = new ProgressionDto()
-        {
-            UnlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString(),
-            RealmTree = Mock.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault),
-            BonusRarePercent = PlayerPrefsHelper.GetBonusRarePercent(),
-            BonusLegendaryPercent = PlayerPrefsHelper.GetBonusLegendaryPercent(),
-            RealmBossProgression = PlayerPrefsHelper.GetRealmBossProgression()
-        };
-        PlayerPrefsHelper.SaveOfflineProgression(offlineProgression);
-    }
 
-    private static void ApplyProgression(ProgressionDto onlineProgression)
+    public static void ApplyProgression(ProgressionDto onlineProgression)
     {
         PlayerPrefsHelper.SaveUnlockedCharacters(onlineProgression.UnlockedCharacters);
         var realmTree = JsonUtility.FromJson<RealmTree>(onlineProgression.RealmTree);

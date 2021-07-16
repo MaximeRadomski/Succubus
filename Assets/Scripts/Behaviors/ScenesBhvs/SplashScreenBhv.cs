@@ -11,6 +11,7 @@ public class SplashScreenBhv : SceneBhv
 
     void Start()
     {
+        Constants.HasStartedBySplashScreen = true;
         Helper.VarMockTest();
         Init();
 

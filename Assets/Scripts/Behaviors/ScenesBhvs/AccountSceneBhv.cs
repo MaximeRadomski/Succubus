@@ -10,7 +10,7 @@ public class AccountSceneBhv : SceneBhv
     private Identifier _password1;
     private Identifier _password2;
     private Identifier _securityAnswer;
-    private AccountDto _recoveryUser;
+    private AccountDto _tmpUser;
 
     private TMPro.TextMeshPro _securityQuestion;
     private int _idSecurityQuestion;
@@ -51,6 +51,7 @@ public class AccountSceneBhv : SceneBhv
             if (account == null)
                 return;
             GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
+            _tmpUser = account;
             ShowPanel(4);
         });
     }
@@ -133,6 +134,8 @@ public class AccountSceneBhv : SceneBhv
     private void InitPanelConnected()
     {
         _panelConnected = GameObject.Find("PanelConnected");
+        _panelConnected.transform.Find("UploadProgression").GetComponent<ButtonBhv>().EndActionDelegate = UploadProgression;
+        _panelConnected.transform.Find("DownloadProgression").GetComponent<ButtonBhv>().EndActionDelegate = DownloadProgression;
         GameObject.Find("Disconnect").GetComponent<ButtonBhv>().EndActionDelegate = () =>
         {
             PlayerPrefsHelper.SaveLastSavedCredentials(null);
@@ -189,8 +192,8 @@ public class AccountSceneBhv : SceneBhv
                 {
                     if (result)
                         return true;
-                    _recoveryUser = account;
-                    GameObject.Find("SecurityQuestionRecovery").GetComponent<TMPro.TextMeshPro>().text = _recoveryUser.SecretQuestion.ToLower();
+                    _tmpUser = account;
+                    GameObject.Find("SecurityQuestionRecovery").GetComponent<TMPro.TextMeshPro>().text = _tmpUser.SecretQuestion.ToLower();
                     ShowPanel(2);
                     return false;
                 });
@@ -202,7 +205,7 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Connected", $"welcome back {account.PlayerName.ToLower()}.", null, "Ok", (result) =>
                 {
                     GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
-                    ProgressionService.GetAndApplyOnlineProgression(account.PlayerName);
+                    _tmpUser = account;
                     ShowPanel(4);
                     return true;
                 });
@@ -242,10 +245,10 @@ public class AccountSceneBhv : SceneBhv
     private void VerifySecurityQuestion()
     {
         if (string.IsNullOrEmpty(_securityAnswer.Text)) { Instantiator.NewPopupYesNo("Security Answer", "you must enter an answer.", null, "Ok", null); return; }
-        var encryptedAnswer = Mock.Md5WithKey(_securityAnswer.Text.ToLower(), _recoveryUser.Type);
-        if (encryptedAnswer != _recoveryUser.SecretAnswer) { Instantiator.NewPopupYesNo("Security Answer", "your answer is different from the one you set up.", null, "Ok", null); return; }
+        var encryptedAnswer = Mock.Md5WithKey(_securityAnswer.Text.ToLower(), _tmpUser.Type);
+        if (encryptedAnswer != _tmpUser.SecretAnswer) { Instantiator.NewPopupYesNo("Security Answer", "your answer is different from the one you set up.", null, "Ok", null); return; }
 
-        if (encryptedAnswer == _recoveryUser.SecretAnswer)
+        if (encryptedAnswer == _tmpUser.SecretAnswer)
             ShowPanel(3);
     }
 
@@ -258,11 +261,72 @@ public class AccountSceneBhv : SceneBhv
         if (_password1.Text != _password2.Text) { Instantiator.NewPopupYesNo("Password", $"your passwords do not match.", null, "Ok", null); return; }
 
         Instantiator.NewLoading();
-        AccountService.PutAccount(new AccountDto(_recoveryUser.PlayerName, Mock.Md5WithKey(_password1.Text, _recoveryUser.Type), _recoveryUser.SecretQuestion, _recoveryUser.SecretAnswer, _recoveryUser.Type, _recoveryUser.Checksum), () =>
+        AccountService.PutAccount(new AccountDto(_tmpUser.PlayerName, Mock.Md5WithKey(_password1.Text, _tmpUser.Type), _tmpUser.SecretQuestion, _tmpUser.SecretAnswer, _tmpUser.Type, _tmpUser.Checksum), () =>
         {
             Helper.ResumeLoading();
             ShowPanel(0);
             Instantiator.NewPopupYesNo("Success", $"your password was successfully modified.", null, "Ok", null);
+        });
+    }
+
+    private void UploadProgression()
+    {
+        var progression = new ProgressionDto()
+        {
+            UnlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString(),
+            RealmTree = Mock.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault),
+            BonusRarePercent = PlayerPrefsHelper.GetBonusRarePercent(),
+            BonusLegendaryPercent = PlayerPrefsHelper.GetBonusLegendaryPercent(),
+            RealmBossProgression = PlayerPrefsHelper.GetRealmBossProgression()
+        };
+        var dark = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32);
+        var light = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43);
+        var content = $"would you like to upload and save your local progress?";
+        content += $"\n{dark}unlocked characters: {light}{progression.UnlockedCharacters.CountChar('1')}";
+        content += $"\n{dark}tree nodes bought: {light}{PlayerPrefsHelper.GetRealmTree().NodesBought()}";
+        content += $"\n{dark}rare + legendary bonus: {light}{progression.BonusRarePercent}% {dark}+{light} {progression.BonusLegendaryPercent}%";
+        content += $"\n{dark}reached realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
+        this.Instantiator.NewPopupYesNo("Upload", content, "No", "Yes", (result) =>
+        {
+            if (!result)
+                return false;
+            ProgressionService.PutProgression(progression, _tmpUser.PlayerName, () =>
+            {
+                
+            });
+            return result;
+        });
+    }
+
+    private void DownloadProgression()
+    {
+        ProgressionService.GetProgression(_tmpUser.PlayerName, (progression) =>
+        {
+            if (progression == null)
+            {
+                this.Instantiator.NewPopupYesNo("Error", "you currently have no progress saved online.", null, "Ok", (result) =>
+                {
+                    return result;
+                });
+                return;
+            }
+            var dark = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32);
+            var light = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43);
+            var realmTree = JsonUtility.FromJson<RealmTree>(progression.RealmTree);
+            if (realmTree == null)
+                realmTree = new RealmTree();
+            var content = $"would you like to download and override your local progress?";
+            content += $"\n{dark}unlocked characters: {light}{progression.UnlockedCharacters.CountChar('1')}";
+            content += $"\n{dark}tree nodes bought: {light}{realmTree.NodesBought()}";
+            content += $"\n{dark}rare + legendary bonus: {light}{progression.BonusRarePercent}% {dark}+{light} {progression.BonusLegendaryPercent}%";
+            content += $"\n{dark}reached realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
+            this.Instantiator.NewPopupYesNo("Download", content, "No", "Yes", (result) =>
+            {
+                if (!result)
+                    return false;
+                ProgressionService.ApplyProgression(progression);
+                return result;
+            });
         });
     }
 

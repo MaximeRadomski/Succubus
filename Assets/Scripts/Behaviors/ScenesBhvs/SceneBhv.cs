@@ -22,6 +22,8 @@ public abstract class SceneBhv : FrameRateBehavior
         NavigationService.TrySetCurrentRootScene(SceneManager.GetActiveScene().name);
         Instantiator = GetComponent<Instantiator>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
+        if (!Constants.HasStartedBySplashScreen)
+            NavigationService.NewRootScene(Constants.SplashScreenScene);
     }
 
     public virtual void PauseOrPrevious()
