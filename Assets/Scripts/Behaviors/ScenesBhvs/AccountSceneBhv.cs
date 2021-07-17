@@ -285,7 +285,7 @@ public class AccountSceneBhv : SceneBhv
         content += $"\n{dark}unlocked characters: {light}{progression.UnlockedCharacters.CountChar('1')}";
         content += $"\n{dark}tree nodes bought: {light}{PlayerPrefsHelper.GetRealmTree().NodesBought()}";
         content += $"\n{dark}rare + legendary bonus: {light}{progression.BonusRarePercent}% {dark}+{light} {progression.BonusLegendaryPercent}%";
-        content += $"\n{dark}reached realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
+        content += $"\n{dark}completed realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
         this.Instantiator.NewPopupYesNo("Upload", content, "No", "Yes", (result) =>
         {
             if (!result)
@@ -319,7 +319,7 @@ public class AccountSceneBhv : SceneBhv
             content += $"\n{dark}unlocked characters: {light}{progression.UnlockedCharacters.CountChar('1')}";
             content += $"\n{dark}tree nodes bought: {light}{realmTree.NodesBought()}";
             content += $"\n{dark}rare + legendary bonus: {light}{progression.BonusRarePercent}% {dark}+{light} {progression.BonusLegendaryPercent}%";
-            content += $"\n{dark}reached realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
+            content += $"\n{dark}completed realm: {light}{((Realm)progression.RealmBossProgression).ToString().ToLower()}";
             this.Instantiator.NewPopupYesNo("Download", content, "No", "Yes", (result) =>
             {
                 if (!result)

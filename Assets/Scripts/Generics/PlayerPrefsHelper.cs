@@ -884,9 +884,9 @@ public class PlayerPrefsHelper : MonoBehaviour
         Mock.SetInt(Constants.PpNumberRunsWithoutCharacterEncounter, nbRuns + 1);
     }
 
-    public static void ResetNumberRunWithoutCharacterEncounter()
+    public static void ResetNumberRunWithoutCharacterEncounter(int resetValue)
     {
-        Mock.SetInt(Constants.PpNumberRunsWithoutCharacterEncounter, -1);
+        Mock.SetInt(Constants.PpNumberRunsWithoutCharacterEncounter, resetValue);
     }
 
     public static int GetNumberRunWithoutCharacterEncounter()

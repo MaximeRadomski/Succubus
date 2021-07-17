@@ -28,6 +28,7 @@ public class SpecialSwap : Special
         _selector.transform.position = new Vector3(_gameplayControler.NextPieces[0].transform.position.x - 2.7143f, _gameplayControler.NextPieces[0].transform.position.y + 0.5f, 0.0f);
         _selectedId = -1;
         CanReactivate = true;
+        _gameplayControler.CanBeReload = false;
         _gameplayControler.StartCoroutine(CustomUpdate());
         return true;
     }
@@ -49,6 +50,7 @@ public class SpecialSwap : Special
         if (!CanReactivate)
             return false;
         CanReactivate = false;
+        _gameplayControler.CanBeReload = true;
         Object.Destroy(_selector);
         _gameplayControler.CurrentPiece.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent);
         _gameplayControler.NextPieces[_selectedId].transform.GetChild(0).GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent);

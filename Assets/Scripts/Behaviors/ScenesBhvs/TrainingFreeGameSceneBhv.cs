@@ -82,6 +82,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public void AskRestartTraining()
     {
+        if (!_gameplayControler.CanBeReload)
+            return;
         Paused = true;
         this.Instantiator.NewPopupYesNo("Restart", "would you like to restart this game?", "No", "Yes", RestartTraining);
     }

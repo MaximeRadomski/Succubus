@@ -23,8 +23,9 @@ public class GameplayControler : MonoBehaviour
     public PlayFieldBhv PlayFieldBhv;
     public GameObject ForcedPiece;
     public List<GameObject> NextPieces;
-    private RealmTree _realmTree;
+    public bool CanBeReload = true;
 
+    private RealmTree _realmTree;
     private Realm _characterRealm;
     private Realm _levelRealm;
 
