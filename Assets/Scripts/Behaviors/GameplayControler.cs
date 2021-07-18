@@ -50,6 +50,7 @@ public class GameplayControler : MonoBehaviour
     private bool? _isTraining;
     private bool _isFreeTraining;
     private bool _hasAlteredPiecePositionAfterResume;
+    private float _lastDownSoftDrop = -1;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -1017,6 +1018,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (SceneBhv.Paused)
             return;
+        SoftDropStomp();
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -1027,11 +1029,15 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropStomp()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
-            return;
-        if (CurrentPiece.GetComponent<Piece>().IsHollowed)
-            return;
-        GravityStomp(scores: true);
+        if (_lastDownSoftDrop >= Time.time - 0.2f)
+        {
+            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+                return;
+            if (CurrentPiece.GetComponent<Piece>().IsHollowed)
+                return;
+            GravityStomp(scores: true);
+        }
+        _lastDownSoftDrop = Time.time;
     }
 
     public void SoftDropHeld()

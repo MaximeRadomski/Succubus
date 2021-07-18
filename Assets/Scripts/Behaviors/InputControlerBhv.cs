@@ -21,7 +21,6 @@ public class InputControlerBhv : FrameRateBehavior
     private int _currentInputLayer = -1;
     private List<GameObject> _lastSelectedGameObjects;
     private GameObject _lastSelectedGameObject;
-    private float _lastDownSoftDrop = -1;
 
     // THIS IS DONE FOR BETTER PERF
     //Faster than refecting on enums 
@@ -308,14 +307,6 @@ public class InputControlerBhv : FrameRateBehavior
         if (Input.GetKeyDown(_keyBinding[1]))
         {
             _gameplayControler.Down();
-        }
-        if (Input.GetKeyDown(_keyBinding[1]))
-        {
-            if (_lastDownSoftDrop >= Time.time - 0.2f)
-            {
-                _gameplayControler.SoftDropStomp();
-            }
-            _lastDownSoftDrop = Time.time;
         }
         if (Input.GetKey(_keyBinding[1]))
         {
