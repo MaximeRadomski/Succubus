@@ -203,7 +203,7 @@ public class StepsService
             opponentType = OpponentType.Common;
         }
         //DEBUG
-        var levelWeight = GetWeightFromRunLevel(run);
+        var levelWeight = GetWeightFromRunLevel(run, character);
         var weight = (int)(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
         _adjacentString += newStep.ToParsedString();
@@ -313,9 +313,9 @@ public class StepsService
         return stepOpponents;
     }
 
-    private int GetWeightFromRunLevel(Run run)
+    private int GetWeightFromRunLevel(Run run, Character character)
     {
-        var baseWeight = 40;
+        var baseWeight = 40 + character.StepsWeightMalus;
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
         weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());

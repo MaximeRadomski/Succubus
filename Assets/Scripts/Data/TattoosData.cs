@@ -12,9 +12,10 @@ public static class TattoosData
     /* 0  */ { "Tribal", "Trinity", "Cleaver", "Broken Clock", "Knuckle", "Fox", "Black Mirror", "Kinky Boot", "Thermal Goggles", "D20",
     /* 10 */ "Broken Sword", "Wooden Wings", "T Worship", "I Worship", "Backspace Key", "X-Ray Glasses", "Spicy Lollipop", "Trash Bin", "Hedgehog", "Handbrake",
     /* 20 */ "Eclipse Glasses", "Crown Of Thorns", "Perfect Score", "Heavy Weight", "Ouroboros", "SOP Sign", "Full Black", "Hell Suppo", "Earth Child", "Heaven Icon",
-    /* 30 */ "Simp Shield", "Permutation", "Fire Stone", "Earth Stone", "Water Stone", "Wind Stone", "Forgotten Dream", "Quad Damage", "Double Edged", "Damocles" };
+    /* 30 */ "Simp Shield", "Permutation", "Fire Stone", "Earth Stone", "Water Stone", "Wind Stone", "Forgotten Dream", "Quad Damage", "Double Edged", "Damocles",
+    /* 40 */ "Brand of Sacrifice"};
 
-    public static string[] CommonTattoosNames = { Tattoos[0], Tattoos[1], Tattoos[4], Tattoos[9], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[31], Tattoos[37], Tattoos[39] };
+    public static string[] CommonTattoosNames = { Tattoos[0], Tattoos[1], Tattoos[4], Tattoos[9], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[31], Tattoos[37], Tattoos[39], Tattoos[40] };
     public static string[] RareTattoosNames = { Tattoos[2], Tattoos[3], Tattoos[5], Tattoos[8], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19], Tattoos[24], Tattoos[30], Tattoos[32], Tattoos[33], Tattoos[34], Tattoos[35], Tattoos[36], Tattoos[38] };
     public static string[] LegendaryTattoosNames = { Tattoos[6], Tattoos[7], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29] };
 

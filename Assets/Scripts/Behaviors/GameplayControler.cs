@@ -51,6 +51,7 @@ public class GameplayControler : MonoBehaviour
     private bool _isFreeTraining;
     private bool _hasAlteredPiecePositionAfterResume;
     private float _lastDownSoftDrop = -1;
+    private bool _isOldSchoolGameplay;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -2213,6 +2214,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Shrink:
                 AttackShrink(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.GoodOldTimes:
+                AttackGoodOldTimes(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2591,6 +2595,30 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idDarkRows);
         ReducePlayHeight(nbLines, afterLock: true);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
+    }
+
+    public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
+    {
+        _isOldSchoolGameplay = true;
+        if (GravityLevel > 10)
+            SetGravity(10);
+        _afterSpawnAttackCounter = nbPieces;
+        AfterSpawn = OldSchoolAfterSpawn;
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+
+        bool OldSchoolAfterSpawn(bool result)
+        {
+            if (_afterSpawnAttackCounter <= 0)
+            {
+                _isOldSchoolGameplay = false;
+                SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
+                BaseAfterSpawnEnd();
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            _soundControler.PlaySound(_idEmptyRows);
+            return true;
+        }
     }
 
     public void SetForcedPieceOpacity(float current, float max)

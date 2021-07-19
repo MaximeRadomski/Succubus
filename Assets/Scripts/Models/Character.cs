@@ -58,6 +58,7 @@ public class Character : Loot
     public int QuadDamage = 0;
     public int DoubleEdgeGravity = 0;
     public int DamoclesDamage = 0;
+    public int StepsWeightMalus = 0;
 
     public Character()
     {
