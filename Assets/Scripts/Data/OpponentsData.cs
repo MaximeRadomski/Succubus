@@ -5,11 +5,11 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool OnlyOpponent = true;
     public static Opponent DebugOpponent()
     {
-        return HellOpponents?.Find(o => o.Name.Contains("Crossed Demon")).Clone();
+        return EarthOpponents?.Find(o => o.Name.Contains("Old Reverend")).Clone();
     }
 
     static OpponentsData()
@@ -368,7 +368,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Name = "Punished sinner", Realm = Realm.Earth, Type = OpponentType.Common,
+            Name = "Punished Sinner", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 5) },
@@ -381,6 +381,14 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 5, 2) },
             GravityLevel = 10, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Old Reverend", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 100, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.GoodOldTimes, 5) },
+            GravityLevel = 12, Weight = 40
         },
     };
 

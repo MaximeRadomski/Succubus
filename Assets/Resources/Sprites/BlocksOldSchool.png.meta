@@ -1,28 +1,28 @@
 fileFormatVersion: 2
-guid: fac5f958a91907a4aa00f1263b4860da
+guid: 4b6d94fb224a13c4bb3a1a15a4cf29e7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5398020992459511424
-    second: EarthOpponents_0
+      213: -3955098765957999511
+    second: BlocksOldSchool_0
   - first:
-      213: 133565052773442841
-    second: EarthOpponents_1
+      213: -442626301426674835
+    second: BlocksOldSchool_1
   - first:
-      213: -8710171758327261162
-    second: EarthOpponents_2
+      213: -557759665513274160
+    second: BlocksOldSchool_2
   - first:
-      213: 4924385043107406374
-    second: EarthOpponents_3
+      213: 7816517313762177093
+    second: BlocksOldSchool_3
   - first:
-      213: 9111404448586224989
-    second: EarthOpponents_4
+      213: -2408707509425609683
+    second: BlocksOldSchool_4
   - first:
-      213: -2181919743044048558
-    second: EarthOpponents_5
+      213: 2922601004276740362
+    second: BlocksOldSchool_5
   - first:
-      213: 5756205229003369331
-    second: EarthOpponents_6
+      213: -1557269135729722341
+    second: BlocksOldSchool_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -86,7 +86,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -98,19 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -124,13 +112,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EarthOpponents_0
+      name: BlocksOldSchool_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +126,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08696a12e7f99ea40800000000000000
-      internalID: 5398020992459511424
+      spriteID: 964dc7b90aaac19c0800000000000000
+      internalID: -3955098765957999511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_1
+      name: BlocksOldSchool_1
       rect:
         serializedVersion: 2
-        x: 29
+        x: 9
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 915a7f435b48ad100800000000000000
-      internalID: 133565052773442841
+      spriteID: d63d73759b97bd9f0800000000000000
+      internalID: -442626301426674835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_2
+      name: BlocksOldSchool_2
       rect:
         serializedVersion: 2
-        x: 58
+        x: 18
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 618934c2fe04f1780800000000000000
-      internalID: -8710171758327261162
+      spriteID: 0d46a031a807248f0800000000000000
+      internalID: -557759665513274160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_3
+      name: BlocksOldSchool_3
       rect:
         serializedVersion: 2
-        x: 87
+        x: 27
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -201,20 +189,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 622e9af2b1ee65440800000000000000
-      internalID: 4924385043107406374
+      spriteID: 5403c7b4519d97c60800000000000000
+      internalID: 7816517313762177093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_4
+      name: BlocksOldSchool_4
       rect:
         serializedVersion: 2
-        x: 116
+        x: 36
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,20 +210,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5555ea5216327e70800000000000000
-      internalID: 9111404448586224989
+      spriteID: d24eed4384d829ed0800000000000000
+      internalID: -2408707509425609683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_5
+      name: BlocksOldSchool_5
       rect:
         serializedVersion: 2
-        x: 145
+        x: 45
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,20 +231,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 259a273dd8348b1e0800000000000000
-      internalID: -2181919743044048558
+      spriteID: a017d18f02a2f8820800000000000000
+      internalID: 2922601004276740362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EarthOpponents_6
+      name: BlocksOldSchool_6
       rect:
         serializedVersion: 2
-        x: 174
+        x: 54
         y: 0
-        width: 29
-        height: 51
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -264,8 +252,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37bedf8782622ef40800000000000000
-      internalID: 5756205229003369331
+      spriteID: b1c7629c8f7736ae0800000000000000
+      internalID: -1557269135729722341
       vertices: []
       indices: 
       edges: []

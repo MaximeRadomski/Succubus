@@ -77,5 +77,5 @@ public enum AttackType
     [Prefixe(null)]
     [Suffixe(" pieces")]
     [Description("Good old Times")]
-    GoodOldTimes = 17, //reduces DAS, prevent Holding, Hard Dropping Lock Delay, and apply a custom skin to pieces
+    GoodOldTimes = 17, //reduces DAS, prevent Holding, Hard Dropping, Lock Delay, and apply a custom skin to pieces
 }

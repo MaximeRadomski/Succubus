@@ -272,4 +272,14 @@ public class Piece : MonoBehaviour
             child.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
     }
+
+
+    public void SetOldSchool()
+    {
+        IsClassic = true;
+        foreach (Transform block in transform)
+        {
+            block.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BlocksOldSchool_{Constants.PiecesLetters.IndexOf(this.Letter[0])}");
+        }
+    }
 }

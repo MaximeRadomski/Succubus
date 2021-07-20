@@ -586,7 +586,10 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
+            if (_isOldSchoolGameplay)
+                _lockDelay = 0.0f;
+            else
+                _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
         }
         else
         {
@@ -602,7 +605,10 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
+        if (_isOldSchoolGameplay)
+            _lockDelay = 0.0f;
+        else
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -1030,6 +1036,8 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropStomp()
     {
+        if (_isOldSchoolGameplay)
+            return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
@@ -1104,7 +1112,7 @@ public class GameplayControler : MonoBehaviour
 
     public void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1543,7 +1551,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Hold()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
@@ -2600,8 +2608,8 @@ public class GameplayControler : MonoBehaviour
     public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         _isOldSchoolGameplay = true;
-        if (GravityLevel > 10)
-            SetGravity(10);
+        _dasMax = 16;
+        _arrMax = 6;
         _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = OldSchoolAfterSpawn;
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
@@ -2611,11 +2619,17 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 _isOldSchoolGameplay = false;
+                _dasMax = PlayerPrefsHelper.GetDas();
+                _arrMax = PlayerPrefsHelper.GetArr();
                 SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
                 BaseAfterSpawnEnd();
                 return false;
             }
+            if (GravityLevel > 6) //I put it back here because changing opponent might reset back to opponent speed gravity
+                SetGravity(6);
+            SetLockDelay();
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            CurrentPiece.GetComponent<Piece>().SetOldSchool();
             _soundControler.PlaySound(_idEmptyRows);
             return true;
         }
