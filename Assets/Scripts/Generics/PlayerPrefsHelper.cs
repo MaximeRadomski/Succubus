@@ -597,6 +597,8 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static int GetDas()
     {
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            return Constants.OldSchoolDas;
         var das = PlayerPrefs.GetInt(Constants.PpDas, Constants.PpDasDefault);
         return das;
     }
@@ -608,6 +610,8 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static int GetArr()
     {
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            return Constants.OldSchoolArr;
         var arr = PlayerPrefs.GetInt(Constants.PpArr, Constants.PpArrDefault);
         return arr;
     }

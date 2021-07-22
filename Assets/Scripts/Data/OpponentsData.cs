@@ -6,7 +6,7 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = true;
-    public static bool OnlyOpponent = true;
+    public static bool OnlyOpponent = false;
     public static Opponent DebugOpponent()
     {
         return EarthOpponents?.Find(o => o.Name.Contains("Old Reverend")).Clone();

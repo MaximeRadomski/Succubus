@@ -170,7 +170,7 @@ public class GameplayControler : MonoBehaviour
     public void CleanPlayerPrefs()
     {
         Bag = null;
-        _characterSpecial.ResetCooldown();
+        _characterSpecial?.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         if (PlayFieldBhv != null)
@@ -181,10 +181,11 @@ public class GameplayControler : MonoBehaviour
     private void SetTraining()
     {
         if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            || Constants.CurrentGameMode == GameMode.TrainingDummy
+            || Constants.CurrentGameMode == GameMode.TrainingOldSchool)
         {
             _isTraining = true;
-            _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree;
+            _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree || Constants.CurrentGameMode == GameMode.TrainingOldSchool;
         }
         else
         {
@@ -206,6 +207,11 @@ public class GameplayControler : MonoBehaviour
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        {
+            _isOldSchoolGameplay = true;
+            _levelRealm = Realm.Earth;
+        }
         _panelGame = GameObject.Find("PanelGame");
         if (!_isFreeTraining)
             _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
@@ -301,8 +307,11 @@ public class GameplayControler : MonoBehaviour
             _realmTree = PlayerPrefsHelper.GetRealmTree();
         }
         SetLockDelay();
-        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
-        _characterSpecial.Init(Character, this);
+        if (Character.SpecialName != null)
+        {
+            _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + Character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
+            _characterSpecial.Init(Character, this);
+        }
         CharacterInstanceBhv.Spawn();
         UpdateItemAndSpecialVisuals();
         _dasMax = PlayerPrefsHelper.GetDas();
@@ -378,7 +387,7 @@ public class GameplayControler : MonoBehaviour
             }
         }
         //SPECIAL
-        if (Constants.SelectedCharacterSpecialCooldown <= 0 || (_characterSpecial.IsReactivable && _characterSpecial.CanReactivate))
+        if (Constants.SelectedCharacterSpecialCooldown <= 0 || (_characterSpecial != null && _characterSpecial.IsReactivable && _characterSpecial.CanReactivate))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -547,8 +556,10 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void SetGravity(int level)
+    public void SetGravity(int level, bool fromOpponentSpawn = false)
     {
+        if (fromOpponentSpawn && (_isOldSchoolGameplay || Constants.IsEffectAttackInProgress != AttackType.None))
+            return;
         if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the pupose of setting it to zero
             level += Character.DoubleEdgeGravity;
 
@@ -730,9 +741,11 @@ public class GameplayControler : MonoBehaviour
         SetNextGravityFall();
         ResetLock();
         SceneBhv.OnNewPiece(tmpLastPiece);
-        _characterSpecial.OnNewPiece(CurrentPiece);
+        _characterSpecial?.OnNewPiece(CurrentPiece);
         AfterSpawn?.Invoke(trueSpawn);
         CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
+        if (_isOldSchoolGameplay)
+            CurrentPiece.GetComponent<Piece>().SetOldSchool();
         DropGhost();
         CheckInputWhileLocked();
     }
@@ -761,12 +774,20 @@ public class GameplayControler : MonoBehaviour
 
     public void UpdateNextPieces()
     {
-        for (int i = 0; i < 5; ++i)
+        int maxPreview = 5;
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            maxPreview = 1;
+        for (int i = 0; i < maxPreview; ++i)
         {
             for (int j = NextPieces[i].transform.childCount - 1; j >= 0; --j)
                 Destroy(NextPieces[i].transform.GetChild(j).gameObject);
             var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(NextPieces[i].transform);
+            if (_isOldSchoolGameplay)
+            {
+                if (Constants.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter)
+                    tmpPiece.GetComponent<Piece>().SetOldSchool();
+            }
         }
     }
 
@@ -874,7 +895,7 @@ public class GameplayControler : MonoBehaviour
         if (drone != null)
             drone.GetComponent<DroneBhv>().OnPieceLocked(CurrentPiece);
         SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
-        _characterSpecial.OnPieceLocked(CurrentPiece);
+        _characterSpecial?.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
         --Constants.HeightLimiterResetLines;
@@ -1605,7 +1626,7 @@ public class GameplayControler : MonoBehaviour
             SetNextGravityFall();
             ResetLock();
             _canHold = false;
-            _characterSpecial.OnNewPiece(CurrentPiece);
+            _characterSpecial?.OnNewPiece(CurrentPiece);
             AfterSpawn?.Invoke(false);
             CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
             DropGhost();
@@ -1616,7 +1637,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Item()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1637,9 +1658,9 @@ public class GameplayControler : MonoBehaviour
 
     public void Special()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
         {
-            if (_characterSpecial.IsReactivable && _characterSpecial.CanReactivate && _characterSpecial.Reactivate())
+            if (_characterSpecial != null && _characterSpecial.IsReactivable && _characterSpecial.CanReactivate && _characterSpecial.Reactivate())
                 _soundControler.PlaySound(_idSpecial);
             UpdateItemAndSpecialVisuals();
             return;
@@ -1844,7 +1865,7 @@ public class GameplayControler : MonoBehaviour
             }
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
-            _characterSpecial.OnLinesCleared(nbLines, isB2B);
+            _characterSpecial?.OnLinesCleared(nbLines, isB2B);
 
             ++Constants.ComboCounter;
             if (Constants.ComboCounter > 1)
@@ -1857,7 +1878,7 @@ public class GameplayControler : MonoBehaviour
             if (GetHighestBlock() == -1) //PERFECT
             {
                 _soundControler.PlaySound(_idPerfect);
-                _characterSpecial.OnPerfectClear();
+                _characterSpecial?.OnPerfectClear();
                 SceneBhv.OnPerfectClear();
             }                
 
@@ -2480,7 +2501,7 @@ public class GameplayControler : MonoBehaviour
                 if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
                 {
                     CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
-                    SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
+                    (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 }
                 Constants.IsEffectAttackInProgress = AttackType.None;
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
@@ -2608,8 +2629,8 @@ public class GameplayControler : MonoBehaviour
     public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         _isOldSchoolGameplay = true;
-        _dasMax = 16;
-        _arrMax = 6;
+        _dasMax = Constants.OldSchoolDas;
+        _arrMax = Constants.OldSchoolArr;
         _afterSpawnAttackCounter = nbPieces;
         AfterSpawn = OldSchoolAfterSpawn;
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
@@ -2621,7 +2642,7 @@ public class GameplayControler : MonoBehaviour
                 _isOldSchoolGameplay = false;
                 _dasMax = PlayerPrefsHelper.GetDas();
                 _arrMax = PlayerPrefsHelper.GetArr();
-                SetGravity(SceneBhv.CurrentOpponent.GravityLevel);
+                (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 BaseAfterSpawnEnd();
                 return false;
             }
@@ -2629,7 +2650,6 @@ public class GameplayControler : MonoBehaviour
                 SetGravity(6);
             SetLockDelay();
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            CurrentPiece.GetComponent<Piece>().SetOldSchool();
             _soundControler.PlaySound(_idEmptyRows);
             return true;
         }

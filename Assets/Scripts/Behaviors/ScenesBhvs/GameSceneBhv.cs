@@ -27,11 +27,16 @@ public abstract class GameSceneBhv : SceneBhv
         if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
             Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+        else if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            Character = CharactersData.CustomCharacters[0];
         else
             Character = PlayerPrefsHelper.GetRunCharacter();
         Character.BoostAttack = 0;
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
-        _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{Character.Kind}");
+        else
+            _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
         _panelGame = GameObject.Find("PanelGame");
     }
 
@@ -84,6 +89,8 @@ public abstract class GameSceneBhv : SceneBhv
             if (Constants.CurrentGameMode == GameMode.TrainingFree
             || Constants.CurrentGameMode == GameMode.TrainingDummy)
                 NavigationService.LoadBackUntil(Constants.CharSelScene);
+            else if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+                NavigationService.LoadBackUntil(Constants.TrainingChoiceScene);
             else
             {
                 PlayerPrefsHelper.SaveIsInFight(false);

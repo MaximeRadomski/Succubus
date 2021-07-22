@@ -40,6 +40,8 @@ public static class Constants
     public const int MaxLegendaryPercent = 15;
     public const float ServerCallTimeout = 8.0f;
     public const int ServerCallOfflineMax = 3;
+    public const int OldSchoolDas = 16;
+    public const int OldSchoolArr = 6;
 
 
     //  TAGS  //

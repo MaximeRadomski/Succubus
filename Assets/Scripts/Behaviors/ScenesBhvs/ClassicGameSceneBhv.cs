@@ -243,13 +243,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
                                      "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
-        ResetToOpponentGravity();
+        ResetToOpponentGravity(true);
         StartOpponentCooldown(sceneInit, true);
     }
 
-    public void ResetToOpponentGravity()
+    public void ResetToOpponentGravity(bool fromOpponentSpawn = false)
     {
-        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1));
+        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1), fromOpponentSpawn);
     }
 
     public void RandomizeOpponentAttack()

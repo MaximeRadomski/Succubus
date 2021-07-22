@@ -279,7 +279,12 @@ public class Piece : MonoBehaviour
         IsClassic = true;
         foreach (Transform block in transform)
         {
-            block.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BlocksOldSchool_{Constants.PiecesLetters.IndexOf(this.Letter[0])}");
+            var spriteRenderer = block.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BlocksOldSchool_{Constants.PiecesLetters.IndexOf(this.Letter[0])}");
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            block.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            block.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
 }

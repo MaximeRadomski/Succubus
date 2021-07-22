@@ -109,4 +109,17 @@ public static class CharactersData
             SpecialName = "Sky Down", SpecialDescription = "apply gravity on all current blocks in the play field (no bonuses)."
         },
     };
+
+    public static List<Character> CustomCharacters = new List<Character>()
+    {
+        new Character()
+        {
+            Id = 0, Name = "Old Man", Kind = "EarthOpponents_6", Realm = Realm.Earth,
+            Attack = 0,
+            Cooldown = 0,
+            SpecialName = null, SpecialDescription = "None",
+            Lore = "None",
+            DialogId = 0, DialogPitch = 1.0f
+        }
+    };
 }

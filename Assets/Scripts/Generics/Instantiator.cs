@@ -278,6 +278,11 @@ public class Instantiator : MonoBehaviour
 
     public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, Character character, Opponent opponent, bool isHorizontal = false)
     {
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        {
+            NewPopupYesNo("Unavailable", "info menu is unavailable in old school mode", null, "Ok", null);
+            return null;
+        }
         var tmpInfoMenuObject = Resources.Load<GameObject>("Prefabs/InfoMenu");
         var tmpInfoMeuInstance = Instantiate(tmpInfoMenuObject, tmpInfoMenuObject.transform.position, tmpInfoMenuObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpInfoMeuInstance.name);

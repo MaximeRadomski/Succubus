@@ -7,5 +7,6 @@ public enum GameMode
     Ascension,
     TrueAscension,
     TrainingFree,
+    TrainingOldSchool,
     TrainingDummy
 }

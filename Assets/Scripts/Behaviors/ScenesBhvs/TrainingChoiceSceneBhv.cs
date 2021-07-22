@@ -23,6 +23,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     {
         GameObject.Find("ButtonFreePlay").GetComponent<ButtonBhv>().EndActionDelegate = GoToFreePlay;
         GameObject.Find("ButtonTrainingDummy").GetComponent<ButtonBhv>().EndActionDelegate = GoToTrainingDummy;
+        GameObject.Find("ButtonOldSchool").GetComponent<ButtonBhv>().EndActionDelegate = GoToOldSchool;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         (_buttonHighScores = GameObject.Find("ButtonHighScores")).GetComponent<ButtonBhv>().EndActionDelegate = GoToButtonHighScores;
         if (PlayerPrefsHelper.GetTrainingHighScoreHistory().Count <= 0)
@@ -47,6 +48,17 @@ public class TrainingChoiceSceneBhv : SceneBhv
         {
             Constants.CurrentGameMode = GameMode.TrainingDummy;
             NavigationService.LoadNextScene(Constants.CharSelScene);
+            return true;
+        }
+    }
+
+    private void GoToOldSchool()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            Constants.CurrentGameMode = GameMode.TrainingOldSchool;
+            NavigationService.LoadNextScene(Constants.TrainingFreeGameScene);
             return true;
         }
     }
