@@ -58,6 +58,10 @@ public class TrainingChoiceSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             Constants.CurrentGameMode = GameMode.TrainingOldSchool;
+            PlayerPrefsHelper.ResetTraining();
+            PlayerPrefsHelper.SaveCurrentOpponents(null);
+            Constants.ResetClassicGameCache();
+            Constants.CurrentItemCooldown = 0;
             NavigationService.LoadNextScene(Constants.TrainingFreeGameScene);
             return true;
         }

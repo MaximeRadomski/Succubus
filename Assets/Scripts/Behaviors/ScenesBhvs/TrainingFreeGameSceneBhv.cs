@@ -70,7 +70,10 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         //_level = 1;
         //_lines = 0;
         //_pieces = 0;
-        NavigationService.LoadNextScene(Constants.HighScoreScene);
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            NavigationService.LoadBackUntil(Constants.TrainingChoiceScene);
+        else
+            NavigationService.LoadNextScene(Constants.HighScoreScene);
         //Reload();
     }
 

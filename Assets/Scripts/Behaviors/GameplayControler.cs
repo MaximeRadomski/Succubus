@@ -52,6 +52,7 @@ public class GameplayControler : MonoBehaviour
     private bool _hasAlteredPiecePositionAfterResume;
     private float _lastDownSoftDrop = -1;
     private bool _isOldSchoolGameplay;
+    private bool _needDownRelease;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -597,10 +598,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            if (_isOldSchoolGameplay)
-                _lockDelay = 0.0f;
-            else
-                _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
         }
         else
         {
@@ -616,10 +614,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        if (_isOldSchoolGameplay)
-            _lockDelay = 0.0f;
-        else
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
+        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -652,6 +647,7 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonRightName, DirectionReleased, 2);
         LookForAllPossibleButton(Constants.GoButtonDownName, Down, 0);
         LookForAllPossibleButton(Constants.GoButtonDownName, SoftDropHeld, 1);
+        LookForAllPossibleButton(Constants.GoButtonDownName, DownReleased, 2);
         LookForAllPossibleButton(Constants.GoButtonHoldName, Hold, 0);
         LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonAntiClockName, AntiClock, 0);
@@ -719,7 +715,7 @@ public class GameplayControler : MonoBehaviour
         if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastForcedBlocks != null)
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Constants.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
         _hasAlteredPiecePositionAfterResume = true;
-        if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
+        if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         else
             CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -1055,6 +1051,11 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    public void DownReleased()
+    {
+        _needDownRelease = false;
+    }
+
     public void SoftDropStomp()
     {
         if (_isOldSchoolGameplay)
@@ -1078,12 +1079,19 @@ public class GameplayControler : MonoBehaviour
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
             return;
+        if (_isOldSchoolGameplay && _needDownRelease)
+            return;
         SetNextGravityFall();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(0.0f, -1.0f, 0.0f);
         if (IsPiecePosValidOrReset())
             SceneBhv.OnSoftDrop();
+        else if (_isOldSchoolGameplay)
+        {
+            Lock();
+            _needDownRelease = true;
+        }
     }
 
     private void GravityFall()
@@ -1378,7 +1386,8 @@ public class GameplayControler : MonoBehaviour
                     currentPieceModel.RotationState = RotationState.L;
                 if (_nextLock > 0.0f)
                     ++_allowedMovesBeforeLock;
-                ResetLock();
+                if (!_isOldSchoolGameplay)
+                    ResetLock();
                 if (!IsNextGravityFallPossible())
                     SetNextGravityFall();
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, -90.0f);
@@ -1498,7 +1507,8 @@ public class GameplayControler : MonoBehaviour
                     currentPieceModel.RotationState = RotationState.R;
                 if (_nextLock > 0.0f)
                     ++_allowedMovesBeforeLock;
-                ResetLock();
+                if (!_isOldSchoolGameplay)
+                    ResetLock();
                 if (!IsNextGravityFallPossible())
                     SetNextGravityFall();
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
@@ -1518,7 +1528,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Rotation180()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused ||_isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Rotation180;
@@ -1608,7 +1618,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
-            if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
+            if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
                 CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -1698,6 +1708,8 @@ public class GameplayControler : MonoBehaviour
                 _allowedMovesBeforeLock = 0;
                 ++_allowedResetMovesBeforeLock;
             }
+            if (_isOldSchoolGameplay && !isGravity)
+                return true;
             ResetLock();
             return true;
         }
@@ -2244,7 +2256,7 @@ public class GameplayControler : MonoBehaviour
                 AttackShrink(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.GoodOldTimes:
-                AttackGoodOldTimes(opponentInstance, opponentRealm, param1);
+                AttackGoodOldTimes(opponentInstance, opponentRealm, param1, param2);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2626,7 +2638,7 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
-    public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
+    public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
     {
         _isOldSchoolGameplay = true;
         _dasMax = Constants.OldSchoolDas;
@@ -2646,8 +2658,8 @@ public class GameplayControler : MonoBehaviour
                 BaseAfterSpawnEnd();
                 return false;
             }
-            if (GravityLevel > 6) //I put it back here because changing opponent might reset back to opponent speed gravity
-                SetGravity(6);
+            if (GravityLevel > gravity) //I put it back here because changing opponent might reset back to opponent speed gravity
+                SetGravity(gravity);
             SetLockDelay();
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             _soundControler.PlaySound(_idEmptyRows);

@@ -387,7 +387,7 @@ public static class OpponentsData
             Name = "Old Reverend", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.GoodOldTimes, 5) },
+                new OpponentAttack(AttackType.GoodOldTimes, 5, 10) },
             GravityLevel = 12, Weight = 40
         },
     };

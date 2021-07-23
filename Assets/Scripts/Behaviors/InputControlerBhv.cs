@@ -312,6 +312,10 @@ public class InputControlerBhv : FrameRateBehavior
         {
             _gameplayControler.SoftDropHeld();
         }
+        if (Input.GetKeyUp(_keyBinding[1]))
+        {
+            _gameplayControler.DownReleased();
+        }
         if (Input.GetKeyDown(_keyBinding[2]))
         {
             _gameplayControler.Left();

@@ -19,7 +19,7 @@ public class Instantiator : MonoBehaviour
     public void Init()
     {
         _mainCamera = Helper.GetMainCamera();
-        _isClassic = PlayerPrefsHelper.GetClassicPieces();
+        _isClassic = PlayerPrefsHelper.GetClassicPieces() || Constants.CurrentGameMode == GameMode.TrainingOldSchool;
         _hasInit = true;
     }
 
