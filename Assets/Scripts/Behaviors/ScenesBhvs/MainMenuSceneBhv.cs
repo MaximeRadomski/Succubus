@@ -61,7 +61,22 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void GoToNewAscension()
     {
-        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        if (_currentRun != null)
+        {
+            this.Instantiator.NewPopupYesNo("Ascension", "would you like to continue your endless ascension, or to start a new one?", "New", "Continue", (result) =>
+            {
+                if (!result)
+                {
+                    _currentRun = null;
+                    PlayerPrefsHelper.ResetRun();
+                }
+                Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+                return result;
+            });
+        }
+        else
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+
         object OnBlend(bool result)
         {
             Constants.CurrentGameMode = GameMode.Ascension;

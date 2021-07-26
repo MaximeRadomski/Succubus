@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public static class NavigationService
 {
+    public static NavigationParameter NextSceneParameter;
+
     private static string _path;
 
     public static void TrySetCurrentRootScene(string name)
@@ -25,8 +27,9 @@ public static class NavigationService
         SceneManager.LoadScene(name);
     }
 
-    public static void LoadNextScene(string name)
+    public static void LoadNextScene(string name, NavigationParameter parameter = null)
     {
+        NextSceneParameter = parameter;
         if (name == SceneManager.GetActiveScene().name)
             return;
         Constants.NameLastScene = SceneManager.GetActiveScene().name;
@@ -81,4 +84,9 @@ public static class NavigationService
         //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+}
+
+public class NavigationParameter
+{
+    public bool BoolParam1;
 }

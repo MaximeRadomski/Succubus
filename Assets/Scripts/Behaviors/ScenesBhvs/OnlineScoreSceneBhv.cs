@@ -14,6 +14,7 @@ public class OnlineScoreSceneBhv : SceneBhv
     private int _listItemDisplay = 5;
     private AccountDto _account;
     private bool _reachedEndOfOnlineScores;
+    private bool _isOldSchool = false;
 
     private TMPro.TextMeshPro _page;
     private List<GameObject> _scoreGo;
@@ -26,6 +27,7 @@ public class OnlineScoreSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        _isOldSchool = NavigationService.NextSceneParameter?.BoolParam1 == true;
         _currentPage = 0;
         GameObject.Find("ButtonNext").GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPage(_currentPage + 1);
         GameObject.Find("ButtonPrevious").GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPage(_currentPage - 1);
@@ -83,7 +85,7 @@ public class OnlineScoreSceneBhv : SceneBhv
             else if (_reachedEndOfOnlineScores == false)
             {
                 Instantiator.NewLoading();
-                HighScoresService.GetHighScores(_lastHighest, _bigRange, (list) =>
+                HighScoresService.GetHighScores(_lastHighest, _bigRange, _isOldSchool, (list) =>
                 {
                     if (list == null || list.Count == 0)
                         _reachedEndOfOnlineScores = true;
@@ -102,7 +104,7 @@ public class OnlineScoreSceneBhv : SceneBhv
         if (_highScores.Count <= (_currentPage * _listItemDisplay))
         {
             Instantiator.NewLoading();
-            HighScoresService.GetHighScores(_lastHighest, _range < _listItemDisplay ? _listItemDisplay : _range, (list) =>
+            HighScoresService.GetHighScores(_lastHighest, _range < _listItemDisplay ? _listItemDisplay : _range, _isOldSchool, (list) =>
             {
                 Helper.ResumeLoading();
                 if (list == null || list.Count == 0)

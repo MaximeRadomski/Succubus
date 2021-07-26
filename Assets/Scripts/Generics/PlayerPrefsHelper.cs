@@ -93,17 +93,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return verifList;
     }
 
-    public static void SaveTrainingHighScoreHistory(List<int> scoreHistory)
+    public static void SaveTrainingHighScoreHistory(List<int> scoreHistory, bool isOldSchool)
     {
         var scoreHistoryStr = "";
         foreach (var score in scoreHistory)
             scoreHistoryStr += $"{score};";
-        Mock.SetString(Constants.PpTrainingHighScoreHistory, scoreHistoryStr);
+        Mock.SetString(isOldSchool ? Constants.PpTrainingHighScoreHistoryOldSchool : Constants.PpTrainingHighScoreHistory, scoreHistoryStr);
     }
 
-    public static List<int> GetTrainingHighScoreHistory()
+    public static List<int> GetTrainingHighScoreHistory(bool isOldSchool)
     {
-        var scoreHistoryStr = Mock.GetString(Constants.PpTrainingHighScoreHistory, Constants.PpSerializeDefault);
+        var scoreHistoryStr = Mock.GetString(isOldSchool ? Constants.PpTrainingHighScoreHistoryOldSchool : Constants.PpTrainingHighScoreHistory, Constants.PpSerializeDefault);
         int i = 0;
         var scoreHistory = new List<int>();
         while (!string.IsNullOrEmpty(scoreHistoryStr) || i > 15)
@@ -121,16 +121,16 @@ public class PlayerPrefsHelper : MonoBehaviour
         return scoreHistory;
     }
 
-    public static void SaveTrainingHighestScore(List<int> scoreContext, string encryptedScore, int type)
+    public static void SaveTrainingHighestScore(List<int> scoreContext, string encryptedScore, int type, bool isOldSchool)
     {
         var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
         var score = new HighScoreDto(lastCredentials != null && lastCredentials.PlayerName != null ? lastCredentials.PlayerName : "", scoreContext[0], scoreContext[1], scoreContext[2], scoreContext[3], scoreContext[4], type, encryptedScore);
-        Mock.SetString(Constants.PpTrainingHighestScore, JsonUtility.ToJson(score));
+        Mock.SetString(isOldSchool ? Constants.PpTrainingHighestScoreOldSchool : Constants.PpTrainingHighestScore, JsonUtility.ToJson(score));
     }
 
-    public static HighScoreDto GetTrainingHighestScore()
+    public static HighScoreDto GetTrainingHighestScore(bool isOldSchool)
     {
-        var score = JsonUtility.FromJson<HighScoreDto>(Mock.GetString(Constants.PpTrainingHighestScore, Constants.PpSerializeDefault));
+        var score = JsonUtility.FromJson<HighScoreDto>(Mock.GetString(isOldSchool ? Constants.PpTrainingHighestScoreOldSchool : Constants.PpTrainingHighestScore, Constants.PpSerializeDefault));
         if (score == null)
             return null;
         return score;

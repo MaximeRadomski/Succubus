@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrainingChoiceSceneBhv : SceneBhv
 {
     private GameObject _buttonHighScores;
+    private GameObject _buttonHighScoresOldSchool;
 
     public override MusicType MusicType => MusicType.Menu;
 
@@ -26,8 +27,11 @@ public class TrainingChoiceSceneBhv : SceneBhv
         GameObject.Find("ButtonOldSchool").GetComponent<ButtonBhv>().EndActionDelegate = GoToOldSchool;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         (_buttonHighScores = GameObject.Find("ButtonHighScores")).GetComponent<ButtonBhv>().EndActionDelegate = GoToButtonHighScores;
-        if (PlayerPrefsHelper.GetTrainingHighScoreHistory().Count <= 0)
+        (_buttonHighScoresOldSchool = GameObject.Find("ButtonHighScoresOldSchool")).GetComponent<ButtonBhv>().EndActionDelegate = GoToButtonHighScoresOldSchool;
+        if (PlayerPrefsHelper.GetTrainingHighScoreHistory(isOldSchool:false).Count <= 0)
             _buttonHighScores.SetActive(false);
+        if (PlayerPrefsHelper.GetTrainingHighScoreHistory(isOldSchool:true).Count <= 0)
+            _buttonHighScoresOldSchool.SetActive(false);
     }
 
     private void GoToFreePlay()
@@ -83,6 +87,16 @@ public class TrainingChoiceSceneBhv : SceneBhv
         object OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.HighScoreScene);
+            return true;
+        }
+    }
+
+    private void GoToButtonHighScoresOldSchool()
+    {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        object OnBlend(bool result)
+        {
+            NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam1 = true });
             return true;
         }
     }

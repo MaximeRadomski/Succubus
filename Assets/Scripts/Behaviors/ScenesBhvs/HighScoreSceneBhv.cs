@@ -11,6 +11,7 @@ public class HighScoreSceneBhv : SceneBhv
     private TMPro.TextMeshPro _title;
     private GameObject _scoreHistoryContainer;
     private ResourceBarBhv _tiltingBar;
+    private bool _isOldSchool = false;
 
     public bool AlreadyTrySendHighScoreOnThisInstance = false;
 
@@ -29,9 +30,10 @@ public class HighScoreSceneBhv : SceneBhv
 
     protected override void Init()
     {
-        base.Init();    
+        base.Init();
+        _isOldSchool = NavigationService.NextSceneParameter?.BoolParam1 == true;
         SetButtons();
-        _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory();
+        _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory(_isOldSchool);
         _title = GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>();
         _scoreHistoryContainer = GameObject.Find("ScoreHistoryContainer");
         var scoreValueStr = "";
@@ -65,7 +67,7 @@ public class HighScoreSceneBhv : SceneBhv
         var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
         if (Constants.CurrentHighScoreContext != null && Constants.CurrentHighScoreContext[0] >= _scoreHistory[0])
         {
-            PlayerPrefsHelper.SaveTrainingHighestScore(Constants.CurrentHighScoreContext, encryptedScore, type);
+            PlayerPrefsHelper.SaveTrainingHighestScore(Constants.CurrentHighScoreContext, encryptedScore, type, _isOldSchool);
             TrySendLocalHighest(null);
         }
         else if (Constants.CurrentHighScoreContext != null && lastCredentials != null && lastCredentials.PlayerName != null)
@@ -75,14 +77,14 @@ public class HighScoreSceneBhv : SceneBhv
         }
         else if (Constants.CurrentHighScoreContext == null)
         {
-            var _highestScore = PlayerPrefsHelper.GetTrainingHighestScore();
+            var _highestScore = PlayerPrefsHelper.GetTrainingHighestScore(_isOldSchool);
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{_highestScore.Score}\n{_highestScore.Level}\n{_highestScore.Lines}\n{_highestScore.Pieces}";
             GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highestScore.CharacterId);
             _title.text = "High Scores";
         }
         UpdateScoreList();
         if (Constants.CurrentHighScoreContext != null)
-            PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
+            PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory, _isOldSchool);
         GameObject.Find("ButtonOnlineScores").GetComponent<ButtonBhv>().EndActionDelegate = GoToHighScores;
         TrySendLocalHighest(null);
     }
@@ -135,21 +137,21 @@ public class HighScoreSceneBhv : SceneBhv
                 afterTrySend?.Invoke();
                 return;
             }
-            HighScoresService.GetHighScore(account.PlayerName, (onlineScore) =>
+            HighScoresService.GetHighScore(account.PlayerName, _isOldSchool, (onlineScore) =>
             {
-                var highestScore = PlayerPrefsHelper.GetTrainingHighestScore();
+                var highestScore = PlayerPrefsHelper.GetTrainingHighestScore(_isOldSchool);
                 if (thisOneInstead != null)
                     highestScore = thisOneInstead;
                 //IF Better account score outside of local scores
                 if (onlineScore != null && onlineScore.Score > highestScore.Score)
                 {
                     Debug.Log("Higher Score Received");
-                    _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory();
+                    _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory(_isOldSchool);
                     if (_scoreHistory.Contains(onlineScore.Score))
                         return;
                     _scoreHistory.Add(onlineScore.Score);
-                    PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory);
-                    PlayerPrefsHelper.SaveTrainingHighestScore(new List<int>() { onlineScore.Score, onlineScore.Level, onlineScore.Lines, onlineScore.Pieces, onlineScore.CharacterId }, onlineScore.Checksum, onlineScore.Type);
+                    PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory, _isOldSchool);
+                    PlayerPrefsHelper.SaveTrainingHighestScore(new List<int>() { onlineScore.Score, onlineScore.Level, onlineScore.Lines, onlineScore.Pieces, onlineScore.CharacterId }, onlineScore.Checksum, onlineScore.Type, _isOldSchool);
                     UpdateScoreList();
                     afterTrySend?.Invoke();
                     return;
@@ -162,7 +164,7 @@ public class HighScoreSceneBhv : SceneBhv
                     return;
                 }
                 //If exact same score and 
-                HighScoresService.CheckCloneScore(highestScore, (clones) =>
+                HighScoresService.CheckCloneScore(highestScore, _isOldSchool, (clones) =>
                 {
                     if (clones != null)
                     {
@@ -179,7 +181,7 @@ public class HighScoreSceneBhv : SceneBhv
                             }
                         }                        
                     }
-                    HighScoresService.PutHighScore(new HighScoreDto(account.PlayerName, highestScore.Score, highestScore.Level, highestScore.Lines, highestScore.Pieces, highestScore.CharacterId, highestScore.Type, highestScore.Checksum), () =>
+                    HighScoresService.PutHighScore(new HighScoreDto(account.PlayerName, highestScore.Score, highestScore.Level, highestScore.Lines, highestScore.Pieces, highestScore.CharacterId, highestScore.Type, highestScore.Checksum), _isOldSchool, () =>
                     {
                         Debug.Log("HighScore Sent");
                         afterTrySend?.Invoke();
@@ -198,7 +200,7 @@ public class HighScoreSceneBhv : SceneBhv
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
             object OnBlend(bool result)
             {
-                NavigationService.LoadNextScene(Constants.OnlineScoreScene);
+                NavigationService.LoadNextScene(Constants.OnlineScoreScene, new NavigationParameter() { BoolParam1 = _isOldSchool });
                 return true;
             }
         });
