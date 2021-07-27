@@ -73,9 +73,13 @@ public enum AttackType
     [Prefixe(null)]
     [Suffixe(" lines")]
     [Description("Shrink")]
-    Shrink = 16, //Shrinks playfield by (param)
+    Shrink = 16, //Shrinks playfield by (param1)
     [Prefixe(null)]
     [Suffixe(" pieces")]
-    [Description("Good old Times")]
-    GoodOldTimes = 17, //reduces DAS, prevent Holding, Hard Dropping, Lock Delay, and apply a custom skin to pieces
+    [Description("Old School")]
+    OldSchool = 17, //reduces DAS, prevent Holding, Hard Dropping, Lock Delay, and apply a custom skin to pieces for (param1) pieces and (param2) gravity
+    [Prefixe(null)]
+    [Suffixe(" pieces")]
+    [Description("Screwed")]
+    Screwed = 18, //prevents rotations for (param1) pieces
 }

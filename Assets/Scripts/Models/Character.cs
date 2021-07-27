@@ -26,6 +26,7 @@ public class Character : Loot
     public int DamagePercentToInferiorRealm = 20;
     public int RealmPassiveEffect = 1;
     public int EnemyCooldownProgressionReducer = 0;
+    public float EnemyMaxCooldownMalus = 0;
     public int VisionBlockReducer = 1;
     public float ItemCooldownReducer = 1.0f;
     public int ItemMaxCooldownReducer = 0;

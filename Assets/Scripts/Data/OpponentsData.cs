@@ -9,7 +9,8 @@ public static class OpponentsData
     public static bool OnlyOpponent = false;
     public static Opponent DebugOpponent()
     {
-        return EarthOpponents?.Find(o => o.Name.Contains("Old Reverend")).Clone();
+        var tmpOpponent = EarthOpponents?.Find(o => o.Name.Contains("Old Reverend")).Clone();
+        return tmpOpponent;
     }
 
     static OpponentsData()
@@ -387,7 +388,7 @@ public static class OpponentsData
             Name = "Old Reverend", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.GoodOldTimes, 5, 10) },
+                new OpponentAttack(AttackType.OldSchool, 5, 10) },
             GravityLevel = 12, Weight = 40
         },
     };

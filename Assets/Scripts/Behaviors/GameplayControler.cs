@@ -24,6 +24,7 @@ public class GameplayControler : MonoBehaviour
     public GameObject ForcedPiece;
     public List<GameObject> NextPieces;
     public bool CanBeReload = true;
+    public bool OpponentDeathScreen = false;
 
     private RealmTree _realmTree;
     private Realm _characterRealm;
@@ -52,6 +53,7 @@ public class GameplayControler : MonoBehaviour
     private bool _hasAlteredPiecePositionAfterResume;
     private float _lastDownSoftDrop = -1;
     private bool _isOldSchoolGameplay;
+    private bool _isScrewed;
     private bool _needDownRelease;
 
     private GameObject _spawner;
@@ -811,7 +813,7 @@ public class GameplayControler : MonoBehaviour
 
     void Update()
     {
-        if (!_hasInit || SceneBhv.Paused || CurrentPiece == null)
+        if (!_hasInit || SceneBhv.Paused || CurrentPiece == null || OpponentDeathScreen)
             return;
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
         {
@@ -1286,7 +1288,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Clock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Clock;
@@ -1407,7 +1409,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AntiClock()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.AntiClock;
@@ -2255,8 +2257,11 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Shrink:
                 AttackShrink(opponentInstance, opponentRealm, param1);
                 break;
-            case AttackType.GoodOldTimes:
-                AttackGoodOldTimes(opponentInstance, opponentRealm, param1, param2);
+            case AttackType.OldSchool:
+                AttackOldSchool(opponentInstance, opponentRealm, param1, param2);
+                break;
+            case AttackType.Screwed:
+                AttackScrewed(opponentInstance, opponentRealm, param1);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2638,7 +2643,7 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
-    public void AttackGoodOldTimes(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
+    public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
     {
         _isOldSchoolGameplay = true;
         _dasMax = Constants.OldSchoolDas;
@@ -2663,6 +2668,27 @@ public class GameplayControler : MonoBehaviour
             SetLockDelay();
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
             _soundControler.PlaySound(_idEmptyRows);
+            return true;
+        }
+    }
+
+    public void AttackScrewed(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
+    {
+        _isScrewed = true;
+        _afterSpawnAttackCounter = nbPieces;
+        AfterSpawn = ScrewedAfterSpawn;
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+
+        bool ScrewedAfterSpawn(bool result)
+        {
+            if (_afterSpawnAttackCounter <= 0)
+            {
+                _isScrewed = false;
+                BaseAfterSpawnEnd();
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            _soundControler.PlaySound(_idDarkRows);
             return true;
         }
     }
