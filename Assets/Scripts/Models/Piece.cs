@@ -24,11 +24,13 @@ public class Piece : MonoBehaviour
     private bool _atLeastOneShadowSet = false;
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
+    private bool _isScrewed = false;
 
     public void Lock(Instantiator instantiator)
     {
         IsLocked = true;
-        EnableRotationPoint(false, instantiator);
+        if (!_isScrewed)
+            EnableRotationPoint(false, instantiator);
         //foreach (Transform child in transform)
         //{
         //    int roundedX = Mathf.RoundToInt(child.position.x);
@@ -246,23 +248,25 @@ public class Piece : MonoBehaviour
         return new int[] { minY, maxY };
     }
 
-    public void EnableRotationPoint(bool enable, Instantiator instantiator)
+    public SpriteRenderer EnableRotationPoint(bool enable, Instantiator instantiator)
     {
         var child0 = transform.GetChild(0);
         if (child0 == null)
-            return;
+            return null;
         var rotationPoint = child0.Find(Constants.GoRotationPoint);
         if (enable == true)
         {
             if (rotationPoint != null)
                 rotationPoint.GetComponent<SpriteRenderer>().enabled = true;
             else
-                instantiator.NewRotationPoint(this.gameObject);
+                rotationPoint = instantiator.NewRotationPoint(this.gameObject).transform;
+            return rotationPoint.GetComponent<SpriteRenderer>();
         }
         else if (rotationPoint != null)
         {
             rotationPoint.GetComponent<SpriteRenderer>().enabled = false;
         }
+        return null;
     }
 
     public void ApplyClassicBlocksNoRotation()
@@ -286,5 +290,14 @@ public class Piece : MonoBehaviour
             block.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             block.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         }
+    }
+
+    public void SetScrewed(Realm realm, Instantiator instantiator)
+    {
+        _isScrewed = true;
+        var spriteRenderer = EnableRotationPoint(true, instantiator);
+        spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{9 + realm.GetHashCode()}");
+        if (Letter == "I")
+            spriteRenderer.gameObject.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
     }
 }

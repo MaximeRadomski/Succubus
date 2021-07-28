@@ -16,11 +16,11 @@ public class TattooBrandofSacrifice : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.DamagePercentBonus += Stat;
-        character.StepsWeightMalus += Stat / 3;
+        character.StepsWeightMalus += Stat / 2;
     }
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damage, but you also face more challenge on each step.";
+        return $"you deal {StatToString("+", "%")} damage, but you also face more challenge on each step.\n(more opponents or more powerful ones)";
     }
 }

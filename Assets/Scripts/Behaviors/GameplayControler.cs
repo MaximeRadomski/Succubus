@@ -744,6 +744,8 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
         if (_isOldSchoolGameplay)
             CurrentPiece.GetComponent<Piece>().SetOldSchool();
+        if (_isScrewed)
+            CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
         DropGhost();
         CheckInputWhileLocked();
     }
@@ -781,11 +783,10 @@ public class GameplayControler : MonoBehaviour
                 Destroy(NextPieces[i].transform.GetChild(j).gameObject);
             var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(NextPieces[i].transform);
-            if (_isOldSchoolGameplay)
-            {
-                if (Constants.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter)
-                    tmpPiece.GetComponent<Piece>().SetOldSchool();
-            }
+            if (_isOldSchoolGameplay && (Constants.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter))
+                tmpPiece.GetComponent<Piece>().SetOldSchool();
+            if (_isScrewed && i + 1 < _afterSpawnAttackCounter)
+                tmpPiece.GetComponent<Piece>().SetScrewed(Character.Realm, this.Instantiator);
         }
     }
 
@@ -1290,6 +1291,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
+            if (_isScrewed)
+                Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Clock;
             return;
@@ -1411,6 +1414,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
         {
+            if (_isScrewed)
+                Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.AntiClock;
             return;
@@ -1641,6 +1646,8 @@ public class GameplayControler : MonoBehaviour
             _characterSpecial?.OnNewPiece(CurrentPiece);
             AfterSpawn?.Invoke(false);
             CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
+            if (_isScrewed)
+                CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
             DropGhost();
             CheckInputWhileLocked();
         }

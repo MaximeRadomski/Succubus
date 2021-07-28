@@ -55,12 +55,13 @@ public class Instantiator : MonoBehaviour
         tmpBackgroundPieceInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
     }
 
-    public void NewRotationPoint(GameObject piece)
+    public GameObject NewRotationPoint(GameObject piece)
     {
         var tmpRotationPointObject = Resources.Load<GameObject>("Prefabs/RotationPoint");
         var tmpRotationPointInstance = Instantiate(tmpRotationPointObject, piece.transform.position, tmpRotationPointObject.transform.rotation);
         tmpRotationPointInstance.name = Constants.GoRotationPoint;
         tmpRotationPointInstance.transform.SetParent(piece.transform.GetChild(0));
+        return tmpRotationPointInstance;
     }
 
     public GameObject NewScoreHistory(int score, int max, int id, GameObject parent)

@@ -61,7 +61,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void GoToNewAscension()
     {
-        if (_currentRun != null)
+        if (_currentRun != null && _currentRun.IsEndless)
         {
             this.Instantiator.NewPopupYesNo("Ascension", "would you like to continue your endless ascension, or to start a new one?", "New", "Continue", (result) =>
             {

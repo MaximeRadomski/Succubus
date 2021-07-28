@@ -38,7 +38,7 @@ public class Run
     public Run(Difficulty difficulty)
     {
         Difficulty = difficulty;
-        CurrentRealm = Realm.Earth;
+        CurrentRealm = Realm.Hell;
         RealmLevel = 0;
         IncreaseLevel();
     }

@@ -349,6 +349,8 @@ public static class Constants
         Constants.SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialTotalCooldownReducer;
         if (Constants.SelectedCharacterSpecialCooldown < 1)
             Constants.SelectedCharacterSpecialCooldown = 1;
+        if (tmpChar.InstantSpecial)
+            Constants.SelectedCharacterSpecialCooldown = 0;
     }
 
     public static void RestartCurrentItemCooldown(Character character, Item item = null)
