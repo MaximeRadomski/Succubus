@@ -296,11 +296,14 @@ public class PlayerPrefsHelper : MonoBehaviour
             var realmId = int.Parse(opponentsStr.Substring(0, separatorRealmId));
             var tmpId = int.Parse(opponentsStr.Substring(separatorRealmId + 1, separatorId - (separatorRealmId + 1)));
             Opponent tmpOpponent = null;
-            if ((Realm)realmId == Realm.Hell)
+            Realm opponentsRealm = run?.CurrentRealm ?? (Realm)realmId;
+            if (OpponentsData.DebugEnabled)
+                opponentsRealm = OpponentsData.DebugRealm;
+            if (opponentsRealm == Realm.Hell)
                 tmpOpponent = OpponentsData.HellOpponents[tmpId];
-            else if ((Realm)realmId == Realm.Earth)
+            else if (opponentsRealm == Realm.Earth)
                 tmpOpponent = OpponentsData.EarthOpponents[tmpId];
-            else if ((Realm)realmId == Realm.Heaven)
+            else if (opponentsRealm == Realm.Heaven)
                 tmpOpponent = OpponentsData.HeavenOpponents[tmpId];
             opponentsList.Add(tmpOpponent.Clone());
             if (separatorId + 1 >= opponentsStr.Length)

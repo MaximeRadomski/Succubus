@@ -7,10 +7,25 @@ public static class OpponentsData
     //DEBUG
     public static bool DebugEnabled = true;
     public static bool OnlyOpponent = false;
+    public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var tmpOpponent = EarthOpponents?.Find(o => o.Name.Contains("Old Reverend")).Clone();
-        return tmpOpponent;
+        var name = "The Pop";
+        var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
+        DebugRealm = Realm.Hell;
+        if (tmpOpponent == null)
+        {
+            tmpOpponent = EarthOpponents?.Find(o => o.Name.Contains(name));
+            DebugRealm = Realm.Earth;
+        }
+        if (tmpOpponent == null)
+        {
+            tmpOpponent = HeavenOpponents?.Find(o => o.Name.Contains(name));
+            DebugRealm = Realm.Heaven;
+        }
+        if (tmpOpponent == null)
+            return null;
+        return tmpOpponent.Clone(); ;
     }
 
     static OpponentsData()
@@ -391,6 +406,61 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.OldSchool, 5, 10) },
             GravityLevel = 12, Weight = 40
         },
+        new Opponent()
+        {
+            Name = "Crusader", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 4, 1) },
+            GravityLevel = 12, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Flag Wielder", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 80, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 8, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Screwed, 3, 1) },
+            GravityLevel = 8, Weight = 30
+        },
+        new Opponent()
+        {
+            Name = "Human Supremacist", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 70, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 3, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.ForcedBlock, 1, 1),
+                new OpponentAttack(AttackType.AirPiece, 1),
+                new OpponentAttack(AttackType.Screwed, 1)},
+            GravityLevel = 12, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Tactical Nun", Realm = Realm.Earth, Type = OpponentType.Boss,
+            HpMax = 500, Weakness = Weakness.None, Cooldown = 2,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Gate, 1),
+                new OpponentAttack(AttackType.Shift, 40),
+                new OpponentAttack(AttackType.Drill, 1),},
+            GravityLevel = 16, Weight = 150,
+            DialogId = 4, DialogPitch = 1.25f
+        },
+        new Opponent()
+        {
+            Name = "Supreme Bishop", Realm = Realm.Earth, Type = OpponentType.Boss,
+            HpMax = 700, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 2, 8) },
+            GravityLevel = 10, Weight = 150,
+            DialogId = 0, DialogPitch = 1.0f
+        },
+        new Opponent()
+        {
+            Name = "The Pop", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            HpMax = 1000, Weakness = Weakness.Combos, DamageOnWeakness = 10, Immunity = Immunity.Twists, Cooldown = 12, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 6, 2)},
+            GravityLevel = 10, Weight = 150,
+            DialogId = 2, DialogPitch = 1.1f
+        }
     };
 
     public static List<Opponent> HeavenOpponents = new List<Opponent>();
