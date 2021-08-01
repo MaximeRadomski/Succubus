@@ -42,6 +42,9 @@ public class DialogBoxBhv : FrameRateBehavior
     private int _talkingFramesProgress;
     private int _pelliculeMove;
 
+    private float _pictureY;
+    private float _pictureYHeadDown;
+
     private System.Func<bool> _resultAction;
 
     public void Init(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction, int? customid = null)
@@ -50,6 +53,8 @@ public class DialogBoxBhv : FrameRateBehavior
 
         transform.position = new Vector3(position.x, position.y, 0.0f);
         _picture = transform.Find("Picture").GetComponent<SpriteRenderer>();
+        _pictureY = _picture.transform.localPosition.y;
+        _pictureYHeadDown = _pictureY + 5.0f;
         _emoji = transform.Find("Emoji").GetComponent<SpriteRenderer>();
         _titleBackground = transform.Find("TitleBackground").GetComponent<SpriteRenderer>();
         _mainTop = transform.Find("MainTop").GetComponent<SpriteRenderer>();
@@ -114,7 +119,8 @@ public class DialogBoxBhv : FrameRateBehavior
                 Region = tmpOpponentSubject.Region,
                 Type = SubjectType.Opponent,
                 DialogId = _soundControler.SetSound($"Dialog{tmpOpponentSubject.DialogId.ToString("00")}"),
-                DialogPitch = tmpOpponentSubject.DialogPitch
+                DialogPitch = tmpOpponentSubject.DialogPitch,
+                HeadDown = tmpOpponentSubject.HeadDown
             };
         else
         {
@@ -142,7 +148,7 @@ public class DialogBoxBhv : FrameRateBehavior
         if (_currentSubject.Type == SubjectType.Opponent)
         {
             _picture.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{_currentSubject.Region}Opponents_{_currentSubject.Id}");
-            _picture.transform.localPosition = new Vector3(-Mathf.Abs(_picture.transform.localPosition.x), _picture.transform.localPosition.y, 0);
+            _picture.transform.localPosition = new Vector3(-Mathf.Abs(_picture.transform.localPosition.x), _currentSubject.HeadDown ? _pictureYHeadDown : _pictureY, 0);
             _picture.flipX = true;
             _emoji.transform.localPosition = new Vector3(-Mathf.Abs(_emoji.transform.localPosition.x), _emoji.transform.localPosition.y, 0);
             _titleBackground.flipX = true;
@@ -151,7 +157,7 @@ public class DialogBoxBhv : FrameRateBehavior
         else
         {
             _picture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _currentSubject.Id);
-            _picture.transform.localPosition = new Vector3(Mathf.Abs(_picture.transform.localPosition.x), _picture.transform.localPosition.y, 0);
+            _picture.transform.localPosition = new Vector3(Mathf.Abs(_picture.transform.localPosition.x), _currentSubject.HeadDown ? _pictureYHeadDown : _pictureY, 0);
             _picture.flipX = false;
             _emoji.transform.localPosition = new Vector3(Mathf.Abs(_emoji.transform.localPosition.x), _emoji.transform.localPosition.y, 0);
             _titleBackground.flipX = false;
@@ -321,6 +327,7 @@ public class DialogBoxBhv : FrameRateBehavior
         public Realm Region;
         public int DialogId;
         public float DialogPitch;
+        public bool HeadDown;
     }
 
     private enum SubjectType

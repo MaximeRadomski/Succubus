@@ -27,6 +27,7 @@ public class Opponent
     public string Lore;
     public int DialogId = 0;
     public float DialogPitch = 1.0f;
+    public bool HeadDown = false;
 
     public Opponent Clone()
     {

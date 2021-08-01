@@ -20,7 +20,7 @@ public static class TattoosData
     public static string[] LegendaryTattoosNames = { Tattoos[6], Tattoos[7], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29] };
 
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static bool DebugMultitude = false;
     public static Tattoo DebugTattoo = GetTattooFromName("Beer");
 

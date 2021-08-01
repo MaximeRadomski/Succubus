@@ -423,5 +423,254 @@ public static class DialogsData
             }
         },
         #endregion
+
+        #region Human Supremacist
+        { "Human Supremacist|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Halt heretic!!",
+                    "Let me guess. Something about the emperor?",
+                    "For the emperor!!"
+                }
+            }
+        },
+        { "Human Supremacist|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Halt heretic!!",
+                    "Leave me alone perv...",
+                    "For the emp... wait what?"
+                }
+            }
+        },
+        #endregion
+        #region Tactical Nun
+        { "Tactical Nun",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Mission failed!!"
+                }
+            }
+        },
+        { "Tactical Nun|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "?\nIt is too quiet, something's fishy.",
+                    "[ Engaging ]"
+                }
+            }
+        },
+        { "Tactical Nun|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Am I the target?",
+                    "Wait... You can hear me?",
+                    "I... I can see you as well...",
+                    "...",
+                    "..."
+                }
+            }
+        },
+        { "Tactical Nun|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Whoever might you be, you stink holiness, your cloaking tricks won't work on me.",
+                    "Well then, let's gain some time!"
+                }
+            }
+        },
+        #endregion
+        #region Supreme Bishop
+        { "Supreme Bishop",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Checkmate..."
+                }
+            }
+        },
+        { "Supreme Bishop|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings opponent.",
+                    "Yes yes, let's do it.",
+                    "I have been summoned here, right before you, to stop your foolish crusade against all that is holy.",
+                    "...",
+                    "This very arena will be the theatre of our might and tenacity!",
+                    "Yes yes...",
+                    "Beware you sinful creature, this is your last warning as my will to eradicate your kind is-",
+                    "Come on!! Duuuude!! Stop talking, start fighting!!"
+                }
+            }
+        },
+        { "Supreme Bishop|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings opponent.\nI have been summoned here, right before you, to stop your foolish crusade against all that is holy.",
+                    "A bit chatty aren't we?",
+                    "I... beg your pardon?",
+                    "Oh I'm sorry, keep going.",
+                    "... Well...\nThis very arena will be the theatre of our might and tenacity!",
+                    "Hahaha that's ridiculous!",
+                    "Is that a joke to you? This war against good and evil?",
+                    "Haha yeah pretty much. Now come you hipster!"
+                },
+                new List<string>()
+                {
+                    "Greetings opponent.\nI have been summoned here... Wait... Sigh... You again?",
+                    "Wow! I sure made an impression last time.",
+                    "Last... time... ?",
+                    "Oh I won't lose any time explaining this to you!"
+                }
+            }
+        },
+        { "Supreme Bishop|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings opponent.",
+                    "Are you literally a chess bishop?",
+                    "You mean figuratively?",
+                    "What is wrong with this game...",
+                },
+                new List<string>()
+                {
+                    "Greetings opponent.\nI have been summoned here-",
+                    "Don't waste your time.",
+                    "Why won't anyone let me do my fighting speech! You helling creatures are certainly not-",
+                    "Ok then don't waste mine!"
+                }
+            }
+        },
+        { "Supreme Bishop|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings opponent.",
+                    "Oh! I like your scarf!",
+                    "My scarf...?",
+                    "Where did you get it?",
+                    "I got it at the... Wait a minute! Why any of this would be relevant?",
+                    "Haha! If I beat your ass, give me your scarf!"
+                },
+                new List<string>()
+                {
+                    "Greetings opponent.",
+                    "You didn't give me your scarf last time!",
+                    "Have we met before?",
+                    "Ah yes... already sick of explaining it over and over..."
+                }
+            }
+        },
+        #endregion
+        #region The Pop
+        { "The Pop",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Bury me with my money..."
+                }
+            }
+        },
+        { "The Pop|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "How dare you face the pop you devil!",
+                    "The Pop? You are the creature behind all of these churches and worshipers?",
+                    "I am and will always be. I'm the arm of saints, placed here to guide the humans to holiness.",
+                    "Are you even human?",
+                    "I am a benediction, and the last being you will see before your eternal suffering!"
+                }
+            }
+        },
+        { "The Pop|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "How dare you face the pop you devil!",
+                    "Oh SHIT an alien!!",
+                    "What did you just called me?",
+                    "You are not going to fool me martian!",
+                    "..."
+                },
+                new List<string>()
+                {
+                    "How dare you face the pop you devil!",
+                    "You were disgusting the first time, it ain't changed since...",
+                    "The only disgusting being here is-",
+                    "Oh my Stan! Can your arms wiggle even more when you move??",
+                    "..."
+                }
+            }
+        },
+        { "The Pop|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Welcome Edam, son of Stan.",
+                    "A proper welcome? What's going on here?",
+                    "You are a subject of choice prince. The saints told me to take a special care of you.",
+                    "How grateful of them!",
+                    "Our fight will be carved in stone, the war between realms will-",
+                    "Come on! You too are into lyrical stuff... Give me a break..."
+                },
+                new List<string>()
+                {
+                    "Welcome Edam, son of Stan.",
+                    "Hi random Alien, son of any other random one.",
+                    "Why you people keep referring to me as an alien?",
+                    "The floppy arms and legs, the big head, the fucking one eye in the middle of your face? No?",
+                    "Can't you recognize holy perfection?",
+                    "Hahaha!! Wow this is the best one so far!"
+                },
+            }
+        },
+        { "The Pop|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "The princess of the underworld herself.",
+                    "Thank you!! You are the first one to address me like so!",
+                    "Don't take my words as compliments, you mere existence and presence here are nothing more than-",
+                    "Annnd... Now you've ruined it."
+                },
+                new List<string>()
+                {
+                    "The princess of the underworld herself.",
+                    "Yep, that's it. That's me. Let's keep it like so and start fighting!",
+                    "Are you in a hurry Ivy, first of the dead?",
+                    "Wow you are in fire dude! If I could be blushing I would!"
+                }
+            }
+        },
+        #endregion
     };
 }

@@ -443,7 +443,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 object LoadNext(bool result)
                 {
                     //DEBUG
-                    if (Constants.BetaMode && _run.CurrentRealm == Realm.Earth)
+                    if (Constants.BetaMode && _run.CurrentRealm == Realm.Heaven)
                     {
                         if (_run.Difficulty == Difficulty.Hard)
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);

@@ -5,7 +5,7 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
@@ -425,7 +425,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Human Supremacist", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 70, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 3, Haste = true,
+            HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 70, Cooldown = 3, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 1),
                 new OpponentAttack(AttackType.AirPiece, 1),
@@ -441,7 +441,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Shift, 40),
                 new OpponentAttack(AttackType.Drill, 1),},
             GravityLevel = 16, Weight = 150,
-            DialogId = 4, DialogPitch = 1.25f
+            DialogId = 4, DialogPitch = 1.25f, HeadDown = true
         },
         new Opponent()
         {
