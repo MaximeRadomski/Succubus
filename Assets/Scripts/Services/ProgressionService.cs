@@ -34,6 +34,7 @@ public class ProgressionService : MonoBehaviour
         if (realmTree == null)
             realmTree = new RealmTree();
         PlayerPrefsHelper.SaveRealmTree(realmTree);
+        PlayerPrefsHelper.SaveBoughtTreeNodes(onlineProgression.BoughtTreeNodes);
         PlayerPrefsHelper.SaveBonusRarePercent(onlineProgression.BonusRarePercent);
         PlayerPrefsHelper.SaveBonusLegendaryPercent(onlineProgression.BonusLegendaryPercent);
         PlayerPrefsHelper.SaveRealmBossProgression(onlineProgression.RealmBossProgression);

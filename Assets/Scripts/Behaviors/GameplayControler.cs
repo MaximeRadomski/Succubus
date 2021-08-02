@@ -2277,7 +2277,7 @@ public class GameplayControler : MonoBehaviour
     public void AttackDarkRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
     {
         if (nbRows > Character.MaxDarkAndWasteLines)
-            nbRows = Character.MaxDarkAndWasteLines;
+            nbRows = nbRows / Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
         for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
@@ -2291,7 +2291,7 @@ public class GameplayControler : MonoBehaviour
     public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole, bool fromPlayer = false)
     {
         if (nbRows > Character.MaxDarkAndWasteLines)
-            nbRows = Character.MaxDarkAndWasteLines;
+            nbRows = nbRows / Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
         nbHole = nbHole < 1 ? 1 : nbHole;
@@ -2465,10 +2465,22 @@ public class GameplayControler : MonoBehaviour
         _afterSpawnAttackCounter = 0;
     }
 
+    private void SetAfterSpawn(Func<bool,bool> newAfterSpawn)
+    {
+        if (AfterSpawn != null)
+        {
+            _afterSpawnAttackCounter = 0;
+            AfterSpawn(true);
+        }
+        AfterSpawn = null;
+        AfterSpawn = newAfterSpawn;
+
+    }
+
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         _afterSpawnAttackCounter = nbPieces;
-        AfterSpawn = AirPieceAfterSpawn;
+        SetAfterSpawn(AirPieceAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool AirPieceAfterSpawn(bool trueSpawn)
@@ -2489,7 +2501,7 @@ public class GameplayControler : MonoBehaviour
     private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
     {
         _afterSpawnAttackCounter = nbPieces;
-        AfterSpawn = ForcedBlockAfterSpawn;
+        SetAfterSpawn(ForcedBlockAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool ForcedBlockAfterSpawn(bool trueSpawn)
@@ -2513,7 +2525,7 @@ public class GameplayControler : MonoBehaviour
         _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
         Constants.IsEffectAttackInProgress = attackType;
-        AfterSpawn = CameraEffectAfterSpawn;
+        SetAfterSpawn(CameraEffectAfterSpawn);
         if (attackType == AttackType.Intoxication)
             SetGravity(8);
 
@@ -2555,7 +2567,7 @@ public class GameplayControler : MonoBehaviour
         var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
-        AfterSpawn = droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn;
+        SetAfterSpawn(droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 1);
     }
 
@@ -2656,7 +2668,7 @@ public class GameplayControler : MonoBehaviour
         _dasMax = Constants.OldSchoolDas;
         _arrMax = Constants.OldSchoolArr;
         _afterSpawnAttackCounter = nbPieces;
-        AfterSpawn = OldSchoolAfterSpawn;
+        SetAfterSpawn(OldSchoolAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool OldSchoolAfterSpawn(bool result)
@@ -2683,7 +2695,7 @@ public class GameplayControler : MonoBehaviour
     {
         _isScrewed = true;
         _afterSpawnAttackCounter = nbPieces;
-        AfterSpawn = ScrewedAfterSpawn;
+        SetAfterSpawn(ScrewedAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
         bool ScrewedAfterSpawn(bool result)

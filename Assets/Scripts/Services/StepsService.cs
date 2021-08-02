@@ -287,7 +287,9 @@ public class StepsService
                 return stepOpponents;
         }
         //DEBUG
-        var minSingleOpponentWeight = Random.Range(0, 2) == 0 ? 0 : 30;
+        plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight && o.Type.GetHashCode() <= OpponentType.Boss.GetHashCode());
+        var averageWeight = plausibleOpponents.Sum(c => c.Weight) / plausibleOpponents.Count;
+        var minSingleOpponentWeight = Random.Range(0, 2) == 0 ? 0 : averageWeight;
         while (i <= 12)
         {
             plausibleOpponents = realmOpponents.FindAll(o => o.Weight > minSingleOpponentWeight && o.Weight <= weight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());

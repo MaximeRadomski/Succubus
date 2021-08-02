@@ -7,7 +7,7 @@ public class TattooSOPSign : Tattoo
     {
         Id = 25;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
+        Stat = 2;
         Rarity = Rarity.Legendary;
         MaxLevel = 1;
     }
@@ -19,6 +19,6 @@ public class TattooSOPSign : Tattoo
 
     public override string GetDescription()
     {
-        return $"you cannot get more than {StatToString(after: " dark line or waste line")} at a time.";
+        return $"the amount of dark lines or waste lines you take is {StatToString("divided by ")}.";
     }
 }

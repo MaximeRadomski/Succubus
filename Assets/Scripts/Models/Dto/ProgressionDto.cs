@@ -6,6 +6,7 @@ public class ProgressionDto : Dto
 {
     public string UnlockedCharacters;
     public string RealmTree;
+    public string BoughtTreeNodes;
     public int BonusRarePercent;
     public int BonusLegendaryPercent;
     public int RealmBossProgression;

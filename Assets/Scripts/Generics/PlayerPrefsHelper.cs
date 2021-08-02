@@ -822,6 +822,11 @@ public class PlayerPrefsHelper : MonoBehaviour
         SaveRealmTree(realmTree);
     }
 
+    public static void SaveBoughtTreeNodes(string boughtTreeNodes)
+    {
+        Mock.SetString(Constants.PpBoughtTreeNodes, boughtTreeNodes);
+    }
+
     public static void SaveRealmTree(RealmTree realmTree)
     {
         Mock.SetString(Constants.PpRealmTree, JsonUtility.ToJson(realmTree));
