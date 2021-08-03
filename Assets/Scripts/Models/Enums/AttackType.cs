@@ -82,4 +82,8 @@ public enum AttackType
     [Suffixe(" pieces")]
     [Description("Screwed")]
     Screwed = 18, //prevents rotations for (param1) pieces
+    [Prefixe(null)]
+    [Suffixe(" moves")]
+    [Description("Drop Bomb")]
+    DropBomb = 19, //drop any next current piece in (param1) moves
 }

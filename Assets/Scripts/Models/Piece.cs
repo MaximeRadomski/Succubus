@@ -31,6 +31,9 @@ public class Piece : MonoBehaviour
         IsLocked = true;
         if (!_isScrewed)
             EnableRotationPoint(false, instantiator);
+        var dropBombCooldownText = transform.Find(Constants.GoDropBombCooldown);
+        if (dropBombCooldownText != null)
+            Destroy(dropBombCooldownText.gameObject);
         //foreach (Transform child in transform)
         //{
         //    int roundedX = Mathf.RoundToInt(child.position.x);
@@ -299,5 +302,17 @@ public class Piece : MonoBehaviour
         spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{9 + realm.GetHashCode()}");
         if (Letter == "I")
             spriteRenderer.gameObject.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
+    }
+
+    public Transform SetDropBombCooldown(Instantiator instantiator)
+    {
+        var rotationPointSpriteRenderer = EnableRotationPoint(true, instantiator);
+        if (Letter == "I")
+            rotationPointSpriteRenderer.gameObject.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
+        var text = instantiator.NewLightRowText(rotationPointSpriteRenderer.gameObject.transform.position);
+        rotationPointSpriteRenderer.enabled = false;
+        text.transform.SetParent(this.transform);
+        text.name = Constants.GoDropBombCooldown;
+        return text.transform;
     }
 }

@@ -204,7 +204,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             AlterOpponentRealm(Constants.CurrentOpponentChangedRealm, fromNextOpponent: true);
         if (Constants.HalvedCooldown)
             HalveOpponentMaxCooldown();
-        if (Constants.NameLastScene == Constants.SettingsScene)
+        if (Constants.NameLastScene == Constants.SettingsScene && sceneInit)
         {
             if (Constants.IsEffectAttackInProgress != AttackType.None)
             {

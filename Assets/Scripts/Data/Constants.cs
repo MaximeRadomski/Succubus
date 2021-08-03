@@ -209,6 +209,7 @@ public static class Constants
     public const string GoPartition = "Partition";
     public const string GoRestLoading = "RestLoading";
     public const string GoKeyboard = "Keyboard";
+    public const string GoDropBombCooldown = "DropBombCooldown";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;

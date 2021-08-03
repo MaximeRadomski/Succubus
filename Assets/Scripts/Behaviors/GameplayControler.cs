@@ -55,6 +55,7 @@ public class GameplayControler : MonoBehaviour
     private bool _isOldSchoolGameplay;
     private bool _isScrewed;
     private bool _needDownRelease;
+    private int _dropBombCooldown;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -950,6 +951,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Left);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -1001,7 +1004,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Right);
             return;
         }
-
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -1052,6 +1056,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.SoftDrop);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
     }
 
     public void DownReleased()
@@ -1152,6 +1158,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.SoftDrop);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         bool hardDropping = true;
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         int nbLinesDropped = 0;
@@ -1303,6 +1311,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Clock);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1426,6 +1436,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.AntiClock);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1535,12 +1547,20 @@ public class GameplayControler : MonoBehaviour
 
     public void Rotation180()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused ||_isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Rotation180;
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
+            partitionBhv.NextNote(KeyBinding.Rotation180);
+            return;
+        }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1601,6 +1621,8 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Hold);
             return;
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown();
         if (_holder.transform.childCount <= 0)
         {
             var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
@@ -2270,6 +2292,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Screwed:
                 AttackScrewed(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.DropBomb:
+                AttackDropBomb(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2461,6 +2486,7 @@ public class GameplayControler : MonoBehaviour
 
     private void BaseAfterSpawnEnd()
     {
+        Constants.IsEffectAttackInProgress = AttackType.None;
         AfterSpawn = null;
         _afterSpawnAttackCounter = 0;
     }
@@ -2480,6 +2506,7 @@ public class GameplayControler : MonoBehaviour
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         _afterSpawnAttackCounter = nbPieces;
+        Constants.IsEffectAttackInProgress = AttackType.AirPiece;
         SetAfterSpawn(AirPieceAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
@@ -2501,6 +2528,7 @@ public class GameplayControler : MonoBehaviour
     private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
     {
         _afterSpawnAttackCounter = nbPieces;
+        Constants.IsEffectAttackInProgress = AttackType.ForcedBlock;
         SetAfterSpawn(ForcedBlockAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
@@ -2539,7 +2567,6 @@ public class GameplayControler : MonoBehaviour
                     CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
                     (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 }
-                Constants.IsEffectAttackInProgress = AttackType.None;
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
                 _soundControler.PlaySound(_idTwist, 0.85f);                    
                 return false;
@@ -2667,6 +2694,7 @@ public class GameplayControler : MonoBehaviour
         _isOldSchoolGameplay = true;
         _dasMax = Constants.OldSchoolDas;
         _arrMax = Constants.OldSchoolArr;
+        Constants.IsEffectAttackInProgress = AttackType.OldSchool;
         _afterSpawnAttackCounter = nbPieces;
         SetAfterSpawn(OldSchoolAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
@@ -2695,6 +2723,7 @@ public class GameplayControler : MonoBehaviour
     {
         _isScrewed = true;
         _afterSpawnAttackCounter = nbPieces;
+        Constants.IsEffectAttackInProgress = AttackType.Screwed;
         SetAfterSpawn(ScrewedAfterSpawn);
         Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
 
@@ -2710,6 +2739,47 @@ public class GameplayControler : MonoBehaviour
             _soundControler.PlaySound(_idDarkRows);
             return true;
         }
+    }
+
+    private void AttackDropBomb(GameObject opponentInstance, Realm opponentRealm, int nbMoves)
+    {
+        _afterSpawnAttackCounter = 999;
+        _dropBombCooldown = nbMoves;
+        Constants.IsEffectAttackInProgress = AttackType.DropBomb;
+        SetAfterSpawn(DropBombAfterSpawn);
+        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 2);
+
+        bool DropBombAfterSpawn(bool trueSpawn)
+        {
+            if (_afterSpawnAttackCounter <= 0)
+            {
+                BaseAfterSpawnEnd();
+                return false;
+            }
+            Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
+            UpdateDropBombCooldown();
+            _soundControler.PlaySound(_idLeftRightDown);
+            return true;
+        }
+    }
+
+    private void DecrementDropBombCooldown()
+    {
+        --_dropBombCooldown;
+        UpdateDropBombCooldown();
+        if (_dropBombCooldown <= 0)
+        {
+            BaseAfterSpawnEnd();
+            HardDrop();
+        }
+    }
+
+    private void UpdateDropBombCooldown()
+    {
+        var cooldownText = CurrentPiece.transform.Find(Constants.GoDropBombCooldown);
+        if (cooldownText == null)
+            cooldownText = CurrentPiece.GetComponent<Piece>().SetDropBombCooldown(this.Instantiator);
+        cooldownText.GetComponent<TMPro.TextMeshPro>().text = _dropBombCooldown.ToString();
     }
 
     public void SetForcedPieceOpacity(float current, float max)
