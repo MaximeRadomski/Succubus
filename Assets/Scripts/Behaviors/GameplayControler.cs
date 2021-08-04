@@ -951,14 +951,16 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Left);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
+        {
             _soundControler.PlaySound(_idLeftRightDown);
+            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                DecrementDropBombCooldown(KeyBinding.Left);
+        }
         DropGhost();
     }
 
@@ -982,7 +984,11 @@ public class GameplayControler : MonoBehaviour
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(-1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHeld == 0)
+        {
             _soundControler.PlaySound(_idLeftRightDown);
+            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                DecrementDropBombCooldown(KeyBinding.Left);
+        }
         DropGhost();
         _arr = 0;
     }
@@ -1004,15 +1010,17 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Right);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         ResetDasArr();
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
+        {
             _soundControler.PlaySound(_idLeftRightDown);
-        DropGhost();
+            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                DecrementDropBombCooldown(KeyBinding.Right);
+        }
+            DropGhost();
     }
 
     public void RightHeld()
@@ -1035,7 +1043,11 @@ public class GameplayControler : MonoBehaviour
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.position += new Vector3(1.0f, 0.0f, 0.0f);
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHeld == 0)
+        {
             _soundControler.PlaySound(_idLeftRightDown);
+            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                DecrementDropBombCooldown(KeyBinding.Left);
+        }
         DropGhost();
         _arr = 0;
     }
@@ -1056,8 +1068,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.SoftDrop);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
     }
 
     public void DownReleased()
@@ -1158,8 +1168,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.SoftDrop);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         bool hardDropping = true;
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         int nbLinesDropped = 0;
@@ -1191,6 +1199,8 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnHardDrop(nbLinesDropped);
         if (Character.PiecesWeight > 0 && nbLinesDropped > 1)
             this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f);
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown(KeyBinding.HardDrop);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
@@ -1311,8 +1321,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Clock);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1410,6 +1418,8 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
+                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                    DecrementDropBombCooldown(KeyBinding.Clock);
                 return;
             }
             else
@@ -1436,8 +1446,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.AntiClock);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1535,6 +1543,8 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
+                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                    DecrementDropBombCooldown(KeyBinding.AntiClock);
                 return;
             }
             else
@@ -1559,8 +1569,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Rotation180);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
         if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
             || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
@@ -1597,6 +1605,8 @@ public class GameplayControler : MonoBehaviour
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost(withRotationAngle: 180.0f);
                 _soundControler.PlaySound(_idRotate);
+                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                    DecrementDropBombCooldown(KeyBinding.Rotation180);
                 return;
             }
             else
@@ -1621,8 +1631,6 @@ public class GameplayControler : MonoBehaviour
             partitionBhv.NextNote(KeyBinding.Hold);
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown();
         if (_holder.transform.childCount <= 0)
         {
             var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
@@ -1673,6 +1681,8 @@ public class GameplayControler : MonoBehaviour
             DropGhost();
             CheckInputWhileLocked();
         }
+        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown(KeyBinding.Hold);
         _soundControler.PlaySound(_idHold);
     }
 
@@ -2757,29 +2767,37 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            UpdateDropBombCooldown();
+            UpdateDropBombCooldown(KeyBinding.Hold);
             _soundControler.PlaySound(_idLeftRightDown);
             return true;
         }
     }
 
-    private void DecrementDropBombCooldown()
+    private void DecrementDropBombCooldown(KeyBinding lastInput)
     {
         --_dropBombCooldown;
-        UpdateDropBombCooldown();
+        UpdateDropBombCooldown(lastInput);
         if (_dropBombCooldown <= 0)
         {
             BaseAfterSpawnEnd();
-            HardDrop();
+            if (lastInput != KeyBinding.HardDrop)
+                HardDrop();
+            _soundControler.PlaySound(_idPerfect, 1.5f, 0.5f);
         }
     }
 
-    private void UpdateDropBombCooldown()
+    private void UpdateDropBombCooldown(KeyBinding lastInput)
     {
-        var cooldownText = CurrentPiece.transform.Find(Constants.GoDropBombCooldown);
+        var cooldownText = CurrentPiece.transform.GetChild(0)?.Find(Constants.GoDropBombCooldown);
         if (cooldownText == null)
             cooldownText = CurrentPiece.GetComponent<Piece>().SetDropBombCooldown(this.Instantiator);
         cooldownText.GetComponent<TMPro.TextMeshPro>().text = _dropBombCooldown.ToString();
+        if (lastInput == KeyBinding.Clock)
+            cooldownText.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+        else if (lastInput == KeyBinding.AntiClock)
+            cooldownText.Rotate(new Vector3(0.0f, 0.0f, -90.0f));
+        else if (lastInput == KeyBinding.Rotation180)
+            cooldownText.Rotate(new Vector3(0.0f, 0.0f, -180.0f));
     }
 
     public void SetForcedPieceOpacity(float current, float max)

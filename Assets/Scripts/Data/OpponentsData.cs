@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "The Pop";
+        var name = "Lost Cherub";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -368,7 +368,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Nun", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 4, Haste = true,
+            HpMax = 120, Weakness = Weakness.None, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 2, 2),
                 new OpponentAttack(AttackType.Shift, 6) },
@@ -393,7 +393,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Chorists", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 8, Haste = true,
+            HpMax = 120, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 5, 2) },
             GravityLevel = 10, Weight = 40
@@ -431,6 +431,14 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.AirPiece, 1),
                 new OpponentAttack(AttackType.Screwed, 1)},
             GravityLevel = 12, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Lost Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 80, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.DropBomb, 10) },
+            GravityLevel = 7, Weight = 40
         },
         new Opponent()
         {

@@ -54,13 +54,13 @@ public class SoundControlerBhv : MonoBehaviour
 #endif
     }
 
-    public void PlaySound(int soundId, float customRate = 1.0f)
+    public void PlaySound(int soundId, float customRate = 1.0f, float customVolume = 1.0f)
     {
         if (!_hasInit)
             Init();
 #if !UNITY_ANDROID
         _pcAudio.pitch = customRate;
-        _pcAudio.PlayOneShot((AudioClip)Resources.Load("Sounds/" + Sounds[soundId].Name));
+        _pcAudio.PlayOneShot((AudioClip)Resources.Load("Sounds/" + Sounds[soundId].Name), _pcAudio.volume * customVolume);
 #else
         AndroidNativeAudio.play(soundId, _level, rate: customRate);
 #endif

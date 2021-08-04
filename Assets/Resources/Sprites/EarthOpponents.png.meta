@@ -41,6 +41,9 @@ TextureImporter:
   - first:
       213: 6193465046405252263
     second: EarthOpponents_12
+  - first:
+      213: 2437981133305106623
+    second: EarthOpponents_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -410,6 +413,27 @@ TextureImporter:
       bones: []
       spriteID: 7a488c335ab93f550800000000000000
       internalID: 6193465046405252263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_13
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb051cb7ce275d120800000000000000
+      internalID: 2437981133305106623
       vertices: []
       indices: 
       edges: []

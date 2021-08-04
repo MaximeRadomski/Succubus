@@ -31,7 +31,7 @@ public class Piece : MonoBehaviour
         IsLocked = true;
         if (!_isScrewed)
             EnableRotationPoint(false, instantiator);
-        var dropBombCooldownText = transform.Find(Constants.GoDropBombCooldown);
+        var dropBombCooldownText = transform.GetChild(0).Find(Constants.GoDropBombCooldown);
         if (dropBombCooldownText != null)
             Destroy(dropBombCooldownText.gameObject);
         //foreach (Transform child in transform)
@@ -46,7 +46,10 @@ public class Piece : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            var tmpColor = child.gameObject.GetComponent<SpriteRenderer>().color;
+            var spriteRenderer = child.gameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+                continue;
+            var tmpColor = spriteRenderer.color;
             var maxOpacity = ActualColor.a;
             if (Vector2.Distance(child.position, transform.position) > 4.0f && IsMimic)
                 maxOpacity = 0.25f;
@@ -311,7 +314,7 @@ public class Piece : MonoBehaviour
             rotationPointSpriteRenderer.gameObject.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
         var text = instantiator.NewLightRowText(rotationPointSpriteRenderer.gameObject.transform.position);
         rotationPointSpriteRenderer.enabled = false;
-        text.transform.SetParent(this.transform);
+        text.transform.SetParent(this.transform.GetChild(0));
         text.name = Constants.GoDropBombCooldown;
         return text.transform;
     }
