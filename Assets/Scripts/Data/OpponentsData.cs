@@ -442,6 +442,22 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Cheese Cake", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 300, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 10, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LightRow, 4, 10) },
+            GravityLevel = 10, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Karen", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drone, 4, 0) },
+            GravityLevel = 12, Weight = 60
+        },
+        new Opponent()
+        {
             Name = "Tactical Nun", Realm = Realm.Earth, Type = OpponentType.Boss,
             HpMax = 500, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
