@@ -5,12 +5,12 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Lost Cherub";
+        var name = "Stained Glass";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -443,18 +443,27 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Cheese Cake", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 300, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 10, Haste = true,
+            HpMax = 300, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LightRow, 4, 10) },
+                new OpponentAttack(AttackType.LightRow, 4, 10),
+                new OpponentAttack(AttackType.Drill, 2)},
             GravityLevel = 10, Weight = 40
         },
         new Opponent()
         {
             Name = "Karen", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 5, Haste = true,
+            HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 4, 0) },
             GravityLevel = 12, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Stained Glass", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 60, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 5,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
+            GravityLevel = 8, Weight = 40
         },
         new Opponent()
         {

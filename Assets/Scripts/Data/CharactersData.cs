@@ -54,29 +54,29 @@ public static class CharactersData
         new Character()
         {
             Id = 4, Name = "Floppyredoux", Kind = "Witch", Realm = Realm.Earth,
-            Attack = 9,
-            Cooldown = 10,
+            Attack = 7,
+            Cooldown = 8,
             SpecialName = "Oketi Poketi", SpecialDescription = "the next 5 pieces have one less block."
         },
         new Character()
         {
             Id = 5, Name = "Sir Vixid", Kind = "Dark Templar", Realm = Realm.Earth,
             Attack = 9,
-            Cooldown = 6,
-            SpecialName = "Diabolus Vult", SpecialDescription = "remove the last 2 rows from the top for a garbage one."
+            Cooldown = 12,
+            SpecialName = "Diabolus Vult", SpecialDescription = "remove the last 4 rows from the top for 4 garbage ones."
         },
         new Character()
         {
             Id = 6, Name = "Theresa", Kind = "Perverted Nun", Realm = Realm.Earth,
             Attack = 5,
-            Cooldown = 4,
+            Cooldown = 2,
             SpecialName = "Penitence", SpecialDescription = "cancel the last piece locked on the playfield."
         },
         new Character()
         {
-            Id = 7, Name = "Jean", Kind = "Corrupted Monk", Realm = Realm.Earth,
+            Id = 7, Name = "Tony", Kind = "Corrupted Monk", Realm = Realm.Earth,
             Attack = 5,
-            Cooldown = 8,
+            Cooldown = 14,
             SpecialName = "Resilience", SpecialDescription = "cancel next enemy attack."
         },
         //HEAVEN
