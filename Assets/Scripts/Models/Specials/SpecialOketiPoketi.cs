@@ -23,6 +23,9 @@ public class SpecialOketiPoketi : Special
         if (_nbPiece <= 0)
             return;
         MonoBehaviour.Destroy(_gameplayControler.CurrentPiece.transform.GetChild(_gameplayControler.CurrentPiece.transform.childCount - 1).gameObject);
+        MonoBehaviour.Destroy(_gameplayControler.CurrentGhost.transform.GetChild(_gameplayControler.CurrentGhost.transform.childCount - 1).gameObject);
+        for (int i = 0; i < _nbPiece && i < 5; ++i)
+            MonoBehaviour.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(0).GetChild(_gameplayControler.NextPieces[i].transform.GetChild(0).childCount - 1).gameObject);
         _gameplayControler.DropGhost();
     }
 

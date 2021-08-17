@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 1
   m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
-  m_Color: {r: 0.09019608, g: 0.62352943, b: 0.4666667, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 1808964706522467271, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0.06666667, g: 0.5176471, b: 0.9176471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -788,6 +788,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 964399606}
     m_Modifications:
+    - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1558,6 +1562,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 964399606}
     m_Modifications:
+    - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2349,8 +2357,8 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
-  m_Color: {r: 0.09019608, g: 0.62352943, b: 0.4666667, a: 1}
+  m_Sprite: {fileID: 115972425246325791, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3452,7 +3460,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 1808964706522467271, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0.06666667, g: 0.5176471, b: 0.9176471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3534,7 +3542,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 1808964706522467271, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0.06666667, g: 0.5176471, b: 0.9176471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4322,8 +4330,8 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
-  m_Color: {r: 0.09019608, g: 0.62352943, b: 0.4666667, a: 1}
+  m_Sprite: {fileID: 3112702236248781428, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6304,8 +6312,8 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
-  m_Color: {r: 0.09019608, g: 0.62352943, b: 0.4666667, a: 1}
+  m_Sprite: {fileID: -7914586359189542566, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6437,6 +6445,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 964399606}
     m_Modifications:
+    - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -7789,6 +7801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea7bbf23d9e81438ebb683e6e29394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BackgroundParticles: 1
 --- !u!212 &2090142771
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7925,7 +7938,7 @@ SpriteRenderer:
   m_SortingLayerID: 445791159
   m_SortingLayer: -2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 2807314771408455767, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
+  m_Sprite: {fileID: 1808964706522467271, guid: 41e6862e3b4ed4b429267e6baa05e602, type: 3}
   m_Color: {r: 0.06666667, g: 0.5176471, b: 0.9176471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
