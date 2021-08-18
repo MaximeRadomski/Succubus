@@ -460,7 +460,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Stained Glass", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 60, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 5,
+            HpMax = 60, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
             GravityLevel = 8, Weight = 40

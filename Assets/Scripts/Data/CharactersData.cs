@@ -56,7 +56,7 @@ public static class CharactersData
             Id = 4, Name = "Floppyredoux", Kind = "Witch", Realm = Realm.Earth,
             Attack = 7,
             Cooldown = 8,
-            SpecialName = "Oketi Poketi", SpecialDescription = "the next 5 pieces have one less block."
+            SpecialName = "Oketi Poketi", SpecialDescription = "the next 7 pieces have one less block."
         },
         new Character()
         {

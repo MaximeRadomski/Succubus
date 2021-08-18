@@ -12,7 +12,7 @@ public class SpecialOketiPoketi : Special
             return false;
         if (!base.Activate())
             return false;
-        _nbPiece = 5;
+        _nbPiece = 7;
         OnNewPiece(_gameplayControler.CurrentPiece);
         return true;
     }
@@ -24,8 +24,12 @@ public class SpecialOketiPoketi : Special
             return;
         MonoBehaviour.Destroy(_gameplayControler.CurrentPiece.transform.GetChild(_gameplayControler.CurrentPiece.transform.childCount - 1).gameObject);
         MonoBehaviour.Destroy(_gameplayControler.CurrentGhost.transform.GetChild(_gameplayControler.CurrentGhost.transform.childCount - 1).gameObject);
-        for (int i = 0; i < _nbPiece && i < 5; ++i)
-            MonoBehaviour.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(0).GetChild(_gameplayControler.NextPieces[i].transform.GetChild(0).childCount - 1).gameObject);
+        for (int i = 0; i < _nbPiece - 1 && i < 5; ++i)
+        {
+            var iteratedNextPieceContainerLastChildId = _gameplayControler.NextPieces[i].transform.childCount - 1;
+            var iteratedNextPieceChildCount = _gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).childCount;
+            MonoBehaviour.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).GetChild(iteratedNextPieceChildCount - 1).gameObject);
+        }
         _gameplayControler.DropGhost();
     }
 

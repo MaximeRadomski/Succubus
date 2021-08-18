@@ -95,6 +95,172 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Floppyredoux
+        { "Floppyredoux|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares disturbing my precious time?",
+                    "Oh, sorry I didn't know... My mistress sent me here to find you.",
+                    "Your mistress?",
+                    "Ivy, first born of Lust, rings a bell?",
+                    "Ohh miss Ivy! Same potion as last time?",
+                    "Well I'm not here for a potion I'm afraid.",
+                    "Oh!! Did her \"horns issue\" got finally fixed?",
+                    "Her... Horns issue?",
+                    "Yeah... I should respect that patient privacy thing..."
+                }
+            }
+        },
+        { "Floppyredoux|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Mister Edam! Glad to see you back! And in the flesh this time! How is your sister's \"horns issue\" doing?",
+                    "Hi Flo! It grew back thankfully! But I'm not here for this matter.",
+                    "What brings your hellish ass then?",
+                    "Do you recall of the guys from up there? Who banished your from cities and prohibited your witchcraft?",
+                    "How could I forget...",
+                    "Want your revenge?",
+                    "Say no more!"
+                }
+            }
+        },
+        { "Floppyredoux|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Miss Ivy? In the flesh? How is your \"horns issue\" doing?",
+                    "Hi witch... Your potions worked, my horn grew back...",
+                    "Oh good to hear! You really should be more careful with your sex life dear!",
+                    "Yeah yeah... But I'm not here to gossip about which demon I have a crush on this week...",
+                    "What brings your hellish ass then?",
+                    "Do you recall of the guys from up there? Who banished your from cities and prohibited your witchcraft?",
+                    "How could I forget...",
+                    "Want your revenge?",
+                    "Say no more!"
+                }
+            }
+        },
+        { "Floppyredoux|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Podarge my girl! How long has it been since I saw you?",
+                    "Wassup Floflo! Way too long!",
+                    "Here to get Miss Ivy's potion?",
+                    "She told me her horn grew back! She might not need it anymore!!",
+                    "Oh neat! To what do I owe the pleasure then?",
+                    "She now wants every help she can get to kick some angels asses...",
+                    "Ugh... Still bossy I see..."
+                }
+            }
+        },
+        #endregion
+        #region Sir Vixid
+        { "Sir Vixid|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Begone before I lose my temper.",
+                    "Wow I think we went on the wrong foot here. I'm pretty sure we share the same faith here!",
+                    "I'm listening.",
+                    "Well you see, I'm sent here to you by my mistress Ivy, first born of the lust.",
+                    "I'll be damned, are you the prophet we've been waiting for?",
+                    "I wouldn't be that arrogant..."
+                }
+            }
+        },
+        { "Sir Vixid|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Finally, an answer to my prayers! Master Edam, is that you?",
+                    "Oh, an adept of the temple!",
+                    "My lord, I am here before you in quest for absolution, for all that is unholy!",
+                    "What is your name fidel?",
+                    "I am Sir Vixid, an adherent of the temple of evil.",
+                    "Well then, Sir, what about a promotion within your rank?"
+                }
+            }
+        },
+        { "Sir Vixid|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Finally, an answer to my prayers!",
+                    "Sigh... What kind of lunatic are you?",
+                    "I, Sir Vixid, started an unholy crusade in your name decades ago, Ivy, first born of the lust!",
+                    "Oh... You are growing on me Vixid. What are you doing later?"
+                }
+            }
+        },
+        { "Sir Vixid|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Begone heretic, before I lose my temper.",
+                    "Can't you see I'm a harpy? Am I not a creature you should worship in your dogma?",
+                    "Aren't you an angel?",
+                    "I beg your pardon???",
+                    "Sorry miss, I've... I've seen many horrible things..."
+                }
+            }
+        },
+        { "Sir Vixid|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Finally, an answer to my prayers!",
+                    "I see you are an adept of the temple!",
+                    "Demon, I am here before you in quest for absolution, for all that is unholy!",
+                    "What is your name fidel?",
+                    "I am Sir Vixid, an adherent of the temple of evil.",
+                    "Well then, Sir, what about a promotion within your rank?"
+                }
+            }
+        },
+        #endregion
+        #region Theresa
+        { "Theresa|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh look at you! What a cutie!!",
+                    "...",
+                    "What? Never seen a nun on high heels before?",
+                    "Those are high indeed! And what about the mini skirt?",
+                    "Stripper high!! And well, listen, I've had a revelation a couple days ago. I got sick of this chasteness...",
+                    "How did the church saw your transition?",
+                    "Oh screw them... I am now resolved to do anything to get rid of their grip!",
+                    "Hehe, I think I can get you a cause to fight for!"
+                }
+            }
+        },
+        #endregion
+        #region Theresa
+        { "Tony|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Wow wow wow... What the fuck are you??",
+                    "Hey rude!!",
+                    "Sorry pal..."
+                }
+            }
+        },
+        #endregion
 
         #region Harpy
         { "Harpy|Edam",
