@@ -527,7 +527,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
         CameraBhv.Bump(2);
         OpponentInstanceBhv.Attack();
         
-        if (Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
+        if (Constants.IsNextOpponentAttackCanceled)
+        {
+            Constants.IsNextOpponentAttackCanceled = false;
+            Instantiator.PopText("canceled", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            _soundControler.PlaySound(_idDodge);
+            _characterInstanceBhv.Dodge();
+        }
+        else if (Constants.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Constants.ChanceAttacksHappeningPercent))
         {
             Instantiator.PopText("missed", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idDodge);

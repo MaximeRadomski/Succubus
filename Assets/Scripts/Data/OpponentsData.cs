@@ -5,7 +5,7 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = false;
     public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()

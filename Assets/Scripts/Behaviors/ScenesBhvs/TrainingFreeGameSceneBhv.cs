@@ -59,7 +59,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _piecesTmp.text = _pieces.ToString();
 
         CurrentOpponent = null;
-        _gameplayControler.StartGameplay(_level, Realm.Hell, Realm.Hell);
+        _gameplayControler.StartGameplay(_level, Character?.Realm ?? Realm.Hell, Realm.Hell);
     }
 
     public override void OnGameOver()

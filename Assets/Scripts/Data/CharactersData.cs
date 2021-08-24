@@ -8,7 +8,7 @@ public static class CharactersData
     public static bool DebugEnabled = true;
     public static Character DebugCharacter()
     {
-        return Characters?.Find(o => o.Name.Contains("Floppyredoux"));
+        return Characters?.Find(o => o.Name.Contains("Cereza"));
     }
 
     public static List<Character> Characters = new List<Character>()
@@ -56,28 +56,36 @@ public static class CharactersData
             Id = 4, Name = "Floppyredoux", Kind = "Witch", Realm = Realm.Earth,
             Attack = 7,
             Cooldown = 8,
-            SpecialName = "Oketi Poketi", SpecialDescription = "the next 7 pieces have one less block."
+            SpecialName = "Oketi Poketi", SpecialDescription = "the next 7 pieces have one less block.",
+            Lore = "Exiled for being an emancipated woman and a witch, Floppy never stopped helping the ones in need, even if it meant making them drink weird flasks.",
+            DialogId = 3, DialogPitch = 1.0f
         },
         new Character()
         {
             Id = 5, Name = "Sir Vixid", Kind = "Dark Templar", Realm = Realm.Earth,
             Attack = 9,
-            Cooldown = 12,
-            SpecialName = "Diabolus Vult", SpecialDescription = "remove the last 4 rows from the top for 4 garbage ones."
+            Cooldown = 14,
+            SpecialName = "Diabolus Vult", SpecialDescription = "removes the last 4 rows from the top for 4 waste ones.",
+            Lore = "Last representant of a long dead religion, this hell crusader stood against holiness for centuries, fulfilling his pact in exchange of his immortality!",
+            DialogId = 1, DialogPitch = 0.5f
         },
         new Character()
         {
-            Id = 6, Name = "Theresa", Kind = "Perverted Nun", Realm = Realm.Earth,
+            Id = 6, Name = "Cereza", Kind = "Perverted Nun", Realm = Realm.Earth,
             Attack = 5,
             Cooldown = 2,
-            SpecialName = "Penitence", SpecialDescription = "cancel the last piece locked on the playfield."
+            SpecialName = "Penitence", SpecialDescription = "cancels the last piece locked on the playfield.",
+            Lore = "Lust, luxury, avarice, envy, nothing is bad enough for her. Her years in convent made her realise it felt good to be bad once in a while.",
+            DialogId = 4, DialogPitch = 1.75f
         },
         new Character()
         {
             Id = 7, Name = "Tony", Kind = "Corrupted Monk", Realm = Realm.Earth,
             Attack = 5,
-            Cooldown = 14,
-            SpecialName = "Resilience", SpecialDescription = "cancel next enemy attack."
+            Cooldown = 8,
+            SpecialName = "Resilience", SpecialDescription = "cancels next enemy attack.",
+            Lore = "Once patriarch of a brewer covenant, this old monk found Satan in his addiction to alcohol. He's still trying to forget it by drinking...",
+            DialogId = 2, DialogPitch = 1.0f
         },
         //HEAVEN
         new Character()

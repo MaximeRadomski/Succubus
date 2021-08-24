@@ -2227,7 +2227,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void IncreaseAllAboveLines(int nbRows)
+    public void IncreaseAllAboveLines(int nbRows)
     {
         for (int y = GetHighestBlock(); y >= Constants.HeightLimiter; --y)
         {
@@ -2816,7 +2816,7 @@ public class GameplayControler : MonoBehaviour
         _forcedPieceModel = ForcedPiece.GetComponent<Piece>();
     }
 
-    private void FillLine(int y, AttackType type, Realm realm, int emptyStart = -1, int emptyEnd = -1)
+    public void FillLine(int y, AttackType type, Realm realm, int emptyStart = -1, int emptyEnd = -1)
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {

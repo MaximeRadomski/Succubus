@@ -230,8 +230,8 @@ public static class DialogsData
             }
         },
         #endregion
-        #region Theresa
-        { "Theresa|Any",
+        #region Cereza
+        { "Cereza|Any",
             new List<List<string>>()
             {
                 new List<string>()
@@ -248,15 +248,22 @@ public static class DialogsData
             }
         },
         #endregion
-        #region Theresa
+        #region Tony
         { "Tony|Any",
             new List<List<string>>()
             {
                 new List<string>()
                 {
-                    "Wow wow wow... What the fuck are you??",
-                    "Hey rude!!",
-                    "Sorry pal..."
+                    "Hi, I'll take one \"white russian\", stirred not shaken.",
+                    "...",
+                    "Please?",
+                    "Who do you think I am?",
+                    "Not a good bartender that's for sure. Now quick, go get my drink!",
+                    "Sign... Can't believe we need help that desperately to hire dudes like you...",
+                    "Dudes like me? To hire me? Are you expecting me to work for you?",
+                    "If I get you your drink, will you help us kicking some asses?",
+                    "Are you expecting me to say no to a free drink? That's a deal!!",
+                    "One \"white russian\" incoming!"
                 }
             }
         },

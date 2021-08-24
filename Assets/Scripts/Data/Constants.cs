@@ -316,6 +316,7 @@ public static class Constants
     public static Vector3? OnResumeLastPiecePosition;
     public static Quaternion? OnResumeLastPieceRotation;
     public static int? OnResumeLastForcedBlocks;
+    public static bool IsNextOpponentAttackCanceled;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -340,6 +341,7 @@ public static class Constants
         OnResumeLastPiecePosition = null;
         OnResumeLastPieceRotation = null;
         OnResumeLastForcedBlocks = null;
+        IsNextOpponentAttackCanceled = false;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
