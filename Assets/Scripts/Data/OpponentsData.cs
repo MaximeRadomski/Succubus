@@ -443,9 +443,8 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Cheese Cake", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 300, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 4,
+            HpMax = 88, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LightRow, 4, 10),
                 new OpponentAttack(AttackType.Drill, 2)},
             GravityLevel = 10, Weight = 40
         },

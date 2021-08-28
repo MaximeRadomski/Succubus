@@ -658,6 +658,17 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButton180, Rotation180, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
+
+        if (_isOldSchoolGameplay)
+        {
+            HideAllPossibleButton(Constants.GoButtonHoldName);
+            HideAllPossibleButton(Constants.GoButtonDropName);
+            HideAllPossibleButton(Constants.GoButton180);
+            HideAllPossibleButton(Constants.GoButtonItemName);
+            HideAllPossibleButton(Constants.GoButtonSpecialName);
+            GameObject.Find($"{Constants.GoButtonItemName}Swipe").SetActive(false);
+            GameObject.Find($"{Constants.GoButtonSpecialName}Swipe").SetActive(false);
+        }
     }
 
     private void LookForAllPossibleButton(string name, ButtonBhv.ActionDelegate actionDelegate, int inputType)
@@ -673,6 +684,17 @@ public class GameplayControler : MonoBehaviour
                 tmp.GetComponent<ButtonBhv>().DoActionDelegate = actionDelegate;
             else if (inputType == 2)
                 tmp.GetComponent<ButtonBhv>().EndActionDelegate = actionDelegate;
+        }
+    }
+
+    private void HideAllPossibleButton(string name)
+    {
+        for (int i = 1; i <= 16; ++i)
+        {
+            var tmp = GameObject.Find(name + i.ToString("D2"));
+            if (tmp == null)
+                break;
+            tmp.SetActive(false);
         }
     }
 

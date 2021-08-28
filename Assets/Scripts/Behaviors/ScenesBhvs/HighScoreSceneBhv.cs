@@ -56,6 +56,8 @@ public class HighScoreSceneBhv : SceneBhv
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{scoreValueStr}\n{Constants.CurrentHighScoreContext[1]}\n{Constants.CurrentHighScoreContext[2]}\n{Constants.CurrentHighScoreContext[3]}";
             if (Constants.CurrentHighScoreContext.Count > 4)
                 GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Constants.CurrentHighScoreContext[4]);
+            if (_isOldSchool)
+                GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/EarthOpponents_6");
             if (_scoreHistory == null || _scoreHistory.Count == 0 || Constants.CurrentHighScoreContext[0] > _scoreHistory[0])
                 _title.text = "New High Score";
             if (Constants.CurrentHighScoreContext[0] > 0)
@@ -80,6 +82,8 @@ public class HighScoreSceneBhv : SceneBhv
             var _highestScore = PlayerPrefsHelper.GetTrainingHighestScore(_isOldSchool);
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{_highestScore.Score}\n{_highestScore.Level}\n{_highestScore.Lines}\n{_highestScore.Pieces}";
             GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highestScore.CharacterId);
+            if (_isOldSchool)
+                GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/EarthOpponents_6");
             _title.text = "High Scores";
         }
         UpdateScoreList();

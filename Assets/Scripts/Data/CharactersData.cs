@@ -8,7 +8,7 @@ public static class CharactersData
     public static bool DebugEnabled = true;
     public static Character DebugCharacter()
     {
-        return Characters?.Find(o => o.Name.Contains("Cereza"));
+        return Characters?.Find(o => o.Name.Contains("Tony"));
     }
 
     public static List<Character> Characters = new List<Character>()
@@ -81,8 +81,8 @@ public static class CharactersData
         new Character()
         {
             Id = 7, Name = "Tony", Kind = "Corrupted Monk", Realm = Realm.Earth,
-            Attack = 5,
-            Cooldown = 8,
+            Attack = 3,
+            Cooldown = 6,
             SpecialName = "Resilience", SpecialDescription = "cancels next enemy attack.",
             Lore = "Once patriarch of a brewer covenant, this old monk found Satan in his addiction to alcohol. He's still trying to forget it by drinking...",
             DialogId = 2, DialogPitch = 1.0f

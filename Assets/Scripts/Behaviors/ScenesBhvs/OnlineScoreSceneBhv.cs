@@ -135,6 +135,8 @@ public class OnlineScoreSceneBhv : SceneBhv
                 _scoreGo[i].SetActive(true);
                 _scoreGo[i].transform.Find("Position").GetComponent<TMPro.TextMeshPro>().text = $"{h + 1}";
                 _scoreGo[i].transform.Find("Character00").GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _highScores[h].CharacterId);
+                if (_isOldSchool)
+                    _scoreGo[i].transform.Find("Character00").GetChild(1).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/EarthOpponents_6");
                 _scoreGo[i].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].PlayerName}";
                 _scoreGo[i].transform.Find("Score").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Score.ToSpacedIntString()}";
                 _scoreGo[i].transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = $"{_highScores[h].Level}";
