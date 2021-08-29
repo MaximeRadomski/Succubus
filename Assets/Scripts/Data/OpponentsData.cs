@@ -5,12 +5,12 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = true;
     public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Stained Glass";
+        var name = "Wololo";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -463,6 +463,23 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
             GravityLevel = 8, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Wololo", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 60, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 5,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LightRow, 5, 6),
+                new OpponentAttack(AttackType.OldSchool, 4, 8) },
+            GravityLevel = 6, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Politician", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 150, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.WasteRow, 2) },
+            GravityLevel = 13, Weight = 60
         },
         new Opponent()
         {

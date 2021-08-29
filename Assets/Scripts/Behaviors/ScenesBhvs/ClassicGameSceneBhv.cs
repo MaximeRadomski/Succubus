@@ -903,7 +903,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (targetDestroyed > 0)
                     targetDestroyed -= _gameplayControler.CheckForWasteRows(targetDestroyed);
                 if (targetDestroyed > 0)
-                    targetDestroyed -= _gameplayControler.CheckForLightRows(brutForceDelete: targetDestroyed);
+                {
+                    for (int i = 0; i < targetDestroyed; ++i)
+                        _gameplayControler.CheckForLightRows();
+                }
 
             }
 

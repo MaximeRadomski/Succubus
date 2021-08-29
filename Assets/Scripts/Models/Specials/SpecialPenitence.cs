@@ -16,7 +16,7 @@ public class SpecialPenitence : Special
         {
             var child = _gameplayControler.PlayFieldBhv.gameObject.transform.GetChild(childId);
             var childPiece = child.GetComponent<Piece>();
-            if (childPiece == null || childPiece.transform.childCount <= 0)
+            if (childPiece == null || childPiece.transform.childCount <= 0 || child.gameObject.name.Contains("Row"))
                 continue;
             else
             {
@@ -25,7 +25,8 @@ public class SpecialPenitence : Special
                     int roundedX = Mathf.RoundToInt(block.transform.position.x);
                     int roundedY = Mathf.RoundToInt(block.transform.position.y);
 
-                    MonoBehaviour.Destroy(_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
+                    if (_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY].gameObject != null)
+                        MonoBehaviour.Destroy(_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                     _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY] = null;
                 }
                 MonoBehaviour.Destroy(child.gameObject);
