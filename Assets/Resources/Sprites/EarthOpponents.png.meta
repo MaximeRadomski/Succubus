@@ -53,6 +53,15 @@ TextureImporter:
   - first:
       213: 156434356403426925
     second: EarthOpponents_16
+  - first:
+      213: 2251889599580520508
+    second: EarthOpponents_17
+  - first:
+      213: -3260817731837486983
+    second: EarthOpponents_18
+  - first:
+      213: 4015853012050118617
+    second: EarthOpponents_19
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -283,8 +292,8 @@ TextureImporter:
       name: EarthOpponents_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 51
+        x: 174
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -304,7 +313,7 @@ TextureImporter:
       name: EarthOpponents_7
       rect:
         serializedVersion: 2
-        x: 29
+        x: 0
         y: 51
         width: 29
         height: 51
@@ -325,7 +334,7 @@ TextureImporter:
       name: EarthOpponents_8
       rect:
         serializedVersion: 2
-        x: 58
+        x: 29
         y: 51
         width: 29
         height: 51
@@ -346,7 +355,7 @@ TextureImporter:
       name: EarthOpponents_9
       rect:
         serializedVersion: 2
-        x: 87
+        x: 58
         y: 51
         width: 29
         height: 51
@@ -367,7 +376,7 @@ TextureImporter:
       name: EarthOpponents_10
       rect:
         serializedVersion: 2
-        x: 116
+        x: 87
         y: 51
         width: 29
         height: 51
@@ -388,7 +397,7 @@ TextureImporter:
       name: EarthOpponents_11
       rect:
         serializedVersion: 2
-        x: 145
+        x: 116
         y: 51
         width: 29
         height: 51
@@ -409,8 +418,8 @@ TextureImporter:
       name: EarthOpponents_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 145
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -430,8 +439,8 @@ TextureImporter:
       name: EarthOpponents_13
       rect:
         serializedVersion: 2
-        x: 29
-        y: 0
+        x: 174
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -451,7 +460,7 @@ TextureImporter:
       name: EarthOpponents_14
       rect:
         serializedVersion: 2
-        x: 58
+        x: 0
         y: 0
         width: 29
         height: 51
@@ -472,7 +481,7 @@ TextureImporter:
       name: EarthOpponents_15
       rect:
         serializedVersion: 2
-        x: 87
+        x: 29
         y: 0
         width: 29
         height: 51
@@ -493,7 +502,7 @@ TextureImporter:
       name: EarthOpponents_16
       rect:
         serializedVersion: 2
-        x: 116
+        x: 58
         y: 0
         width: 29
         height: 51
@@ -506,6 +515,69 @@ TextureImporter:
       bones: []
       spriteID: d66d714e734cb2200800000000000000
       internalID: 156434356403426925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_17
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c30c468e8a1504f10800000000000000
+      internalID: 2251889599580520508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_18
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9781888ac8f3fb2d0800000000000000
+      internalID: -3260817731837486983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_19
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d70e6d990d2bb730800000000000000
+      internalID: 4015853012050118617
       vertices: []
       indices: 
       edges: []

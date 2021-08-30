@@ -5,6 +5,13 @@ using UnityEngine;
 public static class Constants
 {
     public const bool BetaMode = true;
+    public const bool CharactersDebug = false;
+    public const bool ItemsDebug = false;
+    public const bool OpponentsDebug = false;
+    public const bool ResourcesDebug = false;
+    public const bool TattoosDebug = false;
+    public const bool RunDebug = true;
+
 
     public const int MaxFps = 60;
     public const float Pixel = 0.14285f;

@@ -5,12 +5,12 @@ using UnityEngine;
 public static class OpponentsData
 {
     //DEBUG
-    public static bool DebugEnabled = true;
+    public static bool DebugEnabled = Constants.OpponentsDebug;
     public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Wololo";
+        var name = "Vampire Hunter";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -476,10 +476,45 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Politician", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
+            HpMax = 170, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2) },
-            GravityLevel = 13, Weight = 60
+            GravityLevel = 13, Weight = 50
+        },
+        new Opponent()
+        {
+            Name = "Vampire Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 500, Weakness = Weakness.Twists, DamageOnWeakness = 200, Cooldown = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drill, 2),
+                new OpponentAttack(AttackType.EmptyRow, 2) },
+            GravityLevel = 10, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Vampire Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 500, Weakness = Weakness.Twists, DamageOnWeakness = 200, Cooldown = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drill, 2),
+                new OpponentAttack(AttackType.EmptyRow, 2) },
+            GravityLevel = 10, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Witch Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.DarkRow, 1) },
+            GravityLevel = 10, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Exorcist", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 100, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 4, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Intoxication, 3),
+                new OpponentAttack(AttackType.WasteRow, 2, 2) },
+            GravityLevel = 10, Weight = 40
         },
         new Opponent()
         {

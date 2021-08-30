@@ -597,6 +597,48 @@ public static class DialogsData
         },
         #endregion
 
+        #region Monk
+        { "Monk|Tony",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Patriarch Anthony?",
+                    "Just Tony. Please.",
+                    "But... But... What happened?",
+                    "Alcohol, monk. Alcohol happened..."
+                }
+            }
+        },
+        #endregion
+        #region Nun
+        { "Nun|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "...",
+                    "...",
+                    "What in the name of god... are you really a nun?",
+                    "Haha, do you like what you see?"
+                }
+            }
+        },
+        #endregion
+        #region Crusader
+        { "Crusader|Sir Vixid",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh! A fierce opponent of the Army of The Night!",
+                    "Oh... A scumbag of the Church...",
+                    "Can't you have at least some dignity?",
+                    "I'm not here for dignity. Now come taste my spear."
+                }
+            }
+        },
+        #endregion
         #region Human Supremacist
         { "Human Supremacist|Any",
             new List<List<string>>()
@@ -617,6 +659,58 @@ public static class DialogsData
                     "Halt heretic!!",
                     "Leave me alone perv...",
                     "For the emp... wait what?"
+                }
+            }
+        },
+        #endregion
+        #region Vampire Hunter
+        { "Vampire Hunter|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Hellspring. Die now, and leave this world. You'll never belong here!",
+                    "Oh but we have no intention to stay here don't you worry!",
+                    "To hell with your heresy! You're nothing but a blight on mankind."
+                }
+            }
+        },
+        #endregion
+        #region Witch Hunter
+        { "Witch Hunter|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "We finally meet, devil worshipper.",
+                    "Out of my way, old illuminated.",
+                    "The outcome of our fight is already written, you cannot kill me!",
+                    "We will see about that."
+                }
+            }
+        },
+        { "Witch Hunter|Floppyredoux",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "The one and only Floppyredoux.",
+                    "Sigh... One of many crazy lunatics...",
+                    "Begone witch! May you rot in hell for the rest of your pitiful life!",
+                    "Oh, I'm so going to Expelliarmus your ass!!"
+                }
+            }
+        },
+        #endregion
+        #region Exorcist
+        { "Exorcist|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "So much dark energy emanating from you...",
+                    "What is that about?",
+                    "You corrupted fool, let me help you finding redemption!"
                 }
             }
         },
@@ -664,6 +758,28 @@ public static class DialogsData
                     "[ Target acquired ]",
                     "Whoever might you be, you stink holiness, your cloaking tricks won't work on me.",
                     "Well then, let's gain some time!"
+                }
+            }
+        },
+        { "Tactical Nun|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Wait, I smell something familiar...",
+                    "[ I... Smell?? ]",
+                    "Jeanne? Could it be you?",
+                    "Wait... Cereza?!!",
+                    "Hi old friend! Do you like my new look?",
+                    "What have you become... You disgust me!"
+                },
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Oh hi Jeanne! Long time no see!",
+                    "Cereza? What have you become...",
+                    "Oh come on don't give me that look again!! You should try to live for yourself a bit!"
                 }
             }
         },
@@ -746,7 +862,29 @@ public static class DialogsData
                     "My scarf...?",
                     "Where did you get it?",
                     "I got it at the... Wait a minute! Why any of this would be relevant?",
-                    "Haha! If I beat your ass, give me your scarf!"
+                    "Haha! If I beat your ass, you give me your scarf!"
+                },
+                new List<string>()
+                {
+                    "Greetings opponent.",
+                    "You didn't give me your scarf last time!",
+                    "Have we met before?",
+                    "Ah yes... already sick of explaining it over and over..."
+                }
+            }
+        },
+        { "Supreme Bishop|Tony",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Anthony is that you?",
+                    "Oh! Hi supreme bishop! How is it going?",
+                    "Anthony... What have you become...",
+                    "It's just Tony now. And do I have to remind you that you are responsible of who I am today!",
+                    "An alcoholic? Certainly not!!",
+                    "Promoting me at the head of a brewer covenant wasn't your best idea dude!",
+                    "..."
                 },
                 new List<string>()
                 {
@@ -841,6 +979,32 @@ public static class DialogsData
                     "Yep, that's it. That's me. Let's keep it like so and start fighting!",
                     "Are you in a hurry Ivy, first of the dead?",
                     "Wow you are in fire dude! If I could be blushing I would!"
+                }
+            }
+        },
+        { "The Pop|Floppyredoux",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "What is a filthy witch doing here?",
+                    "You... You took everything from me!",
+                    "I don't even know who you are.",
+                    "You will."
+                }
+            }
+        },
+        { "The Pop|Sir Vixid",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh! An actual crusader of the night, what an interesting encounter!",
+                    "Finally. My destiny is finally fulfilling!",
+                    "Hahaha!! Aren't your sect dead by now?",
+                    "All my relatives live in me. Their wrath has feed my hate against your kind for centuries.",
+                    "...",
+                    "Let me give you a taste of it!"
                 }
             }
         },

@@ -5,7 +5,7 @@ using UnityEngine;
 public static class CharactersData
 {
     //DEBUG
-    public static bool DebugEnabled = false;
+    public static bool DebugEnabled = Constants.CharactersDebug;
     public static Character DebugCharacter()
     {
         return Characters?.Find(o => o.Name.Contains("Tony"));

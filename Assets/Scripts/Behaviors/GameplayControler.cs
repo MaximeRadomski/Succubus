@@ -2703,7 +2703,7 @@ public class GameplayControler : MonoBehaviour
     public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
     {
         Constants.IsEffectAttackInProgress = AttackType.Partition;
-        SetGravity(4);
+        SetGravity(2);
         var halfPixel = Constants.Pixel / 2.0f;
         float y = GetHighestBlock() + 3.0f + halfPixel;
         if (y > 15.0f + halfPixel)
