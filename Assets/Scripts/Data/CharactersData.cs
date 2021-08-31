@@ -73,7 +73,7 @@ public static class CharactersData
         {
             Id = 6, Name = "Cereza", Kind = "Perverted Nun", Realm = Realm.Earth,
             Attack = 5,
-            Cooldown = 2,
+            Cooldown = 4,
             SpecialName = "Penitence", SpecialDescription = "cancels the last piece locked on the playfield.",
             Lore = "Lust, luxury, avarice, envy, nothing is bad enough for her. Her years in convent made her realise it felt good to be bad once in a while.",
             DialogId = 4, DialogPitch = 1.75f

@@ -62,6 +62,12 @@ TextureImporter:
   - first:
       213: 4015853012050118617
     second: EarthOpponents_19
+  - first:
+      213: 3963857571247279535
+    second: EarthOpponents_20
+  - first:
+      213: 2649464659161018387
+    second: EarthOpponents_21
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -167,7 +173,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -188,7 +194,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -209,7 +215,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -230,7 +236,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -251,7 +257,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -272,7 +278,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -293,7 +299,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 102
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -314,7 +320,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -335,7 +341,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -356,7 +362,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -377,7 +383,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -398,7 +404,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -419,7 +425,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -440,7 +446,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 51
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -461,7 +467,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -482,7 +488,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -503,7 +509,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -524,7 +530,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -545,7 +551,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -566,7 +572,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -578,6 +584,48 @@ TextureImporter:
       bones: []
       spriteID: 9d70e6d990d2bb730800000000000000
       internalID: 4015853012050118617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_20
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 51
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fadcf6aa573720730800000000000000
+      internalID: 3963857571247279535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3107e3ee11ac4c420800000000000000
+      internalID: 2649464659161018387
       vertices: []
       indices: 
       edges: []

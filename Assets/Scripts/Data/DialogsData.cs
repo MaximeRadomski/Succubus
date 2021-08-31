@@ -291,7 +291,7 @@ public static class DialogsData
             }
         },
         #endregion
-        #region Jill
+        #region PHILL
         { "PHILL|Any",
             new List<List<string>>()
             {
@@ -663,8 +663,8 @@ public static class DialogsData
             }
         },
         #endregion
-        #region Vampire Hunter
-        { "Vampire Hunter|Any",
+        #region Vampire Killer
+        { "Vampire Killer|Any",
             new List<List<string>>()
             {
                 new List<string>()
@@ -709,7 +709,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "So much dark energy emanating from you...",
-                    "What is that about?",
+                    "Yeah seems fair...",
                     "You corrupted fool, let me help you finding redemption!"
                 }
             }
@@ -848,7 +848,7 @@ public static class DialogsData
                     "Greetings opponent.\nI have been summoned here-",
                     "Don't waste your time.",
                     "Why won't anyone let me do my fighting speech! You helling creatures are certainly not-",
-                    "Ok then don't waste mine!"
+                    "Ok then don't waste my time!"
                 }
             }
         },
@@ -885,13 +885,22 @@ public static class DialogsData
                     "An alcoholic? Certainly not!!",
                     "Promoting me at the head of a brewer covenant wasn't your best idea dude!",
                     "..."
-                },
+                }
+            }
+        },
+        { "Supreme Bishop|Sir Vixid",
+            new List<List<string>>()
+            {
                 new List<string>()
                 {
-                    "Greetings opponent.",
-                    "You didn't give me your scarf last time!",
-                    "Have we met before?",
-                    "Ah yes... already sick of explaining it over and over..."
+                    "Greetings, sir.",
+                    "Greetings, bishop.",
+                    "I have been summoned here, right before you, to stop your foolish crusade against all that is holy.",
+                    "And I am here to fulfill my destiny, against your holiness, in this arena which will soon become your tomb.",
+                    "This very arena will be the theatre of our might and tenacity!",
+                    "Indeed it will! I am more resolved than ever to eradicate your sacred being!",
+                    "Beware, you sinful creature, this is your last warning as my will to eradicate your kind is unwavering!",
+                    "So be it."
                 }
             }
         },

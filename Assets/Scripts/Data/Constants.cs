@@ -7,7 +7,7 @@ public static class Constants
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
     public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool ResourcesDebug = false;
     public const bool TattoosDebug = false;
     public const bool RunDebug = true;
@@ -324,6 +324,7 @@ public static class Constants
     public static Quaternion? OnResumeLastPieceRotation;
     public static int? OnResumeLastForcedBlocks;
     public static bool IsNextOpponentAttackCanceled;
+    public static int EnemyCooldownInfiniteStairMalus = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -349,6 +350,7 @@ public static class Constants
         OnResumeLastPieceRotation = null;
         OnResumeLastForcedBlocks = null;
         IsNextOpponentAttackCanceled = false;
+        EnemyCooldownInfiniteStairMalus = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

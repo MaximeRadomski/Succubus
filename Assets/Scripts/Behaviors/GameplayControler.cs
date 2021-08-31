@@ -1967,7 +1967,7 @@ public class GameplayControler : MonoBehaviour
                 || Constants.ComboCounter > 3)
                     StartCoroutine(Reflect());
 
-                if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
+                if (!Character.LineDestroyInvulnerability && AttackIncoming && Constants.HeightLimiterResetLines < 0)
                 {
                     AttackIncoming = false;
                     //Debug.Log(DateTime.Now + "CheckForLine (line)");

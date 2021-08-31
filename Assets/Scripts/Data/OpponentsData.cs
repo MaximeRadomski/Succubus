@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Vampire Hunter";
+        var name = "Exorcist";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -372,7 +372,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 2, 2),
                 new OpponentAttack(AttackType.Shift, 6) },
-            GravityLevel = 8, Weight = 20
+            GravityLevel = 8, Weight = 20,
+            DialogId = 4, DialogPitch = 1.75f
         },
         new Opponent()
         {
@@ -430,7 +431,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.ForcedBlock, 1, 1),
                 new OpponentAttack(AttackType.AirPiece, 1),
                 new OpponentAttack(AttackType.Screwed, 1)},
-            GravityLevel = 12, Weight = 60
+            GravityLevel = 12, Weight = 60,
+            DialogId = 2, DialogPitch = 0.4f
         },
         new Opponent()
         {
@@ -483,38 +485,32 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Name = "Vampire Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 500, Weakness = Weakness.Twists, DamageOnWeakness = 200, Cooldown = 3,
+            Name = "Vampire Killer", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 500, Weakness = Weakness.Twists, DamageOnWeakness = 200, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2),
                 new OpponentAttack(AttackType.EmptyRow, 2) },
-            GravityLevel = 10, Weight = 60
-        },
-        new Opponent()
-        {
-            Name = "Vampire Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 500, Weakness = Weakness.Twists, DamageOnWeakness = 200, Cooldown = 3,
-            Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Drill, 2),
-                new OpponentAttack(AttackType.EmptyRow, 2) },
-            GravityLevel = 10, Weight = 60
+            GravityLevel = 10, Weight = 60,
+            DialogId = 4, DialogPitch = 0.75f
         },
         new Opponent()
         {
             Name = "Witch Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 3,
+            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 1) },
-            GravityLevel = 10, Weight = 60
+                new OpponentAttack(AttackType.DarkRow, 2) },
+            GravityLevel = 10, Weight = 60,
+            DialogId = 3, DialogPitch = 0.75f
         },
         new Opponent()
         {
             Name = "Exorcist", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 3),
+                new OpponentAttack(AttackType.Intoxication, 5),
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 40,
+            DialogId = 3, DialogPitch = 0.5f
         },
         new Opponent()
         {

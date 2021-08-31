@@ -198,6 +198,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         }
         CurrentOpponent = _opponents[Constants.CurrentListOpponentsId].Clone();
+        Constants.EnemyCooldownInfiniteStairMalus = 0;
         if (Constants.RandomizedAttackType != AttackType.None)
             RandomizeOpponentAttack();
         if (Constants.CurrentOpponentChangedRealm != Realm.None)
@@ -210,7 +211,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Constants.CurrentOpponentAttackId = Constants.CurrentOpponentAttackId - 1 < 0 ? CurrentOpponent.Attacks.Count - 1 : Constants.CurrentOpponentAttackId - 1;
                 Constants.IsEffectAttackInProgress = AttackType.None;
-                Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus;
+                Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus;
                 UpdateCooldownBar(Direction.Up);
                 OpponentAttackIncoming();
             }
@@ -475,8 +476,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (!sceneInit)
                 Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
-            Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus;
+            Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus;
         }
+        if (Character.EnemyCooldownInfiniteStairMalus > 0)
+            Constants.EnemyCooldownInfiniteStairMalus += Character.EnemyCooldownInfiniteStairMalus;
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Drill)
             _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, true);
         SetNextCooldownTick();
@@ -486,7 +489,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_timeStopTimer > 0)
             return;
-        if (!Paused && _opponentOnCooldown && Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus)
+        if (!Paused && _opponentOnCooldown && Constants.CurrentOpponentCooldown > CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus)
             OpponentAttackIncoming();
         else
         {
@@ -626,12 +629,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece && _gameplayControler.ForcedPiece == null)
         {
             _gameplayControler.AttackForcedPiece(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param1, CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].Param2);
-            _gameplayControler.SetForcedPieceOpacity(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus);
+            _gameplayControler.SetForcedPieceOpacity(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus);
         }
         if (_opponentOnCooldown && Time.time >= _nextCooldownTick)
         {
             Constants.CurrentOpponentCooldown += Constants.OpponentCooldownIncrement;
-            _gameplayControler.SetForcedPieceOpacity(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus);
+            _gameplayControler.SetForcedPieceOpacity(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus);
             UpdateCooldownBar(Direction.Up);
             SetNextCooldownTick();
         }
@@ -648,7 +651,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void UpdateCooldownBar(Direction direction)
     {
-        _opponentCooldownBar.UpdateContent(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus, direction);
+        _opponentCooldownBar.UpdateContent(Constants.CurrentOpponentCooldown, CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus, direction);
     }
 
     public override void OnGameOver()
@@ -750,7 +753,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
-            if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus)
+            if (_opponentOnCooldown && Constants.CurrentOpponentCooldown < CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus)
             {
                 if (CurrentOpponent.Immunity != Immunity.Cooldown)
                     Constants.CurrentOpponentCooldown -= Character.EnemyCooldownProgressionReducer;

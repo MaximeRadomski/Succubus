@@ -61,6 +61,8 @@ public class Character : Loot
     public int DamoclesDamage = 0;
     public int StepsWeightMalus = 0;
     public bool InstantSpecial = false;
+    public bool LineDestroyInvulnerability = false;
+    public int EnemyCooldownInfiniteStairMalus = 0;
 
     public Character()
     {
