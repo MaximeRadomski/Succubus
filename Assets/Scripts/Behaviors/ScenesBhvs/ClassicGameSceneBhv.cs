@@ -163,7 +163,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             Paused = true;
             PlayerPrefsHelper.AddToAlreadyDialog($"{CurrentOpponent.Name}|{Character.Name}");
-            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Appearance);
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Character.StartingRealm, Appearance);
         }
         else
             Appearance();
@@ -317,7 +317,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         PlayerPrefsHelper.SaveRun(_run);
         if (loot.LootType == LootType.Character)
         {
-            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, AfterCharacterDialog);
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, Character.StartingRealm, AfterCharacterDialog);
             bool AfterCharacterDialog() {
                 StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                 _musicControler.Play(Constants.VictoryAudioClip, once: true);
@@ -476,7 +476,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (!sceneInit)
                 Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
-            Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus;
+            if (Character.HasteCancel)
+                Instantiator.PopText("canceled", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
+            else
+                Constants.CurrentOpponentCooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Constants.EnemyCooldownInfiniteStairMalus;
         }
         if (Character.EnemyCooldownInfiniteStairMalus > 0)
             Constants.EnemyCooldownInfiniteStairMalus += Character.EnemyCooldownInfiniteStairMalus;
@@ -583,6 +586,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Constants.CurrentOpponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
         _opponentCooldownBar.ResetTilt();
+        if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType != AttackType.ForcedPiece && _gameplayControler.ForcedPiece != null)
+            Destroy(_gameplayControler.ForcedPiece);
+        if (CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType != AttackType.Drill && Helper.TryFind(Constants.GoDrillTarget, out var tmpDrillTarget))
+            Destroy(tmpDrillTarget);
+        Destroy(_gameplayControler.ForcedPiece);
         StartOpponentCooldown();
         if (Character.ThornsPercent > 0)
         {

@@ -11,7 +11,19 @@ public class Character : Loot
     public int Cooldown;
     public string SpecialName;
     public string SpecialDescription;
-    public Realm Realm;
+
+    private Realm realm;
+    public Realm Realm
+    {
+        get => realm;
+        set
+        {
+            realm = value;
+            if (StartingRealm == Realm.None)
+                StartingRealm = Realm;
+        }
+    }
+    public Realm StartingRealm = Realm.None;
 
     public string Lore;
     public int DialogId = 0;
@@ -63,6 +75,7 @@ public class Character : Loot
     public bool InstantSpecial = false;
     public bool LineDestroyInvulnerability = false;
     public int EnemyCooldownInfiniteStairMalus = 0;
+    public bool HasteCancel = false;
 
     public Character()
     {

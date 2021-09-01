@@ -47,7 +47,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private System.Func<bool> _resultAction;
 
-    public void Init(Vector3 position, string subjectName, string secondaryName, System.Func<bool> resultAction, int? customid = null)
+    public void Init(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customid = null)
     {
         _resultAction = resultAction;
 
@@ -81,9 +81,13 @@ public class DialogBoxBhv : FrameRateBehavior
         List<List<string>> tmpSentences = null;
         if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
         {
-            _dialogLibelle = $"{subjectName}|Any";
+            _dialogLibelle = $"{subjectName}|{secondaryRealm}";
             if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
-                _sentences = new List<string>() { "[Error]: Missing content... Go throw some rocks at at the dev!" };
+            {
+                _dialogLibelle = $"{subjectName}|Any";
+                if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
+                    _sentences = new List<string>() { "[Error]: Missing content... Go throw some rocks at at the dev!" };
+            }
         }
         if (tmpSentences != null)
         {

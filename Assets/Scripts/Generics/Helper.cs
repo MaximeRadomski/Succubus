@@ -542,4 +542,11 @@ public static class Helper
         count += tree.Repentance;
         return count;
     }
+
+    public static bool TryFind(string name, out GameObject outGameObject)
+    {
+        var found = GameObject.Find(name);
+        outGameObject = found;
+        return found != null;
+    }
 }

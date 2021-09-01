@@ -276,7 +276,7 @@ public class StepsSceneBhv : SceneBhv
                 if (!alreadyDialog.Contains(dialogLibelle))
                 {
                     PlayerPrefsHelper.AddToAlreadyDialog(dialogLibelle);
-                    Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, () => { ResetGotoStep(); return true; });
+                    Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, _character.StartingRealm, () => { ResetGotoStep(); return true; });
                 }
                 else
                     ResetGotoStep();

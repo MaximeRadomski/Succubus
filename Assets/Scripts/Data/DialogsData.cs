@@ -340,7 +340,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "It wasn't me I swear!! I was in admin the whole time!!",
-                    "The fuck are you talking about?",
+                    "What are you talking about?",
                     "Well, your loss then!!"
                 }
             }
@@ -363,6 +363,15 @@ public static class DialogsData
                 {
                     "Go back where you come from vermin! Those gates have remained sealed for centuries and I am here to keep it that way.",
                     "Vermin?"
+                }
+            }
+        },
+        { "Baphomeh|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Go back where you come from human! Enjoy your stay in this place as long as your corpse can handle it."
                 }
             }
         },
@@ -438,6 +447,17 @@ public static class DialogsData
                 new List<string>()
                 {
                     "Have you lost your mind??? Do you have any idea how many souls I have to judge instead of cleaning your mess?"
+                }
+            }
+        },
+        { "Devil's Advocate|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "A human here? Wait a minute, I cannot find your soul in the registries... How did you even end up here???",
+                    "I've been told some amulet brought me here.",
+                    "Oh... The evil twins... What have they done again..."
                 }
             }
         },
@@ -523,6 +543,17 @@ public static class DialogsData
                 new List<string>()
                 {
                     "So... you are the one making this mess. I hope you know what you're doing, and what are the consequences!!"
+                }
+            }
+        },
+        { "Stan|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Is this some kind of joke??",
+                    "Why would it be?",
+                    "A mere human, trying to get out of hell. My children are really taking this matter too lightly..."
                 }
             }
         },
