@@ -746,6 +746,17 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Matriarch
+        { "Matriarch|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Ha ha ha ha"
+                }
+            }
+        },
+        #endregion
         #region Tactical Nun
         { "Tactical Nun",
             new List<List<string>>()
@@ -1045,6 +1056,147 @@ public static class DialogsData
                     "All my relatives live in me. Their wrath has feed my hate against your kind for centuries.",
                     "...",
                     "Let me give you a taste of it!"
+                }
+            }
+        },
+        #endregion
+
+        #region The Beholder
+        { "The Beholder",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Do you really think this is over?"
+                }
+            }
+        },
+        { "The BeholderFirstEncounter|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings!",
+                    "Hello...\nWho are you exactly?",
+                    "My apologies for my rudeness. Let me introduce myself properly.",
+                    "...",
+                    "I am the beholder, collector of chaos, master of distortion, and a big fan of your little adventure you have going on I must say!",
+                    "Hi mister beholder..., what little adventure?",
+                    "You know, your little \"hell against heaven\" thingy you are doing with your friends of yours.",
+                    "Oh, yes... That little adventure...",
+                    "No no I really enjoy it so far! I've been through many lifetimes and universes, and it is somewhat new for me to spectate such a thing!",
+                    "Well... Good to know. Now what?",
+                    "Now, I make you an offer. An offer to let you skip a realm you've fought before, for free!",
+                    "For free? That's not an offer, where is the poop Beholder?",
+                    "No trickeries involved I assure you. All I wish is to see the end of it!",
+                    "I still don't know if we can trust you...",
+                    "Well give it a try at least, just once, ha ha ha ha ha!!"
+                }
+            }
+        },
+        { "The Beholder|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings!"
+                }
+            }
+        },
+        { "The Beholder|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Ivy, first of the dead.",
+                    "Hello Beholder!",
+                    "How is your horn doing?",
+                    "You... You know about my horn???"
+                }
+            }
+        },
+        { "The Beholder|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Edam, harpies commander.",
+                    "Is that my official title among yours?",
+                    "You are also known as Satan's capricious brat.",
+                    "The what???"
+                }
+            }
+        },
+        { "The Beholder|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Podarge, betrayers of your own kind.",
+                    "Who are you again?",
+                    "You... You are joking right?",
+                    "..."
+                }
+            }
+        },
+        { "The Beholder|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Belias, slave amongst gods.",
+                    "I beg your pardon?",
+                    "Isn't it the truth?",
+                    "Yeah... Yes it sadly is..."
+                }
+            }
+        },
+        { "The Beholder|Floppyredoux",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Floppyredoux, humans protector.",
+                    "Wait, is that my destiny or something??",
+                    "Oops... Spoiler alert I guess...",
+                    "Nooooo!! I want to know more now!!"
+                }
+            }
+        },
+        { "The Beholder|Sir Vixid",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Sir Vixid, last crusader of the night.",
+                    "Am I really the last one?",
+                    "I'm afraid so.",
+                    "..."
+                }
+            }
+        },
+        { "The Beholder|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings... Wait... Who are you?",
+                    "Hi, I'm Cereza!",
+                    "I know this, but that's all I know... Why don't I know who you are?",
+                    "Because we never actually took the time to spend some time together?",
+                    "This is not how my omniscience works..."
+                }
+            }
+        },
+        { "The Beholder|Tony",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Anthony, patriarch of the beer.",
+                    "Wow you're late dude, I've been demoted...",
+                    "I was just trying to embellish your title a bit.",
+                    "Oh do not worry, I really prefer my actual rank!"
                 }
             }
         },

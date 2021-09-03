@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Stan";
+        var name = "Kultist";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -511,6 +511,26 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
             GravityLevel = 10, Weight = 40,
             DialogId = 3, DialogPitch = 0.5f
+        },
+        new Opponent()
+        {
+            Name = "Kultist", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 180, Cooldown = 4, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LightRow, 2, 5),
+                new OpponentAttack(AttackType.LightRow, 4, 5),
+                new OpponentAttack(AttackType.LightRow, 6, 5)
+            },
+            GravityLevel = 8, Weight = 50
+        },
+        new Opponent()
+        {
+            Name = "Matriarch", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 200, Immunity = Immunity.Twists, Weakness = Weakness.Combos, DamageOnWeakness = 15, Cooldown = 10, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Gate, 5) },
+            GravityLevel = 12, Weight = 50,
+            DialogId = 4, DialogPitch = 0.75f
         },
         new Opponent()
         {

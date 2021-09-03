@@ -128,6 +128,15 @@ public static class CharactersData
             SpecialName = null, SpecialDescription = "None",
             Lore = "None",
             DialogId = 0, DialogPitch = 1.0f
+        },
+        new Character()
+        {
+            Id = 13, Name = "The Beholder", Kind = "Mystic Being", Realm = Realm.Heaven,
+            Attack = 0,
+            Cooldown = 0,
+            SpecialName = null, SpecialDescription = "None",
+            Lore = "None",
+            DialogId = 4, DialogPitch = 0.5f
         }
     };
 }

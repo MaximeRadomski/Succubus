@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +25,9 @@ public class StepsSceneBhv : SceneBhv
     private SpriteRenderer _lootPicture;
     private TMPro.TextMeshPro _lootName;
     private SpriteRenderer _characterPicture;
+    private SpriteRenderer _beholderPicture;
     private GameObject _buttonInfo;
+    private GameObject _buttonBeholder;
     private InputControlerBhv _inputControler;
 
     private Step _selectedStep;
@@ -64,6 +67,10 @@ public class StepsSceneBhv : SceneBhv
         _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
         _buttonInfo = GameObject.Find(Constants.GoButtonInfoName);
         _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;
+        _beholderPicture = GameObject.Find("BeholderPicture").GetComponent<SpriteRenderer>();
+        _beholderPicture.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
+        _buttonBeholder = GameObject.Find("ButtonBeholder");
+        _buttonBeholder.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
@@ -148,6 +155,8 @@ public class StepsSceneBhv : SceneBhv
         {
             _characterPicture.gameObject.SetActive(false);
             _buttonInfo.SetActive(false);
+            _beholderPicture.gameObject.SetActive(false);
+            _buttonBeholder.SetActive(false);
             if (_selectedStep.LootType == LootType.Character)
             {
                 rarity = Rarity.Legendary;
@@ -203,6 +212,22 @@ public class StepsSceneBhv : SceneBhv
                 _characterPicture.gameObject.SetActive(false);
                 _buttonInfo.SetActive(false);
             }
+
+            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1)
+            {
+                //DEBUG
+                if (Constants.BetaMode && _run.CurrentRealm.GetHashCode() < Realm.Earth.GetHashCode())
+                //DEBUG
+                {
+                    _beholderPicture.gameObject.SetActive(true);
+                    _buttonBeholder.SetActive(true);
+                }
+            }
+            else
+            {
+                _beholderPicture.gameObject.SetActive(false);
+                _buttonBeholder.SetActive(false);
+            }
         }
     }
 
@@ -257,6 +282,52 @@ public class StepsSceneBhv : SceneBhv
         Paused = true;
         _musicControler.HalveVolume();
         _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, _character, null);
+    }
+
+    private void BeholderWarp()
+    {
+        var beholder = CharactersData.CustomCharacters.First(c => c.Name.Contains("Beholder"));
+        if (!PlayerPrefsHelper.GetHasMetBeholder())
+        {
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, $"{beholder.Name}FirstEncounter", _character.Name, _character.StartingRealm, OffersWarp);
+            PlayerPrefsHelper.SaveHasMetBeholder(true);
+        }
+        else
+        {
+            var alreadyDialog = PlayerPrefsHelper.GetAlreadyDialog();
+            var dialogLibelle = $"{beholder.Name}|{_character.Name}";
+            if (!alreadyDialog.Contains(dialogLibelle))
+            {
+                PlayerPrefsHelper.AddToAlreadyDialog(dialogLibelle);
+                Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, beholder.Name, _character.Name, _character.StartingRealm, OffersWarp);
+            }
+            else
+                OffersWarp();
+        }
+
+        bool OffersWarp()
+        {
+            Instantiator.NewPopupYesNo("Realm Warp", "the beholder offers you to warp to the next realm. Do you accept?", "No", "Yes", OnWarp);
+            NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+            return true;
+        }
+
+        object OnWarp(bool result)
+        {
+            if (!result)
+                return false;
+
+            _run.RealmLevel = 3;
+            _run.IncreaseLevel();
+            var currentItem = PlayerPrefsHelper.GetCurrentItem();
+            if (currentItem != null)
+                _run.CurrentItemUses = currentItem.Uses;
+            if (currentItem != null && currentItem.Name == ItemsData.Items[25])
+                ++_run.DeathScytheAscension;
+            PlayerPrefsHelper.SaveRun(_run);
+            NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+            return true;
+        }
     }
 
     private void GoToStep()

@@ -129,12 +129,14 @@ public class DialogBoxBhv : FrameRateBehavior
         else
         {
             var tmpCharacterSubject = CharactersData.Characters.Find(c => c.Name == name);
+            if (tmpCharacterSubject == null)
+                tmpCharacterSubject = CharactersData.CustomCharacters.Find(o => o.Name == name);
             if (tmpCharacterSubject != null)
                 tmpSubject = new DialogSubject() { Id = tmpCharacterSubject.Id,
                     Name = tmpCharacterSubject.Name,
                     Realm = tmpCharacterSubject.Realm,
                     Region = tmpCharacterSubject.Realm,
-                    Type = SubjectType.Character,
+                    Type = tmpCharacterSubject.SpecialName != null ? SubjectType.Character : SubjectType.Opponent,
                     DialogId = _soundControler.SetSound($"Dialog{tmpCharacterSubject.DialogId.ToString("00")}"),
                     DialogPitch = tmpCharacterSubject.DialogPitch
                 };

@@ -906,4 +906,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var nbRuns = Mock.GetInt(Constants.PpNumberRunsWithoutCharacterEncounter, Constants.PpSerializeDefaultInt);
         return nbRuns;
     }
+
+    public static void SaveHasMetBeholder(bool hasMetHim)
+    {
+        PlayerPrefs.SetInt(Constants.PpHasMetBeholder, hasMetHim ? 1 : 0);
+    }
+
+    public static bool GetHasMetBeholder()
+    {
+        var hasMetHim = PlayerPrefs.GetInt(Constants.PpHasMetBeholder, Constants.PpSerializeDefaultInt);
+        return hasMetHim == 1 ? true : false;
+    }
 }
