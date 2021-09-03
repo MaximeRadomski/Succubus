@@ -349,12 +349,12 @@ public class Instantiator : MonoBehaviour
         tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().Init(sprite, position + new Vector2(0.0f, +0.3f));
     }
 
-    public void NewDialogBoxEncounter(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customId = null)
+    public void NewDialogBoxEncounter(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customId = null, string customDialogLibelle = null)
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
-        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, subjectName, secondaryName, secondaryRealm, resultAction, customId);
+        tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, subjectName, secondaryName, secondaryRealm, resultAction, customId, customDialogLibelle);
     }
 
     public void NewDialogBoxDeath(Vector3 position, string name, System.Func<bool> resultAction)

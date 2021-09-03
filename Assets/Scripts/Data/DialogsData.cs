@@ -1071,13 +1071,13 @@ public static class DialogsData
                 }
             }
         },
-        { "The BeholderFirstEncounter|Any",
+        { "The Beholder|FirstEncounter",
             new List<List<string>>()
             {
                 new List<string>()
                 {
                     "Greetings!",
-                    "Hello...\nWho are you exactly?",
+                    "Hello... \nWho are you exactly?",
                     "My apologies for my rudeness. Let me introduce myself properly.",
                     "...",
                     "I am the beholder, collector of chaos, master of distortion, and a big fan of your little adventure you have going on I must say!",

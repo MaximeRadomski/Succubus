@@ -47,7 +47,7 @@ public class DialogBoxBhv : FrameRateBehavior
 
     private System.Func<bool> _resultAction;
 
-    public void Init(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customid = null)
+    public void Init(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customid = null, string customDialogLibelle = null)
     {
         _resultAction = resultAction;
 
@@ -79,6 +79,8 @@ public class DialogBoxBhv : FrameRateBehavior
         _subject = GetSubjectFromName(subjectName);
         _secondary = GetSubjectFromName(secondaryName);
         List<List<string>> tmpSentences = null;
+        if (customDialogLibelle != null)
+            _dialogLibelle = customDialogLibelle;
         if (!DialogsData.DialogTree.TryGetValue(_dialogLibelle, out tmpSentences))
         {
             _dialogLibelle = $"{subjectName}|{secondaryRealm}";
@@ -136,7 +138,7 @@ public class DialogBoxBhv : FrameRateBehavior
                     Name = tmpCharacterSubject.Name,
                     Realm = tmpCharacterSubject.Realm,
                     Region = tmpCharacterSubject.Realm,
-                    Type = tmpCharacterSubject.SpecialName != null ? SubjectType.Character : SubjectType.Opponent,
+                    Type = SubjectType.Character,
                     DialogId = _soundControler.SetSound($"Dialog{tmpCharacterSubject.DialogId.ToString("00")}"),
                     DialogPitch = tmpCharacterSubject.DialogPitch
                 };

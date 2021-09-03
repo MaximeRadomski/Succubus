@@ -213,15 +213,10 @@ public class StepsSceneBhv : SceneBhv
                 _buttonInfo.SetActive(false);
             }
 
-            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1)
+            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1 && _run.CurrentRealm == Realm.Hell /*DEBUG*/)
             {
-                //DEBUG
-                if (Constants.BetaMode && _run.CurrentRealm.GetHashCode() < Realm.Earth.GetHashCode())
-                //DEBUG
-                {
-                    _beholderPicture.gameObject.SetActive(true);
-                    _buttonBeholder.SetActive(true);
-                }
+                _beholderPicture.gameObject.SetActive(true);
+                _buttonBeholder.SetActive(true);
             }
             else
             {
@@ -289,7 +284,7 @@ public class StepsSceneBhv : SceneBhv
         var beholder = CharactersData.CustomCharacters.First(c => c.Name.Contains("Beholder"));
         if (!PlayerPrefsHelper.GetHasMetBeholder())
         {
-            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, $"{beholder.Name}FirstEncounter", _character.Name, _character.StartingRealm, OffersWarp);
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, beholder.Name, _character.Name, _character.StartingRealm, OffersWarp, customDialogLibelle: "The Beholder|FirstEncounter");
             PlayerPrefsHelper.SaveHasMetBeholder(true);
         }
         else
@@ -307,8 +302,8 @@ public class StepsSceneBhv : SceneBhv
 
         bool OffersWarp()
         {
-            Instantiator.NewPopupYesNo("Realm Warp", "the beholder offers you to warp to the next realm. Do you accept?", "No", "Yes", OnWarp);
-            NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+            Instantiator.NewPopupYesNo("Realm Warp", "the beholder offers you to warp to the next realm. do you accept?", "No", "Yes", OnWarp);
             return true;
         }
 

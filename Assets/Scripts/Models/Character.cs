@@ -12,18 +12,19 @@ public class Character : Loot
     public string SpecialName;
     public string SpecialDescription;
 
-    private Realm realm;
-    public Realm Realm
+    public Realm Realm;
+
+    private Realm _startingRealm = Realm.None;
+    public Realm StartingRealm
     {
-        get => realm;
-        set
+        get
         {
-            realm = value;
-            if (StartingRealm == Realm.None)
-                StartingRealm = Realm;
+            if (_startingRealm == Realm.None)
+                _startingRealm = Realm;
+            return _startingRealm;
         }
+        set => _startingRealm = value;
     }
-    public Realm StartingRealm = Realm.None;
 
     public string Lore;
     public int DialogId = 0;

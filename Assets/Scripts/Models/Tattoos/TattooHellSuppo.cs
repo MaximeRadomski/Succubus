@@ -15,6 +15,8 @@ public class TattooHellSuppo : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
+        if (character.StartingRealm == Realm.None)
+            character.StartingRealm = character.Realm;
         character.Realm = Realm.Hell;
     }
 
