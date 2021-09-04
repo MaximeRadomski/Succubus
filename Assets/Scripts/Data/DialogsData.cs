@@ -1112,6 +1112,10 @@ public static class DialogsData
                     "Hello Beholder!",
                     "How is your horn doing?",
                     "You... You know about my horn???"
+                },
+                new List<string>()
+                {
+                    "Greetings, Ivy, first of the dead."
                 }
             }
         },
@@ -1124,6 +1128,10 @@ public static class DialogsData
                     "Is that my official title among yours?",
                     "You are also known as Satan's capricious brat.",
                     "The what???"
+                },
+                new List<string>()
+                {
+                    "Greetings, Edam, harpies commander."
                 }
             }
         },
@@ -1136,6 +1144,10 @@ public static class DialogsData
                     "Who are you again?",
                     "You... You are joking right?",
                     "..."
+                },
+                new List<string>()
+                {
+                    "Greetings, Podarge, betrayers of your own kind."
                 }
             }
         },
@@ -1148,6 +1160,10 @@ public static class DialogsData
                     "I beg your pardon?",
                     "Isn't it the truth?",
                     "Yeah... Yes it sadly is..."
+                },
+                new List<string>()
+                {
+                    "Greetings, Belias, slave amongst gods."
                 }
             }
         },
@@ -1160,6 +1176,10 @@ public static class DialogsData
                     "Wait, is that my destiny or something??",
                     "Oops... Spoiler alert I guess...",
                     "Nooooo!! I want to know more now!!"
+                },
+                new List<string>()
+                {
+                    "Greetings, Floppyredoux, humans protector."
                 }
             }
         },
@@ -1172,6 +1192,10 @@ public static class DialogsData
                     "Am I really the last one?",
                     "I'm afraid so.",
                     "..."
+                },
+                new List<string>()
+                {
+                    "Greetings, Sir Vixid, last crusader of the night."
                 }
             }
         },
@@ -1185,6 +1209,10 @@ public static class DialogsData
                     "I know this, but that's all I know... Why don't I know who you are?",
                     "Because we never actually took the time to spend some time together?",
                     "This is not how my omniscience works..."
+                },
+                new List<string>()
+                {
+                    "Greetings Cereza."
                 }
             }
         },
@@ -1197,6 +1225,10 @@ public static class DialogsData
                     "Wow you're late dude, I've been demoted...",
                     "I was just trying to embellish your title a bit.",
                     "Oh do not worry, I really prefer my actual rank!"
+                },
+                new List<string>()
+                {
+                    "Greetings, Anthony, patriarch of the beer."
                 }
             }
         },
