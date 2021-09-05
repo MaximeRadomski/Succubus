@@ -13,18 +13,7 @@ public class Character : Loot
     public string SpecialDescription;
 
     public Realm Realm;
-
-    private Realm _startingRealm = Realm.None;
-    public Realm StartingRealm
-    {
-        get
-        {
-            if (_startingRealm == Realm.None)
-                _startingRealm = Realm;
-            return _startingRealm;
-        }
-        set => _startingRealm = value;
-    }
+    public Realm StartingRealm;
 
     public string Lore;
     public int DialogId = 0;
@@ -77,6 +66,7 @@ public class Character : Loot
     public bool LineDestroyInvulnerability = false;
     public int EnemyCooldownInfiniteStairMalus = 0;
     public bool HasteCancel = false;
+    public bool HasteForAll = false;
 
     public Character()
     {

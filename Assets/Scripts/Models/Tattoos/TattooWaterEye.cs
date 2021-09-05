@@ -1,25 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooBloodEye : Tattoo
+public class TattooWaterEye : Tattoo
 {
-    public TattooBloodEye()
+    public TattooWaterEye()
     {
-        Id = 46;
+        Id = 47;
         Name = TattoosData.Tattoos[Id];
-        Stat = 0;
-        StatStr = "don't affect you";
+        Stat = 50;
         Rarity = Rarity.Rare;
         MaxLevel = 1;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.HasteCancel = true;
+        character.DamagePercentBonus += Stat;
+        character.HasteForAll = true;
     }
 
     public override string GetDescription()
     {
-        return $"haste attacks {StatToString()} anymore.";
+        return $"you deal {StatToString("+", "%")} damage, but all your opponents now have haste.";
     }
 }

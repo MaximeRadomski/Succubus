@@ -11,6 +11,14 @@ public static class CharactersData
         return Characters?.Find(o => o.Name.Contains("Tony"));
     }
 
+    static CharactersData()
+    {
+        for (int i = 0; i < Characters.Count; i++)
+        {
+            Characters[i].StartingRealm = Characters[i].Realm;
+        }
+    }
+
     public static List<Character> Characters = new List<Character>()
     {
         //HELL

@@ -145,7 +145,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        if (CurrentOpponent.Haste)
+        if (CurrentOpponent.Haste || Character.HasteForAll)
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Constants.InputLocked = false;        
         Paused = false;
@@ -472,7 +472,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
-        if (first && CurrentOpponent.Haste)
+        if (first && (CurrentOpponent.Haste || Character.HasteForAll))
         {
             if (!sceneInit)
                 Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
