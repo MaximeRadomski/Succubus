@@ -20,11 +20,14 @@ public abstract class Tattoo : Loot
         LootType = LootType.Tattoo;
     }
 
-    protected string StatToString(string before = "", string after = "")
+    protected string StatToString(string before = "", string after = "", float statMultiplier = 1.0f)
     {
         string stat;
         if (Stat != 0)
-            stat = (Stat * Level).ToString();
+        {
+            var tmpStat = (int)(Stat * statMultiplier);
+            stat = (tmpStat * Level).ToString();
+        }
         else
             stat = StatStr;
         return $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{before}{stat}{after}{Constants.MaterialEnd}";

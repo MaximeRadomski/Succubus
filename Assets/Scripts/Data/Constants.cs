@@ -214,6 +214,7 @@ public static class Constants
     public const string GoMenuSelector = "MenuSelector";
     public const string GoRotationPoint = "RotationPoint";
     public const string GoSimpShield = "SimpShield";
+    public const string GoFillTarget = "FillTarget";
     public const string GoPartition = "Partition";
     public const string GoRestLoading = "RestLoading";
     public const string GoKeyboard = "Keyboard";

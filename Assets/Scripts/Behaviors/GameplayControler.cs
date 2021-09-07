@@ -1949,6 +1949,10 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idCombo, 1.0f + ((Constants.ComboCounter - 2) * 0.15f));
                 SceneBhv.OnCombo(Constants.ComboCounter, nbLines);
             }
+            if (Character.GodHandCombo > 0 && Constants.ComboCounter == 4 + 1)
+            {
+                SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, Character.Realm);
+            }
 
             if (GetHighestBlock() == -1) //PERFECT
             {
@@ -2351,6 +2355,8 @@ public class GameplayControler : MonoBehaviour
             nbRows = nbRows / Character.MaxDarkAndWasteLines;
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
+        if (Character.WasteHoleFiller > 0)
+            nbHole -= Character.WasteHoleFiller;
         nbHole = nbHole < 1 ? 1 : nbHole;
         int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - nbHole);
         int emptyEnd = emptyStart + nbHole - 1;

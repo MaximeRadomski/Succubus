@@ -39,12 +39,12 @@ public class StepsService
         }        
         var originStep = new Step(50, 50, run.CurrentRealm, first, true, false, LootType.None, 0, null);
         run.Steps += originStep.ToParsedString();
-        GenerateAdjacentSteps(run, character, originStep);
+        GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? 7 : -1);
     }
 
     private string _adjacentString;
 
-    public void GenerateAdjacentSteps(Run run, Character character, Step currentStep)
+    public void GenerateAdjacentSteps(Run run, Character character, Step currentStep, int recursiveIteration = -1)
     {
         var directionStr = currentStep.StepType.ToString().Substring(1);//SubString because StepType starts with a 'S'
         _adjacentString = string.Empty;
@@ -56,11 +56,13 @@ public class StepsService
             var y = (i == 1 || i == 3) ? currentStep.Y : (i == 0 ? currentStep.Y + 1 : currentStep.Y - 1);
             if (GetStepOnPos(x, y, run.Steps) != null)
                 continue;
-            GenerateRandomStepAtPosition(x, y, run, character);
+            var generatedStep = GenerateRandomStepAtPosition(x, y, run, character);
+            if (recursiveIteration > 0)
+                GenerateAdjacentSteps(run, character, generatedStep, recursiveIteration - 1);
         }
     }
 
-    public void GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character)
+    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character)
     {
         var minimumExit = "0000";
         for (int i = 0; i < 4; ++i)
@@ -123,7 +125,7 @@ public class StepsService
             if (unlockedIds.Count == 0)
             {
                 GenerateRandomStepAtPosition(stepX, stepY, run, character);
-                return;
+                return null;
             }
             lootId = unlockedIds[Random.Range(0, unlockedIds.Count)];
             opponentType = OpponentType.Champion;
@@ -208,6 +210,7 @@ public class StepsService
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
         _adjacentString += newStep.ToParsedString();
         run.Steps += newStep.ToParsedString();
+        return newStep;
     }
 
     public Step GetStepOnPos(int x, int y, string parsedStepsString)

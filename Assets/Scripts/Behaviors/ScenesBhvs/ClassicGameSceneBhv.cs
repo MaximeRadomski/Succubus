@@ -141,6 +141,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, new Vector3(-1.5f + (1.5f * i), -2.6f, 0.0f), Character.Realm, 3 - i);
             }
         }
+        if (Character.Target)
+            Instantiator.NewFillTarget(Character.Realm);
     }
 
     private bool AfterFightIntro()
@@ -884,6 +886,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             incomingDamage = Character.GetAttack();
             if (nbLines == 1)
                 incomingDamage += Character.SingleLineDamageBonus;
+            if ((Character.DamageSmallLinesBonus > 0 || Character.DamageSmallLinesMalus > 0) && nbLines >= 1 && nbLines <= 2)
+                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
+            if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)
+                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageBigLinesBonus - Character.DamageBigLinesMalus));
             if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit + _realmTree.CriticalPrecision))
             {
                 Constants.CumulativeCrit += Character.CumulativeCrit;

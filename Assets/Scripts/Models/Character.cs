@@ -67,6 +67,14 @@ public class Character : Loot
     public int EnemyCooldownInfiniteStairMalus = 0;
     public bool HasteCancel = false;
     public bool HasteForAll = false;
+    public int WasteHoleFiller = 0;
+    public int DamageSmallLinesBonus = 0;
+    public int DamageBigLinesBonus = 0;
+    public int DamageSmallLinesMalus = 0;
+    public int DamageBigLinesMalus = 0;
+    public int GodHandCombo = 0;
+    public bool MapAquired = false;
+    public bool Target = false;
 
     public Character()
     {

@@ -382,6 +382,14 @@ public class Instantiator : MonoBehaviour
         tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = sortingId;
     }
 
+    public void NewFillTarget(Realm realm)
+    {
+        var tmpTargetObject = Resources.Load<GameObject>("Prefabs/DrillTarget");
+        var tmpTargetInstance = Instantiate(tmpTargetObject, new Vector3(9.5f, -0.5f), tmpTargetObject.transform.rotation);
+        tmpTargetInstance.name = Constants.GoSimpShield;
+        tmpTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 3);
+    }
+
     public GameObject NewHeightLimiter(int height, Realm realm, Transform parent)
     {
         var tmpLimiterObject = Resources.Load<GameObject>("Prefabs/HeightLimiter");
