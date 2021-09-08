@@ -1949,7 +1949,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idCombo, 1.0f + ((Constants.ComboCounter - 2) * 0.15f));
                 SceneBhv.OnCombo(Constants.ComboCounter, nbLines);
             }
-            if (Character.GodHandCombo > 0 && Constants.ComboCounter == 4 + 1)
+            if (Character.GodHandCombo > 0 && Constants.ComboCounter == 4)
             {
                 SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, Character.Realm);
             }
@@ -2084,7 +2084,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light"))
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Filled"))
                 return false;
         }
         return true;

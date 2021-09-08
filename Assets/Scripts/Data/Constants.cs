@@ -49,6 +49,7 @@ public static class Constants
     public const int ServerCallOfflineMax = 3;
     public const int OldSchoolDas = 16;
     public const int OldSchoolArr = 6;
+    public const int MapRecursiveIteration = 7;
 
 
     //  TAGS  //
@@ -214,11 +215,11 @@ public static class Constants
     public const string GoMenuSelector = "MenuSelector";
     public const string GoRotationPoint = "RotationPoint";
     public const string GoSimpShield = "SimpShield";
-    public const string GoFillTarget = "FillTarget";
     public const string GoPartition = "Partition";
     public const string GoRestLoading = "RestLoading";
     public const string GoKeyboard = "Keyboard";
     public const string GoDropBombCooldown = "DropBombCooldown";
+    public const string GoFilledTarget = "Filled-Target";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;

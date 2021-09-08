@@ -19,11 +19,11 @@ public class StepInstanceBhv : MonoBehaviour
         _hasInit = true;
     }
 
-    public void UpdateVisual(Step step, Run run)
+    public void UpdateVisual(Step step, Run run, bool mapAquired)
     {
         if (!_hasInit)
             Init();
-        if (step.Discovered)
+        if (step.Discovered || mapAquired)
         {
             _step.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Steps_" + (step.StepType.GetHashCode() + (run.CurrentRealm.GetHashCode() * 16)));
         }

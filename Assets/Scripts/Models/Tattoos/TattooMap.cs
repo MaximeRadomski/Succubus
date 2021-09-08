@@ -17,6 +17,11 @@ public class TattooMap : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.MapAquired = true;
+        var run = PlayerPrefsHelper.GetRun();
+        var stepsService = new StepsService();
+        var originStep = stepsService.GetStepOnPos(50, 50, run.Steps);
+        stepsService.GenerateAdjacentSteps(run, character, originStep, Constants.MapRecursiveIteration);
+        PlayerPrefsHelper.SaveRun(run);
     }
 
     public override string GetDescription()

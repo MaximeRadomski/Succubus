@@ -16,7 +16,7 @@ public class SpecialPenitence : Special
         {
             var child = _gameplayControler.PlayFieldBhv.gameObject.transform.GetChild(childId);
             var childPiece = child.GetComponent<Piece>();
-            if (childPiece == null || childPiece.transform.childCount <= 0 || child.gameObject.name.Contains("Row"))
+            if (childPiece == null || childPiece.transform.childCount <= 0 || child.gameObject.name.Contains("Row") || child.gameObject.name == Constants.GoFilledTarget)
                 continue;
             else
             {

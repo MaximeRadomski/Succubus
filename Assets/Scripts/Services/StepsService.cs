@@ -39,7 +39,7 @@ public class StepsService
         }        
         var originStep = new Step(50, 50, run.CurrentRealm, first, true, false, LootType.None, 0, null);
         run.Steps += originStep.ToParsedString();
-        GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? 7 : -1);
+        GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? Constants.MapRecursiveIteration : -1);
     }
 
     private string _adjacentString;
@@ -54,15 +54,14 @@ public class StepsService
                 continue;
             var x = (i == 0 || i == 2) ? currentStep.X : (i == 1 ? currentStep.X + 1 : currentStep.X - 1);
             var y = (i == 1 || i == 3) ? currentStep.Y : (i == 0 ? currentStep.Y + 1 : currentStep.Y - 1);
-            if (GetStepOnPos(x, y, run.Steps) != null)
-                continue;
-            var generatedStep = GenerateRandomStepAtPosition(x, y, run, character);
+            if (!TryGetStepOnPos(x, y, run.Steps, out var generatedStep))
+                generatedStep = GenerateRandomStepAtPosition(x, y, run, character, recursiveIteration == 0 ? 0 : -1);
             if (recursiveIteration > 0)
                 GenerateAdjacentSteps(run, character, generatedStep, recursiveIteration - 1);
         }
     }
 
-    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character)
+    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character, int customChancePercentToHaveAnExit = -1)
     {
         var minimumExit = "0000";
         for (int i = 0; i < 4; ++i)
@@ -85,15 +84,15 @@ public class StepsService
                     minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
-        var chancePercentageToHaveAnExit = 80;
+        var chancePercentToHaveAnExit = customChancePercentToHaveAnExit >= 0 ? customChancePercentToHaveAnExit : 80;
         for (int i = 0; i < 4; ++i)
         {
             if (minimumExit[i] == '1' || minimumExit[i] == '.')
                 continue;
-            if (Helper.RandomDice100(chancePercentageToHaveAnExit))
+            if (Helper.RandomDice100(chancePercentToHaveAnExit))
             {
                 minimumExit = minimumExit.ReplaceChar(i, '1');
-                chancePercentageToHaveAnExit -= 20;
+                chancePercentToHaveAnExit -= 20;
             }
         }
         minimumExit = minimumExit.Replace('.', '0');
@@ -223,6 +222,12 @@ public class StepsService
         return new Step(stepStr);
     }
 
+    public bool TryGetStepOnPos(int x, int y, string parsedStepsString, out Step outStep)
+    {
+        outStep = GetStepOnPos(x, y, parsedStepsString);
+        return outStep != null;
+    }
+
     public void DiscoverStepOnPos(int x, int y, Run run)
     {
         var stepStartId = run.Steps.IndexOf("X" + x.ToString("00") + "Y" + y.ToString("00"));
@@ -244,7 +249,7 @@ public class StepsService
     public void SetVisionOnRandomStep(Run run)
     {
         var steps = GetAllSteps(run);
-        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && !s.Discovered);
+        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && s.LootType != LootType.None);
         if (unvisionnedSteps == null || unvisionnedSteps.Count == 0)
             return;
         var randomId = Random.Range(0, unvisionnedSteps.Count);
@@ -254,7 +259,7 @@ public class StepsService
     public void SetVisionOnAllSteps(Run run)
     {
         var steps = GetAllSteps(run);
-        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && !s.Discovered);
+        var unvisionnedSteps = steps.FindAll(s => !s.LandLordVision && s.LootType != LootType.None);
         foreach (Step step in unvisionnedSteps)
             SetLandLordVisionOnPos(step.X, step.Y, run);
     }

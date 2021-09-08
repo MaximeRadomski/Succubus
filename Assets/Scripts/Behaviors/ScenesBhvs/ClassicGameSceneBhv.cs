@@ -142,7 +142,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
         }
         if (Character.Target)
-            Instantiator.NewFillTarget(Character.Realm);
+            Instantiator.NewFillTarget(Character.Realm, _gameplayControler);
     }
 
     private bool AfterFightIntro()
@@ -887,9 +887,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (nbLines == 1)
                 incomingDamage += Character.SingleLineDamageBonus;
             if ((Character.DamageSmallLinesBonus > 0 || Character.DamageSmallLinesMalus > 0) && nbLines >= 1 && nbLines <= 2)
-                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
+                incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
             if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)
-                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageBigLinesBonus - Character.DamageBigLinesMalus));
+                incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageBigLinesBonus - Character.DamageBigLinesMalus));
             if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit + _realmTree.CriticalPrecision))
             {
                 Constants.CumulativeCrit += Character.CumulativeCrit;

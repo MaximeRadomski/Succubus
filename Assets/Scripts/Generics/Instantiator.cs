@@ -92,11 +92,11 @@ public class Instantiator : MonoBehaviour
         return tmpStepsContainerInstance;
     }
 
-    public GameObject NewStepInstance(Step step, GameObject mask, Run run)
+    public GameObject NewStepInstance(Step step, GameObject mask, Run run, bool mapAquired)
     {
         var tmpStepObject = Resources.Load<GameObject>("Prefabs/Step");
         var tmpStepInstance = Instantiate(tmpStepObject, Helper.TransformFromStepCoordinates(step.X, step.Y), tmpStepObject.transform.rotation);
-        tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step, run);
+        tmpStepInstance.GetComponent<StepInstanceBhv>().UpdateVisual(step, run, mapAquired);
         tmpStepInstance.transform.name = step.X + "_" + step.Y;
         tmpStepInstance.GetComponent<MaskLinkerBhv>().Mask = mask;
         return tmpStepInstance;
@@ -382,12 +382,15 @@ public class Instantiator : MonoBehaviour
         tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = sortingId;
     }
 
-    public void NewFillTarget(Realm realm)
+    public FillTargetBhv NewFillTarget(Realm realm, GameplayControler gameplayControler)
     {
         var tmpTargetObject = Resources.Load<GameObject>("Prefabs/DrillTarget");
         var tmpTargetInstance = Instantiate(tmpTargetObject, new Vector3(9.5f, -0.5f), tmpTargetObject.transform.rotation);
         tmpTargetInstance.name = Constants.GoSimpShield;
         tmpTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 3);
+        var fillTargetBhv = tmpTargetInstance.GetComponent<FillTargetBhv>();
+        fillTargetBhv.Init(realm, gameplayControler);
+        return fillTargetBhv;
     }
 
     public GameObject NewHeightLimiter(int height, Realm realm, Transform parent)

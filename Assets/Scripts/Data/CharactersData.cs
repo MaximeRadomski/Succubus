@@ -80,7 +80,7 @@ public static class CharactersData
         new Character()
         {
             Id = 6, Name = "Cereza", Kind = "Perverted Nun", Realm = Realm.Earth,
-            Attack = 5,
+            Attack = 6,
             Cooldown = 4,
             SpecialName = "Penitence", SpecialDescription = "cancels the last piece locked on the playfield.",
             Lore = "Lust, luxury, avarice, envy, nothing is bad enough for her. Her years in convent made her realise it felt good to be bad once in a while.",
@@ -89,7 +89,7 @@ public static class CharactersData
         new Character()
         {
             Id = 7, Name = "Tony", Kind = "Corrupted Monk", Realm = Realm.Earth,
-            Attack = 3,
+            Attack = 6,
             Cooldown = 6,
             SpecialName = "Resilience", SpecialDescription = "cancels next enemy attack.",
             Lore = "Once patriarch of a brewer covenant, this old monk found Satan in his addiction to alcohol. He's still trying to forget it by drinking...",

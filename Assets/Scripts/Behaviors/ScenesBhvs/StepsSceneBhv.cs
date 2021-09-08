@@ -234,7 +234,7 @@ public class StepsSceneBhv : SceneBhv
         var steps = _stepsService.GetAllSteps(_run);
         foreach (Step step in steps)
         {
-            var stepInstance = Instantiator.NewStepInstance(step, _backgroundMask, _run);
+            var stepInstance = Instantiator.NewStepInstance(step, _backgroundMask, _run, _character.MapAquired);
             stepInstance.transform.parent = _stepsContainer.transform;
             stepInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnStepClicked;
         }

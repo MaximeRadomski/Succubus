@@ -8,9 +8,9 @@ public class TattooGodHand : Tattoo
     {
         Id = 51;
         Name = TattoosData.Tattoos[Id];
-        Stat = 4;
+        Stat = 6;
         Rarity = Rarity.Legendary;
-        MaxLevel = 3;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)
