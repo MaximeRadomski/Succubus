@@ -75,7 +75,8 @@ public class Character : Loot
     public int GodHandCombo = 0;
     public bool MapAquired = false;
     public bool Target = false;
-
+    public int LastStandMultiplier = 0;
+    public bool DragoncrestRing = false;
     public Character()
     {
         LootType = LootType.Character;

@@ -137,9 +137,9 @@ public abstract class GameSceneBhv : SceneBhv
 
     }
 
-    public virtual void DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
+    public virtual bool DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
-
+        return false;
     }
 
     public virtual void OnLinesCleared(int nbLines, bool isB2B, bool lastLockIsTwist)

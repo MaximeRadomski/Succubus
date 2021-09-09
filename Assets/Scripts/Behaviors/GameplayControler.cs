@@ -121,6 +121,15 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
         Constants.InputLocked = true;
         CharacterInstanceBhv.TakeDamage();
+        
+        if (Character.LastStandMultiplier > 0)
+        {
+            if (SceneBhv.DamageOpponent(Character.GetAttack() * Character.LastStandMultiplier, null, Character.Realm))
+            {
+                Resurect("last stand");
+                return;
+            }
+        }
         if (Character.BonusLife > 0)
         {
             Character.BonusLife--;
@@ -132,17 +141,17 @@ public class GameplayControler : MonoBehaviour
             Constants.TruthResurection = false;
             Resurect();
         }
-        else if (!_isTraining.Value && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
-        {
-            run.LifeRouletteOnce = true;
-            PlayerPrefsHelper.SaveRun(run);
-            Resurect("life roulette");
-        }
         else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
         {
             run.RepentanceOnce = true;
             PlayerPrefsHelper.SaveRun(run);
             Resurect("repentance");
+        }
+        else if (!_isTraining.Value && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        {
+            run.LifeRouletteOnce = true;
+            PlayerPrefsHelper.SaveRun(run);
+            Resurect("life roulette");
         }
         else
         {

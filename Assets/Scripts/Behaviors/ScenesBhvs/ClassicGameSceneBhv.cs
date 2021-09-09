@@ -147,9 +147,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        if (CurrentOpponent.Haste || Character.HasteForAll)
+        if (!Character.DragoncrestRing && (CurrentOpponent.Haste || Character.HasteForAll))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
-        Constants.InputLocked = false;        
+        Constants.InputLocked = false;
         Paused = false;
         OpponentAppearance();
         return true;
@@ -471,6 +471,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void StartOpponentCooldown(bool sceneInit = false, bool first = false)
     {
+        if (Character.DragoncrestRing && Constants.CurrentListOpponentsId == 0 && first)
+        {
+            Constants.DragoncrestRingInEffect = true;
+            _opponentOnCooldown = false;
+            return;
+        }
         _opponentOnCooldown = true;
         if (!sceneInit)
             Constants.CurrentOpponentCooldown = 0;
@@ -700,10 +706,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _wetTimer = Time.time + seconds;
     }
 
-    public override void DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
+    public override bool DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
         if (Constants.CurrentOpponentHp <= 0 && CurrentOpponent.IsDead)
-            return;
+            return false;
         if (Character.QuadDamage > 0 && Constants.CurrentListOpponentsId == 0 && _opponents.Count >= 4)
         {
             amount *= Character.QuadDamage;
@@ -757,9 +763,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         Instantiator.PopText($"{realmMaterial}{attackText}", damageTextPosition);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
+        if (Constants.DragoncrestRingInEffect)
+        {
+            StartOpponentCooldown();
+            Constants.DragoncrestRingInEffect = false;
+        }
         if (Constants.CurrentOpponentHp <= 0)
         {
             KillOpponent();
+            return true;
         }
         else
         {
@@ -772,6 +784,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 UpdateCooldownBar(Direction.Down);
             }
             SetNextCooldownTick();
+            return false;
         }
     }
 

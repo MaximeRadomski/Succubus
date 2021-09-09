@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
@@ -328,6 +329,7 @@ public static class Constants
     public static int? OnResumeLastForcedBlocks;
     public static bool IsNextOpponentAttackCanceled;
     public static int EnemyCooldownInfiniteStairMalus = 0;
+    public static bool DragoncrestRingInEffect = false;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -354,6 +356,7 @@ public static class Constants
         OnResumeLastForcedBlocks = null;
         IsNextOpponentAttackCanceled = false;
         EnemyCooldownInfiniteStairMalus = 0;
+        DragoncrestRingInEffect = false;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
