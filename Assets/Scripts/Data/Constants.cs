@@ -329,7 +329,8 @@ public static class Constants
     public static int? OnResumeLastForcedBlocks;
     public static bool IsNextOpponentAttackCanceled;
     public static int EnemyCooldownInfiniteStairMalus = 0;
-    public static bool DragoncrestRingInEffect = false;
+    public static bool HasLastStanded = false;
+    public static bool SlumberingDragoncrestInEffect = false;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -356,8 +357,9 @@ public static class Constants
         OnResumeLastForcedBlocks = null;
         IsNextOpponentAttackCanceled = false;
         EnemyCooldownInfiniteStairMalus = 0;
-        DragoncrestRingInEffect = false;
-    }
+        SlumberingDragoncrestInEffect = false;
+        HasLastStanded = false;
+}
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
     {

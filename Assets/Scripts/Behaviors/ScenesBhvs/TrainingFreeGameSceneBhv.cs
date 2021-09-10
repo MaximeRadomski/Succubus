@@ -193,7 +193,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             _poppingText += nbLines + " lines";
         if (isB2B)
         {
-            tmpAdded = (int)((float)tmpAdded * 1.5f);
+            tmpAdded = Mathf.RoundToInt((float)tmpAdded * 1.5f);
             _poppingText += " cc";
         }
 

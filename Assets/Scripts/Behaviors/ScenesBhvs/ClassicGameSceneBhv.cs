@@ -147,7 +147,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        if (!Character.DragoncrestRing && (CurrentOpponent.Haste || Character.HasteForAll))
+        if (!Character.SlumberingDragoncrest && (CurrentOpponent.Haste || Character.HasteForAll))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Constants.InputLocked = false;
         Paused = false;
@@ -374,6 +374,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 amount = 3;
             else if (_run.Difficulty == Difficulty.Infernal)
                 amount = 4;
+            if (Character.ResourceFarmBonus > 0)
+                amount += Character.ResourceFarmBonus;
             _run.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.SaveRun(_run);
@@ -430,6 +432,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     _run.CurrentItemUses = currentItem.Uses;
                 if (currentItem != null && currentItem.Name == ItemsData.Items[25])
                     ++_run.DeathScytheAscension;
+                if (Character.LastStandMultiplier > 0)
+                    Constants.HasLastStanded = false;
                 PlayerPrefsHelper.SaveRun(_run);
                 if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
@@ -471,9 +475,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void StartOpponentCooldown(bool sceneInit = false, bool first = false)
     {
-        if (Character.DragoncrestRing && Constants.CurrentListOpponentsId == 0 && first)
+        if (Character.SlumberingDragoncrest && Constants.CurrentListOpponentsId == 0 && first)
         {
-            Constants.DragoncrestRingInEffect = true;
+            Constants.SlumberingDragoncrestInEffect = true;
             _opponentOnCooldown = false;
             return;
         }
@@ -602,7 +606,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         StartOpponentCooldown();
         if (Character.ThornsPercent > 0)
         {
-            var thornDamage = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
+            var thornDamage = Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.ThornsPercent));
             DamageOpponent(thornDamage == 0 ? 1 : thornDamage, _gameplayControler.CharacterInstanceBhv.gameObject);
         }
         return spawnAfterAttack;
@@ -763,10 +767,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         Instantiator.PopText($"{realmMaterial}{attackText}", damageTextPosition);
         _opponentHpBar.UpdateContent(Constants.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Left);
-        if (Constants.DragoncrestRingInEffect)
+        if (Constants.SlumberingDragoncrestInEffect)
         {
             StartOpponentCooldown();
-            Constants.DragoncrestRingInEffect = false;
+            Constants.SlumberingDragoncrestInEffect = false;
         }
         if (Constants.CurrentOpponentHp <= 0)
         {
@@ -819,7 +823,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var bossHateBonusPercent = 0;
             if (CurrentOpponent.Type == OpponentType.Boss)
                 bossHateBonusPercent = _realmTree.BossHate;
-            DamageOpponent((int)(_characterAttack * Helper.MultiplierFromPercent(1.0f, bossHateBonusPercent)), lastPiece);
+            DamageOpponent(Mathf.RoundToInt(_characterAttack * Helper.MultiplierFromPercent(1.0f, bossHateBonusPercent)), lastPiece);
         }
         else if (_characterAttack < 0)
             Instantiator.PopText("missed", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
@@ -906,11 +910,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Helper.RandomDice100(Character.CritChancePercent + Constants.CumulativeCrit + _realmTree.CriticalPrecision))
             {
                 Constants.CumulativeCrit += Character.CumulativeCrit;
-                incomingDamage += (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
+                incomingDamage += Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
             if (Helper.IsSuperiorByRealm(Character.Realm, CurrentOpponent.Realm))
-                incomingDamage = (int)(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
+                incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamage *= nbLines;
             if (lastLockIsTwist)
                 incomingDamage *= 2;
@@ -939,6 +943,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 }
 
             }
+            if (Character.OwlReduceSeconds > 0 && nbLines == 4)
+                Constants.CurrentOpponentCooldown -= Character.OwlReduceSeconds;
 
             //ELEMENTS STONES
             if (nbLines == 3)
@@ -985,7 +991,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         yield return new WaitForSeconds(0.33f);
         if (time > 0)
         {
-            var burnDamage = (int)(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagePercent));
+            var burnDamage = Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.FireDamagePercent));
             DamageOpponent(burnDamage == 0 ? 1 : burnDamage, null, Realm.Hell, attackLine: false);
             StartCoroutine(Burn(time - 1));
         }
@@ -1005,7 +1011,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         var incomingDamage = 0;
         if (Character.Realm == Realm.Hell)
-            incomingDamage += (int)((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
+            incomingDamage += Mathf.RoundToInt((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
         if (CurrentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();

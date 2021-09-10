@@ -46,7 +46,7 @@ public class ResolutionService : MonoBehaviour
         else
             _resolutions = new List<Resolution>();
         int height = _maxResolutionHeight;
-        _resolutions.Insert(0, new Resolution() { height = height, width = (int)(height * 0.5625f) });
+        _resolutions.Insert(0, new Resolution() { height = height, width = Mathf.RoundToInt(height * 0.5625f) });
         height = (height % baseUnitHeight) != height ? height - (height % baseUnitHeight) : height - baseUnitHeight;
         while (_resolutions.Count < 9 && height > 0)
         {
@@ -56,7 +56,7 @@ public class ResolutionService : MonoBehaviour
             var indexOfDot = widthString.IndexOf('.');
             if (widthString[indexOfDot + 1] == '0' && widthString[indexOfDot + 2] == '0' && width % baseUnitWidth == 0
                 && _resolutions[0].height != height)
-                _resolutions.Insert(0, new Resolution() { height = height, width = (int)width });
+                _resolutions.Insert(0, new Resolution() { height = height, width = Mathf.RoundToInt(width) });
             height -= baseUnitHeight;
         }
     }

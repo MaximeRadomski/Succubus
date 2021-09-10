@@ -25,7 +25,7 @@ public abstract class Tattoo : Loot
         string stat;
         if (Stat != 0)
         {
-            var tmpStat = (int)(Stat * statMultiplier);
+            var tmpStat = Mathf.RoundToInt(Stat * statMultiplier);
             stat = (tmpStat * Level).ToString();
         }
         else

@@ -76,7 +76,12 @@ public class Character : Loot
     public bool MapAquired = false;
     public bool Target = false;
     public int LastStandMultiplier = 0;
-    public bool DragoncrestRing = false;
+    public bool SlumberingDragoncrest = false;
+    public bool SocialPyramid = false;
+    public int ResourceFarmBonus = 0;
+    public int OwlReduceSeconds = 0;
+    public int ChanceAdditionalBlock = 0;
+
     public Character()
     {
         LootType = LootType.Character;

@@ -122,10 +122,11 @@ public class GameplayControler : MonoBehaviour
         Constants.InputLocked = true;
         CharacterInstanceBhv.TakeDamage();
         
-        if (Character.LastStandMultiplier > 0)
+        if (Character.LastStandMultiplier > 0 && !Constants.HasLastStanded)
         {
             if (SceneBhv.DamageOpponent(Character.GetAttack() * Character.LastStandMultiplier, null, Character.Realm))
             {
+                Constants.HasLastStanded = true;
                 Resurect("last stand");
                 return;
             }
@@ -748,6 +749,8 @@ public class GameplayControler : MonoBehaviour
         }
         if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastForcedBlocks != null)
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Constants.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
+        else if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
         _hasAlteredPiecePositionAfterResume = true;
         if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -1686,6 +1689,8 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
+            if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
+                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
             if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
@@ -2355,7 +2360,7 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole, bool fromPlayer = false)
@@ -2375,7 +2380,7 @@ public class GameplayControler : MonoBehaviour
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
         if (!fromPlayer)
-            Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+            Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
@@ -2397,7 +2402,7 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
@@ -2405,7 +2410,7 @@ public class GameplayControler : MonoBehaviour
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbRows);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbSeconds)
@@ -2418,7 +2423,7 @@ public class GameplayControler : MonoBehaviour
         var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (nbRows / 2));
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbRows / 2));
     }
 
     public void AttackForcedPiece(GameObject opponentInstance, Realm opponentRealm, int letter, int rotation)
@@ -2438,7 +2443,7 @@ public class GameplayControler : MonoBehaviour
             StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
-                Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
+                Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
                 UpdateItemAndSpecialVisuals();
                 return true;
             }, true));
@@ -2474,7 +2479,7 @@ public class GameplayControler : MonoBehaviour
                 for (int i = 0; i < numberRotation; ++i)
                     ForcedPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
             }
-            for (int j = 0; ((int)ForcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)
+            for (int j = 0; Mathf.RoundToInt(ForcedPiece.transform.position.x) != (4 + randomX) || j > 10; ++j)
             {
                 var lastPos = ForcedPiece.transform.position;
                 ForcedPiece.transform.position += new Vector3(1.0f * (randomX < 0 ? -1.0f : 1.0f), 0.0f, 0.0f);
@@ -2505,7 +2510,7 @@ public class GameplayControler : MonoBehaviour
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
                 Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                 PlayFieldBhv.Grid[roundedX, roundedY] = null;
-                Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 1);
+                Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
             }
             Destroy(drillTarget);
         }
@@ -2555,7 +2560,7 @@ public class GameplayControler : MonoBehaviour
         _afterSpawnAttackCounter = nbPieces;
         Constants.IsEffectAttackInProgress = AttackType.AirPiece;
         SetAfterSpawn(AirPieceAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool AirPieceAfterSpawn(bool trueSpawn)
         {
@@ -2577,7 +2582,7 @@ public class GameplayControler : MonoBehaviour
         _afterSpawnAttackCounter = nbPieces;
         Constants.IsEffectAttackInProgress = AttackType.ForcedBlock;
         SetAfterSpawn(ForcedBlockAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ForcedBlockAfterSpawn(bool trueSpawn)
         {
@@ -2642,7 +2647,7 @@ public class GameplayControler : MonoBehaviour
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         SetAfterSpawn(droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 1);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
     }
 
     private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows)
@@ -2658,7 +2663,7 @@ public class GameplayControler : MonoBehaviour
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 2);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
         SceneBhv.Paused = true;
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
         {
@@ -2712,7 +2717,7 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), opponentRealm);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * cooldown);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldown);
     }
 
     public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
@@ -2726,7 +2731,7 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idVisionBlock);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, y, 0.0f), opponentRealm);
         Instantiator.NewPartition(new Vector3(4.5f, y), opponentRealm, nbNotes, this, airLines);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbNotes);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbNotes);
     }
 
     public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLines)
@@ -2744,7 +2749,7 @@ public class GameplayControler : MonoBehaviour
         Constants.IsEffectAttackInProgress = AttackType.OldSchool;
         _afterSpawnAttackCounter = nbPieces;
         SetAfterSpawn(OldSchoolAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool OldSchoolAfterSpawn(bool result)
         {
@@ -2772,7 +2777,7 @@ public class GameplayControler : MonoBehaviour
         _afterSpawnAttackCounter = nbPieces;
         Constants.IsEffectAttackInProgress = AttackType.Screwed;
         SetAfterSpawn(ScrewedAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * nbPieces);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ScrewedAfterSpawn(bool result)
         {
@@ -2794,7 +2799,7 @@ public class GameplayControler : MonoBehaviour
         _dropBombCooldown = nbMoves;
         Constants.IsEffectAttackInProgress = AttackType.DropBomb;
         SetAfterSpawn(DropBombAfterSpawn);
-        Constants.CurrentItemCooldown -= (int)(Character.ItemCooldownReducer * 2);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
 
         bool DropBombAfterSpawn(bool trueSpawn)
         {
@@ -2919,7 +2924,7 @@ public class GameplayControler : MonoBehaviour
         if (!afterLock)
             CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
         if (CurrentPiece.transform.position.y > 19.0f)
-            CurrentPiece.transform.position += new Vector3(0.0f, -(int)(CurrentPiece.transform.position.y - 19.0f), 0.0f);
+            CurrentPiece.transform.position += new Vector3(0.0f, -Mathf.RoundToInt(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce);
         Constants.HeightLimiter += heightToReduce;
         ClearLineSpace();

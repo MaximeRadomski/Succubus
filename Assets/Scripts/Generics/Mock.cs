@@ -23,7 +23,7 @@ public class Mock
         {
             var go = GameObject.Find($"test{i}");
             var str = go.GetComponent<ParameterBhv>().String;
-            str = str.Replace("$", (((int)go.transform.position.x) / go.layer).ToString()).Replace("£", (((int)go.transform.position.y) / go.layer).ToString());
+            str = str.Replace("$", (Mathf.RoundToInt(go.transform.position.x) / go.layer).ToString()).Replace("£", (((int)go.transform.position.y) / go.layer).ToString());
             test.Add(str);
         }
     }

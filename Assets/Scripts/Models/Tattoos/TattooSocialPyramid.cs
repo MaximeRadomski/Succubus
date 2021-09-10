@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TattooDragoncrestRing : Tattoo
+public class TattooSocialPyramid : Tattoo
 {
-    public TattooDragoncrestRing()
+    public TattooSocialPyramid()
     {
-        Id = 55;
+        Id = 56;
         Name = TattoosData.Tattoos[Id];
         Stat = 0;
-        StatStr = "you start any fight stealthily";
+        StatStr = "common and elite";
         Rarity = Rarity.Legendary;
         MaxLevel = 1;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DragoncrestRing = true;
+        character.SocialPyramid = true;
     }
 
     public override string GetDescription()
     {
-        return $"{StatToString()}, the first opponent won't fight back until you attacked him once.";
+        return $"reduces the opponents you encounter to only {StatToString()} ones.";
     }
 }

@@ -19,6 +19,6 @@ public class TattooDamocles : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+")} damage each time you land a 4 lines for the duration of the fight.";
+        return $"you deal {StatToString("+")} damage each time you land quadruple lines for the duration of the fight.";
     }
 }

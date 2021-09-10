@@ -39,7 +39,7 @@ public class GameOverSceneBhv : SceneBhv
         var mult = (float)PlayerPrefsHelper.GetDifficulty();
         if (mult == 0)
             mult = 0.5f;
-        int rareAdd = (int)((float)PlayerPrefsHelper.GetRunBossVanquished() * mult);
+        int rareAdd = Mathf.RoundToInt((float)PlayerPrefsHelper.GetRunBossVanquished() * mult);
         int legendaryAdd = rareAdd / 2;
         if (rareAdd >= 1)
         {

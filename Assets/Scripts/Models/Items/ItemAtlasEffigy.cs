@@ -16,7 +16,7 @@ public class ItemAtlasEffigy : Item
     protected override object Effect()
     {
         var oldAttack = _character.GetAttackNoBoost();
-        _character.BoostAttack += ((int)(oldAttack * 0.5f));
+        _character.BoostAttack += (Mathf.RoundToInt(oldAttack * 0.5f));
 
         _gameplayControler.ReducePlayHeight(5);
         _gameplayControler.CharacterInstanceBhv.Boost(_character.Realm, 2.0f);

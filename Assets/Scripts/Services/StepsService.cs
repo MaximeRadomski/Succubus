@@ -204,8 +204,10 @@ public class StepsService
             opponentType = OpponentType.Common;
         }
         //DEBUG
+        if (character.SocialPyramid && opponentType == OpponentType.Champion)
+            opponentType = OpponentType.Elite;
         var levelWeight = GetWeightFromRunLevel(run, character);
-        var weight = (int)(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
+        var weight = Mathf.RoundToInt(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
         _adjacentString += newStep.ToParsedString();
         run.Steps += newStep.ToParsedString();
@@ -329,7 +331,7 @@ public class StepsService
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
         weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());
-        return (int)weight;
+        return Mathf.RoundToInt(weight);
     }
 
     public Step GetClosestAvailableStepFromPos(int stepX, int stepY, Run run)

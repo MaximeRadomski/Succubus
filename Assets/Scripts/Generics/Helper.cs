@@ -41,8 +41,8 @@ public static class Helper
     {
         var tmpOpponent = opponent.Clone();
         var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
-        tmpOpponent.Cooldown -= (int)(opponent.Cooldown * (typeDifference * Constants.OpponentUpgradeReducedCooldown));
-        tmpOpponent.HpMax += (int)(opponent.HpMax * (typeDifference * Constants.OpponentUpgradeAddedLife));
+        tmpOpponent.Cooldown -= Mathf.RoundToInt(opponent.Cooldown * (typeDifference * Constants.OpponentUpgradeReducedCooldown));
+        tmpOpponent.HpMax += Mathf.RoundToInt(opponent.HpMax * (typeDifference * Constants.OpponentUpgradeAddedLife));
         tmpOpponent.Type = opponentType;
         return tmpOpponent;
     }
@@ -76,9 +76,9 @@ public static class Helper
     public static string ToHex(this Color color, bool withoutHash = false)
     {
         var tmp = withoutHash ? "" : "#";
-        tmp += ((int)(color.r * 255.0f)).ToString("X");
-        tmp += ((int)(color.g * 255.0f)).ToString("X");
-        tmp += ((int)(color.b * 255.0f)).ToString("X");
+        tmp += (Mathf.RoundToInt(color.r * 255.0f)).ToString("X");
+        tmp += (Mathf.RoundToInt(color.g * 255.0f)).ToString("X");
+        tmp += (Mathf.RoundToInt(color.b * 255.0f)).ToString("X");
         return tmp;
     }
 
@@ -402,20 +402,20 @@ public static class Helper
             opponent.Cooldown += (realmTree.CooldownBrake * 0.666f);
             if (difficulty == Difficulty.Easy)
             {
-                opponent.Cooldown = (int)(opponent.Cooldown * 3.0f);
-                opponent.HpMax = (int)(opponent.HpMax * 0.5f);
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 3.0f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 0.5f);
                 opponent.GravityLevel -= 8;
             }
             else if (difficulty == Difficulty.Hard)
             {
-                opponent.Cooldown = (int)(opponent.Cooldown * 0.75f);
-                opponent.HpMax = (int)(opponent.HpMax * 1.25f);
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.75f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 1.25f);
                 opponent.GravityLevel += 8;
             }
             else if (difficulty == Difficulty.Infernal)
             {
-                opponent.Cooldown = (int)(opponent.Cooldown * 0.5f);
-                opponent.HpMax = (int)(opponent.HpMax * 1.5f);
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.5f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 1.5f);
                 opponent.GravityLevel += 12;
             }
             if (opponent.Cooldown < 1.0f)
@@ -535,7 +535,7 @@ public static class Helper
         count += tree.CooldownBrake;
         count += tree.CriticalPrecision / 2;
         count += tree.PosthumousItem;
-        count += (int)(tree.LockDelay / 0.25f);
+        count += Mathf.RoundToInt(tree.LockDelay / 0.25f);
         count += tree.LifeRoulette / 50;
         count += tree.BossHate / 10;
         count += tree.Shadowing;
