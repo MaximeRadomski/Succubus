@@ -549,7 +549,7 @@ public class GameplayControler : MonoBehaviour
         var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
         var spriteName = gameplayButton.GetComponent<SpriteRenderer>().sprite.name;
         var spriteId = int.Parse(spriteName.Substring(spriteName.IndexOf('_') + 1));
-        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 10 + spriteId));
+        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + spriteId));
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
