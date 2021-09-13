@@ -378,7 +378,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Living bible", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 10, Weakness = Weakness.None, Cooldown = 10, Haste = true,
+            HpMax = 20, Weakness = Weakness.None, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shrink, 2) },
             GravityLevel = 10, Weight = 5
@@ -386,7 +386,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Punished Sinner", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 5, Haste = true,
+            HpMax = 180, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 5) },
             GravityLevel = 10, Weight = 30
@@ -402,7 +402,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Old Reverend", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10, Haste = true,
+            HpMax = 130, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 9, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.OldSchool, 5, 10) },
             GravityLevel = 12, Weight = 40
@@ -410,7 +410,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Crusader", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 10,
+            HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 4, 1) },
             GravityLevel = 12, Weight = 40
@@ -418,7 +418,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Flag Wielder", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 80, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 8, Haste = true,
+            HpMax = 100, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 7, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Screwed, 3, 1) },
             GravityLevel = 8, Weight = 30
@@ -431,7 +431,7 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.ForcedBlock, 1, 1),
                 new OpponentAttack(AttackType.AirPiece, 1),
                 new OpponentAttack(AttackType.Screwed, 1)},
-            GravityLevel = 12, Weight = 60,
+            GravityLevel = 12, Weight = 40,
             DialogId = 2, DialogPitch = 0.4f
         },
         new Opponent()
@@ -440,7 +440,7 @@ public static class OpponentsData
             HpMax = 80, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DropBomb, 10) },
-            GravityLevel = 7, Weight = 40
+            GravityLevel = 7, Weight = 30
         },
         new Opponent()
         {
@@ -448,7 +448,7 @@ public static class OpponentsData
             HpMax = 88, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2)},
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 20
         },
         new Opponent()
         {
@@ -461,7 +461,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Stained Glass", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 60, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 6,
+            HpMax = 90, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
             GravityLevel = 8, Weight = 40
@@ -469,7 +469,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Wololo", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 60, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 5,
+            HpMax = 100, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 5, 6),
                 new OpponentAttack(AttackType.OldSchool, 4, 8) },
@@ -478,10 +478,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Politician", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 170, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
+            HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2) },
-            GravityLevel = 13, Weight = 50
+            GravityLevel = 13, Weight = 40
         },
         new Opponent()
         {
@@ -490,7 +490,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2),
                 new OpponentAttack(AttackType.EmptyRow, 2) },
-            GravityLevel = 10, Weight = 60,
+            GravityLevel = 10, Weight = 40,
             DialogId = 4, DialogPitch = 0.75f
         },
         new Opponent()
@@ -499,17 +499,17 @@ public static class OpponentsData
             HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
-            GravityLevel = 10, Weight = 60,
+            GravityLevel = 10, Weight = 40,
             DialogId = 3, DialogPitch = 0.75f
         },
         new Opponent()
         {
             Name = "Exorcist", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 4, Haste = true,
+            HpMax = 150, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Intoxication, 5),
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
-            GravityLevel = 10, Weight = 40,
+            GravityLevel = 10, Weight = 30,
             DialogId = 3, DialogPitch = 0.5f
         },
         new Opponent()
@@ -521,15 +521,15 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.LightRow, 4, 5),
                 new OpponentAttack(AttackType.LightRow, 6, 5)
             },
-            GravityLevel = 8, Weight = 50
+            GravityLevel = 8, Weight = 40
         },
         new Opponent()
         {
             Name = "Matriarch", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 150, Immunity = Immunity.Twists, Weakness = Weakness.Combos, DamageOnWeakness = 15, Cooldown = 10,
+            HpMax = 200, Immunity = Immunity.Twists, Weakness = Weakness.Combos, DamageOnWeakness = 15, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Gate, 3) },
-            GravityLevel = 12, Weight = 50,
+                new OpponentAttack(AttackType.Gate, 1) },
+            GravityLevel = 12, Weight = 40,
             DialogId = 4, DialogPitch = 0.75f
         },
         new Opponent()

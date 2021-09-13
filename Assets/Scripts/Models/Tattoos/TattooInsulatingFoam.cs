@@ -19,6 +19,6 @@ public class TattooInsulatingFoam : Tattoo
 
     public override string GetDescription()
     {
-        return $"fills you waste rows holes by {StatToString("+", Stat * Level == 1 ? " column" : " columns")}.";
+        return $"fills your waste rows holes by {StatToString("+", Stat * Level == 1 ? " column" : " columns")}.";
     }
 }

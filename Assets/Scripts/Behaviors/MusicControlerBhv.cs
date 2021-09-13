@@ -37,7 +37,8 @@ public class MusicControlerBhv : MonoBehaviour
             _level = PlayerPrefsHelper.GetMusicLevel();
         else
             _level = level ?? 0.0f;
-        _audioSource.volume = Constants.MaximumVolumeMusic * _level;
+        var multiplier = Mathf.Pow(_level, 1.5f);
+        _audioSource.volume = Constants.MaximumVolumeMusic * multiplier;
     }
 
     public void HalveVolume()

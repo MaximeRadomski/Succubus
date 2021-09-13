@@ -23,7 +23,7 @@ public class MainMenuSceneBhv : SceneBhv
         if (_currentRun != null && PlayerPrefsHelper.GetIsInFight() == true)
         {
             PlayerPrefsHelper.SaveIsInFight(false);
-            if (_currentRun.RealmLevel > 1)
+            if (_currentRun.CharacterEncounterAvailability)
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             PlayerPrefsHelper.ResetRun();
             _currentRun = null;

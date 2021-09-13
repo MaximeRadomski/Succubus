@@ -225,6 +225,7 @@ public class GameplayControler : MonoBehaviour
         {
             _isOldSchoolGameplay = true;
             _levelRealm = Realm.Earth;
+            GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}earth\ntrain";
         }
         _panelGame = GameObject.Find("PanelGame");
         if (!_isFreeTraining)
@@ -611,7 +612,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) - (_realmTree?.LockDelay ?? 0.0f);
+            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_realmTree?.LockDelay ?? 0.0f);
         }
         else
         {

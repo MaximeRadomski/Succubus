@@ -111,7 +111,7 @@ public class StepsService
         var opponentType = OpponentType.Common;
         if (Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 1)
         {
-            PlayerPrefsHelper.ResetNumberRunWithoutCharacterEncounter(-1); // -1 because will be incremented at the end of the run
+            PlayerPrefsHelper.ResetNumberRunWithoutCharacterEncounter(0);
             lootType = LootType.Character;
             run.CharacterEncounterAvailability = false;
             var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);

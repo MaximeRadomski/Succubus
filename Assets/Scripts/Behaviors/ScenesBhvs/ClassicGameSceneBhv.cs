@@ -684,7 +684,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else
         {
             Constants.GameOverParams = $"{CurrentOpponent.Name}|{_run.CurrentRealm}|{_run.RealmLevel}";
-            if (_run.RealmLevel > 1)
+            if (_run.CharacterEncounterAvailability)
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             PlayerPrefsHelper.ResetRun();
             NavigationService.LoadNextScene(Constants.GameOverScene);

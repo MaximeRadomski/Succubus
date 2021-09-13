@@ -96,7 +96,7 @@ public abstract class GameSceneBhv : SceneBhv
                 PlayerPrefsHelper.SaveIsInFight(false);
                 var run = PlayerPrefsHelper.GetRun();
                 Constants.GameOverParams = $"Abandonment|{ run.CurrentRealm}|{run.RealmLevel}";
-                if (run.RealmLevel > 1)
+                if (run.CharacterEncounterAvailability)
                     PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
                 PlayerPrefsHelper.ResetRun();
                 NavigationService.LoadNextScene(Constants.GameOverScene);
