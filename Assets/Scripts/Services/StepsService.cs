@@ -111,15 +111,13 @@ public class StepsService
         var opponentType = OpponentType.Common;
         if (Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 1)
         {
-            PlayerPrefsHelper.ResetNumberRunWithoutCharacterEncounter(0);
             lootType = LootType.Character;
-            run.CharacterEncounterAvailability = false;
             var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);
             var unlockedIds = new List<int>();
             for (int i = 0; i < unlockedRealmString.Length; ++i)
             {
                 if (unlockedRealmString[i] == '0')
-                    unlockedIds.Add(i + run.CurrentRealm.GetHashCode());
+                    unlockedIds.Add(i + run.CurrentRealm.GetHashCode() * 4);
             }
             if (unlockedIds.Count == 0)
             {
@@ -128,6 +126,8 @@ public class StepsService
             }
             lootId = unlockedIds[Random.Range(0, unlockedIds.Count)];
             opponentType = OpponentType.Champion;
+            PlayerPrefsHelper.ResetNumberRunWithoutCharacterEncounter(0);
+            run.CharacterEncounterAvailability = false;
         }
         else if (Helper.RandomDice100(run.ItemLootPercent))
         {

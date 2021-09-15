@@ -55,20 +55,21 @@ public class Run
     {
         ++RealmLevel;
         if (RealmLevel > 3)
-        {
+        {            
             RealmLevel = 1;
             if (CurrentRealm == Realm.Hell)
                 CurrentRealm = Realm.Earth;
             else if (CurrentRealm == Realm.Earth)
                 CurrentRealm = Realm.Heaven;
+            CharacterEncounterAvailability = true;
         }
-        MaxSteps = 5;
+        MaxSteps = 4;
         if (Difficulty == Difficulty.Easy)
-            MaxSteps = 6;
+            MaxSteps = 5;
         else if (Difficulty == Difficulty.Hard)
-            MaxSteps = 4;
-        else if (Difficulty == Difficulty.Infernal)
             MaxSteps = 3;
+        else if (Difficulty == Difficulty.Infernal)
+            MaxSteps = 2;
         var realmTree = PlayerPrefsHelper.GetRealmTree();
         MaxSteps += realmTree.Shadowing;
         CurrentStep = 0;

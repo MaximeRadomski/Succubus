@@ -526,7 +526,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Matriarch", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 200, Immunity = Immunity.Twists, Weakness = Weakness.Combos, DamageOnWeakness = 15, Cooldown = 6,
+            HpMax = 200, Immunity = Immunity.Twists, Weakness = Weakness.Combos, DamageOnWeakness = 15, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1) },
             GravityLevel = 12, Weight = 40,
