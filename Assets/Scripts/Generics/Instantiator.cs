@@ -216,14 +216,14 @@ public class Instantiator : MonoBehaviour
     }
 
     public GameObject NewPopupYesNo(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction, Sprite sprite = null)
+        System.Func<bool, object> resultAction, Sprite sprite = null, bool defaultPositive = false)
     {
         if (!_hasInit)
             Init();
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite);
+        tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite, defaultPositive);
         return tmpPopupInstance;
     }
 

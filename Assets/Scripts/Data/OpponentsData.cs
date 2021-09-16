@@ -496,7 +496,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Witch Hunter", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 4,
+            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 200, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 10, Weight = 40,

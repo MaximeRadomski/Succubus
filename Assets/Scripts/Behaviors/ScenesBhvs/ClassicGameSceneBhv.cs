@@ -349,7 +349,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
             {
                 var content = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "switch your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " for " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Item)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "?";
-                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite);
+                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite, defaultPositive: true);
                 object OnItemSwitch(bool result)
                 {
                     if (result)

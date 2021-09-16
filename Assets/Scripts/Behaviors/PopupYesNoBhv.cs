@@ -10,7 +10,7 @@ public class PopupYesNoBhv : PopupBhv
     private ButtonBhv _buttonNegative;
 
     public void Init(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction, Sprite sprite = null)
+        System.Func<bool, object> resultAction, Sprite sprite = null, bool defaultPositive = false)
     {
         //transform.position = Camera.main.transform.position;
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = title;
@@ -41,6 +41,10 @@ public class PopupYesNoBhv : PopupBhv
                 mainPicture.transform.localPosition = new Vector3(0.0f, 9.5f, 0.0f);
                 transform.position += new Vector3(0.0f, -2.3f, 0.0f);
             }
+        }
+        if (defaultPositive == true)
+        {
+            _buttonPositive.IsMenuSelectorResetButton = true;
         }
     }
 
