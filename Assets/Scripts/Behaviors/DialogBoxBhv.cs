@@ -64,7 +64,9 @@ public class DialogBoxBhv : FrameRateBehavior
         _content = transform.Find("Content").GetComponent<TMPro.TextMeshPro>();
         (_previousSentence = transform.Find("ButtonPrev").GetComponent<ButtonBhv>()).EndActionDelegate = PrevSentence;
         (_nextSentence = transform.Find("ButtonNext").GetComponent<ButtonBhv>()).EndActionDelegate = NextSentence;
-        if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+        if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene
+            && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal
+            && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons)
         {
             _previousSentence.transform.position += new Vector3(-10.0f, 4.0f, 0.0f);
             _nextSentence.transform.position += new Vector3(10.0f, 4.0f, 0.0f);

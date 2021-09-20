@@ -51,14 +51,14 @@ public abstract class GameSceneBhv : SceneBhv
         Constants.OnResumeLastPieceRotation = _gameplayControler.CurrentPiece.transform.rotation;
         if (_gameplayControler.CurrentPiece.transform.childCount > 4)
             Constants.OnResumeLastForcedBlocks = _gameplayControler.CurrentPiece.transform.childCount - 4;
-        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);
+        _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
     }
 
     public void Info()
     {
         Paused = true;
         _musicControler.HalveVolume();
-        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, CurrentOpponent, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal);
+        _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, CurrentOpponent, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
     }
 
     private object ResumeGiveUp(bool resume)

@@ -10,7 +10,7 @@ public class TattooTarget : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 0;
         StatStr = "fills single holes";
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 1;
     }
 

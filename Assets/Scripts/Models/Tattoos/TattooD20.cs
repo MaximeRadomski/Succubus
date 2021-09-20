@@ -11,7 +11,7 @@ public class TattooD20 : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 4;
         Rarity = Rarity.Common;
-        MaxLevel = 11;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)

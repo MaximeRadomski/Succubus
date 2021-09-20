@@ -7,7 +7,7 @@ public class FillTargetBhv : FrameRateBehavior
     private Realm _characterRealm;
     private GameplayControler _gameplayControler;
     private Vector3 _resetPosition;
-    private float _delay = 2.0f;
+    private float _delay = 5.0f;
     private GameObject _filledTarget;
 
     private bool _isMovingToHolePosition;

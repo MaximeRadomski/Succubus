@@ -30,7 +30,7 @@ public class FightIntroBhv : FrameRateBehavior
         _pelliculeBot = transform.Find("PelliculeBot");
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
 #if UNITY_ANDROID
-        _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal;
+        _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons;
 #else
         _horizontal = false;
 #endif
@@ -104,6 +104,15 @@ public class FightIntroBhv : FrameRateBehavior
 
             if (Helper.FloatEqualsPrecision(_opponentsPictures[_opponentsPictures.Count -1].transform.position.x, _opponentsXTarget[_opponentsXTarget.Count - 1], 0.01f))
             {
+                _characterPicture.transform.position = new Vector3(_characterXTarget, _characterPicture.transform.position.y, 0.0f);
+                _characterPicture.color = Constants.ColorPlain;
+
+                for (int i = 0; i < _opponentsPictures.Count; ++i)
+                {
+                    _opponentsPictures[i].transform.position = new Vector3(_opponentsXTarget[i], _opponentsPictures[i].transform.position.y, 0.0f);
+                    _opponentsPictures[i].color = Constants.ColorPlain;
+                }
+
                 Invoke(nameof(AfterIntro), 1.0f);
                 _animated = false;
             }

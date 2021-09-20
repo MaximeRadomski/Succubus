@@ -36,7 +36,8 @@ public class PopupYesNoBhv : PopupBhv
                 child.GetComponent<SpriteRenderer>().enabled = true;
             if ((SceneManager.GetActiveScene().name == Constants.TrainingFreeGameScene
                 || SceneManager.GetActiveScene().name == Constants.ClassicGameScene)
-                && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+                && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal
+                && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons)
             {
                 mainPicture.transform.localPosition = new Vector3(0.0f, 9.5f, 0.0f);
                 transform.position += new Vector3(0.0f, -2.3f, 0.0f);
