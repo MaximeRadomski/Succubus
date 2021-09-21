@@ -8,7 +8,7 @@ public static class Constants
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
     public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool ResourcesDebug = false;
     public const bool TattoosDebug = false;
     public const bool RunDebug = false;
@@ -153,6 +153,7 @@ public static class Constants
     public const string PpVersion = "Version";
     public const string PpVersionDefault = "Alpha.01.004";
     public const string PpInfernalUnlocked = "InfernalUnlocked";
+    public const string PpDivineUnlocked = "DivineUnlocked";
     public const string PpLastSavedCredentials = "LastSavedCredentials";
     public const string PpHasMetBeholder = "HasMetBeholder";
 

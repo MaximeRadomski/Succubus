@@ -9,7 +9,7 @@ public class TattooCleaver : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 2;
         Rarity = Rarity.Rare;
-        MaxLevel = 99;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)

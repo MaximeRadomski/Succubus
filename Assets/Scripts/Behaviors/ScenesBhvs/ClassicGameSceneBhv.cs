@@ -374,6 +374,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 amount = 3;
             else if (_run.Difficulty == Difficulty.Infernal)
                 amount = 4;
+            else if (_run.Difficulty == Difficulty.Divine || _run.Difficulty.GetHashCode() > Difficulty.Divine.GetHashCode())
+                amount = 5;
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
             _run.AlterResource(((Resource)loot).Id, amount);
@@ -454,6 +456,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     {
                         if (_run.Difficulty == Difficulty.Hard)
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);
+                        if (_run.Difficulty == Difficulty.Infernal)
+                            PlayerPrefsHelper.SaveDivineUnlocked(true);
                         Constants.GameOverParams = $"Abject|{_run.CurrentRealm}|3";
                         PlayerPrefsHelper.EndlessRun(_run);
                         NavigationService.LoadNextScene(Constants.DemoEndScene);

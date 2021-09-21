@@ -12,7 +12,7 @@ public class TattooBrokenSword : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 4;
         Rarity = Rarity.Common;
-        MaxLevel = 33;
+        MaxLevel = 3;
     }
 
     public override void ApplyToCharacter(Character character)

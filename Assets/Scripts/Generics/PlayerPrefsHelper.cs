@@ -27,9 +27,11 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void EndlessRun(Run run)
     {
-        run.IsEndless = true;
+        ++run.Endless;
         run.CurrentRealm = Realm.Hell;
         run.RealmLevel = 1;
+        if (run.Difficulty != Difficulty.Divine666)
+            run.Difficulty = (Difficulty)run.Difficulty.GetHashCode() + 1;
         SaveRun(run);
     }
 
@@ -861,11 +863,22 @@ public class PlayerPrefsHelper : MonoBehaviour
         Mock.SetInt(Constants.PpInfernalUnlocked, unlocked ? 1 : 0);
     }
 
+    public static void SaveDivineUnlocked(bool unlocked)
+    {
+        Mock.SetInt(Constants.PpDivineUnlocked, unlocked ? 1 : 0);
+    }
+
     public static bool GetInfernalUnlocked()
     {
         var randomItemMaxRarity = GetRealmBossProgression();
         var unlocked = Mock.GetInt(Constants.PpInfernalUnlocked, 0);
         return unlocked == 1 || randomItemMaxRarity >= 0 ? true : false;
+    }
+
+    public static bool GetDivineUnlocked()
+    {
+        var unlocked = Mock.GetInt(Constants.PpDivineUnlocked, 0);
+        return unlocked == 1 ? true : false;
     }
 
     public static AccountDto GetLastSavedCredentials()

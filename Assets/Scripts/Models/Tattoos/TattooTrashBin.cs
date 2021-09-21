@@ -9,7 +9,7 @@ public class TattooTrashBin : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 2;
         Rarity = Rarity.Common;
-        MaxLevel = 99;
+        MaxLevel = 10;
     }
 
     public override void ApplyToCharacter(Character character)

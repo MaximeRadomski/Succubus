@@ -9,7 +9,7 @@ public class TattooWaterStone : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 40;
         Rarity = Rarity.Rare;
-        MaxLevel = 99;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)

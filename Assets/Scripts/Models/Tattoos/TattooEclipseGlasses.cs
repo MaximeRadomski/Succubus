@@ -9,7 +9,7 @@ public class TattooEclipseGlasses : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Common;
-        MaxLevel = 99;
+        MaxLevel = 3;
     }
 
     public override void ApplyToCharacter(Character character)

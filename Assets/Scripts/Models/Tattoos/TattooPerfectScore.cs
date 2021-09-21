@@ -7,7 +7,7 @@ public class TattooPerfectScore : Tattoo
     {
         Id = 22;
         Name = TattoosData.Tattoos[Id];
-        Stat = 200;
+        Stat = 100;
         Rarity = Rarity.Legendary;
         MaxLevel = 4;
     }

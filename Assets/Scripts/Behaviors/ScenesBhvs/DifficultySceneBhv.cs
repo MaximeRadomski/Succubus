@@ -8,6 +8,7 @@ public class DifficultySceneBhv : SceneBhv
     private GameObject _normal;
     private GameObject _hard;
     private GameObject _infernal;
+    private GameObject _divine;
 
     private TMPro.TextMeshPro _difficultyLibelle;
     private TMPro.TextMeshPro _difficulty;
@@ -41,6 +42,7 @@ public class DifficultySceneBhv : SceneBhv
         (_normal = GameObject.Find(Difficulty.Normal.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(1); };
         (_hard = GameObject.Find(Difficulty.Hard.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(2); };
         (_infernal = GameObject.Find(Difficulty.Infernal.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(3); };
+        (_divine = GameObject.Find(Difficulty.Divine.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(4); };
 
         _difficultyLibelle = GameObject.Find("DifficultyLibelle").GetComponent<TMPro.TextMeshPro>();
         _difficulty = GameObject.Find("Difficulty").GetComponent<TMPro.TextMeshPro>();
@@ -113,6 +115,16 @@ public class DifficultySceneBhv : SceneBhv
             _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd}What?";
             _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd}Yes";
             _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd}Stomp";
+        }
+        else if (difficulty == Difficulty.Divine)
+        {
+            _difficultyLibelle.text = $"Wait what?";
+            _difficulty.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Difficulty: {Constants.MaterialEnd}{difficulty}";
+            _resources.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Resources: {Constants.MaterialEnd}x5";
+            _realmSteps.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Realm steps: {Constants.MaterialEnd}1";
+            _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd} ? ";
+            _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd} ? ";
+            _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd} ? ";
         }
         PlayerPrefsHelper.SaveDifficulty(difficulty);
     }

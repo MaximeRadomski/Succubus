@@ -44,7 +44,7 @@ public class MainMenuSceneBhv : SceneBhv
         buttonAscension.GetComponent<ButtonBhv>().EndActionDelegate = GoToNewAscension;
         if (_currentRun != null)
         {
-            if (_currentRun.IsEndless)
+            if (_currentRun.Endless > 0)
                 buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Endless Ascension";
             else
                 buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
@@ -61,7 +61,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void GoToNewAscension()
     {
-        if (_currentRun != null && _currentRun.IsEndless)
+        if (_currentRun != null && _currentRun.Endless > 0)
         {
             this.Instantiator.NewPopupYesNo("Ascension", "would you like to continue your endless ascension, or to start a new one?", "New", "Continue", (result) =>
             {

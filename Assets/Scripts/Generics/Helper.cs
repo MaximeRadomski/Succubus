@@ -418,8 +418,46 @@ public static class Helper
                 opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 1.5f);
                 opponent.GravityLevel += 12;
             }
-            if (opponent.Cooldown < 1.0f)
+            else if (difficulty == Difficulty.Divine)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.25f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
+                opponent.GravityLevel += 16;
+            }
+            else if (difficulty == Difficulty.Divine2)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.2f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.25f);
+                opponent.GravityLevel += 20;
+            }
+            else if (difficulty == Difficulty.Divine3)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.15f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.50f);
+                opponent.GravityLevel += 20;
+            }
+            else if (difficulty == Difficulty.Divine4)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.1f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.75f);
+                opponent.GravityLevel += 20;
+            }
+            else if (difficulty == Difficulty.Divine5)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.05f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 3.0f);
+                opponent.GravityLevel += 20;
+            }
+            else if (difficulty == Difficulty.Divine666)
+            {
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.01f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 3.25f);
+                opponent.GravityLevel += 20;
+            }
+            if (opponent.Cooldown < 1.0f && difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
                 opponent.Cooldown = 1.0f;
+            else if (opponent.Cooldown < 0.5f && difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
+                opponent.Cooldown = 0.5f;
             if (difficulty != Difficulty.Normal)
                 opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
             if (opponent.GravityLevel < 1)

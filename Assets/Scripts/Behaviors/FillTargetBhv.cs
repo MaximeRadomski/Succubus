@@ -48,7 +48,7 @@ public class FillTargetBhv : FrameRateBehavior
         }
         if (_isMovingToHolePosition)
         {
-            transform.position = Vector3.Lerp(transform.position, _filledTarget.transform.GetChild(0).position, 0.05f);
+            transform.position = Vector3.Lerp(transform.position, _filledTarget.transform.GetChild(0).position, 0.025f);
             if (Helper.VectorEqualsPrecision(transform.position, _filledTarget.transform.GetChild(0).position, 0.2f))
             {
                 _isMovingToHolePosition = false;
@@ -62,7 +62,7 @@ public class FillTargetBhv : FrameRateBehavior
         }
         else if (_isMovingBackToResetPosition)
         {
-            transform.position = Vector3.Lerp(transform.position, _resetPosition, 0.05f);
+            transform.position = Vector3.Lerp(transform.position, _resetPosition, 0.025f);
             if (Helper.VectorEqualsPrecision(transform.position, _resetPosition, 0.2f))
             {
                 _isMovingBackToResetPosition = false;

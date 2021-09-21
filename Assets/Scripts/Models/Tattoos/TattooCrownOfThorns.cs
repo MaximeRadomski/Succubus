@@ -9,7 +9,7 @@ public class TattooCrownOfThorns : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 20;
         Rarity = Rarity.Common;
-        MaxLevel = 99;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)
