@@ -7,6 +7,11 @@ public abstract class InputBhv : MonoBehaviour
     public int Layer = 0;
     public bool ForcedLayer = false;
 
+    void Awake()
+    {
+        this.tag = Constants.TagButton;
+    }
+
     public virtual void SetPrivates()
     {
         if (!ForcedLayer)

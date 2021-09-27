@@ -384,13 +384,13 @@ public class InputControlerBhv : FrameRateBehavior
 #else
         if (!_hasInit)
             Init();
-        var allGameObjects = FindObjectsOfType<GameObject>();
+        var buttonTaggedGameObjects = GameObject.FindGameObjectsWithTag(Constants.TagButton);
         _availableButtons = new List<GameObject>();
-        if (allGameObjects.Length > 0)
+        if (buttonTaggedGameObjects.Length > 0)
         {
-            for (int i = allGameObjects.Length - 1; i >= 0; i--)
+            for (int i = buttonTaggedGameObjects.Length - 1; i >= 0; i--)
             {
-                var buttonBhv = allGameObjects[i].GetComponent<ButtonBhv>();
+                var buttonBhv = buttonTaggedGameObjects[i].GetComponent<ButtonBhv>();
                 if (buttonBhv != null
                     && (buttonBhv.BeginActionDelegate != null || buttonBhv.DoActionDelegate != null || buttonBhv.EndActionDelegate != null)
                     && buttonBhv.Layer == Constants.InputLayer
@@ -398,7 +398,7 @@ public class InputControlerBhv : FrameRateBehavior
                 {
                     if (_gameplayControler != null && buttonBhv.Layer == 0)
                         continue;
-                    _availableButtons.Add(allGameObjects[i]);
+                    _availableButtons.Add(buttonTaggedGameObjects[i]);
                 }
             }
         }

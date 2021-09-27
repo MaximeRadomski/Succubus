@@ -70,7 +70,7 @@ public class Run
             MaxSteps = 3;
         else if (Difficulty == Difficulty.Infernal)
             MaxSteps = 2;
-        else if (Difficulty == Difficulty.Infernal || Difficulty.GetHashCode() > Difficulty.Divine.GetHashCode())
+        else if (Difficulty >= Difficulty.Divine)
             MaxSteps = 1;
         var realmTree = PlayerPrefsHelper.GetRealmTree();
         MaxSteps += realmTree.Shadowing;
