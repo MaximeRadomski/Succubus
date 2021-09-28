@@ -56,7 +56,7 @@ public class GameplayControler : MonoBehaviour
     private bool _isScrewed;
     private bool _needDownRelease;
     private int _dropBombCooldown;
-    private bool _itemBeingUsed;
+    private bool _usingItem;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -861,7 +861,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityStomp();
         }
-        if (!_itemBeingUsed && IsNextGravityFallPossible() == false)
+        if (!_usingItem && IsNextGravityFallPossible() == false)
         {
             if (!CurrentPiece.GetComponent<Piece>().IsLocked && !Constants.InputLocked)
                 HandleLock();
@@ -1736,14 +1736,21 @@ public class GameplayControler : MonoBehaviour
         }
         if (CharacterItem != null)
         {
-            _itemBeingUsed = true;
+            _usingItem = true;
             if (CharacterItem.Activate(Character, this, () =>
             {
+                //Executed at the end of the item animation
                 _soundControler.PlaySound(_idItem);
-                _itemBeingUsed = false;
+                StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () =>
+                {
+                    //Delayed in order to prevent piece locking during item use in high gravity
+                    _usingItem = false;
+                    return true;
+                }, lockInputWhile: false));
                 return true;
             }))
             {
+                //Executed at the start of the item animation
                 this.SceneBhv.CameraBhv.Bump(4);
                 _soundControler.PlaySound(_idBipItem);
             }
@@ -1788,7 +1795,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_nextLock > 0.0f && !isGravity)
                 ++_allowedMovesBeforeLock;
-            else if (isGravity && _allowedResetMovesBeforeLock < Constants.MaxResetMovesBeforeLock + (SceneBhv.CurrentOpponent.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Gate ? 2 : 0))
+            else if (isGravity && _allowedResetMovesBeforeLock < Constants.MaxResetMovesBeforeLock + (SceneBhv.CurrentOpponent?.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Gate ? 2 : 0))
             {
                 _allowedMovesBeforeLock = 0;
                 ++_allowedResetMovesBeforeLock;
