@@ -122,9 +122,9 @@ public class DifficultySceneBhv : SceneBhv
             _difficulty.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Difficulty: {Constants.MaterialEnd}{difficulty}";
             _resources.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Resources: {Constants.MaterialEnd}x5";
             _realmSteps.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Realm steps: {Constants.MaterialEnd}1";
-            _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd} ? ";
-            _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd} ? ";
-            _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd} ? ";
+            _cooldowns.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Cooldowns: {Constants.MaterialEnd} !? ";
+            _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd} !? ";
+            _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd} !? ";
         }
         PlayerPrefsHelper.SaveDifficulty(difficulty);
     }
