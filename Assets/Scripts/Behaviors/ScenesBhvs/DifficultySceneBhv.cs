@@ -9,6 +9,11 @@ public class DifficultySceneBhv : SceneBhv
     private GameObject _hard;
     private GameObject _infernal;
     private GameObject _divine;
+    private GameObject _buttonNext;
+    private GameObject _buttonPrevious;
+    private GameObject _buttonPlay;
+    private GameObject _baseDifficultiesContainer;
+    private GameObject _advancedDifficultiesContainer;
 
     private TMPro.TextMeshPro _difficultyLibelle;
     private TMPro.TextMeshPro _difficulty;
@@ -18,6 +23,7 @@ public class DifficultySceneBhv : SceneBhv
     private TMPro.TextMeshPro _hpMax;
     private TMPro.TextMeshPro _gravity;
 
+    private InputControlerBhv _inputControlerBhv;
     private float _yOffset = 4.0f;
 
     public override MusicType MusicType => MusicType.Menu;
@@ -33,6 +39,8 @@ public class DifficultySceneBhv : SceneBhv
         SetButtons();
 
         var lastSelectedDifficulty = PlayerPrefsHelper.GetDifficulty();
+        if (lastSelectedDifficulty > Difficulty.Hard)
+            Next();
         SelectDifficulty(lastSelectedDifficulty.GetHashCode());
     }
 
@@ -43,6 +51,12 @@ public class DifficultySceneBhv : SceneBhv
         (_hard = GameObject.Find(Difficulty.Hard.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(2); };
         (_infernal = GameObject.Find(Difficulty.Infernal.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(3); };
         (_divine = GameObject.Find(Difficulty.Divine.ToString())).GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectDifficulty(4); };
+        (_buttonNext = GameObject.Find("ButtonNext")).GetComponent<ButtonBhv>().EndActionDelegate = Next;
+        _buttonNext.SetActive(PlayerPrefsHelper.GetInfernalUnlocked());
+        (_buttonPrevious = GameObject.Find("ButtonPrevious")).GetComponent<ButtonBhv>().EndActionDelegate = Previous;
+        _buttonPrevious.SetActive(false);
+        _baseDifficultiesContainer = GameObject.Find("BaseDifficultiesContainer");
+        _advancedDifficultiesContainer = GameObject.Find("AdvancedDifficultiesContainer");
 
         _difficultyLibelle = GameObject.Find("DifficultyLibelle").GetComponent<TMPro.TextMeshPro>();
         _difficulty = GameObject.Find("Difficulty").GetComponent<TMPro.TextMeshPro>();
@@ -52,17 +66,10 @@ public class DifficultySceneBhv : SceneBhv
         _hpMax = GameObject.Find("HpMax").GetComponent<TMPro.TextMeshPro>();
         _gravity = GameObject.Find("Gravity").GetComponent<TMPro.TextMeshPro>();
 
-        if (PlayerPrefsHelper.GetInfernalUnlocked())
-        {
-            GameObject.Find("SelectADifficulty").transform.position = new Vector3(50.0f, 50.0f, 0.0f);
-            _easy.transform.position += new Vector3(0.0f, _yOffset, 0.0f);
-            _normal.transform.position = _easy.transform.position + new Vector3(0.0f, -(_easy.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_normal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
-            _hard.transform.position = _normal.transform.position + new Vector3(0.0f, -(_normal.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_hard.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
-            _infernal.transform.position = _hard.transform.position + new Vector3(0.0f, -(_hard.GetComponent<BoxCollider2D>().size.y / 2.0f) - (Constants.Pixel * 3) - (_infernal.GetComponent<BoxCollider2D>().size.y / 2.0f), 0.0f);
-        }
-
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
-        GameObject.Find(Constants.GoButtonPlayName).GetComponent<ButtonBhv>().EndActionDelegate = Play;
+        (_buttonPlay = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = Play;
+
+        _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
     }
 
     private void SelectDifficulty(int id)
@@ -71,10 +78,12 @@ public class DifficultySceneBhv : SceneBhv
         for (int i = 0; i < Helper.EnumCount<Difficulty>(); ++i)
         {
             var button = GameObject.Find(((Difficulty)i).ToString());
+            if (button == null)
+                continue;
             if (i == id)
                 button.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
             else
-                button.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
+                button.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Constants.ColorPlainQuarterTransparent;
         }
         if (difficulty == Difficulty.Easy)
         {
@@ -118,7 +127,7 @@ public class DifficultySceneBhv : SceneBhv
         }
         else if (difficulty == Difficulty.Divine)
         {
-            _difficultyLibelle.text = $"Wait what?";
+            _difficultyLibelle.text = $"Wait...";
             _difficulty.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Difficulty: {Constants.MaterialEnd}{difficulty}";
             _resources.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Resources: {Constants.MaterialEnd}x5";
             _realmSteps.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Realm steps: {Constants.MaterialEnd}1";
@@ -151,5 +160,26 @@ public class DifficultySceneBhv : SceneBhv
             NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             return true;
         }
+    }
+    private void Previous()
+    {
+        _buttonPlay.GetComponent<ButtonBhv>().IsMenuSelectorResetButton = false;
+        _buttonPrevious.SetActive(false);
+        _buttonNext.SetActive(true);
+        var tmpPos = _baseDifficultiesContainer.transform.position;
+        _baseDifficultiesContainer.transform.position = _advancedDifficultiesContainer.transform.position;
+        _advancedDifficultiesContainer.transform.position = tmpPos;
+        _inputControlerBhv.InitMenuKeyboardInputs(_buttonNext.transform.position + new Vector3(0.0f, 1.0f, 0.0f));
+    }
+
+    private void Next()
+    {
+        _buttonPlay.GetComponent<ButtonBhv>().IsMenuSelectorResetButton = false;
+        _buttonPrevious.SetActive(true);
+        _buttonNext.SetActive(false);
+        var tmpPos = _advancedDifficultiesContainer.transform.position;
+        _advancedDifficultiesContainer.transform.position = _baseDifficultiesContainer.transform.position;
+        _baseDifficultiesContainer.transform.position = tmpPos;
+        _inputControlerBhv.InitMenuKeyboardInputs(_buttonPrevious.transform.position + new Vector3(0.0f, 1.1f, 0.0f));
     }
 }
