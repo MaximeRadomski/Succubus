@@ -45,13 +45,13 @@ namespace Proyecto26
                     }
                     else
                     {
+                        retries++;
                         var err = CreateException(options, request);
                         Helper.ResumeLoading();
                         DatabaseService.SendErrorBody(Helper.DateFormat(DateTime.Now), options.Body);
                         if (!err.IsNetworkError)
                             GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
-                        else
-                            ++Constants.NetworkErrorCount;
+                        ++Constants.NetworkErrorCount;
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);
                         break;

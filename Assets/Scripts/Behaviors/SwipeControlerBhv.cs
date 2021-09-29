@@ -39,6 +39,10 @@ public class SwipeControlerBhv : MonoBehaviour
     {
         if (Constants.InputLocked || _gameplayControler == null || _gameplayControler.SceneBhv.Paused || _gameplayControler.CurrentPiece == null)
         {
+            //for (int i = 0; i < _beginPos.Count; ++i)
+            //    if (_beginPos[i].x > -99) _beginPos[i] = new Vector3(-99, -99);
+            //for (int i = 0; i < _reBeginPos.Count; ++i)
+            //    if (_reBeginPos[i].x > -99) _reBeginPos[i] = new Vector3(-99, -99);
             if (_beginPos.Count > 0)
                 _beginPos.Clear();
             if (_reBeginPos.Count > 0)
@@ -63,7 +67,7 @@ public class SwipeControlerBhv : MonoBehaviour
                 }
                 else
                 {
-                    if (_beginPos.Count > i && _beginPos[i] != null)
+                    if (_beginPos.Count <= i || _beginPos[i] == null)
                         ResetBeginPos(i, touchPosWorld2D);
                     CheckDoPhase(i, touchPosWorld2D);
                 }
@@ -90,7 +94,7 @@ public class SwipeControlerBhv : MonoBehaviour
                 }
                 else if (_doPhase)
                 {
-                    if (_beginPos.Count > 0 && _beginPos[0] != null)
+                    if (_beginPos.Count <= 0 || _beginPos[0] == null)
                         ResetBeginPos(0, touchPosWorld2D);
                     CheckDoPhase(0, touchPosWorld2D);
                 }
@@ -140,6 +144,7 @@ public class SwipeControlerBhv : MonoBehaviour
         _isHoldingDown = false;
         _framesBeforeHoldingDown = 0;
         _direction = Direction.None;
+        _beginPos.RemoveAt(id);
     }
 
     private void CheckDoPhase(int id, Vector2 currentPos)

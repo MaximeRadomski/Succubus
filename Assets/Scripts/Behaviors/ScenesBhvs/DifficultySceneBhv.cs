@@ -24,7 +24,6 @@ public class DifficultySceneBhv : SceneBhv
     private TMPro.TextMeshPro _gravity;
 
     private InputControlerBhv _inputControlerBhv;
-    private float _yOffset = 4.0f;
 
     public override MusicType MusicType => MusicType.Menu;
 

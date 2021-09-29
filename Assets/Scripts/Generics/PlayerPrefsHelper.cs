@@ -31,7 +31,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         run.CurrentRealm = Realm.Hell;
         run.RealmLevel = 1;
         if (run.Difficulty != Difficulty.Divine666)
-            run.Difficulty = (Difficulty)run.Difficulty.GetHashCode() + 1;
+            run.Difficulty = (Difficulty)(run.Difficulty.GetHashCode() + 1);
         SaveRun(run);
     }
 
