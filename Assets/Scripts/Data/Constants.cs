@@ -10,7 +10,7 @@ public static class Constants
     public const bool ItemsDebug = false;
     public const bool OpponentsDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool TattoosDebug = false;
+    public const bool TattoosDebug = true;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;

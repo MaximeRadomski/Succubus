@@ -61,7 +61,7 @@ public class StepsService
         }
     }
 
-    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character, int customChancePercentToHaveAnExit = -1)
+    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character, int customChancePercentToHaveAnExit = -1, bool canEncounterCharacter = true)
     {
         var minimumExit = "0000";
         for (int i = 0; i < 4; ++i)
@@ -109,7 +109,7 @@ public class StepsService
         var lootType = LootType.None;
         var lootId = 0;
         var opponentType = OpponentType.Common;
-        if (Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 1)
+        if (canEncounterCharacter && Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 1)
         {
             lootType = LootType.Character;
             var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);
@@ -121,7 +121,7 @@ public class StepsService
             }
             if (unlockedIds.Count == 0)
             {
-                GenerateRandomStepAtPosition(stepX, stepY, run, character);
+                GenerateRandomStepAtPosition(stepX, stepY, run, character, canEncounterCharacter: false);
                 return null;
             }
             lootId = unlockedIds[Random.Range(0, unlockedIds.Count)];
@@ -132,7 +132,13 @@ public class StepsService
         else if (Helper.RandomDice100(run.ItemLootPercent))
         {
             lootType = LootType.Item;
-            lootId = ItemsData.GetRandomItem().Id;
+            var nbTries = 0;
+            do
+            {
+                lootId = ItemsData.GetRandomItem().Id;
+                ++nbTries;
+            } while (ItemsData.Items[lootId] == PlayerPrefsHelper.GetCurrentItemName() || run.Steps.Contains($"I{lootId.ToString("00")}") || nbTries > 10);
+
             opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         else if (Helper.RandomDice100(run.ResourceLootPercent))
