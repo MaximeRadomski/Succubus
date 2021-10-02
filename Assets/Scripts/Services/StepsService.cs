@@ -46,6 +46,8 @@ public class StepsService
 
     public void GenerateAdjacentSteps(Run run, Character character, Step currentStep, int recursiveIteration = -1)
     {
+        if (currentStep == null)
+            return;
         var directionStr = currentStep.StepType.ToString().Substring(1);//SubString because StepType starts with a 'S'
         _adjacentString = string.Empty;
         for (int i = 0; i < 4; ++i)
@@ -55,13 +57,15 @@ public class StepsService
             var x = (i == 0 || i == 2) ? currentStep.X : (i == 1 ? currentStep.X + 1 : currentStep.X - 1);
             var y = (i == 1 || i == 3) ? currentStep.Y : (i == 0 ? currentStep.Y + 1 : currentStep.Y - 1);
             if (!TryGetStepOnPos(x, y, run.Steps, out var generatedStep))
-                generatedStep = GenerateRandomStepAtPosition(x, y, run, character, recursiveIteration == 0 ? 0 : -1);
+                generatedStep = GenerateRandomStepAtPosition(x, y, run, character,
+                    canEncounterCharacter: PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4) != "1111",
+                    customChancePercentToHaveAnExit: recursiveIteration == 0 ? 0 : -1);
             if (recursiveIteration > 0)
                 GenerateAdjacentSteps(run, character, generatedStep, recursiveIteration - 1);
         }
     }
 
-    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character, int customChancePercentToHaveAnExit = -1, bool canEncounterCharacter = true)
+    public Step GenerateRandomStepAtPosition(int stepX, int stepY, Run run, Character character, bool canEncounterCharacter, int customChancePercentToHaveAnExit = -1)
     {
         var minimumExit = "0000";
         for (int i = 0; i < 4; ++i)
@@ -84,10 +88,12 @@ public class StepsService
                     minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
+        if (customChancePercentToHaveAnExit == 0)
+            Debug.Log("DEBUG");
         var chancePercentToHaveAnExit = customChancePercentToHaveAnExit >= 0 ? customChancePercentToHaveAnExit : 80;
         for (int i = 0; i < 4; ++i)
         {
-            if (minimumExit[i] == '1' || minimumExit[i] == '.')
+            if (chancePercentToHaveAnExit <= 0 || minimumExit[i] == '1' || minimumExit[i] == '.')
                 continue;
             if (Helper.RandomDice100(chancePercentToHaveAnExit))
             {
@@ -121,7 +127,7 @@ public class StepsService
             }
             if (unlockedIds.Count == 0)
             {
-                GenerateRandomStepAtPosition(stepX, stepY, run, character, canEncounterCharacter: false);
+                GenerateRandomStepAtPosition(stepX, stepY, run, character, canEncounterCharacter: false, customChancePercentToHaveAnExit);
                 return null;
             }
             lootId = unlockedIds[Random.Range(0, unlockedIds.Count)];

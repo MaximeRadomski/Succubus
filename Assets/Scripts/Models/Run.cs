@@ -47,6 +47,8 @@ public class Run
     public int GetCharEncounterPercent()
     {
         var bonusPercent = PlayerPrefsHelper.GetNumberRunWithoutCharacterEncounter() * 10;
+        if (bonusPercent > 50)
+            bonusPercent = 50;
         return CharEncounterPercent + bonusPercent;
     }
         
