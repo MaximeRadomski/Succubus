@@ -15,6 +15,11 @@ public class ItemCreepingTotem : Item
 
     protected override object Effect()
     {
+        if (this._character.DiamondBlocks)
+        {
+            _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), null, Realm.Earth);
+            return base.Effect();
+        }
         var highestX = -1;
         var highestY = Constants.HeightLimiter - 1;
         for (int x = 0; x < Constants.PlayFieldWidth; ++x)

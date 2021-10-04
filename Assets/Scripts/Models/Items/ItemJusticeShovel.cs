@@ -15,6 +15,8 @@ public class ItemJusticeShovel : Item
 
     protected override object Effect()
     {
+        if (this._character.DiamondBlocks)
+            return base.Effect();
         var leftColumnId = Random.Range(0, 8);
         _gameplayControler.DeleteColumn(leftColumnId);
         _gameplayControler.DeleteColumn(leftColumnId + 1);

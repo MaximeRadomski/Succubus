@@ -8,7 +8,7 @@ public static class Constants
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
     public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool ResourcesDebug = false;
     public const bool TattoosDebug = false;
     public const bool RunDebug = false;
@@ -50,6 +50,7 @@ public static class Constants
     public const int OldSchoolDas = 16;
     public const int OldSchoolArr = 6;
     public const int MapRecursiveIteration = 6;
+    public const int WeightIncrementPercentPerDifficulty = 15;
 
 
     //  TAGS  //
@@ -329,8 +330,9 @@ public static class Constants
     public static int? OnResumeLastForcedBlocks;
     public static bool IsNextOpponentAttackCanceled;
     public static int EnemyCooldownInfiniteStairMalus = 0;
-    public static bool HasLastStanded = false;
     public static bool SlumberingDragoncrestInEffect = false;
+    public static bool HasLastStanded = false;
+    public static int CanceledShrinkingLines = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -359,7 +361,8 @@ public static class Constants
         EnemyCooldownInfiniteStairMalus = 0;
         SlumberingDragoncrestInEffect = false;
         HasLastStanded = false;
-}
+        CanceledShrinkingLines = 0;
+    }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
     {

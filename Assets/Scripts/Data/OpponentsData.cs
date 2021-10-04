@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Baphomeh";
+        var name = "Igorr";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -121,9 +121,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Warrior Soul", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 12,
+            HpMax = 100, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 12, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DarkRow, 2) },
+                new OpponentAttack(AttackType.DarkRow, 2),
+                new OpponentAttack(AttackType.Shrink, 2)},
             GravityLevel = 3, Weight = 20
         },
         new Opponent()
@@ -323,7 +324,7 @@ public static class OpponentsData
             HpMax = 333, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 2, 1) },
-            GravityLevel = 6, Weight = 150,
+            GravityLevel = 6, Weight = 999,
             DialogId = 2, DialogPitch = 0.75f
         },
         new Opponent()
@@ -333,7 +334,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 4),
                 new OpponentAttack(AttackType.Shift, 2)},
-            GravityLevel = 14, Weight = 150,
+            GravityLevel = 14, Weight = 999,
             DialogId = 3, DialogPitch = 0.35f
         },
         new Opponent()
@@ -342,7 +343,7 @@ public static class OpponentsData
             HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },
-            GravityLevel = 10, Weight = 150,
+            GravityLevel = 10, Weight = 999,
             DialogId = 1, DialogPitch = 0.75f
         }
     };
@@ -351,7 +352,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Beginner monk", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 80, Weakness = Weakness.None, Cooldown = 8, Haste = true,
+            HpMax = 100, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 3) },
             GravityLevel = 5, Weight = 10
@@ -359,7 +360,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Monk", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 4, Haste = true,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.EmptyRow, 2),
                 new OpponentAttack(AttackType.DarkRow, 3) },
@@ -368,7 +369,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Nun", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 120, Weakness = Weakness.None, Cooldown = 6, Haste = true,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 2, 2),
                 new OpponentAttack(AttackType.Shift, 6) },
@@ -378,7 +379,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Living bible", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 20, Weakness = Weakness.None, Cooldown = 10, Haste = true,
+            HpMax = 30, Weakness = Weakness.None, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shrink, 2) },
             GravityLevel = 10, Weight = 5
@@ -386,7 +387,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Punished Sinner", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 180, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 4, Haste = true,
+            HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 5) },
             GravityLevel = 10, Weight = 30
@@ -437,7 +438,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Lost Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 80, Cooldown = 5, Haste = true,
+            HpMax = 120, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DropBomb, 10) },
             GravityLevel = 7, Weight = 30
@@ -445,9 +446,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Cheese Cake", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 88, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 1,
+            HpMax = 130, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Drill, 2)},
+                new OpponentAttack(AttackType.Drill, 2),
+                new OpponentAttack(AttackType.VisionBlock, 10, 5)},
             GravityLevel = 10, Weight = 20
         },
         new Opponent()
@@ -534,13 +536,29 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Worm Ghast", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 4, Weakness = Weakness.Consecutive, DamageOnWeakness = 50, Cooldown = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.AirPiece, 3) },
+            GravityLevel = 6, Weight = 25
+        },
+        new Opponent()
+        {
+            Name = "Igorr", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 20,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.VisionBlock, 6, 10) },
+            GravityLevel = 10, Weight = 40
+        },
+        new Opponent()
+        {
             Name = "Tactical Nun", Realm = Realm.Earth, Type = OpponentType.Boss,
             HpMax = 500, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1),
                 new OpponentAttack(AttackType.Shift, 40),
                 new OpponentAttack(AttackType.Drill, 1),},
-            GravityLevel = 16, Weight = 150,
+            GravityLevel = 16, Weight = 999,
             DialogId = 4, DialogPitch = 1.25f, HeadDown = true
         },
         new Opponent()
@@ -549,7 +567,7 @@ public static class OpponentsData
             HpMax = 700, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 8) },
-            GravityLevel = 10, Weight = 150,
+            GravityLevel = 10, Weight = 999,
             DialogId = 0, DialogPitch = 1.0f
         },
         new Opponent()
@@ -558,7 +576,7 @@ public static class OpponentsData
             HpMax = 1000, Weakness = Weakness.Combos, DamageOnWeakness = 10, Immunity = Immunity.Twists, Cooldown = 12, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 6, 2)},
-            GravityLevel = 10, Weight = 150,
+            GravityLevel = 10, Weight = 999,
             DialogId = 2, DialogPitch = 1.1f
         }
     };

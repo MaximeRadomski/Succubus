@@ -81,6 +81,8 @@ public class Character : Loot
     public int ResourceFarmBonus = 0;
     public int OwlReduceSeconds = 0;
     public int ChanceAdditionalBlock = 0;
+    public bool DiamondBlocks = false;
+    public int CancelableShrinkingLines = 0;
 
     public Character()
     {

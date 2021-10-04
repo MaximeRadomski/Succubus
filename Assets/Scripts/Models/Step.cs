@@ -23,8 +23,11 @@ public class Step
         StepType = stepType;
         Discovered = discovered;
         LandLordVision = landLordVision;
-        LootType = lootType;
         LootId = lootId;
+        if (lootId != -1)
+            LootType = lootType;
+        else
+            LootType = LootType.None;
         Opponents = opponents;
     }
 

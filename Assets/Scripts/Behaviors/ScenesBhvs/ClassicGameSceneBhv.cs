@@ -968,7 +968,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (isB2B)
         {
-            if (CurrentOpponent.Weakness == Weakness.Consecutive)
+            if (CurrentOpponent.Weakness == Weakness.Consecutive && nbLines >= 2)
             {
                 _weaknessInstance.Pop();
                 _soundControler.PlaySound(_idWeakness);
@@ -980,7 +980,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 _soundControler.PlaySound(_idImmunity);
                 incomingDamage = 0;
             }
-            if (Character.Realm == Realm.Heaven)
+            if (Character.Realm == Realm.Heaven && nbLines >= 2)
             {
                 Constants.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
                 Constants.CurrentItemCooldown -= Character.RealmPassiveEffect;

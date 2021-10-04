@@ -171,6 +171,7 @@ public class StepsService
             }
             else
             {
+                lootId = -1;
                 var firstRandomId = Random.Range(0, 12);
                 int id = firstRandomId;
                 var loop = -1;
@@ -343,6 +344,11 @@ public class StepsService
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
         weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());
+        if (run.Difficulty >= Difficulty.Hard)
+        {
+            var harderCount = run.Difficulty.GetHashCode() - Difficulty.Hard.GetHashCode() + 1;
+            weight *= Helper.MultiplierFromPercent(1.0f, Constants.WeightIncrementPercentPerDifficulty * harderCount);
+        }
         return Mathf.RoundToInt(weight);
     }
 

@@ -13,7 +13,25 @@ namespace Proyecto26
             if (Constants.NetworkErrorCount >= Constants.ServerCallOfflineMax)
             {
                 if (Constants.NetworkErrorCount == Constants.ServerCallOfflineMax)
-                    GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", "too many failed attempts were made to connect to the server. the game will continue in offline mode.", null, "Ok", null);
+                {
+                    var currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+                    if (currentScene is GameSceneBhv gameScene && Constants.InputLayer == 0)
+                    {
+                        gameScene.PauseOrPrevious();
+                        gameScene.StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () =>
+                        {
+                            DisplayErrorTooManyAttemptsPopup();
+                            return true;
+                        }, false));
+                    }
+                    else
+                        DisplayErrorTooManyAttemptsPopup();
+
+                    void DisplayErrorTooManyAttemptsPopup()
+                    {
+                        GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", "too many failed attempts were made to connect to the server. the game will continue in offline mode.", null, "Ok", null);
+                    }
+                }
                 ++Constants.NetworkErrorCount;
                 yield break;
             }

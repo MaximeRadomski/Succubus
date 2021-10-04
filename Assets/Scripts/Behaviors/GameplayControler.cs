@@ -2523,7 +2523,8 @@ public class GameplayControler : MonoBehaviour
             {   
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
-                Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
+                if (!this.Character.DiamondBlocks)
+                    Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                 PlayFieldBhv.Grid[roundedX, roundedY] = null;
                 Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
             }
@@ -2749,10 +2750,18 @@ public class GameplayControler : MonoBehaviour
         Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbNotes);
     }
 
-    public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLines)
+    public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLinesToShrink)
     {
         _soundControler.PlaySound(_idDarkRows);
-        ReducePlayHeight(nbLines, afterLock: true);
+        if (this.Character.CancelableShrinkingLines > 0 && Constants.CanceledShrinkingLines < this.Character.CancelableShrinkingLines)
+        {
+            Constants.CanceledShrinkingLines += nbLinesToShrink;
+            if (Constants.CanceledShrinkingLines > this.Character.CancelableShrinkingLines)
+                nbLinesToShrink = Constants.CanceledShrinkingLines - this.Character.CancelableShrinkingLines;
+            else
+                nbLinesToShrink = 0;
+        }
+        ShrinkPlayHeight(nbLinesToShrink, afterLock: true);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
@@ -2930,7 +2939,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void ReducePlayHeight(int heightToReduce, bool afterLock = false)
+    public void ShrinkPlayHeight(int heightToReduce, bool afterLock = false)
     {
         if (_heightLimiter == null)
             _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
