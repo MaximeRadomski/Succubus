@@ -7,10 +7,10 @@ public static class Constants
 {
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
-    public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = true;
+    public const bool ItemsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool TattoosDebug = false;
+    public const bool TattoosDebug = true;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;
@@ -222,6 +222,7 @@ public static class Constants
     public const string GoKeyboard = "Keyboard";
     public const string GoDropBombCooldown = "DropBombCooldown";
     public const string GoFilledTarget = "Filled-Target";
+    public const string GoBasketballHoop = "BasketballHoop";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;
@@ -333,6 +334,7 @@ public static class Constants
     public static bool SlumberingDragoncrestInEffect = false;
     public static bool HasLastStanded = false;
     public static int CanceledShrinkingLines = 0;
+    public static int CanceledDiamondBlocks = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -362,6 +364,7 @@ public static class Constants
         SlumberingDragoncrestInEffect = false;
         HasLastStanded = false;
         CanceledShrinkingLines = 0;
+        CanceledDiamondBlocks = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

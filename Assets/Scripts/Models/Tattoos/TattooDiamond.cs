@@ -7,19 +7,18 @@ public class TattooDiamond : Tattoo
     {
         Id = 60;
         Name = TattoosData.Tattoos[Id];
-        Stat = 0;
-        StatStr = "any attacks or items making holes";
+        Stat = 4;
         Rarity = Rarity.Common;
-        MaxLevel = 1;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DiamondBlocks = true;
+        character.DiamondBlocks += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"your blocks now resist {StatToString()} in your playfield.\n(line clearing still works)";
+        return $"cancels the first {StatToString(after: " attacks or items")} making holes in your playfield for a fight.";
     }
 }

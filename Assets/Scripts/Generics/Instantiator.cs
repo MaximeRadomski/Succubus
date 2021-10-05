@@ -386,11 +386,21 @@ public class Instantiator : MonoBehaviour
     {
         var tmpTargetObject = Resources.Load<GameObject>("Prefabs/DrillTarget");
         var tmpTargetInstance = Instantiate(tmpTargetObject, new Vector3(9.5f, -0.5f), tmpTargetObject.transform.rotation);
-        tmpTargetInstance.name = Constants.GoSimpShield;
+        tmpTargetInstance.name = Constants.GoFilledTarget;
         tmpTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 3);
         var fillTargetBhv = tmpTargetInstance.GetComponent<FillTargetBhv>();
         fillTargetBhv.Init(realm, gameplayControler);
         return fillTargetBhv;
+    }
+
+    public HoopBhv NewHoop(GameplayControler gameplayControler)
+    {
+        var tmpHoopObject = Resources.Load<GameObject>("Prefabs/BasketballHoop");
+        var tmpHoopInstance = Instantiate(tmpHoopObject, new Vector3(-30.0f, -30.0f, 0.0f), tmpHoopObject.transform.rotation);
+        tmpHoopInstance.name = Constants.GoBasketballHoop;
+        var hoopBhv = tmpHoopInstance.GetComponent<HoopBhv>();
+        hoopBhv.Init(gameplayControler);
+        return hoopBhv;
     }
 
     public GameObject NewHeightLimiter(int height, Realm realm, Transform parent)

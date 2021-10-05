@@ -143,6 +143,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (Character.Target)
             Instantiator.NewFillTarget(Character.Realm, _gameplayControler);
+        if (Character.BasketTimesBonus > 0)
+            Instantiator.NewHoop(_gameplayControler);
     }
 
     private bool AfterFightIntro()

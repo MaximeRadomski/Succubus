@@ -57,6 +57,7 @@ public class GameplayControler : MonoBehaviour
     private bool _needDownRelease;
     private int _dropBombCooldown;
     private bool _usingItem;
+    private bool _hasGate;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -1795,7 +1796,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_nextLock > 0.0f && !isGravity)
                 ++_allowedMovesBeforeLock;
-            else if (isGravity && _allowedResetMovesBeforeLock < Constants.MaxResetMovesBeforeLock + (SceneBhv.CurrentOpponent?.Attacks[Constants.CurrentOpponentAttackId].AttackType == AttackType.Gate ? 2 : 0))
+            else if (isGravity && _allowedResetMovesBeforeLock < Constants.MaxResetMovesBeforeLock + (_hasGate ? 2 : 0))
             {
                 _allowedMovesBeforeLock = 0;
                 ++_allowedResetMovesBeforeLock;
@@ -2083,6 +2084,8 @@ public class GameplayControler : MonoBehaviour
                 int yRounded = Mathf.RoundToInt(lightRowGameObject.transform.position.y);
                 int startY = yRounded;
                 int nbRows = lightRowBhv.NbRows;
+                if (lightRowBhv.IsGate)
+                    _hasGate = false;
                 if (DeleteLightRow(yRounded, lightRowBhv) > 0 && hasDeletedRows == false)
                 {
                     _soundControler.PlaySound(_idCleanRows);
@@ -2360,6 +2363,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.DropBomb:
                 AttackDropBomb(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.Tunnel:
+                AttackTunnel(opponentInstance, opponentRealm, param1);
+                break;
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -2520,12 +2526,16 @@ public class GameplayControler : MonoBehaviour
             int roundedY = Mathf.RoundToInt(drillTarget.transform.position.y);
             var targetedGo = PlayFieldBhv.Grid[roundedX, roundedY];
             if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
-            {   
+            {
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
-                if (!this.Character.DiamondBlocks)
+                if (Character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < Character.DiamondBlocks)
+                    ++Constants.CanceledDiamondBlocks;
+                else
+                {
                     Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
-                PlayFieldBhv.Grid[roundedX, roundedY] = null;
+                    PlayFieldBhv.Grid[roundedX, roundedY] = null;
+                }
                 Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
             }
             Destroy(drillTarget);
@@ -2719,13 +2729,15 @@ public class GameplayControler : MonoBehaviour
         int lineY = GetHighestBlock() + 3;
         if (lineY > 18)
             return;
-        int holeStartX = UnityEngine.Random.Range(1, 7);
+        int holeStartX = UnityEngine.Random.Range(1, 7 - Character.GateWidener);
         _soundControler.PlaySound(_idLightRows);
-        FillLine(lineY, AttackType.LightRow, opponentRealm, holeStartX, holeStartX + 1);
+        FillLine(lineY, AttackType.LightRow, opponentRealm, holeStartX, holeStartX + 1 + Character.GateWidener);
         cooldown = cooldown < 1 ? 1 : cooldown;
         PlayFieldBhv.Grid[0, lineY].gameObject.tag = Constants.TagLightRows;
         PlayFieldBhv.Grid[0, lineY].gameObject.AddComponent<LightRowBlockBhv>();
+        _hasGate = true;
         var lightRowBhv = PlayFieldBhv.Grid[0, lineY].gameObject.GetComponent<LightRowBlockBhv>();
+        lightRowBhv.IsGate = true;
         lightRowBhv.NbRows = 1;
         lightRowBhv.Cooldown = cooldown;
         var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(holeStartX + 0.5f, lineY));
@@ -2734,6 +2746,31 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), opponentRealm);
         Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldown);
+    }
+
+    private void AttackTunnel(GameObject opponentInstance, Realm opponentRealm, int deepness)
+    {
+        var x = UnityEngine.Random.Range(0, 9);
+        int y = GetHighestBlockOnX(x);
+        Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, new Vector3(x, y - (deepness / 2.0f), 0.0f), opponentRealm);
+        _soundControler.PlaySound(_idEmptyRows);
+        if (Character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < Character.DiamondBlocks)
+            ++Constants.CanceledDiamondBlocks;
+        else for (int i = 0; i < deepness; ++i)
+            {
+                var decreasingY = y - i;
+                if (decreasingY < 0)
+                    break;
+                var targetedGo = PlayFieldBhv.Grid[x, decreasingY];
+                if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
+                {
+                    Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, decreasingY].transform.position, 5, 0);
+                    Destroy(PlayFieldBhv.Grid[x, decreasingY].gameObject);
+                    PlayFieldBhv.Grid[x, decreasingY] = null;
+                }
+            }
+        var cooldownReducer = deepness / 3.0f;
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldownReducer < 1 ? 1 : Mathf.RoundToInt(cooldownReducer));
     }
 
     public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
@@ -2753,14 +2790,6 @@ public class GameplayControler : MonoBehaviour
     public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLinesToShrink)
     {
         _soundControler.PlaySound(_idDarkRows);
-        if (this.Character.CancelableShrinkingLines > 0 && Constants.CanceledShrinkingLines < this.Character.CancelableShrinkingLines)
-        {
-            Constants.CanceledShrinkingLines += nbLinesToShrink;
-            if (Constants.CanceledShrinkingLines > this.Character.CancelableShrinkingLines)
-                nbLinesToShrink = Constants.CanceledShrinkingLines - this.Character.CancelableShrinkingLines;
-            else
-                nbLinesToShrink = 0;
-        }
         ShrinkPlayHeight(nbLinesToShrink, afterLock: true);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
     }
@@ -2941,6 +2970,16 @@ public class GameplayControler : MonoBehaviour
 
     public void ShrinkPlayHeight(int heightToReduce, bool afterLock = false)
     {
+        if (this.Character.CancelableShrinkingLines > 0 && Constants.CanceledShrinkingLines < this.Character.CancelableShrinkingLines)
+        {
+            Constants.CanceledShrinkingLines += heightToReduce;
+            if (Constants.CanceledShrinkingLines > this.Character.CancelableShrinkingLines)
+                heightToReduce = Constants.CanceledShrinkingLines - this.Character.CancelableShrinkingLines;
+            else
+                heightToReduce = 0;
+        }
+        if (heightToReduce == 0)
+            return;
         if (_heightLimiter == null)
             _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
         else

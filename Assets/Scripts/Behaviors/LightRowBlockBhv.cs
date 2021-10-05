@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LightRowBlockBhv : MonoBehaviour
 {
+    public bool IsGate;
     public int NbRows;
     public int Cooldown;
     public TMPro.TextMeshPro CooldownText;

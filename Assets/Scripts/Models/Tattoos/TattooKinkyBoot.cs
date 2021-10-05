@@ -8,19 +8,19 @@ public class TattooKinkyBoot : Tattoo
     {
         Id = 7;
         Name = TattoosData.Tattoos[Id];
-        Stat = 0;
-        StatStr = "double jump";
-        Rarity = Rarity.Legendary;
-        MaxLevel = 1;
+        Stat = 1;
+        Rarity = Rarity.Common;
+        MaxLevel = 3;
     }
 
     public override void ApplyToCharacter(Character character)
     {
+        character.GateWidener += Stat;
         character.CanDoubleJump = true;
     }
 
     public override string GetDescription()
     {
-        return $"allows you to {StatToString()}!\n(obviously does nothing)";
+        return $"increases gate attacks wideness by {StatToString(after: Stat * Level == 1 ? " block" : " blocks")}\n(allows you to double jump as well)";
     }
 }

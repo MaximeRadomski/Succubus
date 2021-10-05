@@ -15,8 +15,9 @@ public class ItemCreepingTotem : Item
 
     protected override object Effect()
     {
-        if (this._character.DiamondBlocks)
+        if (_character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < _character.DiamondBlocks)
         {
+            ++Constants.CanceledDiamondBlocks;
             _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), null, Realm.Earth);
             return base.Effect();
         }

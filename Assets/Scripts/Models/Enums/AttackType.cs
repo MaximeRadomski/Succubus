@@ -86,4 +86,8 @@ public enum AttackType
     [Suffixe(" moves")]
     [Description("Drop Bomb")]
     DropBomb = 19, //drop any next current piece in (param1) moves
+    [Prefixe(null)]
+    [Suffixe(" deep")]
+    [Description("Tunnel")]
+    Tunnel = 20, //Destroy a random column of (param1) number of blocks from the top
 }
