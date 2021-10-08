@@ -393,12 +393,12 @@ public class Instantiator : MonoBehaviour
         return fillTargetBhv;
     }
 
-    public HoopBhv NewHoop(GameplayControler gameplayControler)
+    public BasketballHoopBhv NewHoop(GameplayControler gameplayControler)
     {
         var tmpHoopObject = Resources.Load<GameObject>("Prefabs/BasketballHoop");
-        var tmpHoopInstance = Instantiate(tmpHoopObject, new Vector3(-30.0f, -30.0f, 0.0f), tmpHoopObject.transform.rotation);
+        var tmpHoopInstance = Instantiate(tmpHoopObject, tmpHoopObject.transform.position, tmpHoopObject.transform.rotation);
         tmpHoopInstance.name = Constants.GoBasketballHoop;
-        var hoopBhv = tmpHoopInstance.GetComponent<HoopBhv>();
+        var hoopBhv = tmpHoopInstance.GetComponent<BasketballHoopBhv>();
         hoopBhv.Init(gameplayControler);
         return hoopBhv;
     }

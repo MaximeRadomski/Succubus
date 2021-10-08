@@ -84,7 +84,7 @@ public class Character : Loot
     public int DiamondBlocks = 0;
     public int CancelableShrinkingLines = 0;
     public int GateWidener = 0;
-    public int BasketTimesBonus = 0;
+    public int BasketballHoopTimesBonus = 0;
 
     public Character()
     {

@@ -14,7 +14,7 @@ public class TattooBasketballHoop : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.BasketTimesBonus += Stat;
+        character.BasketballHoopTimesBonus += Stat;
     }
 
     public override string GetDescription()

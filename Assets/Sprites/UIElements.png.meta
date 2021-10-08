@@ -116,6 +116,15 @@ TextureImporter:
   - first:
       213: -7970166708876948243
     second: UIElements_30
+  - first:
+      213: 4616423162712822110
+    second: UIElements_31
+  - first:
+      213: 1506219553365610156
+    second: UIElements_32
+  - first:
+      213: -6140498132047275511
+    second: UIElements_33
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -147,8 +156,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -855,7 +864,7 @@ TextureImporter:
         width: 10
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -863,6 +872,69 @@ TextureImporter:
       bones: []
       spriteID: decceb42b97446190800000000000000
       internalID: -7970166708876948243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_31
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 171
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51126a5864d01040800000000000000
+      internalID: 4616423162712822110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_32
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 164
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caeca1814ba27e410800000000000000
+      internalID: 1506219553365610156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_33
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 146
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a5f5f8b7198caa0800000000000000
+      internalID: -6140498132047275511
       vertices: []
       indices: 
       edges: []

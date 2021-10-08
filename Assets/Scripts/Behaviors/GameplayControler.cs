@@ -73,6 +73,7 @@ public class GameplayControler : MonoBehaviour
     private List<GameObject> _gameplayButtons;
     private Piece _forcedPieceModel;
     private GameObject _heightLimiter;
+    private BasketballHoopBhv _basketballHoopBhv;
 
     private Special _characterSpecial;
     private List<Vector3> _currentGhostPiecesOriginalPos;
@@ -333,6 +334,13 @@ public class GameplayControler : MonoBehaviour
         UpdateItemAndSpecialVisuals();
         _dasMax = PlayerPrefsHelper.GetDas();
         _arrMax = PlayerPrefsHelper.GetArr();
+
+        if (Character.BasketballHoopTimesBonus > 0)
+        {
+            _basketballHoopBhv = Instantiator.NewHoop(this).GetComponent<BasketballHoopBhv>();
+            _basketballHoopBhv.RandomizePosition();
+        }
+
         _hasInit = true;
     }
 
@@ -1968,6 +1976,18 @@ public class GameplayControler : MonoBehaviour
                 isB2B = true;
                 _soundControler.PlaySound(_idConsecutive);
             }
+
+            if (_basketballHoopBhv != null)
+            {
+                var range = CurrentPiece.GetComponent<Piece>().GetRangeX();
+                int xHoopRounded = Mathf.RoundToInt(_basketballHoopBhv.transform.position.x);
+                if (range[0] <= xHoopRounded && range[1] >= xHoopRounded)
+                {
+                    SceneBhv.DamageOpponent(Character.GetAttack() * Character.BasketballHoopTimesBonus, _basketballHoopBhv.gameObject, Character.Realm);
+                    _basketballHoopBhv.RandomizePosition();
+                }
+            }
+
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial?.OnLinesCleared(nbLines, isB2B);

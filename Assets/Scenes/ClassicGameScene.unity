@@ -1578,6 +1578,8 @@ MonoBehaviour:
   PlayFieldBhv: {fileID: 0}
   ForcedPiece: {fileID: 0}
   NextPieces: []
+  CanBeReload: 1
+  OpponentDeathScreen: 0
 --- !u!114 &331272313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2119,6 +2121,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &488515786
@@ -5974,6 +5977,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &1466922717
@@ -7836,7 +7840,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8141,6 +8145,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1940658361
@@ -8822,6 +8827,7 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1001 &2082865255
@@ -8833,7 +8839,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -9614,6 +9620,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4535579309658388681}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 1268422405
   _SortingOrder: 0
 --- !u!114 &6634099502379320464
@@ -9709,6 +9716,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4535579310346033286}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 445791159
   _SortingOrder: 0
 --- !u!1 &6902801642684002000
