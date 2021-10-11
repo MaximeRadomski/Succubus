@@ -74,7 +74,7 @@ public class Character : Loot
     public int DamageBigLinesMalus = 0;
     public int GodHandCombo = 0;
     public bool MapAquired = false;
-    public bool Target = false;
+    public int FillTargetBlocks = 0;
     public int LastStandMultiplier = 0;
     public bool SlumberingDragoncrest = false;
     public bool SocialPyramid = false;
@@ -85,6 +85,11 @@ public class Character : Loot
     public int CancelableShrinkingLines = 0;
     public int GateWidener = 0;
     public int BasketballHoopTimesBonus = 0;
+    public int SlavWheelDamagePercentBonus = 0;
+    public int DevilsContractMalus = 0;
+
+    [System.NonSerialized]
+    private int? _realmTreeAttackBoost;
 
     public Character()
     {
@@ -100,7 +105,12 @@ public class Character : Loot
 
     public int GetAttackNoBoost()
     {
-        var floatValue = (Attack + DamageFlatBonus + Constants.DamoclesDamage + PlayerPrefsHelper.GetRealmTree().AttackBoost) * Helper.MultiplierFromPercent(1.0f, DamagePercentBonus);
+        if (!_realmTreeAttackBoost.HasValue)
+            _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
+        var flatDamage = Attack + DamageFlatBonus + Constants.DamoclesDamage + _realmTreeAttackBoost.Value;
+        var multiplierDamage = DamagePercentBonus;
+        var floatValue = flatDamage * Helper.MultiplierFromPercent(1.0f, multiplierDamage);
+
         return Mathf.RoundToInt(floatValue);
     }
 }

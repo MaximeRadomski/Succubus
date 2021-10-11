@@ -8,9 +8,9 @@ public static class Constants
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
     public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool ResourcesDebug = false;
-    public const bool TattoosDebug = true;
+    public const bool TattoosDebug = false;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;
@@ -335,6 +335,7 @@ public static class Constants
     public static bool HasLastStanded = false;
     public static int CanceledShrinkingLines = 0;
     public static int CanceledDiamondBlocks = 0;
+    public static int SlavWheelStreak = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -365,6 +366,7 @@ public static class Constants
         HasLastStanded = false;
         CanceledShrinkingLines = 0;
         CanceledDiamondBlocks = 0;
+        SlavWheelStreak = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

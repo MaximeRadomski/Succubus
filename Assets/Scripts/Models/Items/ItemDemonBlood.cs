@@ -16,7 +16,7 @@ public class ItemDemonBlood : Item
     protected override object Effect()
     {
         _gameplayControler.CheckForDarkRows(4);
-        _gameplayControler.ClearLineSpace();
+        _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
         return base.Effect();
     }
 }

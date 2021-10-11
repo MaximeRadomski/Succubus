@@ -7,17 +7,21 @@ public class FillTargetBhv : FrameRateBehavior
     private Realm _characterRealm;
     private GameplayControler _gameplayControler;
     private Vector3 _resetPosition;
-    private float _delay = 5.0f;
+    private float _delay = 1.0f;
     private GameObject _filledTarget;
+    private int _maxFilledBlocks;
+    private int _filledBlocksCount;
 
     private bool _isMovingToHolePosition;
     private bool _isMovingBackToResetPosition;
 
-    public void Init(Realm characterRealm, GameplayControler gameplayControler)
+    public void Init(Realm characterRealm, int nbBlocks, GameplayControler gameplayControler)
     {
         _characterRealm = characterRealm;
         _gameplayControler = gameplayControler;
         _resetPosition = transform.position;
+        _maxFilledBlocks = nbBlocks;
+        _filledBlocksCount = 0;
 
         Invoke(nameof(CheckForSingleHole), _delay);
     }
@@ -48,7 +52,7 @@ public class FillTargetBhv : FrameRateBehavior
         }
         if (_isMovingToHolePosition)
         {
-            transform.position = Vector3.Lerp(transform.position, _filledTarget.transform.GetChild(0).position, 0.025f);
+            transform.position = Vector3.Lerp(transform.position, _filledTarget.transform.GetChild(0).position, 0.06f);
             if (Helper.VectorEqualsPrecision(transform.position, _filledTarget.transform.GetChild(0).position, 0.2f))
             {
                 _isMovingToHolePosition = false;
@@ -57,16 +61,19 @@ public class FillTargetBhv : FrameRateBehavior
                 int y = Mathf.RoundToInt(_filledTarget.transform.GetChild(0).position.y);
                 var tmpPiece = _gameplayControler.Instantiator.NewPiece("D", _characterRealm.ToString(), new Vector3(x, y, 0.0f));
                 _gameplayControler.AddToPlayField(tmpPiece);
+                ++_filledBlocksCount;
                 StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _isMovingBackToResetPosition = true; return true; }, lockInputWhile: false));
             }
         }
         else if (_isMovingBackToResetPosition)
         {
-            transform.position = Vector3.Lerp(transform.position, _resetPosition, 0.025f);
+            transform.position = Vector3.Lerp(transform.position, _resetPosition, 0.06f);
             if (Helper.VectorEqualsPrecision(transform.position, _resetPosition, 0.2f))
             {
                 _isMovingBackToResetPosition = false;
                 transform.position = _resetPosition;
+                if (_filledBlocksCount >= _maxFilledBlocks)
+                    Destroy(gameObject);
                 Invoke(nameof(CheckForSingleHole), _delay);
             }
         }

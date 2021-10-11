@@ -37,7 +37,7 @@ public class SpecialSwap : Special
     {
         if (_selector != null)
         {
-            if (++_selectedId > 4)
+            if (++_selectedId > 4 || _gameplayControler.NextPieces[_selectedId].transform.childCount == 0)
                 _selectedId = 0;
             _selector.transform.position = new Vector3(_selector.transform.position.x, _gameplayControler.NextPieces[_selectedId].transform.position.y + 0.5f, 0.0f);
             yield return new WaitForSeconds(_customUpdateDelay);

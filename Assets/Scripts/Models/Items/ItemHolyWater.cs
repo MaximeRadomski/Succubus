@@ -16,7 +16,7 @@ public class ItemHolyWater : Item
     protected override object Effect()
     {
         _gameplayControler.CheckForWasteRows(4);
-        _gameplayControler.ClearLineSpace();
+        _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
         return base.Effect();
     }
 }

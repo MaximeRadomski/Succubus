@@ -346,7 +346,7 @@ public class StepsService
         weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());
         if (run.Difficulty >= Difficulty.Hard)
         {
-            var harderCount = run.Difficulty.GetHashCode() - Difficulty.Hard.GetHashCode() + 1;
+            var harderCount = (run.Difficulty.GetHashCode() - Difficulty.Hard.GetHashCode()) + 1;
             weight *= Helper.MultiplierFromPercent(1.0f, Constants.WeightIncrementPercentPerDifficulty * harderCount);
         }
         return Mathf.RoundToInt(weight);

@@ -90,4 +90,12 @@ public enum AttackType
     [Suffixe(" deep")]
     [Description("Tunnel")]
     Tunnel = 20, //Destroy a random column of (param1) number of blocks from the top
+    [Prefixe(null)]
+    [Suffixe(" beats")]
+    [Description("Rhythm Mania")]
+    RhythmMania = 21, //Force you to play in rythm for the next (param1) moves
+    [Prefixe(null)]
+    [Suffixe(" lines")]
+    [Description("Line Break")]
+    LineBreak = 22, //The next (param1) lines aren't destroyed, but set to the bottom of the playfield
 }

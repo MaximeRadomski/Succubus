@@ -8,19 +8,18 @@ public class TattooTarget : Tattoo
     {
         Id = 53;
         Name = TattoosData.Tattoos[Id];
-        Stat = 0;
-        StatStr = "fills single holes";
+        Stat = 4;
         Rarity = Rarity.Rare;
-        MaxLevel = 1;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.Target = true;
+        character.FillTargetBlocks += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"spawns a target which {StatToString()} in your playfield.";
+        return $"spawns a target which {StatToString("fills up to ", " single holes")} in your playfield.";
     }
 }

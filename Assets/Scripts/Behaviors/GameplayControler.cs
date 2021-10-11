@@ -58,6 +58,7 @@ public class GameplayControler : MonoBehaviour
     private int _dropBombCooldown;
     private bool _usingItem;
     private bool _hasGate;
+    private int _lineBreakCount;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -820,13 +821,19 @@ public class GameplayControler : MonoBehaviour
 
     public void UpdateNextPieces()
     {
-        int maxPreview = 5;
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
-            maxPreview = 1;
-        for (int i = 0; i < maxPreview; ++i)
+        for (int i = NextPieces.Count - 1; i >= 0; --i)
         {
             for (int j = NextPieces[i].transform.childCount - 1; j >= 0; --j)
                 Destroy(NextPieces[i].transform.GetChild(j).gameObject);
+        }
+
+        int maxPreview = 5 - Character.DevilsContractMalus;
+        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            maxPreview = 1;
+        if (maxPreview < 0)
+            maxPreview = 0;
+        for (int i = 0; i < maxPreview; ++i)
+        {
             var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(NextPieces[i].transform);
             if (_isOldSchoolGameplay && (Constants.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter))
@@ -1950,7 +1957,15 @@ public class GameplayControler : MonoBehaviour
             if (HasLine(y))
             {
                 ++nbLines;
-                DeleteLine(y);
+                if (_lineBreakCount > 0)
+                {
+                    --_lineBreakCount;
+                    LineBreak(y);
+                }
+                else
+                {
+                    DeleteLine(y);
+                }
             }
         }
         var canSpawn = true;
@@ -1988,6 +2003,19 @@ public class GameplayControler : MonoBehaviour
                 }
             }
 
+            if (Character.SlavWheelDamagePercentBonus > 0)
+            {
+                var randomResult = UnityEngine.Random.Range(0, 6);
+                if (randomResult == 0)
+                {
+                    Constants.SlavWheelStreak = 0;
+                    ShrinkPlayHeight(1, afterLock: true);
+                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), Character.Realm);
+                }
+                else
+                    ++Constants.SlavWheelStreak;
+            }
+
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial?.OnLinesCleared(nbLines, isB2B);
@@ -2014,7 +2042,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
             StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
-                ClearLineSpace();
+                ClearLineSpaceAndPushDownLineBreaks();
 
                 if (nbLines >= 4
                 || (_lastLockTwist && nbLines >= 2)
@@ -2111,7 +2139,7 @@ public class GameplayControler : MonoBehaviour
                     _soundControler.PlaySound(_idCleanRows);
                     hasDeletedRows = true;
                 }
-                ClearLineSpace(startY, startY + nbRows - 1);
+                ClearLineSpaceAndPushDownLineBreaks(startY, startY + nbRows - 1);
                 if (brutForceDelete > 0 && --brutForceDelete == 0)
                     return nbLinesDeleted;
             }
@@ -2175,6 +2203,12 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    public void LineBreak(int y)
+    {
+        DeleteLine(y);
+        Instantiator.NewLineBreak(y, Character.Realm);
+    }
+
     private int DeleteLightRow(int yRounded, LightRowBlockBhv lightRowBhv)
     {
         int nbLinesDeleted = 0;
@@ -2213,11 +2247,11 @@ public class GameplayControler : MonoBehaviour
                 break;
             DeleteLine(y);
         }
-        ClearLineSpace();
+        ClearLineSpaceAndPushDownLineBreaks();
         DropGhost();
     }
 
-    public void ClearLineSpace(int minY = -1, int maxY = -1)
+    public void ClearLineSpaceAndPushDownLineBreaks(int minY = -1, int maxY = -1)
     {
         if (minY == -1)
             minY = Constants.HeightLimiter - 1;
@@ -2385,6 +2419,9 @@ public class GameplayControler : MonoBehaviour
                 break;
             case AttackType.Tunnel:
                 AttackTunnel(opponentInstance, opponentRealm, param1);
+                break;
+            case AttackType.LineBreak:
+                AttackLineBreak(opponentInstance, opponentRealm, param1);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2814,6 +2851,12 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
+    public void AttackLineBreak(GameObject opponentInstance, Realm opponentRealm, int nbLineBreak)
+    {
+        _soundControler.PlaySound(_idGarbageRows);
+        _lineBreakCount += nbLineBreak;
+    }
+
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
     {
         _isOldSchoolGameplay = true;
@@ -3010,14 +3053,14 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position += new Vector3(0.0f, -Mathf.RoundToInt(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce);
         Constants.HeightLimiter += heightToReduce;
-        ClearLineSpace();
+        ClearLineSpaceAndPushDownLineBreaks();
     }
 
     public void ResetPlayHeight()
     {
         Destroy(_heightLimiter);
         Constants.HeightLimiter = 0;
-        ClearLineSpace();
+        ClearLineSpaceAndPushDownLineBreaks();
     }
 
     public IEnumerator Reflect()

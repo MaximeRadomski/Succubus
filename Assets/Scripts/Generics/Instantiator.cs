@@ -382,14 +382,14 @@ public class Instantiator : MonoBehaviour
         tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = sortingId;
     }
 
-    public FillTargetBhv NewFillTarget(Realm realm, GameplayControler gameplayControler)
+    public FillTargetBhv NewFillTarget(Realm realm, int nbBlocks, GameplayControler gameplayControler)
     {
         var tmpTargetObject = Resources.Load<GameObject>("Prefabs/DrillTarget");
         var tmpTargetInstance = Instantiate(tmpTargetObject, new Vector3(9.5f, -0.5f), tmpTargetObject.transform.rotation);
         tmpTargetInstance.name = Constants.GoFilledTarget;
         tmpTargetInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 3);
         var fillTargetBhv = tmpTargetInstance.GetComponent<FillTargetBhv>();
-        fillTargetBhv.Init(realm, gameplayControler);
+        fillTargetBhv.Init(realm, nbBlocks, gameplayControler);
         return fillTargetBhv;
     }
 
@@ -474,5 +474,10 @@ public class Instantiator : MonoBehaviour
         var tmpLoadingInstance = Instantiate(tmpLoadingObject, pos, tmpLoadingObject.transform.rotation);
         tmpLoadingInstance.name = Constants.GoRestLoading;
         return tmpLoadingInstance;
+    }
+
+    public void NewLineBreak(int y, Realm realm)
+    {
+        //HasToBeIndestructible
     }
 }

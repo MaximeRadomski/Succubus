@@ -20,7 +20,7 @@ public class ItemCRTMonitor : Item
             _gameplayControler.DeleteLine(i);
         _gameplayControler.StartCoroutine(Helper.ExecuteAfterDelay(0.2f, () =>
         {
-            _gameplayControler.ClearLineSpace();
+            _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
             _gameplayControler.SceneBhv.Paused = false;
             return true;
         }));

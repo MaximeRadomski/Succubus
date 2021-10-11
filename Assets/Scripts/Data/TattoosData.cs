@@ -24,7 +24,7 @@ public static class TattoosData
     // DEBUG //
     public static bool DebugEnabled = Constants.TattoosDebug;
     public static bool DebugMultitude = false;
-    public static Tattoo DebugTattoo = GetTattooFromName("Basketball Hoop");
+    public static Tattoo DebugTattoo = GetTattooFromName("Target");
 
     public static Tattoo GetRandomTattoo()
     {
@@ -66,7 +66,7 @@ public static class TattoosData
         var cleanName = names[id].Replace(" ", "");
         cleanName = cleanName.Replace("'", "");
         cleanName = cleanName.Replace("-", "");
-        var instance = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + cleanName));
+        var instance = (Tattoo)Activator.CreateInstance(Type.GetType("Tattoo" + cleanName, true));
         if (PlayerPrefsHelper.GetMaxedOutTattoos().Contains((instance).Id) && loopId != id)
         {
             if (loopId == -1)
