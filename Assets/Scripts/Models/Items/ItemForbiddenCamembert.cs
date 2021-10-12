@@ -40,7 +40,7 @@ public class ItemForbiddenCamembert : Item
                 _gameplayControler.DeleteLine(y);
             }
         }
-        _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
+        _gameplayControler.ClearLineSpace();
         return base.Effect();
     }
 }

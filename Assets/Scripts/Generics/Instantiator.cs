@@ -476,8 +476,11 @@ public class Instantiator : MonoBehaviour
         return tmpLoadingInstance;
     }
 
-    public void NewLineBreak(int y, Realm realm)
+    public GameObject NewLineBreak(int y, Realm realm)
     {
-        //HasToBeIndestructible
+        var tmpLineObject = Resources.Load<GameObject>("Prefabs/LineBreak");
+        var tmpLineInstance = Instantiate(tmpLineObject, new Vector3(4.5f, y, 0.0f), tmpLineObject.transform.rotation);
+        tmpLineInstance.tag = Constants.TagLineBreak;
+        return tmpLineInstance;
     }
 }

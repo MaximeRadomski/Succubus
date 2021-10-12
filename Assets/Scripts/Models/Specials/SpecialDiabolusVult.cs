@@ -29,7 +29,7 @@ public class SpecialDiabolusVult : Special
         {
             _gameplayControler.FillLine(y, AttackType.WasteRow, _character.Realm, emptyStart, emptyEnd);
         }
-        _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
+        _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
         return true;
     }

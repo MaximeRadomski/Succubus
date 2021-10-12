@@ -1965,6 +1965,12 @@ public class GameplayControler : MonoBehaviour
                 else
                 {
                     DeleteLine(y);
+                    if (_lineBreakCount == 0)
+                    {
+                        --_lineBreakCount;
+                        CheckForLineBreaks();
+                        ClearLineSpace();
+                    }
                 }
             }
         }
@@ -2042,7 +2048,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
             StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
-                ClearLineSpaceAndPushDownLineBreaks();
+                ClearLineSpace();
 
                 if (nbLines >= 4
                 || (_lastLockTwist && nbLines >= 2)
@@ -2139,12 +2145,24 @@ public class GameplayControler : MonoBehaviour
                     _soundControler.PlaySound(_idCleanRows);
                     hasDeletedRows = true;
                 }
-                ClearLineSpaceAndPushDownLineBreaks(startY, startY + nbRows - 1);
+                ClearLineSpace(startY, startY + nbRows - 1);
                 if (brutForceDelete > 0 && --brutForceDelete == 0)
                     return nbLinesDeleted;
             }
         }
         return nbLinesDeleted;
+    }
+
+    private void CheckForLineBreaks()
+    {
+        var lineBreaks = GameObject.FindGameObjectsWithTag(Constants.TagLineBreak);
+        for (int i = lineBreaks.Length - 1; i >= 0; --i)
+        {
+            int yRounded = Mathf.RoundToInt(lineBreaks[i].transform.position.y);
+            DeleteLine(yRounded);
+            Destroy(lineBreaks[i]);
+        }
+        _soundControler.PlaySound(_idCleanRows);
     }
 
     private void CheckForVisionBlocks()
@@ -2206,7 +2224,11 @@ public class GameplayControler : MonoBehaviour
     public void LineBreak(int y)
     {
         DeleteLine(y);
-        Instantiator.NewLineBreak(y, Character.Realm);
+        IncreaseAllAboveLines(1);
+        FillLine(Constants.HeightLimiter, AttackType.LightRow, this.SceneBhv.CurrentOpponent.Realm);
+        for (int x = 0; x < 10; ++x)
+            if (PlayFieldBhv.Grid[x, y].TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer.enabled = false;
+        Instantiator.NewLineBreak(Constants.HeightLimiter, Character.Realm);
     }
 
     private int DeleteLightRow(int yRounded, LightRowBlockBhv lightRowBhv)
@@ -2247,11 +2269,11 @@ public class GameplayControler : MonoBehaviour
                 break;
             DeleteLine(y);
         }
-        ClearLineSpaceAndPushDownLineBreaks();
+        ClearLineSpace();
         DropGhost();
     }
 
-    public void ClearLineSpaceAndPushDownLineBreaks(int minY = -1, int maxY = -1)
+    public void ClearLineSpace(int minY = -1, int maxY = -1)
     {
         if (minY == -1)
             minY = Constants.HeightLimiter - 1;
@@ -3053,14 +3075,14 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position += new Vector3(0.0f, -Mathf.RoundToInt(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce);
         Constants.HeightLimiter += heightToReduce;
-        ClearLineSpaceAndPushDownLineBreaks();
+        ClearLineSpace();
     }
 
     public void ResetPlayHeight()
     {
         Destroy(_heightLimiter);
         Constants.HeightLimiter = 0;
-        ClearLineSpaceAndPushDownLineBreaks();
+        ClearLineSpace();
     }
 
     public IEnumerator Reflect()

@@ -125,6 +125,33 @@ TextureImporter:
   - first:
       213: 8351872239932888538
     second: Frames_26
+  - first:
+      213: 16317165664949122
+    second: Frames_27
+  - first:
+      213: -5803955726972019400
+    second: Frames_28
+  - first:
+      213: 8650563011366056656
+    second: Frames_29
+  - first:
+      213: -791286581291143028
+    second: Frames_30
+  - first:
+      213: -2394803737786689770
+    second: Frames_31
+  - first:
+      213: -6022857186235608857
+    second: Frames_32
+  - first:
+      213: 8047917959421606589
+    second: Frames_33
+  - first:
+      213: -8276906924678372617
+    second: Frames_34
+  - first:
+      213: -6301704285350053469
+    second: Frames_35
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -156,8 +183,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -759,7 +786,7 @@ TextureImporter:
         width: 140
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -780,7 +807,7 @@ TextureImporter:
         width: 71
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -788,6 +815,195 @@ TextureImporter:
       bones: []
       spriteID: ad555a65d8fc7e370800000000000000
       internalID: 8351872239932888538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_27
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 187
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 283533f2068f93000800000000000000
+      internalID: 16317165664949122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_28
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 187
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83d1db95405347fa0800000000000000
+      internalID: -5803955726972019400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_29
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 187
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d27b97e939fc0870800000000000000
+      internalID: 8650563011366056656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_30
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 179
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c80bb96fb09c405f0800000000000000
+      internalID: -791286581291143028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_31
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 179
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 617527e40b2f3ced0800000000000000
+      internalID: -2394803737786689770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_32
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 179
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e09481bc438a6ca0800000000000000
+      internalID: -6022857186235608857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_33
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 171
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbabfc09eb2ffaf60800000000000000
+      internalID: 8047917959421606589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_34
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 171
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f223934105822d80800000000000000
+      internalID: -8276906924678372617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frames_35
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 171
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a937202759db88a0800000000000000
+      internalID: -6301704285350053469
       vertices: []
       indices: 
       edges: []

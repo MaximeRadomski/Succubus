@@ -26,7 +26,7 @@ public class ItemSunJuice : Item
                 break;
             _gameplayControler.DeleteLine(y);
         }
-        _gameplayControler.ClearLineSpaceAndPushDownLineBreaks();
+        _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
         return base.Effect();
     }
