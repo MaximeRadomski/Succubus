@@ -64,6 +64,7 @@ public static class OpponentsData
             Name = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 222, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 5),
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.WasteRow, 2, 1)},
             GravityLevel = 2, Weight = 0,

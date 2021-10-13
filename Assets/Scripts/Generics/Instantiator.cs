@@ -481,6 +481,7 @@ public class Instantiator : MonoBehaviour
         var tmpLineObject = Resources.Load<GameObject>("Prefabs/LineBreak");
         var tmpLineInstance = Instantiate(tmpLineObject, new Vector3(4.5f, y, 0.0f), tmpLineObject.transform.rotation);
         tmpLineInstance.tag = Constants.TagLineBreak;
+        tmpLineInstance.GetComponent<LineBreakBhv>().Init(realm);
         return tmpLineInstance;
     }
 }

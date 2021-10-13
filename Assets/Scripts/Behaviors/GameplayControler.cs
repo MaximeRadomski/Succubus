@@ -1961,6 +1961,7 @@ public class GameplayControler : MonoBehaviour
                 {
                     --_lineBreakCount;
                     LineBreak(y);
+                    ClearLineSpace();
                 }
                 else
                 {
@@ -2227,7 +2228,7 @@ public class GameplayControler : MonoBehaviour
         IncreaseAllAboveLines(1);
         FillLine(Constants.HeightLimiter, AttackType.LightRow, this.SceneBhv.CurrentOpponent.Realm);
         for (int x = 0; x < 10; ++x)
-            if (PlayFieldBhv.Grid[x, y].TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer.enabled = false;
+            if (PlayFieldBhv.Grid[x, Constants.HeightLimiter].TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer.enabled = false;
         Instantiator.NewLineBreak(Constants.HeightLimiter, Character.Realm);
     }
 

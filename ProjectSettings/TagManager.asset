@@ -13,6 +13,7 @@ TagManager:
   - PoppingText
   - VisionBlock
   - OverBlend
+  - LineBreak
   layers:
   - Default
   - TransparentFX
