@@ -224,6 +224,7 @@ public static class Constants
     public const string GoDropBombCooldown = "DropBombCooldown";
     public const string GoFilledTarget = "Filled-Target";
     public const string GoBasketballHoop = "BasketballHoop";
+    public const string GoLineBreakLimiter = "LineBreakLimiter";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;
@@ -257,6 +258,12 @@ public static class Constants
 
     public static string MaterialEnd = "</material>";
 
+    /// <summary>
+    /// Returns a realm color: -1 = Black, 0 = Darker, ... , 4 = Brighter, 5 = White
+    /// </summary>
+    /// <param name="realm"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public static object GetColorFromRealm(Realm realm, int id)
     {
         if (id == -1)
@@ -337,6 +344,8 @@ public static class Constants
     public static int CanceledShrinkingLines = 0;
     public static int CanceledDiamondBlocks = 0;
     public static int SlavWheelStreak = 0;
+    public static int LineBreakReach = 0;
+    public static int LineBreakCount = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -368,6 +377,8 @@ public static class Constants
         CanceledShrinkingLines = 0;
         CanceledDiamondBlocks = 0;
         SlavWheelStreak = 0;
+        LineBreakReach = 0;
+        LineBreakCount = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)

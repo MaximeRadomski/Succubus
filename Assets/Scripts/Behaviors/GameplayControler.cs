@@ -58,7 +58,6 @@ public class GameplayControler : MonoBehaviour
     private int _dropBombCooldown;
     private bool _usingItem;
     private bool _hasGate;
-    private int _lineBreakCount;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -75,6 +74,7 @@ public class GameplayControler : MonoBehaviour
     private Piece _forcedPieceModel;
     private GameObject _heightLimiter;
     private BasketballHoopBhv _basketballHoopBhv;
+    private GameObject _lineBreakLimiter;
 
     private Special _characterSpecial;
     private List<Vector3> _currentGhostPiecesOriginalPos;
@@ -1957,22 +1957,15 @@ public class GameplayControler : MonoBehaviour
             if (HasLine(y))
             {
                 ++nbLines;
-                if (_lineBreakCount > 0)
+                if (Constants.LineBreakReach > 0)
                 {
-                    --_lineBreakCount;
+                    ++Constants.LineBreakCount;
                     LineBreak(y);
                     ClearLineSpace();
+                    ++y; //Because we add a line in LineBreak(y);
                 }
                 else
-                {
                     DeleteLine(y);
-                    if (_lineBreakCount == 0)
-                    {
-                        --_lineBreakCount;
-                        CheckForLineBreaks();
-                        ClearLineSpace();
-                    }
-                }
             }
         }
         var canSpawn = true;
@@ -2049,6 +2042,14 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
             StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
+                if ((Constants.LineBreakReach > 0 || Constants.LineBreakCount > 0)
+                && Constants.LineBreakCount >= Constants.LineBreakReach)
+                {
+                    Constants.LineBreakReach = 0;
+                    Constants.LineBreakCount = 0;
+                    CheckForLineBreaks();
+                }
+
                 ClearLineSpace();
 
                 if (nbLines >= 4
@@ -2161,7 +2162,11 @@ public class GameplayControler : MonoBehaviour
         {
             int yRounded = Mathf.RoundToInt(lineBreaks[i].transform.position.y);
             DeleteLine(yRounded);
-            Destroy(lineBreaks[i]);
+        }
+        if (_lineBreakLimiter != null)
+        {
+            Destroy(_lineBreakLimiter);
+            _lineBreakLimiter = null;
         }
         _soundControler.PlaySound(_idCleanRows);
     }
@@ -2183,7 +2188,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Filled"))
+            if (PlayFieldBhv.Grid[x, y] == null || PlayFieldBhv.Grid[x, y].GetComponent<BlockBhv>().Indestructible || PlayFieldBhv.Grid[x, y].parent.name.Contains("Filled"))
                 return false;
         }
         return true;
@@ -2206,8 +2211,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteLine(int y)
     {
-        LightRowBlockBhv lightRowBlockBhv = null;
-        if (PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.TryGetComponent<LightRowBlockBhv>(out lightRowBlockBhv) != false)
+        if (PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.TryGetComponent<LightRowBlockBhv>(out var lightRowBlockBhv) != false)
         {
             DeleteLightRow(y, lightRowBlockBhv);
             return;
@@ -2225,11 +2229,9 @@ public class GameplayControler : MonoBehaviour
     public void LineBreak(int y)
     {
         DeleteLine(y);
-        IncreaseAllAboveLines(1);
-        FillLine(Constants.HeightLimiter, AttackType.LightRow, this.SceneBhv.CurrentOpponent.Realm);
-        for (int x = 0; x < 10; ++x)
-            if (PlayFieldBhv.Grid[x, Constants.HeightLimiter].TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer.enabled = false;
-        Instantiator.NewLineBreak(Constants.HeightLimiter, Character.Realm);
+        IncreaseAllAboveLines(1, isShrinkOrLineBreak: true);
+        FillLine(Constants.HeightLimiter, AttackType.LineBreak, this.SceneBhv.CurrentOpponent.Realm);
+        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.tag = Constants.TagLineBreak;
     }
 
     private int DeleteLightRow(int yRounded, LightRowBlockBhv lightRowBhv)
@@ -2254,7 +2256,8 @@ public class GameplayControler : MonoBehaviour
     {
         for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
         {
-            if (PlayFieldBhv.Grid[x, y] == null)
+            if (PlayFieldBhv.Grid[x, y] == null ||
+                (PlayFieldBhv.Grid[x, y].TryGetComponent<BlockBhv>(out var blockBhv) && blockBhv.Indestructible))
                 continue;
             Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
@@ -2362,12 +2365,14 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void IncreaseAllAboveLines(int nbRows)
+    public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false)
     {
         for (int y = GetHighestBlock(); y >= Constants.HeightLimiter; --y)
         {
             if (y + nbRows >= _playFieldHeight)
-                return;
+                return -1;
+            if (!isShrinkOrLineBreak && PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.tag == Constants.TagLineBreak)
+                return y + 1; //Reached a Line Break, must return line id above
             for (int x = 0; x < _playFieldWidth; ++x)
             {
                 if (PlayFieldBhv.Grid[x, y] != null)
@@ -2378,6 +2383,7 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         }
+        return Constants.HeightLimiter;
     }
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
@@ -2454,9 +2460,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (nbRows > Character.MaxDarkAndWasteLines)
             nbRows = nbRows / Character.MaxDarkAndWasteLines;
-        IncreaseAllAboveLines(nbRows);
+        var minY = IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idDarkRows);
-        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
+        for (int y = minY; y < minY + nbRows; ++y)
         {
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
@@ -2468,14 +2474,14 @@ public class GameplayControler : MonoBehaviour
     {
         if (nbRows > Character.MaxDarkAndWasteLines)
             nbRows = nbRows / Character.MaxDarkAndWasteLines;
-        IncreaseAllAboveLines(nbRows);
+        var minY = IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idGarbageRows);
         if (Character.WasteHoleFiller > 0)
             nbHole -= Character.WasteHoleFiller;
         nbHole = nbHole < 1 ? 1 : nbHole;
         int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - nbHole);
         int emptyEnd = emptyStart + nbHole - 1;
-        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
+        for (int y = minY; y < minY + nbRows; ++y)
         {
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
@@ -2486,9 +2492,9 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
     {
-        IncreaseAllAboveLines(nbRows);
+        var minY = IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idLightRows);
-        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + nbRows; ++y)
+        for (int y = minY; y < minY + nbRows; ++y)
         {
             FillLine(y, AttackType.LightRow, opponentRealm);
         }
@@ -2877,7 +2883,16 @@ public class GameplayControler : MonoBehaviour
     public void AttackLineBreak(GameObject opponentInstance, Realm opponentRealm, int nbLineBreak)
     {
         _soundControler.PlaySound(_idGarbageRows);
-        _lineBreakCount += nbLineBreak;
+        Constants.LineBreakReach += nbLineBreak;
+        if (Constants.LineBreakReach > 15)
+            Constants.LineBreakReach = 15;
+        if (_lineBreakLimiter == null)
+        {
+            _lineBreakLimiter = this.Instantiator.NewLineBreakLimiter(opponentRealm);
+            _lineBreakLimiter.transform.SetParent(PlayFieldBhv.transform);
+        }
+        _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Constants.HeightLimiter + Constants.LineBreakReach - 1, 0.0f);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, _lineBreakLimiter.transform.position + new Vector3(0.0f, 0.5f, 0.0f), opponentRealm);
     }
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
@@ -3005,8 +3020,10 @@ public class GameplayControler : MonoBehaviour
                 && x >= emptyStart && x <= emptyEnd)
                 continue;
             var attackPiece = Instantiator.NewPiece(type.ToString(), realm.ToString(), new Vector3(x, y, 0.0f));
-            if (type == AttackType.DarkRow || type == AttackType.LightRow)
+            if (type == AttackType.DarkRow || type == AttackType.LightRow || type == AttackType.LineBreak)
                 attackPiece.transform.GetChild(0).GetComponent<BlockBhv>().Indestructible = true;
+            if (type == AttackType.LineBreak && attackPiece.TryGetComponent<LineBreakBhv>(out var lineBreakBhv))
+                lineBreakBhv.Init(x);
             attackPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[x, y] = attackPiece.transform.GetChild(0);
         }
@@ -3074,7 +3091,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
         if (CurrentPiece.transform.position.y > 19.0f)
             CurrentPiece.transform.position += new Vector3(0.0f, -Mathf.RoundToInt(CurrentPiece.transform.position.y - 19.0f), 0.0f);
-        IncreaseAllAboveLines(heightToReduce);
+        IncreaseAllAboveLines(heightToReduce, isShrinkOrLineBreak: true);
         Constants.HeightLimiter += heightToReduce;
         ClearLineSpace();
     }

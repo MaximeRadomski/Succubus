@@ -462,7 +462,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);
                         if (_run.Difficulty == Difficulty.Infernal)
                             PlayerPrefsHelper.SaveDivineUnlocked(true);
-                        Constants.GameOverParams = $"Abject|{_run.CurrentRealm}|3";
+                        Constants.GameOverParams = $"Abject|{_run.CurrentRealm - 1}|3";
                         PlayerPrefsHelper.EndlessRun(_run);
                         NavigationService.LoadNextScene(Constants.DemoEndScene);
                         return false;

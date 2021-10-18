@@ -63,7 +63,10 @@ public class Run
                 CurrentRealm = Realm.Earth;
             else if (CurrentRealm == Realm.Earth)
                 CurrentRealm = Realm.Heaven;
-            CharacterEncounterAvailability = true;
+            if (CharacterEncounterAvailability)
+                PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
+            else
+                CharacterEncounterAvailability = true;
         }
         MaxSteps = 4;
         if (Difficulty == Difficulty.Easy)

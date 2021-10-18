@@ -22,14 +22,17 @@ public class BlockBhv : MonoBehaviour
 
     public void Start()
     {
-        Shadow = transform.GetChild(0).gameObject;
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        var shadowRenderer = Shadow.GetComponent<SpriteRenderer>();
-        shadowRenderer.sprite = _spriteRenderer.sprite;
-        shadowRenderer.sortingOrder = -2;
-        shadowRenderer.flipX = _spriteRenderer.flipX;
-        shadowRenderer.flipY = _spriteRenderer.flipY;
-        shadowRenderer.transform.rotation = _spriteRenderer.transform.rotation;
+        if (transform.childCount > 0)
+        {
+            Shadow = transform.GetChild(0).gameObject;
+            var shadowRenderer = Shadow.GetComponent<SpriteRenderer>();
+            shadowRenderer.sprite = _spriteRenderer.sprite;
+            shadowRenderer.sortingOrder = -2;
+            shadowRenderer.flipX = _spriteRenderer.flipX;
+            shadowRenderer.flipY = _spriteRenderer.flipY;
+            shadowRenderer.transform.rotation = _spriteRenderer.transform.rotation;
+        }
         _hasSpreadDown = false;
     }
 
@@ -43,7 +46,8 @@ public class BlockBhv : MonoBehaviour
     {
         IsMimicked = true;
         GetComponent<SpriteRenderer>().color = Constants.ColorPlainQuarterTransparent;
-        Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
+        if (Shadow != null)
+            Shadow.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
     }
 
     public void UnsetMimicAppearance(float maxOpacity)
@@ -52,7 +56,8 @@ public class BlockBhv : MonoBehaviour
         var plainColor = new Color(Constants.ColorPlain.r, Constants.ColorPlain.g, Constants.ColorPlain.b, maxOpacity);
         var shadowColor = new Color(Constants.ColorBlack.r, Constants.ColorBlack.g, Constants.ColorBlack.b, maxOpacity);
         GetComponent<SpriteRenderer>().color = plainColor;
-        Shadow.GetComponent<SpriteRenderer>().color = shadowColor;
+        if (Shadow != null)
+            Shadow.GetComponent<SpriteRenderer>().color = shadowColor;
     }
 
     public void PreventYAxisShif()

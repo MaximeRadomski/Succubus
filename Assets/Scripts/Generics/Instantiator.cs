@@ -130,12 +130,10 @@ public class Instantiator : MonoBehaviour
         }
         var tmpPieceObject = Resources.Load<GameObject>("Prefabs/" + pieceLetter + "-" + realm);
         var pieceModel = tmpPieceObject.GetComponent<Piece>();
-        GameObject tmpPieceInstance = null;
         if (pieceModel != null)
-            tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation); 
+            return Instantiate(tmpPieceObject, spawnerPosition + new Vector3(keepSpawnerX ? 0.0f : pieceModel.XFromSpawn, pieceModel.YFromSpawn, 0.0f), tmpPieceObject.transform.rotation); 
         else
-            tmpPieceInstance = Instantiate(tmpPieceObject, spawnerPosition, tmpPieceObject.transform.rotation);
-        return tmpPieceInstance;
+            return Instantiate(tmpPieceObject, spawnerPosition, tmpPieceObject.transform.rotation);
     }
 
     public GameObject NewPieceBlock(string realm, Vector3 spawnPosition, Transform parent)
@@ -476,12 +474,12 @@ public class Instantiator : MonoBehaviour
         return tmpLoadingInstance;
     }
 
-    public GameObject NewLineBreak(int y, Realm realm)
+    public GameObject NewLineBreakLimiter(Realm realm)
     {
-        var tmpLineObject = Resources.Load<GameObject>("Prefabs/LineBreak");
-        var tmpLineInstance = Instantiate(tmpLineObject, new Vector3(4.5f, y, 0.0f), tmpLineObject.transform.rotation);
-        tmpLineInstance.tag = Constants.TagLineBreak;
-        tmpLineInstance.GetComponent<LineBreakBhv>().Init(realm);
-        return tmpLineInstance;
+        var tmpLimiterObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoLineBreakLimiter}");
+        var tmpLimiterInstance = Instantiate(tmpLimiterObject, new Vector3(4.5f, 0.0f, 0.0f), tmpLimiterObject.transform.rotation);
+        tmpLimiterInstance.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(realm, 4);
+        tmpLimiterInstance.name = Constants.GoLineBreakLimiter;
+        return tmpLimiterInstance;
     }
 }

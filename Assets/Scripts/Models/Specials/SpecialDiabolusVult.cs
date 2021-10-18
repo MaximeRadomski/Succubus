@@ -21,11 +21,11 @@ public class SpecialDiabolusVult : Special
                 break;
             _gameplayControler.DeleteLine(y);
         }
-        _gameplayControler.IncreaseAllAboveLines(_nbRows);
+        var minY = _gameplayControler.IncreaseAllAboveLines(_nbRows);
         var nbHole = 1;
         int emptyStart = UnityEngine.Random.Range(0, 10 + 1 - nbHole);
         int emptyEnd = emptyStart + nbHole - 1;
-        for (int y = Constants.HeightLimiter; y < Constants.HeightLimiter + _nbRows; ++y)
+        for (int y = minY; y < minY + _nbRows; ++y)
         {
             _gameplayControler.FillLine(y, AttackType.WasteRow, _character.Realm, emptyStart, emptyEnd);
         }

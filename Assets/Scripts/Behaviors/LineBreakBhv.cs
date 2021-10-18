@@ -8,16 +8,11 @@ public class LineBreakBhv : FrameRateBehavior
 {
     public List<Sprite> _sprites;
 
-    private List<SpriteRenderer> _renderers;
-
-    public void Init(Realm realm)
+    public void Init(int x)
     {
-        _renderers = new List<SpriteRenderer>();
-
-        for (int i = 0; i < 3; ++i)
-        {
-            _renderers.Add(transform.GetChild(i).GetComponent<SpriteRenderer>());
-            _renderers[i].sprite = _sprites[3 * realm.GetHashCode() + i];
-        }
+        if (x == 0)
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _sprites[0];
+        else if (x == Constants.PlayFieldWidth - 1)
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _sprites[2];
     }
 }
