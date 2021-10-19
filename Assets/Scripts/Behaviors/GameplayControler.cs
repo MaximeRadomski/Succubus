@@ -75,6 +75,7 @@ public class GameplayControler : MonoBehaviour
     private GameObject _heightLimiter;
     private BasketballHoopBhv _basketballHoopBhv;
     private GameObject _lineBreakLimiter;
+    private RhythmIndicatorBhv _rhythmIndicatorBhv;
 
     private Special _characterSpecial;
     private List<Vector3> _currentGhostPiecesOriginalPos;
@@ -995,6 +996,11 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Left;
             return;
         }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        {
+            _leftHeld = _rightHeld = -100;
+            return;
+        }
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             if (!canTriggerPartition)
@@ -1052,6 +1058,11 @@ public class GameplayControler : MonoBehaviour
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Right;
+            return;
+        }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        {
+            _leftHeld = _rightHeld = -100;
             return;
         }
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
@@ -2449,6 +2460,9 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Tunnel:
                 AttackTunnel(opponentInstance, opponentRealm, param1);
                 break;
+            case AttackType.RhythmMania:
+                AttackRhythmMania(opponentInstance, opponentRealm, param1, param2);
+                break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1);
                 break;
@@ -2893,6 +2907,19 @@ public class GameplayControler : MonoBehaviour
         }
         _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Constants.HeightLimiter + Constants.LineBreakReach - 1, 0.0f);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _lineBreakLimiter.transform.position + new Vector3(0.0f, 0.5f, 0.0f), opponentRealm);
+    }
+
+    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int beat)
+    {
+        if (_rhythmIndicatorBhv == null)
+        {
+            _rhythmIndicatorBhv = this.Instantiator.NewRhythmIndicator();
+            _rhythmIndicatorBhv.transform.SetParent(PlayFieldBhv.transform);
+        }
+        var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
+        _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, GravityLevel);
+        SetGravity(2);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
     }
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)

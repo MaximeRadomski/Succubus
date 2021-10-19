@@ -482,4 +482,13 @@ public class Instantiator : MonoBehaviour
         tmpLimiterInstance.name = Constants.GoLineBreakLimiter;
         return tmpLimiterInstance;
     }
+
+    internal RhythmIndicatorBhv NewRhythmIndicator()
+    {
+        var tmpIndicatorObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoRhythmIndicator}");
+        var tmpIndicatorInstance = Instantiate(tmpIndicatorObject, tmpIndicatorObject.transform.position, tmpIndicatorObject.transform.rotation);
+        tmpIndicatorInstance.name = Constants.GoRhythmIndicator;
+        var rhythmIndicatorBhv = tmpIndicatorInstance.GetComponent<RhythmIndicatorBhv>();
+        return rhythmIndicatorBhv;
+    }
 }

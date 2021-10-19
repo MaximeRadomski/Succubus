@@ -225,6 +225,7 @@ public static class Constants
     public const string GoFilledTarget = "Filled-Target";
     public const string GoBasketballHoop = "BasketballHoop";
     public const string GoLineBreakLimiter = "LineBreakLimiter";
+    public const string GoRhythmIndicator = "RhythmIndicator"; 
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;
