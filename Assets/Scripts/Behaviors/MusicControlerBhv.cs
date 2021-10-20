@@ -120,6 +120,12 @@ public class MusicControlerBhv : MonoBehaviour
         _audioSource.Play();
     }
 
+    public float GetDelayForNextBeat(float beat)
+    {
+        var time = _audioSource.time;
+        return (time % beat) / 1000.0f;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetSceneLoadedMusic();

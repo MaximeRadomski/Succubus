@@ -5,6 +5,9 @@ using System;
 
 public class RhythmIndicatorBhv : FrameRateBehavior
 {
+    private SoundControlerBhv _soundControler;
+    private int _idBeat;
+
     private CharacterInstanceBhv _opponentInstance;
     private CharacterInstanceBhv _characterInstance;
     private float _delay;
@@ -15,6 +18,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     private int _gravityBefore;
 
     private bool _isTilting;
+    private int _idTilt;
 
     /// <summary>
     /// Beat in millisecond: 1000 = 1 second
@@ -49,6 +53,15 @@ public class RhythmIndicatorBhv : FrameRateBehavior
             _opponentInstance.Dodge();
             _characterInstance.Dodge();
             Tilt();
+            if (_soundControler == null)
+            {
+                _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+                _idBeat = _soundControler.SetSound("Beat");
+            }
+            _soundControler.PlaySound(_idBeat, customRate: _idTilt == 3 ? 1.2f : 1.0f);
+            ++_idTilt;
+            if (_idTilt >= 4)
+                _idTilt = 0;
             yield return new WaitForSeconds(_delay);
             StartCoroutine(Beat(id));
         }
@@ -56,8 +69,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
 
     private void Tilt()
     {
-        foreach (Transform child in transform)
-            child.GetComponent<SpriteRenderer>().color = _color;
+        ApplyColor(_color);
         _isTilting = true;
     }
 
@@ -73,16 +85,28 @@ public class RhythmIndicatorBhv : FrameRateBehavior
         }
     }
 
-    public bool IsInBeat()
+    public void ApplyColor(Color color)
     {
-        bool isInBeat = Helper.FloatEqualsPrecision(Time.time, _beatTime, 0.1f)
-            || Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, 0.1f);
+        foreach (Transform child in transform)
+            child.GetComponent<SpriteRenderer>().color = color;
+    }
+
+    public bool IsInBeat(bool exactBeat = false)
+    {
+        bool isInBeat = false;
+        if (exactBeat == false)
+            isInBeat = Helper.FloatEqualsPrecision(Time.time, _beatTime, 0.1f)
+                || Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, 0.1f);
+        else
+            isInBeat = Helper.FloatEqualsPrecision(Time.time, _beatTime, 0.01f)
+                    || Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, 0.01f);
         if (isInBeat)
         {
             --_remainingMoves;
             if (_remainingMoves <= 0)
             {
                 GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().ResetToOpponentGravity();
+                //GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
                 Destroy(gameObject);
             }
         }

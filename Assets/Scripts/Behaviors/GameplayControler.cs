@@ -1026,6 +1026,8 @@ public class GameplayControler : MonoBehaviour
     {
         ++_leftHeld;
         ++_das;
+        if (_rhythmIndicatorBhv != null)
+            return;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
@@ -1090,6 +1092,8 @@ public class GameplayControler : MonoBehaviour
     {
         ++_rightHeld;
         ++_das;
+        if (_rhythmIndicatorBhv != null)
+            return;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
@@ -1140,7 +1144,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropStomp()
     {
-        if (_isOldSchoolGameplay)
+        if (_isOldSchoolGameplay || _rhythmIndicatorBhv != null)
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
@@ -1160,6 +1164,8 @@ public class GameplayControler : MonoBehaviour
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
+            return;
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat(exactBeat:true))
             return;
         if (_isOldSchoolGameplay && _needDownRelease)
             return;
@@ -1224,6 +1230,8 @@ public class GameplayControler : MonoBehaviour
     public void HardDrop()
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
+            return;
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1378,6 +1386,8 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Clock;
             return;
         }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+            return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -1503,6 +1513,8 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.AntiClock;
             return;
         }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+            return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -1626,6 +1638,8 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Rotation180;
             return;
         }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+            return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -1688,6 +1702,8 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Hold;
             return;
         }
+        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+            return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
             var partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
@@ -2911,13 +2927,18 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int beat)
     {
+        var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
         if (_rhythmIndicatorBhv == null)
         {
-            _rhythmIndicatorBhv = this.Instantiator.NewRhythmIndicator();
+            _rhythmIndicatorBhv = this.Instantiator.NewRhythmIndicator(color);
             _rhythmIndicatorBhv.transform.SetParent(PlayFieldBhv.transform);
         }
-        var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
-        _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, GravityLevel);
+        //_musicControler.HalveVolume();
+        StartCoroutine(Helper.ExecuteAfterDelay(_musicControler.GetDelayForNextBeat(beat), () =>
+        {
+            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, GravityLevel);
+            return true;
+        }));
         SetGravity(2);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
     }
