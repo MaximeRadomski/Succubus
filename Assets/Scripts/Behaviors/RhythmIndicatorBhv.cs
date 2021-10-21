@@ -15,10 +15,11 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     private Color _color;
     private float _beatTime;
     private int _remainingMoves;
-    private int _gravityBefore;
 
     private bool _isTilting;
     private int _idTilt;
+    private bool _hasDoneActionOnBeat;
+    private bool _hasDoneActionOnNextBeat;
 
     /// <summary>
     /// Beat in millisecond: 1000 = 1 second
@@ -27,11 +28,10 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     /// <param name="characterInstance"></param>
     /// <param name="nbMoves"></param>
     /// <param name="beat"></param>
-    public void StartRhythm(CharacterInstanceBhv opponentInstance, CharacterInstanceBhv characterInstance, int nbMoves, int beat, Color color, int gravity)
+    public void StartRhythm(CharacterInstanceBhv opponentInstance, CharacterInstanceBhv characterInstance, int nbMoves, int beat, Color color)
     {
         _opponentInstance = opponentInstance;
         _characterInstance = characterInstance;
-        _gravityBefore = gravity;
         _delay = beat / 1000.0f;
         if (_remainingMoves < 0)
             _remainingMoves = 0;
@@ -45,6 +45,13 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     {
         if (id == _currentId)
         {
+            if (_hasDoneActionOnNextBeat)
+            {
+                _hasDoneActionOnBeat = true;
+                _hasDoneActionOnNextBeat = false;
+            }
+            else
+                _hasDoneActionOnBeat = false;
             _beatTime = Time.time;
             if (_opponentInstance == null)
                 _opponentInstance = GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().OpponentInstanceBhv;
@@ -93,20 +100,24 @@ public class RhythmIndicatorBhv : FrameRateBehavior
 
     public bool IsInBeat(bool exactBeat = false)
     {
-        bool isInBeat = false;
-        if (exactBeat == false)
-            isInBeat = Helper.FloatEqualsPrecision(Time.time, _beatTime, 0.1f)
-                || Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, 0.1f);
-        else
-            isInBeat = Helper.FloatEqualsPrecision(Time.time, _beatTime, 0.01f)
-                    || Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, 0.01f);
+        bool isInBeat;
+        bool isInCurrentBeat;
+        bool isInNextBeat;
+        isInCurrentBeat = !_hasDoneActionOnBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime, exactBeat ? 0.01f : 0.125f);
+        isInNextBeat = !_hasDoneActionOnNextBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, exactBeat ? 0.01f : 0.125f);
+        isInBeat = isInCurrentBeat || isInNextBeat;
         if (isInBeat)
         {
-            --_remainingMoves;
+            if (isInCurrentBeat)
+                _hasDoneActionOnBeat = true;
+            else
+                _hasDoneActionOnNextBeat = true;
+            if (!exactBeat)
+                --_remainingMoves;
             if (_remainingMoves <= 0)
             {
                 GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().ResetToOpponentGravity();
-                //GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
+                GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
                 Destroy(gameObject);
             }
         }

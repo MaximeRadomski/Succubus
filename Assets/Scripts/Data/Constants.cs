@@ -51,6 +51,7 @@ public static class Constants
     public const int OldSchoolArr = 6;
     public const int MapRecursiveIteration = 6;
     public const int WeightIncrementPercentPerDifficulty = 15;
+    public const int MusicBeat = 380;
 
 
     //  TAGS  //

@@ -2477,7 +2477,7 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1, param2);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1);
@@ -2925,7 +2925,7 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, _lineBreakLimiter.transform.position + new Vector3(0.0f, 0.5f, 0.0f), opponentRealm);
     }
 
-    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int beat)
+    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
         if (_rhythmIndicatorBhv == null)
@@ -2933,13 +2933,15 @@ public class GameplayControler : MonoBehaviour
             _rhythmIndicatorBhv = this.Instantiator.NewRhythmIndicator(color);
             _rhythmIndicatorBhv.transform.SetParent(PlayFieldBhv.transform);
         }
-        //_musicControler.HalveVolume();
+        _musicControler.HalveVolume();
+        var beat = Constants.MusicBeat;
         StartCoroutine(Helper.ExecuteAfterDelay(_musicControler.GetDelayForNextBeat(beat), () =>
         {
-            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, GravityLevel);
+            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color);
             return true;
         }));
-        SetGravity(2);
+        var newGravity = GravityLevel / 2;
+        SetGravity(newGravity < 2 ? 2 : newGravity);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
     }
 
