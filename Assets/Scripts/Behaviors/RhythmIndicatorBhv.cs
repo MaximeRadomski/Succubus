@@ -10,11 +10,14 @@ public class RhythmIndicatorBhv : FrameRateBehavior
 
     private CharacterInstanceBhv _opponentInstance;
     private CharacterInstanceBhv _characterInstance;
+    private GameplayControler _gameplayControler;
     private float _delay;
     private int _currentId;
     private Color _color;
+    private Realm _realm;
     private float _beatTime;
     private int _remainingMoves;
+    private int _nbEmptyRowsOnMiss;
 
     private bool _isTilting;
     private int _idTilt;
@@ -28,10 +31,12 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     /// <param name="characterInstance"></param>
     /// <param name="nbMoves"></param>
     /// <param name="beat"></param>
-    public void StartRhythm(CharacterInstanceBhv opponentInstance, CharacterInstanceBhv characterInstance, int nbMoves, int beat, Color color)
+    public void StartRhythm(CharacterInstanceBhv opponentInstance, CharacterInstanceBhv characterInstance, int nbMoves, int beat, Color color, int nbEmptyRowsOnMiss, Realm realm)
     {
         _opponentInstance = opponentInstance;
         _characterInstance = characterInstance;
+        _nbEmptyRowsOnMiss = nbEmptyRowsOnMiss;
+        _realm = realm;
         _delay = beat / 1000.0f;
         if (_remainingMoves < 0)
             _remainingMoves = 0;
@@ -103,8 +108,8 @@ public class RhythmIndicatorBhv : FrameRateBehavior
         bool isInBeat;
         bool isInCurrentBeat;
         bool isInNextBeat;
-        isInCurrentBeat = !_hasDoneActionOnBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime, exactBeat ? 0.01f : 0.125f);
-        isInNextBeat = !_hasDoneActionOnNextBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, exactBeat ? 0.01f : 0.125f);
+        isInCurrentBeat = !_hasDoneActionOnBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime, exactBeat ? 0.01f : 0.15f);
+        isInNextBeat = !_hasDoneActionOnNextBeat && Helper.FloatEqualsPrecision(Time.time, _beatTime + _delay, exactBeat ? 0.01f : 0.15f);
         isInBeat = isInCurrentBeat || isInNextBeat;
         if (isInBeat)
         {
@@ -120,6 +125,15 @@ public class RhythmIndicatorBhv : FrameRateBehavior
                 GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
                 Destroy(gameObject);
             }
+        }
+        else
+        {
+            if (_gameplayControler == null)
+                _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
+            if (_opponentInstance == null)
+                _opponentInstance = GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().OpponentInstanceBhv;
+            _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);
+            _gameplayControler.DropGhost();
         }
         return isInBeat;
     }

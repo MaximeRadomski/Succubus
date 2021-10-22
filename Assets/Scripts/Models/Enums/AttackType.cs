@@ -93,7 +93,7 @@ public enum AttackType
     [Prefixe(null)]
     [Suffixe(" beats")]
     [Description("Rhythm Mania")]
-    RhythmMania = 21, //Force you to play in a rhythm of (param2) for the next (param1) moves
+    RhythmMania = 21, //Force you to play in a rhythm for the next (param1) moves, with (param2) emptyRows on miss
     [Prefixe(null)]
     [Suffixe(" lines")]
     [Description("Line Break")]

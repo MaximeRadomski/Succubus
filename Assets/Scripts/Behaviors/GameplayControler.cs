@@ -346,6 +346,15 @@ public class GameplayControler : MonoBehaviour
         _hasInit = true;
     }
 
+    internal void OnNextOpponent()
+    {
+        if (_rhythmIndicatorBhv != null)
+        {
+            var newGravity = GravityLevel / 2;
+            SetGravity(newGravity < 2 ? 2 : newGravity);
+        }
+    }
+
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
@@ -2394,6 +2403,8 @@ public class GameplayControler : MonoBehaviour
 
     public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false)
     {
+        if (nbRows == 0)
+            return Constants.HeightLimiter;
         for (int y = GetHighestBlock(); y >= Constants.HeightLimiter; --y)
         {
             if (y + nbRows >= _playFieldHeight)
@@ -2477,7 +2488,7 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1, param2);
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1);
@@ -2923,9 +2934,10 @@ public class GameplayControler : MonoBehaviour
         }
         _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Constants.HeightLimiter + Constants.LineBreakReach - 1, 0.0f);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _lineBreakLimiter.transform.position + new Vector3(0.0f, 0.5f, 0.0f), opponentRealm);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbLineBreak / 2));
     }
 
-    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
+    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbEmptyRowsOnMiss)
     {
         var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
         if (_rhythmIndicatorBhv == null)
@@ -2937,12 +2949,13 @@ public class GameplayControler : MonoBehaviour
         var beat = Constants.MusicBeat;
         StartCoroutine(Helper.ExecuteAfterDelay(_musicControler.GetDelayForNextBeat(beat), () =>
         {
-            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color);
+            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, nbEmptyRowsOnMiss, opponentRealm);
             return true;
         }));
         var newGravity = GravityLevel / 2;
         SetGravity(newGravity < 2 ? 2 : newGravity);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
+        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1.0f); //Not more because each Missed Empty Row might reduce it
     }
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)

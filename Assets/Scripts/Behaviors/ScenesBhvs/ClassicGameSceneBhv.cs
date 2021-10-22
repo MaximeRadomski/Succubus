@@ -251,6 +251,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                                      "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
         ResetToOpponentGravity(true);
+        _gameplayControler.OnNextOpponent();
         StartOpponentCooldown(sceneInit, true);
     }
 
