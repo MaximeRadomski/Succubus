@@ -44,7 +44,7 @@ public class MusicControlerBhv : MonoBehaviour
     public void HalveVolume()
     {
         _isHalved = true;
-        _audioSource.volume = Constants.MaximumVolumeMusic * (_level / 2.5f);
+        _audioSource.volume = Constants.MaximumVolumeMusic * (_level / 3.0f);
     }
 
     public void Mute()

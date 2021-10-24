@@ -76,6 +76,9 @@ public abstract class GameSceneBhv : SceneBhv
             Instantiator.New321(_panelGame.transform.position, () =>
                 {
                     Paused = false;
+                    var rhythmIndicator = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>() ?? null;
+                    if (rhythmIndicator != null)
+                        rhythmIndicator.UnpauseBeat();
                 });
             return true;
         }

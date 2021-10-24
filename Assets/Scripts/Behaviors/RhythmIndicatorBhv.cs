@@ -46,6 +46,11 @@ public class RhythmIndicatorBhv : FrameRateBehavior
         StartCoroutine(Beat(_currentId));
     }
 
+    public void UnpauseBeat()
+    {
+        StartCoroutine(Beat(_currentId));
+    }
+
     private IEnumerator Beat(int id)
     {
         if (id == _currentId)
@@ -75,7 +80,10 @@ public class RhythmIndicatorBhv : FrameRateBehavior
             if (_idTilt >= 4)
                 _idTilt = 0;
             yield return new WaitForSeconds(_delay);
-            StartCoroutine(Beat(id));
+            if (_gameplayControler == null)
+                _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
+            if (!_gameplayControler.SceneBhv.Paused)
+                StartCoroutine(Beat(id));
         }
     }
 
@@ -126,7 +134,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
                 Destroy(gameObject);
             }
         }
-        else
+        else if (!exactBeat)
         {
             if (_gameplayControler == null)
                 _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();

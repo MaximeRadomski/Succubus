@@ -342,6 +342,7 @@ public class GameplayControler : MonoBehaviour
             _basketballHoopBhv = Instantiator.NewHoop(this).GetComponent<BasketballHoopBhv>();
             _basketballHoopBhv.RandomizePosition();
         }
+        _rhythmIndicatorBhv = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>() ?? null;
 
         _hasInit = true;
     }
@@ -2199,7 +2200,7 @@ public class GameplayControler : MonoBehaviour
             int yRounded = Mathf.RoundToInt(lineBreaks[i].transform.position.y);
             DeleteLine(yRounded);
         }
-        if (_lineBreakLimiter != null)
+        if (_lineBreakLimiter != null || (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) != null)
         {
             Destroy(_lineBreakLimiter);
             _lineBreakLimiter = null;
@@ -2559,6 +2560,12 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idEmptyRows);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
         Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
+        var nbTries = 0;
+        while (!IsPiecePosValid(CurrentPiece) && nbTries < 10)
+        {
+            CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+            ++nbTries;
+        }
     }
 
     private void AttackVisionBlock(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbSeconds)
@@ -2927,7 +2934,7 @@ public class GameplayControler : MonoBehaviour
         Constants.LineBreakReach += nbLineBreak;
         if (Constants.LineBreakReach > 15)
             Constants.LineBreakReach = 15;
-        if (_lineBreakLimiter == null)
+        if (_lineBreakLimiter == null && (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) == null)
         {
             _lineBreakLimiter = this.Instantiator.NewLineBreakLimiter(opponentRealm);
             _lineBreakLimiter.transform.SetParent(PlayFieldBhv.transform);
@@ -2940,7 +2947,7 @@ public class GameplayControler : MonoBehaviour
     private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbEmptyRowsOnMiss)
     {
         var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
-        if (_rhythmIndicatorBhv == null)
+        if (_rhythmIndicatorBhv == null && (_rhythmIndicatorBhv = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>()) == null)
         {
             _rhythmIndicatorBhv = this.Instantiator.NewRhythmIndicator(color);
             _rhythmIndicatorBhv.transform.SetParent(PlayFieldBhv.transform);
