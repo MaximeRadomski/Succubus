@@ -8,9 +8,9 @@ public static class Constants
     public const bool BetaMode = true;
     public const bool CharactersDebug = false;
     public const bool ItemsDebug = false;
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool ResourcesDebug = false;
-    public const bool TattoosDebug = false;
+    public const bool TattoosDebug = true;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;
@@ -348,6 +348,7 @@ public static class Constants
     public static int SlavWheelStreak = 0;
     public static int LineBreakReach = 0;
     public static int LineBreakCount = 0;
+    public static int MusicAttackCount = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -381,6 +382,7 @@ public static class Constants
         SlavWheelStreak = 0;
         LineBreakReach = 0;
         LineBreakCount = 0;
+        MusicAttackCount = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
