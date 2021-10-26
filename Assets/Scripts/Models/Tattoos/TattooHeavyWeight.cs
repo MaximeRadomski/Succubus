@@ -21,6 +21,6 @@ public class TattooHeavyWeight : Tattoo
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damage, but each time you hard drop a piece from more than 1 lines, it pounds your gameplay!";
+        return $"you deal {StatToString("+", "%")} damage, but each time you hard drop a piece from more than 1 lines, it pounds your playfield!";
     }
 }

@@ -9,7 +9,7 @@ public class TattooHedgehog : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Rare;
-        MaxLevel = 10;
+        MaxLevel = 5;
     }
 
     public override void ApplyToCharacter(Character character)

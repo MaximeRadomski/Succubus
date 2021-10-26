@@ -111,7 +111,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
             child.GetComponent<SpriteRenderer>().color = color;
     }
 
-    public bool IsInBeat(bool exactBeat = false)
+    public bool IsInBeat(bool exactBeat)
     {
         bool isInBeat;
         bool isInCurrentBeat;

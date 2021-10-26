@@ -1007,7 +1007,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Left;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
         {
             _leftHeld = _rightHeld = -100;
             return;
@@ -1072,7 +1072,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Right;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
         {
             _leftHeld = _rightHeld = -100;
             return;
@@ -1173,7 +1173,7 @@ public class GameplayControler : MonoBehaviour
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
             return;
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat(exactBeat:true))
+        if (_rhythmIndicatorBhv != null && !IsInBeat(exactBeat:true))
             return;
         if (_isOldSchoolGameplay && _needDownRelease)
             return;
@@ -1239,7 +1239,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
             return;
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1393,7 +1393,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Clock;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1519,7 +1519,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.AntiClock;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1643,7 +1643,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Rotation180;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1706,7 +1706,7 @@ public class GameplayControler : MonoBehaviour
                 _inputWhileLocked = KeyBinding.Hold;
             return;
         }
-        if (_rhythmIndicatorBhv != null && !_rhythmIndicatorBhv.IsInBeat())
+        if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
         if (Constants.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -2921,6 +2921,13 @@ public class GameplayControler : MonoBehaviour
         if (Character.BassGuitarBonus > 0 && Constants.MusicAttackCount <= Character.BassGuitarBonus)
             note = KeyBinding.None;
         _partitionBhv.NextNote(note);
+    }
+
+    private bool IsInBeat(bool exactBeat = false)
+    {
+        if (Character.BassGuitarBonus > 0 && Constants.MusicAttackCount <= Character.BassGuitarBonus)
+            return true;
+        return _rhythmIndicatorBhv.IsInBeat(exactBeat);
     }
 
     public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLinesToShrink)

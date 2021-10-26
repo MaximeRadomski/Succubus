@@ -9,7 +9,7 @@ public class TattooForgottenDream : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 2;
         Rarity = Rarity.Rare;
-        MaxLevel = 5;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)

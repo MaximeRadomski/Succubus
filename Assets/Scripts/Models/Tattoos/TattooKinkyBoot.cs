@@ -21,6 +21,6 @@ public class TattooKinkyBoot : Tattoo
 
     public override string GetDescription()
     {
-        return $"increases gate attacks wideness by {StatToString(after: Stat * Level == 1 ? " block" : " blocks")}\n(allows you to double jump as well)";
+        return $"increases gate attacks wideness by {StatToString(after: Stat * Level == 1 ? " block" : " blocks")}";
     }
 }

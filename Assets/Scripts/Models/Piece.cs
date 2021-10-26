@@ -185,11 +185,12 @@ public class Piece : MonoBehaviour
                 id = 0;
             if (remainingBlocks <= 0)
                 break;
+            int posId = Random.Range(0, 4);
             for (int i = 0; i < 4; ++i)
             {
                 var child = transform.GetChild(id);
-                int x = i == 0 || i == 2 ? 0 : (i == 1 ? 1 : -1);
-                int y = i == 1 || i == 3 ? 0 : (i == 0 ? 1 : -1);
+                int x = posId == 0 || posId == 2 ? 0 : (posId == 1 ? 1 : -1);
+                int y = posId == 1 || posId == 3 ? 0 : (posId == 0 ? 1 : -1);
                 int roundedChildX = Mathf.RoundToInt(child.position.x);
                 int roundedChildY = Mathf.RoundToInt(child.position.y);
 
@@ -202,6 +203,8 @@ public class Piece : MonoBehaviour
                     AddRandomBlocks(realm, --nbBlocks, instantiator, ghost, ghostColor);
                     return;
                 }
+                if (++posId == 4)
+                    posId = 0;
             }
             ++id;
             if (id == initialRandomBlockId)
