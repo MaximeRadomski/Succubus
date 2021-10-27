@@ -41,23 +41,23 @@ public enum AttackType
     [Prefixe(null)]
     [Suffixe(" pieces")]
     [Description("Air Piece")]
-    AirPiece = 8, //Makes your next 'param1' pieces transparent
+    AirPiece = 8, //Makes your next (param1) pieces transparent
     [Prefixe(null)]
     [Suffixe(null)]
     [Description("Forced Block")]
-    ForcedBlock = 9, //'param2' blocks that are added to the next 'param1' pieces
+    ForcedBlock = 9, //(param2) blocks that are added to the next (param1) pieces
     [Prefixe(null)]
     [Suffixe(" pieces")]
     [Description("Upside Down")]
-    MirrorMirror = 10, //Reverse the camera on 'param2' (0 = x, 1 = y, 2 = xy) axis for 'param1' pieces
+    MirrorMirror = 10, //Reverse the camera on (param2) (0 = x, 1 = y, 2 = xy) axis for (param1) pieces
     [Prefixe(null)]
     [Suffixe(" pieces")]
     [Description("Intoxication")]
-    Intoxication = 11, //Makes you drunk for 'param1' pieces
+    Intoxication = 11, //Makes you drunk for (param1) pieces
     [Prefixe(null)]
     [Suffixe(null)]
     [Description("Drone")]
-    Drone = 12, //Invokes a drone that drops 'param1' (number) 'param2' (type) rows until destroyed
+    Drone = 12, //Invokes a drone that drops (param1) (number) (param2) (type) rows until destroyed
     [Prefixe(null)]
     [Suffixe(null)]
     [Description("Shift")]

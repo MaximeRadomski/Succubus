@@ -29,6 +29,7 @@ public class GameplayControler : MonoBehaviour
     private RealmTree _realmTree;
     private Realm _characterRealm;
     private Realm _levelRealm;
+    private Difficulty _difficulty;
 
     private int _das;
     private int _dasMax;
@@ -58,6 +59,7 @@ public class GameplayControler : MonoBehaviour
     private int _dropBombCooldown;
     private bool _usingItem;
     private bool _hasGate;
+    private bool _hasMovedOrRotatedCurrentPiece;
 
     private GameObject _spawner;
     private GameObject _holder;
@@ -189,11 +191,12 @@ public class GameplayControler : MonoBehaviour
 
     public void CleanPlayerPrefs()
     {
+        var run = PlayerPrefsHelper.GetRun();
         Bag = null;
         _characterSpecial?.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (PlayFieldBhv != null)
+        if (PlayFieldBhv != null && _difficulty < Difficulty.Divine)
             Destroy(PlayFieldBhv.gameObject);
         Constants.InputLocked = false;
     }
@@ -224,6 +227,13 @@ public class GameplayControler : MonoBehaviour
         SetGravity(level);
         _characterRealm = characterRealm;
         _levelRealm = levelRealm;
+        if (_isTraining.Value)
+            _difficulty = Difficulty.Normal;
+        else
+        {
+            var run = PlayerPrefsHelper.GetRun();
+            _difficulty = run?.Difficulty ?? Difficulty.Normal;
+        }
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -609,21 +619,8 @@ public class GameplayControler : MonoBehaviour
         if (level < 0)
             level = 0;
         GravityLevel = level;
-        
-        Realm realm;
-        Difficulty difficulty;
-        if (_isTraining.Value)
-        {
-            realm = Realm.Hell;
-            difficulty = Difficulty.Normal;
-        }
-        else
-        {
-            var run = PlayerPrefsHelper.GetRun();
-            realm = run.CurrentRealm;
-            difficulty = run.Difficulty;
-        }        
-        GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{difficulty.ToString().ToLower()}\ngrav: {GravityLevel}";
+                
+        GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(_levelRealm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(_levelRealm, TextType.succubus3x5, TextCode.c43B)}{_difficulty.ToString().ToLower()}\ngrav: {GravityLevel}";
 
         GravityDelay = Constants.GravityDelay;
         SetLockDelay();
@@ -806,6 +803,7 @@ public class GameplayControler : MonoBehaviour
         if (_isScrewed)
             CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
         DropGhost();
+        _hasMovedOrRotatedCurrentPiece = false;
         CheckInputWhileLocked();
     }
     public Func<bool, bool> AfterSpawn; //Parameter bool trueSpawn -> not from hold)
@@ -1030,6 +1028,7 @@ public class GameplayControler : MonoBehaviour
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
+        _hasMovedOrRotatedCurrentPiece = true;
     }
 
     public void LeftHeld()
@@ -1060,6 +1059,7 @@ public class GameplayControler : MonoBehaviour
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
+        _hasMovedOrRotatedCurrentPiece = true;
         _arr = 0;
     }
 
@@ -1094,7 +1094,8 @@ public class GameplayControler : MonoBehaviour
             if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Right);
         }
-            DropGhost();
+        DropGhost();
+        _hasMovedOrRotatedCurrentPiece = true;
     }
 
     public void RightHeld()
@@ -1125,6 +1126,7 @@ public class GameplayControler : MonoBehaviour
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
+        _hasMovedOrRotatedCurrentPiece = true;
         _arr = 0;
     }
 
@@ -1499,6 +1501,7 @@ public class GameplayControler : MonoBehaviour
                     currentPieceModel.ApplyClassicBlocksNoRotation();
                 if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.Clock);
+                _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
             else
@@ -1625,6 +1628,7 @@ public class GameplayControler : MonoBehaviour
                     currentPieceModel.ApplyClassicBlocksNoRotation();
                 if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.AntiClock);
+                _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
             else
@@ -1688,6 +1692,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.Rotation180);
+                _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
             else
@@ -1763,6 +1768,7 @@ public class GameplayControler : MonoBehaviour
             if (_isScrewed)
                 CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
             DropGhost();
+            _hasMovedOrRotatedCurrentPiece = false;
             CheckInputWhileLocked();
         }
         if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
@@ -2065,7 +2071,13 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idPerfect);
                 _characterSpecial?.OnPerfectClear();
                 SceneBhv.OnPerfectClear();
-            }                
+            }
+            
+            if (Character.NoodleShield > 0 && !_hasMovedOrRotatedCurrentPiece && Constants.NoodleShieldCount < Character.NoodleShield)
+            {
+                var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Constants.CurrentRemainingSimpShields++, Character.Realm);
+                Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, Character.Realm);
+            }
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
@@ -2418,23 +2430,28 @@ public class GameplayControler : MonoBehaviour
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
     {
+        var attackBoost = 0;
+        if (_difficulty >= Difficulty.Infernal)
+            attackBoost = 1;
+        if (_difficulty >= Difficulty.Divine2)
+            attackBoost += _difficulty.GetHashCode() - Difficulty.Divine2.GetHashCode() + 1;
         VibrationService.Vibrate();
         switch (type)
         {
             case AttackType.DarkRow:
-                AttackDarkRows(opponentInstance, param1, opponentRealm);
+                AttackDarkRows(opponentInstance, param1 + attackBoost, opponentRealm);
                 break;
             case AttackType.WasteRow:
-                AttackWasteRows(opponentInstance, param1, opponentRealm, param2);
+                AttackWasteRows(opponentInstance, param1 + attackBoost, opponentRealm, param2);
                 break;
             case AttackType.LightRow:
-                AttackLightRows(opponentInstance, param1, opponentRealm, param2);
+                AttackLightRows(opponentInstance, param1 + (2 * attackBoost), opponentRealm, param2 + (2 * attackBoost));
                 break;
             case AttackType.EmptyRow:
-                AttackEmptyRows(opponentInstance, param1, opponentRealm);
+                AttackEmptyRows(opponentInstance, param1 + (2 * attackBoost), opponentRealm);
                 break;
             case AttackType.VisionBlock:
-                AttackVisionBlock(opponentInstance, param1, opponentRealm, param2);
+                AttackVisionBlock(opponentInstance, param1 + (2 * attackBoost), opponentRealm, param2 + attackBoost);
                 break;
             case AttackType.ForcedPiece:
                 AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
@@ -2443,47 +2460,47 @@ public class GameplayControler : MonoBehaviour
                 AttackDrill(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.AirPiece:
-                AttackAirPiece(opponentInstance, opponentRealm, param1);
+                AttackAirPiece(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.ForcedBlock:
-                AttackForcedBlock(opponentInstance, opponentRealm, param1, param2);
+                AttackForcedBlock(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.MirrorMirror:
             case AttackType.Intoxication:
-                AttackCameraEffects(type, opponentInstance, opponentRealm, param1, param2);
+                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Drone:
-                AttackDrone(opponentInstance, opponentRealm, param1, param2);
+                AttackDrone(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Shift:
                 AttackShift(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.Gate:
-                AttackGate(opponentInstance, opponentRealm, param1);
+                AttackGate(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.Partition:
-                AttackPartition(opponentInstance, opponentRealm, param1, param2);
+                AttackPartition(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Shrink:
-                AttackShrink(opponentInstance, opponentRealm, param1);
+                AttackShrink(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.OldSchool:
-                AttackOldSchool(opponentInstance, opponentRealm, param1, param2);
+                AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + (2 * attackBoost));
                 break;
             case AttackType.Screwed:
-                AttackScrewed(opponentInstance, opponentRealm, param1);
+                AttackScrewed(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.DropBomb:
                 AttackDropBomb(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.Tunnel:
-                AttackTunnel(opponentInstance, opponentRealm, param1);
+                AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1, param2);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1 + (2 * attackBoost), param2 + attackBoost);
                 break;
             case AttackType.LineBreak:
-                AttackLineBreak(opponentInstance, opponentRealm, param1);
+                AttackLineBreak(opponentInstance, opponentRealm, param1 + (2 * attackBoost));
                 break;
         }
         UpdateItemAndSpecialVisuals();

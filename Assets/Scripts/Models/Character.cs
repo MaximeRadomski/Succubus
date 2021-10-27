@@ -88,6 +88,7 @@ public class Character : Loot
     public int SlavWheelDamagePercentBonus = 0;
     public int DevilsContractMalus = 0;
     public int BassGuitarBonus = 0;
+    public int NoodleShield = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

@@ -371,13 +371,17 @@ public class Instantiator : MonoBehaviour
         tmpFightIntroInstance.GetComponent<FightIntroBhv>().Init(character, opponents, resultAction);
     }
 
-    public void NewSimpShield(Vector3 parentPosition, Vector3 localPosition, Realm realm, int sortingId)
+    public GameObject NewSimpShield(Vector3 parentPosition, int id, Realm realm)
     {
+        var line = id / 3;
+        var column = id % 3;
+        var localPosition = new Vector3(-1.5f + (1.5f * column), -2.6f + (1.5f * line), 0.0f);
         var tmpShieldObject = Resources.Load<GameObject>("Prefabs/SimpShield");
         var tmpShieldInstance = Instantiate(tmpShieldObject, parentPosition + localPosition, tmpShieldObject.transform.rotation);
         tmpShieldInstance.name = Constants.GoSimpShield;
         tmpShieldInstance.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{6 + realm.GetHashCode()}");
-        tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = sortingId;
+        tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = id;
+        return tmpShieldInstance;
     }
 
     public FillTargetBhv NewFillTarget(Realm realm, int nbBlocks, GameplayControler gameplayControler)

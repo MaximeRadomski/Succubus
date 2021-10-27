@@ -22,6 +22,7 @@ public class DifficultySceneBhv : SceneBhv
     private TMPro.TextMeshPro _cooldowns;
     private TMPro.TextMeshPro _hpMax;
     private TMPro.TextMeshPro _gravity;
+    private TMPro.TextMeshPro _infoStr;
 
     private InputControlerBhv _inputControlerBhv;
 
@@ -64,6 +65,7 @@ public class DifficultySceneBhv : SceneBhv
         _cooldowns = GameObject.Find("Cooldowns").GetComponent<TMPro.TextMeshPro>();
         _hpMax = GameObject.Find("HpMax").GetComponent<TMPro.TextMeshPro>();
         _gravity = GameObject.Find("Gravity").GetComponent<TMPro.TextMeshPro>();
+        _infoStr = GameObject.Find("InfoStr").GetComponent<TMPro.TextMeshPro>();
 
         GameObject.Find(Constants.GoButtonBackName).GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
         (_buttonPlay = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = Play;
@@ -134,6 +136,12 @@ public class DifficultySceneBhv : SceneBhv
             _hpMax.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Max HP: {Constants.MaterialEnd} !? ";
             _gravity.text = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}Gravity: {Constants.MaterialEnd} !? ";
         }
+        var infoStr = string.Empty;
+        if (difficulty >= Difficulty.Infernal)
+            infoStr += "stronger opponents attacks.";
+        if (difficulty >= Difficulty.Divine)
+            infoStr += "\nno playield clearing after a fight.";
+        _infoStr.text = infoStr;
         PlayerPrefsHelper.SaveDifficulty(difficulty);
     }
 

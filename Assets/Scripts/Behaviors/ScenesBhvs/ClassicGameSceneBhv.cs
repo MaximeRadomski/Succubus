@@ -142,7 +142,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             for (int i = 0; i < Constants.CurrentRemainingSimpShields; ++i)
             {
-                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, new Vector3(-1.5f + (1.5f * i), -2.6f, 0.0f), Character.Realm, 3 - i);
+                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, i, Character.Realm);
             }
         }
         if (Character.FillTargetBlocks > 0)
