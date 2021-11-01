@@ -312,7 +312,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         var loot = Helper.GetLootFromTypeAndId(_currentStep.LootType, _currentStep.LootId);
-        if (loot.LootType == LootType.Character)
+        if (loot?.LootType == LootType.Character)
             PlayerPrefsHelper.AddUnlockedCharacters((Character)loot); //Done here in order to prevent generating a step with the just unlocked character
 
         _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
@@ -322,7 +322,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _run.CurrentItemCooldown = Constants.CurrentItemCooldown - _realmTree.PosthumousItem;
         _run.CurrentItemUses = Constants.CurrentItemUses;
         PlayerPrefsHelper.SaveRun(_run);
-        if (loot.LootType == LootType.Character)
+        if (loot?.LootType == LootType.Character)
         {
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, Character.StartingRealm, AfterCharacterDialog);
             bool AfterCharacterDialog() {
@@ -331,7 +331,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);
                 return true;}
         }
-        else if (loot.LootType == LootType.Item)
+        else if (loot?.LootType == LootType.Item)
         {
             _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
@@ -369,7 +369,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 }
             }
         }
-        else if (loot.LootType == LootType.Resource)
+        else if (loot?.LootType == LootType.Resource)
         {
             _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var amount = 2;
@@ -388,7 +388,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             PlayerPrefsHelper.SaveRun(_run);
             Instantiator.NewPopupYesNo("Resources", $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} added to your resources.", null, "Ka-Ching!", LoadBackAfterVictory);
         }
-        else if (loot.LootType == LootType.Tattoo)
+        else if (loot?.LootType == LootType.Tattoo)
         {
             _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
@@ -576,12 +576,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else if (Constants.CurrentRemainingSimpShields > 0)
         {
             --Constants.CurrentRemainingSimpShields;
-            var shieldObject = GameObject.Find(Constants.GoSimpShield);
-            if (shieldObject != null)
+            var shieldObjects = GameObject.FindGameObjectsWithTag(Constants.TagSimpShield);
+            if (shieldObjects != null && shieldObjects.Length > 0)
             {
                 Instantiator.PopText("blocked", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
                 _soundControler.PlaySound(_idHit);
-                shieldObject.GetComponent<CharacterInstanceBhv>().GetOS();
+                shieldObjects[shieldObjects.Length - 1].GetComponent<CharacterInstanceBhv>().GetOS();
             }
         }
         else if (Helper.RandomDice100(Character.DodgeChance + Constants.AddedDodgeChancePercent))

@@ -14,6 +14,7 @@ TagManager:
   - VisionBlock
   - OverBlend
   - LineBreak
+  - SimpShield
   layers:
   - Default
   - TransparentFX

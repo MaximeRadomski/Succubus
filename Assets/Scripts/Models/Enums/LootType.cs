@@ -8,5 +8,6 @@ public enum LootType
     Item = 1,
     Tattoo = 2,
     Character = 3,
-    Resource = 4
+    Resource = 4,
+
 }

@@ -26,6 +26,8 @@ public class GameplayControler : MonoBehaviour
     public bool CanBeReload = true;
     public bool OpponentDeathScreen = false;
 
+    private TMPro.TextMeshPro _infoRealmDebug;
+
     private RealmTree _realmTree;
     private Realm _characterRealm;
     private Realm _levelRealm;
@@ -119,6 +121,9 @@ public class GameplayControler : MonoBehaviour
         Spawn();
         if (Constants.NameLastScene == Constants.SettingsScene)
             SceneBhv.PauseOrPrevious();
+
+        _infoRealmDebug = GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>();
+        _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\ndebug";
     }
 
     public void GameOver()
@@ -198,6 +203,8 @@ public class GameplayControler : MonoBehaviour
         PlayerPrefsHelper.SaveHolder(null);
         if (PlayFieldBhv != null && _difficulty < Difficulty.Divine)
             Destroy(PlayFieldBhv.gameObject);
+        else
+            ResetPlayHeight(); //If Divine or more, just reset playfield to prevent Height Limiter to the next game
         Constants.InputLocked = false;
     }
 
@@ -2075,6 +2082,7 @@ public class GameplayControler : MonoBehaviour
             
             if (Character.NoodleShield > 0 && !_hasMovedOrRotatedCurrentPiece && Constants.NoodleShieldCount < Character.NoodleShield)
             {
+                ++Constants.NoodleShieldCount;
                 var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Constants.CurrentRemainingSimpShields++, Character.Realm);
                 Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, Character.Realm);
             }
@@ -2181,7 +2189,10 @@ public class GameplayControler : MonoBehaviour
                 int startY = yRounded;
                 int nbRows = lightRowBhv.NbRows;
                 if (lightRowBhv.IsGate)
+                {
                     _hasGate = false;
+                    _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\nfalse";
+                }
                 if (DeleteLightRow(yRounded, lightRowBhv) > 0 && hasDeletedRows == false)
                 {
                     _soundControler.PlaySound(_idCleanRows);
@@ -2879,6 +2890,7 @@ public class GameplayControler : MonoBehaviour
         PlayFieldBhv.Grid[0, lineY].gameObject.tag = Constants.TagLightRows;
         PlayFieldBhv.Grid[0, lineY].gameObject.AddComponent<LightRowBlockBhv>();
         _hasGate = true;
+        _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\ntrue";
         var lightRowBhv = PlayFieldBhv.Grid[0, lineY].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.IsGate = true;
         lightRowBhv.NbRows = 1;
@@ -3195,7 +3207,8 @@ public class GameplayControler : MonoBehaviour
 
     public void ResetPlayHeight()
     {
-        Destroy(_heightLimiter);
+        if (_heightLimiter != null)
+            Destroy(_heightLimiter);
         Constants.HeightLimiter = 0;
         ClearLineSpace();
     }
