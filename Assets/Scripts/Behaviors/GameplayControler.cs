@@ -2883,7 +2883,7 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.IsGate = true;
         lightRowBhv.NbRows = 1;
         lightRowBhv.Cooldown = cooldown;
-        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(holeStartX + 0.5f, lineY));
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(holeStartX + (0.5f * (Character.GateWidener + 1)), lineY));
         tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, lineY]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
