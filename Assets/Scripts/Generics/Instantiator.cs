@@ -19,7 +19,7 @@ public class Instantiator : MonoBehaviour
     public void Init()
     {
         _mainCamera = Helper.GetMainCamera();
-        _isClassic = PlayerPrefsHelper.GetClassicPieces() || Constants.CurrentGameMode == GameMode.TrainingOldSchool;
+        _isClassic = PlayerPrefsHelper.GetClassicPieces() || Cache.CurrentGameMode == GameMode.TrainingOldSchool;
         _hasInit = true;
     }
 
@@ -200,8 +200,8 @@ public class Instantiator : MonoBehaviour
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
         var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
         tmpKeyboardInstance.name = Constants.GoKeyboard;
-        Constants.IncreaseInputLayer(tmpKeyboardInstance.name);
-        Constants.KeyboardUp = true;
+        Cache.IncreaseInputLayer(tmpKeyboardInstance.name);
+        Cache.KeyboardUp = true;
         for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
         {
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
@@ -220,7 +220,7 @@ public class Instantiator : MonoBehaviour
             Init();
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        Cache.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite, defaultPositive);
         return tmpPopupInstance;
     }
@@ -229,7 +229,7 @@ public class Instantiator : MonoBehaviour
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupGameplayButtons");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        Cache.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupGameplayButtons>().Init(resultAction);
     }
 
@@ -263,7 +263,7 @@ public class Instantiator : MonoBehaviour
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpPauseMeuInstance.name);
+        Cache.IncreaseInputLayer(tmpPauseMeuInstance.name);
         tmpPauseMeuInstance.GetComponent<PauseMenuBhv>().Init(this, resumeAction, callingScene, isHorizontal);
         return tmpPauseMeuInstance;
     }
@@ -277,14 +277,14 @@ public class Instantiator : MonoBehaviour
 
     public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, Character character, Opponent opponent, bool isHorizontal = false)
     {
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
         {
             NewPopupYesNo("Unavailable", "info menu is unavailable in old school mode", null, "Ok", null);
             return null;
         }
         var tmpInfoMenuObject = Resources.Load<GameObject>("Prefabs/InfoMenu");
         var tmpInfoMeuInstance = Instantiate(tmpInfoMenuObject, tmpInfoMenuObject.transform.position, tmpInfoMenuObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpInfoMeuInstance.name);
+        Cache.IncreaseInputLayer(tmpInfoMeuInstance.name);
         tmpInfoMeuInstance.GetComponent<InfoMenuBhv>().Init(this, resumeAction, character, opponent, isHorizontal);
         return tmpInfoMeuInstance;
     }
@@ -351,7 +351,7 @@ public class Instantiator : MonoBehaviour
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
+        Cache.IncreaseInputLayer(tmpDialogBoxInstance.name);
         tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, subjectName, secondaryName, secondaryRealm, resultAction, customId, customDialogLibelle);
     }
 
@@ -359,7 +359,7 @@ public class Instantiator : MonoBehaviour
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpDialogBoxInstance.name);
+        Cache.IncreaseInputLayer(tmpDialogBoxInstance.name);
         tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, name, null, Realm.None, resultAction);
     }
 
@@ -367,7 +367,7 @@ public class Instantiator : MonoBehaviour
     {
         var tmpFightIntroObject = Resources.Load<GameObject>("Prefabs/FightIntro");
         var tmpFightIntroInstance = Instantiate(tmpFightIntroObject, position, tmpFightIntroObject.transform.rotation);
-        Constants.IncreaseInputLayer(tmpFightIntroInstance.name);
+        Cache.IncreaseInputLayer(tmpFightIntroInstance.name);
         tmpFightIntroInstance.GetComponent<FightIntroBhv>().Init(character, opponents, resultAction);
     }
 
@@ -448,7 +448,7 @@ public class Instantiator : MonoBehaviour
         }
         for (int x = 0; x < 10; ++x)
         {
-            var maxY = Constants.HeightLimiter - 1;
+            var maxY = Cache.HeightLimiter - 1;
             foreach (Transform child in piece)
             {
                 int roundedX = Mathf.RoundToInt(child.position.x);
@@ -458,7 +458,7 @@ public class Instantiator : MonoBehaviour
                 if (roundedY > maxY)
                     maxY = roundedY;
             }
-            if (maxY > Constants.HeightLimiter - 1)
+            if (maxY > Cache.HeightLimiter - 1)
             {
                 var tmpParticlesInstance = Instantiate(tmpParticlesObject, new Vector3(x, maxY + 0.75f, 0.0f), tmpParticlesObject.transform.rotation);
                 tmpParticlesInstance.GetComponent<LockPieceParticleBhv>().Init(realm);
@@ -470,7 +470,7 @@ public class Instantiator : MonoBehaviour
     {
         if (_mainCamera == null)
             _mainCamera = Helper.GetMainCamera();
-        Constants.InputLocked = true;
+        Cache.InputLocked = true;
         var pos = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         var tmpLoadingObject = Resources.Load<GameObject>($"Prefabs/{Constants.GoRestLoading}");
         var tmpLoadingInstance = Instantiate(tmpLoadingObject, pos, tmpLoadingObject.transform.rotation);

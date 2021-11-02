@@ -15,14 +15,14 @@ public class ItemCreepingTotem : Item
 
     protected override object Effect()
     {
-        if (_character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < _character.DiamondBlocks)
+        if (_character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < _character.DiamondBlocks)
         {
-            ++Constants.CanceledDiamondBlocks;
+            ++Cache.CanceledDiamondBlocks;
             _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), null, Realm.Earth);
             return base.Effect();
         }
         var highestX = -1;
-        var highestY = Constants.HeightLimiter - 1;
+        var highestY = Cache.HeightLimiter - 1;
         for (int x = 0; x < Constants.PlayFieldWidth; ++x)
         {
             var highestYOnX = _gameplayControler.GetHighestBlockOnX(x);
@@ -34,14 +34,14 @@ public class ItemCreepingTotem : Item
         }
         var selectedX = Random.Range(0, Constants.PlayFieldWidth);
         var selectedY = _gameplayControler.GetHighestBlockOnX(selectedX);
-        if (selectedY < Constants.HeightLimiter + 3 && highestY >= Constants.HeightLimiter + 3)
+        if (selectedY < Cache.HeightLimiter + 3 && highestY >= Cache.HeightLimiter + 3)
         {
             selectedY = highestY;
             selectedX = highestX;
         }
-        if (selectedY >= Constants.HeightLimiter)
+        if (selectedY >= Cache.HeightLimiter)
         {
-            var centerY = Random.Range(selectedY >= Constants.HeightLimiter + 3 ? Constants.HeightLimiter + 1 : Constants.HeightLimiter, selectedY - 2);
+            var centerY = Random.Range(selectedY >= Cache.HeightLimiter + 3 ? Cache.HeightLimiter + 1 : Cache.HeightLimiter, selectedY - 2);
             while (centerY < 0 || _gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
                 ++centerY;
             DestroyBlock(selectedX, centerY);
@@ -57,7 +57,7 @@ public class ItemCreepingTotem : Item
     private void DestroyBlock(int roundedX, int roundedY)
     {
         if (roundedX < 0 || roundedX >= Constants.PlayFieldWidth
-            || roundedY < Constants.HeightLimiter || roundedY >= Constants.PlayFieldHeight
+            || roundedY < Cache.HeightLimiter || roundedY >= Constants.PlayFieldHeight
             || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;
         _gameplayControler.Instantiator.NewFadeBlock(Realm.Earth, new Vector3(roundedX, roundedY, 0.0f), 5, 0);

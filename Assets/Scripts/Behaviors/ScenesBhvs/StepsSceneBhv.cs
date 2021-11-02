@@ -40,14 +40,14 @@ public class StepsSceneBhv : SceneBhv
     void Start()
     {
         Init();
-        if (Constants.NameLastScene == Constants.SettingsScene)
+        if (Cache.NameLastScene == Constants.SettingsScene)
             PauseOrPrevious();
     }
 
     protected override void Init()
     {
         base.Init();
-        CameraBhv.Paused = Constants.NameLastScene == Constants.SettingsScene;
+        CameraBhv.Paused = Cache.NameLastScene == Constants.SettingsScene;
         _run = PlayerPrefsHelper.GetRun();
         _character = PlayerPrefsHelper.GetRunCharacter();
 
@@ -102,7 +102,7 @@ public class StepsSceneBhv : SceneBhv
         PositionOnCurrent();
         if (_stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps).LandLordVision)
         {
-            Constants.InputLocked = true;
+            Cache.InputLocked = true;
             Invoke(nameof(OnBossTriggered), 1.0f);
         }
     }
@@ -118,7 +118,7 @@ public class StepsSceneBhv : SceneBhv
 
     private void OnStepClicked()
     {
-        var lastClicked = Constants.LastEndActionClickedName;
+        var lastClicked = Cache.LastEndActionClickedName;
         FocusOnSelected(int.Parse(lastClicked.Substring(0, 2)), int.Parse(lastClicked.Substring(3, 2)));
     }
 
@@ -254,7 +254,7 @@ public class StepsSceneBhv : SceneBhv
         {
             Paused = false;
             CameraBhv.Paused = false;
-            Constants.NameLastScene = SceneManager.GetActiveScene().name;
+            Cache.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
             return true;
         }
@@ -366,7 +366,7 @@ public class StepsSceneBhv : SceneBhv
         _stepsService.DiscoverStepOnPos(_selectedStep.X, _selectedStep.Y, _run);
         PlayerPrefsHelper.SaveRun(_run);
         //PlayerPrefsHelper.SaveCurrentOpponents(_selectedStep.Opponents);
-        Constants.ResetClassicGameCache(_character);
+        Cache.ResetClassicGameCache(_character);
         NavigationService.LoadNextScene(Constants.ClassicGameScene);
     }
 

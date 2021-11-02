@@ -10,9 +10,9 @@ public class SpriteOrderBhv : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        SetSpriteSortingLayerOrder(Constants.InputLayer);
+        SetSpriteSortingLayerOrder(Cache.InputLayer);
         _textMesh = GetComponent<TMPro.TextMeshPro>();
-        SetTextSortingLayerOrder(Constants.InputLayer);
+        SetTextSortingLayerOrder(Cache.InputLayer);
     }
 
     private void SetSpriteSortingLayerOrder(int hundred)

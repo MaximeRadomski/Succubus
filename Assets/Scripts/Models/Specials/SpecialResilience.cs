@@ -10,7 +10,7 @@ public class SpecialResilience : Special
             return false;
         if (!base.Activate())
             return false;
-        Constants.IsNextOpponentAttackCanceled = true;
+        Cache.IsNextOpponentAttackCanceled = true;
         return true;
     }
 }

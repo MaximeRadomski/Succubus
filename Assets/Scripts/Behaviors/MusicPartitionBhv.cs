@@ -80,12 +80,12 @@ public class MusicPartitionBhv : MonoBehaviour
         if (_id >= _notes.Count)
         {
             ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).ResetToOpponentGravity();
-            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () =>
+            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, (System.Func<object>)(() =>
             {
-                Constants.IsEffectAttackInProgress = AttackType.None;
+                Cache.IsEffectAttackInProgress = AttackType.None;
                 Destroy(gameObject);
                 return true;
-            }, lockInputWhile: false));
+            }), lockInputWhile: false));
         }
     }
 

@@ -32,7 +32,7 @@ public static class NavigationService
         NextSceneParameter = parameter;
         if (name == SceneManager.GetActiveScene().name)
             return;
-        Constants.NameLastScene = SceneManager.GetActiveScene().name;
+        Cache.NameLastScene = SceneManager.GetActiveScene().name;
         _path += "/" + name;
         //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(name);
@@ -55,14 +55,14 @@ public static class NavigationService
 
     public static bool IsRootScene()
     {
-        Constants.NameLastScene = SceneManager.GetActiveScene().name;
+        Cache.NameLastScene = SceneManager.GetActiveScene().name;
         var lastSeparator = _path.LastIndexOf('/');
         return string.IsNullOrEmpty(_path) || lastSeparator == 0;
     }
 
     public static void LoadPreviousScene(string onRootPreviousScene = null)
     {
-        Constants.NameLastScene = SceneManager.GetActiveScene().name;
+        Cache.NameLastScene = SceneManager.GetActiveScene().name;
         var lastSeparator = _path.LastIndexOf('/');
         if (string.IsNullOrEmpty(_path) || lastSeparator == 0)
         {

@@ -450,6 +450,22 @@ public class PlayerPrefsHelper : MonoBehaviour
         return tattoosList;
     }
 
+    public static List<Pact> GetCurrentPacts()
+    {
+        var pactsFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        var pactsList = new List<Pact>();
+        if (pactsFullStr == Constants.PpSerializeDefault)
+            return pactsList;
+        var tattooFullStrSplits = pactsFullStr.Split(';');
+        for (int i = 0; i < tattooFullStrSplits.Length; ++i)
+        {
+            var pactStr = tattooFullStrSplits[i];
+            var tmpTattoo = (Pact)Activator.CreateInstance(Type.GetType("Pact" + pactStr));
+            pactsList.Add(tmpTattoo);
+        }
+        return pactsList;
+    }
+
     public static Tattoo GetCurrentInkedTattoo(string name)
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
@@ -602,7 +618,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static int GetDas()
     {
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             return Constants.OldSchoolDas;
         var das = PlayerPrefs.GetInt(Constants.PpDas, Constants.PpDasDefault);
         return das;
@@ -615,7 +631,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static int GetArr()
     {
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             return Constants.OldSchoolArr;
         var arr = PlayerPrefs.GetInt(Constants.PpArr, Constants.PpArrDefault);
         return arr;

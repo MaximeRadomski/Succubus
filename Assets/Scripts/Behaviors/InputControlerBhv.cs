@@ -68,7 +68,7 @@ public class InputControlerBhv : FrameRateBehavior
 
     protected override void FrameUpdate()
     {
-        if (Constants.InputLocked)
+        if (Cache.InputLocked)
             return;
 #if !UNITY_ANDROID || UNITY_EDITOR
         CheckFrameDependentGameKeyboardInputs();
@@ -77,7 +77,7 @@ public class InputControlerBhv : FrameRateBehavior
 
     void OnGUI()
     {
-        if (!Constants.KeyboardUp)
+        if (!Cache.KeyboardUp)
             return;
         if (_anyInputKey == null)
             _anyInputKey = GameObject.Find(Constants.GoKeyboard).transform.Find("InputKeyShift").GetComponent<InputKeyBhv>();
@@ -86,7 +86,7 @@ public class InputControlerBhv : FrameRateBehavior
 
     protected override void NormalUpdate()
     {
-        if (Constants.InputLocked)
+        if (Cache.InputLocked)
             return;
 #if !UNITY_ANDROID || UNITY_EDITOR
         CheckGameKeyboardInputs();
@@ -94,25 +94,25 @@ public class InputControlerBhv : FrameRateBehavior
 #endif
         // IF BACK BUTTON //
 #if UNITY_ANDROID
-        if (Input.GetKeyDown(KeyCode.Escape) && !Constants.EscapeLocked)
+        if (Input.GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyDown(_keyBinding[15]) && !Constants.EscapeLocked)
+        if (Input.GetKeyDown(_keyBinding[15]) && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
         }
 #if UNITY_ANDROID
-        if (Input.GetKeyUp(KeyCode.Escape) && !Constants.EscapeLocked)
+        if (Input.GetKeyUp(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyUp(_keyBinding[15]) && !Constants.EscapeLocked)
+        if (Input.GetKeyUp(_keyBinding[15]) && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
             if (_currentScene == null)
                 GetScene();
-            if (Constants.InputLayer > 0)
+            if (Cache.InputLayer > 0)
             {
-                var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
+                var gameObjectToDestroy = GameObject.Find(Cache.InputTopLayerNames[Cache.InputTopLayerNames.Count - 1]);
                 if (gameObjectToDestroy.name.Contains("Keyboard"))
                     gameObjectToDestroy.transform.GetChild(0).GetComponent<PopupBhv>().ExitPopup();
                 else
@@ -126,7 +126,7 @@ public class InputControlerBhv : FrameRateBehavior
                     else if (!_currentScene.Paused)
                         _mainCamera.gameObject.GetComponent<CameraBhv>().Unfocus();
                 }
-                //Constants.DecreaseInputLayer();
+                //Cache.DecreaseInputLayer();
                 //Destroy(gameObjectToDestroy);
             }
             else
@@ -138,7 +138,7 @@ public class InputControlerBhv : FrameRateBehavior
             }
             return;
         }
-        var currentFrameInputLayer = Constants.InputLayer;
+        var currentFrameInputLayer = Cache.InputLayer;
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
@@ -166,7 +166,7 @@ public class InputControlerBhv : FrameRateBehavior
                         }
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended && _lastDownInput?.name == _currentInput.name)
                         {
-                            Constants.SetLastEndActionClickedName(_currentInput.name);
+                            Cache.SetLastEndActionClickedName(_currentInput.name);
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
                             _lastDownInput = null;
@@ -188,9 +188,9 @@ public class InputControlerBhv : FrameRateBehavior
                 || (_doPhase = Input.GetMouseButton(0)))
             {
 #if !UNITY_ANDROID
-                if (!Constants.OnlyMouseInMenu)
+                if (!Cache.OnlyMouseInMenu)
                 {
-                    Constants.OnlyMouseInMenu = true;
+                    Cache.OnlyMouseInMenu = true;
                     ResetMenuSelector();
                 }
 #endif
@@ -216,7 +216,7 @@ public class InputControlerBhv : FrameRateBehavior
                         }
                         else if (_endPhase && _lastDownInput?.name == _currentInput.name)
                         {
-                            Constants.SetLastEndActionClickedName(_currentInput.name);
+                            Cache.SetLastEndActionClickedName(_currentInput.name);
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
                             _lastDownInput = null;
@@ -356,7 +356,7 @@ public class InputControlerBhv : FrameRateBehavior
         {
             if (_currentScene == null)
                 GetScene();
-            if (_currentScene is TrainingFreeGameSceneBhv trainingScene && Constants.InputLayer == 0)
+            if (_currentScene is TrainingFreeGameSceneBhv trainingScene && Cache.InputLayer == 0)
                 trainingScene.AskRestartTraining();
         }
         HandleFrameKeysPressOrHeld();
@@ -393,7 +393,7 @@ public class InputControlerBhv : FrameRateBehavior
                 var buttonBhv = buttonTaggedGameObjects[i].GetComponent<ButtonBhv>();
                 if (buttonBhv != null
                     && (buttonBhv.BeginActionDelegate != null || buttonBhv.DoActionDelegate != null || buttonBhv.EndActionDelegate != null)
-                    && buttonBhv.Layer == Constants.InputLayer
+                    && buttonBhv.Layer == Cache.InputLayer
                     && buttonBhv.GetComponent<BoxCollider2D>().enabled == true)
                 {
                     if (_gameplayControler != null && buttonBhv.Layer == 0)
@@ -403,7 +403,7 @@ public class InputControlerBhv : FrameRateBehavior
             }
         }
         _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-        if (Constants.InputLayer > _currentInputLayer)
+        if (Cache.InputLayer > _currentInputLayer)
         {
             if (_lastSelectedGameObjects == null)
                 _lastSelectedGameObjects = new List<GameObject>();
@@ -411,7 +411,7 @@ public class InputControlerBhv : FrameRateBehavior
                 _lastSelectedGameObjects.Add(_lastSelectedGameObject);
             ResetMenuSelector(preferedResetPos);
         }
-        else if (Constants.InputLayer < _currentInputLayer)
+        else if (Cache.InputLayer < _currentInputLayer)
         {
             if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
@@ -432,7 +432,7 @@ public class InputControlerBhv : FrameRateBehavior
             _lastSelectedGameObject = null;
             ResetMenuSelector(preferedResetPos);
         }
-        _currentInputLayer = Constants.InputLayer;
+        _currentInputLayer = Cache.InputLayer;
 #endif
     }
 
@@ -442,8 +442,8 @@ public class InputControlerBhv : FrameRateBehavior
             Init();
         if (_currentScene == null)
             GetScene();
-        MenuSelector?.Reset(Constants.OnlyMouseInMenu ? null : preferedResetPos);
-        if (!Constants.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
+        MenuSelector?.Reset(Cache.OnlyMouseInMenu ? null : preferedResetPos);
+        if (!Cache.OnlyMouseInMenu && (_availableButtons != null && _availableButtons.Count > 0))
         {
             //if (_mainCamera != null && _mainCamera.GetComponent<CameraBhv>().IsSliding)
             //    return;
@@ -453,7 +453,7 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void CheckMenuKeyboardInputs()
     {
-        if (MenuSelector == null || Constants.KeyboardUp)
+        if (MenuSelector == null || Cache.KeyboardUp)
             return;
         if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused)
         {
@@ -461,9 +461,9 @@ public class InputControlerBhv : FrameRateBehavior
             _currentInputLayer = 0;
             return;
         }
-        if (_currentInputLayer != Constants.InputLayer || _availableButtons == null || _availableButtons.Count == 0)
+        if (_currentInputLayer != Cache.InputLayer || _availableButtons == null || _availableButtons.Count == 0)
         {
-            if (!Constants.OnlyMouseInMenu)
+            if (!Cache.OnlyMouseInMenu)
                 InitMenuKeyboardInputs();
             else if (_lastSelectedGameObjects != null)
                 _lastSelectedGameObjects.Clear();
@@ -509,9 +509,9 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void FindNearest(Direction direction, float? visionConeMult = null, bool retry = false, bool soundMuted = false, bool reset = false)
     {
-        if (Constants.OnlyMouseInMenu)
+        if (Cache.OnlyMouseInMenu)
             direction = Direction.Down;
-        Constants.OnlyMouseInMenu = false;
+        Cache.OnlyMouseInMenu = false;
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
         if (_mainCamera == null)
@@ -541,11 +541,11 @@ public class InputControlerBhv : FrameRateBehavior
                     || (direction == Direction.Down && button.transform.position.y > MenuSelector.transform.position.y - precision / 2)
                     || (direction == Direction.Left && button.transform.position.x > MenuSelector.transform.position.x - precision / 2)
                     || (direction == Direction.Right && button.transform.position.x < MenuSelector.transform.position.x + precision / 2)
-                    || button.GetComponent<ButtonBhv>().Layer != Constants.InputLayer
+                    || button.GetComponent<ButtonBhv>().Layer != Cache.InputLayer
                     || (!soundMuted && !Helper.IsInsideCamera(_mainCamera, button.transform.position))
                     || (!soundMuted && button.GetComponent<MaskLinkerBhv>() != null && !Helper.IsSpriteRendererVisible(button, button.GetComponent<MaskLinkerBhv>().Mask)))
                     continue;
-                if (reset && button.GetComponent<ButtonBhv>().IsMenuSelectorResetButton && button.GetComponent<ButtonBhv>().Layer == Constants.InputLayer)
+                if (reset && button.GetComponent<ButtonBhv>().IsMenuSelectorResetButton && button.GetComponent<ButtonBhv>().Layer == Cache.InputLayer)
                 {
                     hasMenuSelectorResetButton = true;
                     selectedGameObject = button;
@@ -603,9 +603,9 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void ButtonOnSelector()
     {
-        if (Constants.OnlyMouseInMenu || _availableButtons == null || _availableButtons.Count == 0)
+        if (Cache.OnlyMouseInMenu || _availableButtons == null || _availableButtons.Count == 0)
         {
-            if (Constants.OnlyMouseInMenu)
+            if (Cache.OnlyMouseInMenu)
                 FindNearest(Direction.Down);
             return;
         }
@@ -629,7 +629,7 @@ public class InputControlerBhv : FrameRateBehavior
         if (selectedGameObject != null)
         {
             MenuSelector.Click(selectedGameObject);
-            Constants.LastEndActionClickedName = selectedGameObject.name;
+            Cache.LastEndActionClickedName = selectedGameObject.name;
             var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
             buttonBhv.BeginAction(selectedGameObject.transform.position);
             buttonBhv.DoAction(selectedGameObject.transform.position);

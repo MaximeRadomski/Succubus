@@ -15,7 +15,7 @@ public abstract class InputBhv : MonoBehaviour
     public virtual void SetPrivates()
     {
         if (!ForcedLayer)
-            Layer = Constants.InputLayer;
+            Layer = Cache.InputLayer;
     }
 
     public abstract void BeginAction(Vector2 initialTouchPosition);

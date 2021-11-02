@@ -41,9 +41,9 @@ public class SettingsDisplaySceneBhv : SceneBhv
         SetButtons();
 
 #if !UNITY_ANDROID
-        Constants.SetLastEndActionClickedName($"Res{PlayerPrefsHelper.GetResolution()}");
+        Cache.SetLastEndActionClickedName($"Res{PlayerPrefsHelper.GetResolution()}");
         SetRes(PlayerPrefsHelper.GetResolution());
-        Constants.SetLastEndActionClickedName($"Fullscreen{(PlayerPrefsHelper.GetFullscreen() == true ? "On" : "Off")}");
+        Cache.SetLastEndActionClickedName($"Fullscreen{(PlayerPrefsHelper.GetFullscreen() == true ? "On" : "Off")}");
         SetFullscreen(PlayerPrefsHelper.GetFullscreen());
 #else
         _fullscreenContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
@@ -84,7 +84,7 @@ public class SettingsDisplaySceneBhv : SceneBhv
 
     private void SetFullscreen(bool result)
     {
-        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);
+        var choiceGameObject = GameObject.Find(Cache.LastEndActionClickedName);
         _fullscreenSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _fullscreenSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveFullscreen(result);
         Screen.SetResolution(Screen.width, Screen.height, result);

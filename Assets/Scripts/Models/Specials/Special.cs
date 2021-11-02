@@ -18,7 +18,7 @@ public abstract class Special
 
     public virtual bool Activate()
     {
-        if (Constants.SelectedCharacterSpecialCooldown > 0)
+        if (Cache.SelectedCharacterSpecialCooldown > 0)
             return false;
         ResetCooldown();
         _gameplayControler.Instantiator.PopText(_character.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
@@ -33,9 +33,9 @@ public abstract class Special
 
     public virtual void ResetCooldown()
     {
-        Constants.SelectedCharacterSpecialCooldown = _character.Cooldown - _character.SpecialTotalCooldownReducer;
-        if (Constants.SelectedCharacterSpecialCooldown < 1)
-            Constants.SelectedCharacterSpecialCooldown = 1;
+        Cache.SelectedCharacterSpecialCooldown = _character.Cooldown - _character.SpecialTotalCooldownReducer;
+        if (Cache.SelectedCharacterSpecialCooldown < 1)
+            Cache.SelectedCharacterSpecialCooldown = 1;
     }
 
     public virtual void OnNewPiece(GameObject piece)
@@ -50,11 +50,11 @@ public abstract class Special
 
     public virtual void OnLinesCleared(int nbLines, bool isB2B)
     {
-        Constants.SelectedCharacterSpecialCooldown -= nbLines * _character.SpecialCooldownReducer;
+        Cache.SelectedCharacterSpecialCooldown -= nbLines * _character.SpecialCooldownReducer;
     }
 
     public virtual void OnPerfectClear()
     {
-        Constants.SelectedCharacterSpecialCooldown = 0;
+        Cache.SelectedCharacterSpecialCooldown = 0;
     }
 }

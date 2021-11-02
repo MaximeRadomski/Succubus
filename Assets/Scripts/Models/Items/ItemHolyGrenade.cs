@@ -15,7 +15,7 @@ public class ItemHolyGrenade : Item
     protected override object Effect()
     {
         int end = _gameplayControler.GetHighestBlock();
-        for (int y = Constants.HeightLimiter; y <= end; ++y)
+        for (int y = Cache.HeightLimiter; y <= end; ++y)
         {
             if (y >= 40)
                 break;

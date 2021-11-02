@@ -24,16 +24,16 @@ public abstract class GameSceneBhv : SceneBhv
         _gameplayControler = GetComponent<GameplayControler>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = PauseOrPrevious;
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        if (Cache.CurrentGameMode == GameMode.TrainingFree
+            || Cache.CurrentGameMode == GameMode.TrainingDummy)
             Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
-        else if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        else if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             Character = CharactersData.CustomCharacters[0];
         else
             Character = PlayerPrefsHelper.GetRunCharacter();
         Character.BoostAttack = 0;
         _characterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{Character.Kind}");
         else
             _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
@@ -47,10 +47,10 @@ public abstract class GameSceneBhv : SceneBhv
         Paused = true;
         CameraBhv.Paused = true;
         _musicControler.HalveVolume();
-        Constants.OnResumeLastPiecePosition = _gameplayControler.CurrentPiece.transform.position;
-        Constants.OnResumeLastPieceRotation = _gameplayControler.CurrentPiece.transform.rotation;
+        Cache.OnResumeLastPiecePosition = _gameplayControler.CurrentPiece.transform.position;
+        Cache.OnResumeLastPieceRotation = _gameplayControler.CurrentPiece.transform.rotation;
         if (_gameplayControler.CurrentPiece.transform.childCount > 4)
-            Constants.OnResumeLastForcedBlocks = _gameplayControler.CurrentPiece.transform.childCount - 4;
+            Cache.OnResumeLastForcedBlocks = _gameplayControler.CurrentPiece.transform.childCount - 4;
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
     }
 
@@ -68,7 +68,7 @@ public abstract class GameSceneBhv : SceneBhv
         if (resume)
         {
             Paused = true;
-            Constants.NameLastScene = SceneManager.GetActiveScene().name;
+            Cache.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
             //var menuSelector = GameObject.Find(Constants.GoMenuSelector);
             //if (menuSelector != null)
@@ -89,16 +89,16 @@ public abstract class GameSceneBhv : SceneBhv
             Destroy(GameObject.Find("PlayField"));
         object OnBlend(bool result)
         {
-            if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+            if (Cache.CurrentGameMode == GameMode.TrainingFree
+            || Cache.CurrentGameMode == GameMode.TrainingDummy)
                 NavigationService.LoadBackUntil(Constants.CharSelScene);
-            else if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+            else if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
                 NavigationService.LoadBackUntil(Constants.TrainingChoiceScene);
             else
             {
                 PlayerPrefsHelper.SaveIsInFight(false);
                 var run = PlayerPrefsHelper.GetRun();
-                Constants.GameOverParams = $"Abandonment|{ run.CurrentRealm}|{run.RealmLevel}";
+                Cache.GameOverParams = $"Abandonment|{ run.CurrentRealm}|{run.RealmLevel}";
                 if (run.CharacterEncounterAvailability)
                     PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
                 PlayerPrefsHelper.ResetRun();

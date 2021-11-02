@@ -39,45 +39,45 @@ public class HighScoreSceneBhv : SceneBhv
         var scoreValueStr = "";
         var encryptedScore = "";
         var type = UnityEngine.Random.Range(0, Mock.test.Count);
-        if (Constants.CurrentHighScoreContext != null)
+        if (Cache.CurrentHighScoreContext != null)
         {
-            if (!Helper.FloatEqualsPrecision(Constants.CurrentHighScoreContext[0], Constants.CurrentHighScoreContext[5], Constants.CurrentHighScoreContext[0] * 0.005f)
-                || Constants.CurrentHighScoreContext[1] != Constants.CurrentHighScoreContext[6])
+            if (!Helper.FloatEqualsPrecision(Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[5], Cache.CurrentHighScoreContext[0] * 0.005f)
+                || Cache.CurrentHighScoreContext[1] != Cache.CurrentHighScoreContext[6])
             {
-                Constants.CurrentHighScoreContext[0] = 0;
+                Cache.CurrentHighScoreContext[0] = 0;
                 scoreValueStr = "altered score";
                 _title.text = "Cheat Detected";
             }
             else
             {
-                scoreValueStr = Constants.CurrentHighScoreContext[0].ToString();
-                encryptedScore = Mock.Md5WithKey(Constants.CurrentHighScoreContext[0].ToString(), type);
+                scoreValueStr = Cache.CurrentHighScoreContext[0].ToString();
+                encryptedScore = Mock.Md5WithKey(Cache.CurrentHighScoreContext[0].ToString(), type);
             }
-            GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{scoreValueStr}\n{Constants.CurrentHighScoreContext[1]}\n{Constants.CurrentHighScoreContext[2]}\n{Constants.CurrentHighScoreContext[3]}";
-            if (Constants.CurrentHighScoreContext.Count > 4)
-                GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Constants.CurrentHighScoreContext[4]);
+            GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{scoreValueStr}\n{Cache.CurrentHighScoreContext[1]}\n{Cache.CurrentHighScoreContext[2]}\n{Cache.CurrentHighScoreContext[3]}";
+            if (Cache.CurrentHighScoreContext.Count > 4)
+                GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Cache.CurrentHighScoreContext[4]);
             if (_isOldSchool)
                 GameObject.Find("CharacterContext").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/EarthOpponents_6");
-            if (_scoreHistory == null || _scoreHistory.Count == 0 || Constants.CurrentHighScoreContext[0] > _scoreHistory[0])
+            if (_scoreHistory == null || _scoreHistory.Count == 0 || Cache.CurrentHighScoreContext[0] > _scoreHistory[0])
                 _title.text = "New High Score";
-            if (Constants.CurrentHighScoreContext[0] > 0)
-                _scoreHistory.Add(Constants.CurrentHighScoreContext[0]);
+            if (Cache.CurrentHighScoreContext[0] > 0)
+                _scoreHistory.Add(Cache.CurrentHighScoreContext[0]);
 
         }
         _scoreHistory.Sort();
         _scoreHistory.Reverse();
         var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
-        if (Constants.CurrentHighScoreContext != null && Constants.CurrentHighScoreContext[0] >= _scoreHistory[0])
+        if (Cache.CurrentHighScoreContext != null && Cache.CurrentHighScoreContext[0] >= _scoreHistory[0])
         {
-            PlayerPrefsHelper.SaveTrainingHighestScore(Constants.CurrentHighScoreContext, encryptedScore, type, _isOldSchool);
+            PlayerPrefsHelper.SaveTrainingHighestScore(Cache.CurrentHighScoreContext, encryptedScore, type, _isOldSchool);
             TrySendLocalHighest(null);
         }
-        else if (Constants.CurrentHighScoreContext != null && lastCredentials != null && lastCredentials.PlayerName != null)
+        else if (Cache.CurrentHighScoreContext != null && lastCredentials != null && lastCredentials.PlayerName != null)
         {
-            var notHighestScoreButStill = new HighScoreDto(lastCredentials.PlayerName, Constants.CurrentHighScoreContext[0], Constants.CurrentHighScoreContext[1], Constants.CurrentHighScoreContext[2], Constants.CurrentHighScoreContext[3], Constants.CurrentHighScoreContext[4], type, encryptedScore);
+            var notHighestScoreButStill = new HighScoreDto(lastCredentials.PlayerName, Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[1], Cache.CurrentHighScoreContext[2], Cache.CurrentHighScoreContext[3], Cache.CurrentHighScoreContext[4], type, encryptedScore);
             TrySendLocalHighest(null, notHighestScoreButStill);
         }
-        else if (Constants.CurrentHighScoreContext == null)
+        else if (Cache.CurrentHighScoreContext == null)
         {
             var _highestScore = PlayerPrefsHelper.GetTrainingHighestScore(_isOldSchool);
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{_highestScore.Score}\n{_highestScore.Level}\n{_highestScore.Lines}\n{_highestScore.Pieces}";
@@ -87,7 +87,7 @@ public class HighScoreSceneBhv : SceneBhv
             _title.text = "High Scores";
         }
         UpdateScoreList();
-        if (Constants.CurrentHighScoreContext != null)
+        if (Cache.CurrentHighScoreContext != null)
             PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory, _isOldSchool);
         GameObject.Find("ButtonOnlineScores").GetComponent<ButtonBhv>().EndActionDelegate = GoToHighScores;
         TrySendLocalHighest(null);
@@ -101,7 +101,7 @@ public class HighScoreSceneBhv : SceneBhv
             Destroy(child.gameObject);
         for (int i = 0; i < _scoreHistory.Count; ++i)
         {
-            var isCurrent = Constants.CurrentHighScoreContext != null && _scoreHistory[i] == Constants.CurrentHighScoreContext[0];
+            var isCurrent = Cache.CurrentHighScoreContext != null && _scoreHistory[i] == Cache.CurrentHighScoreContext[0];
             if (i < 19)
             {
                 var tmpInstance = Instantiator.NewScoreHistory(_scoreHistory[i], _scoreHistory[0], i, _scoreHistoryContainer);
@@ -200,7 +200,7 @@ public class HighScoreSceneBhv : SceneBhv
     {
         TrySendLocalHighest(() =>
         {
-            Constants.CurrentHighScoreContext = null;
+            Cache.CurrentHighScoreContext = null;
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
             object OnBlend(bool result)
             {
@@ -212,7 +212,7 @@ public class HighScoreSceneBhv : SceneBhv
 
     private void GoToPrevious()
     {
-        Constants.CurrentHighScoreContext = null;
+        Cache.CurrentHighScoreContext = null;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
         object OnBlend(bool result)
         {

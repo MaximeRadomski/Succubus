@@ -199,7 +199,7 @@ public class Piece : MonoBehaviour
                     ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
                     var shadowBlock = instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
-                    shadowBlock.GetComponent<SpriteRenderer>().color = Constants.IsEffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
+                    shadowBlock.GetComponent<SpriteRenderer>().color = Cache.IsEffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
                     AddRandomBlocks(realm, --nbBlocks, instantiator, ghost, ghostColor);
                     return;
                 }
@@ -252,7 +252,7 @@ public class Piece : MonoBehaviour
             if (child.transform.position.y > maxY)
                 maxY = Mathf.RoundToInt(child.transform.position.y);
         }
-        minY = minY < Constants.HeightLimiter ? Constants.HeightLimiter : minY;
+        minY = minY < Cache.HeightLimiter ? Cache.HeightLimiter : minY;
         maxY = maxY > 99 ? 99 : maxY;
         return new int[] { minY, maxY };
     }

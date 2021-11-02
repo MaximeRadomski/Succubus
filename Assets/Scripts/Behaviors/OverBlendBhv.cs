@@ -25,7 +25,7 @@ public class OverBlendBhv : FrameRateBehavior
 
     public void SetPrivates(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, object> resultAction, bool reverse)
     {
-        Constants.InputLocked = true;
+        Cache.InputLocked = true;
         DontDestroyOnLoad(gameObject);
         _audioSource = GetComponent<AudioSource>();
         _overBlendType = overBlendType;
@@ -106,7 +106,7 @@ public class OverBlendBhv : FrameRateBehavior
         {
             _midActionDone = true;
             HasResulted = (bool)_resultAction?.Invoke(true);
-            Constants.InputLocked = false;
+            Cache.InputLocked = false;
             EndPercent();
             return;
         }
@@ -118,7 +118,7 @@ public class OverBlendBhv : FrameRateBehavior
         else if (_overBlendType == OverBlendType.StartLoadMidActionEnd && !_midActionDone && _loadPercent >= 50.0f)
         {
             _midActionDone = true;
-            Constants.InputLocked = false;
+            Cache.InputLocked = false;
             HasResulted = (bool)_resultAction?.Invoke(true);
         }
     }
@@ -133,7 +133,7 @@ public class OverBlendBhv : FrameRateBehavior
     public virtual void ExitOverBlend()
     {
         State = -1;
-        Constants.InputLocked = false;
+        Cache.InputLocked = false;
         Destroy(gameObject);
     }
 }

@@ -51,21 +51,21 @@ public class PopupYesNoBhv : PopupBhv
 
     private void PositiveDelegate()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke(true);
         Destroy(gameObject);
     }
 
     private void NegativeDelegate()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke(false);
         Destroy(gameObject);
     }
 
     public override void ExitPopup()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         Destroy(_buttonPositive.gameObject);
         Destroy(_buttonNegative.gameObject);
         _resultAction?.Invoke(false);

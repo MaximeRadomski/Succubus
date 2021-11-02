@@ -17,7 +17,7 @@ public class SpecialDiabolusVult : Special
         int end = start - (_nbRows - 1);
         for (int y = start; y >= end; --y)
         {
-            if (y < Constants.HeightLimiter)
+            if (y < Cache.HeightLimiter)
                 break;
             _gameplayControler.DeleteLine(y);
         }

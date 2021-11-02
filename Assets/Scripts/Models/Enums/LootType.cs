@@ -9,5 +9,5 @@ public enum LootType
     Tattoo = 2,
     Character = 3,
     Resource = 4,
-
+    Pact = 5
 }

@@ -29,12 +29,12 @@ public abstract class Item : Loot
         _character = character;
         _gameplayControler = gameplayControler;
         _soundFunc = soundFunc;
-        if (Constants.CurrentItemCooldown > 0 || (IsUsesBased && Constants.CurrentItemUses == 0))
+        if (Cache.CurrentItemCooldown > 0 || (IsUsesBased && Cache.CurrentItemUses == 0))
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        Constants.RestartCurrentItemCooldown(character, this);
-        --Constants.CurrentItemUses;
+        Cache.RestartCurrentItemCooldown(character, this);
+        --Cache.CurrentItemUses;
         _gameplayControler.UpdateItemAndSpecialVisuals();
         _popPosition = new Vector3(4.5f, 6.5f, 0.0f);
         _attackLine = gameplayControler.Instantiator.NewAttackLine(gameplayControler.CharacterInstanceBhv.transform.position, _popPosition, character.Realm, linear: false,

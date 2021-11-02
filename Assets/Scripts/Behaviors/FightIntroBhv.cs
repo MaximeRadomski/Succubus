@@ -136,7 +136,7 @@ public class FightIntroBhv : FrameRateBehavior
     private void AfterIntro()
     {
         _musicControler.ResetSceneLoadedMusic(manualReset: true);
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke();
         Destroy(gameObject);
     }

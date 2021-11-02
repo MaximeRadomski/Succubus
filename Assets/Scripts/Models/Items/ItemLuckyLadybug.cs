@@ -15,7 +15,7 @@ public class ItemLuckyLadybug : Item
 
     protected override object Effect()
     {
-        Constants.AddedDodgeChancePercent += 33;
+        Cache.AddedDodgeChancePercent += 33;
         return base.Effect();
     }
 }

@@ -15,7 +15,7 @@ public class ItemD6 : Item
 
     protected override object Effect()
     {
-        Constants.RandomizedAttackType = (AttackType)Random.Range(1, Helper.EnumCount<AttackType>());
+        Cache.RandomizedAttackType = (AttackType)Random.Range(1, Helper.EnumCount<AttackType>());
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).RandomizeOpponentAttack();
         return base.Effect();
     }

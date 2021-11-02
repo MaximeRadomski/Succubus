@@ -45,12 +45,12 @@ public class SettingsAudioSceneBhv : SceneBhv
         _hasInit = true;
 #endif
         SetButtons();
-        Constants.SetLastEndActionClickedName("EffectsLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetEffectsLevel()));
+        Cache.SetLastEndActionClickedName("EffectsLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetEffectsLevel()));
         LevelChoice();
-        Constants.SetLastEndActionClickedName("MusicLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetMusicLevel()));
+        Cache.SetLastEndActionClickedName("MusicLevel" + String.Format("{0:0.00}", PlayerPrefsHelper.GetMusicLevel()));
         LevelChoice();
 #if UNITY_ANDROID
-        Constants.SetLastEndActionClickedName($"Vibration{(PlayerPrefsHelper.GetVibrationEnabled() == true ? "On" : "Off")}");
+        Cache.SetLastEndActionClickedName($"Vibration{(PlayerPrefsHelper.GetVibrationEnabled() == true ? "On" : "Off")}");
         SetVibration(PlayerPrefsHelper.GetVibrationEnabled());
 #endif
     }
@@ -77,12 +77,12 @@ public class SettingsAudioSceneBhv : SceneBhv
 
     private void LevelChoice()
     {
-        var choiceLevelSring = Constants.LastEndActionClickedName.Substring(Constants.LastEndActionClickedName.Length - 4);
+        var choiceLevelSring = Cache.LastEndActionClickedName.Substring(Cache.LastEndActionClickedName.Length - 4);
         var choiceLevel = -1.0f;
         if (!float.TryParse(choiceLevelSring.Replace(",", "."), out choiceLevel))
             float.TryParse(choiceLevelSring.Replace(".", ","), out choiceLevel);
-        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName.Replace(",", "."));
-        if (Constants.LastEndActionClickedName.Contains("Effects"))
+        var choiceGameObject = GameObject.Find(Cache.LastEndActionClickedName.Replace(",", "."));
+        if (Cache.LastEndActionClickedName.Contains("Effects"))
         {
             _effectsLevelSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _effectsLevelSelector.transform.position.y, 0.0f);
             PlayerPrefsHelper.SaveEffectsLevel(choiceLevel);
@@ -99,7 +99,7 @@ public class SettingsAudioSceneBhv : SceneBhv
 
     private void SetVibration(bool result)
     {
-        var choiceGameObject = GameObject.Find(Constants.LastEndActionClickedName);
+        var choiceGameObject = GameObject.Find(Cache.LastEndActionClickedName);
         _vibrationSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _vibrationSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveVibrationEnabled(result);
         if (result)

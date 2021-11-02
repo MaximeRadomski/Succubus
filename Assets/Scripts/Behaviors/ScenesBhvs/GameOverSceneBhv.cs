@@ -14,9 +14,9 @@ public class GameOverSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
-        if (Constants.GameOverParams == null)
-            Constants.GameOverParams = "Test|Realm|99";
-        var gameOverParams = Constants.GameOverParams.Split('|');
+        if (Cache.GameOverParams == null)
+            Cache.GameOverParams = "Test|Realm|99";
+        var gameOverParams = Cache.GameOverParams.Split('|');
         GameObject.Find("OpponentText").GetComponent<TMPro.TextMeshPro>().text = $"by {gameOverParams[0].ToLower()}";
         GameObject.Find("RealmText").GetComponent<TMPro.TextMeshPro>().text = $"{gameOverParams[1].ToLower()}";
         GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>().text = $"lvl {gameOverParams[2].ToLower()}";

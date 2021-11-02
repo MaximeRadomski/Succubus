@@ -62,7 +62,7 @@ public class EffectsCameraBhv : MonoBehaviour
         float xScale = axis == 0 || axis == 2 ? -1.0f : 1.0f;
         float yScale = axis == 1 || axis == 2 ? -1.0f : 1.0f;
         transform.localScale = new Vector3(xScale, yScale, 1.0f);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(_character.ItemCooldownReducer * cooldown);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(_character.ItemCooldownReducer * cooldown);
     }
 
     private void SetIntoxication(int cooldown)
@@ -72,7 +72,7 @@ public class EffectsCameraBhv : MonoBehaviour
         _intoxicatedPosition = _textureQuad.transform.localPosition;
         _intoxicatedScale = new Vector3(_quadOriginalScale, _quadOriginalScale, 1.0f);
         _isIntoxicated = true;
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(_character.ItemCooldownReducer * (cooldown / 3));
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(_character.ItemCooldownReducer * (cooldown / 3));
     }
 
     private void Update()

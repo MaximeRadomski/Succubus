@@ -20,7 +20,7 @@ public class SpecialSwap : Special
         if (!base.Activate())
             return false;
         _gameplayControler.SceneBhv.Paused = true;
-        Constants.EscapeLocked = true;
+        Cache.EscapeLocked = true;
         _selector = GameObject.Instantiate(new GameObject());
         var selectorSpriteRenderer = _selector.AddComponent<SpriteRenderer>();
         selectorSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{3 + _character.Realm.GetHashCode()}");
@@ -69,7 +69,7 @@ public class SpecialSwap : Special
         Object.Destroy(_gameplayControler.CurrentPiece ?? null);
         Object.Destroy(_gameplayControler.CurrentGhost ?? null);
         _gameplayControler.SceneBhv.Paused = false;
-        Constants.EscapeLocked = false;
+        Cache.EscapeLocked = false;
         _gameplayControler.Spawn(false);
         return true;
     }

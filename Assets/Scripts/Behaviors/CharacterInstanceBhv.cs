@@ -111,7 +111,7 @@ public class CharacterInstanceBhv : FrameRateBehavior
                     spriteRenderer.color = Constants.ColorBlackTransparent;
             }
             _isDying = false;
-            Constants.InputLocked = false;
+            Cache.InputLocked = false;
             AfterDeath?.Invoke();
         }
     }
@@ -204,7 +204,7 @@ public class CharacterInstanceBhv : FrameRateBehavior
     public void Die()
     {
         _isDying = true;
-        Constants.InputLocked = true;
+        Cache.InputLocked = true;
     }
 
     public void Boost(Realm realm, float duration)

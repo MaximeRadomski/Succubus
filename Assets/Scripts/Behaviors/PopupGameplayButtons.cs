@@ -22,14 +22,14 @@ public class PopupGameplayButtons : PopupBhv
 
     private void ChooseButton()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke(true);
         Destroy(gameObject);
     }
 
     private void NegativeDelegate()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke(false);
         Destroy(gameObject);
     }

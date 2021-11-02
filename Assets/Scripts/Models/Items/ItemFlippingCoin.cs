@@ -15,7 +15,7 @@ public class ItemFlippingCoin : Item
 
     protected override object Effect()
     {
-        Constants.ChanceAttacksHappeningPercent = 50;
+        Cache.ChanceAttacksHappeningPercent = 50;
         return base.Effect();
     }
 }

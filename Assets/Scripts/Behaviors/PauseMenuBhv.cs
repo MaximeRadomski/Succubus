@@ -32,7 +32,7 @@ public class PauseMenuBhv : PopupBhv
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = Settings;
         var buttonGiveUpGameObject = GameObject.Find("ButtonGiveUp");
         buttonGiveUpGameObject.GetComponent<ButtonBhv>().EndActionDelegate = GiveUp;
-        if (Constants.CurrentGameMode == GameMode.Ascension || Constants.CurrentGameMode == GameMode.TrueAscension)
+        if (Cache.CurrentGameMode == GameMode.Ascension || Cache.CurrentGameMode == GameMode.TrueAscension)
         {
             if (SceneManager.GetActiveScene().name == Constants.ClassicGameScene)
                 buttonGiveUpGameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Abandon";
@@ -58,7 +58,7 @@ public class PauseMenuBhv : PopupBhv
     private void PauseToInfo(GameSceneBhv callingScene)
     {
         var inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         inputControlerBhv.InitMenuKeyboardInputs();
         callingScene.Info();
         Destroy(this.gameObject);
@@ -73,7 +73,7 @@ public class PauseMenuBhv : PopupBhv
             Camera.main.transform.rotation = _cameraInitialRotation;
         }
 #endif
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }
 
@@ -84,7 +84,7 @@ public class PauseMenuBhv : PopupBhv
 
     private void Settings()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         _mainCamera.transform.position = new Vector3(0.0f, 0.0f, _mainCamera.transform.position.z);
         _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
@@ -103,7 +103,7 @@ public class PauseMenuBhv : PopupBhv
         {
             if (!result)
                 return result;
-            Constants.DecreaseInputLayer();
+            Cache.DecreaseInputLayer();
             _resumeAction.Invoke(false);
             return result;
         }
@@ -111,7 +111,7 @@ public class PauseMenuBhv : PopupBhv
 
     private void SaveAndQuit()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resumeAction.Invoke(false);
     }
 }

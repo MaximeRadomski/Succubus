@@ -37,7 +37,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
         SetButtons();
 
-        Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGhostColor());
+        Cache.SetLastEndActionClickedName(PlayerPrefsHelper.GetGhostColor());
         GhostColorChoice();
 
         DasChoice(PlayerPrefsHelper.GetDas());
@@ -77,7 +77,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
 
     private void GhostColorChoice()
     {
-        var choiceId = Constants.LastEndActionClickedName.Substring(Constants.LastEndActionClickedName.Length - 1, 1);
+        var choiceId = Cache.LastEndActionClickedName.Substring(Cache.LastEndActionClickedName.Length - 1, 1);
         var choiceGameObject = GameObject.Find("Ghost" + choiceId);
         _ghostSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _ghostSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveGhostColor(choiceId);

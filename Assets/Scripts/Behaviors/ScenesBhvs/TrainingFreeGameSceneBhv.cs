@@ -65,12 +65,12 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     public override void OnGameOver()
     {
         var verif = (_verif[0] / 8.0f) + (_verif[1] * 3.0f) + (_verif[2] / 4.0f) + (_verif[3] * 20.0f);
-        Constants.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id, (int)verif, (int)(_verif[4] / 4) };
+        Cache.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id, (int)verif, (int)(_verif[4] / 4) };
         //_score = 0;
         //_level = 1;
         //_lines = 0;
         //_pieces = 0;
-        NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam1 = Constants.CurrentGameMode == GameMode.TrainingOldSchool });
+        NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam1 = Cache.CurrentGameMode == GameMode.TrainingOldSchool });
         //Reload();
     }
 
@@ -96,8 +96,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _isRestarting = true;
         PlayerPrefsHelper.ResetTraining();
         PlayerPrefsHelper.SaveCurrentOpponents(null);
-        Constants.ResetClassicGameCache();
-        Constants.CurrentItemCooldown = 0;
+        Cache.ResetClassicGameCache();
+        Cache.CurrentItemCooldown = 0;
         NavigationService.ReloadScene();
         _gameplayControler.CleanPlayerPrefs();
         return true;

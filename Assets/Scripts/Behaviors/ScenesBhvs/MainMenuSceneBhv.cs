@@ -27,7 +27,7 @@ public class MainMenuSceneBhv : SceneBhv
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             PlayerPrefsHelper.ResetRun();
             _currentRun = null;
-            Constants.InputLocked = true;
+            Cache.InputLocked = true;
             StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
             {
                 Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
@@ -79,7 +79,7 @@ public class MainMenuSceneBhv : SceneBhv
 
         object OnBlend(bool result)
         {
-            Constants.CurrentGameMode = GameMode.Ascension;
+            Cache.CurrentGameMode = GameMode.Ascension;
             if (_currentRun != null)
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else

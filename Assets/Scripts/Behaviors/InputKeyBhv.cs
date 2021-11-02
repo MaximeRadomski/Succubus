@@ -209,8 +209,8 @@ public class InputKeyBhv : PopupBhv
     public override void ExitPopup()
     {
         Helper.GetMainCamera().gameObject.GetComponent<CameraBhv>().Unfocus();
-        Constants.DecreaseInputLayer();
-        Constants.KeyboardUp = false;
+        Cache.DecreaseInputLayer();
+        Cache.KeyboardUp = false;
         Destroy(_keyboard.gameObject);
     }
 

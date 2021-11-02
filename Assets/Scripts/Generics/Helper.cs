@@ -260,11 +260,11 @@ public static class Helper
     public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func, bool lockInputWhile = true)
     {
         if (lockInputWhile)
-            Constants.InputLocked = true;
+            Cache.InputLocked = true;
         yield return new WaitForSeconds(delay);
         func.Invoke();
         if (lockInputWhile)
-            Constants.InputLocked = false;
+            Cache.InputLocked = false;
     }
 
     public static bool RandomDice100(int target)
@@ -474,7 +474,7 @@ public static class Helper
 
     public static void ResumeLoading()
     {
-        Constants.InputLocked = false;
+        Cache.InputLocked = false;
         var i = 0;
         while (i < 10)
         {

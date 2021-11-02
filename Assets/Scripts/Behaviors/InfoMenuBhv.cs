@@ -11,9 +11,9 @@ public class InfoMenuBhv : PopupBhv
     private bool _isHorizontal;
     private Vector3 _cameraInitialPosition;
     private GameObject _characterFrame;
-    private GameObject _opponentFrame;
+    private GameObject _fightFrame;
     private GameObject _characterTab;
-    private GameObject _opponentTab;
+    private GameObject _fightTab;
     private Item _characterItem;
     private Run _run;
     private Realm _currentRealm;
@@ -49,9 +49,9 @@ public class InfoMenuBhv : PopupBhv
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
         (_characterTab = GameObject.Find("CharacterTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacter;
-        (_opponentTab = GameObject.Find("OpponentTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowOpponent;
+        (_fightTab = GameObject.Find("FightTab")).GetComponent<ButtonBhv>().EndActionDelegate = ShowOpponent;
         _characterFrame = GameObject.Find("CharacterFrame");
-        _opponentFrame = GameObject.Find("OpponentFrame");
+        _fightFrame = GameObject.Find("FightFrame");
         InitCharacterFrame(character);
         InitOpponentFrame(opponent);
         if (opponent == null)
@@ -69,8 +69,8 @@ public class InfoMenuBhv : PopupBhv
         _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<ButtonBhv>().EndActionDelegate = CharacterLore;
         _characterFrame.transform.Find("ButtonCharacter").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        if (Cache.CurrentGameMode == GameMode.TrainingFree
+            || Cache.CurrentGameMode == GameMode.TrainingDummy)
         {
             _characterItem = ItemsData.GetItemFromName(ItemsData.Items[2]);
             _characterFrame.transform.Find("ButtonItem").GetComponent<ButtonBhv>().EndActionDelegate = ItemInfo;
@@ -109,8 +109,8 @@ public class InfoMenuBhv : PopupBhv
 
     private void TattooInfo()
     {
-        var bodyPart = (BodyPart)int.Parse(GameObject.Find(Constants.LastEndActionClickedName).transform.parent.name.Substring("BodyPart".Length));
-        var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Constants.LastEndActionClickedName.Substring("Tattoo".Length))]);
+        var bodyPart = (BodyPart)int.Parse(GameObject.Find(Cache.LastEndActionClickedName).transform.parent.name.Substring("BodyPart".Length));
+        var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Cache.LastEndActionClickedName.Substring("Tattoo".Length))]);
         _instantiator.NewPopupYesNo(clickedTattoo.Name + (clickedTattoo.Level > 1 ? (" +" + (clickedTattoo.Level - 1).ToString()) : ""), Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "inked: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + bodyPart.GetDescription().ToLower() + "\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + clickedTattoo.GetDescription(), null, "Ok", null);
     }
 
@@ -123,11 +123,11 @@ public class InfoMenuBhv : PopupBhv
     {
         if (opponent == null)
             return;
-        _opponentFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
-        _opponentFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.HpMax;
-        _opponentFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Cooldown + " seconds";
+        _fightFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
+        _fightFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.HpMax;
+        _fightFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Cooldown + " seconds";
         if (opponent.Attacks.Count > 1)
-        _opponentFrame.transform.Find("OpponentAttackLibelle").GetComponent<TMPro.TextMeshPro>().text = "attacks:";
+        _fightFrame.transform.Find("OpponentAttackLibelle").GetComponent<TMPro.TextMeshPro>().text = "attacks:";
         for (int i = 0; i < 4; ++i)
         {
             if (i < opponent.Attacks.Count)
@@ -135,22 +135,33 @@ public class InfoMenuBhv : PopupBhv
                 var prefixe = opponent.Attacks[i].AttackType.GetAttribute<PrefixeAttribute>().ToLower();
                 var suffixe = opponent.Attacks[i].AttackType.GetAttribute<SuffixeAttribute>().ToLower();
                 var param1 = !(string.IsNullOrEmpty(prefixe) && string.IsNullOrEmpty(suffixe)) ? $"({prefixe}{opponent.Attacks[i].Param1}{suffixe})" : string.Empty;
-                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}- {opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
+                _fightFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}- {opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
             }
             else
-                _opponentFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
+                _fightFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
         }
-        _opponentFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Realm.ToString().ToLower() + "\n" +
+        _fightFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Realm.ToString().ToLower() + "\n" +
             "- takes more damage from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n";
         //+
         //   "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger."
-        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
-        _opponentFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
-        _opponentFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
-        _opponentFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + 
+        _fightFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
+        _fightFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
+        _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
+        _fightFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + 
             (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
-        _opponentFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
+        _fightFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
             (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.GetDescription().ToLower() : opponent.Immunity.GetDescription().ToLower());
+        var pacts = PlayerPrefsHelper.GetCurrentPacts();
+        var pactsStr = string.Empty;
+        if (pacts.Count == 0)
+            pactsStr = "none.";
+        foreach (var pact in pacts)
+        {
+            if (pactsStr != string.Empty)
+                pactsStr += "\n";
+            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{pact.Name} - {pact.NbFight} fight{(pact.NbFight > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
+        }
+        _fightFrame.transform.Find("PactsList").GetComponent<TMPro.TextMeshPro>().text = pactsStr.ToLower();
     }
 
     private void OpponentLore()
@@ -162,29 +173,29 @@ public class InfoMenuBhv : PopupBhv
     private void ShowCharacter()
     {
         _characterFrame.transform.position = transform.position;
-        _opponentFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
+        _fightFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
         _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
-        _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
+        _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
     }
 
     private void ShowOpponent()
     {
         if (_opponent == null)
         {
-            _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+            _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
             _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
             _instantiator.NewPopupYesNo("No Opponent", "you currently have no opponent", null, "Ok", OnOk);
             object OnOk(bool result)
             {
                 _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
-                _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
+                _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
                 return result;
             }
             return;
         }
-        _opponentFrame.transform.position = transform.position;
+        _fightFrame.transform.position = transform.position;
         _characterFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
-        _opponentTab.transform.position = new Vector3(_opponentTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
+        _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
         _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
     }
 
@@ -197,7 +208,7 @@ public class InfoMenuBhv : PopupBhv
             Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
         }
 #endif
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resumeAction.Invoke(true);
     }
 

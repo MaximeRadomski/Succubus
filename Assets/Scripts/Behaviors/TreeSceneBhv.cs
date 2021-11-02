@@ -99,7 +99,7 @@ public class TreeSceneBhv : SceneBhv
 
     private void SelectNode()
     {
-        var node = _treeNodes.Find(n => n.Name == Constants.LastEndActionClickedName);
+        var node = _treeNodes.Find(n => n.Name == Cache.LastEndActionClickedName);
         var firstSpace = node.Description.IndexOf(' ');
         var description = $"{node.Description.Substring(0, firstSpace)}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} {node.Description.Substring(firstSpace + 1)}";
         var price = $"\n---\nprice: {Constants.GetMaterial(node.Realm, TextType.succubus3x5, TextCode.c43)}{node.Price} {ResourcesData.Resources[node.Realm.GetHashCode()].ToLower()}";

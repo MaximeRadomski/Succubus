@@ -15,7 +15,7 @@ public class ItemTheHierophant : Item
 
     protected override object Effect()
     {
-        Constants.BonusLockDelay += 2.0f;
+        Cache.BonusLockDelay += 2.0f;
         _gameplayControler.SetLockDelay();
         return base.Effect();
     }

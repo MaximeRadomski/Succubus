@@ -10,12 +10,12 @@ namespace Proyecto26
     {
         public static IEnumerator CreateRequestAndRetry(RequestHelper options, Action<RequestException, ResponseHelper> callback)
         {
-            if (Constants.NetworkErrorCount >= Constants.ServerCallOfflineMax)
+            if (Cache.NetworkErrorCount >= Constants.ServerCallOfflineMax)
             {
-                if (Constants.NetworkErrorCount == Constants.ServerCallOfflineMax)
+                if (Cache.NetworkErrorCount == Constants.ServerCallOfflineMax)
                 {
                     var currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
-                    if (currentScene is GameSceneBhv gameScene && Constants.InputLayer == 0)
+                    if (currentScene is GameSceneBhv gameScene && Cache.InputLayer == 0)
                     {
                         gameScene.PauseOrPrevious();
                         gameScene.StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () =>
@@ -32,7 +32,7 @@ namespace Proyecto26
                         GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", "too many failed attempts were made to connect to the server. the game will continue in offline mode.", null, "Ok", null);
                     }
                 }
-                ++Constants.NetworkErrorCount;
+                ++Cache.NetworkErrorCount;
                 yield break;
             }
             var retries = 0;
@@ -69,7 +69,7 @@ namespace Proyecto26
                         DatabaseService.SendErrorBody(Helper.DateFormat(DateTime.Now), options.Body);
                         if (!err.IsNetworkError)
                             GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
-                        ++Constants.NetworkErrorCount;
+                        ++Cache.NetworkErrorCount;
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);
                         break;

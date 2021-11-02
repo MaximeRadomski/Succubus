@@ -15,9 +15,9 @@ public class ItemDarkMilk : Item
 
     protected override object Effect()
     {
-        Constants.CurrentOpponentChangedRealm = Helper.GetInferiorFrom(_character.Realm);
-        ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).AlterOpponentRealm(Constants.CurrentOpponentChangedRealm);
-        ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).OpponentInstanceBhv.Malus(Constants.CurrentOpponentChangedRealm, 2.0f);
+        Cache.CurrentOpponentChangedRealm = Helper.GetInferiorFrom(_character.Realm);
+        ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).AlterOpponentRealm(Cache.CurrentOpponentChangedRealm);
+        ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).OpponentInstanceBhv.Malus(Cache.CurrentOpponentChangedRealm, 2.0f);
         return base.Effect();
     }
 }

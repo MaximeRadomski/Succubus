@@ -17,7 +17,7 @@ public class ItemDoorofTruth : Item
 
     protected override object Effect()
     {
-        Constants.TruthResurection = true;
+        Cache.TruthResurection = true;
         PlayerPrefsHelper.ResetCurrentItem();
         _gameplayControler.CharacterItem = PlayerPrefsHelper.GetCurrentItem();
         _gameplayControler.UpdateItemAndSpecialVisuals();

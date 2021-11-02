@@ -23,8 +23,8 @@ public class ItemSmokeBomb : Item
         run.X = tmpStep.X;
         run.Y = tmpStep.Y;
         --run.CurrentStep;
-        Constants.RestartCurrentItemCooldown(_character, this);
-        run.CurrentItemCooldown = Constants.CurrentItemCooldown;
+        Cache.RestartCurrentItemCooldown(_character, this);
+        run.CurrentItemCooldown = Cache.CurrentItemCooldown;
         PlayerPrefsHelper.SaveRun(run);
         _gameplayControler.CleanPlayerPrefs();
         NavigationService.LoadBackUntil(Constants.StepsScene);

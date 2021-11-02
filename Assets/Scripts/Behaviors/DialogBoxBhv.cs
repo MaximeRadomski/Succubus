@@ -323,7 +323,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private void ExitDialogBox()
     {
         _musicControler.ResetSceneLoadedMusic(manualReset : true);
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         _resultAction?.Invoke();
         Destroy(gameObject);
     }

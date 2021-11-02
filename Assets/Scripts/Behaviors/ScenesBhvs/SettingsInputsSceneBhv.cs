@@ -50,7 +50,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
         SetButtons();
 
-        Constants.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
+        Cache.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
         GameplayButtonChoice();
 
         SetSensitivity(PlayerPrefsHelper.GetTouchSensitivity());
@@ -135,7 +135,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void GameplayButtonChoice()
     {
-        var choiceButtonName = Constants.LastEndActionClickedName;
+        var choiceButtonName = Cache.LastEndActionClickedName;
         var choiceGameObject = GameObject.Find(choiceButtonName);
 
         var choiceType = GameplayChoice.Buttons;
@@ -228,7 +228,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void SetKeyBinding(int id)
     {
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; return true; }));
-        Constants.EscapeLocked = true;
+        Cache.EscapeLocked = true;
         _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
 
         object OnSetKey(bool result)
@@ -247,7 +247,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
     }
 
-    private void UnlockEscape() { Constants.EscapeLocked = false; }
+    private void UnlockEscape() { Cache.EscapeLocked = false; }
 
     void OnGUI()
     {
@@ -312,28 +312,28 @@ public class SettingsInputsSceneBhv : SceneBhv
         {
             _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            if (!Constants.OnlyMouseInMenu)
+            if (!Cache.OnlyMouseInMenu)
                 _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(9).gameObject, true);
         }
         else
         {
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.GetComponent<PositionBhv>().UpdatePositions();
-            if (!Constants.OnlyMouseInMenu)
+            if (!Cache.OnlyMouseInMenu)
                 _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(6).gameObject, true);
         }
     }
 
     private void SetGameplayButtonOnClick()
     {
-        var addButton = GameObject.Find(Constants.LastEndActionClickedName);
+        var addButton = GameObject.Find(Cache.LastEndActionClickedName);
         var buttonId = int.Parse(addButton.gameObject.name.Substring(addButton.gameObject.name.Length - 2, 2));
         Instantiator.NewPopupGameplayButtons(AfterPopup);
         object AfterPopup(bool result)
         {
             if (!result)
                 return result;
-            var gameplayButtonName = Constants.LastEndActionClickedName;
+            var gameplayButtonName = Cache.LastEndActionClickedName;
             SetGameplayButton(addButton, buttonId, gameplayButtonName);
             return result;
         }
@@ -380,7 +380,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void UnsetGameplayButtonPosition()
     {
-        var gameplayButton = GameObject.Find(Constants.LastEndActionClickedName);
+        var gameplayButton = GameObject.Find(Cache.LastEndActionClickedName);
         var isLeft = gameplayButton.transform.position.x < 0;
         if (isLeft)
         {

@@ -22,7 +22,7 @@ public abstract class PopupBhv : MonoBehaviour
 
     public virtual void ExitPopup()
     {
-        Constants.DecreaseInputLayer();
+        Cache.DecreaseInputLayer();
         Destroy(gameObject);
     }
 }

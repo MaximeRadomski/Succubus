@@ -39,7 +39,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.CurrentGameMode = GameMode.TrainingFree;
+            Cache.CurrentGameMode = GameMode.TrainingFree;
             NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
@@ -50,7 +50,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.CurrentGameMode = GameMode.TrainingDummy;
+            Cache.CurrentGameMode = GameMode.TrainingDummy;
             NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;
         }
@@ -61,11 +61,11 @@ public class TrainingChoiceSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            Constants.CurrentGameMode = GameMode.TrainingOldSchool;
+            Cache.CurrentGameMode = GameMode.TrainingOldSchool;
             PlayerPrefsHelper.ResetTraining();
             PlayerPrefsHelper.SaveCurrentOpponents(null);
-            Constants.ResetClassicGameCache();
-            Constants.CurrentItemCooldown = 0;
+            Cache.ResetClassicGameCache();
+            Cache.CurrentItemCooldown = 0;
             NavigationService.LoadNextScene(Constants.TrainingFreeGameScene);
             return true;
         }

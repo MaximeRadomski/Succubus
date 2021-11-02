@@ -18,9 +18,9 @@ public class CharSelSceneBhv : SceneBhv
     {
         base.Init();
         var gameModeTitle = "New Ascension";
-        if (Constants.CurrentGameMode == GameMode.TrainingFree)
+        if (Cache.CurrentGameMode == GameMode.TrainingFree)
             gameModeTitle = "Free Play";
-        else if (Constants.CurrentGameMode == GameMode.TrainingDummy)
+        else if (Cache.CurrentGameMode == GameMode.TrainingDummy)
             gameModeTitle = "Training Dummy";
         _charSelector = GameObject.Find("CharSelector");
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
@@ -33,7 +33,7 @@ public class CharSelSceneBhv : SceneBhv
                 GameObject.Find($"Character{i.ToString("00")}").transform.GetChild(1).GetComponent<SpriteRenderer>().color = Constants.ColorPlain;
         }
         var lastSelectedCharacter = PlayerPrefsHelper.GetSelectedCharacterId();
-        Constants.SetLastEndActionClickedName(_charButtonsContainer.transform.GetChild(lastSelectedCharacter).name);
+        Cache.SetLastEndActionClickedName(_charButtonsContainer.transform.GetChild(lastSelectedCharacter).name);
         SelectCharacter();
     }
 
@@ -50,7 +50,7 @@ public class CharSelSceneBhv : SceneBhv
 
     private void SelectCharacter()
     {
-        var lastClickedButton = GameObject.Find(Constants.LastEndActionClickedName);
+        var lastClickedButton = GameObject.Find(Cache.LastEndActionClickedName);
         var buttonId = int.Parse(lastClickedButton.gameObject.name.Substring(lastClickedButton.gameObject.name.Length - 2, 2));
         var realm = 0;
         if (lastClickedButton.name.Contains(Realm.Earth.ToString()))
@@ -91,23 +91,23 @@ public class CharSelSceneBhv : SceneBhv
 
     private void Play()
     {
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy)
+        if (Cache.CurrentGameMode == GameMode.TrainingFree
+            || Cache.CurrentGameMode == GameMode.TrainingDummy)
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
         else
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
             var scene = "";
-            if (Constants.CurrentGameMode == GameMode.TrainingFree)
+            if (Cache.CurrentGameMode == GameMode.TrainingFree)
             {
                 scene = Constants.TrainingFreeGameScene;
                 PlayerPrefsHelper.ResetTraining();
                 PlayerPrefsHelper.SaveCurrentOpponents(null);
-                Constants.ResetClassicGameCache();
-                Constants.CurrentItemCooldown = 0;
+                Cache.ResetClassicGameCache();
+                Cache.CurrentItemCooldown = 0;
             }
-            else if (Constants.CurrentGameMode == GameMode.TrainingDummy)
+            else if (Cache.CurrentGameMode == GameMode.TrainingDummy)
             {
                 scene = Constants.ClassicGameScene;
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2] };
@@ -117,8 +117,8 @@ public class CharSelSceneBhv : SceneBhv
                 //DEBUG
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 //PlayerPrefsHelper.ResetTattoos();
-                Constants.ResetClassicGameCache();
-                Constants.RestartCurrentItemCooldown(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
+                Cache.ResetClassicGameCache();
+                Cache.RestartCurrentItemCooldown(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
             }
             else
             {

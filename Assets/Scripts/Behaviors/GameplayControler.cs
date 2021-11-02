@@ -119,7 +119,7 @@ public class GameplayControler : MonoBehaviour
     {
         Init(level, characterRealm, levelRealm);
         Spawn();
-        if (Constants.NameLastScene == Constants.SettingsScene)
+        if (Cache.NameLastScene == Constants.SettingsScene)
             SceneBhv.PauseOrPrevious();
 
         _infoRealmDebug = GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>();
@@ -132,14 +132,14 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idGameOver);
         _musicControler.Pause();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
-        Constants.InputLocked = true;
+        Cache.InputLocked = true;
         CharacterInstanceBhv.TakeDamage();
         
-        if (Character.LastStandMultiplier > 0 && !Constants.HasLastStanded)
+        if (Character.LastStandMultiplier > 0 && !Cache.HasLastStanded)
         {
             if (SceneBhv.DamageOpponent(Character.GetAttack() * Character.LastStandMultiplier, null, Character.Realm))
             {
-                Constants.HasLastStanded = true;
+                Cache.HasLastStanded = true;
                 Resurect("last stand");
                 return;
             }
@@ -150,9 +150,9 @@ public class GameplayControler : MonoBehaviour
             PlayerPrefsHelper.SaveRunCharacter(Character);
             Resurect();
         }
-        else if (Constants.TruthResurection)
+        else if (Cache.TruthResurection)
         {
-            Constants.TruthResurection = false;
+            Cache.TruthResurection = false;
             Resurect();
         }
         else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
@@ -185,7 +185,7 @@ public class GameplayControler : MonoBehaviour
             var resurectionStr = resurectionDefault != null ? resurectionDefault : "resurection";
             Instantiator.PopText(resurectionStr, new Vector2(4.5f, 10.0f));
             CurrentPiece.GetComponent<Piece>().IsLocked = false;
-            Constants.InputLocked = false;
+            Cache.InputLocked = false;
             StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
             {
                 _musicControler.Play();
@@ -205,17 +205,17 @@ public class GameplayControler : MonoBehaviour
             Destroy(PlayFieldBhv.gameObject);
         else
             ResetPlayHeight(); //If Divine or more, just reset playfield to prevent Height Limiter to the next game
-        Constants.InputLocked = false;
+        Cache.InputLocked = false;
     }
 
     private void SetTraining()
     {
-        if (Constants.CurrentGameMode == GameMode.TrainingFree
-            || Constants.CurrentGameMode == GameMode.TrainingDummy
-            || Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingFree
+            || Cache.CurrentGameMode == GameMode.TrainingDummy
+            || Cache.CurrentGameMode == GameMode.TrainingOldSchool)
         {
             _isTraining = true;
-            _isFreeTraining = Constants.CurrentGameMode == GameMode.TrainingFree || Constants.CurrentGameMode == GameMode.TrainingOldSchool;
+            _isFreeTraining = Cache.CurrentGameMode == GameMode.TrainingFree || Cache.CurrentGameMode == GameMode.TrainingOldSchool;
         }
         else
         {
@@ -244,7 +244,7 @@ public class GameplayControler : MonoBehaviour
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
         {
             _isOldSchoolGameplay = true;
             _levelRealm = Realm.Earth;
@@ -377,7 +377,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        if (CharacterItem != null && (Constants.CurrentItemCooldown <= 0 || CharacterItem.IsUsesBased))
+        if (CharacterItem != null && (Cache.CurrentItemCooldown <= 0 || CharacterItem.IsUsesBased))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -399,7 +399,7 @@ public class GameplayControler : MonoBehaviour
                 {
                     tmp.transform.GetChild(0).position = tmp.transform.position + new Vector3(-1.284f, 1.261f, 0.0f);
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = (Color)Constants.GetColorFromRealm(Character.Realm, 4);
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{Constants.CurrentItemUses}";
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{Cache.CurrentItemUses}";
                 }
                 else
                 {
@@ -433,7 +433,7 @@ public class GameplayControler : MonoBehaviour
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (CharacterItem != null)
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Constants.CurrentItemCooldown}";
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Cache.CurrentItemCooldown}";
                 else
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = null;
@@ -442,7 +442,7 @@ public class GameplayControler : MonoBehaviour
             }
         }
         //SPECIAL
-        if (Constants.SelectedCharacterSpecialCooldown <= 0 || (_characterSpecial != null && _characterSpecial.IsReactivable && _characterSpecial.CanReactivate))
+        if (Cache.SelectedCharacterSpecialCooldown <= 0 || (_characterSpecial != null && _characterSpecial.IsReactivable && _characterSpecial.CanReactivate))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -482,7 +482,7 @@ public class GameplayControler : MonoBehaviour
                     break;
                 tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Constants.SelectedCharacterSpecialCooldown}";
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Cache.SelectedCharacterSpecialCooldown}";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop(1.7f, 2.0f);
             }
@@ -613,7 +613,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SetGravity(int level, bool fromOpponentSpawn = false)
     {
-        if (fromOpponentSpawn && (_isOldSchoolGameplay || Constants.IsEffectAttackInProgress != AttackType.None))
+        if (fromOpponentSpawn && (_isOldSchoolGameplay || Cache.IsEffectAttackInProgress != AttackType.None))
             return;
         if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the pupose of setting it to zero
             level += Character.DoubleEdgeGravity;
@@ -639,7 +639,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Constants.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_realmTree?.LockDelay ?? 0.0f);
+            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_realmTree?.LockDelay ?? 0.0f);
         }
         else
         {
@@ -655,7 +655,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Constants.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
+        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
     }
 
     private void SetNextGravityFall()
@@ -768,19 +768,19 @@ public class GameplayControler : MonoBehaviour
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
-        if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastPiecePosition != null && Constants.OnResumeLastPieceRotation != null)
+        if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastPiecePosition != null && Cache.OnResumeLastPieceRotation != null)
         {
-            CurrentPiece.transform.position = Constants.OnResumeLastPiecePosition.Value;
-            CurrentPiece.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
-            CurrentGhost.transform.position = Constants.OnResumeLastPiecePosition.Value;
-            CurrentGhost.transform.rotation = Constants.OnResumeLastPieceRotation.Value;
+            CurrentPiece.transform.position = Cache.OnResumeLastPiecePosition.Value;
+            CurrentPiece.transform.rotation = Cache.OnResumeLastPieceRotation.Value;
+            CurrentGhost.transform.position = Cache.OnResumeLastPiecePosition.Value;
+            CurrentGhost.transform.rotation = Cache.OnResumeLastPieceRotation.Value;
         }
-        if (!_hasAlteredPiecePositionAfterResume && Constants.NameLastScene == Constants.SettingsScene && Constants.OnResumeLastForcedBlocks != null)
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Constants.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
+        if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastForcedBlocks != null)
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
         else if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
         _hasAlteredPiecePositionAfterResume = true;
-        if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
+        if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
         else
             CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -845,7 +845,7 @@ public class GameplayControler : MonoBehaviour
         }
 
         int maxPreview = 5 - Character.DevilsContractMalus;
-        if (Constants.CurrentGameMode == GameMode.TrainingOldSchool)
+        if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             maxPreview = 1;
         if (maxPreview < 0)
             maxPreview = 0;
@@ -853,7 +853,7 @@ public class GameplayControler : MonoBehaviour
         {
             var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(NextPieces[i].transform);
-            if (_isOldSchoolGameplay && (Constants.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter))
+            if (_isOldSchoolGameplay && (Cache.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter))
                 tmpPiece.GetComponent<Piece>().SetOldSchool();
             if (_isScrewed && i + 1 < _afterSpawnAttackCounter)
                 tmpPiece.GetComponent<Piece>().SetScrewed(Character.Realm, this.Instantiator);
@@ -896,7 +896,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (!_usingItem && IsNextGravityFallPossible() == false)
         {
-            if (!CurrentPiece.GetComponent<Piece>().IsLocked && !Constants.InputLocked)
+            if (!CurrentPiece.GetComponent<Piece>().IsLocked && !Cache.InputLocked)
                 HandleLock();
         }
         else
@@ -967,11 +967,11 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial?.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
-        --Constants.HeightLimiterResetLines;
-        if (Constants.HeightLimiterResetLines == 0)
+        --Cache.HeightLimiterResetLines;
+        if (Cache.HeightLimiterResetLines == 0)
         {
             ResetPlayHeight();
-            Constants.HeightLimiterResetLines = -1;
+            Cache.HeightLimiterResetLines = -1;
         }
         SpreadEffect(CurrentPiece);
         CheckForLightRows();
@@ -1017,7 +1017,7 @@ public class GameplayControler : MonoBehaviour
             _leftHeld = _rightHeld = -100;
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             if (!canTriggerPartition)
                 return;
@@ -1031,7 +1031,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
@@ -1044,7 +1044,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -1062,7 +1062,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHeld == 0)
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
@@ -1084,7 +1084,7 @@ public class GameplayControler : MonoBehaviour
             _leftHeld = _rightHeld = -100;
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             if (!canTriggerPartition)
                 return;
@@ -1098,7 +1098,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Right);
         }
         DropGhost();
@@ -1111,7 +1111,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -1129,7 +1129,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHeld == 0)
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
         DropGhost();
@@ -1147,7 +1147,7 @@ public class GameplayControler : MonoBehaviour
         if (SceneBhv.Paused)
             return;
         SoftDropStomp();
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.SoftDrop);
             return;
@@ -1165,7 +1165,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
-            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
                 return;
             if (CurrentPiece.GetComponent<Piece>().IsHollowed)
                 return;
@@ -1176,7 +1176,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
             return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
@@ -1250,7 +1250,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.SoftDrop);
             return;
@@ -1286,7 +1286,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnHardDrop(nbLinesDropped);
         if (Character.PiecesWeight > 0 && nbLinesDropped > 1)
             this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f);
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
             DecrementDropBombCooldown(KeyBinding.HardDrop);
     }
 
@@ -1404,7 +1404,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.Clock);
             return;
@@ -1506,7 +1506,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
-                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.Clock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -1531,7 +1531,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.AntiClock);
             return;
@@ -1633,7 +1633,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
-                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.AntiClock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -1656,7 +1656,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.Rotation180);
             return;
@@ -1697,7 +1697,7 @@ public class GameplayControler : MonoBehaviour
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost(withRotationAngle: 180.0f);
                 _soundControler.PlaySound(_idRotate);
-                if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                     DecrementDropBombCooldown(KeyBinding.Rotation180);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -1720,7 +1720,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.Hold);
             return;
@@ -1751,7 +1751,7 @@ public class GameplayControler : MonoBehaviour
             CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
             if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
                 CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
-            if (Constants.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
+            if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
                 CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -1778,7 +1778,7 @@ public class GameplayControler : MonoBehaviour
             _hasMovedOrRotatedCurrentPiece = false;
             CheckInputWhileLocked();
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.DropBomb)
+        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
             DecrementDropBombCooldown(KeyBinding.Hold);
         _soundControler.PlaySound(_idHold);
     }
@@ -1787,7 +1787,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
             return;
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.Item);
             return;
@@ -1825,7 +1825,7 @@ public class GameplayControler : MonoBehaviour
             UpdateItemAndSpecialVisuals();
             return;
         }
-        if (Constants.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.Special);
             return;
@@ -1892,7 +1892,7 @@ public class GameplayControler : MonoBehaviour
         if (roundedX == -1)
             return false;
 
-        if (roundedY < Constants.HeightLimiter || roundedY >= _playFieldHeight)
+        if (roundedY < Cache.HeightLimiter || roundedY >= _playFieldHeight)
             return false;
 
         if (PlayFieldBhv.Grid[roundedX, roundedY] != null && (bhvPiece == null || !bhvPiece.IsHollowed))
@@ -1993,14 +1993,14 @@ public class GameplayControler : MonoBehaviour
         if (CurrentGhost != null)
             Destroy(CurrentGhost);
         int nbLines = 0;
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
         {
             if (HasLine(y))
             {
                 ++nbLines;
-                if (Constants.LineBreakReach > 0)
+                if (Cache.LineBreakReach > 0)
                 {
-                    ++Constants.LineBreakCount;
+                    ++Cache.LineBreakCount;
                     LineBreak(y);
                     ClearLineSpace();
                     ++y; //Because we add a line in LineBreak(y);
@@ -2049,26 +2049,26 @@ public class GameplayControler : MonoBehaviour
                 var randomResult = UnityEngine.Random.Range(0, 6);
                 if (randomResult == 0)
                 {
-                    Constants.SlavWheelStreak = 0;
+                    Cache.SlavWheelStreak = 0;
                     ShrinkPlayHeight(1, afterLock: true);
-                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), Character.Realm);
+                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), Character.Realm);
                 }
                 else
-                    ++Constants.SlavWheelStreak;
+                    ++Cache.SlavWheelStreak;
             }
 
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial?.OnLinesCleared(nbLines, isB2B);
 
-            ++Constants.ComboCounter;
-            if (Constants.ComboCounter > 1)
+            ++Cache.ComboCounter;
+            if (Cache.ComboCounter > 1)
             {
                 CheckForDarkRows(Character.ComboDarkRow);
-                _soundControler.PlaySound(_idCombo, 1.0f + ((Constants.ComboCounter - 2) * 0.15f));
-                SceneBhv.OnCombo(Constants.ComboCounter, nbLines);
+                _soundControler.PlaySound(_idCombo, 1.0f + ((Cache.ComboCounter - 2) * 0.15f));
+                SceneBhv.OnCombo(Cache.ComboCounter, nbLines);
             }
-            if (Character.GodHandCombo > 0 && Constants.ComboCounter == 4)
+            if (Character.GodHandCombo > 0 && Cache.ComboCounter == 4)
             {
                 SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, Character.Realm);
             }
@@ -2080,21 +2080,21 @@ public class GameplayControler : MonoBehaviour
                 SceneBhv.OnPerfectClear();
             }
             
-            if (Character.NoodleShield > 0 && !_hasMovedOrRotatedCurrentPiece && Constants.NoodleShieldCount < Character.NoodleShield)
+            if (Character.NoodleShield > 0 && !_hasMovedOrRotatedCurrentPiece && Cache.NoodleShieldCount < Character.NoodleShield)
             {
-                ++Constants.NoodleShieldCount;
-                var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Constants.CurrentRemainingSimpShields++, Character.Realm);
+                ++Cache.NoodleShieldCount;
+                var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Cache.CurrentRemainingSimpShields++, Character.Realm);
                 Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, Character.Realm);
             }
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
-            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
-                if ((Constants.LineBreakReach > 0 || Constants.LineBreakCount > 0)
-                && Constants.LineBreakCount >= Constants.LineBreakReach)
+            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, (Func<object>)(() => {
+                if ((Cache.LineBreakReach > 0 || Cache.LineBreakCount > 0)
+                && Cache.LineBreakCount >= Cache.LineBreakReach)
                 {
-                    Constants.LineBreakReach = 0;
-                    Constants.LineBreakCount = 0;
+                    Cache.LineBreakReach = 0;
+                    Cache.LineBreakCount = 0;
                     CheckForLineBreaks();
                 }
 
@@ -2102,10 +2102,10 @@ public class GameplayControler : MonoBehaviour
 
                 if (nbLines >= 4
                 || (_lastLockTwist && nbLines >= 2)
-                || Constants.ComboCounter > 3)
+                || Cache.ComboCounter > 3)
                     StartCoroutine(Reflect());
 
-                if (!Character.LineDestroyInvulnerability && AttackIncoming && Constants.HeightLimiterResetLines < 0)
+                if (!Character.LineDestroyInvulnerability && AttackIncoming && Cache.HeightLimiterResetLines < 0)
                 {
                     AttackIncoming = false;
                     //Debug.Log(DateTime.Now + "CheckForLine (line)");
@@ -2114,15 +2114,15 @@ public class GameplayControler : MonoBehaviour
                 if (canSpawn)
                     Spawn();
                 return true;
-            }, false));
+            }), false));
             
         }
         else
         {
             SceneBhv.OnLinesCleared(nbLines, false, _lastLockTwist);
             SceneBhv.PopText();
-            Constants.ComboCounter = 0;
-            if (AttackIncoming && Constants.HeightLimiterResetLines < 0)
+            Cache.ComboCounter = 0;
+            if (AttackIncoming && Cache.HeightLimiterResetLines < 0)
             {
                 AttackIncoming = false;
                 //Debug.Log(DateTime.Now + "CheckForLine (no line)");
@@ -2137,7 +2137,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
         {
             if (HasDarkRow(y))
             {
@@ -2158,7 +2158,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
         {
             if (HasWasteRow(y))
             {
@@ -2281,8 +2281,8 @@ public class GameplayControler : MonoBehaviour
     {
         DeleteLine(y);
         IncreaseAllAboveLines(1, isShrinkOrLineBreak: true);
-        FillLine(Constants.HeightLimiter, AttackType.LineBreak, this.SceneBhv.CurrentOpponent.Realm);
-        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.tag = Constants.TagLineBreak;
+        FillLine(Cache.HeightLimiter, AttackType.LineBreak, this.SceneBhv.CurrentOpponent.Realm);
+        PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.tag = Constants.TagLineBreak;
     }
 
     private int DeleteLightRow(int yRounded, LightRowBlockBhv lightRowBhv)
@@ -2305,7 +2305,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteColumn(int x)
     {
-        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] == null ||
                 (PlayFieldBhv.Grid[x, y].TryGetComponent<BlockBhv>(out var blockBhv) && blockBhv.Indestructible))
@@ -2318,7 +2318,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteFromBottom(int nbRows)
     {
-        for (int y = Constants.HeightLimiter; y < nbRows; ++y)
+        for (int y = Cache.HeightLimiter; y < nbRows; ++y)
         {
             if (y >= Constants.PlayFieldHeight)
                 break;
@@ -2331,25 +2331,25 @@ public class GameplayControler : MonoBehaviour
     public void ClearLineSpace(int minY = -1, int maxY = -1)
     {
         if (minY == -1)
-            minY = Constants.HeightLimiter - 1;
+            minY = Cache.HeightLimiter - 1;
         if (maxY == -1)
-            maxY = Constants.HeightLimiter - 1;
+            maxY = Cache.HeightLimiter - 1;
         int highestBlock = _playFieldHeight - 1;
-        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
         {
-            if (y == Constants.HeightLimiter)
+            if (y == Cache.HeightLimiter)
                 highestBlock = GetHighestBlock();
-            if (y > highestBlock || highestBlock == Constants.HeightLimiter - 1)
+            if (y > highestBlock || highestBlock == Cache.HeightLimiter - 1)
                 break;
             if (HasFullLineSpace(y))
             {
-                if (maxY != Constants.HeightLimiter - 1 && minY != Constants.HeightLimiter - 1
+                if (maxY != Cache.HeightLimiter - 1 && minY != Cache.HeightLimiter - 1
                     && (y < minY || y > maxY))
                     continue;
                 DropAllAboveLines(y);
-                y = Constants.HeightLimiter - 1;
-                if (maxY != Constants.HeightLimiter - 1 && minY != Constants.HeightLimiter - 1 && --maxY < minY)
-                    maxY = minY = Constants.HeightLimiter - 2;
+                y = Cache.HeightLimiter - 1;
+                if (maxY != Cache.HeightLimiter - 1 && minY != Cache.HeightLimiter - 1 && --maxY < minY)
+                    maxY = minY = Cache.HeightLimiter - 2;
             }
         }
         foreach (Transform child in PlayFieldBhv.transform)
@@ -2362,7 +2362,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlock()
     {
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
         {
             if (!HasFullLineSpace(y))
                 return y;
@@ -2372,7 +2372,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlockOnX(int x)
     {
-        for (int y = _playFieldHeight - 1; y >= Constants.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return y;
@@ -2392,7 +2392,7 @@ public class GameplayControler : MonoBehaviour
 
     private bool HasFullColumnSpace(int x)
     {
-        for (int y = Constants.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return false;
@@ -2419,8 +2419,8 @@ public class GameplayControler : MonoBehaviour
     public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false)
     {
         if (nbRows == 0)
-            return Constants.HeightLimiter;
-        for (int y = GetHighestBlock(); y >= Constants.HeightLimiter; --y)
+            return Cache.HeightLimiter;
+        for (int y = GetHighestBlock(); y >= Cache.HeightLimiter; --y)
         {
             if (y + nbRows >= _playFieldHeight)
                 return -1;
@@ -2436,7 +2436,7 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         }
-        return Constants.HeightLimiter;
+        return Cache.HeightLimiter;
     }
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
@@ -2528,7 +2528,7 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackWasteRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int nbHole, bool fromPlayer = false)
@@ -2548,7 +2548,7 @@ public class GameplayControler : MonoBehaviour
         }
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
         if (!fromPlayer)
-            Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
+            Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackLightRows(GameObject opponentInstance, int nbRows, Realm opponentRealm, int cooldown)
@@ -2560,17 +2560,17 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.LightRow, opponentRealm);
         }
         cooldown = cooldown < 1 ? 1 : cooldown;
-        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.tag = Constants.TagLightRows;
-        PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.AddComponent<LightRowBlockBhv>();
-        var lightRowBhv = PlayFieldBhv.Grid[0, Constants.HeightLimiter].gameObject.GetComponent<LightRowBlockBhv>();
+        PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.tag = Constants.TagLightRows;
+        PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.AddComponent<LightRowBlockBhv>();
+        var lightRowBhv = PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.NbRows = nbRows;
         lightRowBhv.Cooldown = cooldown;
-        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + Constants.HeightLimiter));
-        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Constants.HeightLimiter]);
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + Cache.HeightLimiter));
+        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Cache.HeightLimiter]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
     public void AttackEmptyRows(GameObject opponentInstance, int nbRows, Realm opponentRealm)
@@ -2578,7 +2578,7 @@ public class GameplayControler : MonoBehaviour
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
         var nbTries = 0;
         if (!CurrentPiece.GetComponent<Piece>().IsLocked)
             while (!IsPiecePosValid(CurrentPiece) && nbTries < 10)
@@ -2598,7 +2598,7 @@ public class GameplayControler : MonoBehaviour
         var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbRows / 2));
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbRows / 2));
     }
 
     public void AttackForcedPiece(GameObject opponentInstance, Realm opponentRealm, int letter, int rotation)
@@ -2615,13 +2615,13 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
             _soundControler.PlaySound(_idTwist);
-            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () => {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, (Func<object>)(() => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
-                Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
+                Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
                 UpdateItemAndSpecialVisuals();
                 return true;
-            }, true));
+            }), true));
         }
         else if (PlayFieldBhv != null && PlayFieldBhv.gameObject != null)
         {
@@ -2683,14 +2683,14 @@ public class GameplayControler : MonoBehaviour
             {
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
                 Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
-                if (Character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < Character.DiamondBlocks)
-                    ++Constants.CanceledDiamondBlocks;
+                if (Character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < Character.DiamondBlocks)
+                    ++Cache.CanceledDiamondBlocks;
                 else
                 {
                     Destroy(PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                     PlayFieldBhv.Grid[roundedX, roundedY] = null;
                 }
-                Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
+                Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
             }
             Destroy(drillTarget);
         }
@@ -2707,7 +2707,7 @@ public class GameplayControler : MonoBehaviour
                     break;
             }
             y -= 1 + deepness; //At least 1 in order to be really bothering
-            y = y < Constants.HeightLimiter ? Constants.HeightLimiter : y;
+            y = y < Cache.HeightLimiter ? Cache.HeightLimiter : y;
             if (Instantiator == null)
                 Instantiator = GetComponent<Instantiator>();
             Instantiator.NewDrillTarget(opponentRealm, new Vector3(x, y, 0.0f));
@@ -2718,7 +2718,7 @@ public class GameplayControler : MonoBehaviour
 
     private void BaseAfterSpawnEnd()
     {
-        Constants.IsEffectAttackInProgress = AttackType.None;
+        Cache.IsEffectAttackInProgress = AttackType.None;
         AfterSpawn = null;
         _afterSpawnAttackCounter = 0;
     }
@@ -2738,9 +2738,9 @@ public class GameplayControler : MonoBehaviour
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
         _afterSpawnAttackCounter = nbPieces;
-        Constants.IsEffectAttackInProgress = AttackType.AirPiece;
+        Cache.IsEffectAttackInProgress = AttackType.AirPiece;
         SetAfterSpawn(AirPieceAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool AirPieceAfterSpawn(bool trueSpawn)
         {
@@ -2760,9 +2760,9 @@ public class GameplayControler : MonoBehaviour
     private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
     {
         _afterSpawnAttackCounter = nbPieces;
-        Constants.IsEffectAttackInProgress = AttackType.ForcedBlock;
+        Cache.IsEffectAttackInProgress = AttackType.ForcedBlock;
         SetAfterSpawn(ForcedBlockAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ForcedBlockAfterSpawn(bool trueSpawn)
         {
@@ -2784,7 +2784,7 @@ public class GameplayControler : MonoBehaviour
         _effectsCamera.SetActive(true);
         _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
         _soundControler.PlaySound(_idTwist);
-        Constants.IsEffectAttackInProgress = attackType;
+        Cache.IsEffectAttackInProgress = attackType;
         SetAfterSpawn(CameraEffectAfterSpawn);
         if (attackType == AttackType.Intoxication)
             SetGravity(8);
@@ -2794,7 +2794,7 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 BaseAfterSpawnEnd();
-                if (Constants.IsEffectAttackInProgress == AttackType.Intoxication)
+                if (Cache.IsEffectAttackInProgress == AttackType.Intoxication)
                 {
                     CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
                     (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
@@ -2827,7 +2827,7 @@ public class GameplayControler : MonoBehaviour
         droneInstance.transform.SetParent(PlayFieldBhv.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
         SetAfterSpawn(droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
     }
 
     private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows)
@@ -2837,13 +2837,13 @@ public class GameplayControler : MonoBehaviour
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        var startFromBottom = UnityEngine.Random.Range(Constants.HeightLimiter, currentHiest - nbRows);
-        if (startFromBottom < Constants.HeightLimiter)
-            startFromBottom = Constants.HeightLimiter;
+        var startFromBottom = UnityEngine.Random.Range(Cache.HeightLimiter, currentHiest - nbRows);
+        if (startFromBottom < Cache.HeightLimiter)
+            startFromBottom = Cache.HeightLimiter;
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
         SceneBhv.Paused = true;
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
         {
@@ -2900,7 +2900,7 @@ public class GameplayControler : MonoBehaviour
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, lineY, 0.0f), opponentRealm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldown);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldown);
     }
 
     private void AttackTunnel(GameObject opponentInstance, Realm opponentRealm, int deepness)
@@ -2909,8 +2909,8 @@ public class GameplayControler : MonoBehaviour
         int y = GetHighestBlockOnX(x);
         Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, new Vector3(x, y - (deepness / 2.0f), 0.0f), opponentRealm);
         _soundControler.PlaySound(_idEmptyRows);
-        if (Character.DiamondBlocks > 0 && Constants.CanceledDiamondBlocks < Character.DiamondBlocks)
-            ++Constants.CanceledDiamondBlocks;
+        if (Character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < Character.DiamondBlocks)
+            ++Cache.CanceledDiamondBlocks;
         else for (int i = 0; i < deepness; ++i)
             {
                 var decreasingY = y - i;
@@ -2925,12 +2925,12 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         var cooldownReducer = deepness / 3.0f;
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldownReducer < 1 ? 1 : Mathf.RoundToInt(cooldownReducer));
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * cooldownReducer < 1 ? 1 : Mathf.RoundToInt(cooldownReducer));
     }
 
     public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
     {
-        Constants.IsEffectAttackInProgress = AttackType.Partition;
+        Cache.IsEffectAttackInProgress = AttackType.Partition;
         SetGravity(2);
         var halfPixel = Constants.Pixel / 2.0f;
         float y = GetHighestBlock() + 3.0f + halfPixel;
@@ -2939,22 +2939,22 @@ public class GameplayControler : MonoBehaviour
         _soundControler.PlaySound(_idVisionBlock);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, y, 0.0f), opponentRealm);
         Instantiator.NewPartition(new Vector3(4.5f, y), opponentRealm, nbNotes, this, airLines);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbNotes);
-        Constants.MusicAttackCount++;
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbNotes);
+        Cache.MusicAttackCount++;
     }
 
     private void SendNoteToPartition(KeyBinding note)
     {
         if (_partitionBhv == null)
             _partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
-        if (Character.BassGuitarBonus > 0 && Constants.MusicAttackCount <= Character.BassGuitarBonus)
+        if (Character.BassGuitarBonus > 0 && Cache.MusicAttackCount <= Character.BassGuitarBonus)
             note = KeyBinding.None;
         _partitionBhv.NextNote(note);
     }
 
     private bool IsInBeat(bool exactBeat = false)
     {
-        if (Character.BassGuitarBonus > 0 && Constants.MusicAttackCount <= Character.BassGuitarBonus)
+        if (Character.BassGuitarBonus > 0 && Cache.MusicAttackCount <= Character.BassGuitarBonus)
             return true;
         return _rhythmIndicatorBhv.IsInBeat(exactBeat);
     }
@@ -2963,23 +2963,23 @@ public class GameplayControler : MonoBehaviour
     {
         _soundControler.PlaySound(_idDarkRows);
         ShrinkPlayHeight(nbLinesToShrink, afterLock: true);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Constants.HeightLimiter / 2, 0.0f), opponentRealm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
     public void AttackLineBreak(GameObject opponentInstance, Realm opponentRealm, int nbLineBreak)
     {
         _soundControler.PlaySound(_idGarbageRows);
-        Constants.LineBreakReach += nbLineBreak;
-        if (Constants.LineBreakReach > 15)
-            Constants.LineBreakReach = 15;
+        Cache.LineBreakReach += nbLineBreak;
+        if (Cache.LineBreakReach > 15)
+            Cache.LineBreakReach = 15;
         if (_lineBreakLimiter == null && (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) == null)
         {
             _lineBreakLimiter = this.Instantiator.NewLineBreakLimiter(opponentRealm);
             _lineBreakLimiter.transform.SetParent(PlayFieldBhv.transform);
         }
-        _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Constants.HeightLimiter + Constants.LineBreakReach - 1, 0.0f);
+        _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Cache.HeightLimiter + Cache.LineBreakReach - 1, 0.0f);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _lineBreakLimiter.transform.position + new Vector3(0.0f, 0.5f, 0.0f), opponentRealm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbLineBreak / 2));
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbLineBreak / 2));
     }
 
     private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbEmptyRowsOnMiss)
@@ -3000,8 +3000,8 @@ public class GameplayControler : MonoBehaviour
         var newGravity = GravityLevel / 2;
         SetGravity(newGravity < 2 ? 2 : newGravity);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1.0f); //Not more because each Missed Empty Row might reduce it
-        Constants.MusicAttackCount++;
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1.0f); //Not more because each Missed Empty Row might reduce it
+        Cache.MusicAttackCount++;
     }
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
@@ -3009,10 +3009,10 @@ public class GameplayControler : MonoBehaviour
         _isOldSchoolGameplay = true;
         _dasMax = Constants.OldSchoolDas;
         _arrMax = Constants.OldSchoolArr;
-        Constants.IsEffectAttackInProgress = AttackType.OldSchool;
+        Cache.IsEffectAttackInProgress = AttackType.OldSchool;
         _afterSpawnAttackCounter = nbPieces;
         SetAfterSpawn(OldSchoolAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool OldSchoolAfterSpawn(bool result)
         {
@@ -3038,9 +3038,9 @@ public class GameplayControler : MonoBehaviour
     {
         _isScrewed = true;
         _afterSpawnAttackCounter = nbPieces;
-        Constants.IsEffectAttackInProgress = AttackType.Screwed;
+        Cache.IsEffectAttackInProgress = AttackType.Screwed;
         SetAfterSpawn(ScrewedAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ScrewedAfterSpawn(bool result)
         {
@@ -3060,9 +3060,9 @@ public class GameplayControler : MonoBehaviour
     {
         _afterSpawnAttackCounter = 999;
         _dropBombCooldown = nbMoves;
-        Constants.IsEffectAttackInProgress = AttackType.DropBomb;
+        Cache.IsEffectAttackInProgress = AttackType.DropBomb;
         SetAfterSpawn(DropBombAfterSpawn);
-        Constants.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
 
         bool DropBombAfterSpawn(bool trueSpawn)
         {
@@ -3182,26 +3182,26 @@ public class GameplayControler : MonoBehaviour
 
     public void ShrinkPlayHeight(int heightToReduce, bool afterLock = false)
     {
-        if (this.Character.CancelableShrinkingLines > 0 && Constants.CanceledShrinkingLines < this.Character.CancelableShrinkingLines)
+        if (this.Character.CancelableShrinkingLines > 0 && Cache.CanceledShrinkingLines < this.Character.CancelableShrinkingLines)
         {
-            Constants.CanceledShrinkingLines += heightToReduce;
-            if (Constants.CanceledShrinkingLines > this.Character.CancelableShrinkingLines)
-                heightToReduce = Constants.CanceledShrinkingLines - this.Character.CancelableShrinkingLines;
+            Cache.CanceledShrinkingLines += heightToReduce;
+            if (Cache.CanceledShrinkingLines > this.Character.CancelableShrinkingLines)
+                heightToReduce = Cache.CanceledShrinkingLines - this.Character.CancelableShrinkingLines;
             else
                 heightToReduce = 0;
         }
         if (heightToReduce == 0)
             return;
         if (_heightLimiter == null)
-            _heightLimiter = Instantiator.NewHeightLimiter(Constants.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
+            _heightLimiter = Instantiator.NewHeightLimiter(Cache.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
         else
-            _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Constants.HeightLimiter + heightToReduce, Character.Realm);
+            _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Cache.HeightLimiter + heightToReduce, Character.Realm);
         if (!afterLock)
             CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
         if (CurrentPiece.transform.position.y > 19.0f)
             CurrentPiece.transform.position += new Vector3(0.0f, -Mathf.RoundToInt(CurrentPiece.transform.position.y - 19.0f), 0.0f);
         IncreaseAllAboveLines(heightToReduce, isShrinkOrLineBreak: true);
-        Constants.HeightLimiter += heightToReduce;
+        Cache.HeightLimiter += heightToReduce;
         ClearLineSpace();
     }
 
@@ -3209,20 +3209,20 @@ public class GameplayControler : MonoBehaviour
     {
         if (_heightLimiter != null)
             Destroy(_heightLimiter);
-        Constants.HeightLimiter = 0;
+        Cache.HeightLimiter = 0;
         ClearLineSpace();
     }
 
     public IEnumerator Reflect()
     {
-        for (int y = 19; y >= Constants.HeightLimiter - 10; --y)
+        for (int y = 19; y >= Cache.HeightLimiter - 10; --y)
         {
             bool atLeastOne = false;
             int diagX = 0;
             int diagY = y;
             while (diagY <= 19 && diagX <= 9)
             {
-                if (diagY >= Constants.HeightLimiter && PlayFieldBhv.Grid[diagX, diagY] != null)
+                if (diagY >= Cache.HeightLimiter && PlayFieldBhv.Grid[diagX, diagY] != null)
                 {
                     var reflectName = "ReflectBlock";
                     Realm? realm = null;
