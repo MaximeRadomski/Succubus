@@ -9,16 +9,18 @@ public static class PactsData
     public static int RarePactAppearancePercent = 15;
 
     public static string[] Pacts =
-    /* 0  */ { "" };
+    /* 0  */ { "Devoted Apostle", "Failed Baptism", "Hellish Idolatry" };
 
-    public static string[] CommonPactsNames = {  };
+    //list https://www.vocabulary.com/lists/185056
+
+    public static string[] CommonPactsNames = { Pacts[0] };
     public static string[] RarePactsNames = {  };
     public static string[] LegendaryPactsNames = {  };
 
     // DEBUG //
     public static bool DebugEnabled = Constants.PactsDebug;
     public static bool DebugMultitude = false;
-    public static Pact DebugPact = GetPactFromName("Instant Noodles");
+    public static Pact DebugPact = GetPactFromName("Devoted Apostle");
 
     public static Pact GetRandomPact()
     {

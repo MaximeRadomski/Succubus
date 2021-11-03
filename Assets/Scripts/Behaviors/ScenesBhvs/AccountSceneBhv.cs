@@ -217,6 +217,7 @@ public class AccountSceneBhv : SceneBhv
     {
         if (string.IsNullOrEmpty(_playerName.Text)) { Instantiator.NewPopupYesNo("Player Name", "you must enter a player name.", null, "Ok", null); return; }
         if (string.IsNullOrWhiteSpace(_playerName.Text) || _playerName.Text.Length < AccountService.MinPlayerNameCharacters) { Instantiator.NewPopupYesNo("Player Name", $"your player name must contains at least {AccountService.MinPlayerNameCharacters} characters.", null, "Ok", null); return; }
+        if (string.IsNullOrWhiteSpace(_playerName.Text.Substring(0, 1)) || string.IsNullOrWhiteSpace(_playerName.Text.Substring(_playerName.Text.Length - 1))) { Instantiator.NewPopupYesNo("Player Name", $"your player name can't start or end with whitespace characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password1.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
         if (string.IsNullOrWhiteSpace(_password1.Text) || _password1.Text.Length < AccountService.MinPasswordCharacters) { Instantiator.NewPopupYesNo("Password", $"your password name must contains at least {AccountService.MinPasswordCharacters} characters.", null, "Ok", null); return; }
         if (string.IsNullOrEmpty(_password2.Text)) { Instantiator.NewPopupYesNo("Password", "you must enter a password.", null, "Ok", null); return; }
