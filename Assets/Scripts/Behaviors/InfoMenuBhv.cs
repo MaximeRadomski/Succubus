@@ -159,7 +159,8 @@ public class InfoMenuBhv : PopupBhv
         {
             if (pactsStr != string.Empty)
                 pactsStr += "\n";
-            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{pact.Name} - {pact.NbFight} fight{(pact.NbFight > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
+            var remainingFights = pact.MaxFight - pact.NbFight;
+            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{pact.Name} - {remainingFights} fight{(remainingFights > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
         }
         _fightFrame.transform.Find("PactsList").GetComponent<TMPro.TextMeshPro>().text = pactsStr.ToLower();
     }
@@ -184,7 +185,7 @@ public class InfoMenuBhv : PopupBhv
         {
             _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
             _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
-            _instantiator.NewPopupYesNo("No Opponent", "you currently have no opponent", null, "Ok", OnOk);
+            _instantiator.NewPopupYesNo("No Fight", "you aren't in a fight", null, "Ok", OnOk);
             object OnOk(bool result)
             {
                 _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);

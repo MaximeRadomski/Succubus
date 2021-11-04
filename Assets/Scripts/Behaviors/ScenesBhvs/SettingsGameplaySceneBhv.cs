@@ -121,7 +121,9 @@ public class SettingsGameplaySceneBhv : SceneBhv
         PlayerPrefsHelper.SaveClassicPieces(enable);
         Instantiator.Init();
         var tmpTHell = this.Instantiator.NewPiece("T", "Hell", _tHell.transform.position, true);
+        tmpTHell.name = "T-Hell";
         var tmpIHell = this.Instantiator.NewPiece("I", "Hell", _iHell.transform.position, true);
+        tmpIHell.name = "I-Hell";
         tmpIHell.transform.position = _iHell.transform.position;
         Destroy(_tHell.gameObject);
         Destroy(_iHell.gameObject);

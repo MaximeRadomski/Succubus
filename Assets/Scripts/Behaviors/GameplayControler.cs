@@ -25,11 +25,11 @@ public class GameplayControler : MonoBehaviour
     public List<GameObject> NextPieces;
     public bool CanBeReload = true;
     public bool OpponentDeathScreen = false;
+    public Realm CharacterRealm;
 
     private TMPro.TextMeshPro _infoRealmDebug;
 
     private RealmTree _realmTree;
-    private Realm _characterRealm;
     private Realm _levelRealm;
     private Difficulty _difficulty;
 
@@ -137,7 +137,7 @@ public class GameplayControler : MonoBehaviour
         
         if (Character.LastStandMultiplier > 0 && !Cache.HasLastStanded)
         {
-            if (SceneBhv.DamageOpponent(Character.GetAttack() * Character.LastStandMultiplier, null, Character.Realm))
+            if (SceneBhv.DamageOpponent(Character.GetAttack() * Character.LastStandMultiplier, null, CharacterRealm))
             {
                 Cache.HasLastStanded = true;
                 Resurect("last stand");
@@ -232,7 +232,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv = GetComponent<GameSceneBhv>();
         Character = SceneBhv.Character;
         SetGravity(level);
-        _characterRealm = characterRealm;
+        CharacterRealm = characterRealm;
         _levelRealm = levelRealm;
         if (_isTraining.Value)
             _difficulty = Difficulty.Normal;
@@ -240,6 +240,8 @@ public class GameplayControler : MonoBehaviour
         {
             var run = PlayerPrefsHelper.GetRun();
             _difficulty = run?.Difficulty ?? Difficulty.Normal;
+            if (Cache.PactCharacterRealm != Realm.None)
+                CharacterRealm = Cache.PactCharacterRealm;
         }
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
@@ -268,7 +270,7 @@ public class GameplayControler : MonoBehaviour
         _mainCamera = GameObject.Find("Main Camera");
         CharacterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
-        _ghostColor = (Color)Constants.GetColorFromRealm(_characterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
+        _ghostColor = (Color)Constants.GetColorFromRealm(CharacterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
@@ -328,7 +330,7 @@ public class GameplayControler : MonoBehaviour
             var holding = PlayerPrefsHelper.GetHolder();
             if (!string.IsNullOrEmpty(holding))
             {
-                var tmpHolding = Instantiator.NewPiece(holding, _characterRealm.ToString(), _holder.transform.position);
+                var tmpHolding = Instantiator.NewPiece(holding, CharacterRealm.ToString(), _holder.transform.position);
                 tmpHolding.transform.SetParent(_holder.transform);
             }
             PlayFieldBhv.HideShow(1);
@@ -391,14 +393,14 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 0));//8 = item in sprite sheet | 0 = empty
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + 0));//8 = item in sprite sheet | 0 = empty
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (_itemTextDefaultLocalPos == null)
                     _itemTextDefaultLocalPos = tmp.transform.GetChild(0).localPosition;
                 if (CharacterItem.IsUsesBased)
                 {
                     tmp.transform.GetChild(0).position = tmp.transform.position + new Vector3(-1.284f, 1.261f, 0.0f);
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = (Color)Constants.GetColorFromRealm(Character.Realm, 4);
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = (Color)Constants.GetColorFromRealm(CharacterRealm, 4);
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{Cache.CurrentItemUses}";
                 }
                 else
@@ -430,10 +432,10 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (CharacterItem != null)
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Cache.CurrentItemCooldown}";
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.CurrentItemCooldown}";
                 else
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "";
                 tmp.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = null;
@@ -456,7 +458,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + 9));//9 = special in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + 9));//9 = special in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -480,9 +482,9 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
-                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{Character.Realm}.2.1\">{Cache.SelectedCharacterSpecialCooldown}";
+                tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.SelectedCharacterSpecialCooldown}";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
                     tmp.transform.GetChild(0).GetComponent<IconInstanceBhv>().Pop(1.7f, 2.0f);
             }
@@ -590,7 +592,7 @@ public class GameplayControler : MonoBehaviour
         var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
         var spriteName = gameplayButton.GetComponent<SpriteRenderer>().sprite.name;
         var spriteId = int.Parse(spriteName.Substring(spriteName.IndexOf('_') + 1));
-        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (_characterRealm.GetHashCode() * 11 + spriteId));
+        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + spriteId));
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
@@ -766,8 +768,8 @@ public class GameplayControler : MonoBehaviour
         var tmpLastPiece = CurrentPiece;
         if (tmpLastPiece != null)
             tmpLastPiece.GetComponent<Piece>().AskDisable();
-        CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm.ToString(), _spawner.transform.position);
-        CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), _characterRealm + "Ghost", _spawner.transform.position);
+        CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), CharacterRealm.ToString(), _spawner.transform.position);
+        CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), CharacterRealm + "Ghost", _spawner.transform.position);
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastPiecePosition != null && Cache.OnResumeLastPieceRotation != null)
         {
             CurrentPiece.transform.position = Cache.OnResumeLastPiecePosition.Value;
@@ -777,8 +779,13 @@ public class GameplayControler : MonoBehaviour
         }
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastForcedBlocks != null)
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
-        else if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+        else
+        {
+            if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
+                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+            if (Cache.PactChanceAdditionalBlock > 0 && Helper.RandomDice100(Cache.PactChanceAdditionalBlock))
+                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+        }
         _hasAlteredPiecePositionAfterResume = true;
         if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -808,7 +815,7 @@ public class GameplayControler : MonoBehaviour
         if (_isOldSchoolGameplay)
             CurrentPiece.GetComponent<Piece>().SetOldSchool();
         if (_isScrewed)
-            CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
+            CurrentPiece.GetComponent<Piece>().SetScrewed(this.CharacterRealm, this.Instantiator);
         DropGhost();
         _hasMovedOrRotatedCurrentPiece = false;
         CheckInputWhileLocked();
@@ -851,12 +858,12 @@ public class GameplayControler : MonoBehaviour
             maxPreview = 0;
         for (int i = 0; i < maxPreview; ++i)
         {
-            var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), _characterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
+            var tmpPiece = Instantiator.NewPiece(Bag.Substring(i, 1), CharacterRealm.ToString(), NextPieces[i].transform.position, keepSpawnerX: i > 0 ? true : false);
             tmpPiece.transform.SetParent(NextPieces[i].transform);
             if (_isOldSchoolGameplay && (Cache.CurrentGameMode == GameMode.TrainingOldSchool || i + 1 < _afterSpawnAttackCounter))
                 tmpPiece.GetComponent<Piece>().SetOldSchool();
             if (_isScrewed && i + 1 < _afterSpawnAttackCounter)
-                tmpPiece.GetComponent<Piece>().SetScrewed(Character.Realm, this.Instantiator);
+                tmpPiece.GetComponent<Piece>().SetScrewed(CharacterRealm, this.Instantiator);
         }
     }
 
@@ -1294,7 +1301,7 @@ public class GameplayControler : MonoBehaviour
     {
         for (int y = 19; y >= yMin; --y)
         {
-            Instantiator.NewFadeBlock(_characterRealm, new Vector3(x, y, 0.0f), 1, -1);
+            Instantiator.NewFadeBlock(CharacterRealm, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
@@ -1305,7 +1312,7 @@ public class GameplayControler : MonoBehaviour
             int x = Mathf.RoundToInt(child.transform.position.x);
             int y = Mathf.RoundToInt(child.transform.position.y);
 
-            Instantiator.NewFadeBlock(_characterRealm, new Vector3(x, y, 0.0f), 1, -1);
+            Instantiator.NewFadeBlock(CharacterRealm, new Vector3(x, y, 0.0f), 1, -1);
         }
     }
 
@@ -1315,7 +1322,7 @@ public class GameplayControler : MonoBehaviour
         {
             for (int x = 0; x < 10; ++x)
             {
-                Instantiator.NewFadeBlock(Character.Realm, new Vector3(x, y, 0.0f), 2, -1);
+                Instantiator.NewFadeBlock(CharacterRealm, new Vector3(x, y, 0.0f), 2, -1);
             }
         }
     }
@@ -1712,7 +1719,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Hold()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || !Cache.PactCanHold || SceneBhv.Paused || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
@@ -1727,7 +1734,7 @@ public class GameplayControler : MonoBehaviour
         }
         if (_holder.transform.childCount <= 0)
         {
-            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
+            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, CharacterRealm.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
@@ -1740,17 +1747,19 @@ public class GameplayControler : MonoBehaviour
         {
             var tmpHeld = _holder.transform.GetChild(0);
             var pieceLetter = tmpHeld.GetComponent<Piece>().Letter;
-            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, _characterRealm.ToString(), _holder.transform.position);
+            var tmpHolding = Instantiator.NewPiece(CurrentPiece.GetComponent<Piece>().Letter, CharacterRealm.ToString(), _holder.transform.position);
             tmpHolding.transform.SetParent(_holder.transform);
             PlayerPrefsHelper.SaveHolder(tmpHolding.GetComponent<Piece>().Letter);
             Destroy(CurrentPiece.gameObject);
             Destroy(tmpHeld.gameObject);
             if (CurrentGhost != null)
                 Destroy(CurrentGhost);
-            CurrentPiece = Instantiator.NewPiece(pieceLetter, _characterRealm.ToString(), _spawner.transform.position);
-            CurrentGhost = Instantiator.NewPiece(pieceLetter, _characterRealm + "Ghost", _spawner.transform.position);
+            CurrentPiece = Instantiator.NewPiece(pieceLetter, CharacterRealm.ToString(), _spawner.transform.position);
+            CurrentGhost = Instantiator.NewPiece(pieceLetter, CharacterRealm + "Ghost", _spawner.transform.position);
             if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
-                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(Character.Realm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+            if (Cache.PactChanceAdditionalBlock > 0 && Helper.RandomDice100(Cache.PactChanceAdditionalBlock))
+                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
             if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
@@ -1773,7 +1782,7 @@ public class GameplayControler : MonoBehaviour
             AfterSpawn?.Invoke(false);
             CurrentPiece.GetComponent<Piece>().EnableRotationPoint(PlayerPrefsHelper.GetRotationPoint(), Instantiator);
             if (_isScrewed)
-                CurrentPiece.GetComponent<Piece>().SetScrewed(this.Character.Realm, this.Instantiator);
+                CurrentPiece.GetComponent<Piece>().SetScrewed(this.CharacterRealm, this.Instantiator);
             DropGhost();
             _hasMovedOrRotatedCurrentPiece = false;
             CheckInputWhileLocked();
@@ -1834,7 +1843,7 @@ public class GameplayControler : MonoBehaviour
         {
             this.SceneBhv.CameraBhv.Bump(4);
             _soundControler.PlaySound(_idSpecial);
-            this.CharacterInstanceBhv.Special(Character.Realm);
+            this.CharacterInstanceBhv.Special(CharacterRealm);
         }
         UpdateItemAndSpecialVisuals();
     }
@@ -1932,7 +1941,7 @@ public class GameplayControler : MonoBehaviour
             if (block.GetComponent<BlockBhv>() != null)
                 block.GetComponent<BlockBhv>().SetMimicAppearance();
             else
-                block.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(Helper.GetInferiorFrom(Character.Realm), 4);
+                block.GetComponent<SpriteRenderer>().color = (Color)Constants.GetColorFromRealm(Helper.GetInferiorFrom(CharacterRealm), 4);
         }
         else
         {
@@ -2039,7 +2048,7 @@ public class GameplayControler : MonoBehaviour
                 int xHoopRounded = Mathf.RoundToInt(_basketballHoopBhv.transform.position.x);
                 if (range[0] <= xHoopRounded && range[1] >= xHoopRounded)
                 {
-                    SceneBhv.DamageOpponent(Character.GetAttack() * Character.BasketballHoopTimesBonus, _basketballHoopBhv.gameObject, Character.Realm);
+                    SceneBhv.DamageOpponent(Character.GetAttack() * Character.BasketballHoopTimesBonus, _basketballHoopBhv.gameObject, CharacterRealm);
                     _basketballHoopBhv.RandomizePosition();
                 }
             }
@@ -2051,7 +2060,7 @@ public class GameplayControler : MonoBehaviour
                 {
                     Cache.SlavWheelStreak = 0;
                     ShrinkPlayHeight(1, afterLock: true);
-                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), Character.Realm);
+                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), CharacterRealm);
                 }
                 else
                     ++Cache.SlavWheelStreak;
@@ -2070,7 +2079,7 @@ public class GameplayControler : MonoBehaviour
             }
             if (Character.GodHandCombo > 0 && Cache.ComboCounter == 4)
             {
-                SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, Character.Realm);
+                SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, CharacterRealm);
             }
 
             if (GetHighestBlock() == -1) //PERFECT
@@ -2083,8 +2092,8 @@ public class GameplayControler : MonoBehaviour
             if (Character.NoodleShield > 0 && !_hasMovedOrRotatedCurrentPiece && Cache.NoodleShieldCount < Character.NoodleShield)
             {
                 ++Cache.NoodleShieldCount;
-                var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Cache.CurrentRemainingSimpShields++, Character.Realm);
-                Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, Character.Realm);
+                var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Cache.CurrentRemainingSimpShields++, CharacterRealm);
+                Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, CharacterRealm);
             }
 
             SceneBhv.PopText();
@@ -2271,7 +2280,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (PlayFieldBhv.Grid[x, y] == null)
                 continue;
-            Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
             PlayFieldBhv.Grid[x, y] = null;
         }
@@ -2295,7 +2304,7 @@ public class GameplayControler : MonoBehaviour
             {
                 if (PlayFieldBhv.Grid[x, y] == null)
                     continue;
-                Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+                Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
                 Destroy(PlayFieldBhv.Grid[x, y].gameObject);
                 PlayFieldBhv.Grid[x, y] = null;
             }
@@ -2310,7 +2319,7 @@ public class GameplayControler : MonoBehaviour
             if (PlayFieldBhv.Grid[x, y] == null ||
                 (PlayFieldBhv.Grid[x, y].TryGetComponent<BlockBhv>(out var blockBhv) && blockBhv.Indestructible))
                 continue;
-            Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
+            Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
             PlayFieldBhv.Grid[x, y] = null;
         }
@@ -2527,7 +2536,7 @@ public class GameplayControler : MonoBehaviour
         {
             FillLine(y, AttackType.DarkRow, opponentRealm);
         }
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), CharacterRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
@@ -2546,7 +2555,7 @@ public class GameplayControler : MonoBehaviour
         {
             FillLine(y, AttackType.WasteRow, opponentRealm, emptyStart, emptyEnd);
         }
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(((emptyEnd - emptyStart) / 2) + emptyStart, (float)nbRows / 2.0f - 0.5f, 0.0f), CharacterRealm);
         if (!fromPlayer)
             Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
@@ -2569,7 +2578,7 @@ public class GameplayControler : MonoBehaviour
         tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Cache.HeightLimiter]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), CharacterRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
     }
 
@@ -2577,7 +2586,7 @@ public class GameplayControler : MonoBehaviour
     {
         IncreaseAllAboveLines(nbRows);
         _soundControler.PlaySound(_idEmptyRows);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), CharacterRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbRows);
         var nbTries = 0;
         if (!CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -2597,7 +2606,7 @@ public class GameplayControler : MonoBehaviour
             currentHiest = 19 - nbRows;
         var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, Character.Realm);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, CharacterRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbRows / 2));
     }
 
@@ -2613,7 +2622,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.name = "Old" + Constants.GoForcedPiece;
             Destroy(ForcedPiece);
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
-            Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, Character.Realm);
+            Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, CharacterRealm);
             _soundControler.PlaySound(_idTwist);
             StartCoroutine(Helper.ExecuteAfterDelay(0.15f, (Func<object>)(() => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
@@ -2682,7 +2691,7 @@ public class GameplayControler : MonoBehaviour
             if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
             {
                 Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, PlayFieldBhv.Grid[roundedX, roundedY].position, opponentRealm);
-                Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
+                Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[roundedX, roundedY].transform.position, 5, 0);
                 if (Character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < Character.DiamondBlocks)
                     ++Cache.CanceledDiamondBlocks;
                 else
@@ -2919,7 +2928,7 @@ public class GameplayControler : MonoBehaviour
                 var targetedGo = PlayFieldBhv.Grid[x, decreasingY];
                 if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)
                 {
-                    Instantiator.NewFadeBlock(_characterRealm, PlayFieldBhv.Grid[x, decreasingY].transform.position, 5, 0);
+                    Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[x, decreasingY].transform.position, 5, 0);
                     Destroy(PlayFieldBhv.Grid[x, decreasingY].gameObject);
                     PlayFieldBhv.Grid[x, decreasingY] = null;
                 }
@@ -3193,9 +3202,9 @@ public class GameplayControler : MonoBehaviour
         if (heightToReduce == 0)
             return;
         if (_heightLimiter == null)
-            _heightLimiter = Instantiator.NewHeightLimiter(Cache.HeightLimiter + heightToReduce, Character.Realm, PlayFieldBhv.gameObject.transform);
+            _heightLimiter = Instantiator.NewHeightLimiter(Cache.HeightLimiter + heightToReduce, CharacterRealm, PlayFieldBhv.gameObject.transform);
         else
-            _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Cache.HeightLimiter + heightToReduce, Character.Realm);
+            _heightLimiter.GetComponent<HeightLimiterBhv>().Set(Cache.HeightLimiter + heightToReduce, CharacterRealm);
         if (!afterLock)
             CurrentPiece.transform.position += new Vector3(0.0f, heightToReduce, 0.0f);
         if (CurrentPiece.transform.position.y > 19.0f)

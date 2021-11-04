@@ -21,6 +21,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private RealmTree _realmTree;
     private StepsService _stepsService;
     private Step _currentStep;
+    private List<Pact> _pacts;
 
     private int _characterAttack;
     private int _wetMalus;
@@ -89,6 +90,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Cache.CurrentItemCooldown = _run.CurrentItemCooldown;
             Cache.CurrentItemUses = _run.CurrentItemUses;
         }
+
+        _pacts = PlayerPrefsHelper.GetCurrentPacts();
+        if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
+            foreach (var pact in _pacts) pact.ApplyPact();
+
         //if (_opponents.Count == 1)
         //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
         for (int i = _opponents.Count; i < 12; ++i)
@@ -132,7 +138,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Cache.InputLocked = true;
         if (Cache.NameLastScene != Constants.SettingsScene)
         {
-            Cache.CurrentRemainingSimpShields = Character.SimpShield;
+            if (!_isTraining)
+                Cache.CurrentRemainingSimpShields = Character.SimpShield;
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
         }
         else
@@ -302,6 +309,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
         Cache.ResetClassicGameCache();
+        if (_pacts != null && _pacts.Count > 0)
+            for (int i = _pacts.Count - 1; i >= 0; --i)
+            {
+                if (++_pacts[i].NbFight == _pacts[i].MaxFight)
+                    _pacts.RemoveAt(i);
+            }
+        PlayerPrefsHelper.SetPacts(_pacts);
 
         if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
@@ -412,6 +426,25 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Tattoo)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " power has been increased.", null, "Noice", LoadBackAfterVictory, sprite);
                 ((Tattoo)loot).ApplyToCharacter(Character);
                 PlayerPrefsHelper.SaveRunCharacter(Character);
+            }
+        }
+        else if (loot?.LootType == LootType.Pact)
+        {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
+            var nameToCheck = ((Pact)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
+            var pacts = PlayerPrefsHelper.GetCurrentPactsString();
+            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Pacts_" + ((Pact)loot).Id);
+
+            if (pacts.Contains(nameToCheck))
+                Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LoadBackAfterVictory, sprite);
+            else
+                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}Do you wish to sign this pact?\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).Description}", "No", "Yes", OnPactSign, sprite, defaultPositive: true);
+            object OnPactSign(bool result)
+            {
+                if (result)
+                    PlayerPrefsHelper.AddPact(((Pact)loot).Name);
+                LoadBackAfterVictory(true);
+                return result;
             }
         }
         else
@@ -926,7 +959,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamage *= nbLines;
             if (lastLockIsTwist)
+            {
                 incomingDamage *= 2;
+                if (_gameplayControler.CharacterRealm == Realm.Heaven)
+                {
+                    Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
+                    Cache.CurrentItemCooldown -= Character.RealmPassiveEffect;
+                    _gameplayControler.UpdateItemAndSpecialVisuals();
+                }
+            }
             if (CurrentOpponent.Weakness == Weakness.xLines && CurrentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();
@@ -945,7 +986,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (slavBonus == 0) slavBonus = 1;
                 incomingDamage += slavBonus;
             }
-            if (Character.Realm == Realm.Earth && nbLines == 4)
+            if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines == 4)
             {
                 int targetDestroyed = Character.RealmPassiveEffect;
                 targetDestroyed -= _gameplayControler.CheckForDarkRows(targetDestroyed);
@@ -991,12 +1032,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 _soundControler.PlaySound(_idImmunity);
                 incomingDamage = 0;
             }
-            if (Character.Realm == Realm.Heaven && nbLines >= 2)
-            {
-                Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
-                Cache.CurrentItemCooldown -= Character.RealmPassiveEffect;
-                _gameplayControler.UpdateItemAndSpecialVisuals();
-            }
         }
         _characterAttack += incomingDamage;
     }
@@ -1025,7 +1060,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (_characterAttack < 0)
             return;
         var incomingDamage = 0;
-        if (Character.Realm == Realm.Hell)
+        if (_gameplayControler.CharacterRealm == Realm.Hell)
             incomingDamage += Mathf.RoundToInt((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
         if (CurrentOpponent.Weakness == Weakness.Combos)
         {

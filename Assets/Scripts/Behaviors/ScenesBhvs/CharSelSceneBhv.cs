@@ -125,6 +125,7 @@ public class CharSelSceneBhv : SceneBhv
                 scene = Constants.DifficultyScene;
                 PlayerPrefsHelper.ResetCurrentItem();
                 PlayerPrefsHelper.ResetTattoos();
+                PlayerPrefsHelper.ResetPacts();
                 PlayerPrefsHelper.ResetAlreadyDialog();
                 PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
                 PlayerPrefsHelper.ResetRunBossVanquished();

@@ -9,9 +9,10 @@ public abstract class Pact : Loot
     public string Name;
     public string Description;
     public string ShortDescription;
-    public int NbFight;
+    public int MaxFight;
+    public int NbFight = 0;
 
-    public abstract bool ApplyPact();
+    public abstract void ApplyPact();
 
     public Pact()
     {

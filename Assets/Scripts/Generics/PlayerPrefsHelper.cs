@@ -450,22 +450,6 @@ public class PlayerPrefsHelper : MonoBehaviour
         return tattoosList;
     }
 
-    public static List<Pact> GetCurrentPacts()
-    {
-        var pactsFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
-        var pactsList = new List<Pact>();
-        if (pactsFullStr == Constants.PpSerializeDefault)
-            return pactsList;
-        var tattooFullStrSplits = pactsFullStr.Split(';');
-        for (int i = 0; i < tattooFullStrSplits.Length; ++i)
-        {
-            var pactStr = tattooFullStrSplits[i];
-            var tmpTattoo = (Pact)Activator.CreateInstance(Type.GetType("Pact" + pactStr));
-            pactsList.Add(tmpTattoo);
-        }
-        return pactsList;
-    }
-
     public static Tattoo GetCurrentInkedTattoo(string name)
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
@@ -510,6 +494,63 @@ public class PlayerPrefsHelper : MonoBehaviour
             }
         }
         return alreadyMaxedTattoos;
+    }
+
+    public static void AddPact(string name)
+    {
+        var pactsFullStr = Mock.GetString(Constants.PpCurrentPacts, Constants.PpSerializeDefault);
+        if (pactsFullStr == null)
+            pactsFullStr = "";
+        var nameToAdd = name.Replace(" ", "").Replace("'", "").Replace("-", "");
+        pactsFullStr += nameToAdd + "F00;";
+        Mock.SetString(Constants.PpCurrentPacts, pactsFullStr);
+    }
+
+    public static void SetPacts(List<Pact> pacts)
+    {
+        if (pacts == null || pacts.Count == 0)
+        {
+            ResetPacts();
+            return;
+        }
+        var pactsFullStr = string.Empty;
+        foreach (var pact in pacts)
+        {
+            var nameToAdd = pact.Name.Replace(" ", "").Replace("'", "").Replace("-", "");
+            pactsFullStr += $"{nameToAdd}F{pact.NbFight.ToString("00")};";
+        }
+        Mock.SetString(Constants.PpCurrentPacts, pactsFullStr);
+    }
+
+    public static string GetCurrentPactsString()
+    {
+        var pacts = Mock.GetString(Constants.PpCurrentPacts, Constants.PpSerializeDefault);
+        return pacts;
+    }
+
+    public static List<Pact> GetCurrentPacts()
+    {
+        var pactsFullStr = Mock.GetString(Constants.PpCurrentPacts, Constants.PpSerializeDefault);
+        var pactsList = new List<Pact>();
+        if (pactsFullStr == Constants.PpSerializeDefault)
+            return pactsList;
+        var pactFullStrSplits = pactsFullStr.Split(';');
+        for (int i = 0; i < pactFullStrSplits.Length; ++i)
+        {
+            var pactStr = pactFullStrSplits[i];
+            var separatorLevelId = pactStr.LastIndexOf('F');
+            if (separatorLevelId == -1)
+                break;
+            var tmppact = (Pact)Activator.CreateInstance(Type.GetType("Pact" + pactStr.Substring(0, separatorLevelId)));
+            tmppact.NbFight = int.Parse(pactStr.Substring(separatorLevelId + 1, 2));
+            pactsList.Add(tmppact);
+        }
+        return pactsList;
+    }
+
+    public static void ResetPacts()
+    {
+        Mock.SetString(Constants.PpCurrentPacts, null);
     }
 
     public static void SaveEffectsLevel(float level)

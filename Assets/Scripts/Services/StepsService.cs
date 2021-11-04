@@ -113,7 +113,7 @@ public class StepsService
             }
         }
         var lootType = LootType.None;
-        var lootId = 0;
+        var lootId = -1;
         var opponentType = OpponentType.Common;
         if (canEncounterCharacter && Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && run.RealmLevel >= 1)
         {
@@ -139,12 +139,12 @@ public class StepsService
         {
             lootType = LootType.Item;
             var nbTries = 0;
+            var currentItem = PlayerPrefsHelper.GetCurrentItemName();
             do
             {
                 lootId = ItemsData.GetRandomItem().Id;
                 ++nbTries;
-            } while (ItemsData.Items[lootId] == PlayerPrefsHelper.GetCurrentItemName() || run.Steps.Contains($"I{lootId.ToString("00")}") || nbTries > 10);
-
+            } while ((ItemsData.Items[lootId] == currentItem || run.Steps.Contains($"I{lootId.ToString("00")}")) && nbTries < 10);
             opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         else if (Helper.RandomDice100(run.ResourceLootPercent))
@@ -153,7 +153,19 @@ public class StepsService
             lootId = run.CurrentRealm.GetHashCode();
             opponentType = OpponentType.Common;
         }
-        else
+        else if (Helper.RandomDice100(run.PactLootPercent))
+        {
+            lootType = LootType.Pact;
+            var nbTries = 0;
+            var currentPacts = PlayerPrefsHelper.GetCurrentPacts();
+            do
+            {
+                lootId = PactsData.GetRandomPact().Id;
+                ++nbTries;
+            } while ((currentPacts.Any(p => p.Id == lootId) || run.Steps.Contains($"P{lootId.ToString("00")}")) && nbTries < 10);
+            opponentType = (OpponentType)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+        }
+        else if(Helper.RandomDice100(run.TattooLootPercent))
         {
             lootType = LootType.Tattoo;
             if (Mock.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)

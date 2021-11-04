@@ -109,7 +109,7 @@ public class Character : Loot
     {
         if (!_realmTreeAttackBoost.HasValue)
             _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
-        var flatDamage = Attack + DamageFlatBonus + Cache.DamoclesDamage + _realmTreeAttackBoost.Value;
+        var flatDamage = Attack + DamageFlatBonus + Cache.DamoclesDamage + Cache.PactFlatDamage + _realmTreeAttackBoost.Value;
         var multiplierDamage = DamagePercentBonus;
         var floatValue = flatDamage * Helper.MultiplierFromPercent(1.0f, multiplierDamage);
 

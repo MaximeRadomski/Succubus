@@ -62,6 +62,11 @@ public static class Cache
     public static int LineBreakCount = 0;
     public static int MusicAttackCount = 0;
     public static int NoodleShieldCount = 0;
+    
+    public static int PactFlatDamage = 0;
+    public static bool PactCanHold = true;
+    public static Realm PactCharacterRealm = Realm.None;
+    public static int PactChanceAdditionalBlock = 0;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -97,6 +102,11 @@ public static class Cache
         LineBreakCount = 0;
         MusicAttackCount = 0;
         NoodleShieldCount = 0;
+        
+        PactFlatDamage = 0;
+        PactCanHold = true;
+        PactCharacterRealm = Realm.None;
+        PactChanceAdditionalBlock = 0;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
