@@ -9,12 +9,12 @@ public class PactDevotedApostle : Pact
         Id = 0;
         Name = PactsData.Pacts[Id];
         MaxFight = 2;
-        Description = $"grants you {Highlight("+2 damage")} / cancels your ability to {Highlight("hold")}.\nduration {Highlight($"{MaxFight} fights")}.";
+        Description = $"grants you {Highlight("+2 damage")} / cancels your ability to {Highlight("hold")}.";
         ShortDescription = "+2 damage / can't hold";
         Rarity = Rarity.Common;
     }
 
-    public override void ApplyPact()
+    public override void ApplyPact(Character character)
     {
         Cache.PactFlatDamage += 2;
         Cache.PactCanHold = false;

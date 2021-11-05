@@ -33,7 +33,8 @@ public abstract class Item : Loot
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        Cache.RestartCurrentItemCooldown(character, this);
+        if (!IsUsesBased)
+            Cache.RestartCurrentItemCooldown(character, this);
         --Cache.CurrentItemUses;
         _gameplayControler.UpdateItemAndSpecialVisuals();
         _popPosition = new Vector3(4.5f, 6.5f, 0.0f);

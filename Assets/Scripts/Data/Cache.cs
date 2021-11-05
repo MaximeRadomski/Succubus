@@ -67,6 +67,7 @@ public static class Cache
     public static bool PactCanHold = true;
     public static Realm PactCharacterRealm = Realm.None;
     public static int PactChanceAdditionalBlock = 0;
+    public static bool PactCooldownSwap = false;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -107,6 +108,7 @@ public static class Cache
         PactCanHold = true;
         PactCharacterRealm = Realm.None;
         PactChanceAdditionalBlock = 0;
+        PactCooldownSwap = false;
     }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
@@ -115,6 +117,8 @@ public static class Cache
         if (tmpChar == null)
             tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialTotalCooldownReducer;
+        if (PactCooldownSwap)
+            SelectedCharacterSpecialCooldown *= 2;
         if (SelectedCharacterSpecialCooldown < 1)
             SelectedCharacterSpecialCooldown = 1;
         if (tmpChar.InstantSpecial)
@@ -131,6 +135,10 @@ public static class Cache
         if (tmpCurrentItem == null)
             return;
         CurrentItemCooldown = tmpCurrentItem.Cooldown - character.ItemMaxCooldownReducer;
+        if (PactCooldownSwap)
+            SelectedCharacterSpecialCooldown /= 2;
+        if (CurrentItemCooldown < 1)
+            CurrentItemCooldown = 1;
     }
 
     public static void SetLastEndActionClickedName(string name)

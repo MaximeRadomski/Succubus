@@ -93,7 +93,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         _pacts = PlayerPrefsHelper.GetCurrentPacts();
         if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
-            foreach (var pact in _pacts) pact.ApplyPact();
+            foreach (var pact in _pacts) pact.ApplyPact(this.Character);
 
         //if (_opponents.Count == 1)
         //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
@@ -438,7 +438,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (pacts.Contains(nameToCheck))
                 Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LoadBackAfterVictory, sprite);
             else
-                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}Do you wish to sign this pact?\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).Description}", "No", "Yes", OnPactSign, sprite, defaultPositive: true);
+                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}Do you wish to sign this pact?\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "No", "Yes", OnPactSign, sprite, defaultPositive: true);
             object OnPactSign(bool result)
             {
                 if (result)

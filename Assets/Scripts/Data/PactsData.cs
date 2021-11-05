@@ -9,13 +9,13 @@ public static class PactsData
     public static int RarePactAppearancePercent = 15;
 
     public static string[] Pacts =
-    /* 0  */ { "Devoted Apostle", "Failed Baptism", "Hellish Idolatry" };
+    /* 0  */ { "Devoted Apostle", "Failed Baptism", "Hellish Idolatry", "Short Paradise" };
 
     //list https://www.vocabulary.com/lists/185056
 
-    public static string[] CommonPactsNames = { Pacts[0] };
-    public static string[] RarePactsNames = {  };
-    public static string[] LegendaryPactsNames = {  };
+    public static string[] CommonPactsNames = { Pacts[0], Pacts[3] };
+    public static string[] RarePactsNames = { Pacts[1] };
+    public static string[] LegendaryPactsNames = { Pacts[2] };
 
     // DEBUG //
     public static bool DebugEnabled = Constants.PactsDebug;
