@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PactDevotedApostle : Pact
+public class PactPolarisedTemperance : Pact
 {
-    public PactDevotedApostle()
+    public PactPolarisedTemperance()
     {
-        Id = 0;
+        Id = 6;
         Name = PactsData.Pacts[Id];
-        MaxFight = 2;
+        MaxFight = 6;
         Pros = $"grants you {Highlight("+2 damage")}.";
-        Cons = $"cancels your ability to {Highlight("hold")}.";
-        ShortDescription = $"+2 damage {Highlight("/")} can't hold";
+        Cons = $"cancels your probability of {Highlight("critical hits")}.";
+        ShortDescription = $"+2 damage {Highlight("/")} no critical hits";
         Rarity = Rarity.Common;
     }
 
     public override void ApplyPact(Character character)
     {
         Cache.PactFlatDamage += 2;
-        Cache.PactNoHold = true;
+        Cache.PactNoCrit = true;
     }
 }

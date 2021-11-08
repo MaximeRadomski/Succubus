@@ -61,6 +61,10 @@ public static class Helper
         {
             return ResourcesData.GetResourceFromName(ResourcesData.Resources[id]);
         }
+        else if (lootType == LootType.Pact)
+        {
+            return PactsData.GetPactFromName(PactsData.Pacts[id]);
+        }
         else if (lootType == LootType.Tattoo)
         {
             return TattoosData.GetTattooFromName(TattoosData.Tattoos[id]);

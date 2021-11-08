@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PactFailedBaptism : Pact
+public class PactCursedProphet : Pact
 {
-    public PactFailedBaptism()
+    public PactCursedProphet()
     {
-        Id = 1;
+        Id = 9;
         Name = PactsData.Pacts[Id];
         MaxFight = 3;
-        Pros = $"makes you {Highlight("holy")}.";
+        Pros = $"makes you {Highlight("human")}.";
         Cons = $"triggers a {Highlight("+10% chance")} of an additional block on your pieces.";
-        ShortDescription = $"holiness {Highlight("/")} +10% additional block";
+        ShortDescription = $"humanity {Highlight("/")} +10% additional block";
         Rarity = Rarity.Rare;
     }
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactCharacterRealm = Realm.Heaven;
+        Cache.PactCharacterRealm = Realm.Earth;
         Cache.PactChanceAdditionalBlock += 10;
     }
 }

@@ -9,8 +9,9 @@ public class PactHellishIdolatry : Pact
         Id = 2;
         Name = PactsData.Pacts[Id];
         MaxFight = 4;
-        Description = $"halves your {Highlight("item's cooldown")} / doubles your {Highlight("special's cooldown")}.";
-        ShortDescription = "halves item's cooldown / doubles special's cooldown";
+        Pros = $"halves your {Highlight("item's cooldown")}.";
+        Cons = $"doubles your {Highlight("special's cooldown")}."; ;
+        ShortDescription = $"halves item's cooldown {Highlight("/")} doubles special's cooldown";
         Rarity = Rarity.Legendary;
     }
 

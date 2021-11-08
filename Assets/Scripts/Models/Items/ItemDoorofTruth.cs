@@ -8,7 +8,7 @@ public class ItemDoorofTruth : Item
     {
         Id = 23;
         Name = ItemsData.Items[Id];
-        Description = $"breaks on use, but {Highlight("resurrect you")} if you die during the fight in which you used it.";
+        Description = $"breaks on use, but {Highlight("resurrects you")} if you die during the fight in which you used it.";
         Rarity = Rarity.Legendary;
         Cooldown = -1;
         IsUsesBased = true;
@@ -17,7 +17,7 @@ public class ItemDoorofTruth : Item
 
     protected override object Effect()
     {
-        Cache.TruthResurection = true;
+        Cache.TruthResurrection = true;
         PlayerPrefsHelper.ResetCurrentItem();
         _gameplayControler.CharacterItem = PlayerPrefsHelper.GetCurrentItem();
         _gameplayControler.UpdateItemAndSpecialVisuals();

@@ -326,6 +326,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
         var loot = Helper.GetLootFromTypeAndId(_currentStep.LootType, _currentStep.LootId);
+        if (Cache.PactNoLoot)
+            loot.LootType = LootType.None;
         if (loot?.LootType == LootType.Character)
             PlayerPrefsHelper.AddUnlockedCharacters((Character)loot); //Done here in order to prevent generating a step with the just unlocked character
 
@@ -438,7 +440,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (pacts.Contains(nameToCheck))
                 Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LoadBackAfterVictory, sprite);
             else
-                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}Do you wish to sign this pact?\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "No", "Yes", OnPactSign, sprite, defaultPositive: true);
+                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
             object OnPactSign(bool result)
             {
                 if (result)
@@ -949,7 +951,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
             if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageBigLinesBonus - Character.DamageBigLinesMalus));
-            if (Helper.RandomDice100(Character.CritChancePercent + Cache.CumulativeCrit + _realmTree.CriticalPrecision))
+            if (!Cache.PactNoCrit && Helper.RandomDice100(Character.CritChancePercent + Cache.CumulativeCrit + Cache.PactCritChance + _realmTree.CriticalPrecision))
             {
                 Cache.CumulativeCrit += Character.CumulativeCrit;
                 incomingDamage += Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
@@ -1062,6 +1064,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var incomingDamage = 0;
         if (_gameplayControler.CharacterRealm == Realm.Hell)
             incomingDamage += Mathf.RoundToInt((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
+        if (Cache.PactComboDamage > 0)
+            incomingDamage += Mathf.RoundToInt((Cache.PactComboDamage + (nbCombo - 2))) * nbLines;
         if (CurrentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();

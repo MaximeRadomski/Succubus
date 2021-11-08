@@ -178,6 +178,13 @@ public class StepsSceneBhv : SceneBhv
                 _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = ResourcesData.Resources[_selectedStep.LootId].ToLower();
             }
+            else if (_selectedStep.LootType == LootType.Pact)
+            {
+                rarity = PactsData.GetPactFromName(PactsData.Pacts[_selectedStep.LootId]).Rarity;
+                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Pacts_" + _selectedStep.LootId);
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _characterPicture.transform.localPosition.y, 0.0f);
+                _lootName.text = PactsData.Pacts[_selectedStep.LootId].ToLower();
+            }
             else if (_selectedStep.LootType == LootType.Tattoo)
             {
                 rarity = TattoosData.GetTattooFromName(TattoosData.Tattoos[_selectedStep.LootId]).Rarity;
@@ -394,6 +401,13 @@ public class StepsSceneBhv : SceneBhv
             name = resource.Name;
             cooldown = null;
             description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + resource.Description;
+        }
+        else if (_selectedStep.LootType == LootType.Pact)
+        {
+            var pact = PactsData.GetPactFromName(PactsData.Pacts[_selectedStep.LootId]);
+            name = pact.Name;
+            cooldown = null;
+            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + pact.FullDescription();
         }
         else if (_selectedStep.LootType == LootType.Tattoo)
         {

@@ -165,7 +165,7 @@ public class StepsService
             } while ((currentPacts.Any(p => p.Id == lootId) || run.Steps.Contains($"P{lootId.ToString("00")}")) && nbTries < 10);
             opponentType = (OpponentType)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
-        else if(Helper.RandomDice100(run.TattooLootPercent))
+        else
         {
             lootType = LootType.Tattoo;
             if (Mock.GetString(Constants.PpCurrentBodyParts).Length < Constants.AvailableBodyPartsIds.Length)

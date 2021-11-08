@@ -7,7 +7,8 @@ public abstract class Pact : Loot
 {
     public int Id;
     public string Name;
-    public string Description;
+    public string Pros;
+    public string Cons;
     public string ShortDescription;
     public int MaxFight;
     public int NbFight = 0;
@@ -21,7 +22,7 @@ public abstract class Pact : Loot
 
     public string FullDescription()
     {
-        return $"{Description}\nduration {Highlight($"{MaxFight} fight{(MaxFight > 1 ? "s" : string.Empty)}")}.";
+        return $"{Pros}\n--- but ---\n{Cons}\n---\nduration {Highlight($"{MaxFight} fight{(MaxFight > 1 ? "s" : string.Empty)}")}.";
     }
 
     protected string Highlight(string highlight)

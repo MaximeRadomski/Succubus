@@ -31,7 +31,7 @@ public class GameplayControler : MonoBehaviour
 
     private RealmTree _realmTree;
     private Realm _levelRealm;
-    private Difficulty _difficulty;
+    private Difficulty _difficulty = Difficulty.None;
 
     private int _das;
     private int _dasMax;
@@ -144,15 +144,20 @@ public class GameplayControler : MonoBehaviour
                 return;
             }
         }
-        if (Character.BonusLife > 0)
+        if (Cache.PactResurrection)
+        {
+            Cache.PactResurrection = false;
+            Resurect();
+        }
+        else if (Character.BonusLife > 0)
         {
             Character.BonusLife--;
             PlayerPrefsHelper.SaveRunCharacter(Character);
             Resurect();
         }
-        else if (Cache.TruthResurection)
+        else if (Cache.TruthResurrection)
         {
-            Cache.TruthResurection = false;
+            Cache.TruthResurrection = false;
             Resurect();
         }
         else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
@@ -224,6 +229,14 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
+    private Difficulty GetDifficulty()
+    {
+        if (_isTraining.Value)
+            return Difficulty.Normal;
+        var run = PlayerPrefsHelper.GetRun();
+        return run?.Difficulty ?? Difficulty.Normal;
+    }
+
     private void Init(int level, Realm characterRealm, Realm levelRealm)
     {
         if (_hasInit)
@@ -231,18 +244,12 @@ public class GameplayControler : MonoBehaviour
         SetTraining();
         SceneBhv = GetComponent<GameSceneBhv>();
         Character = SceneBhv.Character;
-        SetGravity(level);
         CharacterRealm = characterRealm;
         _levelRealm = levelRealm;
-        if (_isTraining.Value)
-            _difficulty = Difficulty.Normal;
-        else
-        {
-            var run = PlayerPrefsHelper.GetRun();
-            _difficulty = run?.Difficulty ?? Difficulty.Normal;
-            if (Cache.PactCharacterRealm != Realm.None)
+        _difficulty = GetDifficulty();
+        if (!_isTraining.Value && Cache.PactCharacterRealm != Realm.None)
                 CharacterRealm = Cache.PactCharacterRealm;
-        }
+        SetGravity(level);
         Instantiator = GetComponent<Instantiator>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
@@ -625,10 +632,13 @@ public class GameplayControler : MonoBehaviour
 
         if (Character != null)
             level -= Character.LoweredGravity;
-        if (level < 0)
+        if (level < 0 || (Cache.PactZeroGravityOrSoftDrop && !_hasGate))
             level = 0;
         GravityLevel = level;
-                
+
+        if (_difficulty == Difficulty.None)
+            _difficulty = GetDifficulty();
+
         GameObject.Find("InfoFight").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(_levelRealm, TextType.succubus3x5, TextCode.c32B)}fight:\n{ Constants.GetMaterial(_levelRealm, TextType.succubus3x5, TextCode.c43B)}{_difficulty.ToString().ToLower()}\ngrav: {GravityLevel}";
 
         GravityDelay = Constants.GravityDelay;
@@ -779,13 +789,8 @@ public class GameplayControler : MonoBehaviour
         }
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastForcedBlocks != null)
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
-        else
-        {
-            if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
+        else if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
                 CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
-            if (Cache.PactChanceAdditionalBlock > 0 && Helper.RandomDice100(Cache.PactChanceAdditionalBlock))
-                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
-        }
         _hasAlteredPiecePositionAfterResume = true;
         if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -1168,7 +1173,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropStomp()
     {
-        if (_isOldSchoolGameplay || _rhythmIndicatorBhv != null)
+        if (_isOldSchoolGameplay || _rhythmIndicatorBhv != null || Cache.PactZeroGravityOrSoftDrop)
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
@@ -1183,7 +1188,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactZeroGravityOrSoftDrop)
             return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
@@ -1719,7 +1724,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Hold()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || !Cache.PactCanHold || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
@@ -1756,9 +1761,7 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, CharacterRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, CharacterRealm + "Ghost", _spawner.transform.position);
-            if (Character.ChanceAdditionalBlock > 0 && Helper.RandomDice100(Character.ChanceAdditionalBlock))
-                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
-            if (Cache.PactChanceAdditionalBlock > 0 && Helper.RandomDice100(Cache.PactChanceAdditionalBlock))
+            if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
                 CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
             if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -2200,6 +2203,7 @@ public class GameplayControler : MonoBehaviour
                 if (lightRowBhv.IsGate)
                 {
                     _hasGate = false;
+                    ((ClassicGameSceneBhv)SceneBhv).ResetToOpponentGravity();
                     _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\nfalse";
                 }
                 if (DeleteLightRow(yRounded, lightRowBhv) > 0 && hasDeletedRows == false)
@@ -2899,6 +2903,7 @@ public class GameplayControler : MonoBehaviour
         PlayFieldBhv.Grid[0, lineY].gameObject.tag = Constants.TagLightRows;
         PlayFieldBhv.Grid[0, lineY].gameObject.AddComponent<LightRowBlockBhv>();
         _hasGate = true;
+        ((ClassicGameSceneBhv)SceneBhv).ResetToOpponentGravity();
         _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\ntrue";
         var lightRowBhv = PlayFieldBhv.Grid[0, lineY].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.IsGate = true;

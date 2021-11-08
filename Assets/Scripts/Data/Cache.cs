@@ -44,7 +44,7 @@ public static class Cache
     public static int AddedDodgeChancePercent = 0;
     public static int BlockPerAttack = -1;
     public static float BonusLockDelay = 0.0f;
-    public static bool TruthResurection = false;
+    public static bool TruthResurrection = false;
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
     public static int HeightLimiterResetLines = -1;
@@ -64,10 +64,17 @@ public static class Cache
     public static int NoodleShieldCount = 0;
     
     public static int PactFlatDamage = 0;
-    public static bool PactCanHold = true;
-    public static Realm PactCharacterRealm = Realm.None;
+    public static int PactCritChance = 0;
+    public static int PactComboDamage = 0;
     public static int PactChanceAdditionalBlock = 0;
+    public static int PactSpecialTotalCooldownReducer = 0;
+    public static bool PactNoLoot = false;
+    public static bool PactNoCrit = false;
+    public static bool PactNoHold = false;
     public static bool PactCooldownSwap = false;
+    public static bool PactResurrection = false;
+    public static bool PactZeroGravityOrSoftDrop = false;
+    public static Realm PactCharacterRealm = Realm.None;
 
     public static void ResetClassicGameCache(Character character = null)
     {
@@ -85,7 +92,7 @@ public static class Cache
         AddedDodgeChancePercent = 0;
         BlockPerAttack = -1;
         BonusLockDelay = 0.0f;
-        TruthResurection = false;
+        TruthResurrection = false;
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
         HeightLimiterResetLines = -1;
@@ -103,13 +110,20 @@ public static class Cache
         LineBreakCount = 0;
         MusicAttackCount = 0;
         NoodleShieldCount = 0;
-        
+
+
         PactFlatDamage = 0;
-        PactCanHold = true;
-        PactCharacterRealm = Realm.None;
+        PactCritChance = 0;
+        PactComboDamage = 0;
         PactChanceAdditionalBlock = 0;
+        PactNoHold = false;
+        PactNoLoot = false;
+        PactNoCrit = false;
         PactCooldownSwap = false;
-    }
+        PactResurrection = false;
+        PactZeroGravityOrSoftDrop = false;
+        PactCharacterRealm = Realm.None;
+}
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
     {
@@ -117,6 +131,8 @@ public static class Cache
         if (tmpChar == null)
             tmpChar = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
         SelectedCharacterSpecialCooldown = tmpChar.Cooldown - tmpChar.SpecialTotalCooldownReducer;
+        if (PactSpecialTotalCooldownReducer > 0)
+            SelectedCharacterSpecialCooldown -= PactSpecialTotalCooldownReducer;
         if (PactCooldownSwap)
             SelectedCharacterSpecialCooldown *= 2;
         if (SelectedCharacterSpecialCooldown < 1)

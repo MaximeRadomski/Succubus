@@ -121,36 +121,37 @@ public class InfoMenuBhv : PopupBhv
 
     private void InitOpponentFrame(Opponent opponent)
     {
-        if (opponent == null)
-            return;
-        _fightFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
-        _fightFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.HpMax;
-        _fightFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Cooldown + " seconds";
-        if (opponent.Attacks.Count > 1)
-        _fightFrame.transform.Find("OpponentAttackLibelle").GetComponent<TMPro.TextMeshPro>().text = "attacks:";
-        for (int i = 0; i < 4; ++i)
+        if (opponent != null)
         {
-            if (i < opponent.Attacks.Count)
+            _fightFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
+            _fightFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.HpMax;
+            _fightFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Cooldown + " seconds";
+            if (opponent.Attacks.Count > 1)
+                _fightFrame.transform.Find("OpponentAttackLibelle").GetComponent<TMPro.TextMeshPro>().text = "attacks:";
+            for (int i = 0; i < 4; ++i)
             {
-                var prefixe = opponent.Attacks[i].AttackType.GetAttribute<PrefixeAttribute>().ToLower();
-                var suffixe = opponent.Attacks[i].AttackType.GetAttribute<SuffixeAttribute>().ToLower();
-                var param1 = !(string.IsNullOrEmpty(prefixe) && string.IsNullOrEmpty(suffixe)) ? $"({prefixe}{opponent.Attacks[i].Param1}{suffixe})" : string.Empty;
-                _fightFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}- {opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
+                if (i < opponent.Attacks.Count)
+                {
+                    var prefixe = opponent.Attacks[i].AttackType.GetAttribute<PrefixeAttribute>().ToLower();
+                    var suffixe = opponent.Attacks[i].AttackType.GetAttribute<SuffixeAttribute>().ToLower();
+                    var param1 = !(string.IsNullOrEmpty(prefixe) && string.IsNullOrEmpty(suffixe)) ? $"({prefixe}{opponent.Attacks[i].Param1}{suffixe})" : string.Empty;
+                    _fightFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}- {opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
+                }
+                else
+                    _fightFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
             }
-            else
-                _fightFrame.transform.Find("OpponentAttack" + (i + 1)).gameObject.SetActive(false);
+            _fightFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Realm.ToString().ToLower() + "\n" +
+                "- takes more damage from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n";
+            //+
+            //   "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger."
+            _fightFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
+            _fightFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
+            _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
+            _fightFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
+                (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
+            _fightFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
+                (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.GetDescription().ToLower() : opponent.Immunity.GetDescription().ToLower());
         }
-        _fightFrame.transform.Find("OpponentRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Realm.ToString().ToLower() + "\n" +
-            "- takes more damage from " + Helper.GetSuperiorFrom(opponent.Realm).ToString().ToLower() + " characters.\n";
-        //+
-        //   "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger."
-        _fightFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
-        _fightFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
-        _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
-        _fightFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + 
-            (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
-        _fightFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
-            (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.GetDescription().ToLower() : opponent.Immunity.GetDescription().ToLower());
         var pacts = PlayerPrefsHelper.GetCurrentPacts();
         var pactsStr = string.Empty;
         if (pacts.Count == 0)
@@ -181,19 +182,6 @@ public class InfoMenuBhv : PopupBhv
 
     private void ShowOpponent()
     {
-        if (_opponent == null)
-        {
-            _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
-            _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
-            _instantiator.NewPopupYesNo("No Fight", "you aren't in a fight", null, "Ok", OnOk);
-            object OnOk(bool result)
-            {
-                _characterTab.transform.position = new Vector3(_characterTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
-                _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOffY, 0.0f);
-                return result;
-            }
-            return;
-        }
         _fightFrame.transform.position = transform.position;
         _characterFrame.transform.position = new Vector3(50.0f, 50.0f, 0.0f);
         _fightTab.transform.position = new Vector3(_fightTab.transform.position.x, _characterTab.transform.parent.position.y + _buttonOnY, 0.0f);
