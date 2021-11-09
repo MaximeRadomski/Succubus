@@ -67,13 +67,16 @@ public static class Cache
     public static int PactCritChance = 0;
     public static int PactComboDamage = 0;
     public static int PactChanceAdditionalBlock = 0;
+    public static int PactEnemyMaxCooldownMalus = 0;
     public static int PactSpecialTotalCooldownReducer = 0;
     public static bool PactNoLoot = false;
     public static bool PactNoCrit = false;
     public static bool PactNoHold = false;
+    public static bool PactStealth = false;
+    public static bool PactNoSoftDrop = false;
+    public static bool PactZeroGravity = false;
     public static bool PactCooldownSwap = false;
     public static bool PactResurrection = false;
-    public static bool PactZeroGravityOrSoftDrop = false;
     public static Realm PactCharacterRealm = Realm.None;
 
     public static void ResetClassicGameCache(Character character = null)
@@ -116,12 +119,16 @@ public static class Cache
         PactCritChance = 0;
         PactComboDamage = 0;
         PactChanceAdditionalBlock = 0;
+        PactEnemyMaxCooldownMalus = 0;
+        PactSpecialTotalCooldownReducer = 0;
         PactNoHold = false;
         PactNoLoot = false;
         PactNoCrit = false;
+        PactStealth = false;
+        PactNoSoftDrop = false;
+        PactZeroGravity = false;
         PactCooldownSwap = false;
         PactResurrection = false;
-        PactZeroGravityOrSoftDrop = false;
         PactCharacterRealm = Realm.None;
 }
 

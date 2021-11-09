@@ -17,7 +17,7 @@ public class PactRighteousSacrifice : Pact
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactFlatDamage -= 5;
         Cache.PactCritChance += 30;
+        Cache.PactFlatDamage -= 5;
     }
 }

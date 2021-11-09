@@ -44,7 +44,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override MusicType MusicType => GetMusicType();
     public float GetCurrentOpponentMaxCooldown()
     {
-        return CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus;
+        return CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus + Cache.PactEnemyMaxCooldownMalus;
     }
 
     private MusicType GetMusicType()
@@ -158,7 +158,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        if (!Character.SlumberingDragoncrest && (CurrentOpponent.Haste || Character.HasteForAll))
+        if (!Character.SlumberingDragoncrest && !Cache.PactStealth && (CurrentOpponent.Haste || Character.HasteForAll))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Cache.InputLocked = false;
         Paused = false;
@@ -519,7 +519,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void StartOpponentCooldown(bool sceneInit = false, bool first = false)
     {
-        if (Character.SlumberingDragoncrest && Cache.CurrentListOpponentsId == 0 && first)
+        if ((Character.SlumberingDragoncrest || Cache.PactStealth) && Cache.CurrentListOpponentsId == 0 && first)
         {
             Cache.SlumberingDragoncrestInEffect = true;
             _opponentOnCooldown = false;

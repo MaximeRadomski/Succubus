@@ -632,7 +632,7 @@ public class GameplayControler : MonoBehaviour
 
         if (Character != null)
             level -= Character.LoweredGravity;
-        if (level < 0 || (Cache.PactZeroGravityOrSoftDrop && !_hasGate))
+        if (level < 0 || (Cache.PactZeroGravity && !_hasGate))
             level = 0;
         GravityLevel = level;
 
@@ -1173,7 +1173,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropStomp()
     {
-        if (_isOldSchoolGameplay || _rhythmIndicatorBhv != null || Cache.PactZeroGravityOrSoftDrop)
+        if (_isOldSchoolGameplay || _rhythmIndicatorBhv != null || Cache.PactNoSoftDrop)
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
@@ -1188,7 +1188,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactZeroGravityOrSoftDrop)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactNoSoftDrop)
             return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
