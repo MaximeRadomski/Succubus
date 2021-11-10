@@ -119,6 +119,15 @@ TextureImporter:
   - first:
       213: -4828798959133277862
     second: StepsAssets_29
+  - first:
+      213: -4768456762315825568
+    second: StepsAssets_30
+  - first:
+      213: -610373627550004295
+    second: StepsAssets_31
+  - first:
+      213: -1386280938263944850
+    second: StepsAssets_32
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -150,8 +159,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -433,8 +442,8 @@ TextureImporter:
       name: StepsAssets_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 33
+        x: 330
+        y: 66
         width: 33
         height: 33
       alignment: 0
@@ -454,7 +463,7 @@ TextureImporter:
       name: StepsAssets_11
       rect:
         serializedVersion: 2
-        x: 33
+        x: 0
         y: 33
         width: 33
         height: 33
@@ -475,7 +484,7 @@ TextureImporter:
       name: StepsAssets_12
       rect:
         serializedVersion: 2
-        x: 66
+        x: 33
         y: 33
         width: 33
         height: 33
@@ -496,7 +505,7 @@ TextureImporter:
       name: StepsAssets_13
       rect:
         serializedVersion: 2
-        x: 99
+        x: 66
         y: 33
         width: 33
         height: 33
@@ -517,7 +526,7 @@ TextureImporter:
       name: StepsAssets_14
       rect:
         serializedVersion: 2
-        x: 132
+        x: 99
         y: 33
         width: 33
         height: 33
@@ -538,7 +547,7 @@ TextureImporter:
       name: StepsAssets_15
       rect:
         serializedVersion: 2
-        x: 165
+        x: 132
         y: 33
         width: 33
         height: 33
@@ -559,7 +568,7 @@ TextureImporter:
       name: StepsAssets_16
       rect:
         serializedVersion: 2
-        x: 198
+        x: 165
         y: 33
         width: 33
         height: 33
@@ -580,7 +589,7 @@ TextureImporter:
       name: StepsAssets_17
       rect:
         serializedVersion: 2
-        x: 231
+        x: 198
         y: 33
         width: 33
         height: 33
@@ -601,7 +610,7 @@ TextureImporter:
       name: StepsAssets_18
       rect:
         serializedVersion: 2
-        x: 264
+        x: 231
         y: 33
         width: 33
         height: 33
@@ -622,7 +631,7 @@ TextureImporter:
       name: StepsAssets_19
       rect:
         serializedVersion: 2
-        x: 297
+        x: 264
         y: 33
         width: 33
         height: 33
@@ -643,8 +652,8 @@ TextureImporter:
       name: StepsAssets_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 297
+        y: 33
         width: 33
         height: 33
       alignment: 0
@@ -664,8 +673,8 @@ TextureImporter:
       name: StepsAssets_21
       rect:
         serializedVersion: 2
-        x: 33
-        y: 0
+        x: 330
+        y: 33
         width: 33
         height: 33
       alignment: 0
@@ -685,7 +694,7 @@ TextureImporter:
       name: StepsAssets_22
       rect:
         serializedVersion: 2
-        x: 66
+        x: 0
         y: 0
         width: 33
         height: 33
@@ -706,7 +715,7 @@ TextureImporter:
       name: StepsAssets_23
       rect:
         serializedVersion: 2
-        x: 99
+        x: 33
         y: 0
         width: 33
         height: 33
@@ -727,7 +736,7 @@ TextureImporter:
       name: StepsAssets_24
       rect:
         serializedVersion: 2
-        x: 132
+        x: 66
         y: 0
         width: 33
         height: 33
@@ -748,7 +757,7 @@ TextureImporter:
       name: StepsAssets_25
       rect:
         serializedVersion: 2
-        x: 165
+        x: 99
         y: 0
         width: 33
         height: 33
@@ -769,7 +778,7 @@ TextureImporter:
       name: StepsAssets_26
       rect:
         serializedVersion: 2
-        x: 198
+        x: 132
         y: 0
         width: 33
         height: 33
@@ -790,7 +799,7 @@ TextureImporter:
       name: StepsAssets_27
       rect:
         serializedVersion: 2
-        x: 231
+        x: 165
         y: 0
         width: 33
         height: 33
@@ -811,7 +820,7 @@ TextureImporter:
       name: StepsAssets_28
       rect:
         serializedVersion: 2
-        x: 264
+        x: 198
         y: 0
         width: 33
         height: 33
@@ -832,7 +841,7 @@ TextureImporter:
       name: StepsAssets_29
       rect:
         serializedVersion: 2
-        x: 297
+        x: 231
         y: 0
         width: 33
         height: 33
@@ -845,6 +854,69 @@ TextureImporter:
       bones: []
       spriteID: a51c5154ee8acfcb0800000000000000
       internalID: -4828798959133277862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StepsAssets_30
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 0
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e1b5bc6d903ddb0800000000000000
+      internalID: -4768456762315825568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StepsAssets_31
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 0
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb8d9d6b648787f0800000000000000
+      internalID: -610373627550004295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StepsAssets_32
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 0
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e61e1ebd4d0f2cce0800000000000000
+      internalID: -1386280938263944850
       vertices: []
       indices: 
       edges: []

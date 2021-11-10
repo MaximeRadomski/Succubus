@@ -74,7 +74,7 @@ public class StepsSceneBhv : SceneBhv
         (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
         _selector = GameObject.Find("Selector");
         _position = GameObject.Find("Position");
-        _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + (_run.CurrentRealm.GetHashCode() * 10)));
+        _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
         _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         _backgroundMask = GameObject.Find("BackgroundMask");
 
@@ -87,7 +87,7 @@ public class StepsSceneBhv : SceneBhv
                 GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
         }
         _stepsService = new StepsService();
-        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (0 + (10 * _run.CurrentRealm.GetHashCode())));
+        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * _run.CurrentRealm.GetHashCode())));
         _stepsBackground = GameObject.Find("StepsBackground");
         _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[_run.CurrentRealm.GetHashCode()];
         if (string.IsNullOrEmpty(_run.Steps))
@@ -201,7 +201,7 @@ public class StepsSceneBhv : SceneBhv
         {
             if (x == _run.X && y == _run.Y)
             {
-                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + (_run.CurrentRealm.GetHashCode() * 10)));
+                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
                 _lootName.text = "current location";
                 _lootTypeRarity.text = "";
                 _opponents.text = "";

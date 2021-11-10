@@ -14,14 +14,14 @@ public static class PactsData
 
     //list https://www.vocabulary.com/lists/185056
 
-    public static string[] CommonPactsNames = { Pacts[0], Pacts[3], Pacts[6], Pacts[8], Pacts[10], Pacts[11], Pacts[12], Pacts[15] };
+    public static string[] CommonPactsNames = { Pacts[0], Pacts[3], Pacts[6], Pacts[8], Pacts[10], Pacts[11], Pacts[12], Pacts[15], Pacts[16] };
     public static string[] RarePactsNames = { Pacts[1], Pacts[4], Pacts[7], Pacts[9], Pacts[14] };
     public static string[] LegendaryPactsNames = { Pacts[2], Pacts[5], Pacts[13] };
 
     // DEBUG //
     public static bool DebugEnabled = Constants.PactsDebug;
     public static bool DebugMultitude = false;
-    public static Pact DebugPact = GetPactFromName("Devoted Apostle");
+    public static Pact DebugPact = GetPactFromName("Failed Baptism");
 
     public static Pact GetRandomPact()
     {

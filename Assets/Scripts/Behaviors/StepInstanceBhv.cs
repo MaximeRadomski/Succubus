@@ -32,9 +32,9 @@ public class StepInstanceBhv : MonoBehaviour
             _step.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Steps_" + (run.CurrentRealm.GetHashCode() * 16));
         }
         _stepVision.enabled = step.LandLordVision;
-        _stepVision.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (1 + (run.CurrentRealm.GetHashCode() * 10)));
+        _stepVision.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsVisionId + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
         _stepLoot.enabled = step.LootType != LootType.None;
-        _stepLoot.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (2 + step.LootType.GetHashCode() + (run.CurrentRealm.GetHashCode() * 10)));
+        _stepLoot.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + step.LootType.GetHashCode() + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
         _stepOpponent.enabled = _stepLoot.enabled;
         var rarity = Rarity.Common;
         if (step.LootType == LootType.Character)
@@ -45,6 +45,6 @@ public class StepInstanceBhv : MonoBehaviour
             rarity = Rarity.Common;
         else if (step.LootType == LootType.Tattoo)
             rarity = TattoosData.GetTattooFromName(TattoosData.Tattoos[step.LootId]).Rarity;
-        _stepOpponent.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (7 + rarity.GetHashCode() + (run.CurrentRealm.GetHashCode() * 10)));
+        _stepOpponent.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsOpponentStart + rarity.GetHashCode() + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
     }
 }

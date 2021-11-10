@@ -17,7 +17,7 @@ public class PactUnexpectedRevelation : Pact
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactSpecialTotalCooldownReducer += 1;
+        Cache.PactSpecialTotalCooldownReducer += 2;
         Cache.PactEnemyMaxCooldownMalus -= 2;
     }
 }

@@ -11,7 +11,7 @@ public class PactHellishIdolatry : Pact
         MaxFight = 4;
         Pros = $"halves your {Highlight("item's cooldown")}.";
         Cons = $"doubles your {Highlight("special's cooldown")}."; ;
-        ShortDescription = $"halves item's cooldown {Highlight("/")} doubles special's cooldown";
+        ShortDescription = $"item's cooldown ~2 {Highlight("/")} special's cooldown *2";
         Rarity = Rarity.Legendary;
     }
 

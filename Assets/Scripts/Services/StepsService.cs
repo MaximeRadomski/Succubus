@@ -208,19 +208,25 @@ public class StepsService
         {
             lootType = LootType.Item;
             lootId = ItemsData.DebugItem.Id;
-            opponentType = OpponentType.Common;
+            opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         if (TattoosData.DebugEnabled && (TattoosData.DebugMultitude || !run.Steps.Contains($"T{TattoosData.DebugTattoo.Id.ToString("00")}")))
         {
             lootType = LootType.Tattoo;
             lootId = TattoosData.DebugTattoo.Id;
-            opponentType = OpponentType.Common;
+            opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+        }
+        if (PactsData.DebugEnabled && (PactsData.DebugMultitude || !run.Steps.Contains($"P{PactsData.DebugPact.Id.ToString("00")}")))
+        {
+            lootType = LootType.Pact;
+            lootId = PactsData.DebugPact.Id;
+            opponentType = (OpponentType)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
         }
         if (CharactersData.DebugEnabled && !run.Steps.Contains($"C{CharactersData.DebugCharacter().Id.ToString("00")}"))
         {
             lootType = LootType.Character;
             lootId = CharactersData.DebugCharacter().Id;
-            opponentType = OpponentType.Common;
+            opponentType = OpponentType.Champion;
         }
         if (ResourcesData.DebugEnabled)
         {

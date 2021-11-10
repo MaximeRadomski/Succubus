@@ -17,7 +17,7 @@ public class PactShortRapture : Pact
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactFlatDamage += 50;
+        Cache.PactFlatDamage += 5;
         Cache.PactChanceAdditionalBlock += 50;
     }
 }

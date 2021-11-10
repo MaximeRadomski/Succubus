@@ -11,7 +11,7 @@ public static class Constants
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool PactsDebug = false;
+    public const bool PactsDebug = true;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;
@@ -53,6 +53,12 @@ public static class Constants
     public const int MapRecursiveIteration = 6;
     public const int WeightIncrementPercentPerDifficulty = 25;
     public const int MusicBeat = 380;
+    public const int StepsAssetsCount = 11;
+    public const int StepsAssetsSelectorId = 0;
+    public const int StepsAssetsVisionId = 1;
+    public const int StepsAssetsPositionId = 2;
+    public const int StepsAssetsLootStart = 3;
+    public const int StepsAssetsOpponentStart = 8;
 
 
     //  TAGS  //

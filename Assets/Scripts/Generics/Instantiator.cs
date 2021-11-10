@@ -222,6 +222,7 @@ public class Instantiator : MonoBehaviour
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Cache.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite, defaultPositive);
+        tmpPopupInstance.transform.SetParent(this._mainCamera.transform);
         return tmpPopupInstance;
     }
 

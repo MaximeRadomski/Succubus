@@ -161,7 +161,7 @@ public class InfoMenuBhv : PopupBhv
             if (pactsStr != string.Empty)
                 pactsStr += "\n";
             var remainingFights = pact.MaxFight - pact.NbFight;
-            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{pact.Name} - {remainingFights} fight{(remainingFights > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
+            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{remainingFights} fight{(remainingFights > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
         }
         _fightFrame.transform.Find("PactsList").GetComponent<TMPro.TextMeshPro>().text = pactsStr.ToLower();
     }

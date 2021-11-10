@@ -93,7 +93,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         _pacts = PlayerPrefsHelper.GetCurrentPacts();
         if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
+        {
             foreach (var pact in _pacts) pact.ApplyPact(this.Character);
+            _gameplayControler.UpdateItemAndSpecialVisuals();
+        }
 
         //if (_opponents.Count == 1)
         //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
@@ -149,11 +152,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             for (int i = 0; i < Cache.CurrentRemainingSimpShields; ++i)
             {
-                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, i, Character.Realm);
+                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, i, _gameplayControler.CharacterRealm);
             }
         }
         if (Character.FillTargetBlocks > 0)
-            Instantiator.NewFillTarget(Character.Realm, Character.FillTargetBlocks, _gameplayControler);
+            Instantiator.NewFillTarget(_gameplayControler.CharacterRealm, Character.FillTargetBlocks, _gameplayControler);
     }
 
     private bool AfterFightIntro()
@@ -763,7 +766,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             amount *= Character.QuadDamage;
             _characterInstanceBhv.Boost(Realm.None, 1.0f);
         }
-        var realm = Character.Realm;
+        var realm = _gameplayControler.CharacterRealm;
         var sourcePosition = _characterInstanceBhv.transform.position;
         Piece piece = null;
         if (source != null)
@@ -773,7 +776,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (piece != null && piece.IsMimic)
         {
-            realm = Helper.GetInferiorFrom(Character.Realm);
+            realm = Helper.GetInferiorFrom(_gameplayControler.CharacterRealm);
             if (source.transform.position.x < 0)
                 sourcePosition = new Vector3(0.0f, sourcePosition.y, 0.0f);
             else if (source.transform.position.x > 9)
@@ -806,7 +809,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var realmMaterial = "";
         if (textRealm == null || textRealm != Realm.None)
         {
-            var tmpRealm = textRealm == null ? Character.Realm : textRealm;
+            var tmpRealm = textRealm == null ? _gameplayControler.CharacterRealm : textRealm;
             realmMaterial = $"<material=\"{tmpRealm.ToString().ToLower()}.4.3\">";
         }
         Instantiator.PopText($"{realmMaterial}{attackText}", damageTextPosition);
@@ -941,7 +944,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Character.DamoclesDamage > 0 && nbLines == 4)
             {
                 Cache.DamoclesDamage += Character.DamoclesDamage;
-                _characterInstanceBhv.Boost(Character.Realm, 0.25f);
+                _characterInstanceBhv.Boost(_gameplayControler.CharacterRealm, 0.25f);
             }
 
             incomingDamage = Character.GetAttack();
@@ -957,19 +960,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamage += Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
-            if (Helper.IsSuperiorByRealm(Character.Realm, CurrentOpponent.Realm))
+            if (Helper.IsSuperiorByRealm(_gameplayControler.CharacterRealm, CurrentOpponent.Realm))
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamage *= nbLines;
-            if (lastLockIsTwist)
-            {
-                incomingDamage *= 2;
-                if (_gameplayControler.CharacterRealm == Realm.Heaven)
-                {
-                    Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
-                    Cache.CurrentItemCooldown -= Character.RealmPassiveEffect;
-                    _gameplayControler.UpdateItemAndSpecialVisuals();
-                }
-            }
             if (CurrentOpponent.Weakness == Weakness.xLines && CurrentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();
@@ -1018,6 +1011,16 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     Cache.TripleLineDamageBonus += Character.WindTripleBonus;
                     StartCoroutine(WindBoost());
                 }
+            }
+        }
+        if (lastLockIsTwist)
+        {
+            incomingDamage *= 2;
+            if (_gameplayControler.CharacterRealm == Realm.Heaven)
+            {
+                Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
+                Cache.CurrentItemCooldown -= Character.RealmPassiveEffect;
+                _gameplayControler.UpdateItemAndSpecialVisuals();
             }
         }
         if (isB2B)
