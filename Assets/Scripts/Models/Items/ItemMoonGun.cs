@@ -8,7 +8,7 @@ public class ItemMoonGun : Item
     {
         Id = 29;
         Name = ItemsData.Items[Id];
-        Description = $"{Highlight("cleans")} your playfield but shrinks it to a height of 6 lines for the next 20 pieces. Your opponent {Highlight("cannot attack")} during this phase.";
+        Description = $"{Highlight("cleans")} your playfield but shrinks it to a height of 10 lines for the next 20 pieces.";
         Rarity = Rarity.Legendary;
         Cooldown = 12;
     }
@@ -23,8 +23,8 @@ public class ItemMoonGun : Item
             _gameplayControler.DeleteLine(y);
         }
         _gameplayControler.ResetPlayHeight();
-        _gameplayControler.ShrinkPlayHeight(14);
-        Cache.HeightLimiterResetLines = 20;
+        _gameplayControler.ShrinkPlayHeight(10);
+        Cache.HeightLimiterResetPieces = 20;
         return base.Effect();
     }
 }

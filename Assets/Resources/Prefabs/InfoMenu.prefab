@@ -7832,7 +7832,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 5.36, y: 1.48}
-  m_SizeDelta: {x: 7, y: 1.09}
+  m_SizeDelta: {x: 8.5, y: 1.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1076395822929432261
 MeshRenderer:
@@ -9440,7 +9440,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -5.36, y: 1.48}
-  m_SizeDelta: {x: 7, y: 1.09}
+  m_SizeDelta: {x: 8.5, y: 1.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3786402691819835740
 MeshRenderer:
@@ -11605,7 +11605,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -12442,7 +12442,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer

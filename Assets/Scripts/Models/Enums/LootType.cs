@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum LootType
 {
-    None = 0,
-    Item = 1,
-    Tattoo = 2,
-    Character = 3,
-    Resource = 4,
-    Pact = 5
+    None = -1,
+    Item = 0,
+    Tattoo = 1,
+    Character = 2,
+    Resource = 3,
+    Pact = 4
 }

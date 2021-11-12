@@ -7,6 +7,33 @@ using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
 {
+    public static void SaveLastFightPlayField(string lastFightPlayField)
+    {
+        Mock.SetString(Constants.PpLastFightPlayField, lastFightPlayField);
+    }
+
+    public static List<(int, int)> GetLastFightPlayField()
+    {
+        var fieldString = Mock.GetString(Constants.PpLastFightPlayField, Constants.PpSerializeDefault);
+        if (fieldString == null)
+            return null;
+        var field = new List<(int, int)>();
+        var cells = fieldString.Split(';');
+        foreach (var cell in cells)
+        {
+            if (cell == null || cell == string.Empty)
+                continue;
+            var xy = cell.Split('-');
+            field.Add((int.Parse(xy[0]), int.Parse(xy[1])));
+        }
+        return field;
+    }
+
+    public static void ResetLastFightPlayField()
+    {
+        SaveLastFightPlayField(null);
+    }
+
     public static void SaveRun(Run run)
     {
         Mock.SetString(Constants.PpRun, JsonUtility.ToJson(run));
@@ -23,6 +50,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void ResetRun()
     {
         SaveRun(null);
+        ResetLastFightPlayField();
     }
 
     public static void EndlessRun(Run run)

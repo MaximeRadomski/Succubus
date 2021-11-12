@@ -142,7 +142,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Cache.NameLastScene != Constants.SettingsScene)
         {
             if (!_isTraining)
+            {
                 Cache.CurrentRemainingSimpShields = Character.SimpShield;
+                if (!Cache.PactNoLastFightPlayField)
+                    _gameplayControler.ApplyLastFightPlayField();
+            }
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
         }
         else
@@ -161,7 +165,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private bool AfterFightIntro()
     {
-        if (!Character.SlumberingDragoncrest && !Cache.PactStealth && (CurrentOpponent.Haste || Character.HasteForAll))
+        if (!Character.SlumberingDragoncrest && !Cache.PactStealth && (CurrentOpponent.Haste || Character.HasteForAll || Cache.PactOnlyHaste))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Cache.InputLocked = false;
         Paused = false;
@@ -531,11 +535,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _opponentOnCooldown = true;
         if (!sceneInit)
             Cache.CurrentOpponentCooldown = 0;
-        if (first && (CurrentOpponent.Haste || Character.HasteForAll))
+        if (first && (CurrentOpponent.Haste || Character.HasteForAll || Cache.PactOnlyHaste))
         {
             if (!sceneInit)
                 Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
-            if (Character.HasteCancel)
+            if (Character.HasteCancel || Cache.PactNoHaste)
                 Instantiator.PopText("canceled", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
             else
                 Cache.CurrentOpponentCooldown = GetCurrentOpponentMaxCooldown();
@@ -1066,9 +1070,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return;
         var incomingDamage = 0;
         if (_gameplayControler.CharacterRealm == Realm.Hell)
-            incomingDamage += Mathf.RoundToInt((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) + (nbCombo - 2)) * nbLines);
+            incomingDamage += Mathf.RoundToInt((Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, 10 * Character.RealmPassiveEffect) * (nbCombo - 1)) * nbLines);
         if (Cache.PactComboDamage > 0)
-            incomingDamage += Mathf.RoundToInt((Cache.PactComboDamage + (nbCombo - 2))) * nbLines;
+            incomingDamage += Mathf.RoundToInt((Cache.PactComboDamage * (nbCombo - 1))) * nbLines;
         if (CurrentOpponent.Weakness == Weakness.Combos)
         {
             _weaknessInstance.Pop();

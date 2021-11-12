@@ -47,7 +47,7 @@ public static class Cache
     public static bool TruthResurrection = false;
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
-    public static int HeightLimiterResetLines = -1;
+    public static int HeightLimiterResetPieces = -1;
     public static Vector3? OnResumeLastPiecePosition;
     public static Quaternion? OnResumeLastPieceRotation;
     public static int? OnResumeLastForcedBlocks;
@@ -72,11 +72,14 @@ public static class Cache
     public static bool PactNoLoot = false;
     public static bool PactNoCrit = false;
     public static bool PactNoHold = false;
+    public static bool PactNoHaste = false;
     public static bool PactStealth = false;
+    public static bool PactOnlyHaste = false;
     public static bool PactNoSoftDrop = false;
     public static bool PactZeroGravity = false;
     public static bool PactCooldownSwap = false;
     public static bool PactResurrection = false;
+    public static bool PactNoLastFightPlayField = false;
     public static Realm PactCharacterRealm = Realm.None;
 
     public static void ResetClassicGameCache(Character character = null)
@@ -98,7 +101,7 @@ public static class Cache
         TruthResurrection = false;
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
-        HeightLimiterResetLines = -1;
+        HeightLimiterResetPieces = -1;
         OnResumeLastPiecePosition = null;
         OnResumeLastPieceRotation = null;
         OnResumeLastForcedBlocks = null;
@@ -125,10 +128,13 @@ public static class Cache
         PactNoLoot = false;
         PactNoCrit = false;
         PactStealth = false;
+        PactNoHaste = false;
+        PactOnlyHaste = false;
         PactNoSoftDrop = false;
         PactZeroGravity = false;
         PactCooldownSwap = false;
         PactResurrection = false;
+        PactNoLastFightPlayField = false;
         PactCharacterRealm = Realm.None;
 }
 
@@ -159,7 +165,7 @@ public static class Cache
             return;
         CurrentItemCooldown = tmpCurrentItem.Cooldown - character.ItemMaxCooldownReducer;
         if (PactCooldownSwap)
-            SelectedCharacterSpecialCooldown /= 2;
+            CurrentItemCooldown /= 2;
         if (CurrentItemCooldown < 1)
             CurrentItemCooldown = 1;
     }

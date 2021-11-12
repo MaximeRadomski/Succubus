@@ -201,16 +201,45 @@ public class GameplayControler : MonoBehaviour
 
     public void CleanPlayerPrefs()
     {
-        var run = PlayerPrefsHelper.GetRun();
         Bag = null;
         _characterSpecial?.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (PlayFieldBhv != null && _difficulty < Difficulty.Divine)
-            Destroy(PlayFieldBhv.gameObject);
+        if (PlayFieldBhv != null && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent.Type == OpponentType.Boss))
+            PlayerPrefsHelper.ResetLastFightPlayField();
         else
-            ResetPlayHeight(); //If Divine or more, just reset playfield to prevent Height Limiter to the next game
+        {
+            SaveLastFightPlayField();
+        }
+        Destroy(PlayFieldBhv.gameObject);
         Cache.InputLocked = false;
+    }
+
+    private void SaveLastFightPlayField()
+    {
+        var remainingBlocks = string.Empty;
+        foreach (Transform piece in PlayFieldBhv.transform)
+        {
+            foreach (Transform block in piece)
+            {
+                if (!block.TryGetComponent<BlockBhv>(out var blockBhv) || blockBhv.Indestructible)
+                    continue;
+                remainingBlocks += $"{Mathf.RoundToInt(block.transform.position.x)}-{Mathf.RoundToInt(block.transform.position.y - (Cache.HeightLimiter > 0 ? Cache.HeightLimiter : 0))};";
+            }
+        }
+        PlayerPrefsHelper.SaveLastFightPlayField(remainingBlocks);
+    }
+
+    public void ApplyLastFightPlayField()
+    {
+        var lastPlayField = PlayerPrefsHelper.GetLastFightPlayField();
+        foreach (var cell in lastPlayField)
+        {
+            var remainingPiece = Instantiator.NewPiece(AttackType.WasteRow.ToString(), CharacterRealm.ToString(), new Vector3(cell.Item1, cell.Item2, 0.0f));
+            remainingPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
+            PlayFieldBhv.Grid[cell.Item1, cell.Item2] = remainingPiece.transform.GetChild(0);
+        }
+        DropGhost();
     }
 
     private void SetTraining()
@@ -979,11 +1008,11 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial?.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
-        --Cache.HeightLimiterResetLines;
-        if (Cache.HeightLimiterResetLines == 0)
+        --Cache.HeightLimiterResetPieces;
+        if (Cache.HeightLimiterResetPieces == 0)
         {
             ResetPlayHeight();
-            Cache.HeightLimiterResetLines = -1;
+            Cache.HeightLimiterResetPieces = -1;
         }
         SpreadEffect(CurrentPiece);
         CheckForLightRows();
@@ -2117,7 +2146,7 @@ public class GameplayControler : MonoBehaviour
                 || Cache.ComboCounter > 3)
                     StartCoroutine(Reflect());
 
-                if (!Character.LineDestroyInvulnerability && AttackIncoming && Cache.HeightLimiterResetLines < 0)
+                if (!Character.LineDestroyInvulnerability && AttackIncoming)
                 {
                     AttackIncoming = false;
                     //Debug.Log(DateTime.Now + "CheckForLine (line)");
@@ -2134,7 +2163,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnLinesCleared(nbLines, false, _lastLockTwist);
             SceneBhv.PopText();
             Cache.ComboCounter = 0;
-            if (AttackIncoming && Cache.HeightLimiterResetLines < 0)
+            if (AttackIncoming)
             {
                 AttackIncoming = false;
                 //Debug.Log(DateTime.Now + "CheckForLine (no line)");

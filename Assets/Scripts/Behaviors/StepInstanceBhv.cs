@@ -34,7 +34,7 @@ public class StepInstanceBhv : MonoBehaviour
         _stepVision.enabled = step.LandLordVision;
         _stepVision.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsVisionId + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
         _stepLoot.enabled = step.LootType != LootType.None;
-        _stepLoot.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + step.LootType.GetHashCode() + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
+        _stepLoot.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsLootStart + step.LootType.GetHashCode() + (run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
         _stepOpponent.enabled = _stepLoot.enabled;
         var rarity = Rarity.Common;
         if (step.LootType == LootType.Character)

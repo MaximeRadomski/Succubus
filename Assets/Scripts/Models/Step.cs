@@ -40,7 +40,7 @@ public class Step
         Discovered = int.Parse(parsedString.Substring(parsedString.IndexOf('D') + 1, 1)) == 1 ? true : false;
         LandLordVision = int.Parse(parsedString.Substring(parsedString.IndexOf('V') + 1, 1)) == 1 ? true : false;
         var lootLetter = parsedString.Substring(parsedString.IndexOf('V') + 2, 1);
-        for (int i = 0; i < Helper.EnumCount<LootType>(); ++i)
+        for (int i = LootType.None.GetHashCode(); i < Helper.EnumCount<LootType>(); ++i)
         {
             if (lootLetter == ((LootType)i).ToString().Substring(0, 1))
                 LootType = (LootType)i;
