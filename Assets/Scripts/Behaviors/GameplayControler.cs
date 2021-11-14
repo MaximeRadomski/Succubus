@@ -205,7 +205,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial?.ResetCooldown();
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (PlayFieldBhv != null && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent.Type == OpponentType.Boss))
+        if (PlayFieldBhv != null && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
             PlayerPrefsHelper.ResetLastFightPlayField();
         else
         {

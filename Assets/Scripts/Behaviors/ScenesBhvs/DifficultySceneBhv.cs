@@ -138,9 +138,9 @@ public class DifficultySceneBhv : SceneBhv
         }
         var infoStr = string.Empty;
         if (difficulty >= Difficulty.Infernal)
-            infoStr += "stronger opponents attacks.";
+            infoStr = "stronger opponents attacks.";
         if (difficulty >= Difficulty.Divine)
-            infoStr += "\nno playield clearing after a fight.";
+            infoStr = "even stronger opponents attacks.";
         _infoStr.text = infoStr;
         PlayerPrefsHelper.SaveDifficulty(difficulty);
     }

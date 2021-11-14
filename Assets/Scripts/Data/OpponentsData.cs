@@ -288,7 +288,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Impostor", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 50, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 6,
+            HpMax = 50, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
             GravityLevel = 3, Weight = 60
