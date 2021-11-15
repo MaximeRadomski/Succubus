@@ -62,8 +62,7 @@ public class DroneBhv : MonoBehaviour
     public void UpdateY()
     {
         int highestOnX = _gameplayControler.GetHighestBlockOnX(Mathf.RoundToInt(transform.position.x));
-        if (highestOnX >= transform.position.y)
-            transform.position = new Vector3(transform.position.x, highestOnX + 1, 0.0f);
+        transform.position = new Vector3(transform.position.x, highestOnX + 1, 0.0f);
     }
 
     private void GetGameplayControler()

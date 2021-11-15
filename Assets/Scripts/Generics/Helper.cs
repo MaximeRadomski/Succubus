@@ -431,31 +431,31 @@ public static class Helper
             else if (difficulty == Difficulty.Divine2)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.2f);
-                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.25f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
             else if (difficulty == Difficulty.Divine3)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.15f);
-                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.50f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
             else if (difficulty == Difficulty.Divine4)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.1f);
-                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.75f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
             else if (difficulty == Difficulty.Divine5)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.05f);
-                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 3.0f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
             else if (difficulty == Difficulty.Divine666)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 0.01f);
-                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 3.25f);
+                opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
             if (opponent.Cooldown < 1.0f && difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())

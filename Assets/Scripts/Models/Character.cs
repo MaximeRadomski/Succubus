@@ -89,6 +89,9 @@ public class Character : Loot
     public int DevilsContractMalus = 0;
     public int BassGuitarBonus = 0;
     public int NoodleShield = 0;
+    public bool AllClear = false;
+    public int InstantLineClear = 0;
+    public int HolyMantle = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

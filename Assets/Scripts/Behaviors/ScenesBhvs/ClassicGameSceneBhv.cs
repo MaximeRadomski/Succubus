@@ -144,7 +144,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (!_isTraining)
             {
                 Cache.CurrentRemainingSimpShields = Character.SimpShield;
-                if (!Cache.PactNoLastFightPlayField)
+                if (!Cache.PactNoLastFightPlayField && !Character.AllClear)
                     _gameplayControler.ApplyLastFightPlayField();
             }
             Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
@@ -240,6 +240,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             _soundControler.PlaySound(_idOpponentAppearance);
             Cache.CurrentOpponentAttackId = 0;
+            Cache.CurrentOpponentAttackCount = 0;
             OpponentInstanceBhv.Spawn();
             CameraBhv.Bump(4);
             var minHeight = 9.0f;
@@ -615,6 +616,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Instantiator.PopText("blocked", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idHit);
         }
+        else if (Character.HolyMantle > 0 && Cache.CurrentOpponentAttackCount <= Character.HolyMantle)
+        {
+            Instantiator.PopText("blessed", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+            _soundControler.PlaySound(_idDodge);
+            _characterInstanceBhv.Dodge();
+        }
         else if (Cache.CurrentRemainingSimpShields > 0)
         {
             --Cache.CurrentRemainingSimpShields;
@@ -645,6 +652,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 || CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.Shift)
                 spawnAfterAttack = false;
         }
+        ++Cache.CurrentOpponentAttackCount;
         if (++Cache.CurrentOpponentAttackId >= CurrentOpponent.Attacks.Count)
             Cache.CurrentOpponentAttackId = 0;
         _opponentCooldownBar.UpdateContent(0, 1, Direction.Down);
@@ -905,6 +913,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _gameplayControler.DeleteFromBottom(Character.DeleteAfterKill);
         Cache.RandomizedAttackType = AttackType.None;
         Cache.HalvedCooldown = false;
+        Cache.CurrentOpponentChangedRealm = Realm.None;
         NextOpponent();
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
@@ -987,13 +996,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines == 4)
             {
-                int targetDestroyed = Character.RealmPassiveEffect;
-                targetDestroyed -= _gameplayControler.CheckForDarkRows(targetDestroyed);
-                if (targetDestroyed > 0)
-                    targetDestroyed -= _gameplayControler.CheckForWasteRows(targetDestroyed);
-                if (targetDestroyed > 0)
+                int linesDestroyed = Character.RealmPassiveEffect;
+                linesDestroyed -= _gameplayControler.CheckForDarkRows(linesDestroyed);
+                if (linesDestroyed > 0)
+                    linesDestroyed -= _gameplayControler.CheckForWasteRows(linesDestroyed);
+                if (linesDestroyed > 0)
                 {
-                    for (int i = 0; i < targetDestroyed; ++i)
+                    for (int i = 0; i < linesDestroyed; ++i)
                         _gameplayControler.CheckForLightRows();
                 }
 
@@ -1020,6 +1029,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (lastLockIsTwist)
         {
             incomingDamage *= 2;
+            if (nbLines == 0 && Character.InstantLineClear > 0)
+            {
+                int linesDestroyed = Character.InstantLineClear;
+                linesDestroyed -= _gameplayControler.CheckForDarkRows(linesDestroyed);
+                if (linesDestroyed > 0)
+                    _gameplayControler.CheckForWasteRows(linesDestroyed);
+            }
             if (_gameplayControler.CharacterRealm == Realm.Heaven)
             {
                 Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;

@@ -27,6 +27,7 @@ public static class Cache
     public static int CurrentItemUses;
     public static string GameOverParams = null;
     public static int CurrentOpponentAttackId;
+    public static int CurrentOpponentAttackCount;
     public static int CurrentRemainingSimpShields = 0;
 
     //Reset before each fight

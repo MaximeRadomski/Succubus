@@ -15,11 +15,11 @@ public static class TattoosData
     /* 30 */ "Simp Shield", "Permutation", "Fire Stone", "Earth Stone", "Water Stone", "Wind Stone", "Forgotten Dream", "Quad Damage", "Double Edged", "Damocles",
     /* 40 */ "Brand of Sacrifice", "Beer", "Loot Box", "Family Tree", "Star", "Infinite Stairs", "Blood Eye", "Water Eye", "Insulating Foam", "Sickle", 
     /* 50 */ "Hammer", "God Hand", "Map", "Target", "Last Stand", "Slumbering Dragoncrest", "Social Pyramid", "Farm", "Owl", "Pentagram",
-    /* 60 */ "Diamond", "Scissor Jack", "Basketball Hoop", "Slav Wheel", "Devil's Contract", "Bass Guitar", "Instant Noodles" };
+    /* 60 */ "Diamond", "Scissor Jack", "Basketball Hoop", "Slav Wheel", "Devil's Contract", "Bass Guitar", "Instant Noodles", "Black Hole", "Butterfly Knife", "Holy Mantle" };
 
     public static string[] CommonTattoosNames = { Tattoos[00], Tattoos[01], Tattoos[04], Tattoos[07], Tattoos[09], Tattoos[10], Tattoos[11], Tattoos[12], Tattoos[13], Tattoos[17], Tattoos[20], Tattoos[21], Tattoos[31], Tattoos[37], Tattoos[39], Tattoos[40], Tattoos[41], Tattoos[43], Tattoos[44], Tattoos[48], Tattoos[49], Tattoos[50], Tattoos[57], Tattoos[58], Tattoos[60], Tattoos[61], Tattoos[64], Tattoos[65] };
-    public static string[] RareTattoosNames = { Tattoos[02], Tattoos[03], Tattoos[05], Tattoos[08], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19], Tattoos[24], Tattoos[30], Tattoos[32], Tattoos[33], Tattoos[34], Tattoos[35], Tattoos[36], Tattoos[38], Tattoos[42], Tattoos[46], Tattoos[47], Tattoos[53], Tattoos[59], Tattoos[62], Tattoos[63], Tattoos[66] };
-    public static string[] LegendaryTattoosNames = { Tattoos[06], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29], Tattoos[45], Tattoos[51], Tattoos[52], Tattoos[54], Tattoos[55], Tattoos[56] };
+    public static string[] RareTattoosNames = { Tattoos[02], Tattoos[03], Tattoos[05], Tattoos[08], Tattoos[14], Tattoos[15], Tattoos[16], Tattoos[18], Tattoos[19], Tattoos[24], Tattoos[30], Tattoos[32], Tattoos[33], Tattoos[34], Tattoos[35], Tattoos[36], Tattoos[38], Tattoos[42], Tattoos[46], Tattoos[47], Tattoos[53], Tattoos[59], Tattoos[62], Tattoos[63], Tattoos[66], Tattoos[68], Tattoos[69] };
+    public static string[] LegendaryTattoosNames = { Tattoos[06], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29], Tattoos[45], Tattoos[51], Tattoos[52], Tattoos[54], Tattoos[55], Tattoos[56], Tattoos[67] };
 
     // DEBUG //
     public static bool DebugEnabled = Constants.TattoosDebug;

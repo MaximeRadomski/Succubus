@@ -233,6 +233,8 @@ public class GameplayControler : MonoBehaviour
     public void ApplyLastFightPlayField()
     {
         var lastPlayField = PlayerPrefsHelper.GetLastFightPlayField();
+        if (lastPlayField == null)
+            return;
         foreach (var cell in lastPlayField)
         {
             var remainingPiece = Instantiator.NewPiece(AttackType.WasteRow.ToString(), CharacterRealm.ToString(), new Vector3(cell.Item1, cell.Item2, 0.0f));
@@ -2779,9 +2781,14 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
-        _afterSpawnAttackCounter = nbPieces;
-        Cache.IsEffectAttackInProgress = AttackType.AirPiece;
-        SetAfterSpawn(AirPieceAfterSpawn);
+        if (Cache.IsEffectAttackInProgress == AttackType.AirPiece)
+            _afterSpawnAttackCounter += nbPieces;
+        else
+        {
+            _afterSpawnAttackCounter = nbPieces;
+            Cache.IsEffectAttackInProgress = AttackType.AirPiece;
+            SetAfterSpawn(AirPieceAfterSpawn);
+        }
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool AirPieceAfterSpawn(bool trueSpawn)
@@ -2801,9 +2808,14 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackForcedBlock(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbBlocks)
     {
-        _afterSpawnAttackCounter = nbPieces;
-        Cache.IsEffectAttackInProgress = AttackType.ForcedBlock;
-        SetAfterSpawn(ForcedBlockAfterSpawn);
+        if (Cache.IsEffectAttackInProgress == AttackType.ForcedBlock)
+            _afterSpawnAttackCounter += nbPieces;
+        else
+        {
+            _afterSpawnAttackCounter = nbPieces;
+            Cache.IsEffectAttackInProgress = AttackType.ForcedBlock;
+            SetAfterSpawn(ForcedBlockAfterSpawn);
+        }
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ForcedBlockAfterSpawn(bool trueSpawn)
@@ -2822,12 +2834,17 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackCameraEffects(AttackType attackType, GameObject opponentInstance, Realm opponentRealm, int nbPieces, int param)
     {
-        _afterSpawnAttackCounter = nbPieces;
-        _effectsCamera.SetActive(true);
-        _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
+        if (Cache.IsEffectAttackInProgress == attackType)
+            _afterSpawnAttackCounter += nbPieces;
+        else
+        {
+            _afterSpawnAttackCounter = nbPieces;
+            _effectsCamera.SetActive(true);
+            _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
+            Cache.IsEffectAttackInProgress = attackType;
+            SetAfterSpawn(CameraEffectAfterSpawn);
+        }
         _soundControler.PlaySound(_idTwist);
-        Cache.IsEffectAttackInProgress = attackType;
-        SetAfterSpawn(CameraEffectAfterSpawn);
         if (attackType == AttackType.Intoxication)
             SetGravity(8);
 
@@ -2855,6 +2872,7 @@ public class GameplayControler : MonoBehaviour
         var drone = GameObject.Find(Constants.GoDrone);
         if (drone != null)
         {
+            AfterSpawn.Invoke(true);
             AfterSpawn = null;
             Destroy(drone);
         }
@@ -3049,12 +3067,17 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
     {
-        _isOldSchoolGameplay = true;
-        _dasMax = Constants.OldSchoolDas;
-        _arrMax = Constants.OldSchoolArr;
-        Cache.IsEffectAttackInProgress = AttackType.OldSchool;
-        _afterSpawnAttackCounter = nbPieces;
-        SetAfterSpawn(OldSchoolAfterSpawn);
+        if (_isOldSchoolGameplay)
+            _afterSpawnAttackCounter += nbPieces;
+        else
+        {
+            _isOldSchoolGameplay = true;
+            _dasMax = Constants.OldSchoolDas;
+            _arrMax = Constants.OldSchoolArr;
+            Cache.IsEffectAttackInProgress = AttackType.OldSchool;
+            _afterSpawnAttackCounter = nbPieces;
+            SetAfterSpawn(OldSchoolAfterSpawn);
+        }        
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool OldSchoolAfterSpawn(bool result)
@@ -3079,10 +3102,15 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackScrewed(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
     {
-        _isScrewed = true;
-        _afterSpawnAttackCounter = nbPieces;
-        Cache.IsEffectAttackInProgress = AttackType.Screwed;
-        SetAfterSpawn(ScrewedAfterSpawn);
+        if (Cache.IsEffectAttackInProgress == AttackType.Screwed)
+            _afterSpawnAttackCounter += nbPieces;
+        else
+        {
+            _isScrewed = true;
+            _afterSpawnAttackCounter = nbPieces;
+            Cache.IsEffectAttackInProgress = AttackType.Screwed;
+            SetAfterSpawn(ScrewedAfterSpawn);
+        }
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * nbPieces);
 
         bool ScrewedAfterSpawn(bool result)
