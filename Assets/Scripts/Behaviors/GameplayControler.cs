@@ -1790,10 +1790,19 @@ public class GameplayControler : MonoBehaviour
             Destroy(tmpHeld.gameObject);
             if (CurrentGhost != null)
                 Destroy(CurrentGhost);
-            CurrentPiece = Instantiator.NewPiece(pieceLetter, CharacterRealm.ToString(), _spawner.transform.position);
-            CurrentGhost = Instantiator.NewPiece(pieceLetter, CharacterRealm + "Ghost", _spawner.transform.position);
+            var heldPieceRealm = CharacterRealm;
+            var hasBlocksAffectedByGravity = false;
+            if (Character.HeldBoosted > 0 && Character.HeldBoosted < Cache.HeldBoostedCount)
+            {
+                heldPieceRealm = Helper.GetInferiorFrom(CharacterRealm);
+                hasBlocksAffectedByGravity = true;
+            }
+            CurrentPiece = Instantiator.NewPiece(pieceLetter, heldPieceRealm.ToString(), _spawner.transform.position);
+            CurrentGhost = Instantiator.NewPiece(pieceLetter, heldPieceRealm + "Ghost", _spawner.transform.position);
             if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
                 CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+            if (hasBlocksAffectedByGravity)
+                CurrentPiece.GetComponent<Piece>().AlterBlocksAffectedByGravity(true, Instantiator, heldPieceRealm);
             if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
                 CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
             else
@@ -2490,6 +2499,8 @@ public class GameplayControler : MonoBehaviour
             attackBoost = 1;
         if (_difficulty >= Difficulty.Divine2)
             attackBoost += _difficulty.GetHashCode() - Difficulty.Divine2.GetHashCode() + 1;
+        if (this.SceneBhv.CurrentOpponent.Realm == Helper.GetSuperiorFrom(CharacterRealm))
+            attackBoost += 1;
         VibrationService.Vibrate();
         switch (type)
         {

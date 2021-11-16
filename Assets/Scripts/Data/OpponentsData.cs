@@ -255,6 +255,14 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Lava Mole", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 150, Weakness = Weakness.Combos, DamageOnWeakness = 5, Cooldown = 4,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Tunnel, 3) },
+            GravityLevel = 5, Weight = 40
+        },
+        new Opponent()
+        {
             Name = "Bad Moose", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamageOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
@@ -317,6 +325,15 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
             GravityLevel = 5, Weight = 60,
+            DialogId = 2, DialogPitch = 0.3f
+        },
+        new Opponent()
+        {
+            Name = "Dark Angel", Realm = Realm.Heaven, Type = OpponentType.Common, Haste = true,
+            HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 6) },
+            GravityLevel = 7, Weight = 60,
             DialogId = 2, DialogPitch = 0.3f
         },
         new Opponent()
@@ -412,7 +429,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Crusader", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 8,
+            HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 4, 1) },
             GravityLevel = 12, Weight = 40

@@ -26,11 +26,7 @@ public class SpecialSinsWeight : Special
         base.OnNewPiece(piece);
         if (_nbPiece <= 0)
             return;
-        _gameplayControler.CurrentPiece.GetComponent<Piece>().AlterBlocksAffectedByGravity(true);
-        foreach (Transform child in _gameplayControler.CurrentPiece.transform)
-        {
-            _gameplayControler.Instantiator.NewGravitySquare(child.gameObject, _character.Realm.ToString());
-        }
+        _gameplayControler.CurrentPiece.GetComponent<Piece>().AlterBlocksAffectedByGravity(true, _gameplayControler.Instantiator, _gameplayControler.CharacterRealm);
         _gameplayControler.DropGhost();
     }
 

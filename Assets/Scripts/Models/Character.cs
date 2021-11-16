@@ -92,6 +92,7 @@ public class Character : Loot
     public bool AllClear = false;
     public int InstantLineClear = 0;
     public int HolyMantle = 0;
+    public int HeldBoosted = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

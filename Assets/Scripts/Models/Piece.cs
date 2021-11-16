@@ -165,13 +165,17 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void AlterBlocksAffectedByGravity(bool value)
+    public void AlterBlocksAffectedByGravity(bool value, Instantiator instantiator, Realm realm)
     {
         HasBlocksAffectedByGravity = value;
         if (value)
             _canMimicAlterBlocksAffectedByGravity = false;
         else
             _canMimicAlterBlocksAffectedByGravity = true;
+        foreach (Transform child in transform)
+        {
+            instantiator.NewGravitySquare(child.gameObject, realm.ToString());
+        }
     }
 
     public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost, Color ghostColor)

@@ -320,6 +320,71 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Dark Angel
+        { "Dark Angel|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Wait, aren't you an angel? What are you doing here?",
+                    "And may the culprits be damned for their sins."
+                }
+            }
+        },
+        { "Dark Angel|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Oh shit an angel!!",
+                    "And may the culprits be damned for their sins.",
+                    "Helloooo?! Anyone there? You seem pretty empty repeating your versets dude.",
+                }
+            }
+        },
+        { "Dark Angel|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "What the actual fuck is an angel doing here?",
+                    "And may the culprits be damned for their sins.",
+                    "Rude. Just asked you a question...",
+                }
+            }
+        },
+        { "Dark Angel|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "How dare you step on hellish grounds!!",
+                    "And may the culprits be damned for their sins.",
+                    "Yeah yeah keep talking, and let me teach you a lesson.",
+                }
+            }
+        },
+        { "Dark Angel|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "A servitor of the sky. Interesting.",
+                    "You... You seem different.",
+                    "I'm just a mere servitor of hell.",
+                    "And yet your purity emanates from your aura. Can't you see it?",
+                    "Purity? Me? No no you must be mistaken...",
+                    "Your place is not here Belias, servitor of Hell.",
+                    "How do you know my name??"
+                }
+            }
+        },
+        #endregion
         #region Shop Keeper
         { "Shop Keeper|Any",
             new List<List<string>>()
@@ -473,7 +538,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "Wait, something's weird... What is happening milady?",
-                    "Wondering about my deeds my dear ?",
+                    "Wondering about my deeds my dear?",
                     "It just feels like... I'm already bored of it even if it hasn't begun... Have you done something against the time continuum???",
                     "Hehehe!!!"
                 },
@@ -481,7 +546,7 @@ public static class DialogsData
                 {
                     "Hmm... Why am I not surprised to see you here milady?",
                     "Might be linked to the fact that we have already done it several times maybe!!",
-                    "Wait... No!!! The amulet ?",
+                    "Wait... No!!! The amulet?",
                     "Haha, seeing you this surprised each time is so pleasing!!"
                 }
             }
@@ -492,8 +557,8 @@ public static class DialogsData
                 new List<string>()
                 {
                     "Look, the turbulent twin... How am I not even surprised to see you here?",
-                    "You always had the kind words didn't you ?",
-                    "Should I behave another way perhaps ?",
+                    "You always had the kind words didn't you?",
+                    "Should I behave another way perhaps?",
                     "No no keep it that way, it reinforces my will to erase you!!"
                 },
                 new List<string>()
@@ -650,7 +715,7 @@ public static class DialogsData
                 {
                     "...",
                     "...",
-                    "What in the name of god... are you really a nun?",
+                    "What in the name of holiness... are you really a nun?",
                     "Haha, do you like what you see?"
                 }
             }
@@ -1115,7 +1180,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Ivy, first of the dead."
+                    "Greetings, Ivy, first of the dead.",
+                    "Yeah yeah, stop blabbering..."
                 }
             }
         },
@@ -1131,7 +1197,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Edam, harpies commander."
+                    "Greetings, Edam, harpies commander.",
+                    "Greetings Beholder, no flattery please this time, I'm only here for your tricks."
                 }
             }
         },
@@ -1147,7 +1214,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Podarge, betrayers of your own kind."
+                    "Greetings, Podarge, betrayers of your own kind.",
+                    "Do you really have to put it like that every time..."
                 }
             }
         },
@@ -1163,7 +1231,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Belias, slave amongst gods."
+                    "Greetings, Belias, slave amongst gods.",
+                    "..."
                 }
             }
         },
@@ -1179,7 +1248,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Floppyredoux, humans protector."
+                    "Greetings, Floppyredoux, humans protector.",
+                    "Tell me more about it already! Come on!!"
                 }
             }
         },
@@ -1195,7 +1265,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Sir Vixid, last crusader of the night."
+                    "Greetings, Sir Vixid, last crusader of the night.",
+                    "Hi master, I require your assistance."
                 }
             }
         },
@@ -1212,7 +1283,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings Cereza."
+                    "Greetings... Cereza?",
+                    "Haha, still have no clue of who I am?"
                 }
             }
         },
@@ -1228,7 +1300,8 @@ public static class DialogsData
                 },
                 new List<string>()
                 {
-                    "Greetings, Anthony, patriarch of the beer."
+                    "Greetings, Anthony, patriarch of the beer.",
+                    "Wassup Beholder!! How's hanging?"
                 }
             }
         },
