@@ -131,6 +131,12 @@ TextureImporter:
   - first:
       213: -4748708976123623867
     second: HellOpponents_32
+  - first:
+      213: -466915928663659670
+    second: HellOpponents_33
+  - first:
+      213: 9070421471291291823
+    second: HellOpponents_34
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -162,8 +168,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -920,6 +926,48 @@ TextureImporter:
       bones: []
       spriteID: 54641709852391eb0800000000000000
       internalID: -4748708976123623867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_33
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6be70ccf6e2589f0800000000000000
+      internalID: -466915928663659670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_34
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa8b46f554c90ed70800000000000000
+      internalID: 9070421471291291823
       vertices: []
       indices: 
       edges: []

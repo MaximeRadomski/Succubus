@@ -320,8 +320,8 @@ public static class DialogsData
             }
         },
         #endregion
-        #region Dark Angel
-        { "Dark Angel|Any",
+        #region Fallen Angel
+        { "Fallen Angel|Any",
             new List<List<string>>()
             {
                 new List<string>()
@@ -332,7 +332,7 @@ public static class DialogsData
                 }
             }
         },
-        { "Dark Angel|Podarge",
+        { "Fallen Angel|Podarge",
             new List<List<string>>()
             {
                 new List<string>()
@@ -344,7 +344,7 @@ public static class DialogsData
                 }
             }
         },
-        { "Dark Angel|Ivy",
+        { "Fallen Angel|Ivy",
             new List<List<string>>()
             {
                 new List<string>()
@@ -356,7 +356,7 @@ public static class DialogsData
                 }
             }
         },
-        { "Dark Angel|Edam",
+        { "Fallen Angel|Edam",
             new List<List<string>>()
             {
                 new List<string>()
@@ -368,7 +368,7 @@ public static class DialogsData
                 }
             }
         },
-        { "Dark Angel|Belias",
+        { "Fallen Angel|Belias",
             new List<List<string>>()
             {
                 new List<string>()
