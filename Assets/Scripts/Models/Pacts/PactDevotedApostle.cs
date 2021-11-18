@@ -9,15 +9,15 @@ public class PactDevotedApostle : Pact
         Id = 0;
         Name = PactsData.Pacts[Id];
         MaxFight = 2;
-        Pros = $"grants you {Highlight("+2 damage")}.";
+        Pros = $"grants you {Highlight("+5 damage")}.";
         Cons = $"cancels your ability to {Highlight("hold")}.";
-        ShortDescription = $"+2 damage {Highlight("/")} can't hold";
+        ShortDescription = $"+5 damage {Highlight("/")} can't hold";
         Rarity = Rarity.Common;
     }
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactFlatDamage += 2;
+        Cache.PactFlatDamage += 5;
         Cache.PactNoHold = true;
     }
 }

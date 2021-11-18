@@ -822,6 +822,97 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Angelic Messenger
+        { "Angelic Messenger|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "He? You mean, your god?",
+                    "Yes, in all his mercy.",
+                    "But, do I want his mercy tho..."
+                }
+            }
+        },
+        { "Angelic Messenger|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Hahaha, like I would like your god's mercy!",
+                    "Even if he forgives your madness?",
+                    "Where you see madness, I see justice. Now get out of my way, or I'll make you."
+                }
+            }
+        },
+        { "Angelic Messenger|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Oh... That's so kind of him... Could you tell him to also act instead of just praying for us?",
+                    "Isn't his mercy enough for your redemption?",
+                    "I'll show you some mercy..."
+                }
+            }
+        },
+        { "Angelic Messenger|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Uh? Who are you talking about?",
+                    "Isn't it obvious? I'm an angelic messenger... I... I Deliver messages from above...",
+                    "Above? Like... There is something above heavens?",
+                    "...",
+                    "...",
+                    "You are not good at this aren't you?"
+                }
+            }
+        },
+        { "Angelic Messenger|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "I cannot be forgiven, angel.",
+                    "You can, and you should, considering you paid your debt ages ago, Belias, slave among demons.",
+                    "I'm no more slave, I am now the armed arm of mistress Ivy!",
+                    "You... You just said \"mistress\" Ivy... Don't you see the Irony?",
+                    "..."
+                }
+            }
+        },
+        { "Angelic Messenger|Sir Vixid",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Your god means nothing to me.",
+                    "My god? He is the god of all of us!",
+                    "I see no god in his acts, only a scared old fool trying to save his royal ass!!"
+                }
+            }
+        },
+        { "Angelic Messenger|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Oh please, like if I never heard it before.",
+                    "You were in the clergy, shouldnt you know that he loves you unconditionally?",
+                    "Yup, but he also made me hate myself... I'd rather love me unconditionally!!"
+                }
+            }
+        },
+        #endregion
         #region Tactical Nun
         { "Tactical Nun",
             new List<List<string>>()

@@ -9,15 +9,15 @@ public class PactRighteousSacrifice : Pact
         Id = 7;
         Name = PactsData.Pacts[Id];
         MaxFight = 3;
-        Pros = $"grants you {Highlight("+30% crit chance")}.";
+        Pros = $"grants you {Highlight("+50% crit chance")}.";
         Cons = $"reduces your attack by {Highlight("-5 damage")}.";
-        ShortDescription = $"+30% crit chance {Highlight("/")} -5 damage";
+        ShortDescription = $"+50% crit chance {Highlight("/")} -5 damage";
         Rarity = Rarity.Rare;
     }
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactCritChance += 30;
+        Cache.PactCritChance += 50;
         Cache.PactFlatDamage -= 5;
     }
 }

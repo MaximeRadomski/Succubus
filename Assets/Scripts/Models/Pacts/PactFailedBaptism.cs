@@ -10,14 +10,14 @@ public class PactFailedBaptism : Pact
         Name = PactsData.Pacts[Id];
         MaxFight = 3;
         Pros = $"makes you {Highlight("holy")}.";
-        Cons = $"triggers a {Highlight("+10% chance")} of an additional block on your pieces.";
-        ShortDescription = $"holiness {Highlight("/")} +10% additional block";
+        Cons = $"triggers a {Highlight("+5% chance")} of an additional block on your pieces.";
+        ShortDescription = $"holiness {Highlight("/")} +5% additional block";
         Rarity = Rarity.Rare;
     }
 
     public override void ApplyPact(Character character)
     {
         Cache.PactCharacterRealm = Realm.Heaven;
-        Cache.PactChanceAdditionalBlock += 10;
+        Cache.PactChanceAdditionalBlock += 5;
     }
 }

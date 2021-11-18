@@ -64,9 +64,8 @@ public static class OpponentsData
             Name = "Dummy", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 222, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Tunnel, 3)},
-            //new OpponentAttack(AttackType.DarkRow, 2),
-            //new OpponentAttack(AttackType.WasteRow, 2, 1)},
+            new OpponentAttack(AttackType.DarkRow, 2),
+            new OpponentAttack(AttackType.WasteRow, 2, 1)},
             GravityLevel = 2, Weight = 0,
             Lore = "Youngest of the dummies, he wishes one day to take the place of his older brother, and thereby manage the training of hell's forces."
         },
@@ -146,11 +145,11 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common,
+            Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common, Haste = true,
             HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Intoxication, 4),
-            new OpponentAttack(AttackType.WasteRow, 1, 2)},
+                new OpponentAttack(AttackType.RhythmMania, 4, 1)},
             GravityLevel = 3, Weight = 30
         },
         new Opponent()
@@ -334,7 +333,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 6) },
             GravityLevel = 7, Weight = 60,
-            DialogId = 2, DialogPitch = 0.3f
+            DialogId = 4, DialogPitch = 0.85f
         },
         new Opponent()
         {
@@ -463,12 +462,29 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Angelic Messenger", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 170, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 5),
+                new OpponentAttack(AttackType.DropBomb, 5) },
+            GravityLevel = 10, Weight = 60
+        },
+        new Opponent()
+        {
             Name = "Cheese Cake", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 130, Weakness = Weakness.Twists, DamageOnWeakness = 150, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2),
                 new OpponentAttack(AttackType.VisionBlock, 10, 5)},
             GravityLevel = 10, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Organist", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.RhythmMania, 8, 1)},
+            GravityLevel = 10, Weight = 40
         },
         new Opponent()
         {
@@ -557,7 +573,8 @@ public static class OpponentsData
             Name = "Worm Ghast", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 4, Weakness = Weakness.Consecutive, DamageOnWeakness = 50, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.AirPiece, 3) },
+                new OpponentAttack(AttackType.AirPiece, 3),
+                new OpponentAttack(AttackType.Tunnel, 2)},
             GravityLevel = 6, Weight = 25
         },
         new Opponent()
