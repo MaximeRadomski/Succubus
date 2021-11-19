@@ -80,6 +80,12 @@ TextureImporter:
   - first:
       213: 1025300826671996481
     second: EarthOpponents_25
+  - first:
+      213: -4666045062157926883
+    second: EarthOpponents_26
+  - first:
+      213: 9070347749097794752
+    second: EarthOpponents_27
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -185,7 +191,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -206,7 +212,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -227,7 +233,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -248,7 +254,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -269,7 +275,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -290,7 +296,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 153
+        y: 204
         width: 29
         height: 51
       alignment: 0
@@ -310,7 +316,7 @@ TextureImporter:
       name: EarthOpponents_6
       rect:
         serializedVersion: 2
-        x: 174
+        x: 0
         y: 153
         width: 29
         height: 51
@@ -331,8 +337,8 @@ TextureImporter:
       name: EarthOpponents_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 102
+        x: 29
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -352,8 +358,8 @@ TextureImporter:
       name: EarthOpponents_8
       rect:
         serializedVersion: 2
-        x: 29
-        y: 102
+        x: 58
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -373,8 +379,8 @@ TextureImporter:
       name: EarthOpponents_9
       rect:
         serializedVersion: 2
-        x: 58
-        y: 102
+        x: 87
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -394,8 +400,8 @@ TextureImporter:
       name: EarthOpponents_10
       rect:
         serializedVersion: 2
-        x: 87
-        y: 102
+        x: 116
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -415,8 +421,8 @@ TextureImporter:
       name: EarthOpponents_11
       rect:
         serializedVersion: 2
-        x: 116
-        y: 102
+        x: 145
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -436,7 +442,7 @@ TextureImporter:
       name: EarthOpponents_12
       rect:
         serializedVersion: 2
-        x: 145
+        x: 0
         y: 102
         width: 29
         height: 51
@@ -457,7 +463,7 @@ TextureImporter:
       name: EarthOpponents_13
       rect:
         serializedVersion: 2
-        x: 174
+        x: 29
         y: 102
         width: 29
         height: 51
@@ -478,8 +484,8 @@ TextureImporter:
       name: EarthOpponents_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 51
+        x: 58
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -499,8 +505,8 @@ TextureImporter:
       name: EarthOpponents_15
       rect:
         serializedVersion: 2
-        x: 29
-        y: 51
+        x: 87
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -520,8 +526,8 @@ TextureImporter:
       name: EarthOpponents_16
       rect:
         serializedVersion: 2
-        x: 58
-        y: 51
+        x: 116
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -541,8 +547,8 @@ TextureImporter:
       name: EarthOpponents_17
       rect:
         serializedVersion: 2
-        x: 87
-        y: 51
+        x: 145
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -562,7 +568,7 @@ TextureImporter:
       name: EarthOpponents_18
       rect:
         serializedVersion: 2
-        x: 116
+        x: 0
         y: 51
         width: 29
         height: 51
@@ -583,7 +589,7 @@ TextureImporter:
       name: EarthOpponents_19
       rect:
         serializedVersion: 2
-        x: 145
+        x: 29
         y: 51
         width: 29
         height: 51
@@ -604,7 +610,7 @@ TextureImporter:
       name: EarthOpponents_20
       rect:
         serializedVersion: 2
-        x: 174
+        x: 58
         y: 51
         width: 29
         height: 51
@@ -625,8 +631,8 @@ TextureImporter:
       name: EarthOpponents_21
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 87
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -646,8 +652,8 @@ TextureImporter:
       name: EarthOpponents_22
       rect:
         serializedVersion: 2
-        x: 29
-        y: 0
+        x: 116
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -667,8 +673,8 @@ TextureImporter:
       name: EarthOpponents_23
       rect:
         serializedVersion: 2
-        x: 58
-        y: 0
+        x: 145
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -688,7 +694,7 @@ TextureImporter:
       name: EarthOpponents_24
       rect:
         serializedVersion: 2
-        x: 87
+        x: 0
         y: 0
         width: 29
         height: 51
@@ -709,7 +715,7 @@ TextureImporter:
       name: EarthOpponents_25
       rect:
         serializedVersion: 2
-        x: 116
+        x: 29
         y: 0
         width: 29
         height: 51
@@ -722,6 +728,48 @@ TextureImporter:
       bones: []
       spriteID: 14ed2b96ba99a3e00800000000000000
       internalID: 1025300826671996481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_26
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1e7c1cdcb0ee3fb0800000000000000
+      internalID: -4666045062157926883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EarthOpponents_27
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ccec36983950ed70800000000000000
+      internalID: 9070347749097794752
       vertices: []
       indices: 
       edges: []
