@@ -6,12 +6,12 @@ using UnityEngine;
 public static class Constants
 {
     public const bool BetaMode = true;
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool CharactersDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool PactsDebug = false;
+    public const bool PactsDebug = true;
     public const bool RunDebug = false;
 
     public const int MaxFps = 60;
@@ -169,6 +169,8 @@ public static class Constants
     public const string PpLastSavedCredentials = "LastSavedCredentials";
     public const string PpHasMetBeholder = "HasMetBeholder";
     public const string PpLastFightPlayField = "LastFightPlayField";
+    public const string PpWatchedCinematics = "WatchedCinematics";
+    public const string PpWatchedCinematicsDefault = "0000";
 
     public static string GetDefaultKeyBinding()
     {

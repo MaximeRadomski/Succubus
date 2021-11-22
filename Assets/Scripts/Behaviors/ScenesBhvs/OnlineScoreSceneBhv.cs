@@ -27,7 +27,7 @@ public class OnlineScoreSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
-        _isOldSchool = NavigationService.NextSceneParameter?.BoolParam1 == true;
+        _isOldSchool = NavigationService.SceneParameter?.BoolParam0 == true;
         _currentPage = 0;
         GameObject.Find("ButtonNext").GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPage(_currentPage + 1);
         GameObject.Find("ButtonPrevious").GetComponent<ButtonBhv>().EndActionDelegate = () => GoToPage(_currentPage - 1);

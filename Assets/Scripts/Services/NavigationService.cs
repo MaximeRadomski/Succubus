@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public static class NavigationService
 {
-    public static NavigationParameter NextSceneParameter;
+    public static NavigationParameter SceneParameter;
 
     private static string _path;
 
@@ -29,7 +29,7 @@ public static class NavigationService
 
     public static void LoadNextScene(string name, NavigationParameter parameter = null)
     {
-        NextSceneParameter = parameter;
+        SceneParameter = parameter;
         if (name == SceneManager.GetActiveScene().name)
             return;
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
@@ -88,5 +88,7 @@ public static class NavigationService
 
 public class NavigationParameter
 {
-    public bool BoolParam1;
+    public bool BoolParam0;
+    public int IntParam0;
+    public string StringParam0;
 }

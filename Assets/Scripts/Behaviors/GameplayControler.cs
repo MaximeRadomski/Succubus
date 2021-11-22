@@ -241,6 +241,7 @@ public class GameplayControler : MonoBehaviour
             remainingPiece.transform.SetParent(PlayFieldBhv.gameObject.transform);
             PlayFieldBhv.Grid[cell.Item1, cell.Item2] = remainingPiece.transform.GetChild(0);
         }
+        ClearLineSpace();
         DropGhost();
     }
 
@@ -2265,7 +2266,7 @@ public class GameplayControler : MonoBehaviour
         for (int i = lineBreaks.Length - 1; i >= 0; --i)
         {
             int yRounded = Mathf.RoundToInt(lineBreaks[i].transform.position.y);
-            DeleteLine(yRounded);
+            DeleteLine(yRounded, deleteLineBreaks: true);
         }
         if (_lineBreakLimiter != null || (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) != null)
         {
@@ -2313,7 +2314,7 @@ public class GameplayControler : MonoBehaviour
         return false;
     }
 
-    public void DeleteLine(int y)
+    public void DeleteLine(int y, bool deleteLineBreaks = false)
     {
         if (PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.TryGetComponent<LightRowBlockBhv>(out var lightRowBlockBhv) != false)
         {
@@ -2322,7 +2323,7 @@ public class GameplayControler : MonoBehaviour
         }
         for (int x = 0; x < _playFieldWidth; ++x)
         {
-            if (PlayFieldBhv.Grid[x, y] == null)
+            if (PlayFieldBhv.Grid[x, y] == null || ((PlayFieldBhv.Grid[0, y]?.tag == Constants.TagLineBreak && deleteLineBreaks == false)))
                 continue;
             Instantiator.NewFadeBlock(CharacterRealm, PlayFieldBhv.Grid[x, y].transform.position, 5, 0);
             Destroy(PlayFieldBhv.Grid[x, y].gameObject);
@@ -3340,5 +3341,10 @@ public class GameplayControler : MonoBehaviour
             if (atLeastOne)
                 yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveLastFightPlayField();
     }
 }

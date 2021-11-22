@@ -28,7 +28,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private float _wetTimer;
     private float _timeStopTimer;
     private bool _isCrit;
-    private bool _isVictorious;
+    //private bool _isVictorious;
     private bool _isTraining;
 
     private SoundControlerBhv _soundControler;
@@ -78,6 +78,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         else
         {
+            if (PlayerPrefsHelper.GetIsInFight() && Cache.NameLastScene != Constants.SettingsScene) // If we get back to a fight after having force-quit the game.
+                BoostCurrentOpponentsAfterForceQuit();
             PlayerPrefsHelper.SaveIsInFight(true);
             _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
             if (_currentStep.LandLordVision)
@@ -161,6 +163,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (Character.FillTargetBlocks > 0)
             Instantiator.NewFillTarget(_gameplayControler.CharacterRealm, Character.FillTargetBlocks, _gameplayControler);
+    }
+
+    private void BoostCurrentOpponentsAfterForceQuit()
+    {
+        Cache.PactOnlyHaste = true;
+        Cache.PactEnemyMaxCooldownMalus -= 2;
     }
 
     private bool AfterFightIntro()
@@ -313,7 +321,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         PlayerPrefsHelper.SaveIsInFight(false);
         Paused = true;
-        _isVictorious = true;
+        //_isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
         Cache.ResetClassicGameCache();
@@ -490,14 +498,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
                     StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                     var content = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you now start your ascensions with a random item.\n(up to a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Rarity)realmIdBeforeIncrease).ToString().ToLower()}{Constants.MaterialEnd} one).";
-                    Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", LoadNext);
+                    Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", LoadNextAfterBoss);
                 }
                 else
                 {
-                    return (bool)LoadNext(true);
+                    return (bool)LoadNextAfterBoss(true);
                 }
                 
-                object LoadNext(bool result)
+                object LoadNextAfterBoss(bool result)
                 {
                     //DEBUG
                     if (Constants.BetaMode && _run.CurrentRealm == Realm.Heaven)
@@ -512,7 +520,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         return false;
                     }
                     //DEBUG
-                    NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+                    if (!PlayerPrefsHelper.IsCinematicWatched(_run.CurrentRealm.GetHashCode()))
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = _run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
+                    else
+                        NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
                     return true;
                 }
             }
@@ -1115,14 +1126,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     private void OnApplicationQuit()
     {
-        if (_isVictorious || _run == null)
-            return;
-        if (Cache.CurrentGameMode == GameMode.Ascension
-            || Cache.CurrentGameMode == GameMode.TrueAscension)
-        {
-            _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
-            _stepsService.SetVisionOnRandomStep(_run);
-            _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
-        }
+        //if (_isVictorious || _run == null)
+        //    return;
+        //if (Cache.CurrentGameMode == GameMode.Ascension
+        //    || Cache.CurrentGameMode == GameMode.TrueAscension)
+        //{
+        //    _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
+        //    _stepsService.SetVisionOnRandomStep(_run);
+        //    _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
+        //}
     }
 }

@@ -31,7 +31,7 @@ public class HighScoreSceneBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
-        _isOldSchool = NavigationService.NextSceneParameter?.BoolParam1 == true;
+        _isOldSchool = NavigationService.SceneParameter?.BoolParam0 == true;
         SetButtons();
         _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory(_isOldSchool);
         _title = GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>();
@@ -204,7 +204,7 @@ public class HighScoreSceneBhv : SceneBhv
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
             object OnBlend(bool result)
             {
-                NavigationService.LoadNextScene(Constants.OnlineScoreScene, new NavigationParameter() { BoolParam1 = _isOldSchool });
+                NavigationService.LoadNextScene(Constants.OnlineScoreScene, new NavigationParameter() { BoolParam0 = _isOldSchool });
                 return true;
             }
         });

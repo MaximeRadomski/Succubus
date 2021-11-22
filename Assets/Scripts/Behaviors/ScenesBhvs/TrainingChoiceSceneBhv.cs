@@ -96,7 +96,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam1 = true });
+            NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam0 = true });
             return true;
         }
     }

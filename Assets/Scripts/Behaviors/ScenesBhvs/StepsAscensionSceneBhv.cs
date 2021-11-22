@@ -50,7 +50,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         _characterPictureTarget = _characterPicture.transform.position + new Vector3(-5.0f, 5.0f, 0.0f);
         _infoRealmTarget = _infoRealm.transform.position + new Vector3(5.0f, 5.0f, 0.0f);
 
-        PlayerPrefsHelper.AlterResource(Realm.Hell.GetHashCode(), 0); //In order not to get the lore intro cinematic again
+        PlayerPrefsHelper.AlterResource(Realm.Hell.GetHashCode(), 0); // (OBSOLETE but usefull) In order not to get the lore intro cinematic again (obsolete, but I let it here this way in order to get something else than null)
 
         _isAnimated = true;
     }
@@ -72,13 +72,16 @@ public class StepsAscensionSceneBhv : SceneBhv
         {
             var lastLevel = _levelsContainer.transform.GetChild(_levelsContainer.transform.childCount - 1);
             lastLevel.GetComponent<IconInstanceBhv>().Pop();
-            Invoke(nameof(LoadStepsScene), 2.75f);
+            Invoke(nameof(LoadNextScene), 2.75f);
             _isAnimated = false;
         }
     }
 
-    private void LoadStepsScene()
+    private void LoadNextScene()
     {
-        NavigationService.LoadNextScene(Constants.StepsScene);
+        if (PlayerPrefsHelper.GetIsInFight())
+            NavigationService.LoadNextScene(Constants.ClassicGameScene);
+        else
+            NavigationService.LoadNextScene(Constants.StepsScene);
     }
 }

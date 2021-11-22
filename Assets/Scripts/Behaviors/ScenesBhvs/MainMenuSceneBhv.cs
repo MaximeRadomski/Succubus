@@ -20,17 +20,17 @@ public class MainMenuSceneBhv : SceneBhv
         base.Init();
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         _currentRun = PlayerPrefsHelper.GetRun();
-        if (_currentRun != null && PlayerPrefsHelper.GetIsInFight() == true)
+        if (_currentRun != null && PlayerPrefsHelper.GetIsInFight())
         {
-            PlayerPrefsHelper.SaveIsInFight(false);
-            if (_currentRun.CharacterEncounterAvailability)
-                PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
-            PlayerPrefsHelper.ResetRun();
-            _currentRun = null;
+            ////PlayerPrefsHelper.SaveIsInFight(false);
+            ////if (_currentRun.CharacterEncounterAvailability)
+            ////    PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
+            ////PlayerPrefsHelper.ResetRun();
+            ////_currentRun = null;
             Cache.InputLocked = true;
-            StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
+            StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () =>
             {
-                Instantiator.NewPopupYesNo("Sorry...", "you've force-quit during a fight. therefore, your progress has been deleted...", null, "Damn...", null);
+                Instantiator.NewPopupYesNo("In a hurry?", "you've force-quit during a fight. you can continue your current fight, but your opponent will be buffed a bit in order to prevent any abuses.", null, "Damn...", null);
                 return false;
             }));
         }
@@ -84,9 +84,8 @@ public class MainMenuSceneBhv : SceneBhv
                 NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             else
             {
-                var totalResources = Mock.GetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
-                if (string.IsNullOrEmpty(totalResources))
-                    NavigationService.LoadNextScene(Constants.LoreScene);
+                if (!PlayerPrefsHelper.IsCinematicWatched(Realm.Hell.GetHashCode()))
+                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.Hell.GetHashCode(), StringParam0 = Constants.CharSelScene});
                 else
                     NavigationService.LoadNextScene(Constants.TreeScene);
             }

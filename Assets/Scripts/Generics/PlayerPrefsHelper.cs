@@ -1015,4 +1015,22 @@ public class PlayerPrefsHelper : MonoBehaviour
         var hasMetHim = PlayerPrefs.GetInt(Constants.PpHasMetBeholder, Constants.PpSerializeDefaultInt);
         return hasMetHim == 1 ? true : false;
     }
+
+    public static void SaveWatchedCinematics(int cinematiId)
+    {
+        var alreadyWatched = GetWatchedCinematics();
+        alreadyWatched = Helper.ReplaceChar(alreadyWatched, cinematiId, '1');
+        PlayerPrefs.SetString(Constants.PpWatchedCinematics, alreadyWatched);
+    }
+
+    public static string GetWatchedCinematics()
+    {
+        var watchedCinematics = PlayerPrefs.GetString(Constants.PpWatchedCinematics, Constants.PpWatchedCinematicsDefault);
+        return watchedCinematics;
+    }
+
+    public static bool IsCinematicWatched(int id)
+    {
+        return GetWatchedCinematics()[id] == '1';
+    }
 }

@@ -34,7 +34,8 @@ public class LoreSceneBhv : SceneBhv
         _pellicules.Add(GameObject.Find("PelliculeRight").GetComponent<SpriteRenderer>());
 
         _loreText = GameObject.Find("LoreText").GetComponent<TMPro.TextMeshPro>();
-        CinematicsData.Cinematics.TryGetValue("Intro", out _lore);
+        _lore = CinematicsData.Cinematics[NavigationService.SceneParameter?.IntParam0 ?? -1];
+        PlayerPrefsHelper.SaveWatchedCinematics(NavigationService.SceneParameter?.IntParam0 ?? -1);
 
         _progression = 0;
         _pelliculeMove = 0;
@@ -103,7 +104,7 @@ public class LoreSceneBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            NavigationService.LoadNextScene(Constants.CharSelScene);
+            NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0);
             return true;
         }
     }

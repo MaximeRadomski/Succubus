@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class CinematicsData
 {
-    public static Dictionary<string, List<string>> Cinematics = new Dictionary<string, List<string>>()
+    public static List<List<string>> Cinematics = new List<List<string>>()
     {
-        { "Intro",
+        { 
             new List<string>()
             {
                 "Before the age of ancients, the world was unformed, shrouded by fog.",
