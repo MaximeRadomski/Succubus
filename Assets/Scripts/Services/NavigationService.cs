@@ -6,24 +6,23 @@ using UnityEngine.SceneManagement;
 public static class NavigationService
 {
     public static NavigationParameter SceneParameter;
-
-    private static string _path;
+    public static string Path;
 
     public static void TrySetCurrentRootScene(string name)
     {
-        if (string.IsNullOrEmpty(_path))
-            _path = "/" + name;
+        if (string.IsNullOrEmpty(Path))
+            Path = "/" + name;
     }
 
     public static void NewRootScene(string name)
     {
-        _path = string.Empty;
+        Path = string.Empty;
         LoadNextScene(name);
     }
 
     public static void LoadBackUntil(string name)
     {
-        _path = _path.Substring(0, _path.IndexOf(name) + name.Length);
+        Path = Path.Substring(0, Path.IndexOf(name) + name.Length);
         SceneManager.LoadScene(name);
     }
 
@@ -33,7 +32,7 @@ public static class NavigationService
         if (name == SceneManager.GetActiveScene().name)
             return;
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        _path += "/" + name;
+        Path += "/" + name;
         //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(name);
     }
@@ -56,15 +55,15 @@ public static class NavigationService
     public static bool IsRootScene()
     {
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        var lastSeparator = _path.LastIndexOf('/');
-        return string.IsNullOrEmpty(_path) || lastSeparator == 0;
+        var lastSeparator = Path.LastIndexOf('/');
+        return string.IsNullOrEmpty(Path) || lastSeparator == 0;
     }
 
     public static void LoadPreviousScene(string onRootPreviousScene = null)
     {
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        var lastSeparator = _path.LastIndexOf('/');
-        if (string.IsNullOrEmpty(_path) || lastSeparator == 0)
+        var lastSeparator = Path.LastIndexOf('/');
+        if (string.IsNullOrEmpty(Path) || lastSeparator == 0)
         {
             if (!string.IsNullOrEmpty(onRootPreviousScene))
                 NewRootScene(onRootPreviousScene);
@@ -72,9 +71,9 @@ public static class NavigationService
                 Debug.Log("    [DEBUG]    Root");
             return;
         }
-        _path = _path.Substring(0, lastSeparator);
-        lastSeparator = _path.LastIndexOf('/');
-        var previousScene = _path.Substring(lastSeparator + 1);
+        Path = Path.Substring(0, lastSeparator);
+        lastSeparator = Path.LastIndexOf('/');
+        var previousScene = Path.Substring(lastSeparator + 1);
         //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(previousScene);
     }

@@ -35,7 +35,6 @@ public class LoreSceneBhv : SceneBhv
 
         _loreText = GameObject.Find("LoreText").GetComponent<TMPro.TextMeshPro>();
         _lore = CinematicsData.Cinematics[NavigationService.SceneParameter?.IntParam0 ?? -1];
-        PlayerPrefsHelper.SaveWatchedCinematics(NavigationService.SceneParameter?.IntParam0 ?? -1);
 
         _progression = 0;
         _pelliculeMove = 0;
@@ -51,7 +50,7 @@ public class LoreSceneBhv : SceneBhv
         var end = false;
         if (_progression % 2 == 0)
         {
-            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Cinematics_" + _progression / 2);
+            var sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Cinematic{NavigationService.SceneParameter?.IntParam0 ?? -1}_{_progression / 2}");
             if (sprite == null)
             {
                 end = true;
@@ -101,10 +100,14 @@ public class LoreSceneBhv : SceneBhv
 
     private void LoadNext()
     {
+        PlayerPrefsHelper.SaveWatchedCinematics(NavigationService.SceneParameter?.IntParam0 ?? -1);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
-            NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0);
+            if (NavigationService.Path.Contains(Constants.StepsAscensionScene))
+                NavigationService.LoadBackUntil(NavigationService.SceneParameter?.StringParam0);
+            else
+                NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0);
             return true;
         }
     }

@@ -19,5 +19,6 @@ public class PactInstantEpiphany : Pact
     {
         Cache.PactSpecialTotalCooldownReducer += 3;
         Cache.PactFlatDamage -= 3;
+        Cache.ResetSelectedCharacterSpecialCooldown(character);
     }
 }

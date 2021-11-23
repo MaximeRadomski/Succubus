@@ -240,7 +240,7 @@ MonoBehaviour:
   Instantiator: {fileID: 0}
   CameraBhv: {fileID: 0}
   OnRootPreviousScene: 
-  CanGoPreviousScene: 1
+  CanGoPreviousScene: 0
 --- !u!114 &576413844
 MonoBehaviour:
   m_ObjectHideFlags: 0

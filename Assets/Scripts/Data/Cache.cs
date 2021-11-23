@@ -86,7 +86,6 @@ public static class Cache
 
     public static void ResetClassicGameCache(Character character = null)
     {
-        ResetSelectedCharacterSpecialCooldown(character);
         IsEffectAttackInProgress = AttackType.None;
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
@@ -138,7 +137,8 @@ public static class Cache
         PactResurrection = false;
         PactNoLastFightPlayField = false;
         PactCharacterRealm = Realm.None;
-}
+        ResetSelectedCharacterSpecialCooldown(character);
+    }
 
     public static void ResetSelectedCharacterSpecialCooldown(Character character)
     {

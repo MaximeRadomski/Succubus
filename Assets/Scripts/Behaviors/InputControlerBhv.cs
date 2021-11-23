@@ -131,7 +131,7 @@ public class InputControlerBhv : FrameRateBehavior
             }
             else
             {
-                if (!_currentScene.Paused)
+                if (!_currentScene.Paused && _currentScene.CanGoPreviousScene)
                     _currentScene.PauseOrPrevious();
                 else
                     _currentScene.Resume();

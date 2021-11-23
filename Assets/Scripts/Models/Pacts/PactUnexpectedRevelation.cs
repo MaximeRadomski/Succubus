@@ -19,5 +19,6 @@ public class PactUnexpectedRevelation : Pact
     {
         Cache.PactSpecialTotalCooldownReducer += 2;
         Cache.PactEnemyMaxCooldownMalus -= 2;
+        Cache.ResetSelectedCharacterSpecialCooldown(character);
     }
 }

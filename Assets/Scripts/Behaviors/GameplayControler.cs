@@ -202,7 +202,7 @@ public class GameplayControler : MonoBehaviour
     public void CleanPlayerPrefs()
     {
         Bag = null;
-        _characterSpecial?.ResetCooldown();
+        Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
         if (PlayFieldBhv != null && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))

@@ -20,7 +20,7 @@ public abstract class Special
     {
         if (Cache.SelectedCharacterSpecialCooldown > 0)
             return false;
-        ResetCooldown();
+        Cache.ResetSelectedCharacterSpecialCooldown(_character);
         _gameplayControler.Instantiator.PopText(_character.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
         return true;
@@ -31,12 +31,12 @@ public abstract class Special
         return true;
     }
 
-    public virtual void ResetCooldown()
-    {
-        Cache.SelectedCharacterSpecialCooldown = _character.Cooldown - _character.SpecialTotalCooldownReducer;
-        if (Cache.SelectedCharacterSpecialCooldown < 1)
-            Cache.SelectedCharacterSpecialCooldown = 1;
-    }
+    //public virtual void ResetCooldown()
+    //{
+    //    Cache.SelectedCharacterSpecialCooldown = _character.Cooldown - _character.SpecialTotalCooldownReducer;
+    //    if (Cache.SelectedCharacterSpecialCooldown < 1)
+    //        Cache.SelectedCharacterSpecialCooldown = 1;
+    //}
 
     public virtual void OnNewPiece(GameObject piece)
     {

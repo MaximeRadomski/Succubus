@@ -39,7 +39,7 @@ public class StepsService
         }        
         var originStep = new Step(50, 50, run.CurrentRealm, first, true, false, LootType.None, 0, null);
         run.Steps += originStep.ToParsedString();
-        GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? Constants.MapRecursiveIteration : -1);
+        GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? run.MaxSteps : -1);
     }
 
     private string _adjacentString;

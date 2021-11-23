@@ -202,6 +202,7 @@ public class StepsSceneBhv : SceneBhv
             if (x == _run.X && y == _run.Y)
             {
                 _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
+                _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = "current location";
                 _lootTypeRarity.text = "";
                 _opponents.text = "";

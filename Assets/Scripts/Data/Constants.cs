@@ -50,7 +50,6 @@ public static class Constants
     public const int ServerCallOfflineMax = 3;
     public const int OldSchoolDas = 16;
     public const int OldSchoolArr = 6;
-    public const int MapRecursiveIteration = 6;
     public const int WeightIncrementPercentPerDifficulty = 25;
     public const int MusicBeat = 380;
     public const int StepsAssetsCount = 11;
