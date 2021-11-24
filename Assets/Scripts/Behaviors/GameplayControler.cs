@@ -121,9 +121,6 @@ public class GameplayControler : MonoBehaviour
         Spawn();
         if (Cache.NameLastScene == Constants.SettingsScene)
             SceneBhv.PauseOrPrevious();
-
-        _infoRealmDebug = GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>();
-        _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\ndebug";
     }
 
     public void GameOver()
@@ -2245,7 +2242,6 @@ public class GameplayControler : MonoBehaviour
                 {
                     _hasGate = false;
                     ((ClassicGameSceneBhv)SceneBhv).ResetToOpponentGravity();
-                    _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\nfalse";
                 }
                 if (DeleteLightRow(yRounded, lightRowBhv) > 0 && hasDeletedRows == false)
                 {
@@ -2963,7 +2959,6 @@ public class GameplayControler : MonoBehaviour
         PlayFieldBhv.Grid[0, lineY].gameObject.AddComponent<LightRowBlockBhv>();
         _hasGate = true;
         ((ClassicGameSceneBhv)SceneBhv).ResetToOpponentGravity();
-        _infoRealmDebug.text = $"debug:{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43B)}\ntrue";
         var lightRowBhv = PlayFieldBhv.Grid[0, lineY].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.IsGate = true;
         lightRowBhv.NbRows = 1;
