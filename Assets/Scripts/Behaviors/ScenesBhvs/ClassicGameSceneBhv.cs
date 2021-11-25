@@ -218,11 +218,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 {
                     StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                     Victory();
+                    ResetAndCleanCache();
                     return true;
                 });
             }
             else
+            {
                 Victory();
+                ResetAndCleanCache();
+            }
             return;
         }
         CurrentOpponent = _opponents[Cache.CurrentListOpponentsId].Clone();
@@ -278,6 +282,18 @@ public class ClassicGameSceneBhv : GameSceneBhv
         StartOpponentCooldown(sceneInit, true);
     }
 
+    private void ResetAndCleanCache()
+    {
+        Cache.ResetClassicGameCache();
+        if (_pacts != null && _pacts.Count > 0)
+            for (int i = _pacts.Count - 1; i >= 0; --i)
+            {
+                if (++_pacts[i].NbFight == _pacts[i].MaxFight)
+                    _pacts.RemoveAt(i);
+            }
+        PlayerPrefsHelper.SetPacts(_pacts);
+    }
+
     public void ResetToOpponentGravity(bool fromOpponentSpawn = false)
     {
         _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1), fromOpponentSpawn);
@@ -324,14 +340,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         //_isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
-        Cache.ResetClassicGameCache();
-        if (_pacts != null && _pacts.Count > 0)
-            for (int i = _pacts.Count - 1; i >= 0; --i)
-            {
-                if (++_pacts[i].NbFight == _pacts[i].MaxFight)
-                    _pacts.RemoveAt(i);
-            }
-        PlayerPrefsHelper.SetPacts(_pacts);
 
         if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
