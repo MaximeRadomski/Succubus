@@ -9,7 +9,7 @@ public class TattooHolyMantle : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Rare;
-        MaxLevel = 3;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)

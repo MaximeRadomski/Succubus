@@ -42,9 +42,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idTattooSound;
 
     public override MusicType MusicType => GetMusicType();
+
     public float GetCurrentOpponentMaxCooldown()
     {
-        return CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus + Cache.PactEnemyMaxCooldownMalus;
+        var cooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus + Cache.PactEnemyMaxCooldownMalus;
+        if (cooldown < 1.0f && _run.Difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
+            return 1.0f;
+        else if (cooldown < 0.5f && _run.Difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
+            return 0.5f;
+        return cooldown;
     }
 
     private MusicType GetMusicType()
@@ -629,13 +635,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idDodge);
             _characterInstanceBhv.Dodge();
         }
-        else if (Cache.BlockPerAttack >= 0 && ++Cache.BlockPerAttack == 3)
+        else if (Cache.BlockPerAttack >= 0 && ++Cache.BlockPerAttack >= 3)
         {
             Cache.BlockPerAttack = 0;
             Instantiator.PopText("blocked", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idHit);
         }
-        else if (Character.HolyMantle > 0 && Cache.CurrentOpponentAttackCount <= Character.HolyMantle)
+        else if (Character.HolyMantle > 0 && Cache.CurrentOpponentAttackCount < Character.HolyMantle)
         {
             Instantiator.PopText("blessed", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             _soundControler.PlaySound(_idDodge);
@@ -1048,12 +1054,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (lastLockIsTwist)
         {
             incomingDamage *= 2;
-            if (nbLines == 0 && Character.InstantLineClear > 0)
+            if (Character.InstantLineClear > 0)
             {
                 int linesDestroyed = Character.InstantLineClear;
                 linesDestroyed -= _gameplayControler.CheckForDarkRows(linesDestroyed);
                 if (linesDestroyed > 0)
                     _gameplayControler.CheckForWasteRows(linesDestroyed);
+                _gameplayControler.ClearLineSpace();
             }
             if (_gameplayControler.CharacterRealm == Realm.Heaven)
             {
@@ -1128,6 +1135,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         base.OnPerfectClear();
         if (_characterAttack < 0)
             return;
+        else
+            _characterAttack *= 2;
         if (Character.PerfectKills > 0)
             DamageOpponent(Character.PerfectKills, _gameplayControler.CharacterInstanceBhv.gameObject);
     }

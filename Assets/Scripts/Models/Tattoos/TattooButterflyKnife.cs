@@ -19,6 +19,6 @@ public class TattooButterflyKnife : Tattoo
 
     public override string GetDescription()
     {
-        return $"doing a twist, without any line clearing, clears up to {StatToString("", Stat * Level == 1 ? " dark or waste row" : " dark or waste rows")}.";
+        return $"doing a twist clears up to {StatToString("", Stat * Level == 1 ? " dark or waste row" : " dark or waste rows")}.";
     }
 }

@@ -19,6 +19,6 @@ public class TattooBasketballHoop : Tattoo
 
     public override string GetDescription()
     {
-        return $"spawns a hoop which deals {StatToString(after: " times your damages")} if you destroy a line by hard dropping a piece through it.";
+        return $"spawns a hoop which deals {StatToString(after: " times your attack")} if you destroy a line by hard dropping a piece through it.";
     }
 }

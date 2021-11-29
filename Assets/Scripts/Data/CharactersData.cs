@@ -63,7 +63,7 @@ public static class CharactersData
         {
             Id = 4, Name = "Floppyredoux", Kind = "Witch", Realm = Realm.Earth,
             Attack = 7,
-            Cooldown = 8,
+            Cooldown = 7,
             SpecialName = "Oketi Poketi", SpecialDescription = "the next 7 pieces have one less block.",
             Lore = "Exiled for being an emancipated woman and a witch, Floppy never stopped helping the ones in need, even if it meant making them drink weird flasks.",
             DialogId = 3, DialogPitch = 1.0f
@@ -72,7 +72,7 @@ public static class CharactersData
         {
             Id = 5, Name = "Sir Vixid", Kind = "Dark Templar", Realm = Realm.Earth,
             Attack = 9,
-            Cooldown = 14,
+            Cooldown = 11,
             SpecialName = "Diabolus Vult", SpecialDescription = "removes the last 4 rows from the top for 4 waste ones.",
             Lore = "Last representant of a long dead religion, this hell crusader stood against holiness for centuries, fulfilling his pact in exchange of his immortality!",
             DialogId = 1, DialogPitch = 0.5f

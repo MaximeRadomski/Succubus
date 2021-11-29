@@ -93,6 +93,8 @@ public class Character : Loot
     public int InstantLineClear = 0;
     public int HolyMantle = 0;
     public int HeldBoosted = 0;
+    public int Ying = 0;
+    public int Yang = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
@@ -114,6 +116,10 @@ public class Character : Loot
         if (!_realmTreeAttackBoost.HasValue)
             _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
         var flatDamage = Attack + DamageFlatBonus + Cache.DamoclesDamage + Cache.PactFlatDamage + _realmTreeAttackBoost.Value;
+        if (Ying > 0 && Cache.SelectedCharacterSpecialCooldown <= 0)
+            flatDamage += Ying;
+        if (Yang > 0 && Cache.CurrentItemCooldown <= 0)
+            flatDamage += Yang;
         var multiplierDamage = DamagePercentBonus;
         var floatValue = flatDamage * Helper.MultiplierFromPercent(1.0f, multiplierDamage);
 

@@ -1790,10 +1790,11 @@ public class GameplayControler : MonoBehaviour
                 Destroy(CurrentGhost);
             var heldPieceRealm = CharacterRealm;
             var hasBlocksAffectedByGravity = false;
-            if (Character.HeldBoosted > 0 && Character.HeldBoosted < Cache.HeldBoostedCount)
+            if (Character.HeldBoosted > 0 && Cache.HeldBoostedCount < Character.HeldBoosted)
             {
                 heldPieceRealm = Helper.GetInferiorFrom(CharacterRealm);
                 hasBlocksAffectedByGravity = true;
+                ++Cache.HeldBoostedCount;
             }
             CurrentPiece = Instantiator.NewPiece(pieceLetter, heldPieceRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, heldPieceRealm + "Ghost", _spawner.transform.position);
@@ -2508,13 +2509,13 @@ public class GameplayControler : MonoBehaviour
                 AttackWasteRows(opponentInstance, param1 + attackBoost, opponentRealm, param2);
                 break;
             case AttackType.LightRow:
-                AttackLightRows(opponentInstance, param1 + (2 * attackBoost), opponentRealm, param2 + (2 * attackBoost));
+                AttackLightRows(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
                 break;
             case AttackType.EmptyRow:
-                AttackEmptyRows(opponentInstance, param1 + (2 * attackBoost), opponentRealm);
+                AttackEmptyRows(opponentInstance, param1 + attackBoost, opponentRealm);
                 break;
             case AttackType.VisionBlock:
-                AttackVisionBlock(opponentInstance, param1 + (2 * attackBoost), opponentRealm, param2 + attackBoost);
+                AttackVisionBlock(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
                 break;
             case AttackType.ForcedPiece:
                 AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
@@ -2548,7 +2549,7 @@ public class GameplayControler : MonoBehaviour
                 AttackShrink(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.OldSchool:
-                AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + (2 * attackBoost));
+                AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
                 break;
             case AttackType.Screwed:
                 AttackScrewed(opponentInstance, opponentRealm, param1 + attackBoost);
@@ -2560,10 +2561,10 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1 + (2 * attackBoost), param2 + attackBoost);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
                 break;
             case AttackType.LineBreak:
-                AttackLineBreak(opponentInstance, opponentRealm, param1 + (2 * attackBoost));
+                AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
         }
         UpdateItemAndSpecialVisuals();

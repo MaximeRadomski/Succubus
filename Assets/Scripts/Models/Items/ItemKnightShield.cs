@@ -15,7 +15,7 @@ public class ItemKnightShield : Item
 
     protected override object Effect()
     {
-        Cache.BlockPerAttack = 0;
+        Cache.BlockPerAttack = 3;
         return base.Effect();
     }
 }

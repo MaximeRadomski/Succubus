@@ -8,7 +8,7 @@ public class ItemDarkMilk : Item
     {
         Id = 26;
         Name = ItemsData.Items[Id];
-        Description = $"change your opponent realm to your {Highlight("weaker")} one";
+        Description = $"change your opponent realm to your {Highlight("weaker")} one.";
         Rarity = Rarity.Common;
         Cooldown = 13;
     }
