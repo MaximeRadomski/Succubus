@@ -15,13 +15,13 @@ public class ItemCRTMonitor : Item
 
     protected override object Effect()
     {
-        _gameplayControler.SceneBhv.Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         for (int i = 0; i < Constants.PlayFieldHeight; i += 2)
             _gameplayControler.DeleteLine(i);
         _gameplayControler.StartCoroutine(Helper.ExecuteAfterDelay(0.2f, () =>
         {
             _gameplayControler.ClearLineSpace();
-            _gameplayControler.SceneBhv.Paused = false;
+            _gameplayControler.GameplayOnHold = false;
             return true;
         }));
         return base.Effect();

@@ -37,7 +37,7 @@ public class SwipeControlerBhv : MonoBehaviour
 
     void Update()
     {
-        if (Cache.InputLocked || _gameplayControler == null || _gameplayControler.SceneBhv.Paused || _gameplayControler.CurrentPiece == null)
+        if (Cache.InputLocked || _gameplayControler == null || _gameplayControler.SceneBhv.Paused || _gameplayControler.GameplayOnHold || _gameplayControler.CurrentPiece == null)
         {
             //for (int i = 0; i < _beginPos.Count; ++i)
             //    if (_beginPos[i].x > -99) _beginPos[i] = new Vector3(-99, -99);

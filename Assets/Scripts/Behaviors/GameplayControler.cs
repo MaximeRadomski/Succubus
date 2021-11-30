@@ -26,6 +26,7 @@ public class GameplayControler : MonoBehaviour
     public bool CanBeReload = true;
     public bool OpponentDeathScreen = false;
     public Realm CharacterRealm;
+    public bool GameplayOnHold;
 
     private TMPro.TextMeshPro _infoRealmDebug;
 
@@ -202,9 +203,9 @@ public class GameplayControler : MonoBehaviour
         Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (PlayFieldBhv != null && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
+        if (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss)
             PlayerPrefsHelper.ResetLastFightPlayField();
-        else
+        else if (PlayFieldBhv != null)
         {
             SaveLastFightPlayField();
         }
@@ -925,7 +926,7 @@ public class GameplayControler : MonoBehaviour
 
     void Update()
     {
-        if (!_hasInit || SceneBhv.Paused || CurrentPiece == null || OpponentDeathScreen)
+        if (!_hasInit || SceneBhv.Paused || CurrentPiece == null || OpponentDeathScreen || GameplayOnHold)
             return;
         if (GravityDelay >= 0.0f && Time.time >= _nextGravityFall)
         {
@@ -1047,7 +1048,7 @@ public class GameplayControler : MonoBehaviour
     public void Left(bool mimicPossible = true, bool canTriggerPartition = true)
     {
         _leftHeld = _rightHeld = 0;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Left;
@@ -1085,7 +1086,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -1114,7 +1115,7 @@ public class GameplayControler : MonoBehaviour
     public void Right(bool mimicPossible = true, bool canTriggerPartition = true)
     {
         _rightHeld = _leftHeld = 0;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Right;
@@ -1152,7 +1153,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             _das += _dasMax;
             return;
@@ -1185,7 +1186,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Down()
     {
-        if (SceneBhv.Paused)
+        if (SceneBhv.Paused || GameplayOnHold)
             return;
         SoftDropStomp();
         if (Cache.IsEffectAttackInProgress == AttackType.Partition)
@@ -1206,7 +1207,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
-            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition)
+            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
                 return;
             if (CurrentPiece.GetComponent<Piece>().IsHollowed)
                 return;
@@ -1217,7 +1218,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactNoSoftDrop)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactNoSoftDrop)
             return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
@@ -1265,7 +1266,7 @@ public class GameplayControler : MonoBehaviour
 
     private void GravityStomp(bool scores = false)
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || CurrentPiece.GetComponent<Piece>().IsHollowed)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || CurrentPiece.GetComponent<Piece>().IsHollowed)
             return;
         bool hardDropping = true;
         int nbLinesStomped = 0;
@@ -1287,7 +1288,7 @@ public class GameplayControler : MonoBehaviour
 
     public void HardDrop()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
             return;
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
@@ -1435,7 +1436,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Clock()
     {
-        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold)
         {
             if (_isScrewed)
                 Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
@@ -1562,7 +1563,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AntiClock()
     {
-        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused)
+        if (_isScrewed || CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold)
         {
             if (_isScrewed)
                 Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
@@ -1689,7 +1690,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Rotation180()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
                 _inputWhileLocked = KeyBinding.Rotation180;
@@ -1753,7 +1754,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Hold()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = KeyBinding.Hold;
@@ -1836,7 +1837,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Item()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
             return;
         if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1869,7 +1870,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Special()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (_characterSpecial != null && _characterSpecial.IsReactivable && _characterSpecial.CanReactivate && _characterSpecial.Reactivate())
                 _soundControler.PlaySound(_idSpecial);
@@ -2101,7 +2102,7 @@ public class GameplayControler : MonoBehaviour
                 if (randomResult == 0)
                 {
                     Cache.SlavWheelStreak = 0;
-                    ShrinkPlayHeight(1, afterLock: true);
+                    AttackDarkRows(CurrentPiece, 2, Helper.GetInferiorFrom(CharacterRealm));
                     Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), CharacterRealm);
                 }
                 else
@@ -2913,7 +2914,7 @@ public class GameplayControler : MonoBehaviour
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
-        SceneBhv.Paused = true;
+        GameplayOnHold = true;
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
         {
             var direction = UnityEngine.Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
@@ -2941,7 +2942,7 @@ public class GameplayControler : MonoBehaviour
                 }
 
             }
-            SceneBhv.Paused = false;
+            GameplayOnHold = false;
             Spawn();
             return true;
         }));

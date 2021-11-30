@@ -67,7 +67,7 @@ public abstract class GameSceneBhv : SceneBhv
         CameraBhv.Paused = false;
         if (resume)
         {
-            Paused = true;
+            _gameplayControler.GameplayOnHold = true;
             Cache.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
             //var menuSelector = GameObject.Find(Constants.GoMenuSelector);
@@ -75,6 +75,7 @@ public abstract class GameSceneBhv : SceneBhv
             //    menuSelector.GetComponent<MenuSelectorBhv>().Reset(MenuSelectorBasePosition);
             Instantiator.New321(_panelGame.transform.position, () =>
                 {
+                    _gameplayControler.GameplayOnHold = false;
                     Paused = false;
                     var rhythmIndicator = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>() ?? null;
                     if (rhythmIndicator != null)

@@ -19,6 +19,6 @@ public class TattooFireStone : Tattoo
 
     public override string GetDescription()
     {
-        return $"your triple lines burn your opponent, dealing {StatToString(after:"%")} of your damage, 3 times in 1 second.";
+        return $"your triple lines burn your opponent, dealing {StatToString(after:"%")} of your attack, 3 times in 1 second.";
     }
 }

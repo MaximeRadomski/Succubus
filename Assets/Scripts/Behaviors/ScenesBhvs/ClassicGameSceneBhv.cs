@@ -102,7 +102,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _pacts = PlayerPrefsHelper.GetCurrentPacts();
         if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
         {
-            foreach (var pact in _pacts) pact.ApplyPact(this.Character);
+            foreach (var pact in _pacts)
+                pact.ApplyPact(this.Character);
             _gameplayControler.UpdateItemAndSpecialVisuals();
         }
 
@@ -144,7 +145,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         NextOpponent(sceneInit: true);
         _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
 
-        Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         _musicControler.Stop();
         Cache.InputLocked = true;
         if (Cache.NameLastScene != Constants.SettingsScene)
@@ -182,8 +183,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (!Character.SlumberingDragoncrest && !Cache.PactStealth && (CurrentOpponent.Haste || Character.HasteForAll || Cache.PactOnlyHaste))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
         Cache.InputLocked = false;
-        Paused = false;
+        _gameplayControler.GameplayOnHold = false;
         OpponentAppearance();
+        if (_pacts != null && _pacts.Count > 0)
+            Instantiator.PopText($"{_pacts.Count} active pact{(_pacts.Count > 1 ? "s" : "")}", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
         return true;
     }
 
@@ -195,7 +198,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             && (DialogsData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|{Character.Name}") ||  DialogsData.DialogTree.ContainsKey($"{CurrentOpponent.Name}|Any"))
             && !alreadyDialog.Contains($"{CurrentOpponent.Name}|{Character.Name}"))
         {
-            Paused = true;
+            _gameplayControler.GameplayOnHold = true;
             PlayerPrefsHelper.AddToAlreadyDialog($"{CurrentOpponent.Name}|{Character.Name}");
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, CurrentOpponent.Name, Character.Name, Character.StartingRealm, Appearance);
         }
@@ -204,7 +207,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
         bool Appearance()
         {
-            Paused = false;
+            _gameplayControler.GameplayOnHold = false;
             Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, customY));
             return true;
         }
@@ -219,7 +222,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 effectsCamera.GetComponent<EffectsCameraBhv>()?.Reset();
             if (CurrentOpponent.Type == OpponentType.Boss)
             {
-                Paused = true;
+                _gameplayControler.GameplayOnHold = true;
                 Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
                 {
                     StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
@@ -342,7 +345,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private bool Victory()
     {
         PlayerPrefsHelper.SaveIsInFight(false);
-        Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         //_isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
         _gameplayControler.CleanPlayerPrefs();
@@ -581,7 +584,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_timeStopTimer > 0)
             return;
-        if (!Paused && _opponentOnCooldown && Cache.CurrentOpponentCooldown > GetCurrentOpponentMaxCooldown())
+        if (!Paused && !_gameplayControler.GameplayOnHold && _opponentOnCooldown && Cache.CurrentOpponentCooldown > GetCurrentOpponentMaxCooldown())
             OpponentAttackIncoming();
         else
         {
@@ -934,8 +937,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Cache.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
             _gameplayControler.UpdateItemAndSpecialVisuals();
         }
-        if (Character.DeleteAfterKill > 0)
-            _gameplayControler.DeleteFromBottom(Character.DeleteAfterKill);
+        if (Character.TrashAfterKill > 0)
+            _gameplayControler.DeleteFromBottom(Character.TrashAfterKill);
         Cache.RandomizedAttackType = AttackType.None;
         Cache.HalvedCooldown = false;
         Cache.CurrentOpponentChangedRealm = Realm.None;
@@ -987,7 +990,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
             incomingDamage = Character.GetAttack();
             if (nbLines == 1)
+            {
+                if (Character.SingleLinesDamageOverride > 0)
+                    incomingDamage = Character.SingleLinesDamageOverride;
                 incomingDamage += Character.SingleLineDamageBonus;
+            }
+            else if (nbLines == 4 && Character.QuadrupleLinesDamageOverride > 0)
+                incomingDamage += Character.QuadrupleLinesDamageOverride;
             if ((Character.DamageSmallLinesBonus > 0 || Character.DamageSmallLinesMalus > 0) && nbLines >= 1 && nbLines <= 2)
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
             if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)

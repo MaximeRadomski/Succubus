@@ -10,7 +10,7 @@ public class ItemBloodlustBlade : Item
     {
         Id = 28;
         Name = ItemsData.Items[Id];
-        Description = $"deals {Highlight($"{_times} times")} your damage but reduces your playfield height by {Highlight("2 lines")}.";
+        Description = $"deals {Highlight($"{_times} times")} your attack but reduces your playfield height by {Highlight("1 lines")}.";
         Rarity = Rarity.Legendary;
         Cooldown = 2;
     }

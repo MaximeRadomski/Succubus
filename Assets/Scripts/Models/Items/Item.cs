@@ -40,13 +40,13 @@ public abstract class Item : Loot
         _popPosition = new Vector3(4.5f, 6.5f, 0.0f);
         _attackLine = gameplayControler.Instantiator.NewAttackLine(gameplayControler.CharacterInstanceBhv.transform.position, _popPosition, character.Realm, linear: false,
             Helper.GetSpriteFromSpriteSheet("Sprites/Items_" + Id.ToString("00")), Effect);
-        _gameplayControler.SceneBhv.Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         return true;
     }
 
     protected void CancelOrEndItem()
     {
-        _gameplayControler.SceneBhv.Paused = false;
+        _gameplayControler.GameplayOnHold = false;
     }
 
     protected virtual object Effect()

@@ -84,13 +84,13 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         if (!_gameplayControler.CanBeReload)
             return;
-        Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         this.Instantiator.NewPopupYesNo("Restart", "would you like to restart this game?", "No", "Yes", RestartTraining);
     }
 
     private object RestartTraining(bool result)
     {
-        Paused = false;
+        _gameplayControler.GameplayOnHold = false;
         if (!result)
             return false;
         _isRestarting = true;

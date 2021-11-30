@@ -10,7 +10,7 @@ public class ItemGrenade : Item
         Name = ItemsData.Items[Id];
         Description = $"clears your last {Highlight("4 rows")}.";
         Rarity = Rarity.Common;
-        Cooldown = 12;
+        Cooldown = 10;
     }
 
     protected override object Effect()

@@ -10,7 +10,7 @@ public class ItemHolyWater : Item
         Name = ItemsData.Items[Id];
         Description = $"clears {Highlight("4 waste rows")}.";
         Rarity = Rarity.Common;
-        Cooldown = 8;
+        Cooldown = 6;
     }
 
     protected override object Effect()

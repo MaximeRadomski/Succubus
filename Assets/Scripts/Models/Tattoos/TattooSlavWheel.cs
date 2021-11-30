@@ -19,6 +19,6 @@ public class TattooSlavWheel : Tattoo
 
     public override string GetDescription()
     {
-        return $"each consecutive attack cumulatively deals {StatToString("+", "%")} damage, but each attack has a 1/6 chance to backfire, ending the streak and shrinking your playfield by 1 line.";
+        return $"each consecutive attack cumulatively deals {StatToString("+", "%")} damage, but each attack has a 1/6 chance to backfire, ending the streak and adding 2 dark rows to your playfield.";
     }
 }

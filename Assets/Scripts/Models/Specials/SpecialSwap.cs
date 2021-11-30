@@ -19,7 +19,7 @@ public class SpecialSwap : Special
             return false;
         if (!base.Activate())
             return false;
-        _gameplayControler.SceneBhv.Paused = true;
+        _gameplayControler.GameplayOnHold = true;
         Cache.EscapeLocked = true;
         _selector = GameObject.Instantiate(new GameObject());
         var selectorSpriteRenderer = _selector.AddComponent<SpriteRenderer>();
@@ -68,7 +68,7 @@ public class SpecialSwap : Special
         _gameplayControler.Bag = _gameplayControler.Bag.ReplaceChar(_selectedId + 1, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter[0]);
         Object.Destroy(_gameplayControler.CurrentPiece ?? null);
         Object.Destroy(_gameplayControler.CurrentGhost ?? null);
-        _gameplayControler.SceneBhv.Paused = false;
+        _gameplayControler.GameplayOnHold = false;
         Cache.EscapeLocked = false;
         _gameplayControler.Spawn(false);
         return true;

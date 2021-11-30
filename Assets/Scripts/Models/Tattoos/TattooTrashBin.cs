@@ -14,7 +14,7 @@ public class TattooTrashBin : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DeleteAfterKill += Stat;
+        character.TrashAfterKill += Stat;
     }
 
     public override string GetDescription()

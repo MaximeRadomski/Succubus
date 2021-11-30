@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PoppingTextBhv : FrameRateBehavior
 {
@@ -12,6 +13,11 @@ public class PoppingTextBhv : FrameRateBehavior
     private float _speed;
     private float _startFadingDistance;
     private float _fadingSpeed;
+
+    private int _scalingState; // 0 -> scaling up; 1 -> scaling down; -1 -> stop scaling;
+    private Vector3 _startingScale;
+    private Vector3 _maxScale;
+    private float _scaleSpeed;
 
     public void Init(string text, Vector2 startingPosition, float floatingTime, float speed, float distance, float startFadingDistancePercent, float fadingSpeed)
     {
@@ -27,13 +33,43 @@ public class PoppingTextBhv : FrameRateBehavior
         _speed = speed;
         _startFadingDistance = distance * startFadingDistancePercent;
         _fadingSpeed = fadingSpeed;
+        _startingScale = new Vector3(1.0f, 1.0f, 1.0f);
+        _maxScale = new Vector3(1.3f, 1.3f, 1.0f);
+        _scalingState = 0;
+        _scaleSpeed = 0.25f;
         _isMoving = true;
     }
 
     protected override void FrameUpdate()
     {
         if (_isMoving)
+        {
             MoveAndFade();
+            if (_scalingState == 0)
+                ScaleUp();
+            else if (_scalingState == 1)
+                ScaleDown();
+        }
+    }
+
+    private void ScaleUp()
+    {
+        transform.localScale = Vector2.Lerp(transform.localScale, _maxScale, _scaleSpeed);
+        if (Helper.FloatEqualsPrecision(transform.localScale.x, _maxScale.x, 0.05f))
+        {
+            transform.localScale = _maxScale;
+            _scalingState++;
+        }
+    }
+
+    private void ScaleDown()
+    {
+        transform.localScale = Vector2.Lerp(transform.localScale, _startingScale, _scaleSpeed);
+        if (Helper.FloatEqualsPrecision(transform.localScale.x, _startingScale.x, 0.05f))
+        {
+            transform.localScale = _startingScale;
+            _scalingState++;
+        }
     }
 
     private void MoveAndFade()

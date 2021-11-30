@@ -46,7 +46,7 @@ public class Character : Loot
     public int IWorshipPercent = 0;
     public bool XRay = false;
     public int ComboDarkRow = 0;
-    public int DeleteAfterKill = 0;
+    public int TrashAfterKill = 0;
     public bool HighPlayPause = false;
     public int ThornsPercent = 0;
     public int PerfectKills = 0;
@@ -95,6 +95,8 @@ public class Character : Loot
     public int HeldBoosted = 0;
     public int Ying = 0;
     public int Yang = 0;
+    public int SingleLinesDamageOverride = 0;
+    public int QuadrupleLinesDamageOverride = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

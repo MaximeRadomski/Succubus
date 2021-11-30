@@ -71,9 +71,9 @@ public static class CharactersData
         new Character()
         {
             Id = 5, Name = "Sir Vixid", Kind = "Dark Templar", Realm = Realm.Earth,
-            Attack = 9,
+            Attack = 7,
             Cooldown = 11,
-            SpecialName = "Diabolus Vult", SpecialDescription = "removes the last 4 rows from the top for 4 waste ones.",
+            SpecialName = "Diabolus Vult", SpecialDescription = "removes the last 4 rows from the top for 4 waste ones on the bottom.",
             Lore = "Last representant of a long dead religion, this hell crusader stood against holiness for centuries, fulfilling his pact in exchange of his immortality!",
             DialogId = 1, DialogPitch = 0.5f
         },
@@ -98,17 +98,17 @@ public static class CharactersData
         //HEAVEN
         new Character()
         {
-            Id = 8, Name = "Melip", Kind = "Seraphim", Realm = Realm.Heaven,
+            Id = 8, Name = "Melip", Kind = "Cherub", Realm = Realm.Heaven,
             Attack = 6,
-            Cooldown = 7,
-            SpecialName = "Pride", SpecialDescription = "randomize all piece preview."
+            Cooldown = 6,
+            SpecialName = "Pride", SpecialDescription = "replaces your last 1 to 3 rows by a 1 to 3 T-Twist pattern."
         },
         new Character()
         {
-            Id = 9, Name = "Enepsigos", Kind = "Fallen Angel", Realm = Realm.Heaven,
+            Id = 9, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
             Attack = 10,
             Cooldown = 10,
-            SpecialName = "Wisdom", SpecialDescription = "banish the current piece from existence."
+            SpecialName = "Wisdom", SpecialDescription = "your current piece destroys any line it has a block within."
         },
         new Character()
         {

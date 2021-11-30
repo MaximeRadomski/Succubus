@@ -17,6 +17,7 @@ public class InfoMenuBhv : PopupBhv
     private Item _characterItem;
     private Run _run;
     private Realm _currentRealm;
+    private SceneBhv _currentScene;
 
     private Character _character;
     private Opponent _opponent;
@@ -58,6 +59,13 @@ public class InfoMenuBhv : PopupBhv
             ShowCharacter();
         else
             ShowOpponent();
+        GetScene();
+        _currentScene.Paused = true;
+    }
+
+    private void GetScene()
+    {
+        _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
     }
 
     private void InitCharacterFrame(Character character)

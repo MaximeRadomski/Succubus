@@ -7,9 +7,9 @@ public class TattooCrownOfThorns : Tattoo
     {
         Id = 21;
         Name = TattoosData.Tattoos[Id];
-        Stat = 20;
+        Stat = 50;
         Rarity = Rarity.Common;
-        MaxLevel = 5;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)

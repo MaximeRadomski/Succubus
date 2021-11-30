@@ -20,6 +20,6 @@ public class TattooLastStand : Tattoo
 
     public override string GetDescription()
     {
-        return $"if you die, deals {StatToString(after:" times")} your damage as a last stand. if it kills your opponent, you are back in the game. (cannot be used more than once per level)";
+        return $"if you die, deals {StatToString(after:" times")} your attack as a last stand. if it kills your opponent, you are back in the game. (cannot be used more than once per level)";
     }
 }
