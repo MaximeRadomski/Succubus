@@ -254,6 +254,18 @@ TextureImporter:
   - first:
       213: 2291034173413970830
     second: Tattoos_75
+  - first:
+      213: -6310052602309754991
+    second: Tattoos_76
+  - first:
+      213: -4667081276329044649
+    second: Tattoos_77
+  - first:
+      213: -3628042295945016766
+    second: Tattoos_78
+  - first:
+      213: 8560898589643302208
+    second: Tattoos_79
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1946,6 +1958,90 @@ TextureImporter:
       bones: []
       spriteID: e83de9a31736bcf10800000000000000
       internalID: 2291034173413970830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_76
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f3c4d17903e68a0800000000000000
+      internalID: -6310052602309754991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_77
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 755d7827e423b3fb0800000000000000
+      internalID: -4667081276329044649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_78
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24aca1801ca96adc0800000000000000
+      internalID: -3628042295945016766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_79
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 045e4d1e8eb6ec670800000000000000
+      internalID: 8560898589643302208
       vertices: []
       indices: 
       edges: []

@@ -436,9 +436,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Flag Wielder", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 100, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 7, Haste = true,
+            HpMax = 100, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Screwed, 3, 1) },
+                new OpponentAttack(AttackType.Screwed, 2) },
             GravityLevel = 8, Weight = 30
         },
         new Opponent()

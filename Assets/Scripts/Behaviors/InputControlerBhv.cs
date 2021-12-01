@@ -455,7 +455,7 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (MenuSelector == null || Cache.KeyboardUp)
             return;
-        if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused)
+        if (_gameplayControler != null && _gameplayControler.SceneBhv != null && !_gameplayControler.SceneBhv.Paused && !_gameplayControler.GameplayOnHold)
         {
             MenuSelector.Reset();
             _currentInputLayer = 0;

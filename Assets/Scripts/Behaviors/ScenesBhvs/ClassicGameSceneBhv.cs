@@ -990,13 +990,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
             incomingDamage = Character.GetAttack();
             if (nbLines == 1)
-            {
-                if (Character.SingleLinesDamageOverride > 0)
-                    incomingDamage = Character.SingleLinesDamageOverride;
                 incomingDamage += Character.SingleLineDamageBonus;
-            }
-            else if (nbLines == 4 && Character.QuadrupleLinesDamageOverride > 0)
-                incomingDamage += Character.QuadrupleLinesDamageOverride;
             if ((Character.DamageSmallLinesBonus > 0 || Character.DamageSmallLinesMalus > 0) && nbLines >= 1 && nbLines <= 2)
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
             if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)
@@ -1010,6 +1004,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Helper.IsSuperiorByRealm(_gameplayControler.CharacterRealm, CurrentOpponent.Realm))
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamage *= nbLines;
+            if (nbLines == 1 && Character.SingleLinesDamageOverride > 0)
+                incomingDamage = Character.SingleLinesDamageOverride;
+            else if (nbLines == 4 && Character.QuadrupleLinesDamageOverride > 0)
+                incomingDamage = Character.QuadrupleLinesDamageOverride;
             if (CurrentOpponent.Weakness == Weakness.xLines && CurrentOpponent.XLineWeakness == nbLines)
             {
                 _weaknessInstance.Pop();
