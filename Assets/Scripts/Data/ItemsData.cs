@@ -13,9 +13,9 @@ public static class ItemsData
     /* 10 */ "Justice Shovel", "Flipping Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield", "CRT Monitor", "Creeping Totem", "The Devil", "The World",
     /* 20 */ "The Hierophant", "Eliacube", "Mask of Duality", "Door of Truth", "Sun Juice", "Death Scythe", "Dark Milk", "Atlas Effigy", "Bloodlust Blade", "Moon Gun" };
 
-    public static string[] CommonItemsNames = { Items[0], Items[1], Items[2], Items[3], Items[8], Items[11], Items[12], Items[16], Items[17], Items[21], Items[22], Items[26] };
-    public static string[] RareItemsNames = { Items[4], Items[5], Items[9], Items[10], Items[13], Items[14], Items[15], Items[18], Items[19], Items[20] };
-    public static string[] LegendaryItemsNames = { Items[6], Items[7], Items[23], Items[24], Items[25], Items[27], Items[28], Items[29] };
+    public static string[] CommonItemsNames =    { Items[00], Items[01], Items[02], Items[03], Items[08], Items[11], Items[12], Items[16], Items[17], Items[21], Items[22], Items[26] };
+    public static string[] RareItemsNames =      { Items[04], Items[05], Items[09], Items[10], Items[13], Items[14], Items[15], Items[18], Items[19], Items[20] };
+    public static string[] LegendaryItemsNames = { Items[06], Items[07], Items[23], Items[24], Items[25], Items[27], Items[28], Items[29] };
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;

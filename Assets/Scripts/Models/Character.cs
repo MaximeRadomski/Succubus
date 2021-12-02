@@ -41,6 +41,7 @@ public class Character : Loot
     public bool CanDoubleJump = false;
     public int PiecesWeight = 0;
     public int CumulativeCrit = 0;
+    public int CumulativeNotCrit = 0;
     public int LoweredGravity = 0;
     public int TWorshipPercent = 0;
     public int IWorshipPercent = 0;
@@ -100,6 +101,8 @@ public class Character : Loot
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
+    [System.NonSerialized]
+    private int? _realmTreeCriticalPrecision;
 
     public Character()
     {
@@ -113,7 +116,28 @@ public class Character : Loot
         return GetAttackNoBoost() + BoostAttack;
     }
 
+    public string GetAttackDetails()
+    {
+        return $"{GetFlatDamage()} + {DamagePercentBonus}%";
+    }
+
+    public int GetCriticalChancePercent()
+    {
+        if (!_realmTreeCriticalPrecision.HasValue)
+            _realmTreeCriticalPrecision = PlayerPrefsHelper.GetRealmTree().CriticalPrecision;
+        return CritChancePercent + Cache.CumulativeCrit + Cache.PactCritChance + _realmTreeCriticalPrecision.Value;
+    }
+
     public int GetAttackNoBoost()
+    {
+        var flatDamage = GetFlatDamage();
+        var multiplierDamage = DamagePercentBonus;
+        var floatValue = flatDamage * Helper.MultiplierFromPercent(1.0f, multiplierDamage);
+
+        return Mathf.RoundToInt(floatValue);
+    }
+
+    private int GetFlatDamage()
     {
         if (!_realmTreeAttackBoost.HasValue)
             _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
@@ -122,9 +146,6 @@ public class Character : Loot
             flatDamage += Ying;
         if (Yang > 0 && Cache.CurrentItemCooldown <= 0)
             flatDamage += Yang;
-        var multiplierDamage = DamagePercentBonus;
-        var floatValue = flatDamage * Helper.MultiplierFromPercent(1.0f, multiplierDamage);
-
-        return Mathf.RoundToInt(floatValue);
+        return flatDamage;
     }
 }

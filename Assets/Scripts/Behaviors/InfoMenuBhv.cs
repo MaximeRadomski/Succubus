@@ -72,6 +72,7 @@ public class InfoMenuBhv : PopupBhv
     {
         _characterFrame.transform.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = character.Name + " - " + character.Kind;
         _characterFrame.transform.Find("CharacterAttack").GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.GetAttackNoBoost();
+        _characterFrame.transform.Find("CharacterAttack").GetComponent<ButtonBhv>().EndActionDelegate = CharacterAttack;
         _characterFrame.transform.Find("CharacterCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.Cooldown;
         _characterFrame.transform.Find("CharacterSpecial").GetComponent<TMPro.TextMeshPro>().text = "special: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
         _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
@@ -133,6 +134,14 @@ public class InfoMenuBhv : PopupBhv
     private void CharacterLore()
     {
         _instantiator.NewPopupYesNo("Lore", _character.Lore.ToLower(), null, "Ok", null);
+    }
+
+    private void CharacterAttack()
+    {
+        var details = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}attack: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetAttackDetails()}.";
+        details += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit chance: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetCriticalChancePercent()}%.";
+        details += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit damage: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.CritMultiplier}%.";
+        _instantiator.NewPopupYesNo("Attack Details", details, null, "Ok", null);
     }
 
     private void InitOpponentFrame(Opponent opponent)

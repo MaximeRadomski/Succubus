@@ -14,9 +14,9 @@ public static class PactsData
 
     //list https://www.vocabulary.com/lists/185056
 
-    public static string[] CommonPactsNames = { Pacts[0], Pacts[3], Pacts[6], Pacts[8], Pacts[10], Pacts[11], Pacts[12], Pacts[15], Pacts[16], Pacts[18], Pacts[19] };
-    public static string[] RarePactsNames = { Pacts[1], Pacts[4], Pacts[7], Pacts[9], Pacts[14], Pacts[17] };
-    public static string[] LegendaryPactsNames = { Pacts[2], Pacts[5], Pacts[13] };
+    public static string[] CommonPactsNames =    { Pacts[00], Pacts[03], Pacts[06], Pacts[08], Pacts[10], Pacts[11], Pacts[12], Pacts[15], Pacts[16], Pacts[18], Pacts[19] };
+    public static string[] RarePactsNames =      { Pacts[01], Pacts[04], Pacts[07], Pacts[09], Pacts[14], Pacts[17] };
+    public static string[] LegendaryPactsNames = { Pacts[02], Pacts[05], Pacts[13] };
 
     // DEBUG //
     public static bool DebugEnabled = Constants.PactsDebug;

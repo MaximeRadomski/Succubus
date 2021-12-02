@@ -995,12 +995,14 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageSmallLinesBonus - Character.DamageSmallLinesMalus));
             if ((Character.DamageBigLinesBonus > 0 || Character.DamageBigLinesMalus > 0) && nbLines >= 3)
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamageBigLinesBonus - Character.DamageBigLinesMalus));
-            if (!Cache.PactNoCrit && Helper.RandomDice100(Character.CritChancePercent + Cache.CumulativeCrit + Cache.PactCritChance + _realmTree.CriticalPrecision))
+            if (!Cache.PactNoCrit && Helper.RandomDice100(Character.GetCriticalChancePercent()))
             {
                 Cache.CumulativeCrit += Character.CumulativeCrit;
                 incomingDamage += Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, Character.CritMultiplier));
                 _isCrit = true;
             }
+            else if (Character.CumulativeNotCrit > 0) // Not Critical
+                Cache.CumulativeCrit += Character.CumulativeNotCrit;
             if (Helper.IsSuperiorByRealm(_gameplayControler.CharacterRealm, CurrentOpponent.Realm))
                 incomingDamage = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(1.0f, Character.DamagePercentToInferiorRealm));
             incomingDamage *= nbLines;
