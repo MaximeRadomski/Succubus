@@ -7,7 +7,7 @@ public class TattooWhetstone : Tattoo
     {
         Id = 77;
         Name = TattoosData.Tattoos[Id];
-        Stat = 30;
+        Stat = 25;
         Rarity = Rarity.Common;
         MaxLevel = 2;
     }

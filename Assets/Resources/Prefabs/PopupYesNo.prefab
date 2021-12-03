@@ -1273,7 +1273,9 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &4508473946155675056
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1945,7 +1947,9 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
+  VibratesOnClick: 0
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &5624624775180413810
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2160,7 +2164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 12
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_SizeDelta.y
