@@ -26,7 +26,13 @@ public class GameplayControler : MonoBehaviour
     public bool CanBeReload = true;
     public bool OpponentDeathScreen = false;
     public Realm CharacterRealm;
-    public bool GameplayOnHold;
+
+    private bool _gameplayOnHold;
+    public bool GameplayOnHold
+    {
+        get => _gameplayOnHold;
+        set => _gameplayOnHold = value;
+    }
 
     private TMPro.TextMeshPro _infoRealmDebug;
 
@@ -3025,7 +3031,10 @@ public class GameplayControler : MonoBehaviour
     private bool IsInBeat(bool exactBeat = false)
     {
         if (Character.BassGuitarBonus > 0 && Cache.MusicAttackCount <= Character.BassGuitarBonus)
+        {
+            _rhythmIndicatorBhv.DecrementRemainingMovesAndCheck();
             return true;
+        }
         return _rhythmIndicatorBhv.IsInBeat(exactBeat);
     }
 

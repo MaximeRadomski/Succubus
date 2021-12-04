@@ -16,10 +16,12 @@ public class TattooBlackHole : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.AllClear = true;
+
+        FillAllSpace();
     }
 
     public override string GetDescription()
     {
-        return $"clears {StatToString()} after a fight.";
+        return $"clears {StatToString()} after a fight, but takes all the remaining place on your body.";
     }
 }

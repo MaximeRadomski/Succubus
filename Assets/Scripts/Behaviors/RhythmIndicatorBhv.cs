@@ -126,12 +126,8 @@ public class RhythmIndicatorBhv : FrameRateBehavior
             else
                 _hasDoneActionOnNextBeat = true;
             if (!exactBeat)
-                --_remainingMoves;
-            if (_remainingMoves <= 0)
             {
-                GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().ResetToOpponentGravity();
-                GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
-                Destroy(gameObject);
+                DecrementRemainingMovesAndCheck();
             }
         }
         else if (!exactBeat)
@@ -144,5 +140,16 @@ public class RhythmIndicatorBhv : FrameRateBehavior
             _gameplayControler.DropGhost();
         }
         return isInBeat;
+    }
+
+    public void DecrementRemainingMovesAndCheck()
+    {
+        --_remainingMoves;
+        if (_remainingMoves <= 0)
+        {
+            GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().ResetToOpponentGravity();
+            GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>().SetNewVolumeLevel();
+            Destroy(gameObject);
+        }
     }
 }

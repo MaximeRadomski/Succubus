@@ -701,7 +701,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     protected override void FrameUpdate()
     {
-        if (Paused)
+        if (Paused || _gameplayControler.GameplayOnHold)
         {
             SetNextCooldownTick();
             return;
