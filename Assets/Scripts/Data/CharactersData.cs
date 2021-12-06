@@ -139,7 +139,7 @@ public static class CharactersData
         },
         new Character()
         {
-            Id = 13, Name = "The Beholder", Kind = "Mystic Being", Realm = Realm.Heaven,
+            Id = 49, Name = "The Beholder", Kind = "Mystic Being", Realm = Realm.Heaven,
             Attack = 0,
             Cooldown = 0,
             SpecialName = null, SpecialDescription = "None",

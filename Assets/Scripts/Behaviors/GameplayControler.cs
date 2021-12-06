@@ -228,7 +228,10 @@ public class GameplayControler : MonoBehaviour
             {
                 if (!block.TryGetComponent<BlockBhv>(out var blockBhv) || blockBhv.Indestructible)
                     continue;
-                remainingBlocks += $"{Mathf.RoundToInt(block.transform.position.x)}-{Mathf.RoundToInt(block.transform.position.y - (Cache.HeightLimiter > 0 ? Cache.HeightLimiter : 0))};";
+                var pos = $"{Mathf.RoundToInt(block.transform.position.x)}-{Mathf.RoundToInt(block.transform.position.y - (Cache.HeightLimiter > 0 ? Cache.HeightLimiter : 0))};";
+                if (remainingBlocks.Contains(pos))
+                    continue;
+                remainingBlocks += pos;
             }
         }
         PlayerPrefsHelper.SaveLastFightPlayField(remainingBlocks);
