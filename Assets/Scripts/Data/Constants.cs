@@ -94,6 +94,9 @@ public static class Constants
     public const string PpCurrentMaxedOutTattoos = "CurrentMaxedOutTattoos";
     public const string PpUnlockedCharacters = "UnlockedCharacters";
     public const string PpUnlockedCharactersDefault = "110000000000";
+    public const string PpUnlockedSkins = "UnlockedSkins";
+    public const string PpUnlockedSkinsDefault = "111111111111000000000000000000000000000000000000";
+    public const string PpSelectedSkinId = "SelectedSkinId";
     public const string PpNumberRunsWithoutCharacterEncounter = "NumberRunsWithoutCharacterEncounter";
     public const string PpTrainingScore = "TrainingScore";
     public const string PpTrainingLevel = "TrainingLevel";

@@ -122,6 +122,7 @@ public class DialogBoxBhv : FrameRateBehavior
         if (tmpOpponentSubject != null)
             tmpSubject = new DialogSubject() {
                 Id = tmpOpponentSubject.Id,
+                SkinId = 0,
                 Name = tmpOpponentSubject.Name,
                 Realm = tmpOpponentSubject.Realm,
                 Region = tmpOpponentSubject.Region,
@@ -136,7 +137,9 @@ public class DialogBoxBhv : FrameRateBehavior
             if (tmpCharacterSubject == null)
                 tmpCharacterSubject = CharactersData.CustomCharacters.Find(o => o.Name == name);
             if (tmpCharacterSubject != null)
-                tmpSubject = new DialogSubject() { Id = tmpCharacterSubject.Id,
+                tmpSubject = new DialogSubject() {
+                    Id = tmpCharacterSubject.Id,
+                    SkinId = tmpCharacterSubject.SkinId,
                     Name = tmpCharacterSubject.Name,
                     Realm = tmpCharacterSubject.Realm,
                     Region = tmpCharacterSubject.Realm,
@@ -166,7 +169,7 @@ public class DialogBoxBhv : FrameRateBehavior
         }
         else
         {
-            _picture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _currentSubject.Id);
+            _picture.sprite = Helper.GetCharacterSkin(_currentSubject.Id, _currentSubject.SkinId);
             _picture.transform.localPosition = new Vector3(Mathf.Abs(_picture.transform.localPosition.x), _currentSubject.HeadDown ? _pictureYHeadDown : _pictureY, 0);
             _picture.flipX = false;
             _emoji.transform.localPosition = new Vector3(Mathf.Abs(_emoji.transform.localPosition.x), _emoji.transform.localPosition.y, 0);
@@ -331,6 +334,7 @@ public class DialogBoxBhv : FrameRateBehavior
     private class DialogSubject
     {
         public int Id;
+        public int SkinId;
         public string Name;
         public SubjectType Type;
         public Realm Realm;

@@ -45,7 +45,7 @@ public class FightIntroBhv : FrameRateBehavior
         }
 
         _characterPicture = transform.Find("CharacterPicture").GetComponent<SpriteRenderer>();
-        _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + character.Id);
+        _characterPicture.sprite = Helper.GetCharacterSkin(character.Id, character.SkinId);
         if (_horizontal)
             _characterPicture.transform.position += new Vector3(_startXOffset / 4, 0.0f, 0.0f);
         _characterXTarget = _characterPicture.transform.position.x;

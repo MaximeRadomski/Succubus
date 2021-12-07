@@ -18,6 +18,7 @@ public class Character : Loot
     public string Lore;
     public int DialogId = 0;
     public float DialogPitch = 1.0f;
+    public int SkinId = 0;
 
     //Global to all
     public int CritChancePercent = 1;

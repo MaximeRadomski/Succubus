@@ -26,7 +26,10 @@ public abstract class GameSceneBhv : SceneBhv
         GameObject.Find(Constants.GoButtonInfoName).GetComponent<ButtonBhv>().EndActionDelegate = Info;
         if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
+        {
             Character = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()];
+            Character.SkinId = PlayerPrefsHelper.GetSelectedSkinId();
+        }
         else if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             Character = CharactersData.CustomCharacters[0];
         else
@@ -36,7 +39,7 @@ public abstract class GameSceneBhv : SceneBhv
         if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
             _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{Character.Kind}");
         else
-            _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + Character.Id);
+            _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(Character.Id, Character.SkinId);
         _panelGame = GameObject.Find("PanelGame");
     }
 

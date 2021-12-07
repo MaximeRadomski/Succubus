@@ -591,4 +591,31 @@ public static class Helper
         outGameObject = found;
         return found != null;
     }
+
+    public static List<int> GetUnlockedCharacterSkins(int charId)
+    {
+        var nbChars = CharactersData.Characters.Count;
+        var skins = new List<int>();
+        var skinsString = PlayerPrefsHelper.GetUnlockedCharactersString();
+        var nbUnlocked = 0;
+        for (int realmId = Realm.None.GetHashCode(); realmId <= Realm.Heaven.GetHashCode(); ++realmId)
+        {
+            var id = (nbChars * (realmId + 1)) + charId;
+            var unlocked = int.Parse(skinsString[id].ToString());
+            if (id < skins.Count)
+                skins.Add(unlocked);
+            if (unlocked == 1)
+                ++nbUnlocked;
+        }
+        if (nbUnlocked <= 1)
+            return null;
+        return skins;
+    }
+
+    public static Sprite GetCharacterSkin(int charId, int skinId)
+    {
+        var nbChars = CharactersData.Characters.Count;
+        var id = (nbChars * skinId) + charId;
+        return GetSpriteFromSpriteSheet("Sprites/Characters_" + id);
+    }
 }

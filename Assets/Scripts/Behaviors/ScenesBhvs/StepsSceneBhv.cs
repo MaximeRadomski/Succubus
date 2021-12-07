@@ -63,7 +63,7 @@ public class StepsSceneBhv : SceneBhv
         _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
         GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
-        _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _character.Id);
+        _characterPicture.sprite = Helper.GetCharacterSkin(_character.Id, _character.SkinId);
         _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
         _buttonInfo = GameObject.Find(Constants.GoButtonInfoName);
         _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;

@@ -6,6 +6,7 @@ public class CharSelSceneBhv : SceneBhv
 {
     private GameObject _charSelector;
     private GameObject _charButtonsContainer;
+    private int _selectedSkin = -1;
 
     public override MusicType MusicType => MusicType.Menu;
 
@@ -71,7 +72,35 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.Cooldown;
         GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.SpecialName.ToLower() + ":\n" + tmpChar.SpecialDescription;
         GameObject.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.Realm.ToString().ToLower() + ":\n" + tmpChar.Realm.GetDescription();
-        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + tmpChar.Id);
+        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, tmpChar.SkinId);
+        var characterSkins = Helper.GetUnlockedCharacterSkins(tmpChar.Id);
+        if (_selectedSkin == -1) //First time SelectCharacter() is called in Init()
+        {
+            if (characterSkins != null)
+            {
+                _selectedSkin = PlayerPrefsHelper.GetSelectedSkinId();
+                GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
+            }
+            else
+                PlayerPrefsHelper.SaveSelectedSkinId(0);
+        }
+        else
+        {
+            if (characterSkins != null)
+            {
+                this.Instantiator.NewPopupCharacterSkins(tmpChar.Id, characterSkins, _selectedSkin, (int selectedSkin) =>
+                {
+                    if (_selectedSkin != selectedSkin)
+                    {
+                        _selectedSkin = selectedSkin;
+                        PlayerPrefsHelper.SaveSelectedSkinId(_selectedSkin);
+                        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
+                    }
+                });
+            }
+            else
+                PlayerPrefsHelper.SaveSelectedSkinId(0);
+        }
     }
 
     private void CharacterLore()

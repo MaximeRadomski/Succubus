@@ -30,6 +30,7 @@ public class ProgressionService : MonoBehaviour
     public static void ApplyProgression(ProgressionDto onlineProgression)
     {
         PlayerPrefsHelper.SaveUnlockedCharacters(onlineProgression.UnlockedCharacters);
+        PlayerPrefsHelper.SaveUnlockedSkins(onlineProgression.UnlockedSkins);
         var realmTree = JsonUtility.FromJson<RealmTree>(onlineProgression.RealmTree);
         if (realmTree == null)
             realmTree = new RealmTree();

@@ -275,6 +275,7 @@ public class AccountSceneBhv : SceneBhv
         var progression = new ProgressionDto()
         {
             UnlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString(),
+            UnlockedSkins = PlayerPrefsHelper.GetUnlockedSkinsString(),
             RealmTree = Mock.GetString(Constants.PpRealmTree, Constants.PpSerializeDefault),
             BoughtTreeNodes = PlayerPrefsHelper.GetBoughtTreeNodes(),
             BonusRarePercent = PlayerPrefsHelper.GetBonusRarePercent(),

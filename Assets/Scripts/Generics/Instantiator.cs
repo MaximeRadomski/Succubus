@@ -226,12 +226,20 @@ public class Instantiator : MonoBehaviour
         return tmpPopupInstance;
     }
 
+    public void NewPopupCharacterSkins(int charId, List<int> unlockedSkins, int currentSelectedSkin, System.Action<int> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterSkins");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Cache.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupCharacterSkinsBhv>().Init(charId, unlockedSkins, currentSelectedSkin, resultAction);
+    }
+
     public void NewPopupGameplayButtons(System.Func<bool, object> resultAction)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupGameplayButtons");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Cache.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupGameplayButtons>().Init(resultAction);
+        tmpPopupInstance.GetComponent<PopupGameplayButtonsBhv>().Init(resultAction);
     }
 
     public GameObject NewGameplayButton(string name, Vector3 position)

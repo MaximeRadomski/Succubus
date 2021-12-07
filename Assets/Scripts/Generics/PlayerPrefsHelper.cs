@@ -262,6 +262,28 @@ public class PlayerPrefsHelper : MonoBehaviour
         return unlockedCharacters;
     }
 
+    public static void SaveUnlockedSkins(string unlockedSkins)
+    {
+        Mock.SetString(Constants.PpUnlockedSkins, unlockedSkins);
+    }
+
+    public static string GetUnlockedSkinsString()
+    {
+        var unlockedSkins = Mock.GetString(Constants.PpUnlockedSkins, Constants.PpUnlockedSkinsDefault);
+        return unlockedSkins;
+    }
+
+    public static void SaveSelectedSkinId(int skinId)
+    {
+        PlayerPrefs.SetInt(Constants.PpSelectedSkinId, skinId);
+    }
+
+    public static int GetSelectedSkinId()
+    {
+        var skinId = PlayerPrefs.GetInt(Constants.PpSelectedSkinId, Constants.PpSerializeDefaultInt);
+        return skinId;
+    }
+
     public static void SaveSelectedCharacter(int selectedCharacter)
     {
         Mock.SetInt(Constants.PpSelectedCharacter, selectedCharacter);
@@ -273,8 +295,10 @@ public class PlayerPrefsHelper : MonoBehaviour
         return selectedCharacter;
     }
 
-    public static void SaveRunCharacter(Character character)
+    public static void SaveRunCharacter(Character character, int? skinId = null)
     {
+        if (skinId != null)
+            character.SkinId = skinId.Value;
         Mock.SetString(Constants.PpRunCharacter, JsonUtility.ToJson(character));
     }
 
@@ -282,7 +306,11 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var character = JsonUtility.FromJson<Character>(Mock.GetString(Constants.PpRunCharacter, Constants.PpSerializeDefault));
         if (character == null)
-            return CharactersData.Characters[GetSelectedCharacterId()];
+        {
+            var defaultCharacter = CharactersData.Characters[GetSelectedCharacterId()];
+            defaultCharacter.SkinId = PlayerPrefsHelper.GetSelectedSkinId();
+            return defaultCharacter;
+        }
         return character;
     }
 

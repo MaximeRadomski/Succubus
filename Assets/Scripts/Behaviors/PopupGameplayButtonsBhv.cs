@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupGameplayButtons : PopupBhv
+public class PopupGameplayButtonsBhv : PopupBhv
 {
     private System.Func<bool, object> _resultAction;
 

@@ -32,7 +32,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         _infoRealm = GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>();
         _infoRealm.text = $"{Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43)}{_run.CurrentRealm.ToString().ToLower()}\nlvl {_run.RealmLevel}";
         _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
-        _characterPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Characters_" + _character.Id);
+        _characterPicture.sprite = Helper.GetCharacterSkin(_character.Id, _character.SkinId);
 
         _levelHeight = Constants.Pixel * 11;
         _levelsContainer = GameObject.Find("LevelsContainer");
