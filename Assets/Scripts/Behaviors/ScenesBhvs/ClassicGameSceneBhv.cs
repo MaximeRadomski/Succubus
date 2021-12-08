@@ -501,6 +501,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 PlayerPrefsHelper.IncrementRunBossVanquished();
                 var realmIdBeforeIncrease = _run.CurrentRealm.GetHashCode();
+                var hasUnlockedSkin = false;
                 _run.IncreaseLevel();
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
                 if (currentItem != null)
@@ -510,16 +511,30 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (Character.LastStandMultiplier > 0)
                     Cache.HasLastStanded = false;
                 PlayerPrefsHelper.SaveRun(_run);
+                if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && Helper.UnlockCharacterSkinIfNotAlready(Character.Id, realmIdBeforeIncrease))
+                    hasUnlockedSkin = true;
                 if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
                     StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                     var content = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you now start your ascensions with a random item.\n(up to a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Rarity)realmIdBeforeIncrease).ToString().ToLower()}{Constants.MaterialEnd} one).";
-                    Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", LoadNextAfterBoss);
+                    Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", CheckForSkin);
                 }
                 else
                 {
-                    return (bool)LoadNextAfterBoss(true);
+                    return (bool)CheckForSkin(true);
+                }
+
+                object CheckForSkin(bool result)
+                {
+                    if (hasUnlockedSkin)
+                    {
+                        var skinContent = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you unlocked a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}new skin{Constants.MaterialEnd} on {Character.Name.ToLower()}.";
+                        Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", skinContent, null, "Neat!", LoadNextAfterBoss);
+                    }
+                    else
+                        return LoadNextAfterBoss(true);
+                    return false;
                 }
                 
                 object LoadNextAfterBoss(bool result)

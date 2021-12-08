@@ -596,13 +596,13 @@ public static class Helper
     {
         var nbChars = CharactersData.Characters.Count;
         var skins = new List<int>();
-        var skinsString = PlayerPrefsHelper.GetUnlockedCharactersString();
+        var skinsString = PlayerPrefsHelper.GetUnlockedSkinsString();
         var nbUnlocked = 0;
         for (int realmId = Realm.None.GetHashCode(); realmId <= Realm.Heaven.GetHashCode(); ++realmId)
         {
             var id = (nbChars * (realmId + 1)) + charId;
             var unlocked = int.Parse(skinsString[id].ToString());
-            if (id < skins.Count)
+            if (id < skinsString.Length)
                 skins.Add(unlocked);
             if (unlocked == 1)
                 ++nbUnlocked;
@@ -617,5 +617,20 @@ public static class Helper
         var nbChars = CharactersData.Characters.Count;
         var id = (nbChars * skinId) + charId;
         return GetSpriteFromSpriteSheet("Sprites/Characters_" + id);
+    }
+
+    public static bool UnlockCharacterSkinIfNotAlready(int charId, int realmId)
+    {
+        var nbChars = CharactersData.Characters.Count;
+        var id = (nbChars * (realmId + 1)) + charId;
+        var unlockedSkinsString = PlayerPrefsHelper.GetUnlockedSkinsString();
+        if (unlockedSkinsString[id] == '1')
+            return false;
+        else
+        {
+            unlockedSkinsString = unlockedSkinsString.ReplaceChar(id, '1');
+            PlayerPrefsHelper.SaveUnlockedSkins(unlockedSkinsString);
+            return true;
+        }
     }
 }

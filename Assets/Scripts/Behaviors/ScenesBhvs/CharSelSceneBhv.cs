@@ -72,17 +72,19 @@ public class CharSelSceneBhv : SceneBhv
         GameObject.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.Cooldown;
         GameObject.Find("Special").GetComponent<TMPro.TextMeshPro>().text = "special:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.SpecialName.ToLower() + ":\n" + tmpChar.SpecialDescription;
         GameObject.Find("Realm").GetComponent<TMPro.TextMeshPro>().text = "realm:" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + tmpChar.Realm.ToString().ToLower() + ":\n" + tmpChar.Realm.GetDescription();
-        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, tmpChar.SkinId);
         var characterSkins = Helper.GetUnlockedCharacterSkins(tmpChar.Id);
         if (_selectedSkin == -1) //First time SelectCharacter() is called in Init()
         {
             if (characterSkins != null)
             {
                 _selectedSkin = PlayerPrefsHelper.GetSelectedSkinId();
-                GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
+                PlayerPrefsHelper.SaveSelectedSkinId(_selectedSkin);
             }
             else
+            {
+                _selectedSkin = 0;
                 PlayerPrefsHelper.SaveSelectedSkinId(0);
+            }
         }
         else
         {
@@ -99,8 +101,12 @@ public class CharSelSceneBhv : SceneBhv
                 });
             }
             else
+            {
+                _selectedSkin = 0;
                 PlayerPrefsHelper.SaveSelectedSkinId(0);
+            }
         }
+        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
     }
 
     private void CharacterLore()
@@ -156,7 +162,7 @@ public class CharSelSceneBhv : SceneBhv
                 PlayerPrefsHelper.ResetTattoos();
                 PlayerPrefsHelper.ResetPacts();
                 PlayerPrefsHelper.ResetAlreadyDialog();
-                PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()]);
+                PlayerPrefsHelper.SaveRunCharacter(CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()], _selectedSkin);
                 PlayerPrefsHelper.ResetRunBossVanquished();
                 PlayerPrefsHelper.ResetRun();
             }
