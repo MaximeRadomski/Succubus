@@ -7,7 +7,7 @@ public class TattooWaterEye : Tattoo
     {
         Id = 47;
         Name = TattoosData.Tattoos[Id];
-        Stat = 25;
+        Stat = 20;
         Rarity = Rarity.Rare;
         MaxLevel = 1;
     }

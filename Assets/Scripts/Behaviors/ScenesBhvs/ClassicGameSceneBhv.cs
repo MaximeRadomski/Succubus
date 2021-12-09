@@ -529,6 +529,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 {
                     if (hasUnlockedSkin)
                     {
+                        StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
                         var skinContent = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you unlocked a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}new skin{Constants.MaterialEnd} on {Character.Name.ToLower()}.";
                         Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", skinContent, null, "Neat!", LoadNextAfterBoss);
                     }
@@ -1040,7 +1041,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Cache.SlavWheelStreak > 0)
             {
                 var slavBonus = Mathf.RoundToInt(incomingDamage * Helper.MultiplierFromPercent(0.0f, this.Character.SlavWheelDamagePercentBonus * Cache.SlavWheelStreak));
-                if (slavBonus == 0) slavBonus = 1;
+                if (slavBonus == 0)
+                    slavBonus = 1;
                 incomingDamage += slavBonus;
             }
             if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines == 4)

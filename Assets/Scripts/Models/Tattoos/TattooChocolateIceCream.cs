@@ -7,19 +7,19 @@ public class TattooChocolateIceCream : Tattoo
     {
         Id = 74;
         Name = TattoosData.Tattoos[Id];
-        Stat = 50;
+        Stat = 4;
         Rarity = Rarity.Legendary;
         MaxLevel = 1;
     }
 
     public override void ApplyToCharacter(Character character)
     {
-        character.DamagePercentBonus += Stat;
+        character.DamageFlatBonus += Stat;
         character.QuadrupleLinesDamageOverride = 1;
     }
 
     public override string GetDescription()
     {
-        return $"you deal {StatToString("+", "%")} damage, except for your quadruple lines which now deal {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}1 damage{Constants.MaterialEnd}.";
+        return $"you deal {StatToString("+", " base damage")}, except for your quadruple lines which now deal {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}1 damage{Constants.MaterialEnd}.";
     }
 }
