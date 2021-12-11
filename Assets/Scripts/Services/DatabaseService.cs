@@ -37,7 +37,7 @@ public static class DatabaseService
 
     public static void SendErrorBody(string id, object content)
     {
-        id = id.Replace(" ", "").Replace("/", "-");
+        id = id.Replace(" ", "-").Replace("/", "-");
         RestClient.Put<object>(SetTableAndId(LogsTable, $"Error_{id}"), content).Then(r =>
         {
             var name = "";
