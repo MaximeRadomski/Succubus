@@ -556,7 +556,7 @@ public static class Helper
 
     public static string DateFormat(DateTime dateTime)
     {
-        return $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day} {dateTime.ToString("HH mm ss")}";
+        return $"{dateTime.Year}/{dateTime.Month}/{dateTime.Day} {dateTime.ToString("HH-mm-ss")}";
     }
 
     public static int CountChar(this string str, char c)

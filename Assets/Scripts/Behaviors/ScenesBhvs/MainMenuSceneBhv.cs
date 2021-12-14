@@ -8,6 +8,8 @@ public class MainMenuSceneBhv : SceneBhv
     private Run _currentRun;
     private int _menuClickCount;
 
+    private Character debug;
+
     public override MusicType MusicType => MusicType.Menu;
 
     void Start()
@@ -36,6 +38,7 @@ public class MainMenuSceneBhv : SceneBhv
         }
         GameObject.Find("Version").GetComponent<TMPro.TextMeshPro>().text = $"abject\n{Application.version.ToString().ToLower()}";
         SetButtons();
+        //var test = debug.SpecialDescription.ToLower();
     }
 
     private void SetButtons()
@@ -129,6 +132,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void ReportBug()
     {
+        LogService.SendLogsIfNecessary();
         Application.OpenURL("https://discord.gg/dJG9KHVhCn");
         //Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }

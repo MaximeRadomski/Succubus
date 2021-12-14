@@ -13,6 +13,7 @@ public class SplashScreenBhv : SceneBhv
     {
         Cache.HasStartedBySplashScreen = true;
         Helper.VarMockTest();
+        LogService.Init();
         Init();
 
         //Instantiator.NewLoading();
