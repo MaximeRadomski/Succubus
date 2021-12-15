@@ -693,7 +693,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 CurrentOpponent.Realm,
                 OpponentInstanceBhv.gameObject);
             if (CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece
-                || CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.Shift)
+                || CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.Shift
+                || CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.Ascension)
                 spawnAfterAttack = false;
         }
         ++Cache.CurrentOpponentAttackCount;
@@ -815,6 +816,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public override bool DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
+        var damageTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
+        if (Cache.CountSheleredAttacks > 0)
+        {
+            amount = 0;
+            Instantiator.PopText($"{Constants.GetMaterial(this.CurrentOpponent.Realm, TextType.succubus3x5, TextCode.c43)}shelter", damageTextPosition);
+            _soundControler.PlaySound(_idDodge);
+            this.OpponentInstanceBhv.Dodge();
+            Cache.CountSheleredAttacks--;
+        }
         if (Cache.CurrentOpponentHp <= 0 && CurrentOpponent.IsDead)
             return false;
         if (Character.QuadDamage > 0 && Cache.CurrentListOpponentsId == 0 && _opponents.Count >= 4)
@@ -854,7 +864,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();
-        var damageTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
         var poppingTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
         //Check for overlapping damage texts
         for (int i = 0; i < poppingTexts.Length; ++i)

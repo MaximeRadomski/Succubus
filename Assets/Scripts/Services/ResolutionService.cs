@@ -68,13 +68,16 @@ public class ResolutionService : MonoBehaviour
         return _resolutions;
     }
 
-    public int SetResolution(int resId)
+    public int SetResolution(int resId, bool horizontal = false)
     {
         if (!_hasInit)
             Init();
         if (resId >= _resolutions.Count)
             resId = _resolutions.Count - 1;
-        Screen.SetResolution(_resolutions[resId].width, _resolutions[resId].height, PlayerPrefsHelper.GetFullscreen(), 60);
+        if (!horizontal)
+            Screen.SetResolution(_resolutions[resId].width, _resolutions[resId].height, PlayerPrefsHelper.GetFullscreen(), 60);
+        else
+            Screen.SetResolution(_resolutions[resId].height, _resolutions[resId].width, PlayerPrefsHelper.GetFullscreen(), 60);
         return resId;
     }
 }

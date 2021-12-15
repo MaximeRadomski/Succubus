@@ -99,7 +99,11 @@ public enum AttackType
     [Description("Line Break")]
     LineBreak = 22, //The next (param1) lines aren't destroyed, but set to the bottom of the playfield
     [Prefixe(null)]
-    [Suffixe(" attacks")]
+    [Suffixe(" attack")]
     [Description("Shelter")]
-    Shelter = 23, //The next (param1) damages are ignored.
+    Shelter = 23, //The next attack is ignored.
+    [Prefixe(null)]
+    [Suffixe(" lines")]
+    [Description("Ascension")]
+    Ascension = 24, //Ascend a (param1) wide column of (param2) lines
 }

@@ -15,6 +15,7 @@ TagManager:
   - OverBlend
   - LineBreak
   - SimpShield
+  - JobScheduler
   layers:
   - Default
   - TransparentFX

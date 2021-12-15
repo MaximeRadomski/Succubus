@@ -3,6 +3,7 @@ using Proyecto26;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public static class DatabaseService
@@ -45,10 +46,21 @@ public static class DatabaseService
                 name = account.PlayerName;
             else if (content is HighScoreDto highScore)
                 name = highScore.PlayerName;
+            else
+                return;
             RestClient.Put<object>(SetTableAndId(BlackList, name), content).Then(r =>
             {
 
             });
+        });
+    }
+
+    public static void SendLog(string id, object content, Action onResolved)
+    {
+        id = id.Replace(" ", "-").Replace("/", "-");
+        RestClient.Put<object>(SetTableAndId(LogsTable, id), content).Then(r =>
+        {
+            onResolved?.Invoke();
         });
     }
 }

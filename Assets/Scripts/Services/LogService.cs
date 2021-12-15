@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public static class LogService
 {
     private static string _currentSessionLogs;
+    private static string _path = $"{Application.persistentDataPath}/Logs.txt";
 
     public static void Init()
     {
@@ -37,12 +38,11 @@ public static class LogService
         }
     }
 
-    public static void SendLogsIfNecessary()
+    public static void TrySendLogs()
     {
-        var path = $"{Application.persistentDataPath}/Logs.txt";
-        if (!File.Exists(path))
+        if (!File.Exists(_path))
             return;
-        var content = File.ReadAllText(path);
+        var content = File.ReadAllText(_path);
         var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
         var title = $"Logs_{Helper.DateFormat(DateTime.Now).Replace(" ", "_")}";
         if (lastCredentials != null && !string.IsNullOrEmpty(lastCredentials.PlayerName))
@@ -50,6 +50,10 @@ public static class LogService
             content = content.Insert(0, $"Player: {lastCredentials.PlayerName}\n");
             title += $"_{lastCredentials.PlayerName}";
         }
-        DatabaseService.SendErrorBody(title, new Dto { Checksum = content });
+        DatabaseService.SendLog(title, new Dto { Checksum = content }, () =>
+        {
+            _currentSessionLogs = null;
+            File.Delete(_path);
+        });
     }
 }

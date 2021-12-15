@@ -14,6 +14,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     private GameObject _buttonsPanels;
     private GameObject _swipesPanels;
     private GameObject _keyBindingPanelGameplay;
+    private GameObject _combatOrientationState;
     private GameObject _keyBindingPanelMenu;
     private GameObject _sensitivitySelector;
     private GameObject _menuSelector;
@@ -83,6 +84,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 #if !UNITY_ANDROID
         _gameplayChoiceButtons.GetComponent<SpriteRenderer>().sprite = PcKeyboard;
         _gameplayChoiceSwipes.GetComponent<SpriteRenderer>().sprite = PcMouse;
+        (_combatOrientationState = GameObject.Find("CombatOrientationState")).transform.SetParent(transform);
 #endif
         GameObject.Find("SwipeType").GetComponent<ButtonBhv>().EndActionDelegate = FlipGameplaySwipe;
         GameObject.Find("0.25").GetComponent<ButtonBhv>().DoActionDelegate = () => { SetSensitivity(0.25f); };
@@ -193,12 +195,14 @@ public class SettingsInputsSceneBhv : SceneBhv
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _combatOrientationState.transform.position = new Vector3(0.0f, -12.22f, 0.0f);
         }
         else //Mouse
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _combatOrientationState.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();

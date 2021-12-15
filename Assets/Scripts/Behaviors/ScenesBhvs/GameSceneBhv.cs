@@ -55,6 +55,10 @@ public abstract class GameSceneBhv : SceneBhv
         if (_gameplayControler.CurrentPiece.transform.childCount > 4)
             Cache.OnResumeLastForcedBlocks = _gameplayControler.CurrentPiece.transform.childCount - 4;
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp, this, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
+#if !UNITY_ANDROID
+        if (PlayerPrefsHelper.GetOrientation() == Direction.Vertical)
+            _gameplayControler.ResetHorizontalOrientationPC();
+#endif
     }
 
     public void Info()
@@ -62,6 +66,10 @@ public abstract class GameSceneBhv : SceneBhv
         Paused = true;
         _musicControler.HalveVolume();
         _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, CurrentOpponent, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
+#if !UNITY_ANDROID
+        if (PlayerPrefsHelper.GetOrientation() == Direction.Vertical)
+            _gameplayControler.ResetHorizontalOrientationPC();
+#endif
     }
 
     private object ResumeGiveUp(bool resume)

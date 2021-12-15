@@ -32,7 +32,7 @@ public class FightIntroBhv : FrameRateBehavior
 #if UNITY_ANDROID
         _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons;
 #else
-        _horizontal = false;
+        _horizontal = PlayerPrefsHelper.GetOrientation() == Direction.Horizontal;
 #endif
         if (_horizontal)
         {

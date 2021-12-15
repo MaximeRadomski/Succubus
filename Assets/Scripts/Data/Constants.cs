@@ -72,6 +72,7 @@ public static class Constants
     public const string TagOverBlend = "OverBlend";
     public const string TagLineBreak = "LineBreak";
     public const string TagSimpShield = "SimpShield";
+    public const string TagJobScheduler = "JobScheduler";
 
     // UNITS OF MEASURE //
     public const int HourInMinutes = 60;

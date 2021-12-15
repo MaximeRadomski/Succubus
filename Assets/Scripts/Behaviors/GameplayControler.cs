@@ -327,11 +327,16 @@ public class GameplayControler : MonoBehaviour
         else
         {
             if (PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
-                SetHorizontalOrientation();
+                SetHorizontalOrientationAndroid();
             UpdatePanelsPositions();
         }
             
 #else
+        if (PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+        {
+            SetHorizontalOrientationPC();
+            UpdatePanelsPositions();
+        }
         SetSwipeGameplayChoice((_gameplayChoice = GameplayChoice.SwipesRightHanded));
 #endif
         SetButtons();
@@ -567,7 +572,7 @@ public class GameplayControler : MonoBehaviour
         _inputDisplay = _panelSwipe.transform.Find("InputDisplay").GetComponent<TMPro.TextMeshPro>();
     }
 
-    public void SetHorizontalOrientation()
+    public void SetHorizontalOrientationAndroid()
     {
         var resetRotation = new Quaternion();
         resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
@@ -596,6 +601,20 @@ public class GameplayControler : MonoBehaviour
         uiPanelRightPositionBhv.Rotated = true;
         uiPanelRightPositionBhv.UpdatePositions();
         RotatePanelChildren(_uiPanelRight);
+    }
+
+    public void SetHorizontalOrientationPC()
+    {
+        _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
+        var resolutionService = GetComponent<ResolutionService>();
+        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution(), horizontal: true);
+    }
+
+    public void ResetHorizontalOrientationPC()
+    {
+        _mainCamera.transform.position = Constants._cameraVerticalGameplayPosition;
+        var resolutionService = GetComponent<ResolutionService>();
+        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution(), true);
     }
 
     private void RotatePanelChildren(GameObject panel)
@@ -2477,7 +2496,7 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false)
+    public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false, int xStart = 0, int xEnd = 9)
     {
         if (nbRows == 0)
             return Cache.HeightLimiter;
@@ -2487,7 +2506,7 @@ public class GameplayControler : MonoBehaviour
                 return -1;
             if (!isShrinkOrLineBreak && PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.tag == Constants.TagLineBreak)
                 return y + 1; //Reached a Line Break, must return line id above
-            for (int x = 0; x < _playFieldWidth; ++x)
+            for (int x = xStart; x <= xEnd; ++x)
             {
                 if (PlayFieldBhv.Grid[x, y] != null)
                 {
@@ -2575,6 +2594,12 @@ public class GameplayControler : MonoBehaviour
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
+                break;
+            case AttackType.Shelter:
+                AttackShelter(opponentInstance, opponentRealm);
+                break;
+            case AttackType.Ascension:
+                AttackAscension(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2955,6 +2980,30 @@ public class GameplayControler : MonoBehaviour
             Spawn();
             return true;
         }));
+    }
+
+    private void AttackAscension(GameObject opponentInstance, Realm opponentRealm, int wideness, int nbRows)
+    {
+        _soundControler.PlaySound(_idVisionBlock);
+        int blocStartX = UnityEngine.Random.Range(0, 10 - wideness);
+        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(blocStartX + ((wideness - 1) / 2), 9.5f), 20, opponentRealm);
+        visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
+        Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
+        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
+        GameplayOnHold = true;
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () =>
+        {
+            IncreaseAllAboveLines(nbRows, xStart: blocStartX, xEnd: blocStartX + wideness - 1);
+            GameplayOnHold = false;
+            Spawn();
+            return true;
+        }));
+    }
+
+    private void AttackShelter(GameObject opponentInstance, Realm opponentRealm)
+    {
+        Cache.CountSheleredAttacks++;
+        opponentInstance.GetComponent<CharacterInstanceBhv>().Boost(opponentRealm, 0.25f);
     }
 
     private void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)

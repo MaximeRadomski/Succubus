@@ -64,6 +64,7 @@ public static class Cache
     public static int MusicAttackCount = 0;
     public static int NoodleShieldCount = 0;
     public static int HeldBoostedCount = 0;
+    public static int CountSheleredAttacks = 0;
     
     public static int PactFlatDamage = 0;
     public static int PactCritChance = 0;
@@ -118,6 +119,7 @@ public static class Cache
         MusicAttackCount = 0;
         NoodleShieldCount = 0;
         HeldBoostedCount = 0;
+        CountSheleredAttacks = 0;
 
         PactFlatDamage = 0;
         PactCritChance = 0;

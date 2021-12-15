@@ -132,7 +132,7 @@ public class MainMenuSceneBhv : SceneBhv
 
     private void ReportBug()
     {
-        LogService.SendLogsIfNecessary();
+        LogService.TrySendLogs();
         Application.OpenURL("https://discord.gg/dJG9KHVhCn");
         //Application.OpenURL("https://abject.itch.io/infidhells/devlog/242745/bug-report");
     }
