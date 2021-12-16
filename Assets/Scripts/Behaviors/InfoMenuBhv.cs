@@ -159,6 +159,8 @@ public class InfoMenuBhv : PopupBhv
                 {
                     var prefixe = opponent.Attacks[i].AttackType.GetAttribute<PrefixeAttribute>().ToLower();
                     var suffixe = opponent.Attacks[i].AttackType.GetAttribute<SuffixeAttribute>().ToLower();
+                    if (!string.IsNullOrEmpty(suffixe) && suffixe[suffixe.Length - 1] == 's' && opponent.Attacks[i].Param1 == 1)
+                        suffixe = suffixe.Substring(0, suffixe.Length - 1);
                     var param1 = !(string.IsNullOrEmpty(prefixe) && string.IsNullOrEmpty(suffixe)) ? $"({prefixe}{opponent.Attacks[i].Param1}{suffixe})" : string.Empty;
                     _fightFrame.transform.Find("OpponentAttack" + (i + 1)).GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}- {opponent.Attacks[i].AttackType.GetDescription().ToLower()} {param1}";
                 }

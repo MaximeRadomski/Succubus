@@ -329,9 +329,11 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Fallen Angel", Realm = Realm.Heaven, Type = OpponentType.Common, Haste = true,
-            HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 14,
+            HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LineBreak, 5) },
+                new OpponentAttack(AttackType.Shift, 2),
+                new OpponentAttack(AttackType.Ascension, 2, 1)
+                /*new OpponentAttack(AttackType.LineBreak, 5)*/ },
             GravityLevel = 7, Weight = 60,
             DialogId = 4, DialogPitch = 0.85f
         },

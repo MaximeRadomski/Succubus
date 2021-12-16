@@ -763,8 +763,12 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static Direction GetOrientation()
     {
+#if UNITY_ANDROID
         var orientation = PlayerPrefs.GetInt(Constants.PpOrientation, Constants.PpOrientationDefault == Direction.Vertical ? 0 : 1);
         return orientation == 0 ? Direction.Vertical : Direction.Horizontal;
+#else
+        return Direction.Vertical;
+#endif
     }
 
     public static int GetDialogProgress(string dialogLibelle)

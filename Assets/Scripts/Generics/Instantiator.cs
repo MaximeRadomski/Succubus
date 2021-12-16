@@ -341,11 +341,11 @@ public class Instantiator : MonoBehaviour
         return tmpPartitionNoteInstance;
     }
 
-    public GameObject NewShiftBlock(Vector2 position, int nbRows, Realm opponentRealm)
+    public GameObject NewShiftBlock(Vector2 position, int nbRows, Realm opponentRealm, int nbColumns = 10)
     {
         var tmpShiftBlockObject = Resources.Load<GameObject>("Prefabs/ShiftBlock");
         var tmpShiftBlockInstance = Instantiate(tmpShiftBlockObject, position, tmpShiftBlockObject.transform.rotation);
-        tmpShiftBlockInstance.GetComponent<ShiftBlockBhv>().Init(nbRows, opponentRealm);
+        tmpShiftBlockInstance.GetComponent<ShiftBlockBhv>().Init(nbRows, nbColumns, opponentRealm);
         return tmpShiftBlockInstance;
     }
 

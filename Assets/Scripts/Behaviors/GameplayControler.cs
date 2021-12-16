@@ -120,7 +120,9 @@ public class GameplayControler : MonoBehaviour
     private int _idCleanRows;
     private int _idVisionBlock;
     private int _idEndCooldown;
-
+    private List<List<int>> _dumbTriesDown;
+    private List<List<int>> _dumbTriesUp;
+    private bool _dumbTries = true;
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
@@ -211,16 +213,17 @@ public class GameplayControler : MonoBehaviour
         PlayerPrefsHelper.SaveHolder(null);
         if (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss)
             PlayerPrefsHelper.ResetLastFightPlayField();
-        else if (PlayFieldBhv != null)
-        {
+        else
             SaveLastFightPlayField();
-        }
-        Destroy(PlayFieldBhv.gameObject);
+        if (PlayFieldBhv?.gameObject != null)
+            Destroy(PlayFieldBhv.gameObject);
         Cache.InputLocked = false;
     }
 
     private void SaveLastFightPlayField()
     {
+        if (PlayFieldBhv == null)
+            return;
         var remainingBlocks = string.Empty;
         foreach (Transform piece in PlayFieldBhv.transform)
         {
@@ -332,11 +335,6 @@ public class GameplayControler : MonoBehaviour
         }
             
 #else
-        if (PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
-        {
-            SetHorizontalOrientationPC();
-            UpdatePanelsPositions();
-        }
         SetSwipeGameplayChoice((_gameplayChoice = GameplayChoice.SwipesRightHanded));
 #endif
         SetButtons();
@@ -414,6 +412,74 @@ public class GameplayControler : MonoBehaviour
             _basketballHoopBhv.RandomizePosition();
         }
         _rhythmIndicatorBhv = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>() ?? null;
+
+        _dumbTriesDown = new List<List<int>>();
+        _dumbTriesDown.Add(new List<int>() { 0, -1 });
+        _dumbTriesDown.Add(new List<int>() { 0, -2 });
+        _dumbTriesDown.Add(new List<int>() { 0, -3 });
+        _dumbTriesDown.Add(new List<int>() { 0, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { -1, 0 });
+        _dumbTriesDown.Add(new List<int>() { -1, -1 });
+        _dumbTriesDown.Add(new List<int>() { -1, -2 });
+        _dumbTriesDown.Add(new List<int>() { -1, -3 });
+        _dumbTriesDown.Add(new List<int>() { -1, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { +1, 0 });
+        _dumbTriesDown.Add(new List<int>() { +1, -1 });
+        _dumbTriesDown.Add(new List<int>() { +1, -2 });
+        _dumbTriesDown.Add(new List<int>() { +1, -3 });
+        _dumbTriesDown.Add(new List<int>() { +1, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { -2, 0 });
+        _dumbTriesDown.Add(new List<int>() { -2, -1 });
+        _dumbTriesDown.Add(new List<int>() { -2, -2 });
+        _dumbTriesDown.Add(new List<int>() { -2, -3 });
+        _dumbTriesDown.Add(new List<int>() { -2, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { +2, 0 });
+        _dumbTriesDown.Add(new List<int>() { +2, -1 });
+        _dumbTriesDown.Add(new List<int>() { +2, -2 });
+        _dumbTriesDown.Add(new List<int>() { +2, -3 });
+        _dumbTriesDown.Add(new List<int>() { +2, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { -3, 0 });
+        _dumbTriesDown.Add(new List<int>() { -3, -1 });
+        _dumbTriesDown.Add(new List<int>() { -3, -2 });
+        _dumbTriesDown.Add(new List<int>() { -3, -3 });
+        _dumbTriesDown.Add(new List<int>() { -3, -4 });
+
+        _dumbTriesDown.Add(new List<int>() { +3, 0 });
+        _dumbTriesDown.Add(new List<int>() { +3, -1 });
+        _dumbTriesDown.Add(new List<int>() { +3, -2 });
+        _dumbTriesDown.Add(new List<int>() { +3, -3 });
+        _dumbTriesDown.Add(new List<int>() { +3, -4 });
+
+        _dumbTriesUp = new List<List<int>>();
+        _dumbTriesUp.Add(new List<int>() { 0, +1 });
+        _dumbTriesUp.Add(new List<int>() { 0, +2 });
+        _dumbTriesUp.Add(new List<int>() { 0, +3 });
+        _dumbTriesUp.Add(new List<int>() { 0, +4 });
+        
+        _dumbTriesUp.Add(new List<int>() { -1, +1 });
+        _dumbTriesUp.Add(new List<int>() { -1, +2 });
+        _dumbTriesUp.Add(new List<int>() { -1, +3 });
+        _dumbTriesUp.Add(new List<int>() { -1, +4 });
+        
+        _dumbTriesUp.Add(new List<int>() { +1, +1 });
+        _dumbTriesUp.Add(new List<int>() { +1, +2 });
+        _dumbTriesUp.Add(new List<int>() { +1, +3 });
+        _dumbTriesUp.Add(new List<int>() { +1, +4 });
+        
+        _dumbTriesUp.Add(new List<int>() { -2, +1 });
+        _dumbTriesUp.Add(new List<int>() { -2, +2 });
+        _dumbTriesUp.Add(new List<int>() { -2, +3 });
+        _dumbTriesUp.Add(new List<int>() { -2, +4 });
+        
+        _dumbTriesUp.Add(new List<int>() { +2, +1 });
+        _dumbTriesUp.Add(new List<int>() { +2, +2 });
+        _dumbTriesUp.Add(new List<int>() { +2, +3 });
+        _dumbTriesUp.Add(new List<int>() { +2, +4 });
 
         _hasInit = true;
     }
@@ -601,20 +667,6 @@ public class GameplayControler : MonoBehaviour
         uiPanelRightPositionBhv.Rotated = true;
         uiPanelRightPositionBhv.UpdatePositions();
         RotatePanelChildren(_uiPanelRight);
-    }
-
-    public void SetHorizontalOrientationPC()
-    {
-        _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
-        var resolutionService = GetComponent<ResolutionService>();
-        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution(), horizontal: true);
-    }
-
-    public void ResetHorizontalOrientationPC()
-    {
-        _mainCamera.transform.position = Constants._cameraVerticalGameplayPosition;
-        var resolutionService = GetComponent<ResolutionService>();
-        resolutionService.SetResolution(PlayerPrefsHelper.GetResolution(), true);
     }
 
     private void RotatePanelChildren(GameObject panel)
@@ -1485,6 +1537,11 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
+        if (_dumbTries && !IsNextGravityFallPossible())
+        {
+            foreach (var dumbTry in _dumbTriesDown)
+                tries.Add(dumbTry);
+        }
         tries.Add(new List<int>() { 0, 0 });
         if (currentPieceModel.Letter != "I")
         {
@@ -1548,11 +1605,16 @@ public class GameplayControler : MonoBehaviour
                 tries.Add(new List<int>() { -1, -2 });
             }
         }
+        if (_dumbTries)
+        {
+            foreach (var dumbTry in _dumbTriesUp)
+                tries.Add(dumbTry);
+        }
 
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.Rotate(0.0f, 0.0f, -90.0f);
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < tries.Count; ++i)
         {
             CurrentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
             if (IsPiecePosValid(CurrentPiece))
@@ -1612,6 +1674,11 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
+        if (_dumbTries && !IsNextGravityFallPossible())
+        {
+            foreach (var dumbTry in _dumbTriesDown)
+                tries.Add(dumbTry);
+        }
         tries.Add(new List<int>() { 0, 0 });
         if (currentPieceModel.Letter != "I")
         {
@@ -1675,11 +1742,16 @@ public class GameplayControler : MonoBehaviour
                 tries.Add(new List<int>() { -2, +1 });
             }
         }
+        if (_dumbTries)
+        {
+            foreach (var dumbTry in _dumbTriesUp)
+                tries.Add(dumbTry);
+        }
 
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
         CurrentPiece.transform.Rotate(0.0f, 0.0f, 90.0f);
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < tries.Count; ++i)
         {
             CurrentPiece.transform.position += new Vector3(tries[i][0], tries[i][1], 0.0f);
             if (IsPiecePosValid(CurrentPiece))
@@ -1737,11 +1809,21 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
+        if (_dumbTries && !IsNextGravityFallPossible())
+        {
+            foreach (var dumbTry in _dumbTriesDown)
+                tries.Add(dumbTry);
+        }
         tries.Add(new List<int>() { 0, 0 });
         tries.Add(new List<int>() { +1, 0 });
         tries.Add(new List<int>() { -1, 0 });
         tries.Add(new List<int>() { 0, +1 });
         tries.Add(new List<int>() { 0, -1 });
+        if (_dumbTries)
+        {
+            foreach (var dumbTry in _dumbTriesUp)
+                tries.Add(dumbTry);
+        }
 
         _lastCurrentPieceValidPosition = CurrentPiece.transform.position;
         FadeBlocksOnLastPosition(CurrentPiece);
@@ -2986,7 +3068,7 @@ public class GameplayControler : MonoBehaviour
     {
         _soundControler.PlaySound(_idVisionBlock);
         int blocStartX = UnityEngine.Random.Range(0, 10 - wideness);
-        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(blocStartX + ((wideness - 1) / 2), 9.5f), 20, opponentRealm);
+        var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(blocStartX + ((wideness - 1) / 2), 9.5f), 20, opponentRealm, wideness);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);

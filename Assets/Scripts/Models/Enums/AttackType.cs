@@ -27,7 +27,7 @@ public enum AttackType
     [Description("Empty Row")]
     EmptyRow = 4, //Empty rows, has to destroy another line to clear eat, and not letting any piece filling it. (param1) -> nb Lines
     [Prefixe(null)]
-    [Suffixe(" lines")]
+    [Suffixe(" rows")]
     [Description("Vision Block")]
     VisionBlock = 5, //Rows that will go over yours to hide your gameplay (param1) -> nbRows, (param2) -> seconds
     [Prefixe(null)]
@@ -43,7 +43,7 @@ public enum AttackType
     [Description("Air Piece")]
     AirPiece = 8, //Makes your next (param1) pieces transparent
     [Prefixe(null)]
-    [Suffixe(null)]
+    [Suffixe(" pieces")]
     [Description("Forced Block")]
     ForcedBlock = 9, //(param2) blocks that are added to the next (param1) pieces
     [Prefixe(null)]
@@ -59,7 +59,7 @@ public enum AttackType
     [Description("Drone")]
     Drone = 12, //Invokes a drone that drops (param1) (number) (param2) (type) rows until destroyed
     [Prefixe(null)]
-    [Suffixe(null)]
+    [Suffixe(" rows")]
     [Description("Shift")]
     Shift = 13, //Shift (param1) rows on the left or right
     [Prefixe(null)]
@@ -99,11 +99,11 @@ public enum AttackType
     [Description("Line Break")]
     LineBreak = 22, //The next (param1) lines aren't destroyed, but set to the bottom of the playfield
     [Prefixe(null)]
-    [Suffixe(" attack")]
+    [Suffixe(" attacks")]
     [Description("Shelter")]
-    Shelter = 23, //The next attack is ignored.
+    Shelter = 23, //The next (param1) attacks are ignored.
     [Prefixe(null)]
-    [Suffixe(" lines")]
+    [Suffixe(" columns")]
     [Description("Ascension")]
     Ascension = 24, //Ascend a (param1) wide column of (param2) lines
 }
