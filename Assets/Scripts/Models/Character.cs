@@ -99,6 +99,7 @@ public class Character : Loot
     public int Yang = 0;
     public int SingleLinesDamageOverride = 0;
     public int QuadrupleLinesDamageOverride = 0;
+    public bool StupidRotationSystem = false;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

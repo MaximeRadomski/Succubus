@@ -120,9 +120,8 @@ public class GameplayControler : MonoBehaviour
     private int _idCleanRows;
     private int _idVisionBlock;
     private int _idEndCooldown;
-    private List<List<int>> _dumbTriesDown;
-    private List<List<int>> _dumbTriesUp;
-    private bool _dumbTries = true;
+    private List<List<int>> _stupidTriesDown;
+    private List<List<int>> _stupidTriesUp;
 
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
@@ -413,73 +412,73 @@ public class GameplayControler : MonoBehaviour
         }
         _rhythmIndicatorBhv = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>() ?? null;
 
-        _dumbTriesDown = new List<List<int>>();
-        _dumbTriesDown.Add(new List<int>() { 0, -1 });
-        _dumbTriesDown.Add(new List<int>() { 0, -2 });
-        _dumbTriesDown.Add(new List<int>() { 0, -3 });
-        _dumbTriesDown.Add(new List<int>() { 0, -4 });
+        _stupidTriesDown = new List<List<int>>();
+        _stupidTriesDown.Add(new List<int>() { 0, -1 });
+        _stupidTriesDown.Add(new List<int>() { 0, -2 });
+        _stupidTriesDown.Add(new List<int>() { 0, -3 });
+        _stupidTriesDown.Add(new List<int>() { 0, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { -1, 0 });
-        _dumbTriesDown.Add(new List<int>() { -1, -1 });
-        _dumbTriesDown.Add(new List<int>() { -1, -2 });
-        _dumbTriesDown.Add(new List<int>() { -1, -3 });
-        _dumbTriesDown.Add(new List<int>() { -1, -4 });
+        _stupidTriesDown.Add(new List<int>() { -1, 0 });
+        _stupidTriesDown.Add(new List<int>() { -1, -1 });
+        _stupidTriesDown.Add(new List<int>() { -1, -2 });
+        _stupidTriesDown.Add(new List<int>() { -1, -3 });
+        _stupidTriesDown.Add(new List<int>() { -1, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { +1, 0 });
-        _dumbTriesDown.Add(new List<int>() { +1, -1 });
-        _dumbTriesDown.Add(new List<int>() { +1, -2 });
-        _dumbTriesDown.Add(new List<int>() { +1, -3 });
-        _dumbTriesDown.Add(new List<int>() { +1, -4 });
+        _stupidTriesDown.Add(new List<int>() { +1, 0 });
+        _stupidTriesDown.Add(new List<int>() { +1, -1 });
+        _stupidTriesDown.Add(new List<int>() { +1, -2 });
+        _stupidTriesDown.Add(new List<int>() { +1, -3 });
+        _stupidTriesDown.Add(new List<int>() { +1, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { -2, 0 });
-        _dumbTriesDown.Add(new List<int>() { -2, -1 });
-        _dumbTriesDown.Add(new List<int>() { -2, -2 });
-        _dumbTriesDown.Add(new List<int>() { -2, -3 });
-        _dumbTriesDown.Add(new List<int>() { -2, -4 });
+        _stupidTriesDown.Add(new List<int>() { -2, 0 });
+        _stupidTriesDown.Add(new List<int>() { -2, -1 });
+        _stupidTriesDown.Add(new List<int>() { -2, -2 });
+        _stupidTriesDown.Add(new List<int>() { -2, -3 });
+        _stupidTriesDown.Add(new List<int>() { -2, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { +2, 0 });
-        _dumbTriesDown.Add(new List<int>() { +2, -1 });
-        _dumbTriesDown.Add(new List<int>() { +2, -2 });
-        _dumbTriesDown.Add(new List<int>() { +2, -3 });
-        _dumbTriesDown.Add(new List<int>() { +2, -4 });
+        _stupidTriesDown.Add(new List<int>() { +2, 0 });
+        _stupidTriesDown.Add(new List<int>() { +2, -1 });
+        _stupidTriesDown.Add(new List<int>() { +2, -2 });
+        _stupidTriesDown.Add(new List<int>() { +2, -3 });
+        _stupidTriesDown.Add(new List<int>() { +2, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { -3, 0 });
-        _dumbTriesDown.Add(new List<int>() { -3, -1 });
-        _dumbTriesDown.Add(new List<int>() { -3, -2 });
-        _dumbTriesDown.Add(new List<int>() { -3, -3 });
-        _dumbTriesDown.Add(new List<int>() { -3, -4 });
+        _stupidTriesDown.Add(new List<int>() { -3, 0 });
+        _stupidTriesDown.Add(new List<int>() { -3, -1 });
+        _stupidTriesDown.Add(new List<int>() { -3, -2 });
+        _stupidTriesDown.Add(new List<int>() { -3, -3 });
+        _stupidTriesDown.Add(new List<int>() { -3, -4 });
 
-        _dumbTriesDown.Add(new List<int>() { +3, 0 });
-        _dumbTriesDown.Add(new List<int>() { +3, -1 });
-        _dumbTriesDown.Add(new List<int>() { +3, -2 });
-        _dumbTriesDown.Add(new List<int>() { +3, -3 });
-        _dumbTriesDown.Add(new List<int>() { +3, -4 });
+        _stupidTriesDown.Add(new List<int>() { +3, 0 });
+        _stupidTriesDown.Add(new List<int>() { +3, -1 });
+        _stupidTriesDown.Add(new List<int>() { +3, -2 });
+        _stupidTriesDown.Add(new List<int>() { +3, -3 });
+        _stupidTriesDown.Add(new List<int>() { +3, -4 });
 
-        _dumbTriesUp = new List<List<int>>();
-        _dumbTriesUp.Add(new List<int>() { 0, +1 });
-        _dumbTriesUp.Add(new List<int>() { 0, +2 });
-        _dumbTriesUp.Add(new List<int>() { 0, +3 });
-        _dumbTriesUp.Add(new List<int>() { 0, +4 });
+        _stupidTriesUp = new List<List<int>>();
+        _stupidTriesUp.Add(new List<int>() { 0, +1 });
+        _stupidTriesUp.Add(new List<int>() { 0, +2 });
+        _stupidTriesUp.Add(new List<int>() { 0, +3 });
+        _stupidTriesUp.Add(new List<int>() { 0, +4 });
         
-        _dumbTriesUp.Add(new List<int>() { -1, +1 });
-        _dumbTriesUp.Add(new List<int>() { -1, +2 });
-        _dumbTriesUp.Add(new List<int>() { -1, +3 });
-        _dumbTriesUp.Add(new List<int>() { -1, +4 });
+        _stupidTriesUp.Add(new List<int>() { -1, +1 });
+        _stupidTriesUp.Add(new List<int>() { -1, +2 });
+        _stupidTriesUp.Add(new List<int>() { -1, +3 });
+        _stupidTriesUp.Add(new List<int>() { -1, +4 });
         
-        _dumbTriesUp.Add(new List<int>() { +1, +1 });
-        _dumbTriesUp.Add(new List<int>() { +1, +2 });
-        _dumbTriesUp.Add(new List<int>() { +1, +3 });
-        _dumbTriesUp.Add(new List<int>() { +1, +4 });
+        _stupidTriesUp.Add(new List<int>() { +1, +1 });
+        _stupidTriesUp.Add(new List<int>() { +1, +2 });
+        _stupidTriesUp.Add(new List<int>() { +1, +3 });
+        _stupidTriesUp.Add(new List<int>() { +1, +4 });
         
-        _dumbTriesUp.Add(new List<int>() { -2, +1 });
-        _dumbTriesUp.Add(new List<int>() { -2, +2 });
-        _dumbTriesUp.Add(new List<int>() { -2, +3 });
-        _dumbTriesUp.Add(new List<int>() { -2, +4 });
+        _stupidTriesUp.Add(new List<int>() { -2, +1 });
+        _stupidTriesUp.Add(new List<int>() { -2, +2 });
+        _stupidTriesUp.Add(new List<int>() { -2, +3 });
+        _stupidTriesUp.Add(new List<int>() { -2, +4 });
         
-        _dumbTriesUp.Add(new List<int>() { +2, +1 });
-        _dumbTriesUp.Add(new List<int>() { +2, +2 });
-        _dumbTriesUp.Add(new List<int>() { +2, +3 });
-        _dumbTriesUp.Add(new List<int>() { +2, +4 });
+        _stupidTriesUp.Add(new List<int>() { +2, +1 });
+        _stupidTriesUp.Add(new List<int>() { +2, +2 });
+        _stupidTriesUp.Add(new List<int>() { +2, +3 });
+        _stupidTriesUp.Add(new List<int>() { +2, +4 });
 
         _hasInit = true;
     }
@@ -1537,9 +1536,9 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
-        if (_dumbTries && !IsNextGravityFallPossible())
+        if (Character.StupidRotationSystem && !IsNextGravityFallPossible())
         {
-            foreach (var dumbTry in _dumbTriesDown)
+            foreach (var dumbTry in _stupidTriesDown)
                 tries.Add(dumbTry);
         }
         tries.Add(new List<int>() { 0, 0 });
@@ -1605,9 +1604,9 @@ public class GameplayControler : MonoBehaviour
                 tries.Add(new List<int>() { -1, -2 });
             }
         }
-        if (_dumbTries)
+        if (Character.StupidRotationSystem)
         {
-            foreach (var dumbTry in _dumbTriesUp)
+            foreach (var dumbTry in _stupidTriesUp)
                 tries.Add(dumbTry);
         }
 
@@ -1674,9 +1673,9 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
-        if (_dumbTries && !IsNextGravityFallPossible())
+        if (Character.StupidRotationSystem && !IsNextGravityFallPossible())
         {
-            foreach (var dumbTry in _dumbTriesDown)
+            foreach (var dumbTry in _stupidTriesDown)
                 tries.Add(dumbTry);
         }
         tries.Add(new List<int>() { 0, 0 });
@@ -1742,9 +1741,9 @@ public class GameplayControler : MonoBehaviour
                 tries.Add(new List<int>() { -2, +1 });
             }
         }
-        if (_dumbTries)
+        if (Character.StupidRotationSystem)
         {
-            foreach (var dumbTry in _dumbTriesUp)
+            foreach (var dumbTry in _stupidTriesUp)
                 tries.Add(dumbTry);
         }
 
@@ -1809,9 +1808,9 @@ public class GameplayControler : MonoBehaviour
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
-        if (_dumbTries && !IsNextGravityFallPossible())
+        if (Character.StupidRotationSystem && !IsNextGravityFallPossible())
         {
-            foreach (var dumbTry in _dumbTriesDown)
+            foreach (var dumbTry in _stupidTriesDown)
                 tries.Add(dumbTry);
         }
         tries.Add(new List<int>() { 0, 0 });
@@ -1819,9 +1818,9 @@ public class GameplayControler : MonoBehaviour
         tries.Add(new List<int>() { -1, 0 });
         tries.Add(new List<int>() { 0, +1 });
         tries.Add(new List<int>() { 0, -1 });
-        if (_dumbTries)
+        if (Character.StupidRotationSystem)
         {
-            foreach (var dumbTry in _dumbTriesUp)
+            foreach (var dumbTry in _stupidTriesUp)
                 tries.Add(dumbTry);
         }
 

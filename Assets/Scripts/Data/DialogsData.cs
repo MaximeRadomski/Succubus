@@ -302,6 +302,21 @@ public static class DialogsData
                     "Time is dead, and meaning has no meaning!!",
                     "Excuse me?",
                     "Existence is upside down and I reign supreme!!"
+                },
+                new List<string>()
+                {
+                    "Hi!! Name's Phill!",
+                    "Yes yes I know, you made quite an impression last time!",
+                    "Oh!! A timebender I see!",
+                    "More like an amulet user to be honest...",
+                    "Wait!! What?? The time amulet! Is it in your possession?",
+                    "I... I guess I've said too much...",
+                    "MINE!!"
+                },
+                new List<string>()
+                {
+                    "The Time Amulet, it shall be mine!!",
+                    "Not happening!"
                 }
             }
         },
@@ -316,6 +331,13 @@ public static class DialogsData
                     "RIP???",
                     "... AND TEAR!!!",
                     "You done?"
+                },
+                new List<string>()
+                {
+                    "[ grunts ]",
+                    "Aren't you supposed to be on our side?",
+                    "[ grunts stronger ]",
+                    "Well... I guess it's settled then..."
                 }
             }
         },
@@ -329,6 +351,18 @@ public static class DialogsData
                     "May be his grace remembered.",
                     "Wait, aren't you an angel? What are you doing here?",
                     "And may the culprits be damned for their sins."
+                }
+            }
+        },
+        { "Fallen Angel|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "A human? Fighting alongside demons?",
+                    "Isn't fighting for a noble cause justified?",
+                    "You dare call shattering the sacred order a noble cause?",
+                    "I dare call you a failure among angels!!"
                 }
             }
         },
@@ -407,6 +441,22 @@ public static class DialogsData
                     "It wasn't me I swear!! I was in admin the whole time!!",
                     "What are you talking about?",
                     "Well, your loss then!!"
+                },
+                new List<string>()
+                {
+                    "I saw you on camera!!",
+                    "What are you talking about?",
+                    "Sure, play innocent!"
+                },
+                new List<string>()
+                {
+                    "It is obviously a self report!!",
+                    "Still talking nonsense?",
+                    "Can't trust you anymore!"
+                },
+                new List<string>()
+                {
+                    "You clearly are the impostor!!"
                 }
             }
         },
@@ -619,6 +669,35 @@ public static class DialogsData
                     "Is this some kind of joke??",
                     "Why would it be?",
                     "A mere human, trying to get out of hell. My children are really taking this matter too lightly..."
+                }
+            }
+        },
+        { "Stan|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Podarge my little harpy, I wouldn't advise you to step closer.",
+                    "Oh come on Stan, for good old times, can't you make an exception for me?",
+                    "Don't you dare speaking to me like so, I'm not the little angel I used to be!!",
+                    "Yeah yeah I know the story... But looking at those eyes of yours, I can see what's left of your youth in the way you look at me!",
+                    "Know... your... place... woman...",
+                    "Hihihi!!"
+                },
+                new List<string>()
+                {
+                    "Podarge my little harpy, you didn't think I would let you go this easily this time!!",
+                    "This time? You know about the time amulet??",
+                    "Like I just stole it yesterday!",
+                    "Oh good to know! Can you explain to me how it exactly works then? I'm to afraid too ask your son, to be honest...",
+                    "Sigh... How can you oppose any resistance to my legions..."
+                },
+                new List<string>()
+                {
+                    "Podarge.",
+                    "Stan! My man!!",
+                    "...",
+                    "Oh come on, for good old times' sake!"
                 }
             }
         },
@@ -1109,7 +1188,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Bury me with my money..."
+                    "The good boy... He must never know!"
                 }
             }
         },

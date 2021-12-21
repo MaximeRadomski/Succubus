@@ -331,9 +331,7 @@ public static class OpponentsData
             Name = "Fallen Angel", Realm = Realm.Heaven, Type = OpponentType.Common, Haste = true,
             HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Shift, 2),
-                new OpponentAttack(AttackType.Ascension, 2, 1)
-                /*new OpponentAttack(AttackType.LineBreak, 5)*/ },
+                new OpponentAttack(AttackType.LineBreak, 5) },
             GravityLevel = 7, Weight = 60,
             DialogId = 4, DialogPitch = 0.85f
         },
@@ -618,5 +616,47 @@ public static class OpponentsData
         }
     };
 
-    public static List<Opponent> HeavenOpponents = new List<Opponent>();
+    public static List<Opponent> HeavenOpponents = new List<Opponent>()
+    {
+        new Opponent()
+        {
+            Name = "Igorr", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 20,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.VisionBlock, 6, 10) },
+            GravityLevel = 10, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Seraphim King", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            HpMax = 1111, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 6),
+                new OpponentAttack(AttackType.Shelter, 2)},
+            GravityLevel = 16, Weight = 999,
+            DialogId = 0, DialogPitch = 1.0f
+        },
+        new Opponent()
+        {
+            Name = "Divine Concil", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            HpMax = 2222, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Gate, 1),
+                new OpponentAttack(AttackType.OldSchool, 3),
+                new OpponentAttack(AttackType.Gate, 1)},
+            GravityLevel = 1, Weight = 999,
+            DialogId = 0, DialogPitch = 1.0f
+        },
+        new Opponent()
+        {
+            Name = "Dog", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            HpMax = 4444, Weakness = Weakness.Twists, DamageOnWeakness = 100, Immunity = Immunity.Combos, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 4),
+                new OpponentAttack(AttackType.Shift, 4),
+                new OpponentAttack(AttackType.Ascension, 4, 1)},
+            GravityLevel = 20, Weight = 999,
+            DialogId = 0, DialogPitch = 1.0f
+        }
+    };
 }

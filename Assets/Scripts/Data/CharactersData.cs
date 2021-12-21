@@ -100,14 +100,14 @@ public static class CharactersData
         {
             Id = 8, Name = "Melip", Kind = "Cherub", Realm = Realm.Heaven,
             Attack = 6,
-            Cooldown = 6,
+            Cooldown = 8,
             SpecialName = "Pride", SpecialDescription = "replaces your last 1 to 3 rows by a 1 to 3 T-Twist pattern."
         },
         new Character()
         {
             Id = 9, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
             Attack = 10,
-            Cooldown = 10,
+            Cooldown = 8,
             SpecialName = "Wisdom", SpecialDescription = "your current piece destroys any line it has a block within."
         },
         new Character()
