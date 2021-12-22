@@ -105,24 +105,24 @@ public static class CharactersData
         },
         new Character()
         {
-            Id = 9, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
-            Attack = 10,
-            Cooldown = 8,
-            SpecialName = "Wisdom", SpecialDescription = "your current piece destroys any line it has a block within."
+            Id = 9, Name = "Azrael", Kind = "Seduced Archangel", Realm = Realm.Heaven,
+            Attack = 12,
+            Cooldown = 20,
+            SpecialName = "Wisdom", SpecialDescription = "your current piece destroys any line it share a block with."
         },
         new Character()
         {
-            Id = 10, Name = "Azrael", Kind = "Seduced Archangel", Realm = Realm.Heaven,
-            Attack = 12,
-            Cooldown = 20,
-            SpecialName = "Punishment", SpecialDescription = "remove one random half of the collumns."
+            Id = 10, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
+            Attack = 10,
+            Cooldown = 8,
+            SpecialName = "Punishment", SpecialDescription = "removes one random half of the columns."
         },
         new Character()
         {
             Id = 11, Name = "Clarity", Kind = "Divine Betrayer", Realm = Realm.Heaven,
             Attack = 14,
             Cooldown = 20,
-            SpecialName = "Sky Down", SpecialDescription = "apply gravity on all current blocks in the play field (no bonuses)."
+            SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field (no bonuses)."
         },
     };
 

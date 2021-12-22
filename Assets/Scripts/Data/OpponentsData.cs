@@ -620,11 +620,12 @@ public static class OpponentsData
     {
         new Opponent()
         {
-            Name = "Igorr", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 20,
+            Name = "Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 120, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.VisionBlock, 6, 10) },
-            GravityLevel = 10, Weight = 40
+                new OpponentAttack(AttackType.LineBreak, 2),
+                new OpponentAttack(AttackType.DropBomb, 5) },
+            GravityLevel = 10, Weight = 20
         },
         new Opponent()
         {
@@ -633,7 +634,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 6),
                 new OpponentAttack(AttackType.Shelter, 2)},
-            GravityLevel = 16, Weight = 999,
+            GravityLevel = 18, Weight = 999,
             DialogId = 0, DialogPitch = 1.0f
         },
         new Opponent()
