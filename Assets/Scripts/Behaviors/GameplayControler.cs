@@ -2026,7 +2026,7 @@ public class GameplayControler : MonoBehaviour
     }
 
 
-    private bool IsPiecePosValid(GameObject piece, bool mimicPossible = false)
+    public bool IsPiecePosValid(GameObject piece, bool mimicPossible = false)
     {
         int id = 0;
         foreach (Transform child in piece.transform)

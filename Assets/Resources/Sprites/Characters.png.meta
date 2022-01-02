@@ -152,6 +152,9 @@ TextureImporter:
   - first:
       213: 2075355484574984046
     second: Characters_49
+  - first:
+      213: 8209100544923272303
+    second: Characters_50
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1298,6 +1301,27 @@ TextureImporter:
       bones: []
       spriteID: e6720c841d42dcc10800000000000000
       internalID: 2075355484574984046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_50
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f640e91b3759ce170800000000000000
+      internalID: 8209100544923272303
       vertices: []
       indices: 
       edges: []

@@ -59,7 +59,7 @@ public class CharSelSceneBhv : SceneBhv
         else if (lastClickedButton.name.Contains(Realm.Heaven.ToString()))
             realm = 8;
         var unlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString();
-        if (unlockedCharacters[realm + buttonId] == '0')
+        if (unlockedCharacters[realm + buttonId] == '0'  && false)
         {
             Instantiator.NewPopupYesNo("Locked", "you haven't unlocked this character yet", null, "Hmm...", null);
             return;

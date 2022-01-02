@@ -133,6 +133,8 @@ public class InfoMenuBhv : PopupBhv
 
     private void CharacterLore()
     {
+        if (string.IsNullOrEmpty(_character.Lore))
+            return;
         _instantiator.NewPopupYesNo("Lore", _character.Lore.ToLower(), null, "Ok", null);
     }
 

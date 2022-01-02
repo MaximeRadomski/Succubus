@@ -10,6 +10,6 @@ public enum Realm
     Hell = 0,
     [Description("quadruple lines destroy 1 opponent row.")]
     Earth = 1,
-    [Description("twists lower all cooldowns by 1.")]
+    [Description("twists lower all your cooldowns by 1.")]
     Heaven = 2
 }

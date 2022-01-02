@@ -197,6 +197,16 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             _poppingText += " cc";
         }
 
+        if (lastLockIsTwist)
+        {
+            if (_gameplayControler.CharacterRealm == Realm.Heaven)
+            {
+                Cache.SelectedCharacterSpecialCooldown -= Character.RealmPassiveEffect;
+                Cache.CurrentItemCooldown -= Character.RealmPassiveEffect;
+                _gameplayControler.UpdateItemAndSpecialVisuals();
+            }
+        }
+
         _score += tmpAdded;
         _verif[1] += tmpAdded / 3;
         DisplayScore();
