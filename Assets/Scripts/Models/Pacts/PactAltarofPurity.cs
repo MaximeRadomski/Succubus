@@ -8,7 +8,7 @@ public class PactAltarofPurity : Pact
     {
         Id = 13;
         Name = PactsData.Pacts[Id];
-        MaxFight = 3;
+        MaxFight = 4;
         Pros = $"grants you {Highlight("stealth")} until your first attack.";
         Cons = $"reduces your attack by {Highlight("-2 damage")}.";
         ShortDescription = $"stealth {Highlight("/")} -2 damage";

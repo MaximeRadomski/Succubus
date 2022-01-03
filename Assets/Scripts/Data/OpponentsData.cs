@@ -6,7 +6,7 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = Constants.OpponentsDebug;
-    public static bool OnlyOpponent = true;
+    public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
@@ -329,7 +329,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Fallen Angel", Realm = Realm.Heaven, Type = OpponentType.Common, Haste = true,
-            HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 5,
+            HpMax = 200, Weakness = Weakness.Consecutive, DamageOnWeakness = 40, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 5) },
             GravityLevel = 7, Weight = 60,
@@ -377,10 +377,10 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Monk", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 150, Weakness = Weakness.None, Cooldown = 4, Haste = true,
+            HpMax = 150, Weakness = Weakness.None, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.EmptyRow, 2),
-                new OpponentAttack(AttackType.DarkRow, 3) },
+                new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 8, Weight = 20
         },
         new Opponent()

@@ -8,7 +8,7 @@ public class PactDivineResurection : Pact
     {
         Id = 4;
         Name = PactsData.Pacts[Id];
-        MaxFight = 1;
+        MaxFight = 3;
         Pros = $"{Highlight("resurrects")} you on death.";
         Cons = $"cancels the {Highlight("step's loot")}.";
         ShortDescription = $"resurrects {Highlight("/")} no loot";

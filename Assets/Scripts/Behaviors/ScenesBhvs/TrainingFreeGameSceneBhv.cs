@@ -206,6 +206,19 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
                 _gameplayControler.UpdateItemAndSpecialVisuals();
             }
         }
+        if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines == 4)
+        {
+            int linesDestroyed = Character.RealmPassiveEffect;
+            linesDestroyed -= _gameplayControler.CheckForDarkRows(linesDestroyed);
+            if (linesDestroyed > 0)
+                linesDestroyed -= _gameplayControler.CheckForWasteRows(linesDestroyed);
+            if (linesDestroyed > 0)
+            {
+                for (int i = 0; i < linesDestroyed; ++i)
+                    _gameplayControler.CheckForLightRows();
+            }
+
+        }
 
         _score += tmpAdded;
         _verif[1] += tmpAdded / 3;

@@ -1100,7 +1100,7 @@ public class GameplayControler : MonoBehaviour
         CheckForLines();
     }
 
-    private void ResetLock()
+    public void ResetLock()
     {
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
@@ -2613,10 +2613,10 @@ public class GameplayControler : MonoBehaviour
         switch (type)
         {
             case AttackType.DarkRow:
-                AttackDarkRows(opponentInstance, param1 + attackBoost, opponentRealm);
+                AttackDarkRows(opponentInstance, param1 + (attackBoost / 2), opponentRealm);
                 break;
             case AttackType.WasteRow:
-                AttackWasteRows(opponentInstance, param1 + attackBoost, opponentRealm, param2);
+                AttackWasteRows(opponentInstance, param1 + (attackBoost / 2), opponentRealm, param2);
                 break;
             case AttackType.LightRow:
                 AttackLightRows(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
@@ -2637,32 +2637,32 @@ public class GameplayControler : MonoBehaviour
                 AttackAirPiece(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.ForcedBlock:
-                AttackForcedBlock(opponentInstance, opponentRealm, param1 + attackBoost, param2);
+                AttackForcedBlock(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
                 break;
             case AttackType.MirrorMirror:
             case AttackType.Intoxication:
-                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + attackBoost, param2);
+                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
                 break;
             case AttackType.Drone:
-                AttackDrone(opponentInstance, opponentRealm, param1 + attackBoost, param2);
+                AttackDrone(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
                 break;
             case AttackType.Shift:
                 AttackShift(opponentInstance, opponentRealm, param1);
                 break;
             case AttackType.Gate:
-                AttackGate(opponentInstance, opponentRealm, param1 + attackBoost);
+                AttackGate(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
                 break;
             case AttackType.Partition:
                 AttackPartition(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Shrink:
-                AttackShrink(opponentInstance, opponentRealm, param1 + attackBoost);
+                AttackShrink(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
                 break;
             case AttackType.OldSchool:
                 AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
                 break;
             case AttackType.Screwed:
-                AttackScrewed(opponentInstance, opponentRealm, param1 + attackBoost);
+                AttackScrewed(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
                 break;
             case AttackType.DropBomb:
                 AttackDropBomb(opponentInstance, opponentRealm, param1);
@@ -2671,7 +2671,7 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
@@ -2680,7 +2680,7 @@ public class GameplayControler : MonoBehaviour
                 AttackShelter(opponentInstance, opponentRealm);
                 break;
             case AttackType.Ascension:
-                AttackAscension(opponentInstance, opponentRealm, param1 + attackBoost, param2);
+                AttackAscension(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -2984,7 +2984,7 @@ public class GameplayControler : MonoBehaviour
                     (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 }
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
-                _soundControler.PlaySound(_idTwist, 0.85f);                    
+                _soundControler.PlaySound(_idTwist, 0.85f);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);

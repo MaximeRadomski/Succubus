@@ -133,8 +133,11 @@ public class DialogBoxBhv : FrameRateBehavior
             };
         else
         {
+            var runCharacter = PlayerPrefsHelper.GetRunCharacter();
             var tmpCharacterSubject = CharactersData.Characters.Find(c => c.Name == name);
-            if (tmpCharacterSubject == null)
+            if (name == runCharacter.Name)
+                tmpCharacterSubject = runCharacter;
+            else if (tmpCharacterSubject == null)
                 tmpCharacterSubject = CharactersData.CustomCharacters.Find(o => o.Name == name);
             if (tmpCharacterSubject != null)
                 tmpSubject = new DialogSubject() {

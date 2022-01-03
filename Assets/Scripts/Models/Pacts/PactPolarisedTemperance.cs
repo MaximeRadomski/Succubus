@@ -9,15 +9,15 @@ public class PactPolarisedTemperance : Pact
         Id = 6;
         Name = PactsData.Pacts[Id];
         MaxFight = 6;
-        Pros = $"grants you {Highlight("+2 damage")}.";
+        Pros = $"grants you {Highlight("+5 damage")}.";
         Cons = $"cancels your probability of {Highlight("critical hits")}.";
-        ShortDescription = $"+2 damage {Highlight("/")} no critical hits";
+        ShortDescription = $"+5 damage {Highlight("/")} no critical hits";
         Rarity = Rarity.Common;
     }
 
     public override void ApplyPact(Character character)
     {
-        Cache.PactFlatDamage += 2;
+        Cache.PactFlatDamage += 5;
         Cache.PactNoCrit = true;
     }
 }

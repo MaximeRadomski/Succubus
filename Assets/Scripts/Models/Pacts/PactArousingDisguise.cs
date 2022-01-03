@@ -8,7 +8,7 @@ public class PactArousingDisguise : Pact
     {
         Id = 18;
         Name = PactsData.Pacts[Id];
-        MaxFight = 3;
+        MaxFight = 8;
         Pros = $"prevents opponents {Highlight("haste attacks")}.";
         Cons = $"cancels your probability of {Highlight("critical hits")}.";
         ShortDescription = $"prevents haste {Highlight("/")} no critical hits";
