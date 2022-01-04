@@ -2038,7 +2038,7 @@ public class GameplayControler : MonoBehaviour
         return true;
     }
 
-    private bool IsBlockPosValid(Transform block, int blockId, Transform transformPiece, bool mimicPossible = false, Piece bhvPiece = null)
+    public bool IsBlockPosValid(Transform block, int blockId, Transform transformPiece, bool mimicPossible = false, Piece bhvPiece = null)
     {
         int roundedX = Mathf.RoundToInt(block.transform.position.x);
         int roundedY = Mathf.RoundToInt(block.transform.position.y);

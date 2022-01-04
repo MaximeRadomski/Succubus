@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockBhv : MonoBehaviour
+public class BlockBhv : FrameRateBehavior
 {
     public GameObject Shadow;
     public bool IsMimicked;
@@ -66,7 +66,7 @@ public class BlockBhv : MonoBehaviour
         transform.position = new Vector3(transform.position.x, roundedY, 0.0f);
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_spreading)
             Spreading();

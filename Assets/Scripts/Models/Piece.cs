@@ -4,7 +4,7 @@ using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 
-public class Piece : MonoBehaviour
+public class Piece : FrameRateBehavior
 {
     public string Letter;
     public float XFromSpawn;
@@ -88,13 +88,17 @@ public class Piece : MonoBehaviour
         }
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_isDoubleJumping)
         {
             DoubleJumping();
         }
-        else if (_disableAsked)
+    }
+
+    protected override void NormalUpdate()
+    {
+        if (_disableAsked && !_isDoubleJumping)
         {
             this.enabled = false;
         }

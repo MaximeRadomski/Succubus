@@ -55,7 +55,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         _isAnimated = true;
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_isAnimated)
             DecreaseLevelsContainer();

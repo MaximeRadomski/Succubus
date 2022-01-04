@@ -111,7 +111,10 @@ public class CharSelSceneBhv : SceneBhv
 
     private void CharacterLore()
     {
-        Instantiator.NewPopupYesNo("Lore", CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()].Lore.ToLower(), null, "Ok", null);
+        var lore = CharactersData.Characters[PlayerPrefsHelper.GetSelectedCharacterId()].Lore;
+        if (string.IsNullOrEmpty(lore))
+            return;
+        Instantiator.NewPopupYesNo("Lore", lore.ToLower(), null, "Ok", null);
     }
 
     private void GoToPrevious()

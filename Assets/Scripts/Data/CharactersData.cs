@@ -114,7 +114,7 @@ public static class CharactersData
         {
             Id = 10, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
             Attack = 10,
-            Cooldown = 20,
+            Cooldown = 16,
             SpecialName = "Punishment", SpecialDescription = "removes one random half of the columns."
         },
         new Character()

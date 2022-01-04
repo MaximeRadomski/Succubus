@@ -88,7 +88,7 @@ public class ButtonBhv : InputBhv
         _isResetingColor = true;
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_isStretching)
             StretchOnBegin();

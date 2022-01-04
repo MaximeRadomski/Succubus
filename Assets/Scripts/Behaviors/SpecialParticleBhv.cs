@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialParticleBhv : MonoBehaviour
+public class SpecialParticleBhv : FrameRateBehavior
 {
     private GameObject _characterInstance;
     private GameObject _particlesFront;
@@ -65,8 +65,8 @@ public class SpecialParticleBhv : MonoBehaviour
         _particlesBack.GetComponent<ParticleSystem>().Stop();
         _isCycling = false;
     }
-    
-    void Update()
+
+    override protected void FrameUpdate()
     {
         if (_isCycling)
         {

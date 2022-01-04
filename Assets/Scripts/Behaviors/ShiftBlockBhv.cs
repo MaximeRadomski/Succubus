@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ShiftBlockBhv : MonoBehaviour
+public class ShiftBlockBhv : FrameRateBehavior
 {
     private Realm _realm;
     private int _nbRows;
@@ -41,7 +41,7 @@ public class ShiftBlockBhv : MonoBehaviour
         }
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_framesBeforeFade-- > 0)
             return;

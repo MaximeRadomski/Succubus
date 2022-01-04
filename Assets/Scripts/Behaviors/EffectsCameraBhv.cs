@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectsCameraBhv : MonoBehaviour
+public class EffectsCameraBhv : FrameRateBehavior
 {
     private GameObject _panelGame;
     private GameObject _textureQuad;
@@ -75,7 +75,7 @@ public class EffectsCameraBhv : MonoBehaviour
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(_character.ItemCooldownReducer * (cooldown / 3));
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_isIntoxicated)
             Intoxicated();

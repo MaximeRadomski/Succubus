@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IconInstanceBhv : MonoBehaviour
+public class IconInstanceBhv : FrameRateBehavior
 {
     private SpriteRenderer _spriteRenderer;
     
@@ -28,7 +28,7 @@ public class IconInstanceBhv : MonoBehaviour
         _hasInit = true;
     }
 
-    void Update()
+    override protected void FrameUpdate()
     {
         if (_popping)
             Popping();

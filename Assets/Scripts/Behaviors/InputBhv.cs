@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InputBhv : MonoBehaviour
+public abstract class InputBhv : FrameRateBehavior
 {
     public int Layer = 0;
     public bool ForcedLayer = false;

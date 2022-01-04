@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuSelectorBhv : MonoBehaviour
+public class MenuSelectorBhv : FrameRateBehavior
 {
     private GameObject _targetGameObject;
     private SoundControlerBhv _soundControler;
@@ -74,7 +74,7 @@ public class MenuSelectorBhv : MonoBehaviour
         _resetingScaleAndOpacity = true;
     }
 
-    private void Update()
+    override protected void FrameUpdate()
     {
         if (_clickIng)
             Clicking();
