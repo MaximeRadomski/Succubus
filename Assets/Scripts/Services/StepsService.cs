@@ -392,12 +392,15 @@ public class StepsService
             realmOpponents = OpponentsData.EarthOpponents;
         else if (run.CurrentRealm == Realm.Heaven)
             realmOpponents = OpponentsData.HeavenOpponents;
+
+        if (Cache.CurrentBossId != 0)
+            return new List<Opponent>() { realmOpponents[Cache.CurrentBossId].Clone() };
+
         var idFromEnd = 1;
-        if (run.RealmLevel == 2)
-            idFromEnd = 2; 
-        else if (run.RealmLevel == 1)
-            idFromEnd = 3;
+        if (run.RealmLevel == 1)
+            idFromEnd = Random.Range(2, 4);
         var idBoss = realmOpponents.Count - idFromEnd;
+        Cache.CurrentBossId = idBoss; 
         return new List<Opponent>() { realmOpponents[idBoss].Clone() };
     }
 }

@@ -5,6 +5,7 @@ public class VisionBlockBhv : MonoBehaviour
 {
     private TMPro.TextMeshPro _secondsText;
     private IconInstanceBhv _secondsTextIconInstance;
+    private GameplayControler _gameplayControler;
     private bool _isInGameScene;
     private int _cooldown;
     private float _nextTick;
@@ -13,13 +14,16 @@ public class VisionBlockBhv : MonoBehaviour
     private Realm _realm;
     private int _nbRows;
 
-    public void Init(int nbRows, int nbSeconds, Realm opponentRealm)
+    public void Init(int nbRows, int nbSeconds, Realm opponentRealm, GameplayControler gameplayControler)
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         GetScene();
         _realm = opponentRealm;
         _nbRows = nbRows;
         _hasPausedOnce = false;
+        _gameplayControler = gameplayControler;
+        if (_gameplayControler.Character.XRay)
+            Reflect();
         var background = transform.Find("Background");
         background.localScale = new Vector3(background.localScale.x, background.localScale.y * _nbRows, 1.0f);
         foreach (Transform child in transform)
@@ -117,5 +121,11 @@ public class VisionBlockBhv : MonoBehaviour
             End();
         else
             UpdateTextAndSetNextTick();
+    }
+
+    private void Reflect()
+    {
+        StartCoroutine(_gameplayControler.Reflect());
+        Invoke(nameof(Reflect), 0.5f);
     }
 }

@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Fallen Angel"; 
+        var name = "Fire Cultist"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -338,7 +338,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Baphomeh", Realm = Realm.Hell, Type = OpponentType.Boss,
-            HpMax = 333, Weakness = Weakness.None, Cooldown = 10,
+            HpMax = 444, Weakness = Weakness.None, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 2, 1) },
             GravityLevel = 6, Weight = 999,
@@ -347,11 +347,11 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Devil's Advocate", Realm = Realm.Earth, Type = OpponentType.Boss,
-            HpMax = 500, Weakness = Weakness.None, Cooldown = 3,
+            HpMax = 444, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 4),
                 new OpponentAttack(AttackType.Shift, 2)},
-            GravityLevel = 14, Weight = 999,
+            GravityLevel = 12, Weight = 999,
             DialogId = 3, DialogPitch = 0.35f
         },
         new Opponent()
@@ -588,18 +588,19 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Tactical Nun", Realm = Realm.Earth, Type = OpponentType.Boss,
-            HpMax = 500, Weakness = Weakness.None, Cooldown = 2,
+            HpMax = 600, Weakness = Weakness.None, Cooldown = 2,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1),
                 new OpponentAttack(AttackType.Shift, 40),
-                new OpponentAttack(AttackType.Drill, 1),},
+                new OpponentAttack(AttackType.Drill, 1),
+                new OpponentAttack(AttackType.Screwed, 1) },
             GravityLevel = 16, Weight = 999,
             DialogId = 4, DialogPitch = 1.25f, HeadDown = true
         },
         new Opponent()
         {
             Name = "Supreme Bishop", Realm = Realm.Earth, Type = OpponentType.Boss,
-            HpMax = 700, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10, Haste = true,
+            HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 8) },
             GravityLevel = 10, Weight = 999,

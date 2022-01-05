@@ -39,11 +39,11 @@ public class StepsAscensionSceneBhv : SceneBhv
         int idLayer = 0;
         for (int idRealm = 0; idRealm <= _run.CurrentRealm.GetHashCode(); ++idRealm)
         {
-            var maxLevel = 3;
+            var maxLevel = 2;
             if (idRealm == _run.CurrentRealm.GetHashCode())
                 maxLevel = _run.RealmLevel;
             for (int idLevel = 0; idLevel < maxLevel; ++idLevel)
-                Instantiator.NewLevel((_levelHeight * idLevel) + (_levelHeight * 3 * idRealm), idRealm, idLayer++, _levelsContainer);
+                Instantiator.NewLevel((_levelHeight * idLevel) + (_levelHeight * 2 * idRealm), idRealm, idLayer++, _levelsContainer);
         }
         var yTarget = _levelHeight * _levelsContainer.transform.childCount;
         _levelsContainerTarget = new Vector3(0.0f, _levelsContainer.transform.position.y - yTarget, 0.0f);

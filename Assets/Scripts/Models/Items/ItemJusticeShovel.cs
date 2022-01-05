@@ -23,6 +23,7 @@ public class ItemJusticeShovel : Item
         var leftColumnId = Random.Range(0, 8);
         _gameplayControler.DeleteColumn(leftColumnId);
         _gameplayControler.DeleteColumn(leftColumnId + 1);
+        _gameplayControler.DropGhost();
         return base.Effect();
     }
 }

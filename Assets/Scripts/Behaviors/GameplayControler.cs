@@ -2764,7 +2764,7 @@ public class GameplayControler : MonoBehaviour
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm);
+        var visionBlockInstance = Instantiator.NewVisionBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)currentHiest), nbRows, nbSeconds, opponentRealm, this);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, CharacterRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbRows / 2));

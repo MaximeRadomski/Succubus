@@ -35,7 +35,9 @@ public class SpecialSkyDown : Special
                 }
             }
         }
+        _gameplayControler.StartCoroutine(_gameplayControler.Reflect());
         _gameplayControler.GameplayOnHold = oldOnHoldValue;
+        _gameplayControler.DropGhost();
         return true;
     }
 

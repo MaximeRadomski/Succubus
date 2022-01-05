@@ -101,28 +101,32 @@ public static class CharactersData
             Id = 8, Name = "Melip", Kind = "Cherub", Realm = Realm.Heaven,
             Attack = 6,
             Cooldown = 6,
-            SpecialName = "Pride", SpecialDescription = "replaces your last 2 to 3 rows by a 2 to 3 T-twist pattern."
+            SpecialName = "Pride", SpecialDescription = "replaces your last 2 to 3 rows by a 2 to 3 T-twist pattern.",
+            DialogId = 5, DialogPitch = 1.6f
         },
         new Character()
         {
             Id = 9, Name = "Azrael", Kind = "Seduced Archangel", Realm = Realm.Heaven,
             Attack = 12,
             Cooldown = 2,
-            SpecialName = "Wisdom", SpecialDescription = "your next piece destroys any blocks it touches."
+            SpecialName = "Wisdom", SpecialDescription = "your next piece destroys any blocks it touches.",
+            DialogId = 5, DialogPitch = 0.6f
         },
         new Character()
         {
             Id = 10, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
             Attack = 10,
             Cooldown = 16,
-            SpecialName = "Punishment", SpecialDescription = "removes one random half of the columns."
+            SpecialName = "Punishment", SpecialDescription = "removes one random half of the columns.",
+            DialogId = 5, DialogPitch = 1.0f
         },
         new Character()
         {
             Id = 11, Name = "Clarity", Kind = "Throne Betrayer", Realm = Realm.Heaven,
             Attack = 14,
             Cooldown = 20,
-            SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field (no bonuses)."
+            SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field (no bonuses).",
+            DialogId = 5, DialogPitch = 0.8f
         },
     };
 

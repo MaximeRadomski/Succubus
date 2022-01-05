@@ -1451,7 +1451,7 @@ GameObject:
   - component: {fileID: 528157142}
   - component: {fileID: 528157141}
   m_Layer: 0
-  m_Name: R1;B2;L8
+  m_Name: R1;B2;L4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1773,7 +1773,7 @@ GameObject:
   - component: {fileID: 641638831}
   - component: {fileID: 641638830}
   m_Layer: 0
-  m_Name: R1;B2;L4
+  m_Name: R1;B2;L2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5088,6 +5088,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1499422719}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!23 &1499422719
@@ -5531,6 +5532,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1592072030}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!23 &1592072030
@@ -6253,6 +6255,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1844560467}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: -1078536199
   _SortingOrder: 0
 --- !u!23 &1844560467
@@ -6950,6 +6953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea7bbf23d9e81438ebb683e6e29394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BackgroundParticles: 1
 --- !u!212 &2090142771
 SpriteRenderer:
   m_ObjectHideFlags: 0

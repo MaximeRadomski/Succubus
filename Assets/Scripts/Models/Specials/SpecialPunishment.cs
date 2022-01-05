@@ -40,6 +40,7 @@ public class SpecialPunishment : Special
         }
         for (int i = start; i <= end; ++i)
             _gameplayControler.DeleteColumn(i);
+        _gameplayControler.DropGhost();
         return true;
     }
 }

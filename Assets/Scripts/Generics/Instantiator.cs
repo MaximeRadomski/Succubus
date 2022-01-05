@@ -313,11 +313,11 @@ public class Instantiator : MonoBehaviour
         return tmpTextInstance;
     }
 
-    public GameObject NewVisionBlock(Vector2 position, int nbRows, int nbSeconds, Realm opponentRealm)
+    public GameObject NewVisionBlock(Vector2 position, int nbRows, int nbSeconds, Realm opponentRealm, GameplayControler gameplayControler)
     {
         var tmpVisionBlockObject = Resources.Load<GameObject>("Prefabs/VisionBlock");
         var tmpVisionBlockInstance = Instantiate(tmpVisionBlockObject, position, tmpVisionBlockObject.transform.rotation);
-        tmpVisionBlockInstance.GetComponent<VisionBlockBhv>().Init(nbRows, nbSeconds, opponentRealm);
+        tmpVisionBlockInstance.GetComponent<VisionBlockBhv>().Init(nbRows, nbSeconds, opponentRealm, gameplayControler);
         return tmpVisionBlockInstance;
     }
 

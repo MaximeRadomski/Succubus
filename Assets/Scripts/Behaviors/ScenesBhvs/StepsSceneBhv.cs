@@ -320,7 +320,7 @@ public class StepsSceneBhv : SceneBhv
             if (!result)
                 return false;
 
-            _run.RealmLevel = 3;
+            _run.RealmLevel = 2;
             _run.IncreaseLevel();
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             if (currentItem != null)

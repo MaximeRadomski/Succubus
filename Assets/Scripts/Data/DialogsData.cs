@@ -800,6 +800,17 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Karen
+        { "Karen|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Let me see the manager!!"
+                }
+            }
+        },
+        #endregion
         #region Crusader
         { "Crusader|Sir Vixid",
             new List<List<string>>()

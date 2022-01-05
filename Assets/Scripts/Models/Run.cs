@@ -58,7 +58,7 @@ public class Run
     public void IncreaseLevel()
     {
         ++RealmLevel;
-        if (RealmLevel > 3)
+        if (RealmLevel > 2)
         {            
             RealmLevel = 1;
             if (CurrentRealm == Realm.Hell)

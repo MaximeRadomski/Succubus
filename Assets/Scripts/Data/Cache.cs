@@ -20,6 +20,7 @@ public static class Cache
     public static List<int> CurrentHighScoreContext;
     public static bool OnlyMouseInMenu;
     public static bool KeyboardUp;
+    public static int CurrentBossId;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;

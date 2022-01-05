@@ -499,6 +499,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (CurrentOpponent.Type == OpponentType.Boss)
             {
+                Cache.CurrentBossId = 0;
                 PlayerPrefsHelper.IncrementRunBossVanquished();
                 var realmIdBeforeIncrease = _run.CurrentRealm.GetHashCode();
                 var hasUnlockedSkin = false;
