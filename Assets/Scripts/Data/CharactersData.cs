@@ -102,6 +102,7 @@ public static class CharactersData
             Attack = 6,
             Cooldown = 6,
             SpecialName = "Pride", SpecialDescription = "replaces your last 2 to 3 rows by a 2 to 3 T-twist pattern.",
+            Lore = "Born malformed, Melip was quickly categorized as impure. He has lived with hatred from his kind, and swore one day to take revenge.",
             DialogId = 5, DialogPitch = 1.6f
         },
         new Character()
@@ -110,22 +111,25 @@ public static class CharactersData
             Attack = 12,
             Cooldown = 2,
             SpecialName = "Wisdom", SpecialDescription = "your next piece destroys any blocks it touches.",
+            Lore = "Being the angel of death made him reconsider his education between life and death but also between good and bad. Azrael made up his mind, he doesn't want to be good anymore.",
             DialogId = 5, DialogPitch = 0.6f
         },
         new Character()
         {
-            Id = 10, Name = "Enepsigos", Kind = "Seraphim", Realm = Realm.Heaven,
+            Id = 10, Name = "Uriel", Kind = "Seraphim", Realm = Realm.Heaven,
             Attack = 10,
             Cooldown = 16,
             SpecialName = "Punishment", SpecialDescription = "removes one random half of the columns.",
+            Lore = "Banished from the skies after an argument about chasteness amongst angels, Uriel took the liberty to steal the Spear of Longinus in it's way out, granting him an immense power!",
             DialogId = 5, DialogPitch = 1.0f
         },
         new Character()
         {
-            Id = 11, Name = "Clarity", Kind = "Throne Betrayer", Realm = Realm.Heaven,
+            Id = 11, Name = "Zaphkiel", Kind = "Throne Betrayer", Realm = Realm.Heaven,
             Attack = 14,
             Cooldown = 20,
             SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field (no bonuses).",
+            Lore = "Simple throne but hard worker, Zaphkiel made his way to the top of the Divine Council. But his dedication, considered as too dangerous for the power in place, put him into prison.",
             DialogId = 5, DialogPitch = 0.8f
         },
     };

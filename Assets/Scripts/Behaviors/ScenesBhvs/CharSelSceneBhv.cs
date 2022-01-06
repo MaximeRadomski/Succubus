@@ -85,6 +85,7 @@ public class CharSelSceneBhv : SceneBhv
                 _selectedSkin = 0;
                 PlayerPrefsHelper.SaveSelectedSkinId(0);
             }
+            GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
         }
         else
         {
@@ -92,12 +93,9 @@ public class CharSelSceneBhv : SceneBhv
             {
                 this.Instantiator.NewPopupCharacterSkins(tmpChar.Id, characterSkins, _selectedSkin, (int selectedSkin) =>
                 {
-                    if (_selectedSkin != selectedSkin)
-                    {
-                        _selectedSkin = selectedSkin;
-                        PlayerPrefsHelper.SaveSelectedSkinId(_selectedSkin);
-                        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
-                    }
+                    _selectedSkin = selectedSkin;
+                    PlayerPrefsHelper.SaveSelectedSkinId(_selectedSkin);
+                    GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
                 });
             }
             else
@@ -105,8 +103,8 @@ public class CharSelSceneBhv : SceneBhv
                 _selectedSkin = 0;
                 PlayerPrefsHelper.SaveSelectedSkinId(0);
             }
+            GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, 0);
         }
-        GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(tmpChar.Id, _selectedSkin);
     }
 
     private void CharacterLore()

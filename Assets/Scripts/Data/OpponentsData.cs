@@ -333,7 +333,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 5) },
             GravityLevel = 7, Weight = 60,
-            DialogId = 4, DialogPitch = 0.85f
+            DialogId = 5, DialogPitch = 0.85f
         },
         new Opponent()
         {
@@ -467,7 +467,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 5),
                 new OpponentAttack(AttackType.DropBomb, 6) },
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 40,
+            DialogId = 5, DialogPitch = 0.5f
         },
         new Opponent()
         {
@@ -640,7 +641,7 @@ public static class OpponentsData
         },
         new Opponent()
         {
-            Name = "Divine Concil", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            Name = "Divine Council", Realm = Realm.Heaven, Type = OpponentType.Boss,
             HpMax = 2222, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1),

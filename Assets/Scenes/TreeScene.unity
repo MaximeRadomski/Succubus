@@ -6393,7 +6393,7 @@ GameObject:
   - component: {fileID: 1914200271}
   - component: {fileID: 1914200270}
   m_Layer: 0
-  m_Name: R2;B2;L6
+  m_Name: R2;B2;L4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

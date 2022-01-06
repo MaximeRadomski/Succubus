@@ -47,7 +47,7 @@ public class PopupCharacterSkinsBhv : PopupBhv
     private void NegativeDelegate()
     {
         Cache.DecreaseInputLayer();
-        _resultAction?.Invoke(_currentSelectedSkin);
+        _resultAction?.Invoke(0);
         Destroy(gameObject);
     }
 }
