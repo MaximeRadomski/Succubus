@@ -40,5 +40,27 @@ public static class CinematicsData
             "The divine has been watching, and sent messengers to unveil its word.",
             "The true fight was about to begin."
         },
+        new List<string>()
+        {
+            "Having its head cut, clergy was no more.",
+            "Suddenly, a gate opened, as an invitation to fulfill the twins' destiny.",
+
+            "A heavenly voice whispered with a deafing tone: \"Come, my children\".",
+            "Night fell instantly, and stairs of light came on their way.",
+
+            "Heaven... The forbidden realm... Its ruler...",
+            "An unknown kingdom stood before them, with all the questions it raised!"
+        },
+        new List<string>()
+        {
+            "Heaven as we know it was no more. The twins established a new precept in this very day.",
+            "\"You don't fuck with the devil.\"",
+
+            "Soon the human would remake their religion, as they always do.",
+            "But this time, holiness would know what borders not to cross.",
+
+            "Because down below, demons and sinners would always fight for their rights.",
+            "Thanks for playing!"
+        },
     };
 }

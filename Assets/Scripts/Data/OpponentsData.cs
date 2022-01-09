@@ -372,7 +372,7 @@ public static class OpponentsData
             HpMax = 100, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 3) },
-            GravityLevel = 5, Weight = 10
+            GravityLevel = 5, Weight = 20
         },
         new Opponent()
         {
@@ -399,7 +399,7 @@ public static class OpponentsData
             HpMax = 30, Weakness = Weakness.None, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shrink, 2) },
-            GravityLevel = 10, Weight = 5
+            GravityLevel = 10, Weight = 10
         },
         new Opponent()
         {
@@ -604,7 +604,7 @@ public static class OpponentsData
             HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 8) },
-            GravityLevel = 10, Weight = 999,
+            GravityLevel = 12, Weight = 999,
             DialogId = 0, DialogPitch = 1.0f
         },
         new Opponent()
@@ -622,12 +622,112 @@ public static class OpponentsData
     {
         new Opponent()
         {
+            Name = "Watcher", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 200, Cooldown = 3, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Partition, 1, 1) },
+            GravityLevel = 12, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Winged Liberty", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 200, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Shelter, 1),
+                new OpponentAttack(AttackType.LightRow, 4, 10),
+                new OpponentAttack(AttackType.Shelter, 1),
+                new OpponentAttack(AttackType.EmptyRow, 5) },
+            GravityLevel = 12, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Shield of Light", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 500, Cooldown = 3, Haste = true, Immunity = Immunity.xLines, XLineImmunity = 3,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Shelter, 1),
+                new OpponentAttack(AttackType.Shift, 4) },
+            GravityLevel = 12, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Truthful Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 250, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
+            GravityLevel = 14, Weight = 30
+        },
+        new Opponent()
+        {
+            Name = "Lower Throne", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 300, Cooldown = 5, Haste = true, Immunity = Immunity.Twists,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 3) },
+            GravityLevel = 16, Weight = 30
+        },
+        new Opponent()
+        {
             Name = "Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 120, Cooldown = 5, Haste = true,
+            HpMax = 250, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 2),
                 new OpponentAttack(AttackType.DropBomb, 5) },
             GravityLevel = 10, Weight = 20
+        },
+        new Opponent()
+        {
+            Name = "Enchant", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 300, Cooldown = 3, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drone, 2, 0),
+                new OpponentAttack(AttackType.VisionBlock, 4, 2),
+                new OpponentAttack(AttackType.Drone, 2, 2),
+                new OpponentAttack(AttackType.VisionBlock, 4, 2),
+             },
+            GravityLevel = 14, Weight = 40
+        },
+        new Opponent()
+        {
+            Name = "Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 500, Cooldown = 5, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 4),
+                new OpponentAttack(AttackType.Ascension, 4, 1)},
+            GravityLevel = 16, Weight = 50
+        },
+        new Opponent()
+        {
+            Name = "Kinky Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
+            HpMax = 600, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Drill, 4),
+                new OpponentAttack(AttackType.Gate, 2) },
+            GravityLevel = 16, Weight = 50
+        },
+        new Opponent()
+        {
+            Name = "Duality Angel", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 350, Cooldown = 5, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Ascension, 1, 4),
+                new OpponentAttack(AttackType.Tunnel, 4) },
+            GravityLevel = 16, Weight = 50
+        },
+        new Opponent()
+        {
+            Name = "Harambe", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 800, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Ascension, 9, 1) },
+            GravityLevel = 16, Weight = 60
+        },
+        new Opponent()
+        {
+            Name = "Holy Raptor", Realm = Realm.Earth, Type = OpponentType.Common,
+            HpMax = 400, Cooldown = 10, Haste = true, Immunity = Immunity.Cooldown,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.DropBomb, 7),
+                new OpponentAttack(AttackType.Screwed, 1) },
+            GravityLevel = 16, Weight = 60
         },
         new Opponent()
         {

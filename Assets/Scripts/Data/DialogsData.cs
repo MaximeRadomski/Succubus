@@ -1307,6 +1307,97 @@ public static class DialogsData
         },
         #endregion
 
+        #region Harambe
+        { "Harambe",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Nice one kiddo. Until next time."
+                }
+            }
+        },
+        { "Harambe|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Wasn't my fault kiddo.",
+                    "I know... We all know..."
+                }
+            }
+        },
+        #endregion
+        #region Seraphim King
+        { "Seraphim King",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "My subjects shall avenge me!!"
+                }
+            }
+        },
+        { "Seraphim King|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares entering my court!"
+                }
+            }
+        },
+        #endregion
+        #region Divine Council
+        { "Divine Council",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "The one... Could it be?"
+                }
+            }
+        },
+        { "Divine Council|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Do you realise the punishment your soul will suffer for stepping foot on this very realm?",
+                    "It doesn't affect me that much I have to say... I have friends on the other side."
+                }
+            }
+        },
+        #endregion
+        #region DOG
+        { "DOG",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "No! Noooooooooo!!!"
+                }
+            }
+        },
+        { "DOG|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Wait... Just a dog? You are kidding me?",
+                    "And why would I. Humankind put me here, as I am man's best friend, and therefore his best ruler.",
+                    "Or... It's just god spelled backward?",
+                    "Simple misconception, I am the true ruler of all realms. And you should start to accept it.",
+                    "That's where you're wrong, one entity shouldn't have all the rights. Have you seen how you neglected hell itself? One of your realms?",
+                    "Hell is nothing more than a shithole, which fits it perfectly.",
+                    "Well, people from this shithole are sick of it, and you're going to pay for it!",
+                    "Hahaha!! Come, my child, and enjoy your last moments!"
+                }
+            }
+        },
+        #endregion
+
         #region The Beholder
         { "The Beholder",
             new List<List<string>>()
