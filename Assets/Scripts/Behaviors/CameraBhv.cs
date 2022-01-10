@@ -119,7 +119,7 @@ public class CameraBhv : FrameRateBehavior
 
     public void Pounder(float nbPixel)
     {
-        Debug.Log($"Strength: {nbPixel.ToString("00.00")}");
+        //Debug.Log($"Strength: {nbPixel.ToString("00.00")}");
         _targetPosition = transform.position + new Vector3(0.0f, Constants.Pixel * nbPixel * 3, 0.0f);
         _isResetingPosition = false;
         _isPoundering = true;

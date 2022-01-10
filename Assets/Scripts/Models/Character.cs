@@ -95,11 +95,15 @@ public class Character : Loot
     public int InstantLineClear = 0;
     public int HolyMantle = 0;
     public int HeldBoosted = 0;
+    public int TwistBoostedDamage = 0;
     public int Ying = 0;
     public int Yang = 0;
     public int SingleLinesDamageOverride = 0;
     public int QuadrupleLinesDamageOverride = 0;
     public bool StupidRotationSystem = false;
+    public int BonusAllowedMovesBeforeLock = 0;
+    public int NegateAttackBoost = 0;
+    public int CookieSpecialBonus = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

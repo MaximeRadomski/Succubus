@@ -748,6 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea7bbf23d9e81438ebb683e6e29394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BackgroundParticles: 1
 --- !u!212 &380368938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1875,7 +1876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 8.1944
+      value: 8.9
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1931,7 +1932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
-      value: -4
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingOrder
@@ -2402,7 +2403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_Name
-      value: Vanquished
+      value: Rollback
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
@@ -2574,7 +2575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
-      value: -4
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingOrder
@@ -3200,7 +3201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
-      value: -4
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4535579311587060280, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingOrder

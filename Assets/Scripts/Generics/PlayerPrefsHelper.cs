@@ -1061,4 +1061,9 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         return GetWatchedCinematics()[id] == '1';
     }
+
+    public static void ResetCinematicsWatched()
+    {
+        PlayerPrefs.SetString(Constants.PpWatchedCinematics, Constants.PpWatchedCinematicsDefault);
+    }
 }

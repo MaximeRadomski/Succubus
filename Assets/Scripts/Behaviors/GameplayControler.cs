@@ -34,8 +34,6 @@ public class GameplayControler : MonoBehaviour
         set => _gameplayOnHold = value;
     }
 
-    private TMPro.TextMeshPro _infoRealmDebug;
-
     private RealmTree _realmTree;
     private Realm _levelRealm;
     private Difficulty _difficulty = Difficulty.None;
@@ -887,8 +885,11 @@ public class GameplayControler : MonoBehaviour
         var tmpLastPiece = CurrentPiece;
         if (tmpLastPiece != null)
             tmpLastPiece.GetComponent<Piece>().AskDisable();
-        CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), CharacterRealm.ToString(), _spawner.transform.position);
-        CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), CharacterRealm + "Ghost", _spawner.transform.position);
+        var pieceRealm = CharacterRealm;
+        if (Cache.TwistBoostedPiece)
+            pieceRealm = Helper.GetInferiorFrom(CharacterRealm);
+        CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), pieceRealm.ToString(), _spawner.transform.position);
+        CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), pieceRealm + "Ghost", _spawner.transform.position);
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastPiecePosition != null && Cache.OnResumeLastPieceRotation != null)
         {
             CurrentPiece.transform.position = Cache.OnResumeLastPiecePosition.Value;
@@ -1033,7 +1034,7 @@ public class GameplayControler : MonoBehaviour
         else if (Time.time < _nextLock)
         {
             CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(((_nextLock - Time.time)/_lockDelay) + 0.25f);
-            if (_allowedMovesBeforeLock >= Constants.NumberOfAllowedMovesBeforeLock && !CurrentPiece.GetComponent<Piece>().IsLocked)
+            if (_allowedMovesBeforeLock > Constants.NumberOfAllowedMovesBeforeLock + Character.BonusAllowedMovesBeforeLock && !CurrentPiece.GetComponent<Piece>().IsLocked)
             {
                 Lock();
             }
@@ -1052,7 +1053,17 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.GetComponent<Piece>().Lock(Instantiator);
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
-        bool isTwtist = false;
+        if (Character.CookieSpecialBonus > 0)
+        {
+            ++Cache.CookieCount;
+            if (Cache.CookieCount >= Constants.CookiePieceMax)
+            {
+                Cache.SelectedCharacterSpecialCooldown -= Character.CookieSpecialBonus;
+                UpdateItemAndSpecialVisuals();
+                Cache.CookieCount = 0;
+            }
+        }
+        bool isTwist = false;
         //Looks for Twists
         if (CurrentPiece.GetComponent<Piece>().Letter != "O")
         {
@@ -1070,11 +1081,15 @@ public class GameplayControler : MonoBehaviour
             if (IsPiecePosValid(CurrentPiece) == false)
                 ++nbLocked;
             CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
-            isTwtist = nbLocked == 3;
-            if (isTwtist)
+            isTwist = nbLocked == 3;
+            if (isTwist)
+            {
                 _soundControler.PlaySound(_idTwist);
+                if (Character.TwistBoostedDamage > 0)
+                    Cache.TwistBoostedPiece = true;
+            }
         }
-        _lastLockTwist = isTwtist;
+        _lastLockTwist = isTwist;
         if (CurrentPiece != null)
         {
             AddToPlayField(CurrentPiece);
@@ -1084,7 +1099,7 @@ public class GameplayControler : MonoBehaviour
         var drone = GameObject.Find(Constants.GoDrone);
         if (drone != null)
             drone.GetComponent<DroneBhv>().OnPieceLocked(CurrentPiece);
-        SceneBhv.OnPieceLocked(isTwtist ? CurrentPiece.GetComponent<Piece>().Letter : null);
+        SceneBhv.OnPieceLocked(isTwist ? CurrentPiece.GetComponent<Piece>().Letter : null);
         _characterSpecial?.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
@@ -1906,6 +1921,8 @@ public class GameplayControler : MonoBehaviour
                 hasBlocksAffectedByGravity = true;
                 ++Cache.HeldBoostedCount;
             }
+            if (Cache.TwistBoostedPiece)
+                heldPieceRealm = Helper.GetInferiorFrom(CharacterRealm);
             CurrentPiece = Instantiator.NewPiece(pieceLetter, heldPieceRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, heldPieceRealm + "Ghost", _spawner.transform.position);
             if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
@@ -2205,6 +2222,10 @@ public class GameplayControler : MonoBehaviour
                 }
             }
 
+            if (Cache.TwistBoostedPiece)
+                SceneBhv.DamageOpponent(Character.TwistBoostedDamage, CurrentPiece, Helper.GetInferiorFrom(CharacterRealm));
+            Cache.TwistBoostedPiece = false;
+
             if (Character.SlavWheelDamagePercentBonus > 0)
             {
                 var randomResult = UnityEngine.Random.Range(0, 6);
@@ -2283,6 +2304,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnLinesCleared(nbLines, false, _lastLockTwist);
             SceneBhv.PopText();
             Cache.ComboCounter = 0;
+            Cache.TwistBoostedPiece = false;
             if (AttackIncoming)
             {
                 AttackIncoming = false;
@@ -2609,6 +2631,12 @@ public class GameplayControler : MonoBehaviour
             attackBoost += _difficulty.GetHashCode() - Difficulty.Divine2.GetHashCode() + 1;
         if (this.SceneBhv.CurrentOpponent.Realm == Helper.GetSuperiorFrom(CharacterRealm))
             attackBoost += 1;
+        if (Cache.NegateAttackBoostCount < Character.NegateAttackBoost)
+        {
+            (this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv.Malus(Helper.GetInferiorFrom(CharacterRealm), 0.5f);
+            ++Cache.NegateAttackBoostCount;
+            attackBoost -= 1;
+        }
         VibrationService.Vibrate();
         switch (type)
         {
@@ -2641,7 +2669,7 @@ public class GameplayControler : MonoBehaviour
                 break;
             case AttackType.MirrorMirror:
             case AttackType.Intoxication:
-                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
+                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Drone:
                 AttackDrone(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
@@ -2671,7 +2699,7 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1 + attackBoost, param2);
+                AttackRhythmMania(opponentInstance, opponentRealm, param1 + (attackBoost * 2), param2);
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
@@ -2680,7 +2708,7 @@ public class GameplayControler : MonoBehaviour
                 AttackShelter(opponentInstance, opponentRealm);
                 break;
             case AttackType.Ascension:
-                AttackAscension(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
+                AttackAscension(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
         }
         UpdateItemAndSpecialVisuals();
@@ -3066,6 +3094,8 @@ public class GameplayControler : MonoBehaviour
     private void AttackAscension(GameObject opponentInstance, Realm opponentRealm, int wideness, int nbRows)
     {
         _soundControler.PlaySound(_idVisionBlock);
+        if (wideness == 10)
+            wideness = 9;
         int blocStartX = UnityEngine.Random.Range(0, 10 - wideness);
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(blocStartX + ((wideness - 1) / 2), 9.5f), 20, opponentRealm, wideness);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
@@ -3083,7 +3113,7 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackShelter(GameObject opponentInstance, Realm opponentRealm)
     {
-        Cache.CountSheleredAttacks++;
+        Cache.SheleredAttacksCount++;
         opponentInstance.GetComponent<CharacterInstanceBhv>().Boost(opponentRealm, 0.25f);
     }
 

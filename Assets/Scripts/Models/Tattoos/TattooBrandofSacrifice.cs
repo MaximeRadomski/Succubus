@@ -9,7 +9,7 @@ public class TattooBrandofSacrifice : Tattoo
         Id = 40;
         Name = TattoosData.Tattoos[Id];
         Stat = 50;
-        Rarity = Rarity.Common;
+        Rarity = Rarity.Rare;
         MaxLevel = 2;
     }
 

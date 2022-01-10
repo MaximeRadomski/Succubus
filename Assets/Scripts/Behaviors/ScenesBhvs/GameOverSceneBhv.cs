@@ -17,7 +17,14 @@ public class GameOverSceneBhv : SceneBhv
         if (Cache.GameOverParams == null)
             Cache.GameOverParams = "Test|Realm|99";
         var gameOverParams = Cache.GameOverParams.Split('|');
-        GameObject.Find("OpponentText").GetComponent<TMPro.TextMeshPro>().text = $"by {gameOverParams[0].ToLower()}";
+        if (Cache.GameOverParams.Contains(Constants.EndScene))
+        {
+            GameObject.Find("Vanquished").GetComponent<TMPro.TextMeshPro>().text = $"Winner";
+            GameObject.Find("OpponentText").GetComponent<TMPro.TextMeshPro>().text = $"with {gameOverParams[0].ToLower()}";
+            GameObject.Find("Rollback").GetComponent<TMPro.TextMeshPro>().text = $"End";
+        }
+        else
+            GameObject.Find("OpponentText").GetComponent<TMPro.TextMeshPro>().text = $"by {gameOverParams[0].ToLower()}";
         GameObject.Find("RealmText").GetComponent<TMPro.TextMeshPro>().text = $"{gameOverParams[1].ToLower()}";
         GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>().text = $"lvl {gameOverParams[2].ToLower()}";
 

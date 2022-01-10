@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -2493,7 +2493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -2852,7 +2852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -2984,7 +2984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -3161,7 +3161,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3867,7 +3867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -4103,7 +4103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -5626,7 +5626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -5994,7 +5994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -6786,7 +6786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -7272,7 +7272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0
@@ -7730,7 +7730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
-  ForcedLayer: 0
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 0

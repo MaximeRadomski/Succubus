@@ -60,7 +60,7 @@ public static class CinematicsData
             "But this time, holiness would know what borders not to cross.",
 
             "Because down below, demons and sinners would always fight for their rights.",
-            "Thanks for playing!"
+            ""
         },
     };
 }

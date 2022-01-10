@@ -541,19 +541,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 
                 object LoadNextAfterBoss(bool result)
                 {
-                    //DEBUG
-                    if (Constants.BetaMode && _run.CurrentRealm == Realm.Heaven)
+                    if (_run.CurrentRealm == Realm.End)
                     {
                         if (_run.Difficulty == Difficulty.Hard)
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);
                         if (_run.Difficulty == Difficulty.Infernal)
                             PlayerPrefsHelper.SaveDivineUnlocked(true);
-                        Cache.GameOverParams = $"Abject|{_run.CurrentRealm - 1}|3";
+                        Cache.GameOverParams = $"{Character.Name}|{_run.CurrentRealm - 1}|3|{Constants.EndScene}";
                         PlayerPrefsHelper.EndlessRun(_run);
-                        NavigationService.LoadNextScene(Constants.DemoEndScene);
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = _run.CurrentRealm.GetHashCode(), StringParam0 = Constants.EndScene });
                         return false;
                     }
-                    //DEBUG
                     if (!PlayerPrefsHelper.IsCinematicWatched(_run.CurrentRealm.GetHashCode()))
                         NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = _run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
                     else
@@ -818,13 +816,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public override bool DamageOpponent(int amount, GameObject source, Realm? textRealm = null, bool attackLine = true)
     {
         var damageTextPosition = _opponentHpBar.transform.position + new Vector3(1.0f, 1.6f, 0.0f);
-        if (Cache.CountSheleredAttacks > 0)
+        if (Cache.SheleredAttacksCount > 0)
         {
             amount = 0;
             Instantiator.PopText($"{Constants.GetMaterial(this.CurrentOpponent.Realm, TextType.succubus3x5, TextCode.c43)}shelter", damageTextPosition);
             _soundControler.PlaySound(_idDodge);
             this.OpponentInstanceBhv.Dodge();
-            Cache.CountSheleredAttacks--;
+            Cache.SheleredAttacksCount--;
         }
         if (Cache.CurrentOpponentHp <= 0 && CurrentOpponent.IsDead)
             return false;

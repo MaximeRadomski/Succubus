@@ -25,7 +25,7 @@ public class CharSelSceneBhv : SceneBhv
             gameModeTitle = "Training Dummy";
         _charSelector = GameObject.Find("CharSelector");
         GameObject.Find("GameModeTitle").GetComponent<TMPro.TextMeshPro>().text = gameModeTitle;
-        _charButtonsContainer = GameObject.Find("CharacterButtons");        
+        _charButtonsContainer = GameObject.Find("CharacterButtons");
         SetButtons();
         var unlockedChars = PlayerPrefsHelper.GetUnlockedCharactersString();
         for (int i = 2; i < unlockedChars.Length; ++i)
@@ -59,7 +59,7 @@ public class CharSelSceneBhv : SceneBhv
         else if (lastClickedButton.name.Contains(Realm.Heaven.ToString()))
             realm = 8;
         var unlockedCharacters = PlayerPrefsHelper.GetUnlockedCharactersString();
-        if (unlockedCharacters[realm + buttonId] == '0'  && false)
+        if (unlockedCharacters[realm + buttonId] == '0')
         {
             Instantiator.NewPopupYesNo("Locked", "you haven't unlocked this character yet", null, "Hmm...", null);
             return;

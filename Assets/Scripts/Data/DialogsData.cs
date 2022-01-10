@@ -79,6 +79,20 @@ public static class DialogsData
                 }
             }
         },
+        { "Belias|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares disturb me during my eternal suffering?",
+                    "Well...",
+                    "Wait, what is an angel doing here??",
+                    "Fallen. Fallen angel please. I'm on your side, on miss Ivy's side.",
+                    "Mistress!! She talked about me? Say no more! I'm coming with you majestic being!",
+                    "Oh my..."
+                }
+            }
+        },
         { "Belias|Ivy",
             new List<List<string>>()
             {
@@ -109,6 +123,21 @@ public static class DialogsData
                     "Well I'm not here for a potion I'm afraid.",
                     "Oh!! Did her \"horns issue\" got finally fixed?",
                     "Her... Horns issue?",
+                    "Yeah... I should respect that patient privacy thing..."
+                }
+            }
+        },
+        { "Floppyredoux|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares disturbing my precious time?",
+                    "Oh, sorry I didn't know... My mistress sent me here to find you.",
+                    "Wait, your mistress? Aren't you an angel? I thought you didn't have a gender...",
+                    "Ivy, first born of Lust, rings a bell?",
+                    "Ohh miss Ivy! When did she start to chat with angels?",
+                    "It's... It's complicated...",
                     "Yeah... I should respect that patient privacy thing..."
                 }
             }
@@ -172,6 +201,20 @@ public static class DialogsData
                     "I'm listening.",
                     "Well you see, I'm sent here to you by my mistress Ivy, first born of the lust.",
                     "I'll be damned, are you the prophet we've been waiting for?",
+                    "I wouldn't be that arrogant..."
+                }
+            }
+        },
+        { "Sir Vixid|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Finally, my ultimate challenge, an angel is standing before me!!",
+                    "Yes, well... I'm afraid you won't get to fight one right away...",
+                    "Cease your spiel, angel, and come fight.",
+                    "Well you see, I'm sent here to you by my mistress Ivy, first born of the lust.",
+                    "I'll be damned, an angel from Hell? are you the prophet we've been waiting for?",
                     "I wouldn't be that arrogant..."
                 }
             }
@@ -268,6 +311,178 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Melip
+        { "Melip|Hell",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Are you... Are you actually a demon? From Hell???",
+                    "Haha, first time seing one?",
+                    "You bet! But how did you manage to climb up here?",
+                    "Mainly through brute force... And we're going to keep it that way. That's the plan so far.",
+                    "Can I join you in your little adventure? I kinda have a grudge against my kind...",
+                    "And why is that so?",
+                    "I was born malformed... and categorized as impure since my youth...",
+                    "Are angels behaving like nazis?",
+                    "Pretty much, rejecting all that is not perfect for their eyes...",
+                    "Then come my friend, we're all fucked up down here!"
+                }
+            }
+        },
+        { "Melip|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Are you... Are you actually a human? From Earth???",
+                    "Haha, is that so uncommon?",
+                    "Kinda yeah, since you've not been canonized! But how did you manage to climb up here?",
+                    "Mainly through brute force... And we're going to keep it that way. That's the plan so far.",
+                    "Can I join you in your little adventure? I kinda have a grudge against my kind...",
+                    "And why is that so?",
+                    "I was born malformed... and categorized as impure since my youth...",
+                    "Are angels behaving like nazis?",
+                    "Pretty much, rejecting all that is not perfect for their eyes...",
+                    "Then come my friend, we're all fucked up down here!"
+                }
+            }
+        },
+        { "Melip|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "You?? Here??",
+                    "Come Melip, we have a holy mission to fulfill.",
+                    "But... but...",
+                    "This wasn't a question Melip. You'll finally get your revenge."
+                }
+            }
+        },
+        #endregion
+        #region Azrael
+        { "Azrael|Hell",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh! A fellow colleague from Hell!",
+                    "Colleague?",
+                    "I'm the angel of death goddamnit! How do you think souls are getting down there?",
+                    "Oh you might be directly working with the devil's advocate then! I just stood against him earlier.",
+                    "Yeah I've been watching your little expedition from above, and I have to say... I'm pretty impressed.",
+                    "You think we got a chance?",
+                    "I'm sure you do. You just need a little help from an old angel of death, tired of killing humans."
+                }
+            }
+        },
+        { "Azrael|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh! A mere human. Your kind usually don't get to often see me.",
+                    "And why is that so?",
+                    "I'm the angel of death, child! I'm only supposed to pay you one visit.",
+                    "Oh don't worry, you'll get many occasions since we've got the time amulet.",
+                    "Yeah I've been watching your little expedition from above, and I have to say... I'm pretty impressed.",
+                    "You think we got a chance?",
+                    "I'm sure you do. You just need a little help from an old angel of death, tired of killing humans."
+                }
+            }
+        },
+        { "Azrael|Melip",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Melip?",
+                    "H... Hi... Lord Azrael...",
+                    "Get to the point Melip. What's the purpose of your presence here?",
+                    "You know... The hellish crusade you asked me to watch for you?",
+                    "Yes? And?",
+                    "Well they're here my lord!",
+                    "Ah. Good. I'll give them a proper welcome."
+                }
+            }
+        },
+        { "Azrael|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "You...",
+                    "Not pleased to see me Azrael?",
+                    "I know why you're here. I would just have wish one of the Twins themselves would ask me to join them.",
+                    "I know we had our differences Azrael, but this time, it is for a greater cause.",
+                    "I know. Now move, and make way for your angel of death."
+                }
+            }
+        },
+        #endregion
+        #region Uriel
+        { "Uriel|Hell",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "The hordes of Hell have finally reached me as I can see.",
+                    "You were... Waiting for us?",
+                    "Aren't you here to retrieve your Spear of Longinus?",
+                    "Oh that old thing? Haha no don't worry you can keep it!",
+                    "Then, why are you standing here before me?",
+                    "Well... We were wondering if avoiding ever being caught for your theft might interest you?",
+                    "Say no more!"
+                }
+            }
+        },
+        { "Uriel|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "The hordes of Earth have finally reached me as I can see.",
+                    "You were... Waiting for us?",
+                    "Aren't you here to retrieve your Spear of Longinus?",
+                    "I don't even know why we would want it...",
+                    "Then, why are you standing here before me?",
+                    "Well... We were wondering if avoiding ever being caught for your theft might interest you?",
+                    "Say no more!"
+                }
+            }
+        },
+        { "Uriel|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "You finally found me! Know that I'll fight for what's mine!",
+                    "Hi Uriel! And... What?",
+                    "Aren't you here to retrieve your Spear of Longinus?",
+                    "No no, I'm here to convince you to fight with us the ones who possessed it before you.",
+                    "Haha, I don't need to be convinced my friend."
+                }
+            }
+        },
+        #endregion
+        #region Zaphkiel
+        { "Zaphkiel|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Ah! My savior! I'm finally free!",
+                    "What were you imprisoned for?",
+                    "I'm the first throne, the legitimate king of this realm! Now move away, and let me take measures to fight the false god above us!",
+                    "Well... Need a hand?",
+                    "What? No no no, you don't understand, you would be fighting legions for the rest of your life if you help me!",
+                    "Well... I'm already deep enough in this mess so...",
+                    "Your sacrifice is remarkable! Now come my friend, and let's fulfil my destiny!!"
+                }
+            }
+        },
+        #endregion
 
         #region Harpy
         { "Harpy|Edam",
@@ -351,6 +566,19 @@ public static class DialogsData
                     "May be his grace remembered.",
                     "Wait, aren't you an angel? What are you doing here?",
                     "And may the culprits be damned for their sins."
+                }
+            }
+        },
+        { "Fallen Angel|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Ah! Long time no see my friend!",
+                    "Asbeel? Is that you?",
+                    "Haha you know it! Here to spread the lord's speech as well?",
+                    "Hmm... I see... I'm not. And I guess it makes us enemies then.",
+                    "You hit rock bottom my friend..."
                 }
             }
         },
@@ -490,6 +718,16 @@ public static class DialogsData
                 }
             }
         },
+        { "Baphomeh|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "What?? No... Impossible! How come an angel be here?",
+                    "It is a proof that the Twins are fighting for a just cause."
+                }
+            }
+        },
         { "Baphomeh|Ivy",
             new List<List<string>>()
             {
@@ -573,6 +811,31 @@ public static class DialogsData
                     "A human here? Wait a minute, I cannot find your soul in the registries... How did you even end up here???",
                     "I've been told some amulet brought me here.",
                     "Oh... The evil twins... What have they done again..."
+                }
+            }
+        },
+
+        { "Devil's Advocate|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh an angel? The angel of death is sending you?",
+                    "Nope. Twins do.",
+                    "Oh... The evil twins... What have they done again..."
+                }
+            }
+        },
+        { "Devil's Advocate|Azrael",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Hi Azrael. How many souls are you bringing to me today?",
+                    "I'm not here for souls I'm afraid.",
+                    "What? Then it is not in the protocole. Move, go already.",
+                    "I'm going to make you eat that protocole!!",
+                    "Azrael??"
                 }
             }
         },
@@ -669,6 +932,19 @@ public static class DialogsData
                     "Is this some kind of joke??",
                     "Why would it be?",
                     "A mere human, trying to get out of hell. My children are really taking this matter too lightly..."
+                }
+            }
+        },
+        { "Stan|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "What are you doing here, angel?",
+                    "Hi Stan. Long time no see.",
+                    "Don't tell me my children somehow got into your brain?",
+                    "Their cause is worth fighting for!",
+                    "Then tell me angel, is it worth dying for?"
                 }
             }
         },
@@ -837,6 +1113,15 @@ public static class DialogsData
                 }
             }
         },
+        { "Human Supremacist|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "You false god!!"
+                }
+            }
+        },
         { "Human Supremacist|Podarge",
             new List<List<string>>()
             {
@@ -850,7 +1135,7 @@ public static class DialogsData
         },
         #endregion
         #region Vampire Killer
-        { "Vampire Killer|Any",
+        { "Vampire Killer|Hell",
             new List<List<string>>()
             {
                 new List<string>()
@@ -863,7 +1148,7 @@ public static class DialogsData
         },
         #endregion
         #region Witch Hunter
-        { "Witch Hunter|Any",
+        { "Witch Hunter|Earth",
             new List<List<string>>()
             {
                 new List<string>()
@@ -922,6 +1207,17 @@ public static class DialogsData
                     "He? You mean, your god?",
                     "Yes, in all his mercy.",
                     "But, do I want his mercy tho..."
+                }
+            }
+        },
+        { "Angelic Messenger|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Nope, I'm pretty sure HE hates me.",
+                    "Oh, a fallen angel, I see."
                 }
             }
         },
@@ -1098,6 +1394,16 @@ public static class DialogsData
                 }
             }
         },
+        { "Supreme Bishop|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "By the lord, I'll be damned!!",
+                    "Never seen an angel before?"
+                }
+            }
+        },
         { "Supreme Bishop|Podarge",
             new List<List<string>>()
             {
@@ -1213,6 +1519,18 @@ public static class DialogsData
                     "I am and will always be. I'm the arm of saints, placed here to guide the humans to holiness.",
                     "Are you even human?",
                     "I am a benediction, and the last being you will see before your eternal suffering!"
+                }
+            }
+        },
+        { "The Pop|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Hmm... Yes? Are you wishing to tell me something angel?",
+                    "I still can't believe our kind put someone... something like you on the Earth Throne!",
+                    "Wait what?",
+                    "I'm about to make a huge gift to humans. It is time to die, creature."
                 }
             }
         },
@@ -1343,7 +1661,33 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Who dares entering my court!"
+                    "Who dares entering my court!",
+                    "The ugly ones, step aside!",
+                    "Don't you give me any order hellspring!!",
+                    "Then come down of your high horse and prepare to fight!!"
+                }
+            }
+        },
+        { "Seraphim King|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Who dares entering my court!",
+                    "An angel bored of your reign of terror!!",
+                    "Haha, you wouldn't be the first one!",
+                    "But I'll be the first to shut you up!"
+                }
+            }
+        },
+        { "Seraphim King|Uriel",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Brother! You are banished, entering here is felony!!",
+                    "I am no longer afraid of your power anymore. I've come to take revenge!",
+                    "Fine by me, I'll crush you myself!"
                 }
             }
         },
@@ -1364,7 +1708,9 @@ public static class DialogsData
                 new List<string>()
                 {
                     "Do you realise the punishment your soul will suffer for stepping foot on this very realm?",
-                    "It doesn't affect me that much I have to say... I have friends on the other side."
+                    "It doesn't affect me that much I have to say... I have friends on the other side.",
+                    "We are talking eternal suffering here!",
+                    "You might wanna start thinking about your own treatment after your defeat."
                 }
             }
         },

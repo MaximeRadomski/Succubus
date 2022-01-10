@@ -58,6 +58,7 @@ public static class Constants
     public const int StepsAssetsPositionId = 2;
     public const int StepsAssetsLootStart = 3;
     public const int StepsAssetsOpponentStart = 8;
+    public const int CookiePieceMax = 20;
 
 
     //  TAGS  //
@@ -199,6 +200,7 @@ public static class Constants
     public const string TreeScene = "TreeScene";
     public const string DifficultyScene = "DifficultyScene";
     public const string DemoEndScene = "DemoEndScene";
+    public const string EndScene = "EndScene";
     public const string HighScoreScene = "HighScoreScene";
     public const string GameOverScene = "GameOverScene";
     public const string LoreScene = "LoreScene";

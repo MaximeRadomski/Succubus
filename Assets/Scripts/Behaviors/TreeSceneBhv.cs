@@ -141,10 +141,6 @@ public class TreeSceneBhv : SceneBhv
         var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 10 : 0;
         var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 10 : 0;
         var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 10 : 0;
-        if (Constants.BetaMode)
-        {
-            heavenResourceAsked = 0;
-        }
         var price = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}\n---\nprice: " +
         $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[Realm.Hell.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
         $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[Realm.Earth.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +

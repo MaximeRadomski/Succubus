@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Fire Cultist"; 
+        var name = "Seraphim King"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -742,18 +742,18 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Divine Council", Realm = Realm.Heaven, Type = OpponentType.Boss,
-            HpMax = 2222, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
+            HpMax = 1111, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1),
                 new OpponentAttack(AttackType.OldSchool, 3),
                 new OpponentAttack(AttackType.Gate, 1)},
-            GravityLevel = 1, Weight = 999,
+            GravityLevel = 18, Weight = 999,
             DialogId = 0, DialogPitch = 1.0f
         },
         new Opponent()
         {
             Name = "Dog", Realm = Realm.Heaven, Type = OpponentType.Boss,
-            HpMax = 4444, Weakness = Weakness.Twists, DamageOnWeakness = 100, Immunity = Immunity.Combos, Cooldown = 5, Haste = true,
+            HpMax = 2222, Weakness = Weakness.Twists, DamageOnWeakness = 100, Immunity = Immunity.Combos, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
                 new OpponentAttack(AttackType.Shift, 4),
