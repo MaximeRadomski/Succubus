@@ -100,7 +100,8 @@ public static class OpponentsData
             HpMax = 40, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
-            GravityLevel = 1, Weight = 10
+            GravityLevel = 1, Weight = 10,
+            Lore = "Soul of a lost undead."
         },
         new Opponent()
         {
@@ -108,7 +109,8 @@ public static class OpponentsData
             HpMax = 30, Weakness = Weakness.xLines, XLineWeakness = 2, DamageOnWeakness = 20, Cooldown = 6, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 1) },
-            GravityLevel = 2, Weight = 10
+            GravityLevel = 2, Weight = 10,
+            Lore = "Ancient human dismorphed by the torture he received in hell."
         },
         new Opponent()
         {
@@ -116,7 +118,8 @@ public static class OpponentsData
             HpMax = 20, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 1) },
-            GravityLevel = 2, Weight = 20
+            GravityLevel = 2, Weight = 20,
+            Lore = "The bad boys from earth end up in hell, becoming demon dogs mostly known as Hell Hounds."
         },
         new Opponent()
         {
@@ -125,7 +128,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2),
                 new OpponentAttack(AttackType.Shrink, 2)},
-            GravityLevel = 3, Weight = 20
+            GravityLevel = 3, Weight = 20,
+            Lore = "Soul of a mighty undead in a previous life."
         },
         new Opponent()
         {
@@ -133,7 +137,8 @@ public static class OpponentsData
             HpMax = 60, Weakness = Weakness.Twists, DamageOnWeakness = 70, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 2, 1) },
-            GravityLevel = 3, Weight = 30
+            GravityLevel = 3, Weight = 30,
+            Lore = "Centaurs were pretty difficult being to be crafted. All the failed attempts ended up in Hell."
         },
         new Opponent()
         {
@@ -141,7 +146,8 @@ public static class OpponentsData
             HpMax = 80, Weakness = Weakness.Combos, DamageOnWeakness = 5, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 3, 5) },
-            GravityLevel = 1, Weight = 30
+            GravityLevel = 1, Weight = 30,
+            Lore = "The main element in hell is fire. And it's not rare to find old cultists worshipping it."
         },
         new Opponent()
         {
@@ -150,7 +156,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Intoxication, 4),
                 new OpponentAttack(AttackType.RhythmMania, 4, 1)},
-            GravityLevel = 3, Weight = 30
+            GravityLevel = 3, Weight = 30,
+            Lore = "Metalheads often end up in Hell, keeping their passion for heavy music, and their love for long haircuts."
         },
         new Opponent()
         {
@@ -158,7 +165,8 @@ public static class OpponentsData
             HpMax = 60, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.MirrorMirror, 2, 0) },
-            GravityLevel = 3, Weight = 30
+            GravityLevel = 3, Weight = 30,
+            Lore = "A drink so dark it could only have dark desires."
         },
         new Opponent()
         {
@@ -167,7 +175,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 2, 1),
                 new OpponentAttack(AttackType.Partition, 3, 1) },
-            GravityLevel = 1, Weight = 40
+            GravityLevel = 1, Weight = 40,
+            Lore = "Bassists always go to Hell. This is all they deserve by being totally worthless musicians."
         },
         new Opponent()
         {
@@ -175,7 +184,8 @@ public static class OpponentsData
             HpMax = 99, Weakness = Weakness.Consecutive, DamageOnWeakness = 20, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 1, 2) },
-            GravityLevel = 5, Weight = 40
+            GravityLevel = 5, Weight = 40,
+            Lore = "Little spiders go to heaven for being good household bug killers. However, giant ones are already used to hell temperature since they mostly live in Austria."
         },
         new Opponent()
         {
@@ -183,7 +193,8 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 2, DamageOnWeakness = 50, Cooldown = 14, Immunity = Immunity.xLines, XLineImmunity = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 10, 5) },
-            GravityLevel = 3, Weight = 40
+            GravityLevel = 3, Weight = 40,
+            Lore = "The most despicable kind of human ever stepping on earth."
         },
         new Opponent()
         {
@@ -191,7 +202,8 @@ public static class OpponentsData
             HpMax = 140, Weakness = Weakness.Twists, DamageOnWeakness = 40, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -1, -1) },
-            GravityLevel = 5, Weight = 40
+            GravityLevel = 5, Weight = 40,
+            Lore = "Furious old metalhead, often racist, with a grudge against pretty much everything and everyone."
         },
         new Opponent()
         {
@@ -199,7 +211,8 @@ public static class OpponentsData
             HpMax = 77, Cooldown = 5, Immunity = Immunity.Cooldown,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.EmptyRow, 2) },
-            GravityLevel = 3, Weight = 40
+            GravityLevel = 3, Weight = 40,
+            Lore = "The greatest manipulator of all, the cat is a true hellish creature."
         },
         new Opponent()
         {
@@ -209,7 +222,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.WasteRow, 1, 4),
                 new OpponentAttack(AttackType.EmptyRow, 4),
             },
-            GravityLevel = 4, Weight = 40
+            GravityLevel = 4, Weight = 40,
+            Lore = "Ghoul Riders found a clever way to march through Hell without proper footwear. It's their only positive aspect."
         },
         new Opponent()
         {
@@ -218,7 +232,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, -2, 0) },
             GravityLevel = 5, Weight = 40,
-            DialogId = 4, DialogPitch = 1.3f
+            DialogId = 4, DialogPitch = 1.3f,
+            Lore = "Main soldiers on Edam, Harpies are unpredictable and ferocious creatures."
         },
         new Opponent()
         {
@@ -226,7 +241,8 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.Combos, DamageOnWeakness = 5, Cooldown = 15, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
-            GravityLevel = 3, Weight = 40
+            GravityLevel = 3, Weight = 40,
+            Lore = "Tormentors are the demons used for torturing animals abusers. They are good guys usually."
         },
         new Opponent()
         {
@@ -234,7 +250,8 @@ public static class OpponentsData
             HpMax = 180, Weakness = Weakness.Twists, DamageOnWeakness = 20, Cooldown = 18,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 3) },
-            GravityLevel = 3, Weight = 40
+            GravityLevel = 3, Weight = 40,
+            Lore = "Iron Maids are devoted to sexually torture pedophiles and zoophiles. They make pretty good arse-juice for those interested."
         },
         new Opponent()
         {
@@ -242,7 +259,8 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.None, Cooldown = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2) },
-            GravityLevel = 5, Weight = 40
+            GravityLevel = 5, Weight = 40,
+            Lore = "Guardians of the imprisoned souls, Snek Jailors were once falsely accused prisoners, taking revenge over their fates."
         },
         new Opponent()
         {
@@ -250,7 +268,8 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.None, Cooldown = 16, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
-            GravityLevel = 1, Weight = 40
+            GravityLevel = 1, Weight = 40,
+            Lore = "Nobody knows where they come from as they can't hear, speak or use any form of sign language. But they are dope as fuck!"
         },
         new Opponent()
         {
@@ -258,7 +277,8 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.Combos, DamageOnWeakness = 5, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Tunnel, 3) },
-            GravityLevel = 5, Weight = 40
+            GravityLevel = 5, Weight = 40,
+            Lore = "Oldest beings of Hell, Lava Moles were here even before the overlord settled down. Their knowledge of Hell's network is fantastic!"
         },
         new Opponent()
         {
@@ -266,7 +286,8 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 2, DamageOnWeakness = 20, Cooldown = 7,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 10) },
-            GravityLevel = 1, Weight = 30
+            GravityLevel = 1, Weight = 30,
+            Lore = "Moose are bad."
         },
         new Opponent()
         {
@@ -274,7 +295,8 @@ public static class OpponentsData
             HpMax = 120, Weakness = Weakness.Consecutive, DamageOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedPiece, 3, 0) },
-            GravityLevel = 6, Weight = 50
+            GravityLevel = 6, Weight = 50,
+            Lore = "Strangely enough, Caca Demons bleed red when hit, yet bleed blue when killed."
         },
         new Opponent()
         {
@@ -282,7 +304,8 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.None, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 2) },
-            GravityLevel = 6, Weight = 50
+            GravityLevel = 6, Weight = 50,
+            Lore = "Very talkative, he won't let you in peace until you've done \"The Thing\" with him."
         },
         new Opponent()
         {
@@ -290,7 +313,8 @@ public static class OpponentsData
             HpMax = 300, Weakness = Weakness.None, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 12) },
-            GravityLevel = 10, Weight = 60
+            GravityLevel = 10, Weight = 60,
+            Lore = "Younger version of a dystopian god from another realm, you can feel happy not to have encounter his adult form."
         },
         new Opponent()
         {
@@ -298,7 +322,8 @@ public static class OpponentsData
             HpMax = 50, Weakness = Weakness.None, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
-            GravityLevel = 3, Weight = 60
+            GravityLevel = 3, Weight = 60,
+            Lore = "He's the killer."
         },
         new Opponent()
         {
@@ -307,7 +332,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Intoxication, 6) },
             GravityLevel = 6, Weight = 60,
-            DialogId = 4, DialogPitch = 1.1f
+            DialogId = 4, DialogPitch = 1.1f,
+            Lore = "Created from pure plagiarism, PHILL is a powerful being trying to get back to his reality."
         },
         new Opponent()
         {
@@ -315,7 +341,8 @@ public static class OpponentsData
             HpMax = 1, Weakness = Weakness.None, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
-            GravityLevel = 10, Weight = 60
+            GravityLevel = 10, Weight = 60,
+            Lore = "The incarnation of truth itself, banished from Heaven, ended up in Hell for being considered as problematic."
         },
         new Opponent()
         {
@@ -324,7 +351,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 0) },
             GravityLevel = 5, Weight = 60,
-            DialogId = 2, DialogPitch = 0.3f
+            DialogId = 2, DialogPitch = 0.3f,
+            Lore = "As a new demonic threat erupts on Earth, so does the Slayer."
         },
         new Opponent()
         {
@@ -333,7 +361,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 5) },
             GravityLevel = 7, Weight = 60,
-            DialogId = 5, DialogPitch = 0.85f
+            DialogId = 5, DialogPitch = 0.85f,
+            Lore = "Celestial being, casted away from Heaven, but still preaching the word of his lord."
         },
         new Opponent()
         {
@@ -342,7 +371,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 2, 1) },
             GravityLevel = 6, Weight = 999,
-            DialogId = 2, DialogPitch = 0.75f
+            DialogId = 2, DialogPitch = 0.75f,
+            Lore = "Guardian of the gates of hell, Baphomeh curse bind him to the gates until eternity."
         },
         new Opponent()
         {
