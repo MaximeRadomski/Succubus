@@ -886,8 +886,11 @@ public class GameplayControler : MonoBehaviour
         if (tmpLastPiece != null)
             tmpLastPiece.GetComponent<Piece>().AskDisable();
         var pieceRealm = CharacterRealm;
-        if (Cache.TwistBoostedPiece)
+        if (Character.TwistBoostedDamage > 0 && _lastLockTwist)
+        {
             pieceRealm = Helper.GetInferiorFrom(CharacterRealm);
+            Cache.TwistBoostedPiece = true;
+        }
         CurrentPiece = Instantiator.NewPiece(Bag.Substring(0, 1), pieceRealm.ToString(), _spawner.transform.position);
         CurrentGhost = Instantiator.NewPiece(Bag.Substring(0, 1), pieceRealm + "Ghost", _spawner.transform.position);
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastPiecePosition != null && Cache.OnResumeLastPieceRotation != null)
@@ -1083,11 +1086,7 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
             isTwist = nbLocked == 3;
             if (isTwist)
-            {
                 _soundControler.PlaySound(_idTwist);
-                if (Character.TwistBoostedDamage > 0)
-                    Cache.TwistBoostedPiece = true;
-            }
         }
         _lastLockTwist = isTwist;
         if (CurrentPiece != null)
@@ -1921,8 +1920,11 @@ public class GameplayControler : MonoBehaviour
                 hasBlocksAffectedByGravity = true;
                 ++Cache.HeldBoostedCount;
             }
-            if (Cache.TwistBoostedPiece)
+            if (Character.TwistBoostedDamage > 0 && _lastLockTwist)
+            {
                 heldPieceRealm = Helper.GetInferiorFrom(CharacterRealm);
+                Cache.TwistBoostedPiece = true;
+            }
             CurrentPiece = Instantiator.NewPiece(pieceLetter, heldPieceRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, heldPieceRealm + "Ghost", _spawner.transform.position);
             if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))

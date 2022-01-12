@@ -128,7 +128,7 @@ public static class CharactersData
             Id = 11, Name = "Zaphkiel", Kind = "Throne Betrayer", Realm = Realm.Heaven,
             Attack = 14,
             Cooldown = 20,
-            SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field (no bonuses).",
+            SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field.",
             Lore = "Simple throne but hard worker, Zaphkiel made his way to the top of the Divine Council. But his dedication, considered as too dangerous for the power in place, put him into prison.",
             DialogId = 5, DialogPitch = 0.8f
         },

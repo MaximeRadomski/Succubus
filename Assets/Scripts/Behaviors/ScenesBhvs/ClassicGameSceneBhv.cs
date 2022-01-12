@@ -549,7 +549,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                             PlayerPrefsHelper.SaveDivineUnlocked(true);
                         Cache.GameOverParams = $"{Character.Name}|{_run.CurrentRealm - 1}|3|{Constants.EndScene}";
                         PlayerPrefsHelper.EndlessRun(_run);
-                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = _run.CurrentRealm.GetHashCode(), StringParam0 = Constants.EndScene });
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.End.GetHashCode(), StringParam0 = Constants.EndScene });
                         return false;
                     }
                     if (!PlayerPrefsHelper.IsCinematicWatched(_run.CurrentRealm.GetHashCode()))

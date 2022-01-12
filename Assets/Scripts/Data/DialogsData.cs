@@ -1210,7 +1210,7 @@ public static class DialogsData
                 }
             }
         },
-        { "Angelic Messenger|Earth",
+        { "Angelic Messenger|Heaven",
             new List<List<string>>()
             {
                 new List<string>()

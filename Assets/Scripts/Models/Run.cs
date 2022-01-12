@@ -65,6 +65,8 @@ public class Run
                 CurrentRealm = Realm.Earth;
             else if (CurrentRealm == Realm.Earth)
                 CurrentRealm = Realm.Heaven;
+            else if (CurrentRealm == Realm.Heaven)
+                CurrentRealm = Realm.End;
             if (CharacterEncounterAvailability)
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             else

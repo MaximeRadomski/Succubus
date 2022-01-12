@@ -685,7 +685,7 @@ public static class OpponentsData
             Name = "Watcher", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 200, Cooldown = 3, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Partition, 1, 1) },
+                new OpponentAttack(AttackType.RhythmMania, 3, 1) },
             GravityLevel = 12, Weight = 20,
             Lore = "Few is known of watchers, as they can be totally invisible until confrontation, as humans think anyway. But they spy humans that's for sure."
         },
@@ -734,9 +734,9 @@ public static class OpponentsData
             Name = "Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 250, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LineBreak, 2),
+                new OpponentAttack(AttackType.LineBreak, 6),
                 new OpponentAttack(AttackType.DropBomb, 5) },
-            GravityLevel = 10, Weight = 20,
+            GravityLevel = 10, Weight = 30,
             Lore = "Smallest of the angels, look how cute they are, with their little wings and their little child skull."
         },
         new Opponent()
@@ -758,7 +758,7 @@ public static class OpponentsData
             HpMax = 500, Cooldown = 5, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
-                new OpponentAttack(AttackType.Ascension, 4, 1)},
+                new OpponentAttack(AttackType.Ascension, 4, 2)},
             GravityLevel = 16, Weight = 50,
             Lore = "Basic angel. As unusefull and not caring as any angel can be."
         },
@@ -787,8 +787,9 @@ public static class OpponentsData
             Name = "Harambe", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 800, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Ascension, 9, 1) },
+                new OpponentAttack(AttackType.Ascension, 7, 1) },
             GravityLevel = 16, Weight = 60,
+            DialogId = 2, DialogPitch = 0.35f,
             Lore = "The one and only. He died for our sins."
         },
         new Opponent()
@@ -807,9 +808,9 @@ public static class OpponentsData
             HpMax = 1111, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 6),
-                new OpponentAttack(AttackType.Shelter, 2)},
+                new OpponentAttack(AttackType.Drone, 2, 0) },
             GravityLevel = 18, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f,
+            DialogId = 5, DialogPitch = 0.35f,
             Lore = "King of Kings, this old seraphim reign over angels of Heaven with an iron fist!"
         },
         new Opponent()
@@ -817,23 +818,22 @@ public static class OpponentsData
             Name = "Divine Council", Realm = Realm.Heaven, Type = OpponentType.Boss,
             HpMax = 1111, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Gate, 1),
-                new OpponentAttack(AttackType.OldSchool, 3),
-                new OpponentAttack(AttackType.Gate, 1)},
+                new OpponentAttack(AttackType.Gate, 2),
+                new OpponentAttack(AttackType.OldSchool, 4) },
             GravityLevel = 18, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f,
+            DialogId = 5, DialogPitch = 0.2f,
             Lore = "Oldest entities existing, eternal beings, having always existed, even before the big bang. They elected the Lord of Heaven."
         },
         new Opponent()
         {
-            Name = "Dog", Realm = Realm.Heaven, Type = OpponentType.Boss,
+            Name = "DOG", Realm = Realm.Heaven, Type = OpponentType.Boss,
             HpMax = 2222, Weakness = Weakness.Twists, DamageOnWeakness = 100, Immunity = Immunity.Combos, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LineBreak, 4),
+                new OpponentAttack(AttackType.LineBreak, 8),
                 new OpponentAttack(AttackType.Shift, 4),
-                new OpponentAttack(AttackType.Ascension, 4, 1)},
+                new OpponentAttack(AttackType.Ascension, 4, 2)},
             GravityLevel = 20, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f,
+            DialogId = 5, DialogPitch = 1.0f,
             Lore = "God of Gods, ruler of Heaven, good boy, and put on the throne by questionable manners..."
         }
     };
