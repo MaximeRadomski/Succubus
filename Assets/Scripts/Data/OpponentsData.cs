@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Seraphim King"; 
+        var name = "Stan"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -382,7 +382,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Shift, 4),
                 new OpponentAttack(AttackType.Shift, 2)},
             GravityLevel = 12, Weight = 999,
-            DialogId = 3, DialogPitch = 0.35f
+            DialogId = 3, DialogPitch = 0.35f,
+            Lore = "Highest ranked magistrat down here, The Devil's Advocate endure the hard task of soul sorting and files handling."
         },
         new Opponent()
         {
@@ -391,7 +392,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },
             GravityLevel = 10, Weight = 999,
-            DialogId = 1, DialogPitch = 0.75f
+            DialogId = 1, DialogPitch = 0.75f,
+            Lore = "FIrst fallen angel in history, Stan was bound to Hell as the overlord by force. Nevertheless, he found passion in his labor, and intended to do it right."
         }
     };
 
@@ -402,7 +404,8 @@ public static class OpponentsData
             HpMax = 100, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 3) },
-            GravityLevel = 5, Weight = 20
+            GravityLevel = 5, Weight = 20,
+            Lore = "A monk, in his first years of learning."
         },
         new Opponent()
         {
@@ -411,7 +414,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.EmptyRow, 2),
                 new OpponentAttack(AttackType.DarkRow, 2) },
-            GravityLevel = 8, Weight = 20
+            GravityLevel = 8, Weight = 20,
+            Lore = "Regular monk, despising everything that isn't holy."
         },
         new Opponent()
         {
@@ -421,7 +425,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.MirrorMirror, 2, 2),
                 new OpponentAttack(AttackType.Shift, 6) },
             GravityLevel = 8, Weight = 20,
-            DialogId = 4, DialogPitch = 1.75f
+            DialogId = 4, DialogPitch = 1.75f,
+            Lore = "Regular Nun, despising everything that isn't chast."
         },
         new Opponent()
         {
@@ -429,7 +434,8 @@ public static class OpponentsData
             HpMax = 30, Weakness = Weakness.None, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shrink, 2) },
-            GravityLevel = 10, Weight = 10
+            GravityLevel = 10, Weight = 10,
+            Lore = "What the fuck is that thing?"
         },
         new Opponent()
         {
@@ -437,7 +443,8 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 30, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 1, 5) },
-            GravityLevel = 10, Weight = 30
+            GravityLevel = 10, Weight = 30,
+            Lore = "Humans committing sins sometimes end up crucified. Which doesn't mean they cannot fight alongside the church afterward."
         },
         new Opponent()
         {
@@ -445,7 +452,8 @@ public static class OpponentsData
             HpMax = 120, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 5, 2) },
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 40,
+            Lore = "Small group of traumatized children, singing traumatizing songs in Latin."
         },
         new Opponent()
         {
@@ -453,7 +461,8 @@ public static class OpponentsData
             HpMax = 130, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 9, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.OldSchool, 5, 10) },
-            GravityLevel = 12, Weight = 40
+            GravityLevel = 12, Weight = 40,
+            Lore = "Back in his days, stackers didn't have Hard Drops or Hold options, and he thinks it was way better this way."
         },
         new Opponent()
         {
@@ -461,7 +470,8 @@ public static class OpponentsData
             HpMax = 250, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 4, 1) },
-            GravityLevel = 12, Weight = 40
+            GravityLevel = 12, Weight = 40,
+            Lore = "Enlightened knight thinking that reconquering holy lands will change anything."
         },
         new Opponent()
         {
@@ -469,7 +479,8 @@ public static class OpponentsData
             HpMax = 100, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Screwed, 2) },
-            GravityLevel = 8, Weight = 30
+            GravityLevel = 8, Weight = 30,
+            Lore = "Flag Wielders must know how to speak in heraldic, and follow their designated knight singing his praise."
         },
         new Opponent()
         {
@@ -480,7 +491,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.AirPiece, 1),
                 new OpponentAttack(AttackType.Screwed, 1)},
             GravityLevel = 12, Weight = 40,
-            DialogId = 2, DialogPitch = 0.4f
+            DialogId = 2, DialogPitch = 0.4f,
+            Lore = "Strongest soldiers of the 40th millenium, they also come by the name of Shpashe Merines."
         },
         new Opponent()
         {
@@ -488,7 +500,8 @@ public static class OpponentsData
             HpMax = 120, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DropBomb, 10) },
-            GravityLevel = 7, Weight = 30
+            GravityLevel = 7, Weight = 30,
+            Lore = "Smallest of the angels, this Cherub seems to have lost his way on earth."
         },
         new Opponent()
         {
@@ -498,7 +511,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.LineBreak, 5),
                 new OpponentAttack(AttackType.DropBomb, 6) },
             GravityLevel = 10, Weight = 40,
-            DialogId = 5, DialogPitch = 0.5f
+            DialogId = 5, DialogPitch = 0.5f,
+            Lore = "The speech of the Lord has only few times in history been told to humans by the Lord himself. Most of the time, Messengers are used for this purpose."
         },
         new Opponent()
         {
@@ -507,7 +521,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 2),
                 new OpponentAttack(AttackType.VisionBlock, 10, 5)},
-            GravityLevel = 10, Weight = 20
+            GravityLevel = 10, Weight = 20,
+            Lore = "Is it cheese? Is it cake? We will never know!"
         },
         new Opponent()
         {
@@ -515,7 +530,8 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 20, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.RhythmMania, 10, 1)},
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 40,
+            Lore = "The Organ is a pretty easy instrument to learn. Nothing particular to say about the people playing it."
         },
         new Opponent()
         {
@@ -523,7 +539,8 @@ public static class OpponentsData
             HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 4, 0) },
-            GravityLevel = 12, Weight = 60
+            GravityLevel = 12, Weight = 60,
+            Lore = "One of the most despicable humans on earth. Run if she asks for the manager!"
         },
         new Opponent()
         {
@@ -531,7 +548,8 @@ public static class OpponentsData
             HpMax = 90, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
-            GravityLevel = 8, Weight = 40
+            GravityLevel = 8, Weight = 40,
+            Lore = "They can fight apparently... I'm the first stunned by it!"
         },
         new Opponent()
         {
@@ -540,7 +558,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 5, 6),
                 new OpponentAttack(AttackType.OldSchool, 4, 8) },
-            GravityLevel = 6, Weight = 40
+            GravityLevel = 6, Weight = 40,
+            Lore = "Don't let them get you into an discussion, or you'll soon be manipulated into joining their ranks!"
         },
         new Opponent()
         {
@@ -548,7 +567,8 @@ public static class OpponentsData
             HpMax = 200, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2) },
-            GravityLevel = 13, Weight = 40
+            GravityLevel = 13, Weight = 40,
+            Lore = "Legends say some good ones exist. Legends..."
         },
         new Opponent()
         {
@@ -558,7 +578,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Drill, 2),
                 new OpponentAttack(AttackType.EmptyRow, 2) },
             GravityLevel = 10, Weight = 40,
-            DialogId = 4, DialogPitch = 0.75f
+            DialogId = 4, DialogPitch = 0.75f,
+            Lore = "Often armed with a whip, Vampire Slayers have best first levels musics, whatever it means!"
         },
         new Opponent()
         {
@@ -567,7 +588,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DarkRow, 2) },
             GravityLevel = 10, Weight = 40,
-            DialogId = 3, DialogPitch = 0.75f
+            DialogId = 3, DialogPitch = 0.75f,
+            Lore = "Old hunters liking old traditions and sick of hunting animals. Yes it is just a pretext to kill women."
         },
         new Opponent()
         {
@@ -577,7 +599,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Intoxication, 5),
                 new OpponentAttack(AttackType.WasteRow, 2, 2) },
             GravityLevel = 10, Weight = 30,
-            DialogId = 3, DialogPitch = 0.5f
+            DialogId = 3, DialogPitch = 0.5f,
+            Lore = "Directly sent from the Vatican, they represent the highest rank of the church to deal with paranormal and demons."
         },
         new Opponent()
         {
@@ -588,7 +611,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.LightRow, 4, 5),
                 new OpponentAttack(AttackType.LightRow, 6, 5)
             },
-            GravityLevel = 8, Weight = 40
+            GravityLevel = 8, Weight = 40,
+            Lore = "Your good old radical racist kultist from Texas."
         },
         new Opponent()
         {
@@ -597,7 +621,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 1) },
             GravityLevel = 12, Weight = 40,
-            DialogId = 4, DialogPitch = 0.75f
+            DialogId = 4, DialogPitch = 0.75f,
+            Lore = "Their soul is so dark, it is hard to believe they belongs in the church..."
         },
         new Opponent()
         {
@@ -606,7 +631,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.AirPiece, 3),
                 new OpponentAttack(AttackType.Tunnel, 2)},
-            GravityLevel = 6, Weight = 25
+            GravityLevel = 6, Weight = 25,
+            Lore = "Lowest form of ghosts, those strange being are nevertheless working with the men of faith."
         },
         new Opponent()
         {
@@ -614,7 +640,8 @@ public static class OpponentsData
             HpMax = 600, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 6, 10) },
-            GravityLevel = 10, Weight = 40
+            GravityLevel = 10, Weight = 40,
+            Lore = "Church doesn't only have pedophiles, they also have pedovores."
         },
         new Opponent()
         {
@@ -626,7 +653,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Drill, 1),
                 new OpponentAttack(AttackType.Screwed, 1) },
             GravityLevel = 16, Weight = 999,
-            DialogId = 4, DialogPitch = 1.25f, HeadDown = true
+            DialogId = 4, DialogPitch = 1.25f, HeadDown = true,
+            Lore = "Ancient agent of a shady organization, this professional killer devoted her life to the church to repent her sins."
         },
         new Opponent()
         {
@@ -635,7 +663,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 2, 8) },
             GravityLevel = 12, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f
+            DialogId = 0, DialogPitch = 1.0f,
+            Lore = "One of the oldest member of the clergy, this immortal being tend to still do thing the old way..."
         },
         new Opponent()
         {
@@ -644,7 +673,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 6, 2)},
             GravityLevel = 10, Weight = 999,
-            DialogId = 2, DialogPitch = 1.1f
+            DialogId = 2, DialogPitch = 1.1f,
+            Lore = "Definitely a human, who was definitely chosen by the Lord and no one else to reign over humans and definitely not lizard people."
         }
     };
 
@@ -656,7 +686,8 @@ public static class OpponentsData
             HpMax = 200, Cooldown = 3, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Partition, 1, 1) },
-            GravityLevel = 12, Weight = 20
+            GravityLevel = 12, Weight = 20,
+            Lore = "Few is known of watchers, as they can be totally invisible until confrontation, as humans think anyway. But they spy humans that's for sure."
         },
         new Opponent()
         {
@@ -667,7 +698,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.LightRow, 4, 10),
                 new OpponentAttack(AttackType.Shelter, 1),
                 new OpponentAttack(AttackType.EmptyRow, 5) },
-            GravityLevel = 12, Weight = 20
+            GravityLevel = 12, Weight = 20,
+            Lore = "Symbol of the liberty, of the fight against oppression, it however was never sent to humans..."
         },
         new Opponent()
         {
@@ -676,7 +708,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shelter, 1),
                 new OpponentAttack(AttackType.Shift, 4) },
-            GravityLevel = 12, Weight = 20
+            GravityLevel = 12, Weight = 20,
+            Lore = "Protectors of Heaven, those mighty shields can block even the heaviest attacks!"
         },
         new Opponent()
         {
@@ -684,7 +717,8 @@ public static class OpponentsData
             HpMax = 250, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
-            GravityLevel = 14, Weight = 30
+            GravityLevel = 14, Weight = 30,
+            Lore = "When you think you reached the truth, this truth will hit you with a truth, truther that the truth you trusted."
         },
         new Opponent()
         {
@@ -692,7 +726,8 @@ public static class OpponentsData
             HpMax = 300, Cooldown = 5, Haste = true, Immunity = Immunity.Twists,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 3) },
-            GravityLevel = 16, Weight = 30
+            GravityLevel = 16, Weight = 30,
+            Lore = "Thrones are ancient angels, they were here when the earth was created, and did nothing to prevent the human to tear apart each others."
         },
         new Opponent()
         {
@@ -701,7 +736,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 2),
                 new OpponentAttack(AttackType.DropBomb, 5) },
-            GravityLevel = 10, Weight = 20
+            GravityLevel = 10, Weight = 20,
+            Lore = "Smallest of the angels, look how cute they are, with their little wings and their little child skull."
         },
         new Opponent()
         {
@@ -713,7 +749,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Drone, 2, 2),
                 new OpponentAttack(AttackType.VisionBlock, 4, 2),
              },
-            GravityLevel = 14, Weight = 40
+            GravityLevel = 14, Weight = 40,
+            Lore = "Tortured angel, taking the weight of human sins on his shoulders."
         },
         new Opponent()
         {
@@ -722,7 +759,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
                 new OpponentAttack(AttackType.Ascension, 4, 1)},
-            GravityLevel = 16, Weight = 50
+            GravityLevel = 16, Weight = 50,
+            Lore = "Basic angel. As unusefull and not caring as any angel can be."
         },
         new Opponent()
         {
@@ -731,7 +769,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },
-            GravityLevel = 16, Weight = 50
+            GravityLevel = 16, Weight = 50,
+            Lore = "Still wondering how this angel didn't end up in Hell... It shows the Heaven's chastity hypocrysis."
         },
         new Opponent()
         {
@@ -740,7 +779,8 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 1, 4),
                 new OpponentAttack(AttackType.Tunnel, 4) },
-            GravityLevel = 16, Weight = 50
+            GravityLevel = 16, Weight = 50,
+            Lore = "Representing a neutral opinion among angels, his devious side is often bribed in order to satisfy most of the angels prerogatives."
         },
         new Opponent()
         {
@@ -748,16 +788,18 @@ public static class OpponentsData
             HpMax = 800, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 9, 1) },
-            GravityLevel = 16, Weight = 60
+            GravityLevel = 16, Weight = 60,
+            Lore = "The one and only. He died for our sins."
         },
         new Opponent()
         {
-            Name = "Holy Raptor", Realm = Realm.Earth, Type = OpponentType.Common,
+            Name = "Prophet Raptor", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 400, Cooldown = 10, Haste = true, Immunity = Immunity.Cooldown,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DropBomb, 7),
                 new OpponentAttack(AttackType.Screwed, 1) },
-            GravityLevel = 16, Weight = 60
+            GravityLevel = 16, Weight = 60,
+            Lore = "The true aspect of the prophet is hard to accept, but is reachable for the chosen ones!"
         },
         new Opponent()
         {
@@ -767,7 +809,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.LineBreak, 6),
                 new OpponentAttack(AttackType.Shelter, 2)},
             GravityLevel = 18, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f
+            DialogId = 0, DialogPitch = 1.0f,
+            Lore = "King of Kings, this old seraphim reign over angels of Heaven with an iron fist!"
         },
         new Opponent()
         {
@@ -778,7 +821,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.OldSchool, 3),
                 new OpponentAttack(AttackType.Gate, 1)},
             GravityLevel = 18, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f
+            DialogId = 0, DialogPitch = 1.0f,
+            Lore = "Oldest entities existing, eternal beings, having always existed, even before the big bang. They elected the Lord of Heaven."
         },
         new Opponent()
         {
@@ -789,7 +833,8 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Shift, 4),
                 new OpponentAttack(AttackType.Ascension, 4, 1)},
             GravityLevel = 20, Weight = 999,
-            DialogId = 0, DialogPitch = 1.0f
+            DialogId = 0, DialogPitch = 1.0f,
+            Lore = "God of Gods, ruler of Heaven, good boy, and put on the throne by questionable manners..."
         }
     };
 }
