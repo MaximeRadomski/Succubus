@@ -157,10 +157,16 @@ public class DifficultySceneBhv : SceneBhv
 
     private void Play()
     {
-        PlayerPrefsHelper.SaveRun(new Run(PlayerPrefsHelper.GetDifficulty()));
+        var run = new Run(PlayerPrefsHelper.GetDifficulty());
         var randomItemMaxRarity = PlayerPrefsHelper.GetRealmBossProgression();
         if (randomItemMaxRarity >= 0)
-            PlayerPrefsHelper.SaveCurrentItem(ItemsData.GetRandomItem((Rarity)randomItemMaxRarity).Name);
+        {
+            var item = ItemsData.GetRandomItem((Rarity)randomItemMaxRarity);
+            PlayerPrefsHelper.SaveCurrentItem(item.Name);
+            if (item.IsUsesBased)
+                run.CurrentItemUses = item.Uses;
+        }
+        PlayerPrefsHelper.SaveRun(run);
         Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
         object OnBlend(bool result)
         {

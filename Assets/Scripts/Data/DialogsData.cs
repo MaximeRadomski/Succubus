@@ -1646,6 +1646,17 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Prophet Raptor
+        { "Prophet Raptor|Earth",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "I died for your sins, Human. You better remember it!"
+                }
+            }
+        },
+        #endregion
         #region Seraphim King
         { "Seraphim King",
             new List<List<string>>()

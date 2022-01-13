@@ -451,7 +451,7 @@ public static class OpponentsData
             Name = "Chorists", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Partition, 5, 2) },
+                new OpponentAttack(AttackType.Partition, 5, 1) },
             GravityLevel = 10, Weight = 40,
             Lore = "Small group of traumatized children, singing traumatizing songs in Latin."
         },
@@ -759,7 +759,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
                 new OpponentAttack(AttackType.Ascension, 4, 2)},
-            GravityLevel = 16, Weight = 50,
+            GravityLevel = 16, Weight = 40,
             Lore = "Basic angel. As unusefull and not caring as any angel can be."
         },
         new Opponent()
@@ -769,7 +769,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },
-            GravityLevel = 16, Weight = 50,
+            GravityLevel = 16, Weight = 40,
             Lore = "Still wondering how this angel didn't end up in Hell... It shows the Heaven's chastity hypocrysis."
         },
         new Opponent()
@@ -779,7 +779,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 1, 4),
                 new OpponentAttack(AttackType.Tunnel, 4) },
-            GravityLevel = 16, Weight = 50,
+            GravityLevel = 16, Weight = 40,
             Lore = "Representing a neutral opinion among angels, his devious side is often bribed in order to satisfy most of the angels prerogatives."
         },
         new Opponent()
@@ -788,7 +788,7 @@ public static class OpponentsData
             HpMax = 800, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 7, 1) },
-            GravityLevel = 16, Weight = 60,
+            GravityLevel = 16, Weight = 50,
             DialogId = 2, DialogPitch = 0.35f,
             Lore = "The one and only. He died for our sins."
         },
@@ -799,7 +799,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.DropBomb, 7),
                 new OpponentAttack(AttackType.Screwed, 1) },
-            GravityLevel = 16, Weight = 60,
+            GravityLevel = 16, Weight = 50,
             Lore = "The true aspect of the prophet is hard to accept, but is reachable for the chosen ones!"
         },
         new Opponent()
