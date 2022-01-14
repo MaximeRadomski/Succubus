@@ -685,14 +685,14 @@ public static class OpponentsData
             Name = "Watcher", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 200, Cooldown = 3, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.RhythmMania, 3, 1) },
+                new OpponentAttack(AttackType.RhythmMania, 4, 1) },
             GravityLevel = 12, Weight = 20,
             Lore = "Few is known of watchers, as they can be totally invisible until confrontation, as humans think anyway. But they spy humans that's for sure."
         },
         new Opponent()
         {
             Name = "Winged Liberty", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 200, Cooldown = 5, Haste = true,
+            HpMax = 200, Cooldown = 3, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shelter, 1),
                 new OpponentAttack(AttackType.LightRow, 4, 10),
@@ -723,7 +723,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Lower Throne", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 300, Cooldown = 5, Haste = true, Immunity = Immunity.Twists,
+            HpMax = 300, Cooldown = 4, Haste = true, Immunity = Immunity.Twists,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 3) },
             GravityLevel = 16, Weight = 30,
@@ -765,7 +765,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Kinky Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 600, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
+            HpMax = 400, Cooldown = 4, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },
@@ -775,7 +775,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Duality Angel", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 350, Cooldown = 5, Haste = true,
+            HpMax = 350, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 1, 4),
                 new OpponentAttack(AttackType.Tunnel, 4) },
@@ -795,9 +795,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Prophet Raptor", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 400, Cooldown = 10, Haste = true, Immunity = Immunity.Cooldown,
+            HpMax = 400, Cooldown = 5, Haste = true, Immunity = Immunity.Cooldown,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DropBomb, 7),
+                new OpponentAttack(AttackType.VisionBlock, 5, 2),
                 new OpponentAttack(AttackType.Screwed, 1) },
             GravityLevel = 16, Weight = 50,
             Lore = "The true aspect of the prophet is hard to accept, but is reachable for the chosen ones!"
@@ -819,7 +819,7 @@ public static class OpponentsData
             HpMax = 1111, Weakness = Weakness.Combos, DamageOnWeakness = 50, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 2),
-                new OpponentAttack(AttackType.OldSchool, 4) },
+                new OpponentAttack(AttackType.OldSchool, 4, 10) },
             GravityLevel = 18, Weight = 999,
             DialogId = 5, DialogPitch = 0.2f,
             Lore = "Oldest entities existing, eternal beings, having always existed, even before the big bang. They elected the Lord of Heaven."

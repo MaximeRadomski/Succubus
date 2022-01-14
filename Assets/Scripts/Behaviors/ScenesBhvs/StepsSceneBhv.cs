@@ -221,7 +221,7 @@ public class StepsSceneBhv : SceneBhv
                 _buttonInfo.SetActive(false);
             }
 
-            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1)
+            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1 && _run.CurrentRealm < Realm.Heaven)
             {
                 _beholderPicture.gameObject.SetActive(true);
                 _buttonBeholder.SetActive(true);
