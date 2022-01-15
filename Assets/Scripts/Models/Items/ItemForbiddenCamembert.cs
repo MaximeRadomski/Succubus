@@ -13,7 +13,7 @@ public class ItemForbiddenCamembert : Item
         Name = ItemsData.Items[Id];
         Description = $"fills every {Highlight("single holes")}.";
         Rarity = Rarity.Rare;
-        Cooldown = 16;
+        Cooldown = 8;
     }
 
     protected override object Effect()

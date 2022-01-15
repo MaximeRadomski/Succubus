@@ -319,7 +319,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Destroy(tmpDrillTarget);
         }
 
-        CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Cache.RandomizedAttackType, 1, 2) };
+        CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Cache.RandomizedAttackType, UnityEngine.Random.Range(1, 4), 1) };
         Cache.CurrentOpponentAttackId = 0;
         if (Cache.RandomizedAttackType == AttackType.Drill)
             _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].Param1, true);

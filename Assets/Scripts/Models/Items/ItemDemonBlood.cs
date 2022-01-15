@@ -8,7 +8,7 @@ public class ItemDemonBlood : Item
     {
         Id = 1;
         Name = ItemsData.Items[Id];
-        Description = $"clears {Highlight("4 dark rows")}.";
+        Description = $"clears {Highlight("6 dark rows")}.";
         Rarity = Rarity.Common;
         Cooldown = 6;
     }

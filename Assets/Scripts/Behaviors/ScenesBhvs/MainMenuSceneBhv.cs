@@ -63,7 +63,7 @@ public class MainMenuSceneBhv : SceneBhv
     {
         if (_currentRun != null && _currentRun.Endless > 0)
         {
-            this.Instantiator.NewPopupYesNo("Ascension", "would you like to continue your endless ascension, or to start a new one?", "New", "Continue", (result) =>
+            this.Instantiator.NewPopupYesNo("Ascension", $"would you like to continue your endless ascension, or to start a new one?\n\ndifficulty: {(_currentRun.Difficulty - 1).ToString().ToLower()} -> {_currentRun.Difficulty.ToString().ToLower()}", "New", "Continue", (result) =>
             {
                 if (!result)
                 {

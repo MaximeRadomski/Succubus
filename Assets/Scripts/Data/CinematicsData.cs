@@ -53,7 +53,7 @@ public static class CinematicsData
         },
         new List<string>()
         {
-            "Heaven as we know it was no more. The twins established a new precept in this very day.",
+            "Heaven, as we know it, was no more.\nThe twins established a new precept in this very day.",
             "\"You don't fuck with the devil.\"",
 
             "Soon the human would remake their religion, as they always do.",

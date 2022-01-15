@@ -11,7 +11,7 @@ public class TreeSceneBhv : SceneBhv
     private List<int> _resources;
     private List<TreeNode> _treeNodes;
 
-    private int _nodeUnitPrice = 5;
+    private int _nodeUnitPrice = 3;
 
     void Start()
     {
@@ -138,9 +138,9 @@ public class TreeSceneBhv : SceneBhv
     private void ResetTreeNodes()
     {
         var maxRealmResourceAsked = PlayerPrefsHelper.GetRealmBossProgression() + 1; //Starts at -1, increments on boss vainquished
-        var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 10 : 0;
-        var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 10 : 0;
-        var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 10 : 0;
+        var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 6 : 0;
+        var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 6 : 0;
+        var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 6 : 0;
         var price = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}\n---\nprice: " +
         $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[Realm.Hell.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
         $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[Realm.Earth.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +

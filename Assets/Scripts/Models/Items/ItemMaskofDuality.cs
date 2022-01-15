@@ -8,7 +8,7 @@ public class ItemMaskofDuality : Item
     {
         Id = 22;
         Name = ItemsData.Items[Id];
-        Description = $"either deals {Highlight("4 times ")} your damage, or attacks you with {Highlight("4 garbage lines")}.";
+        Description = $"either deals {Highlight("8 times ")} your damage, or attacks you with {Highlight("4 garbage lines")}.";
         Rarity = Rarity.Common;
         Cooldown = 6;
     }
@@ -17,7 +17,7 @@ public class ItemMaskofDuality : Item
     {
         var random = Random.Range(0, 2);
         if (random == 0)
-            _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Heaven);
+            _gameplayControler.SceneBhv.DamageOpponent(8 * _character.GetAttack(), _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Heaven);
         else
         {
             _gameplayControler.AttackWasteRows(_gameplayControler.CharacterInstanceBhv.gameObject, 4, Realm.Hell, 1, fromPlayer: true);

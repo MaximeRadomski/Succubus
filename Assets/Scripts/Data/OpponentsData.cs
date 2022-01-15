@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Stan"; 
+        var name = "Headbanger"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -765,7 +765,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Kinky Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 400, Cooldown = 4, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
+            HpMax = 400, Cooldown = 3, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },

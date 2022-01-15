@@ -15,11 +15,6 @@ public class ItemJusticeShovel : Item
 
     protected override object Effect()
     {
-        if (_character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < _character.DiamondBlocks)
-        {
-            ++Cache.CanceledDiamondBlocks;
-            return base.Effect();
-        }
         var leftColumnId = Random.Range(0, 8);
         _gameplayControler.DeleteColumn(leftColumnId);
         _gameplayControler.DeleteColumn(leftColumnId + 1);

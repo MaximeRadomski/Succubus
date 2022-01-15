@@ -1934,6 +1934,67 @@ public static class DialogsData
                 }
             }
         },
+        { "The Beholder|Melip",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Melip, ugly duckling of Heaven.",
+                    "Oh come on! I'm on the human side now!",
+                    "Isn't being from heaven more prestigious?",
+                    "Not at all!"
+                },
+                new List<string>()
+                {
+                    "Greetings, Melip, ugly duckling of Earth.",
+                    "Sigh..."
+                }
+            }
+        },
+        { "The Beholder|Azrael",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Azrael, last Angel of Death.",
+                    "Wait what?? Last? What do you mean by that?",
+                    "Do you really think your little combo Hell, Earth and Heaven thing is the only one which has ever existed?",
+                    "I'm so confused..."
+                },
+                new List<string>()
+                {
+                    "Greetings, Azrael, only Angel of Death.",
+                    "Like if there could be another one..."
+                }
+            }
+        },
+        { "The Beholder|Uriel",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Uriel, future advisor of Heaven.",
+                    "Future adviser? Me? A mere reject?",
+                    "The only reason you've been rejected is because of your brother.",
+                    "That little brat..."
+                },
+                new List<string>()
+                {
+                    "Greetings, Uriel, future advisor of Heaven.",
+                    "Greetings fellow Beholder."
+                }
+            }
+        },
+        { "The Beholder|Zaphkiel",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Greetings, Zaphkiel, legitimate king of Heaven.",
+                    "Ahhh... Hearing this is pleasing..."
+                }
+            }
+        },
         #endregion
     };
 }
