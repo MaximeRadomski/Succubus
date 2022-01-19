@@ -7,7 +7,7 @@ public class TattooScissorJack : Tattoo
     {
         Id = 61;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
+        Stat = 2;
         Rarity = Rarity.Common;
         MaxLevel = 10;
     }
@@ -19,6 +19,6 @@ public class TattooScissorJack : Tattoo
 
     public override string GetDescription()
     {
-        return $"cancels the first {StatToString(after: Stat * Level == 1 ? " shrinking line" : " shrinking lines")} in a fight.";
+        return $"cancels the first {StatToString(after: " shrinking lines")} in a fight.";
     }
 }

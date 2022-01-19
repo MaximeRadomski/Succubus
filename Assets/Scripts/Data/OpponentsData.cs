@@ -556,7 +556,7 @@ public static class OpponentsData
             Name = "Wololo", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 100, Immunity = Immunity.xLines, XLineImmunity = 1, Cooldown = 4,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.LightRow, 5, 6),
+                new OpponentAttack(AttackType.Shrink, 1),
                 new OpponentAttack(AttackType.OldSchool, 4, 8) },
             GravityLevel = 6, Weight = 40,
             Lore = "Don't let them get you into an discussion, or you'll soon be manipulated into joining their ranks!"
@@ -609,7 +609,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LightRow, 2, 5),
                 new OpponentAttack(AttackType.LightRow, 4, 5),
-                new OpponentAttack(AttackType.LightRow, 6, 5)
+                new OpponentAttack(AttackType.Shrink, 1)
             },
             GravityLevel = 8, Weight = 40,
             Lore = "Your good old radical racist kultist from Texas."
@@ -778,7 +778,8 @@ public static class OpponentsData
             HpMax = 350, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 1, 4),
-                new OpponentAttack(AttackType.Tunnel, 4) },
+                new OpponentAttack(AttackType.Tunnel, 4),
+                new OpponentAttack(AttackType.Shrink, 1) },
             GravityLevel = 16, Weight = 40,
             Lore = "Representing a neutral opinion among angels, his devious side is often bribed in order to satisfy most of the angels prerogatives."
         },
@@ -823,7 +824,7 @@ public static class OpponentsData
             GravityLevel = 18, Weight = 999,
             DialogId = 5, DialogPitch = 0.2f,
             Lore = "Oldest entities existing, eternal beings, having always existed, even before the big bang. They elected the Lord of Heaven."
-        },
+        }, 
         new Opponent()
         {
             Name = "DOG", Realm = Realm.Heaven, Type = OpponentType.Boss,
