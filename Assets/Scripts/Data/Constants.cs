@@ -174,6 +174,8 @@ public static class Constants
     public const string PpLastFightPlayField = "LastFightPlayField";
     public const string PpWatchedCinematics = "WatchedCinematics";
     public const string PpWatchedCinematicsDefault = "0000";
+    public const string PpLastRandomBosses = "";
+    public const string PpLastRandomBossesDefault = "00";
 
     public static string GetDefaultKeyBinding()
     {

@@ -100,6 +100,7 @@ public abstract class GameSceneBhv : SceneBhv
                 NavigationService.LoadBackUntil(Constants.TrainingChoiceScene);
             else
             {
+                Cache.CurrentBossId = 0;
                 PlayerPrefsHelper.SaveIsInFight(false);
                 var run = PlayerPrefsHelper.GetRun();
                 Cache.GameOverParams = $"Abandonment|{ run.CurrentRealm}|{run.RealmLevel}";

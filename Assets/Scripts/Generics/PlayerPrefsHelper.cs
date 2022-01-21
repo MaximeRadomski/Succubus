@@ -1066,4 +1066,15 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.SetString(Constants.PpWatchedCinematics, Constants.PpWatchedCinematicsDefault);
     }
+
+    public static string GetLastRandomBosses()
+    {
+        var watchedCinematics = PlayerPrefs.GetString(Constants.PpLastRandomBosses, Constants.PpLastRandomBossesDefault);
+        return watchedCinematics;
+    }
+
+    public static void SetLastRandomBosses(string lastRandomBosses)
+    {
+        PlayerPrefs.GetString(Constants.PpLastRandomBosses, lastRandomBosses); 
+    }
 }

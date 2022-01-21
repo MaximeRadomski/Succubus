@@ -205,6 +205,7 @@ public class GameplayControler : MonoBehaviour
     public void CleanPlayerPrefs()
     {
         Bag = null;
+        Cache.CurrentBossId = 0;
         Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);

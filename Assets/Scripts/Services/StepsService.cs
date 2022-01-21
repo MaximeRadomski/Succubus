@@ -397,8 +397,22 @@ public class StepsService
             return new List<Opponent>() { realmOpponents[Cache.CurrentBossId].Clone() };
 
         var idFromEnd = 1;
+        var lastRandomBosses = PlayerPrefsHelper.GetLastRandomBosses();
         if (run.RealmLevel == 1)
-            idFromEnd = Random.Range(2, 4);
+        {
+            if (lastRandomBosses[0] == lastRandomBosses[1])
+            {
+                if (lastRandomBosses[0] == '2')
+                    idFromEnd = 3;
+                else if (lastRandomBosses[0] == '3')
+                    idFromEnd = 2;
+                else
+                    idFromEnd = Random.Range(2, 4);
+            }
+            else
+                idFromEnd = Random.Range(2, 4);
+            PlayerPrefsHelper.SetLastRandomBosses($"{lastRandomBosses[1]}{idFromEnd}");
+        }
         var idBoss = realmOpponents.Count - idFromEnd;
         Cache.CurrentBossId = idBoss; 
         return new List<Opponent>() { realmOpponents[idBoss].Clone() };
