@@ -9,7 +9,7 @@ public class ItemHolyGrenade : Item
         Name = ItemsData.Items[Id];
         Description = $"clears the {Highlight("whole playfield")}.";
         Rarity = Rarity.Legendary;
-        Cooldown = 25;
+        Cooldown = 40;
     }
 
     protected override object Effect()
@@ -19,7 +19,7 @@ public class ItemHolyGrenade : Item
         {
             if (y >= 40)
                 break;
-            _gameplayControler.DeleteLine(y);
+            _gameplayControler.DeleteLine(y); 
         }
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();

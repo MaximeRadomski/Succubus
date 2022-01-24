@@ -358,7 +358,7 @@ public class StepsService
 
     private int GetWeightFromRunLevel(Run run, Character character)
     {
-        var baseWeight = 40 + character.StepsWeightMalus;
+        var baseWeight = 50 + character.StepsWeightMalus;
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
         weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());

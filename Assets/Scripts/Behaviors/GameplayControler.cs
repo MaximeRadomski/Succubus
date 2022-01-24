@@ -158,9 +158,9 @@ public class GameplayControler : MonoBehaviour
             PlayerPrefsHelper.SaveRunCharacter(Character);
             Resurect();
         }
-        else if (Cache.TruthResurrection)
+        else if (Cache.TruthResurrection > 0)
         {
-            Cache.TruthResurrection = false;
+            --Cache.TruthResurrection;
             Resurect();
         }
         else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
@@ -1966,7 +1966,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Item()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay || _usingItem)
             return;
         if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {

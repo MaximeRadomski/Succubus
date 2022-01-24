@@ -6,11 +6,11 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = Constants.OpponentsDebug;
-    public static bool OnlyOpponent = false;
+    public static bool OnlyOpponent = true;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Headbanger"; 
+        var name = "Karen"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -539,7 +539,7 @@ public static class OpponentsData
             HpMax = 200, Immunity = Immunity.xLines, XLineImmunity = 3, Cooldown = 6,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drone, 4, 0) },
-            GravityLevel = 12, Weight = 60,
+            GravityLevel = 9, Weight = 60,
             Lore = "One of the most despicable humans on earth. Run if she asks for the manager!"
         },
         new Opponent()

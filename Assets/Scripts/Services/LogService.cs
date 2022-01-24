@@ -36,7 +36,8 @@ public static class LogService
             if (currentScene is ClassicGameSceneBhv gameScene)
             {
                 var gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
-                context = $"\n    [CONTEXT] Opponent: {gameScene.CurrentOpponent?.Name}, Character: {gameScene.Character?.Name}, Item: {gameplayControler?.CharacterItem?.Name}, CacheOpponentAttackId: {Cache.CurrentOpponentAttackId}";
+                var run = PlayerPrefsHelper.GetRun();
+                context = $"\n    [CONTEXT] Opponent: {gameScene.CurrentOpponent?.Name}, Character: {gameScene.Character?.Name}, Item: {gameplayControler?.CharacterItem?.Name}, CacheOpponentAttackId: {Cache.CurrentOpponentAttackId}, Difficulty: {run.Difficulty}";
             }
             else if (currentScene is LoreSceneBhv loreScene)
             {

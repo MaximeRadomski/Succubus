@@ -46,7 +46,7 @@ public static class Cache
     public static int AddedDodgeChancePercent = 0;
     public static int BlockPerAttack = -1;
     public static float BonusLockDelay = 0.0f;
-    public static bool TruthResurrection = false;
+    public static int TruthResurrection = 0;
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
     public static int HeightLimiterResetPieces = -1;
@@ -104,7 +104,7 @@ public static class Cache
         AddedDodgeChancePercent = 0;
         BlockPerAttack = -1;
         BonusLockDelay = 0.0f;
-        TruthResurrection = false;
+        TruthResurrection = 0;
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
         HeightLimiterResetPieces = -1;
