@@ -415,7 +415,8 @@ public class StepsSceneBhv : SceneBhv
             var tattoo = TattoosData.GetTattooFromName(TattoosData.Tattoos[_selectedStep.LootId]);
             name = tattoo.Name;
             cooldown = null;
-            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + tattoo.GetDescription();
+            var upgradable = tattoo.MaxLevel > 1 ? " [upgradable]" : "";
+            description = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + tattoo.GetDescription() + upgradable;
         }
         else
             return;

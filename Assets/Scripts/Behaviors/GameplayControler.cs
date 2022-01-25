@@ -1966,7 +1966,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Item()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay || _usingItem)
+        if (_usingItem || CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
             return;
         if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
@@ -1993,6 +1993,8 @@ public class GameplayControler : MonoBehaviour
                 this.SceneBhv.CameraBhv.Bump(4);
                 _soundControler.PlaySound(_idBipItem);
             }
+            else
+                _usingItem = false;
             UpdateItemAndSpecialVisuals();
         }
     }
@@ -3025,25 +3027,34 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackDrone(GameObject opponentInstance, Realm opponentRealm, int nbRows, int rowTypeId)
     {
-        var drone = GameObject.Find(Constants.GoDrone);
-        if (drone != null)
+        try
         {
-            AfterSpawn.Invoke(true);
-            AfterSpawn = null;
-            Destroy(drone);
+            var drone = GameObject.Find(Constants.GoDrone);
+            if (drone != null)
+            {
+                if (AfterSpawn != null)
+                    AfterSpawn.Invoke(true);
+                AfterSpawn = null;
+                if (drone != null)
+                    Destroy(drone);
+            }
+            _soundControler.PlaySound(_idBipItem);
+            var rowType = AttackType.DarkRow;
+            if (rowTypeId >= 1 || rowTypeId <= 4)
+                rowType = (AttackType)rowTypeId;
+            var x = UnityEngine.Random.Range(0, 10);
+            if (Instantiator == null)
+                Instantiator = GetComponent<Instantiator>();
+            var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
+            droneInstance.transform.SetParent(PlayFieldBhv.transform);
+            Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
+            SetAfterSpawn(droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn);
+            Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
         }
-        _soundControler.PlaySound(_idBipItem);
-        var rowType = AttackType.DarkRow;
-        if (rowTypeId >= 1 || rowTypeId <= 4)
-            rowType = (AttackType)rowTypeId;
-        var x = UnityEngine.Random.Range(0, 10);
-        if (Instantiator == null)
-            Instantiator = GetComponent<Instantiator>();
-        var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
-        droneInstance.transform.SetParent(PlayFieldBhv.transform);
-        Instantiator.NewAttackLine(opponentInstance.transform.position, droneInstance.transform.position, opponentRealm);
-        SetAfterSpawn(droneInstance.GetComponent<DroneBhv>().DroneAttackAfterSpawn);
-        Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1);
+        catch (Exception e)
+        {
+            LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
+        }
     }
 
     private void AttackShift(GameObject opponentInstance, Realm opponentRealm, int nbRows)

@@ -17,7 +17,7 @@ public static class LogService
         Application.logMessageReceived += LogCallback;
     }
 
-    private static void LogCallback(string condition, string stackTrace, LogType type)
+    public static void LogCallback(string condition, string stackTrace, LogType type)
     {
         if (type == LogType.Assert
             || type == LogType.Error

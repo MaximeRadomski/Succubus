@@ -6,6 +6,7 @@ public class SplashScreenBhv : SceneBhv
 {
     private TMPro.TextMeshPro _catchPhrase;
     private List<string> _catchPhrases;
+    private TMPro.TextMeshPro _continueText;
 
     public override MusicType MusicType => MusicType.SplashScreen;
 
@@ -49,10 +50,15 @@ public class SplashScreenBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        _continueText = GameObject.Find("ContinueText").GetComponent<TMPro.TextMeshPro>();
 #if !UNITY_ANDROID
         var resolutionService = GetComponent<ResolutionService>();
         PlayerPrefsHelper.SaveResolution(resolutionService.SetResolution(PlayerPrefsHelper.GetResolution()));
+        _continueText.text = "Press Any Button To Continue";
+#else
+        _continueText.text = "Touch Anywhere To Continue";
 #endif
+        Invoke(nameof(TiltContinue), 0.75f);
         var canCheckOnlineVersionRightAway = CheckLastInstalledVersion();
         if (canCheckOnlineVersionRightAway)
             CheckLastUpdatedVersion();
@@ -85,6 +91,15 @@ public class SplashScreenBhv : SceneBhv
         tmpTxt = tmpTxt.Replace("[DAY]", DateTime.Today.DayOfWeek.ToString());
         _catchPhrase.text = tmpTxt;
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = GoToMainMenu;
+    }
+
+    private void TiltContinue()
+    {
+        _continueText.enabled = !_continueText.enabled;
+        if (_continueText.enabled)
+            Invoke(nameof(TiltContinue), 0.70f);
+        else
+            Invoke(nameof(TiltContinue), 0.35f);
     }
 
     private bool CheckLastInstalledVersion()

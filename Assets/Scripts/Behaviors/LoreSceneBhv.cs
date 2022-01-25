@@ -16,6 +16,12 @@ public class LoreSceneBhv : SceneBhv
     private List<string> _lore;
     private bool _hasInit;
 
+    private float _spamNextDelay = 0.1f;
+    private float _nextAvailableSpamNext = 0.0f;
+    private bool _canGoNext = true;
+
+    private int _cinematicId;
+
     private void Start()
     {
         Init();
@@ -34,26 +40,32 @@ public class LoreSceneBhv : SceneBhv
         _pellicules.Add(GameObject.Find("PelliculeRight").GetComponent<SpriteRenderer>());
 
         _loreText = GameObject.Find("LoreText").GetComponent<TMPro.TextMeshPro>();
-        _lore = CinematicsData.Cinematics[NavigationService.SceneParameter?.IntParam0 ?? -1];
+        if (NavigationService.SceneParameter != null)
+            _cinematicId = NavigationService.SceneParameter?.IntParam0 ?? 0;
+        else
+        {
+            var run = PlayerPrefsHelper.GetRun();
+            _cinematicId = run?.CurrentRealm.GetHashCode() ?? 0;
+        }
+        _lore = CinematicsData.Cinematics[_cinematicId];
 
         _progression = 0;
         _pelliculeMove = 0;
         _hasInit = true;
 
-        GameObject.Find("Background").GetComponent<ButtonBhv>().EndActionDelegate = SkipLoreBecauseYouDontLikeLoreThusAreAHorribleHumanBeing;
+        GameObject.Find("Background").GetComponent<ButtonBhv>().EndActionDelegate = GoToNext;
 
-        StartCoroutine(NextCinematic());
+        StartCoroutine(PlayCinematicPart());
     }
 
-    private IEnumerator NextCinematic()
+    private IEnumerator PlayCinematicPart()
     {
-        var end = false;
         if (_progression % 2 == 0)
         {
-            var sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Cinematic{NavigationService.SceneParameter?.IntParam0 ?? -1}_{_progression / 2}");
+            var sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Cinematic{_cinematicId}_{_progression / 2}");
             if (sprite == null)
             {
-                end = true;
+                _canGoNext = false;
                 LoadNext();
             }
             else
@@ -71,13 +83,18 @@ public class LoreSceneBhv : SceneBhv
         {
             _loreText.text = "";
             yield return new WaitForSeconds(0.25f);
-            _loreText.text = _lore[_progression];
+            if (_progression > 0 && _progression < _lore.Count)
+                _loreText.text = _lore[_progression];
         }
 
+        var progressionBeforeDelay = _progression;
         yield return new WaitForSeconds(_progression == 0 ? 7.6f : 6.5f);
-        ++_progression;
-        if (!end)
-            StartCoroutine(NextCinematic());
+        if (progressionBeforeDelay == _progression) // This checks if player hasn't click next
+        {
+            ++_progression;
+            if (_canGoNext)
+                StartCoroutine(PlayCinematicPart());
+        }
     }
 
     protected override void FrameUpdate()
@@ -100,27 +117,35 @@ public class LoreSceneBhv : SceneBhv
 
     private void LoadNext()
     {
-        PlayerPrefsHelper.SaveWatchedCinematics(NavigationService.SceneParameter?.IntParam0 ?? -1);
+        PlayerPrefsHelper.SaveWatchedCinematics(_cinematicId);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         object OnBlend(bool result)
         {
             if (NavigationService.Path.Contains(Constants.StepsAscensionScene))
-                NavigationService.LoadBackUntil(NavigationService.SceneParameter?.StringParam0);
+                NavigationService.LoadBackUntil(NavigationService.SceneParameter?.StringParam0 ?? Constants.StepsAscensionScene);
             else
-                NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0);
+                NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0 ?? Constants.CharSelScene);
             return true;
         }
     }
 
-    private void SkipLoreBecauseYouDontLikeLoreThusAreAHorribleHumanBeing()
+    private void GoToNext()
     {
-        this.Instantiator.NewPopupYesNo("Don't like lore?", "would you like to skip the cinematic?", "No", "Yes", OnSkipResult);
-
-        object OnSkipResult(bool result)
+        if (Time.time > _nextAvailableSpamNext)
         {
-            if (result)
-                LoadNext();
-            return result;
+            _nextAvailableSpamNext = Time.time + _spamNextDelay;
+            ++_progression;
+            if (_canGoNext)
+                StartCoroutine(PlayCinematicPart());
         }
+        
+        //this.Instantiator.NewPopupYesNo("Don't like lore?", "would you like to skip the cinematic?", "No", "Yes", OnSkipResult);
+
+        //object OnSkipResult(bool result)
+        //{
+        //    if (result)
+        //        LoadNext();
+        //    return result;
+        //}
     }
 }

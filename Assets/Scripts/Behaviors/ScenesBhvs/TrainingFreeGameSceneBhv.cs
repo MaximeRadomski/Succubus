@@ -194,7 +194,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         if (isB2B)
         {
             tmpAdded = Mathf.RoundToInt((float)tmpAdded * 1.5f);
-            _poppingText += " cc";
+            _poppingText += "\nconsecutive";
         }
 
         if (lastLockIsTwist)

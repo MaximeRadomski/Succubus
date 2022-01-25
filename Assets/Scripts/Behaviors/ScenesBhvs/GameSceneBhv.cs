@@ -168,7 +168,7 @@ public abstract class GameSceneBhv : SceneBhv
             _poppingText += nbLines + " lines";
         if (isB2B)
         {
-            _poppingText += " cc";
+            _poppingText += "\nconsecutive";
         }
     }
 

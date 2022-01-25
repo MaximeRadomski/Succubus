@@ -31,8 +31,8 @@ public class Run
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 15;
     public int ResourceLootPercent = 25;
-    public int PactLootPercent = 25;
-    public int TattooLootPercent = 30;
+    public int PactLootPercent = 20;
+    public int TattooLootPercent = 35;
 
     public int DeathScytheAscension = 0;
     public bool LifeRouletteOnce = false;
