@@ -21,7 +21,10 @@ public abstract class Special
         if (Cache.SelectedCharacterSpecialCooldown > 0)
             return false;
         Cache.ResetSelectedCharacterSpecialCooldown(_character);
-        _gameplayControler.Instantiator.PopText(_character.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
+        if (Cache.TemporaryCharacter != null)
+            _gameplayControler.Instantiator.PopText(Cache.TemporaryCharacter.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
+        else
+            _gameplayControler.Instantiator.PopText(_character.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
         return true;
     }

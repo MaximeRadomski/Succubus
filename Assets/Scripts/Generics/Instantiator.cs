@@ -123,7 +123,7 @@ public class Instantiator : MonoBehaviour
 
     public GameObject NewPiece(string pieceLetter, string realm, Vector3 spawnerPosition, bool keepSpawnerX = false)
     {
-        if (_isClassic)
+        if (_isClassic || realm == Realm.None.ToString())
         {
             var ghost = realm.Contains("Ghost") ? "Ghost" : "";
             realm = "Classic" + ghost;

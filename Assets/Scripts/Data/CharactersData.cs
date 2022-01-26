@@ -131,7 +131,7 @@ public static class CharactersData
             SpecialName = "Sky Down", SpecialDescription = "applies gravity on all current blocks in the play field.",
             Lore = "Simple throne but hard worker, Zaphkiel made his way to the top of the Divine Council. But his dedication, considered as too dangerous for the power in place, put him into prison.",
             DialogId = 5, DialogPitch = 0.8f
-        },
+        }
     };
 
     public static List<Character> CustomCharacters = new List<Character>()
@@ -148,10 +148,10 @@ public static class CharactersData
         new Character()
         {
             Id = 49, Name = "The Beholder", Kind = "Mystic Being", Realm = Realm.Heaven,
-            Attack = 0,
-            Cooldown = 0,
-            SpecialName = null, SpecialDescription = "None",
-            Lore = "None",
+            Attack = 15,
+            Cooldown = 8,
+            SpecialName = "Uncertainty", SpecialDescription = "Destroys 1 to 10 lines from the bottom.",
+            Lore = "Who the hell might he be?",
             DialogId = 4, DialogPitch = 0.5f
         }
     };

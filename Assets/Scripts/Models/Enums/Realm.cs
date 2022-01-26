@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum Realm
 {
+    [Description("none")]
     None = -1,
     [Description("each combo adds 10% attack point.")]
     Hell = 0,

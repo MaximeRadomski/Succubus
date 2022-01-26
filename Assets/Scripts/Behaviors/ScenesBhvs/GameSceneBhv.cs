@@ -43,6 +43,13 @@ public abstract class GameSceneBhv : SceneBhv
         _panelGame = GameObject.Find("PanelGame");
     }
 
+    public void TemporaryCharacter(Character character)
+    {
+        Cache.TemporaryCharacter = character;
+        _characterInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetCharacterSkin(character.Id, 0);
+        _gameplayControler.TemporaryCharacter(character);
+    }
+
     public override void PauseOrPrevious()
     {
         if (Paused)

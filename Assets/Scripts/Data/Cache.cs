@@ -39,7 +39,7 @@ public static class Cache
     public static int ComboCounter = 0;
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
-    public static int DamoclesDamage = 0;
+    public static int BonusDamage = 0;
     public static int ChanceAttacksHappeningPercent = 100;
     public static AttackType RandomizedAttackType = AttackType.None;
     public static bool HalvedCooldown = false;
@@ -69,6 +69,7 @@ public static class Cache
     public static int SheleredAttacksCount = 0;
     public static int NegateAttackBoostCount = 0;
     public static int CookieCount = 0;
+    public static Character TemporaryCharacter = null;
 
     public static int PactFlatDamage = 0;
     public static int PactCritChance = 0;
@@ -97,7 +98,7 @@ public static class Cache
         CurrentOpponentCooldown = 0;
         CumulativeCrit = 0;
         TripleLineDamageBonus = 0;
-        DamoclesDamage = 0;
+        BonusDamage = 0;
         ChanceAttacksHappeningPercent = 100;
         RandomizedAttackType = AttackType.None;
         HalvedCooldown = false;
@@ -127,6 +128,7 @@ public static class Cache
         SheleredAttacksCount = 0;
         NegateAttackBoostCount = 0;
         CookieCount = 0;
+        TemporaryCharacter = null;
 
         PactFlatDamage = 0;
         PactCritChance = 0;

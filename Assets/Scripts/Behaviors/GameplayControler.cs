@@ -125,6 +125,8 @@ public class GameplayControler : MonoBehaviour
     {
         Init(level, characterRealm, levelRealm);
         Spawn();
+        if (Cache.TemporaryCharacter != null)
+            this.SceneBhv.TemporaryCharacter(Cache.TemporaryCharacter);
         if (Cache.NameLastScene == Constants.SettingsScene)
             SceneBhv.PauseOrPrevious();
     }
@@ -275,6 +277,15 @@ public class GameplayControler : MonoBehaviour
             return Difficulty.Normal;
         var run = PlayerPrefsHelper.GetRun();
         return run?.Difficulty ?? Difficulty.Normal;
+    }
+
+    public void TemporaryCharacter(Character character)
+    {
+        _characterSpecial = (Special)Activator.CreateInstance(Type.GetType("Special" + character.SpecialName.Replace(" ", "").Replace("'", "").Replace("-", "")));
+        _characterSpecial.Init(Character, this);
+        CharacterInstanceBhv.Spawn();
+        Cache.SelectedCharacterSpecialCooldown = 0;
+        UpdateItemAndSpecialVisuals();
     }
 
     private void Init(int level, Realm characterRealm, Realm levelRealm)
@@ -3258,6 +3269,11 @@ public class GameplayControler : MonoBehaviour
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1.0f); //Not more because each Missed Empty Row might reduce it
         Cache.MusicAttackCount++;
+        var highestBlockY = GetHighestBlock();
+        var maxHeight = 15.0f;
+        if (maxHeight > highestBlockY + 3)
+            maxHeight = highestBlockY + 4;
+        Instantiator.PopText("play in rhythm", new Vector2(4.5f, maxHeight));
     }
 
     public void AttackOldSchool(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int gravity)
@@ -3408,7 +3424,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AddFrameKeyPressOrHeld(string input)
     {
-        if (_inputDisplay == null)
+        if (_inputDisplay == null || input.Contains("Menu"))
             return;
         if (_inputString.Length > 0)
             _inputString += "\n";
@@ -3419,7 +3435,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (_inputDisplay == null)
             return;
-        _inputDisplay.text = _inputString;
+        _inputDisplay.text = $"{Constants.GetMaterial(CharacterRealm, TextType.succubus3x5, TextCode.c43B)}{_inputString}";
         _inputString = "";
     }
 

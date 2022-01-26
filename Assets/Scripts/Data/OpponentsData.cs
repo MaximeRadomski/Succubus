@@ -6,11 +6,11 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = Constants.OpponentsDebug;
-    public static bool OnlyOpponent = true;
+    public static bool OnlyOpponent = false;
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Karen"; 
+        var name = "Headbanger"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)

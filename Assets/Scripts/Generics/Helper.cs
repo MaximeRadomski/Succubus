@@ -616,7 +616,10 @@ public static class Helper
     {
         var nbChars = CharactersData.Characters.Count;
         var id = (nbChars * skinId) + charId;
-        return GetSpriteFromSpriteSheet("Sprites/Characters_" + id);
+        var sprite = GetSpriteFromSpriteSheet("Sprites/Characters_" + id);
+        if (sprite != null)
+            return sprite;
+        return GetSpriteFromSpriteSheet("Sprites/Characters_" + charId);
     }
 
     public static bool UnlockCharacterSkinIfNotAlready(int charId, int realmId)

@@ -69,107 +69,115 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     void Start()
     {
-        Init();
-        if (_run == null)
-            _run = PlayerPrefsHelper.GetRun();
-        _realmTree = PlayerPrefsHelper.GetRealmTree();
-        if (_stepsService == null)
-            _stepsService = new StepsService();
-        if (Cache.CurrentGameMode == GameMode.TrainingDummy
-            || Cache.CurrentGameMode == GameMode.TrainingFree)
+        try
         {
-            _isTraining = true;
-            _opponents = PlayerPrefsHelper.GetCurrentOpponents(new Run(Difficulty.Normal));
-            Cache.RestartCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
-        }
-        else
-        {
-            if (PlayerPrefsHelper.GetIsInFight() && Cache.NameLastScene != Constants.SettingsScene) // If we get back to a fight after having force-quit the game.
-                BoostCurrentOpponentsAfterForceQuit();
-            PlayerPrefsHelper.SaveIsInFight(true);
-            _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
-            if (_currentStep.LandLordVision)
+            Init();
+            if (_run == null)
+                _run = PlayerPrefsHelper.GetRun();
+            _realmTree = PlayerPrefsHelper.GetRealmTree();
+            if (_stepsService == null)
+                _stepsService = new StepsService();
+            if (Cache.CurrentGameMode == GameMode.TrainingDummy
+                || Cache.CurrentGameMode == GameMode.TrainingFree)
             {
-                _opponents = _stepsService.GetBoss(_run);
-                Helper.ApplyDifficulty(_opponents, _run.Difficulty);
+                _isTraining = true;
+                _opponents = PlayerPrefsHelper.GetCurrentOpponents(new Run(Difficulty.Normal));
+                Cache.RestartCurrentItemCooldown(Character, ItemsData.GetItemFromName(ItemsData.CommonItemsNames[2]));
             }
             else
-                _opponents = _currentStep.Opponents;
-            Cache.CurrentItemCooldown = _run.CurrentItemCooldown;
-            Cache.CurrentItemUses = _run.CurrentItemUses;
-        }
+            {
+                if (PlayerPrefsHelper.GetIsInFight() && Cache.NameLastScene != Constants.SettingsScene) // If we get back to a fight after having force-quit the game.
+                    BoostCurrentOpponentsAfterForceQuit();
+                PlayerPrefsHelper.SaveIsInFight(true);
+                _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+                if (_currentStep.LandLordVision)
+                {
+                    _opponents = _stepsService.GetBoss(_run);
+                    Helper.ApplyDifficulty(_opponents, _run.Difficulty);
+                }
+                else
+                    _opponents = _currentStep.Opponents;
+                Cache.CurrentItemCooldown = _run.CurrentItemCooldown;
+                Cache.CurrentItemUses = _run.CurrentItemUses;
+            }
 
-        _pacts = PlayerPrefsHelper.GetCurrentPacts();
-        if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
-        {
-            foreach (var pact in _pacts)
-                pact.ApplyPact(this.Character);
-            _gameplayControler.UpdateItemAndSpecialVisuals();
-        }
+            _pacts = PlayerPrefsHelper.GetCurrentPacts();
+            if (Cache.NameLastScene != Constants.SettingsScene && !_isTraining)
+            {
+                foreach (var pact in _pacts)
+                    pact.ApplyPact(this.Character);
+                _gameplayControler.UpdateItemAndSpecialVisuals();
+            }
 
-        //if (_opponents.Count == 1)
-        //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
-        for (int i = _opponents.Count; i < 12; ++i)
-        {
-            GameObject.Find("Opponent" + i).SetActive(false);
-        }
-        for (int j = 0; j < _opponents.Count; ++j)
-        {
-            if (j < Cache.CurrentListOpponentsId)
-                GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[j].Realm.GetHashCode() * 2) + 1));
+            //if (_opponents.Count == 1)
+            //    GameObject.Find("Enemies").GetComponent<TMPro.TextMeshPro>().text = "enemy";
+            for (int i = _opponents.Count; i < 12; ++i)
+            {
+                GameObject.Find("Opponent" + i).SetActive(false);
+            }
+            for (int j = 0; j < _opponents.Count; ++j)
+            {
+                if (j < Cache.CurrentListOpponentsId)
+                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[j].Realm.GetHashCode() * 2) + 1));
+                else
+                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
+            }
+            _wetTimer = -1;
+            _timeStopTimer = -1;
+            _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
+            _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
+            _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
+            _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
+            _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
+            OpponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
+            OpponentInstanceBhv.AfterDeath = AfterOpponentDeath;
+            _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
+            _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
+            _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+            _idOpponentDeath = _soundControler.SetSound("OpponentDeath");
+            _idOpponentAppearance = _soundControler.SetSound("OpponentAppearance");
+            _idCrit = _soundControler.SetSound("Crit");
+            _idHit = _soundControler.SetSound("Hit");
+            _idWeakness = _soundControler.SetSound("Weakness");
+            _idImmunity = _soundControler.SetSound("Immunity");
+            _idDodge = _soundControler.SetSound("LevelUp");
+            _idTattooSound = _soundControler.SetSound("TattooSound");
+            var realm = _isTraining ? Realm.Hell : _run?.CurrentRealm ?? Realm.Hell;
+            GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
+            NextOpponent(sceneInit: true);
+            _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
+
+            _gameplayControler.GameplayOnHold = true;
+            _musicControler.Stop();
+            Cache.InputLocked = true;
+            if (Cache.NameLastScene != Constants.SettingsScene)
+            {
+                if (!_isTraining)
+                {
+                    Cache.CurrentRemainingSimpShields = Character.SimpShield;
+                    if (!Cache.PactNoLastFightPlayField && !Character.AllClear)
+                        _gameplayControler.ApplyLastFightPlayField();
+                }
+                Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
+            }
             else
-                GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
-        }
-        _wetTimer = -1;
-        _timeStopTimer = -1;
-        _weaknessInstance = GameObject.Find("Weakness").GetComponent<IconInstanceBhv>();
-        _immunityInstance = GameObject.Find("Immunity").GetComponent<IconInstanceBhv>();
-        _stunIcon = GameObject.Find("StunIcon").GetComponent<WiggleBhv>();
-        _opponentHpBar = GameObject.Find("OpponentHpBar").GetComponent<ResourceBarBhv>();
-        _opponentCooldownBar = GameObject.Find("OpponentCooldownBar").GetComponent<ResourceBarBhv>();
-        OpponentInstanceBhv = GameObject.Find(Constants.GoOpponentInstance).GetComponent<CharacterInstanceBhv>();
-        OpponentInstanceBhv.AfterDeath = AfterOpponentDeath;
-        _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
-        _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
-        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
-        _idOpponentDeath = _soundControler.SetSound("OpponentDeath");
-        _idOpponentAppearance = _soundControler.SetSound("OpponentAppearance");
-        _idCrit = _soundControler.SetSound("Crit");
-        _idHit = _soundControler.SetSound("Hit");
-        _idWeakness = _soundControler.SetSound("Weakness");
-        _idImmunity = _soundControler.SetSound("Immunity");
-        _idDodge = _soundControler.SetSound("LevelUp");
-        _idTattooSound = _soundControler.SetSound("TattooSound");
-        var realm = _isTraining ? Realm.Hell : _run?.CurrentRealm ?? Realm.Hell;
-        GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
-        NextOpponent(sceneInit: true);
-        _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
+                _musicControler.Play();
 
-        _gameplayControler.GameplayOnHold = true;
-        _musicControler.Stop();
-        Cache.InputLocked = true;
-        if (Cache.NameLastScene != Constants.SettingsScene)
-        {
-            if (!_isTraining)
+            if (Cache.CurrentRemainingSimpShields > 0)
             {
-                Cache.CurrentRemainingSimpShields = Character.SimpShield;
-                if (!Cache.PactNoLastFightPlayField && !Character.AllClear)
-                    _gameplayControler.ApplyLastFightPlayField();
+                for (int i = 0; i < Cache.CurrentRemainingSimpShields; ++i)
+                {
+                    Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, i, _gameplayControler.CharacterRealm);
+                }
             }
-            Instantiator.NewFightIntro(new Vector3(CameraBhv.transform.position.x, CameraBhv.transform.position.y, 0.0f), Character, _opponents, AfterFightIntro);
+            if (Character.FillTargetBlocks > 0)
+                Instantiator.NewFillTarget(_gameplayControler.CharacterRealm, Character.FillTargetBlocks, _gameplayControler);
         }
-        else
-            _musicControler.Play();
-
-        if (Cache.CurrentRemainingSimpShields > 0)
+        catch (Exception e)
         {
-            for (int i = 0; i < Cache.CurrentRemainingSimpShields; ++i)
-            {
-                Instantiator.NewSimpShield(_characterInstanceBhv.OriginalPosition, i, _gameplayControler.CharacterRealm);
-            }
+            PlayerPrefsHelper.ResetRun();
+            LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
         }
-        if (Character.FillTargetBlocks > 0)
-            Instantiator.NewFillTarget(_gameplayControler.CharacterRealm, Character.FillTargetBlocks, _gameplayControler);
     }
 
     private void BoostCurrentOpponentsAfterForceQuit()
@@ -1008,7 +1016,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             if (Character.DamoclesDamage > 0 && nbLines == 4)
             {
-                Cache.DamoclesDamage += Character.DamoclesDamage;
+                Cache.BonusDamage += Character.DamoclesDamage;
                 _characterInstanceBhv.Boost(_gameplayControler.CharacterRealm, 0.25f);
             }
 

@@ -119,7 +119,7 @@ public class Character : Loot
     {
         if (BoostAttack < 0)
             BoostAttack = 0;
-        return GetAttackNoBoost() + BoostAttack;
+        return GetAttackNoBoost() + BoostAttack + Constants.DamageDebug;
     }
 
     public string GetAttackDetails()
@@ -147,7 +147,7 @@ public class Character : Loot
     {
         if (!_realmTreeAttackBoost.HasValue)
             _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
-        var flatDamage = Attack + DamageFlatBonus + Cache.DamoclesDamage + Cache.PactFlatDamage + _realmTreeAttackBoost.Value;
+        var flatDamage = Attack + DamageFlatBonus + Cache.BonusDamage + Cache.PactFlatDamage + _realmTreeAttackBoost.Value;
         if (Ying > 0 && Cache.SelectedCharacterSpecialCooldown <= 0)
             flatDamage += Ying;
         if (Yang > 0 && Cache.CurrentItemCooldown <= 0)

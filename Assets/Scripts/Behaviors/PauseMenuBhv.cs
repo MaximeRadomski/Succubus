@@ -44,15 +44,10 @@ public class PauseMenuBhv : PopupBhv
         }
 
         var buttonInfo = transform.Find(Constants.GoButtonInfoName);
-#if UNITY_ANDROID
-        Destroy(buttonInfo.gameObject);
-#else
         if (callingScene != null)
             buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = () => { PauseToInfo(callingScene); };
         else
             Destroy(buttonInfo.gameObject);
-#endif
-
     }
 
     private void PauseToInfo(GameSceneBhv callingScene)
