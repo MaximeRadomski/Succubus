@@ -23,6 +23,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     private int _idTilt;
     private bool _hasDoneActionOnBeat;
     private bool _hasDoneActionOnNextBeat;
+    private bool _hasMadeErrorInBeat;
 
     /// <summary>
     /// Beat in millisecond: 1000 = 1 second
@@ -89,6 +90,8 @@ public class RhythmIndicatorBhv : FrameRateBehavior
 
     private void Tilt()
     {
+        VibrationService.Vibrate(30);
+        _hasMadeErrorInBeat = false;
         ApplyColor(_color);
         _isTilting = true;
     }
@@ -136,7 +139,11 @@ public class RhythmIndicatorBhv : FrameRateBehavior
                 _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
             if (_opponentInstance == null)
                 _opponentInstance = GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().OpponentInstanceBhv;
-            _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);
+            if (!_hasMadeErrorInBeat)
+            {
+                _hasMadeErrorInBeat = true;
+                _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);
+            }
             _gameplayControler.DropGhost();
         }
         return isInBeat;

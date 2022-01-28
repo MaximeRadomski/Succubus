@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Constants
 {
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool CharactersDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
@@ -129,8 +129,12 @@ public static class Constants
     public const string PpEffectsLevel = "EffectsLevel";
     public const string PpMusicLevel = "MusicLevel";
     public const string PpVibrationEnabled = "VibrationEnabled";
-    public const float PpAudioLevelDefault = 1.0f;
     public const bool PpVibrationEnabledDefault = true;
+    public const string PpRhythmAttacksEnabled = "RhythmAttacksEnabled";
+    public const bool PpRhythmAttacksEnabledDefault = true;
+    public const string PpRhythmAttacksPopupSeen = "RhythmAttacksPopupSeen";
+    public const bool PpRhythmAttacksPopupSeenDefault = false;
+    public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
     public const string PpTouchSensitivity = "TouchSensitivity";
     public const float PpTouchSensitivityDefault = 1.5f;

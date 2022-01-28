@@ -2654,6 +2654,7 @@ public class GameplayControler : MonoBehaviour
             attackBoost -= 1;
         }
         VibrationService.Vibrate();
+        Instantiator.PopText($"{type.GetDescription().ToLower()}", opponentInstance.transform.position + new Vector3(+3f, 0.0f, 0.0f));
         switch (type)
         {
             case AttackType.DarkRow:
@@ -2715,7 +2716,13 @@ public class GameplayControler : MonoBehaviour
                 AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
                 break;
             case AttackType.RhythmMania:
-                AttackRhythmMania(opponentInstance, opponentRealm, param1 + (attackBoost * 2), param2);
+                if (PlayerPrefsHelper.GetRhythmAttacksEnabled() == true)
+                    AttackRhythmMania(opponentInstance, opponentRealm, param1 + (attackBoost * 2), param2);
+                else
+                {
+                    var nbNotes = param1 + attackBoost;
+                    AttackPartition(opponentInstance, opponentRealm, (nbNotes > 8 ? 8 : nbNotes), param2);
+                }
                 break;
             case AttackType.LineBreak:
                 AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);

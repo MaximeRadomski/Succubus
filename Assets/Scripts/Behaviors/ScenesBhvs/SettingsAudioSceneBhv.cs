@@ -8,6 +8,7 @@ public class SettingsAudioSceneBhv : SceneBhv
     private GameObject _effectsLevelSelector;
     private GameObject _musicLevelSelector;
     private GameObject _vibrationSelector;
+    private GameObject _rhythmAttacksSelector;
 
     private MusicControlerBhv _musicControlerBhv;
     private SoundControlerBhv _soundControler;
@@ -31,6 +32,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         _effectsLevelSelector = GameObject.Find("EffectsLevelSelector");
         _musicLevelSelector = GameObject.Find("MusicLevelSelector");
         _vibrationSelector = GameObject.Find("VibrationSelector");
+        _rhythmAttacksSelector = GameObject.Find("RhythmAttacksSelector");
         _musicControlerBhv = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
         _soundControler = GameObject.Find("SoundControler").GetComponent<SoundControlerBhv>();
         _idSpecial = _soundControler.SetSound("Special");
@@ -39,7 +41,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         if (!_hasInit)
         {
             GameObject.Find("VibrationContainer").transform.position = new Vector3(0.0f, -_containerSpace, 0.0f);
-            GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 2);
+            GameObject.Find("SettingsContainer").transform.position += new Vector3(0.0f, _containerSpace / 1.5f);
             GameObject.Find("SettingsTitle").GetComponent<TMPro.TextMeshPro>().text = "Audio & Vibration";
         }
         _hasInit = true;
@@ -53,6 +55,8 @@ public class SettingsAudioSceneBhv : SceneBhv
         Cache.SetLastEndActionClickedName($"Vibration{(PlayerPrefsHelper.GetVibrationEnabled() == true ? "On" : "Off")}");
         SetVibration(PlayerPrefsHelper.GetVibrationEnabled());
 #endif
+        Cache.SetLastEndActionClickedName($"RhythmAttacks{(PlayerPrefsHelper.GetRhythmAttacksEnabled() == true ? "On" : "Off")}");
+        SetRhythmAttacks(PlayerPrefsHelper.GetRhythmAttacksEnabled());
     }
 
     private void SetButtons()
@@ -64,6 +68,8 @@ public class SettingsAudioSceneBhv : SceneBhv
         GameObject.Find("ButtonReset").GetComponent<ButtonBhv>().EndActionDelegate = ResetDefault;
         GameObject.Find("VibrationOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetVibration(true); };
         GameObject.Find("VibrationOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetVibration(false); };
+        GameObject.Find("RhythmAttacksOn").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetRhythmAttacks(true); };
+        GameObject.Find("RhythmAttacksOff").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetRhythmAttacks(false); };
     }
 
     private void SetLevelsButtons(GameObject levelsContainer, string prefix)
@@ -104,6 +110,14 @@ public class SettingsAudioSceneBhv : SceneBhv
         PlayerPrefsHelper.SaveVibrationEnabled(result);
         if (result)
             VibrationService.Vibrate();
+    }
+
+    private void SetRhythmAttacks(bool result)
+    {
+        var choiceGameObject = GameObject.Find(Cache.LastEndActionClickedName);
+        _rhythmAttacksSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _rhythmAttacksSelector.transform.position.y, 0.0f);
+        PlayerPrefsHelper.SaveRhythmAttacksEnabled(result);
+        GameObject.Find("RhythmAttacksStatus").GetComponent<TMPro.TextMeshPro>().enabled = !result;
     }
 
     private void GoToPrevious()

@@ -63,6 +63,7 @@ public class MainMenuSceneBhv : SceneBhv
     {
         if (_currentRun != null && _currentRun.Endless > 0)
         {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
             this.Instantiator.NewPopupYesNo("Ascension", $"would you like to continue your endless ascension, or to start a new one?\n\ndifficulty: {(_currentRun.Difficulty - 1).ToString().ToLower()} -}} {_currentRun.Difficulty.ToString().ToLower()}", "New", "Continue", (result) =>
             {
                 if (!result)
@@ -75,7 +76,19 @@ public class MainMenuSceneBhv : SceneBhv
             });
         }
         else
-            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        {
+            if (!PlayerPrefsHelper.GetRhythmAttacksPopupSeen())
+            {
+                this.Instantiator.NewPopupYesNo("Accessibility", $"some opponents have a rhythm dependant attack.\nif you play without sound, an accessibility option replaces this attack by one not needing any sound in the settings.", null, "Noted!", (result) =>
+                {
+                    PlayerPrefsHelper.SaveRhythmAttacksPopupSeen(true);
+                    Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+                    return result;
+                });
+            }
+            else
+                Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
+        }
 
         object OnBlend(bool result)
         {

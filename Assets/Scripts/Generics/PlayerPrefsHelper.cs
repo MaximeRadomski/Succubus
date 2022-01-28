@@ -631,6 +631,28 @@ public class PlayerPrefsHelper : MonoBehaviour
         return enabled == 1 ? true : false;
     }
 
+    public static void SaveRhythmAttacksEnabled(bool enabled)
+    {
+        PlayerPrefs.SetInt(Constants.PpRhythmAttacksEnabled, enabled ? 1 : 0);
+    }
+
+    public static bool GetRhythmAttacksEnabled()
+    {
+        var enabled = PlayerPrefs.GetInt(Constants.PpRhythmAttacksEnabled, Constants.PpRhythmAttacksEnabledDefault == true ? 1 : 0);
+        return enabled == 1 ? true : false;
+    }
+
+    public static void SaveRhythmAttacksPopupSeen(bool popupSeen)
+    {
+        PlayerPrefs.SetInt(Constants.PpRhythmAttacksPopupSeen, popupSeen ? 1 : 0);
+    }
+
+    public static bool GetRhythmAttacksPopupSeen()
+    {
+        var popupSeen = PlayerPrefs.GetInt(Constants.PpRhythmAttacksPopupSeen, Constants.PpRhythmAttacksPopupSeenDefault == true ? 1 : 0);
+        return popupSeen == 1 ? true : false;
+    }
+
     public static void SaveMusicLevel(float level)
     {
         PlayerPrefs.SetFloat(Constants.PpMusicLevel, level);

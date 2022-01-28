@@ -154,8 +154,8 @@ public static class OpponentsData
             Name = "Headbanger", Realm = Realm.Hell, Type = OpponentType.Common, Haste = true,
             HpMax = 80, Weakness = Weakness.None, Cooldown = 5,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Intoxication, 4),
-                new OpponentAttack(AttackType.RhythmMania, 4, 1)},
+                new OpponentAttack(AttackType.RhythmMania, 4, 1),
+                new OpponentAttack(AttackType.Intoxication, 4) },
             GravityLevel = 3, Weight = 30,
             Lore = "Metalheads often end up in Hell, keeping their passion for heavy music, and their love for long haircuts."
         },
