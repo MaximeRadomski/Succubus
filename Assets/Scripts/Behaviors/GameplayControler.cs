@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameplayControler : MonoBehaviour
 {
@@ -133,7 +129,7 @@ public class GameplayControler : MonoBehaviour
 
     public void GameOver()
     {
-        var run = PlayerPrefsHelper.GetRun();
+        var classicGameSceneBhv = SceneBhv is ClassicGameSceneBhv result ? result : null;
         _soundControler.PlaySound(_idGameOver);
         _musicControler.Pause();
         CurrentPiece.GetComponent<Piece>().IsLocked = true;
@@ -165,16 +161,16 @@ public class GameplayControler : MonoBehaviour
             --Cache.TruthResurrection;
             Resurect();
         }
-        else if (!_isTraining.Value && !run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
         {
-            run.RepentanceOnce = true;
-            PlayerPrefsHelper.SaveRun(run);
+            classicGameSceneBhv.Run.RepentanceOnce = true;
+            PlayerPrefsHelper.SaveRun(classicGameSceneBhv.Run);
             Resurect("repentance");
         }
-        else if (!_isTraining.Value && !run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
         {
-            run.LifeRouletteOnce = true;
-            PlayerPrefsHelper.SaveRun(run);
+            classicGameSceneBhv.Run.LifeRouletteOnce = true;
+            PlayerPrefsHelper.SaveRun(classicGameSceneBhv.Run);
             Resurect("life roulette");
         }
         else
@@ -2627,6 +2623,9 @@ public class GameplayControler : MonoBehaviour
                 return y + 1; //Reached a Line Break, must return line id above
             for (int x = xStart; x <= xEnd; ++x)
             {
+                if ((xStart != 0 || xEnd != 9) && PlayFieldBhv.Grid[x, y] != null
+                    && (PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light")))
+                    continue;
                 if (PlayFieldBhv.Grid[x, y] != null)
                 {
                     PlayFieldBhv.Grid[x, y + nbRows] = PlayFieldBhv.Grid[x, y];
@@ -2647,7 +2646,7 @@ public class GameplayControler : MonoBehaviour
             attackBoost += _difficulty.GetHashCode() - Difficulty.Divine2.GetHashCode() + 1;
         if (this.SceneBhv.CurrentOpponent.Realm == Helper.GetSuperiorFrom(CharacterRealm))
             attackBoost += 1;
-        if (Cache.NegateAttackBoostCount < Character.NegateAttackBoost)
+        if (Helper.GetInferiorFrom(SceneBhv.CurrentOpponent.Realm) == Character.Realm && Cache.NegateAttackBoostCount < Character.NegateAttackBoost)
         {
             (this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv.Malus(Helper.GetInferiorFrom(CharacterRealm), 0.5f);
             ++Cache.NegateAttackBoostCount;
@@ -2975,7 +2974,7 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.15f + (0.1f * Character.AirPieceOpacity));
+            var airPieceColor = new Color(1.0f, 1.0f, 1.0f, 0.10f + (0.1f * Character.AirPieceOpacity));
             CurrentPiece.GetComponent<Piece>().SetColor(airPieceColor);
             _soundControler.PlaySound(_idEmptyRows);
             return true;
@@ -3010,6 +3009,12 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackCameraEffects(AttackType attackType, GameObject opponentInstance, Realm opponentRealm, int nbPieces, int param)
     {
+        if (Character.VisionBlockReducer > 0)
+        {
+            nbPieces -= nbPieces;
+            if (nbPieces <= 0)
+                nbPieces = 1;
+        }
         if (Cache.IsEffectAttackInProgress == attackType)
             _afterSpawnAttackCounter += nbPieces;
         else

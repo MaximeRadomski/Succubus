@@ -34,9 +34,9 @@ public class Run
     public int PactLootPercent = 20;
     public int TattooLootPercent = 35;
 
-    public int DeathScytheAscension = 0;
-    public bool LifeRouletteOnce = false;
-    public bool RepentanceOnce = false;
+    public int DeathScytheAscension;
+    public bool LifeRouletteOnce;
+    public bool RepentanceOnce;
 
     public Run(Difficulty difficulty)
     {

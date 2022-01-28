@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 445791159
-  m_SortingLayer: -4
+  m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: -1092932395581486110, guid: 8387206ce6b428d4e89824e5afa95f05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,7 +103,9 @@ MonoBehaviour:
   Disabled: 0
   StretchDisabled: 0
   CustomSound: 1
+  VibratesOnClick: 1
   ConeVisionMult: 1.5
+  IsMenuSelectorResetButton: 0
 --- !u!61 &6415633934118628221
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -137,18 +139,6 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4534612009328829313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c82381da50370034ba9eb1ebe94ca19d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1331515734933471125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021248492443308557}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c82381da50370034ba9eb1ebe94ca19d, type: 3}
@@ -247,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007233, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_SortingLayer
-      value: -4
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4778738889613007233, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
       propertyPath: m_SortingOrder
@@ -317,3 +307,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
   m_PrefabInstance: {fileID: 1287669032355023758}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1331515734933471125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021248492443308557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82381da50370034ba9eb1ebe94ca19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

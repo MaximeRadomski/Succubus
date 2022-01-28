@@ -27,7 +27,7 @@ public static class LogService
             var path = $"{Application.persistentDataPath}/Logs.txt";
             if (string.IsNullOrEmpty(_currentSessionLogs))
             {
-                _currentSessionLogs = $"----------------------------\nSession: {Helper.DateFormat(DateTime.Now)}\n----------------------------\n";
+                _currentSessionLogs = $"----------------------------\nSession: {Helper.DateFormat(DateTime.Now)} {Application.version}\n----------------------------\n";
                 File.AppendAllText(path, _currentSessionLogs);
             }
 

@@ -19,6 +19,6 @@ public class TattooEclipseGlasses : Tattoo
 
     public override string GetDescription()
     {
-        return $"decreases vision blocks cooldown by {StatToString("", Stat * Level == 1 ? " additional second" : " additional seconds")} each time you lock a piece.";
+        return $"decreases vision blocks cooldown by {StatToString("", Stat * Level == 1 ? " additional second" : " additional seconds")} each time you lock a piece, and reduce by {StatToString()} the number of pieces of intoxication and mirror attacks.";
     }
 }

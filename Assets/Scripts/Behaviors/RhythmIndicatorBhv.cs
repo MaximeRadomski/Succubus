@@ -90,7 +90,9 @@ public class RhythmIndicatorBhv : FrameRateBehavior
 
     private void Tilt()
     {
+#if UNITY_ANDROID
         VibrationService.Vibrate(30);
+#endif
         _hasMadeErrorInBeat = false;
         ApplyColor(_color);
         _isTilting = true;

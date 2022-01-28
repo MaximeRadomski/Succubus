@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Constants
 {
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool CharactersDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;

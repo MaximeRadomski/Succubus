@@ -20,7 +20,7 @@ public class MainMenuSceneBhv : SceneBhv
         base.Init();
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
         _currentRun = PlayerPrefsHelper.GetRun();
-        if (_currentRun != null && PlayerPrefsHelper.GetIsInFight())
+        if (_currentRun != null && PlayerPrefsHelper.GetIsInFight() && Cache.InAHurryPopup == false)
         {
             ////PlayerPrefsHelper.SaveIsInFight(false);
             ////if (_currentRun.CharacterEncounterAvailability)
@@ -30,6 +30,7 @@ public class MainMenuSceneBhv : SceneBhv
             Cache.InputLocked = true;
             StartCoroutine(Helper.ExecuteAfterDelay(0.1f, () =>
             {
+                Cache.InAHurryPopup = true;
                 Instantiator.NewPopupYesNo("In a hurry?", "you've force-quit during a fight. you can continue your current fight, but your opponent will be buffed a bit in order to prevent any abuses.", null, "Damn...", null);
                 return false;
             }));
@@ -94,7 +95,12 @@ public class MainMenuSceneBhv : SceneBhv
         {
             Cache.CurrentGameMode = GameMode.Ascension;
             if (_currentRun != null)
-                NavigationService.LoadNextScene(Constants.StepsAscensionScene);
+            {
+                if (!PlayerPrefsHelper.IsCinematicWatched(Realm.Hell.GetHashCode()))
+                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.Hell.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
+                else
+                    NavigationService.LoadNextScene(Constants.StepsAscensionScene);
+            }
             else
             {
                 if (!PlayerPrefsHelper.IsCinematicWatched(Realm.Hell.GetHashCode()))

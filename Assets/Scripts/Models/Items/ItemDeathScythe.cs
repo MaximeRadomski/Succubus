@@ -6,7 +6,7 @@ public class ItemDeathScythe : Item
 {
     private int favor = 0;
     private int unfavor = 0;
-    private int percentBonus = 20;
+    private int percentBonus = 50;
 
     public ItemDeathScythe()
     {

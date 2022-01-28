@@ -21,6 +21,7 @@ public static class Cache
     public static bool OnlyMouseInMenu;
     public static bool KeyboardUp;
     public static int CurrentBossId;
+    public static bool InAHurryPopup = false;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;

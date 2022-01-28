@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ClassicGameSceneBhv : GameSceneBhv
 {
     public CharacterInstanceBhv OpponentInstanceBhv;
+    public Run Run;
 
     private ResourceBarBhv _opponentHpBar;
     private ResourceBarBhv _opponentCooldownBar;
@@ -16,8 +17,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private IconInstanceBhv _weaknessInstance;
     private IconInstanceBhv _immunityInstance;
     private WiggleBhv _stunIcon;
-
-    private Run _run;
     private RealmTree _realmTree;
     private StepsService _stepsService;
     private Step _currentStep;
@@ -46,9 +45,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public float GetCurrentOpponentMaxCooldown()
     {
         var cooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus + Cache.PactEnemyMaxCooldownMalus;
-        if (cooldown < 1.0f && _run.Difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
+        if (cooldown < 1.0f && Run.Difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
             return 1.0f;
-        else if (cooldown < 0.5f && _run.Difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
+        else if (cooldown < 0.5f && Run.Difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
             return 0.5f;
         return cooldown;
     }
@@ -57,11 +56,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         if (_stepsService == null)
             _stepsService = new StepsService();
-        if (_run == null)
-            _run = PlayerPrefsHelper.GetRun();
-        if (_run == null)
+        if (Run == null)
+            Run = PlayerPrefsHelper.GetRun();
+        if (Run == null)
             return MusicType.Game;
-        var currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+        var currentStep = _stepsService.GetStepOnPos(Run.X, Run.Y, Run.Steps);
         if (currentStep != null && currentStep.LandLordVision)
             return MusicType.Boss;
         return MusicType.Game;
@@ -72,8 +71,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
         try
         {
             Init();
-            if (_run == null)
-                _run = PlayerPrefsHelper.GetRun();
+            if (Run == null)
+                Run = PlayerPrefsHelper.GetRun();
             _realmTree = PlayerPrefsHelper.GetRealmTree();
             if (_stepsService == null)
                 _stepsService = new StepsService();
@@ -89,16 +88,16 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (PlayerPrefsHelper.GetIsInFight() && Cache.NameLastScene != Constants.SettingsScene) // If we get back to a fight after having force-quit the game.
                     BoostCurrentOpponentsAfterForceQuit();
                 PlayerPrefsHelper.SaveIsInFight(true);
-                _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+                _currentStep = _stepsService.GetStepOnPos(Run.X, Run.Y, Run.Steps);
                 if (_currentStep.LandLordVision)
                 {
-                    _opponents = _stepsService.GetBoss(_run);
-                    Helper.ApplyDifficulty(_opponents, _run.Difficulty);
+                    _opponents = _stepsService.GetBoss(Run);
+                    Helper.ApplyDifficulty(_opponents, Run.Difficulty);
                 }
                 else
                     _opponents = _currentStep.Opponents;
-                Cache.CurrentItemCooldown = _run.CurrentItemCooldown;
-                Cache.CurrentItemUses = _run.CurrentItemUses;
+                Cache.CurrentItemCooldown = Run.CurrentItemCooldown;
+                Cache.CurrentItemUses = Run.CurrentItemUses;
             }
 
             _pacts = PlayerPrefsHelper.GetCurrentPacts();
@@ -142,10 +141,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _idImmunity = _soundControler.SetSound("Immunity");
             _idDodge = _soundControler.SetSound("LevelUp");
             _idTattooSound = _soundControler.SetSound("TattooSound");
-            var realm = _isTraining ? Realm.Hell : _run?.CurrentRealm ?? Realm.Hell;
-            GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {_run?.RealmLevel.ToString() ?? "?"}";
+            var realm = _isTraining ? Realm.Hell : Run?.CurrentRealm ?? Realm.Hell;
+            GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {Run?.RealmLevel.ToString() ?? "?"}";
             NextOpponent(sceneInit: true);
-            _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, _run?.CurrentRealm ?? Realm.Hell);
+            _gameplayControler.GetComponent<GameplayControler>().StartGameplay(CurrentOpponent.GravityLevel, Character.Realm, Run?.CurrentRealm ?? Realm.Hell);
 
             _gameplayControler.GameplayOnHold = true;
             _musicControler.Stop();
@@ -313,7 +312,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public void ResetToOpponentGravity(bool fromOpponentSpawn = false)
     {
-        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((_run?.RealmLevel ?? 1) - 1), fromOpponentSpawn);
+        _gameplayControler.SetGravity(CurrentOpponent.GravityLevel + ((Run?.RealmLevel ?? 1) - 1), fromOpponentSpawn);
     }
 
     public void RandomizeOpponentAttack()
@@ -365,20 +364,20 @@ public class ClassicGameSceneBhv : GameSceneBhv
             return false;
         }
 
-        _currentStep = _stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps);
+        _currentStep = _stepsService.GetStepOnPos(Run.X, Run.Y, Run.Steps);
         var loot = Helper.GetLootFromTypeAndId(_currentStep.LootType, _currentStep.LootId);
         if (Cache.PactNoLoot)
             loot.LootType = LootType.None;
         if (loot?.LootType == LootType.Character)
             PlayerPrefsHelper.AddUnlockedCharacters((Character)loot); //Done here in order to prevent generating a step with the just unlocked character
 
-        _stepsService.ClearLootOnPos(_run.X, _run.Y, _run);
-        if (_run.CurrentStep > Character.LandLordLateAmount)
-            _stepsService.SetVisionOnRandomStep(_run);
-        _stepsService.GenerateAdjacentSteps(_run, Character, _currentStep);
-        _run.CurrentItemCooldown = Cache.CurrentItemCooldown - _realmTree.PosthumousItem;
-        _run.CurrentItemUses = Cache.CurrentItemUses;
-        PlayerPrefsHelper.SaveRun(_run);
+        _stepsService.ClearLootOnPos(Run.X, Run.Y, Run);
+        if (Run.CurrentStep > Character.LandLordLateAmount)
+            _stepsService.SetVisionOnRandomStep(Run);
+        _stepsService.GenerateAdjacentSteps(Run, Character, _currentStep);
+        Run.CurrentItemCooldown = Cache.CurrentItemCooldown - _realmTree.PosthumousItem;
+        Run.CurrentItemUses = Cache.CurrentItemUses;
+        PlayerPrefsHelper.SaveRun(Run);
         if (loot?.LootType == LootType.Character)
         {
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, Character.StartingRealm, AfterCharacterDialog);
@@ -397,16 +396,16 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Instantiator.NewPopupYesNo("New Item", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Item)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " added to your gear.", null, "Ok", LoadBackAfterVictory, sprite);
                 PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                _run.CurrentItemCooldown = 0;
-                _run.CurrentItemUses = ((Item)loot).Uses;
-                PlayerPrefsHelper.SaveRun(_run);
+                Run.CurrentItemCooldown = 0;
+                Run.CurrentItemUses = ((Item)loot).Uses;
+                PlayerPrefsHelper.SaveRun(Run);
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
                 Instantiator.NewPopupYesNo("Same Item", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "well... this is awkward... you already use " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "...", null, "Oh...", LoadBackAfterVictory, sprite);
-                _run.CurrentItemCooldown = 0;
-                _run.CurrentItemUses = ((Item)loot).Uses;
-                PlayerPrefsHelper.SaveRun(_run);
+                Run.CurrentItemCooldown = 0;
+                Run.CurrentItemUses = ((Item)loot).Uses;
+                PlayerPrefsHelper.SaveRun(Run);
             }
             else
             {
@@ -417,9 +416,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     if (result)
                     {
                         PlayerPrefsHelper.SaveCurrentItem(((Item)loot).Name);
-                        _run.CurrentItemCooldown = 0;
-                        _run.CurrentItemUses = ((Item)loot).Uses;
-                        PlayerPrefsHelper.SaveRun(_run);
+                        Run.CurrentItemCooldown = 0;
+                        Run.CurrentItemUses = ((Item)loot).Uses;
+                        PlayerPrefsHelper.SaveRun(Run);
                     }
                     LoadBackAfterVictory(true);
                     return result;
@@ -430,19 +429,19 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             _musicControler.Play(Constants.VictoryAudioClip, once: true);
             var amount = 2;
-            if (_run.Difficulty == Difficulty.Easy)
+            if (Run.Difficulty == Difficulty.Easy)
                 amount = 1;
-            else if (_run.Difficulty == Difficulty.Hard)
+            else if (Run.Difficulty == Difficulty.Hard)
                 amount = 3;
-            else if (_run.Difficulty == Difficulty.Infernal)
+            else if (Run.Difficulty == Difficulty.Infernal)
                 amount = 4;
-            else if (_run.Difficulty == Difficulty.Divine || _run.Difficulty.GetHashCode() > Difficulty.Divine.GetHashCode())
+            else if (Run.Difficulty == Difficulty.Divine || Run.Difficulty.GetHashCode() > Difficulty.Divine.GetHashCode())
                 amount = 5;
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
-            _run.AlterResource(((Resource)loot).Id, amount);
+            Run.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
-            PlayerPrefsHelper.SaveRun(_run);
+            PlayerPrefsHelper.SaveRun(Run);
             Instantiator.NewPopupYesNo("Resources", $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} added to your resources.", null, "Ka-Ching!", LoadBackAfterVictory);
         }
         else if (loot?.LootType == LootType.Tattoo)
@@ -509,20 +508,20 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Cache.CurrentBossId = 0;
                 PlayerPrefsHelper.IncrementRunBossVanquished();
-                var realmIdBeforeIncrease = _run.CurrentRealm.GetHashCode();
+                var realmIdBeforeIncrease = Run.CurrentRealm.GetHashCode();
                 var hasUnlockedSkin = false;
-                _run.IncreaseLevel();
+                Run.IncreaseLevel();
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
                 if (currentItem != null)
-                    _run.CurrentItemUses = currentItem.Uses;
+                    Run.CurrentItemUses = currentItem.Uses;
                 if (currentItem != null && currentItem.Name == ItemsData.Items[25])
-                    ++_run.DeathScytheAscension;
+                    ++Run.DeathScytheAscension;
                 if (Character.LastStandMultiplier > 0)
                     Cache.HasLastStanded = false;
-                PlayerPrefsHelper.SaveRun(_run);
-                if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && Helper.UnlockCharacterSkinIfNotAlready(Character.Id, realmIdBeforeIncrease))
+                PlayerPrefsHelper.SaveRun(Run);
+                if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && Helper.UnlockCharacterSkinIfNotAlready(Character.Id, realmIdBeforeIncrease))
                     hasUnlockedSkin = true;
-                if (_run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
+                if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
                     StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
@@ -549,19 +548,19 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 
                 object LoadNextAfterBoss(bool result)
                 {
-                    if (_run.CurrentRealm == Realm.End)
+                    if (Run.CurrentRealm == Realm.End)
                     {
-                        if (_run.Difficulty == Difficulty.Hard)
+                        if (Run.Difficulty == Difficulty.Hard)
                             PlayerPrefsHelper.SaveInfernalUnlocked(true);
-                        if (_run.Difficulty == Difficulty.Infernal)
+                        if (Run.Difficulty == Difficulty.Infernal)
                             PlayerPrefsHelper.SaveDivineUnlocked(true);
-                        Cache.GameOverParams = $"{Character.Name}|{_run.CurrentRealm - 1}|3|{Constants.EndScene}";
-                        PlayerPrefsHelper.EndlessRun(_run);
+                        Cache.GameOverParams = $"{Character.Name}|{Run.CurrentRealm - 1}|3|{Constants.EndScene}";
+                        PlayerPrefsHelper.EndlessRun(Run);
                         NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.End.GetHashCode(), StringParam0 = Constants.EndScene });
                         return false;
                     }
-                    if (!PlayerPrefsHelper.IsCinematicWatched(_run.CurrentRealm.GetHashCode()))
-                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = _run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
+                    if (!PlayerPrefsHelper.IsCinematicWatched(Run.CurrentRealm.GetHashCode()))
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
                     else
                         NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
                     return true;
@@ -794,8 +793,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             NavigationService.LoadBackUntil(Constants.CharSelScene);
         else
         {
-            Cache.GameOverParams = $"{CurrentOpponent.Name}|{_run.CurrentRealm}|{_run.RealmLevel}";
-            if (_run.CharacterEncounterAvailability)
+            Cache.GameOverParams = $"{CurrentOpponent.Name}|{Run.CurrentRealm}|{Run.RealmLevel}";
+            if (Run.CharacterEncounterAvailability)
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             PlayerPrefsHelper.ResetRun();
             NavigationService.LoadNextScene(Constants.GameOverScene);

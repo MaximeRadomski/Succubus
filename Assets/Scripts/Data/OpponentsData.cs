@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Headbanger"; 
+        var name = "Reverse Centaur"; 
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -303,7 +303,7 @@ public static class OpponentsData
             Name = "Shop Keeper", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.AirPiece, 2) },
+                new OpponentAttack(AttackType.AirPiece, 3) },
             GravityLevel = 6, Weight = 50,
             Lore = "Very talkative, he won't let you in peace until you've done \"The Thing\" with him."
         },
@@ -669,7 +669,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "The Pop", Realm = Realm.Heaven, Type = OpponentType.Boss,
-            HpMax = 1000, Weakness = Weakness.Combos, DamageOnWeakness = 10, Immunity = Immunity.Twists, Cooldown = 12, Haste = true,
+            HpMax = 1000, Weakness = Weakness.Combos, DamageOnWeakness = 10, Immunity = Immunity.Twists, Cooldown = 14, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.WasteRow, 6, 2)},
             GravityLevel = 10, Weight = 999,
@@ -683,7 +683,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Watcher", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 200, Cooldown = 3, Haste = true,
+            HpMax = 200, Cooldown = 4, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.RhythmMania, 4, 1) },
             GravityLevel = 12, Weight = 20,
@@ -704,7 +704,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Shield of Light", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 500, Cooldown = 3, Haste = true, Immunity = Immunity.xLines, XLineImmunity = 3,
+            HpMax = 400, Cooldown = 3, Haste = true, Immunity = Immunity.xLines, XLineImmunity = 3,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shelter, 1),
                 new OpponentAttack(AttackType.Shift, 4) },
@@ -723,7 +723,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Lower Throne", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 300, Cooldown = 4, Haste = true, Immunity = Immunity.Twists,
+            HpMax = 300, Cooldown = 5, Haste = true, Immunity = Immunity.Twists,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 3) },
             GravityLevel = 16, Weight = 30,
@@ -755,7 +755,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 500, Cooldown = 5, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
+            HpMax = 400, Cooldown = 5, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
                 new OpponentAttack(AttackType.Ascension, 4, 2)},
@@ -765,7 +765,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Kinky Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 400, Cooldown = 3, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
+            HpMax = 350, Cooldown = 3, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },
@@ -775,7 +775,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Duality Angel", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 350, Cooldown = 4, Haste = true,
+            HpMax = 300, Cooldown = 5, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 1, 4),
                 new OpponentAttack(AttackType.Tunnel, 4),
@@ -786,7 +786,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Harambe", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 800, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
+            HpMax = 500, Cooldown = 10, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 20,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Ascension, 7, 1) },
             GravityLevel = 16, Weight = 50,
@@ -796,7 +796,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Prophet Raptor", Realm = Realm.Earth, Type = OpponentType.Common,
-            HpMax = 400, Cooldown = 5, Haste = true, Immunity = Immunity.Cooldown,
+            HpMax = 350, Cooldown = 5, Haste = true, Immunity = Immunity.Cooldown,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.VisionBlock, 5, 2),
                 new OpponentAttack(AttackType.Screwed, 1) },
@@ -832,7 +832,7 @@ public static class OpponentsData
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 8),
                 new OpponentAttack(AttackType.Shift, 4),
-                new OpponentAttack(AttackType.Ascension, 4, 2)},
+                new OpponentAttack(AttackType.Ascension, 4, 2) },
             GravityLevel = 20, Weight = 999,
             DialogId = 5, DialogPitch = 1.0f,
             Lore = "God of Gods, ruler of Heaven, good boy, and put on the throne by questionable manners..."

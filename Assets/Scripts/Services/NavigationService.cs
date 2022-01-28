@@ -6,23 +6,24 @@ using UnityEngine.SceneManagement;
 public static class NavigationService
 {
     public static NavigationParameter SceneParameter;
-    public static string Path;
+    public static List<string> Path;
 
     public static void TrySetCurrentRootScene(string name)
     {
-        if (string.IsNullOrEmpty(Path))
-            Path = "/" + name;
+        if (Path == null || Path.Count == 0)
+            Path = new List<string>() { name };
     }
 
     public static void NewRootScene(string name)
     {
-        Path = string.Empty;
+        Path.Clear();
         LoadNextScene(name);
     }
 
     public static void LoadBackUntil(string name)
     {
-        Path = Path.Substring(0, Path.IndexOf(name) + name.Length);
+        for (int i = Path.Count - 1; Path.Count > 0 && Path[i] != name; --i)
+            Path.RemoveAt(i);
         SceneManager.LoadScene(name);
     }
 
@@ -32,8 +33,7 @@ public static class NavigationService
         if (name == SceneManager.GetActiveScene().name)
             return;
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        Path += "/" + name;
-        //Debug.Log("    [DEBUG]    Path = " + _path);
+        Path.Add(name);
         SceneManager.LoadScene(name);
     }
 
@@ -43,51 +43,44 @@ public static class NavigationService
         if (instantiator != null)
             instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, string.Empty, 10.0f, OnToPreviousScene, true);
         else
-            LoadPreviousScene(onRootPreviousScene);
+            LoadPreviousScene();
 
         object OnToPreviousScene(bool result)
         {
-            LoadPreviousScene(onRootPreviousScene);
+            LoadPreviousScene();
             return result;
         }
     }
 
     public static bool IsRootScene()
     {
+        if (Path == null || Path.Count <= 1)
+            return true;
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        var lastSeparator = Path.LastIndexOf('/');
-        return string.IsNullOrEmpty(Path) || lastSeparator == 0;
+        return false;
     }
 
-    public static void LoadPreviousScene(string onRootPreviousScene = null)
+    public static void LoadPreviousScene()
     {
         Cache.NameLastScene = SceneManager.GetActiveScene().name;
-        var lastSeparator = Path.LastIndexOf('/');
-        if (string.IsNullOrEmpty(Path) || lastSeparator == 0)
+        if (Path == null || Path.Count == 0)
         {
-            if (!string.IsNullOrEmpty(onRootPreviousScene))
-                NewRootScene(onRootPreviousScene);
-            else
-                Debug.Log("    [DEBUG]    Root");
+            Debug.Log("    [DEBUG]    Root");
             return;
         }
-        Path = Path.Substring(0, lastSeparator);
-        lastSeparator = Path.LastIndexOf('/');
-        var previousScene = Path.Substring(lastSeparator + 1);
-        //Debug.Log("    [DEBUG]    Path = " + _path);
-        SceneManager.LoadScene(previousScene);
+        Path.RemoveAt(Path.Count - 1);   
+        SceneManager.LoadScene(Path[Path.Count - 1]);
     }
 
     public static void ReloadScene()
     {
-        //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
 public class NavigationParameter
 {
-    public bool BoolParam0;
+    public bool BoolParam0; 
     public int IntParam0;
     public string StringParam0;
 }

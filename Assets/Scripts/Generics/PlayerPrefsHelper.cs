@@ -58,9 +58,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         ++run.Endless;
         run.CurrentRealm = Realm.Hell;
         run.RealmLevel = 1;
+        run.DeathScytheAscension = 0; 
+        run.LifeRouletteOnce = false;
+        run.RepentanceOnce = false;
         if (run.Difficulty != Difficulty.Divine666)
             run.Difficulty = (Difficulty)(run.Difficulty.GetHashCode() + 1);
         SaveRun(run);
+        ResetAlreadyDialog();
     }
 
     public static void SaveBag(string bag)

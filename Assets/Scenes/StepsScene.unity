@@ -480,8 +480,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -6291728694041167770, guid: f908ea6159efee84fa833ec57e0fe92e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1323,8 +1323,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7871495015514009198, guid: f908ea6159efee84fa833ec57e0fe92e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4822,8 +4822,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1848216903799394968, guid: f908ea6159efee84fa833ec57e0fe92e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5834,8 +5834,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &4535579311082797490
@@ -5875,8 +5875,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &4535579311110900027
@@ -5916,8 +5916,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1078536199
-  m_SortingLayer: -6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6634099502603261229

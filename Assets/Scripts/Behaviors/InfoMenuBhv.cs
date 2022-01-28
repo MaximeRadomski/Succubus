@@ -128,7 +128,7 @@ public class InfoMenuBhv : PopupBhv
             else if (clickedTattoo.Level > 1 && clickedTattoo.Level == clickedTattoo.MaxLevel)
                 tattooSuffixe = "Max";
         }
-        var upgradable = clickedTattoo.MaxLevel > 1 ? " [upgradable]" : "";
+        var upgradable = clickedTattoo.MaxLevel > 1 ? $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}[upgradable]" : "";
         _instantiator.NewPopupYesNo($"{clickedTattoo.Name} {tattooSuffixe}", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "inked: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + bodyPart.GetDescription().ToLower() + "\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + clickedTattoo.GetDescription() + upgradable, null, "Ok", null);
     }
 
@@ -153,7 +153,7 @@ public class InfoMenuBhv : PopupBhv
         {
             _fightFrame.transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = opponent.Name;
             _fightFrame.transform.Find("OpponentHealth").GetComponent<TMPro.TextMeshPro>().text = "health: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.HpMax;
-            _fightFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + opponent.Cooldown + " seconds";
+            _fightFrame.transform.Find("OpponentCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + Math.Round(opponent.Cooldown, 1) + " seconds";
             if (opponent.Attacks.Count > 1)
                 _fightFrame.transform.Find("OpponentAttackLibelle").GetComponent<TMPro.TextMeshPro>().text = "attacks:";
             for (int i = 0; i < 4; ++i)
