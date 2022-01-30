@@ -9,7 +9,6 @@ public class InfoMenuBhv : PopupBhv
     private System.Func<bool, object> _resumeAction;
     private Instantiator _instantiator;
     private bool _isHorizontal;
-    private Vector3 _cameraInitialPosition;
     private GameObject _characterFrame;
     private GameObject _fightFrame;
     private GameObject _characterTab;
@@ -41,9 +40,16 @@ public class InfoMenuBhv : PopupBhv
 #if UNITY_ANDROID
         if (_isHorizontal)
         {
-            _cameraInitialPosition = Camera.main.transform.position;
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, _cameraInitialPosition.z);
-            Camera.main.transform.Rotate(0.0f, 0.0f, -90.0f);
+            if (Cache.HorizontalCameraInitialPosition == null)
+            {
+                Cache.HorizontalCameraInitialPosition = Camera.main.transform.position;
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Cache.HorizontalCameraInitialPosition.Value.z);
+            }
+            if (Cache.HorizontalCameraInitialRotation == null)
+            {
+                Cache.HorizontalCameraInitialRotation = Camera.main.transform.rotation;
+                Camera.main.transform.rotation = transform.rotation;
+            }
         }
 #endif
         _mainCamera = Helper.GetMainCamera();
@@ -223,8 +229,16 @@ public class InfoMenuBhv : PopupBhv
 #if UNITY_ANDROID
         if (_isHorizontal)
         {
-            Camera.main.transform.position = _cameraInitialPosition;
-            Camera.main.transform.Rotate(0.0f, 0.0f, 90.0f);
+            if (Cache.HorizontalCameraInitialPosition != null)
+            {
+                Camera.main.transform.position = Cache.HorizontalCameraInitialPosition.Value;
+                Cache.HorizontalCameraInitialPosition = null;
+            }
+            if (Cache.HorizontalCameraInitialRotation != null)
+            {
+                Camera.main.transform.rotation = Cache.HorizontalCameraInitialRotation.Value;
+                Cache.HorizontalCameraInitialRotation = null;
+            }
         }
 #endif
         Cache.DecreaseInputLayer();

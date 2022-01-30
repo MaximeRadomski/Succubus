@@ -31,6 +31,8 @@ public static class Cache
     public static int CurrentOpponentAttackId;
     public static int CurrentOpponentAttackCount;
     public static int CurrentRemainingSimpShields = 0;
+    public static Vector3? HorizontalCameraInitialPosition;
+    public static Quaternion? HorizontalCameraInitialRotation;
 
     //Reset before each fight
     public static AttackType IsEffectAttackInProgress = AttackType.None;
