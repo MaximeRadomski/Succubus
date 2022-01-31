@@ -67,7 +67,7 @@ public class SpecialWisdom : Special
     private void TryDestroy(int x, int y, Transform parent)
     {
         if (x < 0 || x >= Constants.PlayFieldWidth
-            || y < Cache.HeightLimiter || y >= Constants.PlayFieldHeight
+            || y < Cache.PlayFieldMinHeight || y >= Constants.PlayFieldHeight
             || _gameplayControler.PlayFieldBhv.Grid[x, y]?.parent == parent
             || _gameplayControler.PlayFieldBhv.Grid[x, y]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;

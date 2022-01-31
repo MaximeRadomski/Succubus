@@ -8,7 +8,7 @@ public class ItemMoonGun : Item
     {
         Id = 29;
         Name = ItemsData.Items[Id];
-        Description = $"{Highlight("cleans")} your playfield but shrinks it to a height of 10 lines for the next 20 pieces.";
+        Description = $"{Highlight("cleans")} your playfield but shrinks it to a height of 10 lines for the next 40 pieces.";
         Rarity = Rarity.Legendary;
         Cooldown = 12;
     }
@@ -16,15 +16,16 @@ public class ItemMoonGun : Item
     protected override object Effect()
     {
         int end = _gameplayControler.GetHighestBlock();
-        for (int y = Cache.HeightLimiter; y <= end; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y <= end; ++y)
         {
             if (y >= 40)
                 break;
             _gameplayControler.DeleteLine(y);
         }
+        _gameplayControler.CheckForLineBreaks();
         _gameplayControler.ResetPlayHeight();
         _gameplayControler.ShrinkPlayHeight(10);
-        Cache.HeightLimiterResetPieces = 20;
+        Cache.HeightLimiterResetPieces = 40;
         return base.Effect();
     }
 }

@@ -137,6 +137,9 @@ TextureImporter:
   - first:
       213: 9070421471291291823
     second: HellOpponents_34
+  - first:
+      213: 3452579548738773147
+    second: HellOpponents_35
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -200,7 +203,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -212,7 +215,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -224,7 +227,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -242,7 +245,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 174
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -262,7 +265,7 @@ TextureImporter:
       name: HellOpponents_7
       rect:
         serializedVersion: 2
-        x: 0
+        x: 203
         y: 153
         width: 29
         height: 51
@@ -284,7 +287,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -305,7 +308,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -326,7 +329,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -347,7 +350,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 87
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -368,7 +371,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 116
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -389,7 +392,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 204
+        y: 153
         width: 29
         height: 51
       alignment: 0
@@ -409,7 +412,7 @@ TextureImporter:
       name: HellOpponents_8
       rect:
         serializedVersion: 2
-        x: 29
+        x: 232
         y: 153
         width: 29
         height: 51
@@ -430,8 +433,8 @@ TextureImporter:
       name: HellOpponents_9
       rect:
         serializedVersion: 2
-        x: 58
-        y: 153
+        x: 0
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -451,8 +454,8 @@ TextureImporter:
       name: HellOpponents_10
       rect:
         serializedVersion: 2
-        x: 87
-        y: 153
+        x: 29
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -472,8 +475,8 @@ TextureImporter:
       name: HellOpponents_11
       rect:
         serializedVersion: 2
-        x: 116
-        y: 153
+        x: 58
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -493,8 +496,8 @@ TextureImporter:
       name: HellOpponents_12
       rect:
         serializedVersion: 2
-        x: 145
-        y: 153
+        x: 87
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -514,8 +517,8 @@ TextureImporter:
       name: HellOpponents_13
       rect:
         serializedVersion: 2
-        x: 174
-        y: 153
+        x: 116
+        y: 102
         width: 29
         height: 51
       alignment: 0
@@ -535,7 +538,7 @@ TextureImporter:
       name: HellOpponents_14
       rect:
         serializedVersion: 2
-        x: 0
+        x: 145
         y: 102
         width: 29
         height: 51
@@ -556,7 +559,7 @@ TextureImporter:
       name: HellOpponents_15
       rect:
         serializedVersion: 2
-        x: 29
+        x: 174
         y: 102
         width: 29
         height: 51
@@ -577,7 +580,7 @@ TextureImporter:
       name: HellOpponents_16
       rect:
         serializedVersion: 2
-        x: 58
+        x: 203
         y: 102
         width: 29
         height: 51
@@ -598,7 +601,7 @@ TextureImporter:
       name: HellOpponents_17
       rect:
         serializedVersion: 2
-        x: 87
+        x: 232
         y: 102
         width: 29
         height: 51
@@ -619,8 +622,8 @@ TextureImporter:
       name: HellOpponents_18
       rect:
         serializedVersion: 2
-        x: 116
-        y: 102
+        x: 0
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -640,8 +643,8 @@ TextureImporter:
       name: HellOpponents_19
       rect:
         serializedVersion: 2
-        x: 145
-        y: 102
+        x: 29
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -661,8 +664,8 @@ TextureImporter:
       name: HellOpponents_20
       rect:
         serializedVersion: 2
-        x: 174
-        y: 102
+        x: 58
+        y: 51
         width: 29
         height: 51
       alignment: 0
@@ -682,7 +685,7 @@ TextureImporter:
       name: HellOpponents_21
       rect:
         serializedVersion: 2
-        x: 0
+        x: 87
         y: 51
         width: 29
         height: 51
@@ -703,7 +706,7 @@ TextureImporter:
       name: HellOpponents_22
       rect:
         serializedVersion: 2
-        x: 29
+        x: 116
         y: 51
         width: 29
         height: 51
@@ -724,7 +727,7 @@ TextureImporter:
       name: HellOpponents_23
       rect:
         serializedVersion: 2
-        x: 58
+        x: 145
         y: 51
         width: 29
         height: 51
@@ -745,7 +748,7 @@ TextureImporter:
       name: HellOpponents_24
       rect:
         serializedVersion: 2
-        x: 87
+        x: 174
         y: 51
         width: 29
         height: 51
@@ -766,7 +769,7 @@ TextureImporter:
       name: HellOpponents_25
       rect:
         serializedVersion: 2
-        x: 116
+        x: 203
         y: 51
         width: 29
         height: 51
@@ -787,7 +790,7 @@ TextureImporter:
       name: HellOpponents_26
       rect:
         serializedVersion: 2
-        x: 145
+        x: 232
         y: 51
         width: 29
         height: 51
@@ -808,8 +811,8 @@ TextureImporter:
       name: HellOpponents_27
       rect:
         serializedVersion: 2
-        x: 174
-        y: 51
+        x: 0
+        y: 0
         width: 29
         height: 51
       alignment: 0
@@ -829,7 +832,7 @@ TextureImporter:
       name: HellOpponents_28
       rect:
         serializedVersion: 2
-        x: 0
+        x: 29
         y: 0
         width: 29
         height: 51
@@ -850,7 +853,7 @@ TextureImporter:
       name: HellOpponents_29
       rect:
         serializedVersion: 2
-        x: 29
+        x: 58
         y: 0
         width: 29
         height: 51
@@ -871,7 +874,7 @@ TextureImporter:
       name: HellOpponents_30
       rect:
         serializedVersion: 2
-        x: 58
+        x: 87
         y: 0
         width: 29
         height: 51
@@ -892,7 +895,7 @@ TextureImporter:
       name: HellOpponents_31
       rect:
         serializedVersion: 2
-        x: 87
+        x: 116
         y: 0
         width: 29
         height: 51
@@ -913,7 +916,7 @@ TextureImporter:
       name: HellOpponents_32
       rect:
         serializedVersion: 2
-        x: 116
+        x: 145
         y: 0
         width: 29
         height: 51
@@ -934,7 +937,7 @@ TextureImporter:
       name: HellOpponents_33
       rect:
         serializedVersion: 2
-        x: 145
+        x: 174
         y: 0
         width: 29
         height: 51
@@ -955,7 +958,7 @@ TextureImporter:
       name: HellOpponents_34
       rect:
         serializedVersion: 2
-        x: 174
+        x: 203
         y: 0
         width: 29
         height: 51
@@ -968,6 +971,27 @@ TextureImporter:
       bones: []
       spriteID: fa8b46f554c90ed70800000000000000
       internalID: 9070421471291291823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HellOpponents_35
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b906a599ec60aef20800000000000000
+      internalID: 3452579548738773147
       vertices: []
       indices: 
       edges: []

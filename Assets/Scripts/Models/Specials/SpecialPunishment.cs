@@ -14,7 +14,7 @@ public class SpecialPunishment : Special
         int right = 0;
         for (int x = 0; x < Constants.PlayFieldWidth; ++x)
         {
-            for (int y = _gameplayControler.GetHighestBlockOnX(x); y >= Cache.HeightLimiter; --y)
+            for (int y = _gameplayControler.GetHighestBlockOnX(x); y >= Cache.PlayFieldMinHeight; --y)
             {
                 if (_gameplayControler.PlayFieldBhv.Grid[x, y] == null)
                 {

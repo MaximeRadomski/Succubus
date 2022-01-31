@@ -11,7 +11,7 @@ public class SpecialUncertainty : Special
         if (!base.Activate())
             return false;
         var nbRows = Random.Range(1, 11);
-        int start = Cache.HeightLimiter;
+        int start = Cache.PlayFieldMinHeight;
         int end = start + (nbRows - 1);
         for (int y = start; y <= end; ++y)
             _gameplayControler.DeleteLine(y);

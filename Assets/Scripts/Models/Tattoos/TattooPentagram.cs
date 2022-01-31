@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TattooPentagram : Tattoo
 {
-    private float multiplier = 0.50f;
+    private float multiplier = 0.25f;
 
     public TattooPentagram()
     {

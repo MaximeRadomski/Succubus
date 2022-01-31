@@ -15,12 +15,13 @@ public class ItemHolyGrenade : Item
     protected override object Effect()
     {
         int end = _gameplayControler.GetHighestBlock();
-        for (int y = Cache.HeightLimiter; y <= end; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y <= end; ++y)
         {
             if (y >= 40)
                 break;
             _gameplayControler.DeleteLine(y); 
         }
+        _gameplayControler.CheckForLineBreaks();
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
         return base.Effect();

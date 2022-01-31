@@ -22,7 +22,7 @@ public class ItemSunJuice : Item
         int end = start - (nbRows - 1);
         for (int y = start; y >= end; --y)
         {
-            if (y < Cache.HeightLimiter)
+            if (y < Cache.PlayFieldMinHeight)
                 break;
             _gameplayControler.DeleteLine(y);
         }

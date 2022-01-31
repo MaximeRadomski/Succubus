@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Reverse Centaur"; 
+        var name = "Heaven's reject";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -366,6 +366,16 @@ public static class OpponentsData
         },
         new Opponent()
         {
+            Name = "Heaven's reject", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 170, Weakness = Weakness.None, Cooldown = 5,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.LineBreak, 2) },
+            GravityLevel = 5, Weight = 40,
+            DialogId = 5, DialogPitch = 1.75f,
+            Lore = "One of many Heaven's rejects, due to their imperfections not fitting for holy standards."
+        },
+        new Opponent()
+        {
             Name = "Baphomeh", Realm = Realm.Hell, Type = OpponentType.Boss,
             HpMax = 444, Weakness = Weakness.None, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
@@ -683,7 +693,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Watcher", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 200, Cooldown = 4, Haste = true,
+            HpMax = 200, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.RhythmMania, 4, 1) },
             GravityLevel = 12, Weight = 20,
@@ -714,7 +724,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Truthful Truth", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 250, Cooldown = 5, Haste = true,
+            HpMax = 250, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.ForcedBlock, 1, 2) },
             GravityLevel = 14, Weight = 30,
@@ -723,7 +733,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Lower Throne", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 300, Cooldown = 5, Haste = true, Immunity = Immunity.Twists,
+            HpMax = 300, Cooldown = 6, Haste = true, Immunity = Immunity.Twists,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 3) },
             GravityLevel = 16, Weight = 30,
@@ -732,7 +742,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 250, Cooldown = 5, Haste = true,
+            HpMax = 250, Cooldown = 7, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 6),
                 new OpponentAttack(AttackType.DropBomb, 5) },
@@ -755,7 +765,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 400, Cooldown = 5, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
+            HpMax = 400, Cooldown = 7, Haste = true, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 100,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 4),
                 new OpponentAttack(AttackType.Ascension, 4, 2)},
@@ -765,7 +775,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Kinky Angel", Realm = Realm.Heaven, Type = OpponentType.Common,
-            HpMax = 350, Cooldown = 3, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
+            HpMax = 350, Cooldown = 6, Haste = true, Weakness = Weakness.Combos, DamageOnWeakness = 10,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Drill, 4),
                 new OpponentAttack(AttackType.Gate, 2) },
@@ -775,9 +785,9 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Duality Angel", Realm = Realm.Hell, Type = OpponentType.Common,
-            HpMax = 300, Cooldown = 5, Haste = true,
+            HpMax = 300, Cooldown = 6, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Ascension, 1, 4),
+                new OpponentAttack(AttackType.Ascension, 1, 3),
                 new OpponentAttack(AttackType.Tunnel, 4),
                 new OpponentAttack(AttackType.Shrink, 1) },
             GravityLevel = 16, Weight = 40,

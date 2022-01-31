@@ -7,7 +7,7 @@ public class TattooNoRagrets : Tattoo
     {
         Id = 75;
         Name = TattoosData.Tattoos[Id];
-        Stat = 60;
+        Stat = 69;
         Rarity = Rarity.Rare;
         MaxLevel = 1;
     }

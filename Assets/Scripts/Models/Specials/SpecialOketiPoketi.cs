@@ -24,12 +24,12 @@ public class SpecialOketiPoketi : Special
             return;
         MonoBehaviour.Destroy(_gameplayControler.CurrentPiece.transform.GetChild(_gameplayControler.CurrentPiece.transform.childCount - 1).gameObject);
         MonoBehaviour.Destroy(_gameplayControler.CurrentGhost.transform.GetChild(_gameplayControler.CurrentGhost.transform.childCount - 1).gameObject);
-        var dPieceRealm = Resources.Load<GameObject>("Prefabs/D-" + _character.Realm.ToString() + "Ghost");
+        var dPieceRealmSprite = Resources.Load<GameObject>("Prefabs/D-" + _character.Realm.ToString() + "Ghost").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         foreach (Transform child in _gameplayControler.CurrentGhost.transform)
         {
             if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
             {
-                spriteRenderer.sprite = dPieceRealm.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+                spriteRenderer.sprite = dPieceRealmSprite;
                 spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
             }
         }

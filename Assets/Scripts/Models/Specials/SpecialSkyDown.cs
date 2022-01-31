@@ -14,11 +14,11 @@ public class SpecialSkyDown : Special
         var oldOnHoldValue = _gameplayControler.GameplayOnHold;
         _gameplayControler.GameplayOnHold = true;
         var takeBackY = -1;
-        for (int y = Cache.HeightLimiter; y < Constants.PlayFieldHeight; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y < Constants.PlayFieldHeight; ++y)
         {
             for (int x = 0; x < Constants.PlayFieldWidth; ++x)
             {
-                if (y > Cache.HeightLimiter && _gameplayControler.PlayFieldBhv.Grid[x, y] != null && _gameplayControler.PlayFieldBhv.Grid[x, y - 1] == null)
+                if (y > Cache.PlayFieldMinHeight && _gameplayControler.PlayFieldBhv.Grid[x, y] != null && _gameplayControler.PlayFieldBhv.Grid[x, y - 1] == null)
                 {
                     _gameplayControler.PlayFieldBhv.Grid[x, y - 1] = _gameplayControler.PlayFieldBhv.Grid[x, y];
                     _gameplayControler.PlayFieldBhv.Grid[x, y] = null;

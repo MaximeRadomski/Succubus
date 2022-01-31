@@ -227,7 +227,7 @@ public class GameplayControler : MonoBehaviour
             {
                 if (!block.TryGetComponent<BlockBhv>(out var blockBhv) || blockBhv.Indestructible)
                     continue;
-                var pos = $"{Mathf.RoundToInt(block.transform.position.x)}-{Mathf.RoundToInt(block.transform.position.y - (Cache.HeightLimiter > 0 ? Cache.HeightLimiter : 0))};";
+                var pos = $"{Mathf.RoundToInt(block.transform.position.x)}-{Mathf.RoundToInt(block.transform.position.y - (Cache.PlayFieldMinHeight > 0 ? Cache.PlayFieldMinHeight : 0))};";
                 if (remainingBlocks.Contains(pos))
                     continue;
                 remainingBlocks += pos;
@@ -2082,7 +2082,7 @@ public class GameplayControler : MonoBehaviour
         if (roundedX == -1)
             return false;
 
-        if (roundedY < Cache.HeightLimiter || roundedY >= _playFieldHeight)
+        if (roundedY < Cache.PlayFieldMinHeight || roundedY >= _playFieldHeight)
             return false;
 
         if (PlayFieldBhv.Grid[roundedX, roundedY] != null && (bhvPiece == null || !bhvPiece.IsHollowed))
@@ -2183,7 +2183,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentGhost != null)
             Destroy(CurrentGhost);
         int nbLines = 0;
-        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             if (HasLine(y))
             {
@@ -2245,7 +2245,7 @@ public class GameplayControler : MonoBehaviour
                 {
                     Cache.SlavWheelStreak = 0;
                     AttackDarkRows(CurrentPiece, 2, Helper.GetInferiorFrom(CharacterRealm));
-                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), CharacterRealm);
+                    Instantiator.NewAttackLine(CharacterInstanceBhv.transform.position, new Vector3(4.5f, Cache.PlayFieldMinHeight / 2, 0.0f), CharacterRealm);
                 }
                 else
                     ++Cache.SlavWheelStreak;
@@ -2286,11 +2286,7 @@ public class GameplayControler : MonoBehaviour
             StartCoroutine(Helper.ExecuteAfterDelay(0.3f, (Func<object>)(() => {
                 if ((Cache.LineBreakReach > 0 || Cache.LineBreakCount > 0)
                 && Cache.LineBreakCount >= Cache.LineBreakReach)
-                {
-                    Cache.LineBreakReach = 0;
-                    Cache.LineBreakCount = 0;
                     CheckForLineBreaks();
-                }
 
                 ClearLineSpace();
 
@@ -2332,7 +2328,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             if (HasDarkRow(y))
             {
@@ -2353,7 +2349,7 @@ public class GameplayControler : MonoBehaviour
     {
         int nbLinesDeleted = 0;
         bool hasDeletedRows = false;
-        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             if (HasWasteRow(y))
             {
@@ -2401,8 +2397,10 @@ public class GameplayControler : MonoBehaviour
         return nbLinesDeleted;
     }
 
-    private void CheckForLineBreaks()
+    public void CheckForLineBreaks()
     {
+        Cache.LineBreakReach = 0;
+        Cache.LineBreakCount = 0;
         var lineBreaks = GameObject.FindGameObjectsWithTag(Constants.TagLineBreak);
         for (int i = lineBreaks.Length - 1; i >= 0; --i)
         {
@@ -2500,7 +2498,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteColumn(int x)
     {
-        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] == null ||
                 (PlayFieldBhv.Grid[x, y].TryGetComponent<BlockBhv>(out var blockBhv) && blockBhv.Indestructible))
@@ -2513,7 +2511,7 @@ public class GameplayControler : MonoBehaviour
 
     public void DeleteFromBottom(int nbRows)
     {
-        for (int y = Cache.HeightLimiter; y < nbRows; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y < nbRows; ++y)
         {
             if (y >= Constants.PlayFieldHeight)
                 break;
@@ -2526,25 +2524,25 @@ public class GameplayControler : MonoBehaviour
     public void ClearLineSpace(int minY = -1, int maxY = -1)
     {
         if (minY == -1)
-            minY = Cache.HeightLimiter - 1;
+            minY = Cache.PlayFieldMinHeight - 1;
         if (maxY == -1)
-            maxY = Cache.HeightLimiter - 1;
+            maxY = Cache.PlayFieldMinHeight - 1;
         int highestBlock = _playFieldHeight - 1;
-        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y < _playFieldHeight; ++y)
         {
-            if (y == Cache.HeightLimiter)
+            if (y == Cache.PlayFieldMinHeight)
                 highestBlock = GetHighestBlock();
-            if (y > highestBlock || highestBlock == Cache.HeightLimiter - 1)
+            if (y > highestBlock || highestBlock == Cache.PlayFieldMinHeight - 1)
                 break;
             if (HasFullLineSpace(y))
             {
-                if (maxY != Cache.HeightLimiter - 1 && minY != Cache.HeightLimiter - 1
+                if (maxY != Cache.PlayFieldMinHeight - 1 && minY != Cache.PlayFieldMinHeight - 1
                     && (y < minY || y > maxY))
                     continue;
                 DropAllAboveLines(y);
-                y = Cache.HeightLimiter - 1;
-                if (maxY != Cache.HeightLimiter - 1 && minY != Cache.HeightLimiter - 1 && --maxY < minY)
-                    maxY = minY = Cache.HeightLimiter - 2;
+                y = Cache.PlayFieldMinHeight - 1;
+                if (maxY != Cache.PlayFieldMinHeight - 1 && minY != Cache.PlayFieldMinHeight - 1 && --maxY < minY)
+                    maxY = minY = Cache.PlayFieldMinHeight - 2;
             }
         }
         foreach (Transform child in PlayFieldBhv.transform)
@@ -2557,7 +2555,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlock()
     {
-        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             if (!HasFullLineSpace(y))
                 return y;
@@ -2567,7 +2565,7 @@ public class GameplayControler : MonoBehaviour
 
     public int GetHighestBlockOnX(int x)
     {
-        for (int y = _playFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return y;
@@ -2587,7 +2585,7 @@ public class GameplayControler : MonoBehaviour
 
     private bool HasFullColumnSpace(int x)
     {
-        for (int y = Cache.HeightLimiter; y < _playFieldHeight; ++y)
+        for (int y = Cache.PlayFieldMinHeight; y < _playFieldHeight; ++y)
         {
             if (PlayFieldBhv.Grid[x, y] != null)
                 return false;
@@ -2614,7 +2612,7 @@ public class GameplayControler : MonoBehaviour
     public int IncreaseAllAboveLines(int nbRows, bool isShrinkOrLineBreak = false, int xStart = 0, int xEnd = 9)
     {
         if (nbRows == 0)
-            return Cache.HeightLimiter;
+            return isShrinkOrLineBreak ? Cache.HeightLimiter : Cache.PlayFieldMinHeight;
         for (int y = GetHighestBlock(); y >= Cache.HeightLimiter; --y)
         {
             if (y + nbRows >= _playFieldHeight)
@@ -2623,9 +2621,12 @@ public class GameplayControler : MonoBehaviour
                 return y + 1; //Reached a Line Break, must return line id above
             for (int x = xStart; x <= xEnd; ++x)
             {
-                if ((xStart != 0 || xEnd != 9) && PlayFieldBhv.Grid[x, y] != null
-                    && (PlayFieldBhv.Grid[x, y].parent.name.Contains("Dark") || PlayFieldBhv.Grid[x, y].parent.name.Contains("Light")))
-                    continue;
+                if ((xStart != 0 || xEnd != 9) && PlayFieldBhv.Grid[x, y] != null)
+                {
+                    var parentName = PlayFieldBhv.Grid[x, y].parent.name;
+                    if (parentName.Contains("Dark") || parentName.Contains("Light") || parentName.Contains("Break"))
+                        continue;
+                }
                 if (PlayFieldBhv.Grid[x, y] != null)
                 {
                     PlayFieldBhv.Grid[x, y + nbRows] = PlayFieldBhv.Grid[x, y];
@@ -2634,7 +2635,7 @@ public class GameplayControler : MonoBehaviour
                 }
             }
         }
-        return Cache.HeightLimiter;
+        return isShrinkOrLineBreak ? Cache.HeightLimiter : Cache.PlayFieldMinHeight;
     }
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
@@ -2779,13 +2780,13 @@ public class GameplayControler : MonoBehaviour
             FillLine(y, AttackType.LightRow, opponentRealm);
         }
         cooldown = cooldown < 1 ? 1 : cooldown;
-        PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.tag = Constants.TagLightRows;
-        PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.AddComponent<LightRowBlockBhv>();
-        var lightRowBhv = PlayFieldBhv.Grid[0, Cache.HeightLimiter].gameObject.GetComponent<LightRowBlockBhv>();
+        PlayFieldBhv.Grid[0, Cache.PlayFieldMinHeight].gameObject.tag = Constants.TagLightRows;
+        PlayFieldBhv.Grid[0, Cache.PlayFieldMinHeight].gameObject.AddComponent<LightRowBlockBhv>();
+        var lightRowBhv = PlayFieldBhv.Grid[0, Cache.PlayFieldMinHeight].gameObject.GetComponent<LightRowBlockBhv>();
         lightRowBhv.NbRows = nbRows;
         lightRowBhv.Cooldown = cooldown;
-        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + Cache.HeightLimiter));
-        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Cache.HeightLimiter]);
+        var tmpTextGameObject = Instantiator.NewLightRowText(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + Cache.PlayFieldMinHeight));
+        tmpTextGameObject.transform.SetParent(PlayFieldBhv.Grid[0, Cache.PlayFieldMinHeight]);
         lightRowBhv.CooldownText = tmpTextGameObject.GetComponent<TMPro.TextMeshPro>();
         lightRowBhv.UpdateCooldownText(cooldown);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, (float)nbRows / 2.0f - 0.5f, 0.0f), CharacterRealm);
@@ -2926,7 +2927,7 @@ public class GameplayControler : MonoBehaviour
                     break;
             }
             y -= 1 + deepness; //At least 1 in order to be really bothering
-            y = y < Cache.HeightLimiter ? Cache.HeightLimiter : y;
+            y = y < Cache.PlayFieldMinHeight ? Cache.PlayFieldMinHeight : y;
             if (Instantiator == null)
                 Instantiator = GetComponent<Instantiator>();
             Instantiator.NewDrillTarget(opponentRealm, new Vector3(x, y, 0.0f));
@@ -3087,9 +3088,9 @@ public class GameplayControler : MonoBehaviour
         var currentHiest = GetHighestBlock();
         if (currentHiest + nbRows > 19)
             currentHiest = 19 - nbRows;
-        var startFromBottom = UnityEngine.Random.Range(Cache.HeightLimiter, currentHiest - nbRows);
-        if (startFromBottom < Cache.HeightLimiter)
-            startFromBottom = Cache.HeightLimiter;
+        var startFromBottom = UnityEngine.Random.Range(Cache.PlayFieldMinHeight, currentHiest - nbRows);
+        if (startFromBottom < Cache.PlayFieldMinHeight)
+            startFromBottom = Cache.PlayFieldMinHeight;
         var visionBlockInstance = Instantiator.NewShiftBlock(new Vector2(4.5f, (((float)nbRows - 1.0f) / 2.0f) + (float)(startFromBottom)), nbRows, opponentRealm);
         visionBlockInstance.transform.SetParent(PlayFieldBhv.gameObject.transform);
         Instantiator.NewAttackLine(opponentInstance.transform.position, visionBlockInstance.transform.position, opponentRealm);
@@ -3497,6 +3498,8 @@ public class GameplayControler : MonoBehaviour
         IncreaseAllAboveLines(heightToReduce, isShrinkOrLineBreak: true);
         Cache.HeightLimiter += heightToReduce;
         ClearLineSpace();
+        if (_lineBreakLimiter != null)
+            _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Cache.HeightLimiter + Cache.LineBreakReach - 1, 0.0f);
     }
 
     public void ResetPlayHeight()

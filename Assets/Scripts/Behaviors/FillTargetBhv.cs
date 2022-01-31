@@ -82,14 +82,14 @@ public class FillTargetBhv : FrameRateBehavior
     private bool TryFindSingleHole(out int[] position)
     {
         List<int[]> availableSingleHoles = new List<int[]>();
-        for (int y = Constants.PlayFieldHeight - 1; y >= Cache.HeightLimiter; --y)
+        for (int y = Constants.PlayFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
             for (int x = 0; x < Constants.PlayFieldWidth; ++x)
             {
                 if (_gameplayControler.PlayFieldBhv.Grid[x, y] == null
                     && (y + 1 >= Constants.PlayFieldHeight || _gameplayControler.PlayFieldBhv.Grid[x, y + 1] != null)
-                    && (y - 1 < Cache.HeightLimiter || _gameplayControler.PlayFieldBhv.Grid[x, y - 1] != null)
-                    && (x - 1 < Cache.HeightLimiter || _gameplayControler.PlayFieldBhv.Grid[x - 1, y] != null)
+                    && (y - 1 < Cache.PlayFieldMinHeight || _gameplayControler.PlayFieldBhv.Grid[x, y - 1] != null)
+                    && (x - 1 < Cache.PlayFieldMinHeight || _gameplayControler.PlayFieldBhv.Grid[x - 1, y] != null)
                     && (x + 1 >= Constants.PlayFieldWidth || _gameplayControler.PlayFieldBhv.Grid[x + 1, y] != null))
                 {
                     availableSingleHoles.Add(new int[] { x, y });

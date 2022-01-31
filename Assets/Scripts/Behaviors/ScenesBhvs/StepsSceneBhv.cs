@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -46,64 +47,72 @@ public class StepsSceneBhv : SceneBhv
 
     protected override void Init()
     {
-        base.Init();
-        CameraBhv.Paused = Cache.NameLastScene == Constants.SettingsScene;
-        _run = PlayerPrefsHelper.GetRun();
-        _character = PlayerPrefsHelper.GetRunCharacter();
+        try
+        { 
+            base.Init();
+            CameraBhv.Paused = Cache.NameLastScene == Constants.SettingsScene;
+            _run = PlayerPrefsHelper.GetRun();
+            _character = PlayerPrefsHelper.GetRunCharacter();
 
-        _lootCenterLocalY = GameObject.Find("LootCenter").transform.localPosition.y;
-        GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _run.CurrentRealm + " - lvl " + _run.RealmLevel;
-        GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.MaxSteps - _run.CurrentStep);
-        _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
-        _opponents = GameObject.Find("Opponents").GetComponent<TMPro.TextMeshPro>();
-        _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
-        _opponentType.sprite = null;
-        _lootPicture = GameObject.Find("LootPicture").GetComponent<SpriteRenderer>();
-        _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = LootInfo;
-        _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
-        GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
-        _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
-        _characterPicture.sprite = Helper.GetCharacterSkin(_character.Id, _character.SkinId);
-        _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        _buttonInfo = GameObject.Find(Constants.GoButtonInfoName);
-        _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;
-        _beholderPicture = GameObject.Find("BeholderPicture").GetComponent<SpriteRenderer>();
-        _beholderPicture.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
-        _buttonBeholder = GameObject.Find("ButtonBeholder");
-        _buttonBeholder.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
-        (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
-        _selector = GameObject.Find("Selector");
-        _position = GameObject.Find("Position");
-        _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
-        _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
-        _backgroundMask = GameObject.Find("BackgroundMask");
+            _lootCenterLocalY = GameObject.Find("LootCenter").transform.localPosition.y;
+            GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _run.CurrentRealm + " - lvl " + _run.RealmLevel;
+            GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.MaxSteps - _run.CurrentStep);
+            _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
+            _opponents = GameObject.Find("Opponents").GetComponent<TMPro.TextMeshPro>();
+            _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
+            _opponentType.sprite = null;
+            _lootPicture = GameObject.Find("LootPicture").GetComponent<SpriteRenderer>();
+            _lootPicture.GetComponent<ButtonBhv>().EndActionDelegate = LootInfo;
+            _lootName = GameObject.Find("LootName").GetComponent<TMPro.TextMeshPro>();
+            GameObject.Find(Constants.GoButtonPauseName).GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+            _characterPicture = GameObject.Find("CharacterPicture").GetComponent<SpriteRenderer>();
+            _characterPicture.sprite = Helper.GetCharacterSkin(_character.Id, _character.SkinId);
+            _characterPicture.GetComponent<ButtonBhv>().EndActionDelegate = Info;
+            _buttonInfo = GameObject.Find(Constants.GoButtonInfoName);
+            _buttonInfo.GetComponent<ButtonBhv>().EndActionDelegate = Info;
+            _beholderPicture = GameObject.Find("BeholderPicture").GetComponent<SpriteRenderer>();
+            _beholderPicture.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
+            _buttonBeholder = GameObject.Find("ButtonBeholder");
+            _buttonBeholder.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
+            (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
+            _selector = GameObject.Find("Selector");
+            _position = GameObject.Find("Position");
+            _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
+            _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
+            _backgroundMask = GameObject.Find("BackgroundMask");
 
-        var resources = _run.GetRunResources();
-        for (int i = 0; i < resources.Count; ++i)
-        {
-            if (resources[i] <= 0)
-                GameObject.Find($"Resource{i}").SetActive(false);
-            else
-                GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
+            var resources = _run.GetRunResources();
+            for (int i = 0; i < resources.Count; ++i)
+            {
+                if (resources[i] <= 0)
+                    GameObject.Find($"Resource{i}").SetActive(false);
+                else
+                    GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
+            }
+            _stepsService = new StepsService();
+            _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * _run.CurrentRealm.GetHashCode())));
+            _stepsBackground = GameObject.Find("StepsBackground");
+            _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[_run.CurrentRealm.GetHashCode()];
+            if (string.IsNullOrEmpty(_run.Steps))
+            {
+                _stepsService.GenerateOriginSteps(_run, _character);
+                PlayerPrefsHelper.SaveRun(_run);
+            }
+            else if (_run.CurrentStep >= _run.MaxSteps)
+                _stepsService.SetVisionOnAllSteps(_run);
+            UpdateAllStepsVisuals();
+            FocusOnSelected(_run.X, _run.Y);
+            PositionOnCurrent();
+            if (_stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps).LandLordVision)
+            {
+                Cache.InputLocked = true;
+                Invoke(nameof(OnBossTriggered), 1.0f);
+            }
         }
-        _stepsService = new StepsService();
-        _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * _run.CurrentRealm.GetHashCode())));
-        _stepsBackground = GameObject.Find("StepsBackground");
-        _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[_run.CurrentRealm.GetHashCode()];
-        if (string.IsNullOrEmpty(_run.Steps))
+        catch (Exception e)
         {
-            _stepsService.GenerateOriginSteps(_run, _character);
-            PlayerPrefsHelper.SaveRun(_run);
-        }
-        else if (_run.CurrentStep >= _run.MaxSteps)
-            _stepsService.SetVisionOnAllSteps(_run);
-        UpdateAllStepsVisuals();
-        FocusOnSelected(_run.X, _run.Y);
-        PositionOnCurrent();
-        if (_stepsService.GetStepOnPos(_run.X, _run.Y, _run.Steps).LandLordVision)
-        {
-            Cache.InputLocked = true;
-            Invoke(nameof(OnBossTriggered), 1.0f);
+            PlayerPrefsHelper.ResetRun();
+            LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
         }
     }
 

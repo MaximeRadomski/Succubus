@@ -93,6 +93,8 @@ public static class Cache
     public static bool PactNoLastFightPlayField = false;
     public static Realm PactCharacterRealm = Realm.None;
 
+    public static int PlayFieldMinHeight => HeightLimiter + LineBreakCount;
+
     public static void ResetClassicGameCache(Character character = null)
     {
         IsEffectAttackInProgress = AttackType.None;

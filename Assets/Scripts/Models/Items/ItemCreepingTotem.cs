@@ -22,7 +22,7 @@ public class ItemCreepingTotem : Item
             return base.Effect();
         }
         var highestX = -1;
-        var highestY = Cache.HeightLimiter - 1;
+        var highestY = Cache.PlayFieldMinHeight - 1;
         for (int x = 0; x < Constants.PlayFieldWidth; ++x)
         {
             var highestYOnX = _gameplayControler.GetHighestBlockOnX(x);
@@ -34,14 +34,14 @@ public class ItemCreepingTotem : Item
         }
         var selectedX = Random.Range(0, Constants.PlayFieldWidth);
         var selectedY = _gameplayControler.GetHighestBlockOnX(selectedX);
-        if (selectedY < Cache.HeightLimiter + 3 && highestY >= Cache.HeightLimiter + 3)
+        if (selectedY < Cache.PlayFieldMinHeight + 3 && highestY >= Cache.PlayFieldMinHeight + 3)
         {
             selectedY = highestY;
             selectedX = highestX;
         }
-        if (selectedY >= Cache.HeightLimiter)
+        if (selectedY >= Cache.PlayFieldMinHeight)
         {
-            var centerY = Random.Range(selectedY >= Cache.HeightLimiter + 3 ? Cache.HeightLimiter + 1 : Cache.HeightLimiter, selectedY - 2);
+            var centerY = Random.Range(selectedY >= Cache.PlayFieldMinHeight + 3 ? Cache.PlayFieldMinHeight + 1 : Cache.PlayFieldMinHeight, selectedY - 2);
             while (centerY < 0 || _gameplayControler.PlayFieldBhv.Grid[selectedX, centerY]?.GetComponent<BlockBhv>()?.Indestructible == true)
                 ++centerY;
             DestroyBlock(selectedX, centerY);
@@ -57,7 +57,7 @@ public class ItemCreepingTotem : Item
     private void DestroyBlock(int roundedX, int roundedY)
     {
         if (roundedX < 0 || roundedX >= Constants.PlayFieldWidth
-            || roundedY < Cache.HeightLimiter || roundedY >= Constants.PlayFieldHeight
+            || roundedY < Cache.PlayFieldMinHeight || roundedY >= Constants.PlayFieldHeight
             || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;
         _gameplayControler.Instantiator.NewFadeBlock(Realm.Earth, new Vector3(roundedX, roundedY, 0.0f), 5, 0);

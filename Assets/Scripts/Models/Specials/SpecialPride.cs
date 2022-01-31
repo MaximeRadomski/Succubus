@@ -13,8 +13,8 @@ public class SpecialPride : Special
         int nbRows = Random.Range(2, 4);
         int tX = Random.Range(1, 8);
         int start = _gameplayControler.GetHighestBlock();
-        if (start + Cache.HeightLimiter < nbRows + Cache.HeightLimiter - 1)
-            start = nbRows + Cache.HeightLimiter - 1;
+        if (start + Cache.PlayFieldMinHeight < nbRows + Cache.PlayFieldMinHeight - 1)
+            start = nbRows + Cache.PlayFieldMinHeight - 1;
         int end = start - (nbRows - 1);
         for (int i = 0; i < nbRows; ++i)
         {
@@ -28,7 +28,7 @@ public class SpecialPride : Special
 
         for (int y = start; y >= end; --y)
         {
-            if (y < Cache.HeightLimiter)
+            if (y < Cache.PlayFieldMinHeight)
                 break;
             _gameplayControler.DeleteLine(y);
             _gameplayControler.FillLine(y, AttackType.WasteRow, _character.Realm);
@@ -85,7 +85,7 @@ public class SpecialPride : Special
     private void DestroyBlock(int roundedX, int roundedY)
     {
         if (roundedX < 0 || roundedX >= Constants.PlayFieldWidth
-            || roundedY < Cache.HeightLimiter || roundedY >= Constants.PlayFieldHeight
+            || roundedY < Cache.PlayFieldMinHeight || roundedY >= Constants.PlayFieldHeight
             || _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.GetComponent<BlockBhv>()?.Indestructible == true)
             return;
         _gameplayControler.Instantiator.NewFadeBlock(_character.Realm, new Vector3(roundedX, roundedY, 0.0f), 5, 0);
