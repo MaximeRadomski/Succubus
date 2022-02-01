@@ -88,11 +88,11 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         this.Instantiator.NewPopupYesNo("Restart", "would you like to restart this game?", "No", "Yes", RestartTraining);
     }
 
-    private object RestartTraining(bool result)
+    private void RestartTraining(bool result)
     {
         _gameplayControler.GameplayOnHold = false;
         if (!result)
-            return false;
+            return;
         _isRestarting = true;
         PlayerPrefsHelper.ResetTraining();
         PlayerPrefsHelper.SaveCurrentOpponents(null);
@@ -100,7 +100,6 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         Cache.CurrentItemCooldown = 0;
         NavigationService.ReloadScene();
         _gameplayControler.CleanPlayerPrefs();
-        return true;
     }
 
     public override void OnNewPiece(GameObject lastPiece)

@@ -13,9 +13,9 @@ public class ItemKnightShield : Item
         Cooldown = 14;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.BlockPerAttack = 3;
-        return base.Effect();
+        base.Effect();
     }
 }

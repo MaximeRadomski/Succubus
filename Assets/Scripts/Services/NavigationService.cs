@@ -45,7 +45,7 @@ public static class NavigationService
         else
             LoadPreviousScene();
 
-        object OnToPreviousScene(bool result)
+        bool OnToPreviousScene(bool result)
         {
             LoadPreviousScene();
             return result;

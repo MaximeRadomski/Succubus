@@ -77,7 +77,7 @@ public class Instantiator : MonoBehaviour
         return tmpScoreHystoryInstance;
     }
 
-    public GameObject NewAttackLine(Vector3 source, Vector3 target, Realm realm, bool linear = true, Sprite sprite = null, System.Func<object> onPop = null)
+    public GameObject NewAttackLine(Vector3 source, Vector3 target, Realm realm, bool linear = true, Sprite sprite = null, Action onPop = null)
     {
         var attackLine = new GameObject("AttackLine");
         attackLine.AddComponent<AttackLineBhv>();
@@ -214,7 +214,7 @@ public class Instantiator : MonoBehaviour
     }
 
     public GameObject NewPopupYesNo(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction, Sprite sprite = null, bool defaultPositive = false)
+        Action<bool> resultAction, Sprite sprite = null, bool defaultPositive = false)
     {
         if (!_hasInit)
             Init();
@@ -234,7 +234,7 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupCharacterSkinsBhv>().Init(charId, unlockedSkins, currentSelectedSkin, resultAction);
     }
 
-    public void NewPopupGameplayButtons(System.Func<bool, object> resultAction)
+    public void NewPopupGameplayButtons(Action<bool> resultAction)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupGameplayButtons");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
@@ -251,14 +251,14 @@ public class Instantiator : MonoBehaviour
     }
 
     public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,
-        System.Func<bool, object> resultAction, bool reverse = false)
+        Func<bool, bool> resultAction, bool reverse = false)
     {
         var already = GameObject.FindGameObjectsWithTag(Constants.TagOverBlend);
         if (already != null && already.Length > 0 && already[0].GetComponent<OverBlendBhv>().State < 2 && !already[0].GetComponent<OverBlendBhv>().HasResulted)
             return;
         var tmpOverBlendObject = Resources.Load<GameObject>("Prefabs/OverBlend");
         var tmpOverBlendInstance = Instantiate(tmpOverBlendObject, tmpOverBlendObject.transform.position, tmpOverBlendObject.transform.rotation);
-        tmpOverBlendInstance.GetComponent<OverBlendBhv>().SetPrivates(overBlendType, message, constantLoadingSpeed, resultAction, reverse);
+        tmpOverBlendInstance.GetComponent<OverBlendBhv>().Init(overBlendType, message, constantLoadingSpeed, resultAction, reverse);
     }
 
     public void NewSnack(string content, float duration = 2.0f)
@@ -268,7 +268,7 @@ public class Instantiator : MonoBehaviour
         tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
-    public GameObject NewPauseMenu(System.Func<bool, object> resumeAction, GameSceneBhv callingScene = null, bool isHorizontal = false)
+    public GameObject NewPauseMenu(Action<bool> resumeAction, GameSceneBhv callingScene = null, bool isHorizontal = false)
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
         var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
@@ -284,7 +284,7 @@ public class Instantiator : MonoBehaviour
         return tmpMenuSelectorInstance;
     }
 
-    public GameObject NewInfoMenu(System.Func<bool, object> resumeAction, Character character, Opponent opponent, bool isHorizontal = false)
+    public GameObject NewInfoMenu(Action<bool> resumeAction, Character character, Opponent opponent, bool isHorizontal = false)
     {
         if (Cache.CurrentGameMode == GameMode.TrainingOldSchool)
         {
@@ -356,7 +356,7 @@ public class Instantiator : MonoBehaviour
         tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().Init(sprite, position + new Vector2(0.0f, +0.3f));
     }
 
-    public void NewDialogBoxEncounter(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customId = null, string customDialogLibelle = null)
+    public void NewDialogBoxEncounter(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, Action resultAction, int? customId = null, string customDialogLibelle = null)
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
@@ -364,7 +364,7 @@ public class Instantiator : MonoBehaviour
         tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, subjectName, secondaryName, secondaryRealm, resultAction, customId, customDialogLibelle);
     }
 
-    public void NewDialogBoxDeath(Vector3 position, string name, System.Func<bool> resultAction)
+    public void NewDialogBoxDeath(Vector3 position, string name, Action resultAction)
     {
         var tmpDialogBoxObject = Resources.Load<GameObject>("Prefabs/DialogBox");
         var tmpDialogBoxInstance = Instantiate(tmpDialogBoxObject, tmpDialogBoxObject.transform.position, tmpDialogBoxObject.transform.rotation);
@@ -372,7 +372,7 @@ public class Instantiator : MonoBehaviour
         tmpDialogBoxInstance.GetComponent<DialogBoxBhv>().Init(position, name, null, Realm.None, resultAction);
     }
 
-    public void NewFightIntro(Vector3 position, Character character, List<Opponent> opponents, System.Func<bool> resultAction)
+    public void NewFightIntro(Vector3 position, Character character, List<Opponent> opponents, Action resultAction)
     {
         var tmpFightIntroObject = Resources.Load<GameObject>("Prefabs/FightIntro");
         var tmpFightIntroInstance = Instantiate(tmpFightIntroObject, position, tmpFightIntroObject.transform.rotation);

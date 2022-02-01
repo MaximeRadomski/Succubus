@@ -62,7 +62,7 @@ public class SpecialSwap : Special
         return true;
     }
 
-    private object AfterEffect()
+    private void AfterEffect()
     {
         _gameplayControler.Bag = _gameplayControler.Bag.Insert(0, _gameplayControler.Bag[_selectedId].ToString());
         _gameplayControler.Bag = _gameplayControler.Bag.ReplaceChar(_selectedId + 1, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter[0]);
@@ -71,6 +71,5 @@ public class SpecialSwap : Special
         _gameplayControler.GameplayOnHold = false;
         Cache.EscapeLocked = false;
         _gameplayControler.Spawn(false);
-        return true;
     }
 }

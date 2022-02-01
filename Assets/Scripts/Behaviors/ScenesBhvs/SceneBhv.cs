@@ -30,7 +30,7 @@ public abstract class SceneBhv : FrameRateBehavior
     {
         if (!NavigationService.IsRootScene())
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, Previous, reverse: true);
-        object Previous(bool result)
+        bool Previous(bool result)
         {
             NavigationService.LoadPreviousScene();
             return result;
@@ -48,19 +48,18 @@ public abstract class SceneBhv : FrameRateBehavior
             "You wont be able to recover your progress if you give up now!"
             , Constants.Cancel, Constants.Proceed, OnAcceptGiveUp);
 
-        object OnAcceptGiveUp(bool result)
+        void OnAcceptGiveUp(bool result)
         {
             if (result)
             {
                 CameraBhv.Unfocus();
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
-                object TransitionGiveUp(bool transResult)
+                bool TransitionGiveUp(bool transResult)
                 {
                     NavigationService.NewRootScene(Constants.MainMenuScene);
                     return transResult;
                 }
             }
-            return result;
         }
     }
 
@@ -75,13 +74,12 @@ public abstract class SceneBhv : FrameRateBehavior
             "Are you sure you want to quit the game?"
             , Constants.Cancel, Constants.Proceed, OnAcceptExit);
 
-        object OnAcceptExit(bool result)
+        void OnAcceptExit(bool result)
         {
             if (result)
             {
                 Application.Quit();
             }
-            return result;
         }
     }
 }

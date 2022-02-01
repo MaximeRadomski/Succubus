@@ -123,7 +123,7 @@ public class SettingsAudioSceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -133,15 +133,14 @@ public class SettingsAudioSceneBhv : SceneBhv
     private void ResetDefault()
     {
         Instantiator.NewPopupYesNo("Default", "are you willing to restore the default settings ?", "Nope", "Yup", OnDefault);
-        object OnDefault(bool result)
+        void OnDefault(bool result)
         {
             if (!result)
-                return result;
+                return;
             PlayerPrefsHelper.SaveEffectsLevel(Constants.PpAudioLevelDefault);
             PlayerPrefsHelper.SaveMusicLevel(Constants.PpAudioLevelDefault);
             PlayerPrefsHelper.SaveVibrationEnabled(Constants.PpVibrationEnabledDefault);
             Init();
-            return result;
         }
     }
 }

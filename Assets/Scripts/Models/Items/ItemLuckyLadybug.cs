@@ -13,9 +13,9 @@ public class ItemLuckyLadybug : Item
         Cooldown = 14;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.AddedDodgeChancePercent += 33;
-        return base.Effect();
+        base.Effect();
     }
 }

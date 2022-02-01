@@ -220,6 +220,28 @@ public class Piece : FrameRateBehavior
         }
     }
 
+    public void RemoveLastBlock(Transform ghost, Realm realm, GameplayControler gameplayControler)
+    {
+        if (transform.childCount <= 1)
+            return;
+        Object.Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+        Object.Destroy(ghost.GetChild(ghost.childCount - 1).gameObject);
+        var dPieceRealmSprite = Resources.Load<GameObject>("Prefabs/D-" + realm.ToString() + "Ghost").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        foreach (Transform child in ghost)
+        {
+            if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+            {
+                spriteRenderer.sprite = dPieceRealmSprite;
+                spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+            }
+        }
+        //Done this way becaude the Destroy(Block) actually happens the next frame, resulting in a ghost higher than what it should be in some few cases.
+        Helper.InvokeNextFrame(() =>
+        {
+            gameplayControler.DropGhost();
+        });
+    }
+
     private bool AnyChildWithPosition(int x, int y)
     {
         foreach (Transform child in transform)

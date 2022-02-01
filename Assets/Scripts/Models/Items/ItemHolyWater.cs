@@ -13,10 +13,10 @@ public class ItemHolyWater : Item
         Cooldown = 6;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.CheckForWasteRows(4);
         _gameplayControler.ClearLineSpace();
-        return base.Effect();
+        base.Effect();
     }
 }

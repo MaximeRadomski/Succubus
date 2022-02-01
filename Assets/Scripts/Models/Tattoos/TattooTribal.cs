@@ -8,9 +8,9 @@ public class TattooTribal : Tattoo
     {
         Id = 0;
         Name = TattoosData.Tattoos[Id];
-        Stat = 10;
+        Stat = 15;
         Rarity = Rarity.Common;
-        MaxLevel = 5;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)

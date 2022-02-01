@@ -13,11 +13,11 @@ public class ItemDarkMilk : Item
         Cooldown = 13;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.CurrentOpponentChangedRealm = Helper.GetInferiorFrom(_character.Realm);
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).AlterOpponentRealm(Cache.CurrentOpponentChangedRealm);
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).OpponentInstanceBhv.Malus(Cache.CurrentOpponentChangedRealm, 2.0f);
-        return base.Effect();
+        base.Effect();
     }
 }

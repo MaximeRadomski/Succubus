@@ -13,10 +13,10 @@ public class ItemDemonBlood : Item
         Cooldown = 6;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.CheckForDarkRows(6);
         _gameplayControler.ClearLineSpace();
-        return base.Effect();
+        base.Effect();
     }
 }

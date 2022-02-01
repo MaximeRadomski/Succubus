@@ -156,7 +156,7 @@ public static class Cache
         ResetSelectedCharacterSpecialCooldown(character);
     }
 
-    public static void ResetSelectedCharacterSpecialCooldown(Character character)
+    public static void ResetSelectedCharacterSpecialCooldown(Character character, bool fromSpecial = false)
     {
         Character tmpChar = character;
         if (tmpChar == null)
@@ -168,7 +168,7 @@ public static class Cache
             SelectedCharacterSpecialCooldown *= 2;
         if (SelectedCharacterSpecialCooldown < 1)
             SelectedCharacterSpecialCooldown = 1;
-        if (tmpChar.InstantSpecial)
+        if (!fromSpecial && tmpChar.InstantSpecial)
             SelectedCharacterSpecialCooldown = 0;
     }
 

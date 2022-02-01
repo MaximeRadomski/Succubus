@@ -109,7 +109,7 @@ public class SettingsDisplaySceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;

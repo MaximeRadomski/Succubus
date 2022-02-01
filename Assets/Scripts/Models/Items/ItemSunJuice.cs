@@ -15,7 +15,7 @@ public class ItemSunJuice : Item
         Uses = 5;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         int nbRows = 8;
         int start = _gameplayControler.GetHighestBlock();
@@ -28,6 +28,6 @@ public class ItemSunJuice : Item
         }
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
-        return base.Effect();
+        base.Effect();
     }
 }

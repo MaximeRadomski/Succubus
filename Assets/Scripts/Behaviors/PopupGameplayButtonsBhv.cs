@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PopupGameplayButtonsBhv : PopupBhv
 {
-    private System.Func<bool, object> _resultAction;
+    private Action<bool> _resultAction;
 
-    public void Init(System.Func<bool, object> resultAction)
+    public void Init(Action<bool> resultAction)
     {
         _resultAction = resultAction;
 

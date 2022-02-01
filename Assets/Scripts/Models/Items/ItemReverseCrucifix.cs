@@ -12,12 +12,12 @@ public class ItemReverseCrucifix : Item
         Cooldown = 25;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         int damage = 666;
         if (_gameplayControler.SceneBhv.CurrentOpponent.Type == OpponentType.Boss)
             damage = 66;
         _gameplayControler.SceneBhv.DamageOpponent(damage, _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Hell);
-        return base.Effect();
+        base.Effect();
     }
 }

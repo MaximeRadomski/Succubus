@@ -62,7 +62,7 @@ public class FillTargetBhv : FrameRateBehavior
                 var tmpPiece = _gameplayControler.Instantiator.NewPiece("D", _characterRealm.ToString(), new Vector3(x, y, 0.0f));
                 _gameplayControler.AddToPlayField(tmpPiece);
                 ++_filledBlocksCount;
-                StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _isMovingBackToResetPosition = true; return true; }, lockInputWhile: false));
+                StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _isMovingBackToResetPosition = true; }, lockInputWhile: false));
             }
         }
         else if (_isMovingBackToResetPosition)

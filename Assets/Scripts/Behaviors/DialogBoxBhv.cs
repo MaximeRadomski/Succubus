@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,9 +46,9 @@ public class DialogBoxBhv : FrameRateBehavior
     private float _pictureY;
     private float _pictureYHeadDown;
 
-    private System.Func<bool> _resultAction;
+    private Action _resultAction;
 
-    public void Init(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, System.Func<bool> resultAction, int? customid = null, string customDialogLibelle = null)
+    public void Init(Vector3 position, string subjectName, string secondaryName, Realm secondaryRealm, Action resultAction, int? customid = null, string customDialogLibelle = null)
     {
         _resultAction = resultAction;
 

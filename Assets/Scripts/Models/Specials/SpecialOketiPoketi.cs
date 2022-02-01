@@ -22,24 +22,16 @@ public class SpecialOketiPoketi : Special
         base.OnNewPiece(piece);
         if (_nbPiece <= 0)
             return;
-        MonoBehaviour.Destroy(_gameplayControler.CurrentPiece.transform.GetChild(_gameplayControler.CurrentPiece.transform.childCount - 1).gameObject);
-        MonoBehaviour.Destroy(_gameplayControler.CurrentGhost.transform.GetChild(_gameplayControler.CurrentGhost.transform.childCount - 1).gameObject);
-        var dPieceRealmSprite = Resources.Load<GameObject>("Prefabs/D-" + _character.Realm.ToString() + "Ghost").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-        foreach (Transform child in _gameplayControler.CurrentGhost.transform)
-        {
-            if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
-            {
-                spriteRenderer.sprite = dPieceRealmSprite;
-                spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
-            }
-        }
-        for (int i = 0; i < _nbPiece - 1 && i < 5; ++i)
+        _gameplayControler.CurrentPiece.GetComponent<Piece>().RemoveLastBlock(_gameplayControler.CurrentGhost.transform, _character.Realm, _gameplayControler);
+        int maxPreview = 5 - _character.DevilsContractMalus;
+        for (int i = 0; i < _nbPiece - 1 && i < maxPreview; ++i)
         {
             var iteratedNextPieceContainerLastChildId = _gameplayControler.NextPieces[i].transform.childCount - 1;
+            if (iteratedNextPieceContainerLastChildId <= 1)
+                continue;
             var iteratedNextPieceChildCount = _gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).childCount;
-            MonoBehaviour.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).GetChild(iteratedNextPieceChildCount - 1).gameObject);
+            Object.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).GetChild(iteratedNextPieceChildCount - 1).gameObject);
         }
-        _gameplayControler.DropGhost();
     }
 
     public override void OnPieceLocked(GameObject piece)

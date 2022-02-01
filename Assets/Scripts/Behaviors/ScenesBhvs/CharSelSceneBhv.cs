@@ -118,7 +118,7 @@ public class CharSelSceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -132,7 +132,7 @@ public class CharSelSceneBhv : SceneBhv
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
         else
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             var scene = "";
             if (Cache.CurrentGameMode == GameMode.TrainingFree)

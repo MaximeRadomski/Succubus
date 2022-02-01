@@ -148,7 +148,7 @@ public class DifficultySceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -168,7 +168,7 @@ public class DifficultySceneBhv : SceneBhv
         }
         PlayerPrefsHelper.SaveRun(run);
         Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             return true;

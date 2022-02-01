@@ -13,9 +13,9 @@ public class ItemWoodenCross : Item
         Cooldown = 10;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.SetGravity(1);
-        return base.Effect();
+        base.Effect();
     }
 }

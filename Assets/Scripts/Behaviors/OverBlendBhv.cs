@@ -11,7 +11,7 @@ public class OverBlendBhv : FrameRateBehavior
     private SpriteRenderer _spriteRenderer;
     private AudioSource _audioSource;
     private TMPro.TextMeshPro _message;
-    private System.Func<bool, object> _resultAction;
+    private System.Func<bool, bool> _resultAction;
 
     private OverBlendType _overBlendType;
     private Vector3 _sourcePosition;
@@ -23,7 +23,7 @@ public class OverBlendBhv : FrameRateBehavior
     private bool _midActionDone;
     private Camera _mainCamera;
 
-    public void SetPrivates(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, object> resultAction, bool reverse)
+    public void Init(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, bool> resultAction, bool reverse)
     {
         Cache.InputLocked = true;
         DontDestroyOnLoad(gameObject);

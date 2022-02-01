@@ -20,7 +20,7 @@ public abstract class Special
     {
         if (Cache.SelectedCharacterSpecialCooldown > 0)
             return false;
-        Cache.ResetSelectedCharacterSpecialCooldown(_character);
+        Cache.ResetSelectedCharacterSpecialCooldown(_character, fromSpecial: true);
         if (Cache.TemporaryCharacter != null)
             _gameplayControler.Instantiator.PopText(Cache.TemporaryCharacter.SpecialName.ToLower(), new Vector2(4.5f, 17.4f));
         else

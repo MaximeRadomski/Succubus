@@ -13,10 +13,10 @@ public class ItemD6 : Item
         Cooldown = 8;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.RandomizedAttackType = (AttackType)Random.Range(1, Helper.EnumCount<AttackType>());
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).RandomizeOpponentAttack();
-        return base.Effect();
+        base.Effect();
     }
 }

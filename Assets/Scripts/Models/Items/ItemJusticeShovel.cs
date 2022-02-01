@@ -13,12 +13,12 @@ public class ItemJusticeShovel : Item
         Cooldown = 14;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         var leftColumnId = Random.Range(0, 8);
         _gameplayControler.DeleteColumn(leftColumnId);
         _gameplayControler.DeleteColumn(leftColumnId + 1);
         _gameplayControler.DropGhost();
-        return base.Effect();
+        base.Effect();
     }
 }

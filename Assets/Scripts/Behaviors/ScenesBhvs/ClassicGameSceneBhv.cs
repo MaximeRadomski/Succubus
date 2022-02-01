@@ -185,7 +185,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Cache.PactEnemyMaxCooldownMalus -= 2;
     }
 
-    private bool AfterFightIntro()
+    private void AfterFightIntro()
     {
         if (!Character.SlumberingDragoncrest && !Cache.PactStealth && (CurrentOpponent.Haste || Character.HasteForAll || Cache.PactOnlyHaste))
             Instantiator.PopText("haste", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
@@ -194,7 +194,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         OpponentAppearance();
         if (_pacts != null && _pacts.Count > 0)
             Instantiator.PopText($"{_pacts.Count} active pact{(_pacts.Count > 1 ? "s" : "")}", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
-        return true;
     }
 
     private void OpponentAppearance(float customY = 9.0f)
@@ -212,11 +211,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else
             Appearance();
 
-        bool Appearance()
+        void Appearance()
         {
             _gameplayControler.GameplayOnHold = false;
             Instantiator.PopText(CurrentOpponent.Name.ToLower() + " appears!", new Vector2(4.5f, customY));
-            return true;
         }
     }
 
@@ -232,10 +230,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 _gameplayControler.GameplayOnHold = true;
                 Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
                 {
-                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
                     Victory();
                     ResetAndCleanCache();
-                    return true;
                 });
             }
             else
@@ -381,11 +378,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (loot?.LootType == LootType.Character)
         {
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, Character.StartingRealm, AfterCharacterDialog);
-            bool AfterCharacterDialog() {
-                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+            void AfterCharacterDialog() {
+                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
                 _musicControler.Play(Constants.VictoryAudioClip, once: true);
-                Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);
-                return true;}
+                Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);}
         }
         else if (loot?.LootType == LootType.Item)
         {
@@ -411,7 +407,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 var content = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "switch your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " for " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Item)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "?";
                 Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite, defaultPositive: true);
-                object OnItemSwitch(bool result)
+                void OnItemSwitch(bool result)
                 {
                     if (result)
                     {
@@ -421,7 +417,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         PlayerPrefsHelper.SaveRun(Run);
                     }
                     LoadBackAfterVictory(true);
-                    return result;
                 }
             }
         }
@@ -481,12 +476,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LoadBackAfterVictory, sprite);
             else
                 Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
-            object OnPactSign(bool result)
+            void OnPactSign(bool result)
             {
                 if (result)
                     PlayerPrefsHelper.AddPact(((Pact)loot).Name);
                 LoadBackAfterVictory(true);
-                return result;
             }
         }
         else
@@ -497,7 +491,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         return true;
     }
 
-    private object LoadBackAfterVictory(bool result)
+    private void LoadBackAfterVictory(bool result)
     {
         if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
@@ -524,29 +518,29 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
-                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
                     var content = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you now start your ascensions with a random item.\n(up to a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Rarity)realmIdBeforeIncrease).ToString().ToLower()}{Constants.MaterialEnd} one).";
                     Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", CheckForSkin);
                 }
                 else
                 {
-                    return (bool)CheckForSkin(true);
+                    CheckForSkin(true);
+                    return;
                 }
 
-                object CheckForSkin(bool result)
+                void CheckForSkin(bool result)
                 {
                     if (hasUnlockedSkin)
                     {
-                        StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+                        StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
                         var skinContent = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you unlocked a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}new skin{Constants.MaterialEnd} on {Character.Name.ToLower()}.";
                         Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", skinContent, null, "Neat!", LoadNextAfterBoss);
                     }
                     else
-                        return LoadNextAfterBoss(true);
-                    return false;
+                        LoadNextAfterBoss(true);
                 }
                 
-                object LoadNextAfterBoss(bool result)
+                void LoadNextAfterBoss(bool result)
                 {
                     if (Run.CurrentRealm == Realm.End)
                     {
@@ -557,13 +551,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         Cache.GameOverParams = $"{Character.Name}|{Run.CurrentRealm - 1}|3|{Constants.EndScene}";
                         PlayerPrefsHelper.EndlessRun(Run);
                         NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.End.GetHashCode(), StringParam0 = Constants.EndScene });
-                        return false;
+                        return;
                     }
                     if (!PlayerPrefsHelper.IsCinematicWatched(Run.CurrentRealm.GetHashCode()))
                         NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
                     else
                         NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
-                    return true;
                 }
             }
             else
@@ -572,7 +565,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             
         }
-        return result;
     }
 
     private void StartOpponentCooldown(bool sceneInit = false, bool first = false)
@@ -631,7 +623,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         _opponentOnCooldown = false;
         _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
-        StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () => { _gameplayControler.AttackIncoming = true; return true; }, lockInputWhile: false));
+        StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () => { _gameplayControler.AttackIncoming = true; }, lockInputWhile: false));
     }
 
     public void StopTime(int seconds)

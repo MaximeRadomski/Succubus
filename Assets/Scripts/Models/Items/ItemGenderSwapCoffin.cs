@@ -13,7 +13,7 @@ public class ItemGenderSwapCoffin : Item
         Cooldown = 10;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.PactFlatDamage += 2;
         var id = Random.Range(0, 13);
@@ -23,6 +23,6 @@ public class ItemGenderSwapCoffin : Item
         else
             tmpChar = CharactersData.Characters[id];
         _gameplayControler.SceneBhv.TemporaryCharacter(tmpChar);        
-        return base.Effect();
+        base.Effect();
     }
 }

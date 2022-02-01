@@ -13,13 +13,13 @@ public class ItemAtlasEffigy : Item
         Cooldown = 16;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         var oldAttack = _character.GetAttackNoBoost();
         _character.BoostAttack += (Mathf.RoundToInt(oldAttack * 0.5f));
 
         _gameplayControler.ShrinkPlayHeight(5);
         _gameplayControler.CharacterInstanceBhv.Boost(_character.Realm, 2.0f);
-        return base.Effect();
+        base.Effect();
     }
 }

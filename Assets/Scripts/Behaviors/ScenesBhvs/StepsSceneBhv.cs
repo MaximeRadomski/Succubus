@@ -156,7 +156,6 @@ public class StepsSceneBhv : SceneBhv
 #if !UNITY_ANDROID
             _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
 #endif
-            return true;
         }));
         _playButton.SetActive(_selectedStep.LootType != LootType.None);
         var rarity = Rarity.Common;
@@ -264,7 +263,7 @@ public class StepsSceneBhv : SceneBhv
         _pauseMenu = Instantiator.NewPauseMenu(ResumeGiveUp);
     }
 
-    private object ResumeGiveUp(bool resume)
+    private void ResumeGiveUp(bool resume)
     {
         _musicControler.SetNewVolumeLevel();
         if (resume)
@@ -273,20 +272,19 @@ public class StepsSceneBhv : SceneBhv
             CameraBhv.Paused = false;
             Cache.NameLastScene = SceneManager.GetActiveScene().name;
             Destroy(_pauseMenu);
-            return true;
+            return;
         }
         _pauseMenu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         CameraBhv.transform.position = new Vector3(0.0f, 0.0f, CameraBhv.transform.position.z);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
         if (GameObject.Find("PlayField") != null)
             Destroy(GameObject.Find("PlayField"));
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             PlayerPrefsHelper.SaveIsInFight(false);
             NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return false;
         }
-        return false;
     }
 
     private void Info()
@@ -317,17 +315,17 @@ public class StepsSceneBhv : SceneBhv
                 OffersWarp();
         }
 
-        bool OffersWarp()
+        void OffersWarp()
         {
-            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
             Instantiator.NewPopupYesNo("Realm Warp", "the beholder offers you to warp to the next realm. do you accept?", "No", "Yes", OnWarp);
-            return true;
+            return;
         }
 
-        object OnWarp(bool result)
+        void OnWarp(bool result)
         {
             if (!result)
-                return false;
+                return;
 
             _run.RealmLevel = 2;
             _run.IncreaseLevel();
@@ -338,7 +336,6 @@ public class StepsSceneBhv : SceneBhv
                 ++_run.DeathScytheAscension;
             PlayerPrefsHelper.SaveRun(_run);
             NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
-            return true;
         }
     }
 
@@ -349,7 +346,7 @@ public class StepsSceneBhv : SceneBhv
             Instantiator.NewPopupYesNo("Landlord Vision", "this area is under landlord vision! are you willing to continue?", "No", "Yes", OnLandLordVisionStep);
             return;
         }
-        object OnLandLordVisionStep(bool result)
+        void OnLandLordVisionStep(bool result)
         {
             if (result)
             {
@@ -359,11 +356,11 @@ public class StepsSceneBhv : SceneBhv
                 if (!alreadyDialog.Contains(dialogLibelle))
                 {
                     PlayerPrefsHelper.AddToAlreadyDialog(dialogLibelle);
-                    Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, _character.StartingRealm, () => { ResetGotoStep(); return true; });
+                    Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, _stepsService.GetBoss(_run)[0].Name, _character.Name, _character.StartingRealm, () => { ResetGotoStep(); });
                 }
                 else
                     ResetGotoStep();
-                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { _inputControler.InitMenuKeyboardInputs(); return true; }));
+                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { _inputControler.InitMenuKeyboardInputs(); }));
             }
 
             void ResetGotoStep()
@@ -373,8 +370,6 @@ public class StepsSceneBhv : SceneBhv
 #endif
                 GoToStep();
             }
-
-            return result;
         }
 
         _run.X = _selectedStep.X;

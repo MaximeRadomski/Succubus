@@ -119,7 +119,7 @@ public class LoreSceneBhv : SceneBhv
     {
         PlayerPrefsHelper.SaveWatchedCinematics(_cinematicId);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             if (NavigationService.Path.Contains(Constants.StepsAscensionScene))
                 NavigationService.LoadBackUntil(NavigationService.SceneParameter?.StringParam0 ?? Constants.StepsAscensionScene);

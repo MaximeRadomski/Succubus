@@ -13,11 +13,11 @@ public class ItemTheDevil : Item
         Cooldown = 8;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         for (int i = 0; i < 5; ++i)
             _gameplayControler.Bag = _gameplayControler.Bag.ReplaceChar(i, _gameplayControler.CurrentPiece.GetComponent<Piece>().Letter[0]);
         _gameplayControler.UpdateNextPieces();
-        return base.Effect();
+        base.Effect();
     }
 }

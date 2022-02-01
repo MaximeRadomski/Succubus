@@ -45,7 +45,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToAudioSettings()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsAudioScene);
             return true;
@@ -55,7 +55,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToGameplaySettings()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsGameplayScene);
             return true;
@@ -65,7 +65,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToInputsSettings()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsInputsScene);
             return true;
@@ -75,7 +75,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToDisplaySettings()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsDisplayScene);
             return true;
@@ -85,7 +85,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToHowToPlay()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsHowToPlay);
             return true;
@@ -95,7 +95,7 @@ public class SettingsSceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;

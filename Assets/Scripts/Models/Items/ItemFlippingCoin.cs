@@ -13,9 +13,9 @@ public class ItemFlippingCoin : Item
         Cooldown = 10;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.ChanceAttacksHappeningPercent = 50;
-        return base.Effect();
+        base.Effect();
     }
 }

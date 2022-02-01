@@ -145,7 +145,7 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse:true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -155,15 +155,14 @@ public class SettingsGameplaySceneBhv : SceneBhv
     private void ResetDefault()
     {
         Instantiator.NewPopupYesNo("Default", "are you willing to restore the default settings ?", "Nope", "Yup", OnDefault);
-        object OnDefault(bool result)
+        void OnDefault(bool result)
         {
             if (!result)
-                return result;
+                return;
             PlayerPrefsHelper.SaveGhostColor(Constants.PpGhostPieceColorDefault);
             PlayerPrefsHelper.SaveDas(Constants.PpDasDefault);
             PlayerPrefsHelper.SaveArr(Constants.PpArrDefault);
             Init();
-            return result;
         }
     }
 }

@@ -21,9 +21,9 @@ public class AttackLineBhv : FrameRateBehavior
     private bool _resetPopping;
     private bool _linear;
 
-    private Func<object> _onPop;
+    private Action _onPop;
 
-    public void Init(Vector3 source, Vector3 target, Realm realm, Instantiator instantiator, bool linear, Sprite sprite, Func<object> onPop)
+    public void Init(Vector3 source, Vector3 target, Realm realm, Instantiator instantiator, bool linear, Sprite sprite, Action onPop)
     {
         _target = target;
         transform.position = source + new Vector3(0.0f, -2.0f, 0.0f);

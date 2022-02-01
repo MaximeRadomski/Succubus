@@ -15,10 +15,10 @@ public class ItemBloodlustBlade : Item
         Cooldown = 2;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.SceneBhv.DamageOpponent(_times * _character.GetAttack(), _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Hell);
         _gameplayControler.ShrinkPlayHeight(2);
-        return base.Effect();
+        base.Effect();
     }
 }

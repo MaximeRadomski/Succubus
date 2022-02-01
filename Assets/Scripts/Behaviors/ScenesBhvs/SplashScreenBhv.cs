@@ -126,7 +126,6 @@ public class SplashScreenBhv : SceneBhv
             Instantiator.NewPopupYesNo("New Data Management", "your previous installation had outdated data management. your data have been reset to its default values.", null, "Ok", (result) =>
             {
                 CheckLastUpdatedVersion();
-                return true;
             });
             return false;
         }
@@ -149,9 +148,8 @@ public class SplashScreenBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Update", "a new update is available!\nredirecting to download page?", "Not now", "Sure", (goOnline) =>
                 {
                     if (!goOnline)
-                        return false;
+                        return;
                     Application.OpenURL("https://abject.itch.io/infidhells/");
-                    return true;
                 });
             }
         });
@@ -167,7 +165,7 @@ public class SplashScreenBhv : SceneBhv
     private void GoToMainMenu()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.NewRootScene(Constants.MainMenuScene);
             return true;

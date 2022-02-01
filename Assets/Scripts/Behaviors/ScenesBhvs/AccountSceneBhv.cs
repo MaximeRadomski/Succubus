@@ -191,11 +191,10 @@ public class AccountSceneBhv : SceneBhv
                 Instantiator.NewPopupYesNo("Error", $"incorrect password.", "Forgot?", "Ok", (result) =>
                 {
                     if (result)
-                        return true;
+                        return;
                     _tmpUser = account;
                     GameObject.Find("SecurityQuestionRecovery").GetComponent<TMPro.TextMeshPro>().text = _tmpUser.SecretQuestion.ToLower();
                     ShowPanel(2);
-                    return false;
                 });
                 return;
             }
@@ -207,7 +206,6 @@ public class AccountSceneBhv : SceneBhv
                     GameObject.Find("PlayerNamePseudo").GetComponent<TMPro.TextMeshPro>().text = account.PlayerName;
                     _tmpUser = account;
                     ShowPanel(4);
-                    return true;
                 });
             }
         });
@@ -292,12 +290,11 @@ public class AccountSceneBhv : SceneBhv
         this.Instantiator.NewPopupYesNo("Upload", content, "No", "Yes", (result) =>
         {
             if (!result)
-                return false;
+                return;
             ProgressionService.PutProgression(progression, _tmpUser.PlayerName, () =>
             {
                 
             });
-            return result;
         });
     }
 
@@ -309,7 +306,7 @@ public class AccountSceneBhv : SceneBhv
             {
                 this.Instantiator.NewPopupYesNo("Error", "you currently have no progress saved online.", null, "Ok", (result) =>
                 {
-                    return result;
+                    return;
                 });
                 return;
             }
@@ -326,9 +323,8 @@ public class AccountSceneBhv : SceneBhv
             this.Instantiator.NewPopupYesNo("Download", content, "No", "Yes", (result) =>
             {
                 if (!result)
-                    return false;
+                    return;
                 ProgressionService.ApplyProgression(progression);
-                return result;
             });
         });
     }
@@ -336,7 +332,7 @@ public class AccountSceneBhv : SceneBhv
     private object GoToPrevious(bool result)
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;

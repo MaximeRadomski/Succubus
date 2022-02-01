@@ -261,12 +261,12 @@ public static class Helper
         return number + suffix;
     }
 
-    public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func, bool lockInputWhile = true)
+    public static IEnumerator ExecuteAfterDelay(float delay, Action action, bool lockInputWhile = true)
     {
         if (lockInputWhile)
             Cache.InputLocked = true;
         yield return new WaitForSeconds(delay);
-        func.Invoke();
+        action();
         if (lockInputWhile)
             Cache.InputLocked = false;
     }
@@ -634,6 +634,17 @@ public static class Helper
             unlockedSkinsString = unlockedSkinsString.ReplaceChar(id, '1');
             PlayerPrefsHelper.SaveUnlockedSkins(unlockedSkinsString);
             return true;
+        }
+    }
+
+    public  static void InvokeNextFrame(Action action)
+    {
+        Coroutine(action);
+
+        IEnumerator Coroutine(Action action)
+        {
+            yield return null;
+            action();
         }
     }
 }

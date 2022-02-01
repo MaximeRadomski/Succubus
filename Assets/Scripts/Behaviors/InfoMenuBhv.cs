@@ -6,7 +6,7 @@ using UnityEngine;
 public class InfoMenuBhv : PopupBhv
 {
     private Camera _mainCamera;
-    private System.Func<bool, object> _resumeAction;
+    private Action<bool> _resumeAction;
     private Instantiator _instantiator;
     private bool _isHorizontal;
     private GameObject _characterFrame;
@@ -24,7 +24,7 @@ public class InfoMenuBhv : PopupBhv
     private float _buttonOnY;
     private float _buttonOffY;
 
-    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, Character character, Opponent opponent, bool isHorizontal)
+    public void Init(Instantiator instantiator, Action<bool> resumeAction, Character character, Opponent opponent, bool isHorizontal)
     {
         _run = PlayerPrefsHelper.GetRun();
         _currentRealm = Realm.Hell;

@@ -1,16 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PopupYesNoBhv : PopupBhv
 {
-    private System.Func<bool, object> _resultAction;
+    private Action<bool> _resultAction;
     private ButtonBhv _buttonPositive;
     private ButtonBhv _buttonNegative;
 
     public void Init(string title, string content, string negative, string positive,
-        System.Func<bool, object> resultAction, Sprite sprite = null, bool defaultPositive = false)
+        Action<bool> resultAction, Sprite sprite = null, bool defaultPositive = false)
     {
         //transform.position = Camera.main.transform.position;
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = title;

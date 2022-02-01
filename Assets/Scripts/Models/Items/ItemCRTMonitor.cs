@@ -13,7 +13,7 @@ public class ItemCRTMonitor : Item
         Cooldown = 16;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.GameplayOnHold = true;
         for (int i = 0; i < Constants.PlayFieldHeight; i += 2)
@@ -22,8 +22,7 @@ public class ItemCRTMonitor : Item
         {
             _gameplayControler.ClearLineSpace();
             _gameplayControler.GameplayOnHold = false;
-            return true;
         }));
-        return base.Effect();
+        base.Effect();
     }
 }

@@ -12,7 +12,7 @@ public class ItemHolyGrenade : Item
         Cooldown = 40;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         int end = _gameplayControler.GetHighestBlock();
         for (int y = Cache.PlayFieldMinHeight; y <= end; ++y)
@@ -24,6 +24,6 @@ public class ItemHolyGrenade : Item
         _gameplayControler.CheckForLineBreaks();
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
-        return base.Effect();
+        base.Effect();
     }
 }

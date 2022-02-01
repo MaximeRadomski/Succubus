@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,11 +20,11 @@ public class FightIntroBhv : FrameRateBehavior
     private int _pelliculeMove;
     private bool _horizontal;
 
-    private System.Func<bool> _resultAction;
+    private Action _resultAction;
 
     private MusicControlerBhv _musicControler;
 
-    public void Init(Character character, List<Opponent> opponents, System.Func<bool> resultAction)
+    public void Init(Character character, List<Opponent> opponents, Action resultAction)
     {
         _resultAction = resultAction;
         _pelliculeTop = transform.Find("PelliculeTop");

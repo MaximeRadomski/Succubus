@@ -13,7 +13,7 @@ public class ItemSmokeBomb : Item
         Cooldown = 18;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         var stepsService = new StepsService();
         var run = PlayerPrefsHelper.GetRun();
@@ -28,6 +28,6 @@ public class ItemSmokeBomb : Item
         PlayerPrefsHelper.SaveRun(run);
         _gameplayControler.CleanPlayerPrefs();
         NavigationService.LoadBackUntil(Constants.StepsScene);
-        return base.Effect();
+        base.Effect();
     }
 }

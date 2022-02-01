@@ -121,15 +121,14 @@ public class TreeSceneBhv : SceneBhv
             description += price;
         Instantiator.NewPopupYesNo(node.Title, description, negative, positive, OnSelectedNode);
 
-        object OnSelectedNode(bool result)
+        void OnSelectedNode(bool result)
         {
             if (!result || !canBuy)
-                return false;
+                return;
             PlayerPrefsHelper.AlterResource(node.Realm.GetHashCode(), -node.Price);
             PlayerPrefsHelper.AddBoughtTreeNode(node.Name, node.Type);
             UpdateResources();
             UpdateTreeNodes();
-            return true;
         }
     }
 
@@ -156,10 +155,10 @@ public class TreeSceneBhv : SceneBhv
         }
         Instantiator.NewPopupYesNo("Reset Realm Tree", $"would you like to reset the realm tree?{price}", negative, positive, OnResetedNode);
 
-        object OnResetedNode(bool result)
+        void OnResetedNode(bool result)
         {
             if (!result || !canBuy)
-                return false;
+                return;
             foreach (var node in _treeNodes)
             {
                 if (node.Bought)
@@ -171,14 +170,13 @@ public class TreeSceneBhv : SceneBhv
             PlayerPrefsHelper.ResetBoughtTreeNodes();
             UpdateResources();
             UpdateTreeNodes();
-            return true;
         }
     }
 
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -188,7 +186,7 @@ public class TreeSceneBhv : SceneBhv
     private void Play()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.CharSelScene);
             return true;

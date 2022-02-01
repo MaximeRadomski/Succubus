@@ -13,13 +13,13 @@ public class ItemCreepingTotem : Item
         Cooldown = 6;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         if (_character.DiamondBlocks > 0 && Cache.CanceledDiamondBlocks < _character.DiamondBlocks)
         {
             ++Cache.CanceledDiamondBlocks;
             _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), null, Realm.Earth);
-            return base.Effect();
+            base.Effect();
         }
         var highestX = -1;
         var highestY = Cache.PlayFieldMinHeight - 1;
@@ -51,7 +51,7 @@ public class ItemCreepingTotem : Item
             DestroyBlock(selectedX + 1, centerY);
         }
         _gameplayControler.SceneBhv.DamageOpponent(4 * _character.GetAttack(), null, Realm.Earth);
-        return base.Effect();
+        base.Effect();
     }
 
     private void DestroyBlock(int roundedX, int roundedY)

@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PauseMenuBhv : PopupBhv
 {
-    private System.Func<bool, object> _resumeAction;
+    private Action<bool> _resumeAction;
     private Instantiator _instantiator;
     private bool _isHorizontal;
     private Camera _mainCamera;
 
-    public void Init(Instantiator instantiator, System.Func<bool, object> resumeAction, GameSceneBhv callingScene, bool isHorizontal)
+    public void Init(Instantiator instantiator, Action<bool> resumeAction, GameSceneBhv callingScene, bool isHorizontal)
     {
         _instantiator = instantiator;
         _resumeAction = resumeAction;
@@ -95,7 +96,7 @@ public class PauseMenuBhv : PopupBhv
         transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         _mainCamera.transform.position = new Vector3(0.0f, 0.0f, _mainCamera.transform.position.z);
         _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsScene);
             return true;
@@ -106,13 +107,12 @@ public class PauseMenuBhv : PopupBhv
     {
         _instantiator.NewPopupYesNo("Wait!", "do you really want to give up ?", "No", "Yes", OnGiveUp);
 
-        object OnGiveUp(bool result)
+        void OnGiveUp(bool result)
         {
             if (!result)
-                return result;
+                return;
             Cache.DecreaseInputLayer();
             _resumeAction.Invoke(false);
-            return result;
         }
     }
 

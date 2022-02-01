@@ -13,9 +13,9 @@ public class ItemEliacube : Item
         Cooldown = 7;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).RestartOpponentCooldown();
-        return base.Effect();
+        base.Effect();
     }
 }

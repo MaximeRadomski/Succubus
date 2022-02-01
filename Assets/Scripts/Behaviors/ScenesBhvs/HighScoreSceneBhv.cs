@@ -202,7 +202,7 @@ public class HighScoreSceneBhv : SceneBhv
         {
             Cache.CurrentHighScoreContext = null;
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-            object OnBlend(bool result)
+            bool OnBlend(bool result)
             {
                 NavigationService.LoadNextScene(Constants.OnlineScoreScene, new NavigationParameter() { BoolParam0 = _isOldSchool });
                 return true;
@@ -214,7 +214,7 @@ public class HighScoreSceneBhv : SceneBhv
     {
         Cache.CurrentHighScoreContext = null;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadBackUntil(Constants.TrainingChoiceScene);
             return true;

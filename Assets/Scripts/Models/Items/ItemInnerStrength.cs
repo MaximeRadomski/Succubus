@@ -15,13 +15,13 @@ public class ItemInnerStrength : Item
 
     private int _oldAttack;
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _oldAttack = _character.GetAttackNoBoost();
         _character.BoostAttack += (_oldAttack * 3);
         _gameplayControler.CharacterInstanceBhv.Boost(_character.Realm, 4.0f);
         Task.Delay(4000).ContinueWith(t => AfterDelay());
-        return base.Effect();
+        base.Effect();
     }
 
     private void AfterDelay()

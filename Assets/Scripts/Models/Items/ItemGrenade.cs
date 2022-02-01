@@ -13,7 +13,7 @@ public class ItemGrenade : Item
         Cooldown = 10;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         int nbRows = 4;
         int start = _gameplayControler.GetHighestBlock();
@@ -26,6 +26,6 @@ public class ItemGrenade : Item
         }
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
-        return base.Effect();
+        base.Effect();
     }
 }

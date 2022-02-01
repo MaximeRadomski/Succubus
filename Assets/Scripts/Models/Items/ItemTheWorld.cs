@@ -13,10 +13,10 @@ public class ItemTheWorld : Item
         Cooldown = 8;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.Instantiator.PopText("toki yo tomare!", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).StopTime(9);
-        return base.Effect();
+        base.Effect();
     }
 }

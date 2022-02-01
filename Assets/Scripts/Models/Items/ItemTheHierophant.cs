@@ -13,10 +13,10 @@ public class ItemTheHierophant : Item
         Cooldown = 8;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.BonusLockDelay += 2.0f;
         _gameplayControler.SetLockDelay();
-        return base.Effect();
+        base.Effect();
     }
 }

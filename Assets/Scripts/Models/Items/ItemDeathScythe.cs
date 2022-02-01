@@ -36,7 +36,7 @@ public class ItemDeathScythe : Item
         return $"{Highlight($"{favor}%")} chance of killing your opponent, {Highlight($"{unfavor}%")} chance of killing you. switches {percentBonus}% in your favor each time you ascend.\nbreaks on use.";
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         GetFavorUnfavor();
         var result = Random.Range(0, 100);
@@ -47,6 +47,6 @@ public class ItemDeathScythe : Item
         PlayerPrefsHelper.ResetCurrentItem();
         _gameplayControler.CharacterItem = PlayerPrefsHelper.GetCurrentItem();
         _gameplayControler.UpdateItemAndSpecialVisuals();
-        return base.Effect();
+        base.Effect();
     }
 }

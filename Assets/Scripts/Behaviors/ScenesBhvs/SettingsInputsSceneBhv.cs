@@ -227,11 +227,11 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void SetKeyBinding(int id)
     {
-        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; return true; }));
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; }));
         Cache.EscapeLocked = true;
         _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
 
-        object OnSetKey(bool result)
+        void OnSetKey(bool result)
         {
             if (result)
             {
@@ -243,7 +243,6 @@ public class SettingsInputsSceneBhv : SceneBhv
             }
             _listeningKeeBindingId = -1;
             Invoke(nameof(UnlockEscape), 0.25f);
-            return result;
         }
     }
 
@@ -329,13 +328,12 @@ public class SettingsInputsSceneBhv : SceneBhv
         var addButton = GameObject.Find(Cache.LastEndActionClickedName);
         var buttonId = int.Parse(addButton.gameObject.name.Substring(addButton.gameObject.name.Length - 2, 2));
         Instantiator.NewPopupGameplayButtons(AfterPopup);
-        object AfterPopup(bool result)
+        void AfterPopup(bool result)
         {
             if (!result)
-                return result;
+                return;
             var gameplayButtonName = Cache.LastEndActionClickedName;
             SetGameplayButton(addButton, buttonId, gameplayButtonName);
-            return result;
         }
     }
 
@@ -478,7 +476,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         else
         {
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-            object OnBlend(bool result)
+            bool OnBlend(bool result)
             {
                 NavigationService.LoadPreviousScene();
                 return true;
@@ -489,10 +487,10 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void ResetDefault()
     {
         Instantiator.NewPopupYesNo("Default", "are you willing to restore the default settings ?", "Nope", "Yup", OnDefault);
-        object OnDefault(bool result)
+        void OnDefault(bool result)
         {
             if (!result)
-                return result;
+                return;
             PlayerPrefsHelper.SaveGhostColor(Constants.PpGhostPieceColorDefault);
             PlayerPrefsHelper.SaveGameplayChoice(Constants.PpGameplayChoiceDefault);
             PlayerPrefsHelper.SaveButtonsLeftPanel(Constants.PpButtonsLeftPanelDefault);
@@ -505,7 +503,6 @@ public class SettingsInputsSceneBhv : SceneBhv
             PanelButtonsVisibility(_panelLeft, _gameplayButtons);
             PanelButtonsVisibility(_panelRight, _gameplayButtons);
             Init();
-            return result;
         }
     }
 }

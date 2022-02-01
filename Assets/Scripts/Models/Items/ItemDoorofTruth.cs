@@ -15,12 +15,12 @@ public class ItemDoorofTruth : Item
         Uses = 1;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.TruthResurrection = 3;
         PlayerPrefsHelper.ResetCurrentItem();
         _gameplayControler.CharacterItem = PlayerPrefsHelper.GetCurrentItem();
         _gameplayControler.UpdateItemAndSpecialVisuals();
-        return base.Effect();
+        base.Effect();
     }
 }

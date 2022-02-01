@@ -7,9 +7,9 @@ public class TattooHeavyWeight : Tattoo
     {
         Id = 23;
         Name = TattoosData.Tattoos[Id];
-        Stat = 20;
+        Stat = 25;
         Rarity = Rarity.Legendary;
-        MaxLevel = 5;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)

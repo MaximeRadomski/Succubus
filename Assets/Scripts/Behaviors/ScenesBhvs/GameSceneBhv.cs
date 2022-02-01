@@ -71,7 +71,7 @@ public abstract class GameSceneBhv : SceneBhv
         _pauseMenu = Instantiator.NewInfoMenu(ResumeGiveUp, Character, CurrentOpponent, PlayerPrefsHelper.GetOrientation() == Direction.Horizontal && PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons);
     }
 
-    private object ResumeGiveUp(bool resume)
+    private void ResumeGiveUp(bool resume)
     {
         _musicControler.SetNewVolumeLevel();
         CameraBhv.Paused = false;
@@ -91,14 +91,14 @@ public abstract class GameSceneBhv : SceneBhv
                     if (rhythmIndicator != null)
                         rhythmIndicator.UnpauseBeat();
                 });
-            return true;
+            return;
         }
         _pauseMenu.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         CameraBhv.transform.position = new Vector3(0.0f, 0.0f, CameraBhv.transform.position.z);
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, true);
         if (GameObject.Find("PlayField") != null)
             Destroy(GameObject.Find("PlayField"));
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
@@ -118,7 +118,6 @@ public abstract class GameSceneBhv : SceneBhv
             }                
             return false;
         }
-        return false;
     }
 
     public virtual void OnNewPiece(GameObject lastPiece)

@@ -13,7 +13,7 @@ public class ItemMaskofDuality : Item
         Cooldown = 6;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         var random = Random.Range(0, 2);
         if (random == 0)
@@ -23,6 +23,6 @@ public class ItemMaskofDuality : Item
             _gameplayControler.AttackWasteRows(_gameplayControler.CharacterInstanceBhv.gameObject, 4, Realm.Hell, 1, fromPlayer: true);
             _gameplayControler.DropGhost();
         }
-        return base.Effect();
+        base.Effect();
     }
 }

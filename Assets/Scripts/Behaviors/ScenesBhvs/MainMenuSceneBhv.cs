@@ -32,7 +32,6 @@ public class MainMenuSceneBhv : SceneBhv
             {
                 Cache.InAHurryPopup = true;
                 Instantiator.NewPopupYesNo("In a hurry?", "you've force-quit during a fight. you can continue your current fight, but your opponent will be buffed a bit in order to prevent any abuses.", null, "Damn...", null);
-                return false;
             }));
         }
         GameObject.Find("Version").GetComponent<TMPro.TextMeshPro>().text = $"abject\n{Application.version.ToString().ToLower()}";
@@ -64,7 +63,7 @@ public class MainMenuSceneBhv : SceneBhv
     {
         if (_currentRun != null && _currentRun.Endless > 0)
         {
-            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); return true; }));
+            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
             this.Instantiator.NewPopupYesNo("Ascension", $"would you like to continue your endless ascension, or to start a new one?\n\ndifficulty: {(_currentRun.Difficulty - 1).ToString().ToLower()} -}} {_currentRun.Difficulty.ToString().ToLower()}", "New", "Continue", (result) =>
             {
                 if (!result)
@@ -73,7 +72,6 @@ public class MainMenuSceneBhv : SceneBhv
                     PlayerPrefsHelper.ResetRun();
                 }
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-                return result;
             });
         }
         else
@@ -84,14 +82,13 @@ public class MainMenuSceneBhv : SceneBhv
                 {
                     PlayerPrefsHelper.SaveRhythmAttacksPopupSeen(true);
                     Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-                    return result;
                 });
             }
             else
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         }
 
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             Cache.CurrentGameMode = GameMode.Ascension;
             if (_currentRun != null)
@@ -115,7 +112,7 @@ public class MainMenuSceneBhv : SceneBhv
     private void GoToTraining()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.TrainingChoiceScene);
             return true;
@@ -125,7 +122,7 @@ public class MainMenuSceneBhv : SceneBhv
     private void GoToSettings()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.SettingsScene);
             return true;
@@ -135,14 +132,13 @@ public class MainMenuSceneBhv : SceneBhv
     private void Quit()
     {
         Instantiator.NewPopupYesNo("Quit", "do you wish to quit the game?", "Nope", "Yup", OnQuit);
-        object OnQuit(bool result)
+        void OnQuit(bool result)
         {
 #if !UNITY_ANDROID
             _inputControlerBhv.MenuSelector.Reset();
 #endif
             if (result)
                 Application.Quit();
-            return result;
         }
     }
 
@@ -156,7 +152,7 @@ public class MainMenuSceneBhv : SceneBhv
     private void GoToAccount()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.AccountScene);
             return true;

@@ -49,7 +49,6 @@ public static class AccountService
                 instantiator.NewPopupYesNo("Error", "couldn't log you in with your saved credentials. please reconnect manually.", null, "Ok", (result) =>
                 {
                     thenAction(null);
-                    return false;
                 });
             }
             else

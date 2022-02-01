@@ -74,7 +74,7 @@ public class GameOverSceneBhv : SceneBhv
     private void GoBackToMainMenu()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadBackUntil(Constants.MainMenuScene);
             return true;

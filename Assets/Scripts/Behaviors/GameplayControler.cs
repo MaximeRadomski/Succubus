@@ -177,11 +177,7 @@ public class GameplayControler : MonoBehaviour
         {
             CharacterInstanceBhv.Die();
             Invoke(nameof(CleanPlayerPrefs), 1.0f);
-            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
-            {
-                SceneBhv.OnGameOver();
-                return true;
-            }));
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, SceneBhv.OnGameOver));
         }
 
         void Resurect(string resurectionDefault = null)
@@ -192,11 +188,7 @@ public class GameplayControler : MonoBehaviour
             Instantiator.PopText(resurectionStr, new Vector2(4.5f, 10.0f));
             CurrentPiece.GetComponent<Piece>().IsLocked = false;
             Cache.InputLocked = false;
-            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
-            {
-                _musicControler.Play();
-                return true;
-            }));
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () => { _musicControler.Play(); }));
         }
     }
 
@@ -910,8 +902,8 @@ public class GameplayControler : MonoBehaviour
         }
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastForcedBlocks != null)
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
-        else if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
-                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+        else
+            HandleAdditionalOrLesserBlocks();
         _hasAlteredPiecePositionAfterResume = true;
         if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -947,6 +939,14 @@ public class GameplayControler : MonoBehaviour
         CheckInputWhileLocked();
     }
     public Func<bool, bool> AfterSpawn; //Parameter bool trueSpawn -> not from hold)
+
+    private void HandleAdditionalOrLesserBlocks()
+    {
+        if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+        if (Character.ChanceLesserBlock > 0 && Helper.RandomDice100(Character.ChanceLesserBlock))
+            CurrentPiece.GetComponent<Piece>().RemoveLastBlock(CurrentGhost.transform, CharacterRealm, this);
+    }
 
     private void CheckInputWhileLocked()
     {
@@ -1935,8 +1935,7 @@ public class GameplayControler : MonoBehaviour
             }
             CurrentPiece = Instantiator.NewPiece(pieceLetter, heldPieceRealm.ToString(), _spawner.transform.position);
             CurrentGhost = Instantiator.NewPiece(pieceLetter, heldPieceRealm + "Ghost", _spawner.transform.position);
-            if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
-                CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+            HandleAdditionalOrLesserBlocks();
             if (hasBlocksAffectedByGravity)
                 CurrentPiece.GetComponent<Piece>().AlterBlocksAffectedByGravity(true, Instantiator, heldPieceRealm);
             if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
@@ -1991,7 +1990,6 @@ public class GameplayControler : MonoBehaviour
                 {
                     //Delayed in order to prevent piece locking during item use in high gravity
                     _usingItem = false;
-                    return true;
                 }, lockInputWhile: false));
                 return true;
             }))
@@ -2283,7 +2281,7 @@ public class GameplayControler : MonoBehaviour
 
             SceneBhv.PopText();
             UpdateItemAndSpecialVisuals();
-            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, (Func<object>)(() => {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.3f, () => {
                 if ((Cache.LineBreakReach > 0 || Cache.LineBreakCount > 0)
                 && Cache.LineBreakCount >= Cache.LineBreakReach)
                     CheckForLineBreaks();
@@ -2303,8 +2301,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (canSpawn)
                     Spawn();
-                return true;
-            }), false));
+            }, false));
             
         }
         else
@@ -2835,13 +2832,12 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().IsLocked = true;
             Instantiator.NewAttackLine(opponentInstance.transform.position, CurrentPiece.transform.position, CharacterRealm);
             _soundControler.PlaySound(_idTwist);
-            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, (Func<object>)(() => {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.15f, () => {
                 CurrentPiece.GetComponent<Piece>().IsLocked = false;
                 HardDrop();
                 Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (letter == 0 || letter == -2 ? 1 : 3)); //If I-Piece or SingleBlock -> 1 cooldown. Else -> 3 cooldown
                 UpdateItemAndSpecialVisuals();
-                return true;
-            }), true));
+            }, true));
         }
         else if (PlayFieldBhv != null && PlayFieldBhv.gameObject != null)
         {
@@ -3125,7 +3121,6 @@ public class GameplayControler : MonoBehaviour
             }
             GameplayOnHold = false;
             Spawn();
-            return true;
         }));
     }
 
@@ -3145,7 +3140,6 @@ public class GameplayControler : MonoBehaviour
             IncreaseAllAboveLines(nbRows, xStart: blocStartX, xEnd: blocStartX + wideness - 1);
             GameplayOnHold = false;
             Spawn();
-            return true;
         }));
     }
 
@@ -3275,7 +3269,6 @@ public class GameplayControler : MonoBehaviour
         StartCoroutine(Helper.ExecuteAfterDelay(_musicControler.GetDelayForNextBeat(beat), () =>
         {
             _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, nbEmptyRowsOnMiss, opponentRealm);
-            return true;
         }));
         var newGravity = GravityLevel / 2;
         SetGravity(newGravity < 2 ? 2 : newGravity);

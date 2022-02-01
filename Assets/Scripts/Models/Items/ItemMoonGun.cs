@@ -13,7 +13,7 @@ public class ItemMoonGun : Item
         Cooldown = 12;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         int end = _gameplayControler.GetHighestBlock();
         for (int y = Cache.PlayFieldMinHeight; y <= end; ++y)
@@ -26,6 +26,6 @@ public class ItemMoonGun : Item
         _gameplayControler.ResetPlayHeight();
         _gameplayControler.ShrinkPlayHeight(10);
         Cache.HeightLimiterResetPieces = 40;
-        return base.Effect();
+        base.Effect();
     }
 }

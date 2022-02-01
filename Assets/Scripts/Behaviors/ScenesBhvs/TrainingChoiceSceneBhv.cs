@@ -37,7 +37,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToFreePlay()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             Cache.CurrentGameMode = GameMode.TrainingFree;
             NavigationService.LoadNextScene(Constants.CharSelScene);
@@ -48,7 +48,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToTrainingDummy()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             Cache.CurrentGameMode = GameMode.TrainingDummy;
             NavigationService.LoadNextScene(Constants.CharSelScene);
@@ -59,7 +59,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToOldSchool()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             Cache.CurrentGameMode = GameMode.TrainingOldSchool;
             PlayerPrefsHelper.ResetTraining();
@@ -74,7 +74,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToPrevious()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend, reverse: true);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadPreviousScene();
             return true;
@@ -84,7 +84,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToButtonHighScores()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.HighScoreScene);
             return true;
@@ -94,7 +94,7 @@ public class TrainingChoiceSceneBhv : SceneBhv
     private void GoToButtonHighScoresOldSchool()
     {
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
-        object OnBlend(bool result)
+        bool OnBlend(bool result)
         {
             NavigationService.LoadNextScene(Constants.HighScoreScene, new NavigationParameter() { BoolParam0 = true });
             return true;

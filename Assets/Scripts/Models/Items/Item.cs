@@ -49,11 +49,10 @@ public abstract class Item : Loot
         _gameplayControler.GameplayOnHold = false;
     }
 
-    protected virtual object Effect()
+    protected virtual void Effect()
     {
         _soundFunc.Invoke();
         CancelOrEndItem();
-        return true;
     }
 
     public virtual string GetDescription()

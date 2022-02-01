@@ -13,10 +13,10 @@ public class ItemVoodooDoll : Item
         Cooldown = 1;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         _gameplayControler.SceneBhv.DamageOpponent(15, _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Earth);
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).OpponentAttackIncoming();
-        return base.Effect();
+        base.Effect();
     }
 }

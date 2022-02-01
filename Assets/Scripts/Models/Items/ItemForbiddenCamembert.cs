@@ -16,7 +16,7 @@ public class ItemForbiddenCamembert : Item
         Cooldown = 8;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         for (int y = Constants.PlayFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
         {
@@ -41,6 +41,6 @@ public class ItemForbiddenCamembert : Item
             }
         }
         _gameplayControler.ClearLineSpace();
-        return base.Effect();
+        base.Effect();
     }
 }

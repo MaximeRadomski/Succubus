@@ -13,11 +13,11 @@ public class ItemMoldFashioned : Item
         Cooldown = 14;
     }
 
-    protected override object Effect()
+    protected override void Effect()
     {
         Cache.HalvedCooldown = true;
         _gameplayControler.SceneBhv.DamageOpponent(Cache.CurrentOpponentHp / 2, null, textRealm: Realm.Heaven);
         ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).HalveOpponentMaxCooldown();
-        return base.Effect();
+        base.Effect();
     }
 }
