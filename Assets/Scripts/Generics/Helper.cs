@@ -636,15 +636,4 @@ public static class Helper
             return true;
         }
     }
-
-    public  static void InvokeNextFrame(Action action)
-    {
-        Coroutine(action);
-
-        IEnumerator Coroutine(Action action)
-        {
-            yield return null;
-            action();
-        }
-    }
 }

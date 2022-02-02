@@ -27,8 +27,6 @@ public class SpecialOketiPoketi : Special
         for (int i = 0; i < _nbPiece - 1 && i < maxPreview; ++i)
         {
             var iteratedNextPieceContainerLastChildId = _gameplayControler.NextPieces[i].transform.childCount - 1;
-            if (iteratedNextPieceContainerLastChildId <= 1)
-                continue;
             var iteratedNextPieceChildCount = _gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).childCount;
             Object.Destroy(_gameplayControler.NextPieces[i].transform.GetChild(iteratedNextPieceContainerLastChildId).GetChild(iteratedNextPieceChildCount - 1).gameObject);
         }

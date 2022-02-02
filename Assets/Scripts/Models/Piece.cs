@@ -236,7 +236,7 @@ public class Piece : FrameRateBehavior
             }
         }
         //Done this way becaude the Destroy(Block) actually happens the next frame, resulting in a ghost higher than what it should be in some few cases.
-        Helper.InvokeNextFrame(() =>
+        InvokeNextFrame(() =>
         {
             gameplayControler.DropGhost();
         });

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,5 +70,16 @@ public abstract class FrameRateBehavior : MonoBehaviour
     protected virtual void NormalUpdate()
     {
 
+    }
+
+    protected void InvokeNextFrame(Action action)
+    {
+        StartCoroutine(Coroutine(action));
+
+        IEnumerator Coroutine(Action action)
+        {
+            yield return null;
+            action();
+        }
     }
 }
