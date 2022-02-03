@@ -25,6 +25,8 @@ public class Piece : FrameRateBehavior
     private bool _disableAsked = false;
     private bool _canMimicAlterBlocksAffectedByGravity = true;
     private bool _isScrewed = false;
+    private Transform _rotationPoint;
+    private bool _rotationPointEnabled;
 
     public void Lock(Instantiator instantiator)
     {
@@ -292,18 +294,20 @@ public class Piece : FrameRateBehavior
         var child0 = transform.GetChild(0);
         if (child0 == null)
             return null;
-        var rotationPoint = child0.Find(Constants.GoRotationPoint);
+        _rotationPointEnabled = enable;
+        if (_rotationPoint == null)
+            _rotationPoint = child0.Find(Constants.GoRotationPoint);
         if (enable == true)
         {
-            if (rotationPoint != null)
-                rotationPoint.GetComponent<SpriteRenderer>().enabled = true;
+            if (_rotationPoint != null)
+                _rotationPoint.GetComponent<SpriteRenderer>().enabled = true;
             else
-                rotationPoint = instantiator.NewRotationPoint(this.gameObject).transform;
-            return rotationPoint.GetComponent<SpriteRenderer>();
+                _rotationPoint = instantiator.NewRotationPoint(this.gameObject).transform;
+            return _rotationPoint.GetComponent<SpriteRenderer>();
         }
-        else if (rotationPoint != null)
+        else if (_rotationPoint != null)
         {
-            rotationPoint.GetComponent<SpriteRenderer>().enabled = false;
+            _rotationPoint.GetComponent<SpriteRenderer>().enabled = false;
         }
         return null;
     }
@@ -313,6 +317,13 @@ public class Piece : FrameRateBehavior
         foreach (Transform child in transform)
         {
             child.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        }
+        if (_rotationPointEnabled)
+        {
+            if (_rotationPoint == null)
+                _rotationPoint = transform.GetChild(0)?.Find(Constants.GoRotationPoint);
+            if (_rotationPoint != null)
+                _rotationPoint.transform.position = transform.position;
         }
     }
 

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooCookie : Tattoo
+public class TattooUglySneaker : Tattoo
 {
-    public TattooCookie()
+    public TattooUglySneaker()
     {
-        Id = 84;
+        Id = 86;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Common;
@@ -14,11 +14,11 @@ public class TattooCookie : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.CookieSpecialBonus += Stat;
+        character.SneakerSPecialBonus += Stat;
     }
 
     public override string GetDescription()
     {
-        return $"your special loses {StatToString(after: Stat * Level == 1 ? " cooldown point": " cooldown points")} every {Constants.CookiePieceMax} pieces locked.";
+        return $"your special loses {StatToString(after: Stat * Level == 1 ? " bonus cooldown point" : " bonus cooldown points")} for every quadruple lines.";
     }
 }

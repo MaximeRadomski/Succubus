@@ -178,6 +178,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         }
         else if (nbLines > 0)
         {
+            CameraBhv.Bump(4);
             if (nbLines == 1)
                 tmpAdded = 100 * _level;
             else if (nbLines == 2)

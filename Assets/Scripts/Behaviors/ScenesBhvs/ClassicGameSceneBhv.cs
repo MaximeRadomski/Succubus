@@ -1005,7 +1005,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (nbLines > 0)
         {
-            if (Character.DamoclesDamage > 0 && nbLines == 4)
+            if (Character.DamoclesDamage > 0 && nbLines >= 4)
             {
                 Cache.BonusDamage += Character.DamoclesDamage;
                 _characterInstanceBhv.Boost(_gameplayControler.CharacterRealm, 0.25f);
@@ -1052,7 +1052,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                     slavBonus = 1;
                 incomingDamage += slavBonus;
             }
-            if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines == 4)
+            if (_gameplayControler.CharacterRealm == Realm.Earth && nbLines >= 4)
             {
                 int linesDestroyed = Character.RealmPassiveEffect;
                 linesDestroyed -= _gameplayControler.CheckForDarkRows(linesDestroyed);
@@ -1065,7 +1065,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 }
 
             }
-            if (Character.OwlReduceSeconds > 0 && nbLines == 4)
+            if (Character.OwlReduceSeconds > 0 && nbLines >= 4)
                 Cache.CurrentOpponentCooldown -= Character.OwlReduceSeconds;
 
             //ELEMENTS STONES

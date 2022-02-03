@@ -50,6 +50,7 @@ public class GameplayControler : MonoBehaviour
     private Vector3 _lastCurrentPieceValidPosition;
     private int _lastNbLinesCleared;
     private int _leftHeld, _rightHeld;
+    private int _leftHeldPounder, _rightHeldPounder;
     private Vector3? _itemTextDefaultLocalPos;
     private bool _lastLockTwist;
     private bool? _isTraining;
@@ -210,7 +211,7 @@ public class GameplayControler : MonoBehaviour
 
     private void SaveLastFightPlayField()
     {
-        if (PlayFieldBhv == null)
+        if (PlayFieldBhv == null || (_isTraining.HasValue && _isTraining.Value))
             return;
         var remainingBlocks = string.Empty;
         foreach (Transform piece in PlayFieldBhv.transform)
@@ -1148,7 +1149,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Left(bool mimicPossible = true, bool canTriggerPartition = true)
     {
-        _leftHeld = _rightHeld = 0;
+        _rightHeld = _leftHeld = _leftHeldPounder = _rightHeldPounder = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -1177,6 +1178,8 @@ public class GameplayControler : MonoBehaviour
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
+        else
+            this.SceneBhv.CameraBhv.SidePounder(-1.0f);
         DropGhost();
         _hasMovedOrRotatedCurrentPiece = true;
     }
@@ -1208,6 +1211,11 @@ public class GameplayControler : MonoBehaviour
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
         }
+        else if (_leftHeldPounder == 0)
+        {
+            _leftHeldPounder = _leftHeld;
+            this.SceneBhv.CameraBhv.SidePounder(-1.0f);
+        }
         DropGhost();
         _hasMovedOrRotatedCurrentPiece = true;
         _arr = 0;
@@ -1215,7 +1223,7 @@ public class GameplayControler : MonoBehaviour
 
     public void Right(bool mimicPossible = true, bool canTriggerPartition = true)
     {
-        _rightHeld = _leftHeld = 0;
+        _rightHeld = _leftHeld = _leftHeldPounder = _rightHeldPounder = 0;
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
@@ -1244,6 +1252,8 @@ public class GameplayControler : MonoBehaviour
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Right);
         }
+        else
+            this.SceneBhv.CameraBhv.SidePounder();
         DropGhost();
         _hasMovedOrRotatedCurrentPiece = true;
     }
@@ -1274,6 +1284,11 @@ public class GameplayControler : MonoBehaviour
             _soundControler.PlaySound(_idLeftRightDown);
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
                 DecrementDropBombCooldown(KeyBinding.Left);
+        }
+        else if (_rightHeldPounder == 0)
+        {
+            _rightHeldPounder = _rightHeld;
+            this.SceneBhv.CameraBhv.SidePounder();
         }
         DropGhost();
         _hasMovedOrRotatedCurrentPiece = true;
@@ -1428,7 +1443,9 @@ public class GameplayControler : MonoBehaviour
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
         if (Character.PiecesWeight > 0 && nbLinesDropped > 1)
-            this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f);
+            this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f, hardReset: false);
+        else if (nbLinesDropped > 0)
+            this.SceneBhv.CameraBhv.Pounder(0.3f);
         if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
             DecrementDropBombCooldown(KeyBinding.HardDrop);
     }
@@ -1553,8 +1570,7 @@ public class GameplayControler : MonoBehaviour
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
-            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
+        if (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1)
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -1690,8 +1706,7 @@ public class GameplayControler : MonoBehaviour
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
-            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
+        if (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1)
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -1825,8 +1840,7 @@ public class GameplayControler : MonoBehaviour
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
-        if ((currentPieceModel.Letter == "O" && CurrentPiece.transform.childCount == 4)
-            || (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1))
+        if (currentPieceModel.Letter == "D" && CurrentPiece.transform.childCount == 1)
             return;
         var rotationState = currentPieceModel.RotationState;
         var tries = new List<List<int>>();
@@ -2252,6 +2266,8 @@ public class GameplayControler : MonoBehaviour
             _lastNbLinesCleared = nbLines;
             SceneBhv.OnLinesCleared(nbLines, isB2B, _lastLockTwist);
             _characterSpecial?.OnLinesCleared(nbLines, isB2B);
+            if (Character.SneakerSPecialBonus > 0 && nbLines >= 4)
+                Cache.SelectedCharacterSpecialCooldown -= Character.SneakerSPecialBonus;
 
             ++Cache.ComboCounter;
             if (Cache.ComboCounter > 1)

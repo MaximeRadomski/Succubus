@@ -13,12 +13,17 @@ public class CameraBhv : FrameRateBehavior
     private float _originalSize;
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
+    private float _targetSideX;
 
     private float _bumpSize;
     private bool _isBumbing;
     private bool _isResetBumping;
     private bool _isPoundering;
-    private bool _isResetingPosition;
+    private bool _isResetingPoundering;
+    private bool _isSidePoundering;
+    private bool _isResetingSidePoundering;
+
+    private float resetSpeed = 0.15f;
 
     public void Init()
     {
@@ -78,14 +83,24 @@ public class CameraBhv : FrameRateBehavior
             {
                 Sliding();
             }
-            else if (_isPoundering)
+            else
             {
-                Poundering();
-                UpdateControlPanels();
-            }
-            else if (_isResetingPosition)
-            {
-                ResetingPosition();
+                if (_isPoundering)
+                {
+                    Poundering();
+                }
+                else if (_isResetingPoundering)
+                {
+                    ResetingPoundering();
+                }
+                if (_isSidePoundering)
+                {
+                    SidePoundering();
+                }
+                else if (_isResetingSidePoundering)
+                {
+                    ResetingSidePoundering();
+                }
                 UpdateControlPanels();
             }
         }
@@ -117,12 +132,20 @@ public class CameraBhv : FrameRateBehavior
         }
     }
 
-    public void Pounder(float nbPixel)
+    public void Pounder(float nbPixel, bool hardReset = true)
     {
-        //Debug.Log($"Strength: {nbPixel.ToString("00.00")}");
+        if (hardReset == false)
+            resetSpeed = 0.001f;
         _targetPosition = transform.position + new Vector3(0.0f, Constants.Pixel * nbPixel * 3, 0.0f);
-        _isResetingPosition = false;
+        _isResetingPoundering = false;
         _isPoundering = true;
+    }
+
+    public void SidePounder(float mult = 1.0f)
+    {
+        _targetSideX = transform.position.x + (Constants.Pixel * 5 * mult);
+        _isResetingSidePoundering = false;
+        _isSidePoundering = true;
     }
 
     private void Poundering()
@@ -131,17 +154,39 @@ public class CameraBhv : FrameRateBehavior
         if (Helper.FloatEqualsPrecision(transform.position.y, _targetPosition.y, 0.05f))
         {
             _isPoundering = false;
-            _isResetingPosition = true;
+            _isResetingPoundering = true;
         }
     }
 
-    private void ResetingPosition()
+    private void ResetingPoundering()
     {
-        transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.01f);
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, resetSpeed);
         if (Helper.FloatEqualsPrecision(transform.position.y, _originalPosition.y, 0.001f))
         {
             transform.position = _originalPosition;
-            _isResetingPosition = false;
+            _isResetingPoundering = false;
+        }
+    }
+
+    private void SidePoundering()
+    {
+        var tmpTarget = new Vector3(_targetSideX, transform.position.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.25f);
+        if (Helper.FloatEqualsPrecision(transform.position.y, tmpTarget.y, 0.01f))
+        {
+            _isSidePoundering = false;
+            _isResetingSidePoundering = true;
+        }
+    }
+
+    private void ResetingSidePoundering()
+    {
+        var tmpTarget = new Vector3(_originalPosition.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.15f);
+        if (Helper.FloatEqualsPrecision(transform.position.x, _originalPosition.x, 0.001f))
+        {
+            transform.position = tmpTarget;
+            _isResetingSidePoundering = false;
         }
     }
 

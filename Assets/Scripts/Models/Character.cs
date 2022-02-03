@@ -105,6 +105,7 @@ public class Character : Loot
     public int BonusAllowedMovesBeforeLock = 0;
     public int NegateAttackBoost = 0;
     public int CookieSpecialBonus = 0;
+    public int SneakerSPecialBonus = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
