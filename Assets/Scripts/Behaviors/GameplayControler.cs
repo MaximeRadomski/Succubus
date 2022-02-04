@@ -1048,11 +1048,13 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(((_nextLock - Time.time)/_lockDelay) + 0.25f);
             if (_allowedMovesBeforeLock > Constants.NumberOfAllowedMovesBeforeLock + Character.BonusAllowedMovesBeforeLock && !CurrentPiece.GetComponent<Piece>().IsLocked)
             {
+                PounderCamera();
                 Lock();
             }
         }
         else if (_nextLock <= Time.time && !CurrentPiece.GetComponent<Piece>().IsLocked)
         {
+            PounderCamera();
             Lock();
         }
     }
@@ -1352,6 +1354,7 @@ public class GameplayControler : MonoBehaviour
             SceneBhv.OnSoftDrop();
         else if (_isOldSchoolGameplay)
         {
+            PounderCamera();
             Lock();
             _needDownRelease = true;
         }
@@ -1442,12 +1445,17 @@ public class GameplayControler : MonoBehaviour
         }
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
-        if (Character.PiecesWeight > 0 && nbLinesDropped > 1)
-            this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f, hardReset: false);
-        else if (nbLinesDropped > 0)
-            this.SceneBhv.CameraBhv.Pounder(0.3f);
+        PounderCamera();
         if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
             DecrementDropBombCooldown(KeyBinding.HardDrop);
+    }
+
+    private void PounderCamera()
+    {
+        if (Character.PiecesWeight > 0)
+            this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f, hardReset: false);
+        else
+            this.SceneBhv.CameraBhv.Pounder(0.3f);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)

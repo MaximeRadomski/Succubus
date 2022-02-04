@@ -20,7 +20,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;
-    public static Item DebugItem = GetItemFromName("Creeping Totem");
+    public static Item DebugItem = GetItemFromName("Flipping Coin");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

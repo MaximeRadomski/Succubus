@@ -14,6 +14,7 @@ public class HighScoreDto : Dto
     public int Pieces;
     public int CharacterId;
     public string CreationDate;
+    public bool Falsified;
 
     public HighScoreDto(string playerNameId, int score, int level, int lines, int pieces, int characterId, int type, string checkSum)
     {

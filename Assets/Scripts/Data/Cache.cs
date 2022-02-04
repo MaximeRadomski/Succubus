@@ -43,7 +43,6 @@ public static class Cache
     public static int CumulativeCrit = 0;
     public static int TripleLineDamageBonus = 0;
     public static int BonusDamage = 0;
-    public static int ChanceAttacksHappeningPercent = 100;
     public static AttackType RandomizedAttackType = AttackType.None;
     public static bool HalvedCooldown = false;
     public static int AddedDodgeChancePercent = 0;
@@ -104,7 +103,6 @@ public static class Cache
         CumulativeCrit = 0;
         TripleLineDamageBonus = 0;
         BonusDamage = 0;
-        ChanceAttacksHappeningPercent = 100;
         RandomizedAttackType = AttackType.None;
         HalvedCooldown = false;
         AddedDodgeChancePercent = 0;

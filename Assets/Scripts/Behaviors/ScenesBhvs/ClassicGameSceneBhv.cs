@@ -646,12 +646,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _soundControler.PlaySound(_idDodge);
             _characterInstanceBhv.Dodge();
         }
-        else if (Cache.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Cache.ChanceAttacksHappeningPercent))
-        {
-            Instantiator.PopText("missed", OpponentInstanceBhv.transform.position + new Vector3(3f, 0.0f, 0.0f));
-            _soundControler.PlaySound(_idDodge);
-            _characterInstanceBhv.Dodge();
-        }
         else if (Cache.BlockPerAttack >= 0 && ++Cache.BlockPerAttack >= 3)
         {
             Cache.BlockPerAttack = 0;
@@ -997,12 +991,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
     {
         base.OnLinesCleared(nbLines, isB2B, lastLockIsTwist);
         var incomingDamage = 0;
-        if (nbLines > 0 && Cache.ChanceAttacksHappeningPercent < 100 && !Helper.RandomDice100(Cache.ChanceAttacksHappeningPercent))
-        {
-            incomingDamage = -1;
-            nbLines = 0;
-            isB2B = false;
-        }
         if (nbLines > 0)
         {
             if (Character.DamoclesDamage > 0 && nbLines >= 4)

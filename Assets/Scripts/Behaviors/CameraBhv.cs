@@ -23,7 +23,7 @@ public class CameraBhv : FrameRateBehavior
     private bool _isSidePoundering;
     private bool _isResetingSidePoundering;
 
-    private float resetSpeed = 0.15f;
+    private float resetSpeed = 0.1f;
 
     public void Init()
     {
@@ -135,7 +135,7 @@ public class CameraBhv : FrameRateBehavior
     public void Pounder(float nbPixel, bool hardReset = true)
     {
         if (hardReset == false)
-            resetSpeed = 0.001f;
+            resetSpeed = 0.01f;
         _targetPosition = transform.position + new Vector3(0.0f, Constants.Pixel * nbPixel * 3, 0.0f);
         _isResetingPoundering = false;
         _isPoundering = true;
@@ -171,7 +171,7 @@ public class CameraBhv : FrameRateBehavior
     private void SidePoundering()
     {
         var tmpTarget = new Vector3(_targetSideX, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.25f);
+        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.1f);
         if (Helper.FloatEqualsPrecision(transform.position.y, tmpTarget.y, 0.01f))
         {
             _isSidePoundering = false;
@@ -182,7 +182,7 @@ public class CameraBhv : FrameRateBehavior
     private void ResetingSidePoundering()
     {
         var tmpTarget = new Vector3(_originalPosition.x, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.15f);
+        transform.position = Vector3.Lerp(transform.position, tmpTarget, 0.1f);
         if (Helper.FloatEqualsPrecision(transform.position.x, _originalPosition.x, 0.001f))
         {
             transform.position = tmpTarget;
