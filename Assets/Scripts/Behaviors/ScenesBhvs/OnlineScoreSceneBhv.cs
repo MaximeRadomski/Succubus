@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OnlineScoreSceneBhv : SceneBhv
@@ -113,7 +114,8 @@ public class OnlineScoreSceneBhv : SceneBhv
                     GoToPage(_currentPage - 1);
                     return;
                 }
-                FillScores(list);
+                var unfalsifiedList = list.Where(s => s.Falsified == 0).ToList();
+                FillScores(unfalsifiedList);
                 DisplayList();
             });
         }

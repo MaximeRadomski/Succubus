@@ -12,6 +12,7 @@ public class HighScoreSceneBhv : SceneBhv
     private GameObject _scoreHistoryContainer;
     private ResourceBarBhv _tiltingBar;
     private bool _isOldSchool = false;
+    private int _encryptType;
 
     public bool AlreadyTrySendHighScoreOnThisInstance = false;
 
@@ -38,7 +39,7 @@ public class HighScoreSceneBhv : SceneBhv
         _scoreHistoryContainer = GameObject.Find("ScoreHistoryContainer");
         var scoreValueStr = "";
         var encryptedScore = "";
-        var type = UnityEngine.Random.Range(0, Mock.test.Count);
+        _encryptType = UnityEngine.Random.Range(0, Mock.test.Count);
         if (Cache.CurrentHighScoreContext != null)
         {
             if (!Helper.FloatEqualsPrecision(Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[5], Cache.CurrentHighScoreContext[0] * 0.005f)
@@ -51,7 +52,7 @@ public class HighScoreSceneBhv : SceneBhv
             else
             {
                 scoreValueStr = Cache.CurrentHighScoreContext[0].ToString();
-                encryptedScore = Mock.Md5WithKey(Cache.CurrentHighScoreContext[0].ToString(), type);
+                encryptedScore = Mock.Md5WithKey(Cache.CurrentHighScoreContext[0].ToString(), _encryptType);
             }
             GameObject.Find("ScoreContext").GetComponent<TMPro.TextMeshPro>().text = $"{scoreValueStr}\n{Cache.CurrentHighScoreContext[1]}\n{Cache.CurrentHighScoreContext[2]}\n{Cache.CurrentHighScoreContext[3]}";
             if (Cache.CurrentHighScoreContext.Count > 4)
@@ -69,12 +70,12 @@ public class HighScoreSceneBhv : SceneBhv
         var lastCredentials = PlayerPrefsHelper.GetLastSavedCredentials();
         if (Cache.CurrentHighScoreContext != null && Cache.CurrentHighScoreContext[0] >= _scoreHistory[0])
         {
-            PlayerPrefsHelper.SaveTrainingHighestScore(Cache.CurrentHighScoreContext, encryptedScore, type, _isOldSchool);
+            PlayerPrefsHelper.SaveTrainingHighestScore(Cache.CurrentHighScoreContext, encryptedScore, _encryptType, _isOldSchool);
             TrySendLocalHighest(null);
         }
         else if (Cache.CurrentHighScoreContext != null && lastCredentials != null && lastCredentials.PlayerName != null)
         {
-            var notHighestScoreButStill = new HighScoreDto(lastCredentials.PlayerName, Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[1], Cache.CurrentHighScoreContext[2], Cache.CurrentHighScoreContext[3], Cache.CurrentHighScoreContext[4], type, encryptedScore);
+            var notHighestScoreButStill = new HighScoreDto(lastCredentials.PlayerName, Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[1], Cache.CurrentHighScoreContext[2], Cache.CurrentHighScoreContext[3], Cache.CurrentHighScoreContext[4], _encryptType, encryptedScore);
             TrySendLocalHighest(null, notHighestScoreButStill);
         }
         else if (Cache.CurrentHighScoreContext == null)
@@ -146,8 +147,37 @@ public class HighScoreSceneBhv : SceneBhv
                 var highestScore = PlayerPrefsHelper.GetTrainingHighestScore(_isOldSchool);
                 if (thisOneInstead != null)
                     highestScore = thisOneInstead;
+                if (onlineScore != null && onlineScore.Falsified == 1)
+                {
+                    var removed = false;
+                    for (int i = 0; i < _scoreHistory.Count; ++i)
+                    {
+                        if (_scoreHistory[i] == onlineScore.Score)
+                        {
+                            _scoreHistory.RemoveAt(i);
+                            removed = true;
+                            break;
+                        }
+                    }
+                    if (removed)
+                    {
+                        PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory, _isOldSchool);
+                        var encryptedScore = Mock.Md5WithKey(_scoreHistory[0].ToString(), _encryptType);
+                        var overrideContext = new List<int>
+                        {
+                            _scoreHistory[0],
+                            Mathf.RoundToInt(_scoreHistory[0] * 0.000015f),
+                            Mathf.RoundToInt(_scoreHistory[0] * 0.000134f),
+                            Mathf.RoundToInt(_scoreHistory[0] * 0.000355f),
+                            highestScore.CharacterId,
+                        };
+                        PlayerPrefsHelper.SaveTrainingHighestScore(overrideContext, encryptedScore, _encryptType, _isOldSchool);
+                        GoToHighScores();
+                        return;
+                    }
+                }
                 //IF Better account score outside of local scores
-                if (onlineScore != null && onlineScore.Score > highestScore.Score)
+                if (onlineScore != null && onlineScore.Score > highestScore.Score || onlineScore.Falsified == 1)
                 {
                     Debug.Log("Higher Score Received");
                     _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory(_isOldSchool);
