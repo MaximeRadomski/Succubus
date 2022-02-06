@@ -143,7 +143,7 @@ public class CameraBhv : FrameRateBehavior
 
     public void SidePounder(float mult = 1.0f)
     {
-        _targetSideX = transform.position.x + (Constants.Pixel * 5 * mult);
+        _targetSideX = transform.position.x + (Constants.Pixel * 10 * mult);
         _isResetingSidePoundering = false;
         _isSidePoundering = true;
     }

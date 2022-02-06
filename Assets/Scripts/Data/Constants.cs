@@ -7,7 +7,7 @@ public static class Constants
 {
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool OpponentsDebug = false;    
+    public const bool OpponentsDebug = true;    
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;

@@ -1455,7 +1455,7 @@ public class GameplayControler : MonoBehaviour
         if (Character.PiecesWeight > 0)
             this.SceneBhv.CameraBhv.Pounder((Mathf.Log10(Character.PiecesWeight) * 1.4f) + 1.0f, hardReset: false);
         else
-            this.SceneBhv.CameraBhv.Pounder(0.3f);
+            this.SceneBhv.CameraBhv.Pounder(0.5f);
     }
 
     private void HardDropFadeBlocksOnX(int x, int yMin)
@@ -2444,7 +2444,7 @@ public class GameplayControler : MonoBehaviour
             var visionBlockBhv = visionBlockGameObject.GetComponent<VisionBlockBhv>();
             if (visionBlockBhv != null)
             {
-                visionBlockBhv.DecreaseCooldown(Character.VisionBlockReducer, pop: true);
+                visionBlockBhv.DecreaseCooldown(Character.VisionBlockReducer + 1, pop: true);
             }
         }
     }
@@ -3032,7 +3032,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (Character.VisionBlockReducer > 0)
         {
-            nbPieces -= nbPieces;
+            nbPieces -= Character.VisionBlockReducer;
             if (nbPieces <= 0)
                 nbPieces = 1;
         }
