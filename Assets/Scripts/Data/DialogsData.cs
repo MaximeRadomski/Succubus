@@ -1299,6 +1299,128 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Mirror of Erised
+        { "Mirror of Erised|Ivy",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows her on a throne in the clouds ]",
+                    "I'm not ashamed of that..."
+                },
+            }
+        },
+        { "Mirror of Erised|Edam",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him killing his dad ]",
+                    "And what? All greeks stories have at least one patricide!!"
+                }
+            }
+        },
+        { "Mirror of Erised|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows stan in a latex uniform ]",
+                    "Now we're talking!"
+                }
+            }
+        },
+        { "Mirror of Erised|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him napping on Ivy's laps ]",
+                    "..."
+                }
+            }
+        },
+        { "Mirror of Erised|Floppyredoux",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows her riding a bike ]",
+                    "What is this weird broom!"
+                }
+            }
+        },
+        { "Mirror of Erised|Sir Vixid",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him dying in battle ]",
+                    "As it shall be."
+                }
+            }
+        },
+        { "Mirror of Erised|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows her winning miss hell contest ]",
+                    "It'll happen for sure!"
+                }
+            }
+        },
+        { "Mirror of Erised|Tony",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him drowning in a giant vodka glass ]",
+                    "that's the dream..."
+                }
+            }
+        },
+        { "Mirror of Erised|Melip",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him having legs ]",
+                    "Come on! That's private stuff!"
+                }
+            }
+        },
+        { "Mirror of Erised|Azrael",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him dying ]",
+                    "Hey! As the angel of death I really wonder how it feels!"
+                }
+            }
+        },
+        { "Mirror of Erised|Uriel",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him killing his brother ]",
+                    "Only god can judge me..."
+                }
+            }
+        },
+        { "Mirror of Erised|Zaphkiel",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "[ shows him as he is ]",
+                    "Ah! Perfection!"
+                }
+            }
+        },
+        #endregion
         #region Tactical Nun
         { "Tactical Nun",
             new List<List<string>>()

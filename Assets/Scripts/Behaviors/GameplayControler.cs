@@ -759,7 +759,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_realmTree?.LockDelay ?? 0.0f);
+            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : (_realmTree?.LockDelay ?? 0.0f));
         }
         else
         {
@@ -775,7 +775,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_realmTree?.LockDelay ?? 0.0f);
+        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : (_realmTree?.LockDelay ?? 0.0f));
     }
 
     private void SetNextGravityFall()

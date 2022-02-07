@@ -64,7 +64,7 @@ namespace Proyecto26
                         Helper.ResumeLoading();
                         DatabaseService.SendErrorBody(Helper.DateFormat(DateTime.Now), options.Body);
                         if (!err.IsNetworkError)
-                            GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Message.ToLower(), null, "Ok", null);
+                            GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator.NewPopupYesNo("Error", err.Response != null ? err.Response.ToLower() : err.Message.ToLower(), null, "Ok", null);
                         ++Cache.NetworkErrorCount;
                         DebugLog(options.EnableDebug, err, true);
                         callback(err, response);

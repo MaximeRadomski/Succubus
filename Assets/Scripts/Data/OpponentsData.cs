@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Reverse Centaur";
+        var name = "Mirror of Erised";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -652,6 +652,15 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.VisionBlock, 6, 10) },
             GravityLevel = 10, Weight = 40,
             Lore = "Church doesn't only have pedophiles, they also have pedovores."
+        },
+        new Opponent()
+        {
+            Name = "Mirror of Erised", Realm = Realm.Hell, Type = OpponentType.Common,
+            HpMax = 200, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 15, Haste = true,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.MirrorMirror, 4, 1) },
+            GravityLevel = 2, Weight = 40,
+            Lore = "This old device shows your deepest desires!"
         },
         new Opponent()
         {

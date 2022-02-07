@@ -1,4 +1,5 @@
 ﻿using RSG;
+using UnityEngine;
 
 namespace Proyecto26
 {
@@ -258,6 +259,7 @@ namespace Proyecto26
         /// <typeparam name="T">The element type of the response.</typeparam>
         public static IPromise<T> Put<T>(string url, object body)
         {
+            var jsonBody = JsonUtility.ToJson(body);
             return Put<T>(new RequestHelper { Uri = url, Body = body });
         }
 

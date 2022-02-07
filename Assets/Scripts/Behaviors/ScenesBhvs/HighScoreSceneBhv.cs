@@ -163,21 +163,27 @@ public class HighScoreSceneBhv : SceneBhv
                     {
                         PlayerPrefsHelper.SaveTrainingHighScoreHistory(_scoreHistory, _isOldSchool);
                         var encryptedScore = Mock.Md5WithKey(_scoreHistory[0].ToString(), _encryptType);
+                        var overridenLevel = Mathf.RoundToInt(_scoreHistory[0] * 0.000015f);
+                        if (overridenLevel < 1)
+                            overridenLevel = 1;
+                        var overridenLines = (overridenLevel * 10) - UnityEngine.Random.Range(0, 5);
                         var overrideContext = new List<int>
                         {
                             _scoreHistory[0],
-                            Mathf.RoundToInt(_scoreHistory[0] * 0.000015f),
-                            Mathf.RoundToInt(_scoreHistory[0] * 0.000134f),
-                            Mathf.RoundToInt(_scoreHistory[0] * 0.000355f),
+                            overridenLevel,
+                            overridenLines,
+                            Mathf.RoundToInt(overridenLines * 2.5f),
                             highestScore.CharacterId,
                         };
                         PlayerPrefsHelper.SaveTrainingHighestScore(overrideContext, encryptedScore, _encryptType, _isOldSchool);
-                        GoToHighScores();
+                        AlreadyTrySendHighScoreOnThisInstance = false;
+                        Debug.Log("Falsified Score Received");
+                        NavigationService.ReloadScene();
                         return;
                     }
                 }
                 //IF Better account score outside of local scores
-                if (onlineScore != null && onlineScore.Score > highestScore.Score || onlineScore.Falsified == 1)
+                if (onlineScore != null && onlineScore.Score > highestScore.Score && onlineScore.Falsified == 0)
                 {
                     Debug.Log("Higher Score Received");
                     _scoreHistory = PlayerPrefsHelper.GetTrainingHighScoreHistory(_isOldSchool);
@@ -191,13 +197,13 @@ public class HighScoreSceneBhv : SceneBhv
                     return;
                 }
                 //If same account score outside of local scores (in order to prevent rewriting everytime the date of the best score)
-                else if (onlineScore != null && onlineScore.Score == highestScore.Score)
+                else if (onlineScore != null && onlineScore.Score == highestScore.Score && onlineScore.Falsified == 0)
                 {
                     Debug.Log("Same Score Received");
                     afterTrySend?.Invoke();
                     return;
                 }
-                //If exact same score and 
+                //If exact same score and from another player
                 HighScoresService.CheckCloneScore(highestScore, _isOldSchool, (clones) =>
                 {
                     if (clones != null)
