@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Run
 {
@@ -55,7 +56,7 @@ public class Run
     }
         
 
-    public void IncreaseLevel()
+    public void IncreaseLevel(Character character = null)
     {
         ++RealmLevel;
         if (RealmLevel > 2)
@@ -82,7 +83,10 @@ public class Run
         else if (Difficulty >= Difficulty.Divine)
             MaxSteps = 1;
         var realmTree = PlayerPrefsHelper.GetRealmTree();
-        MaxSteps += realmTree.Shadowing;
+        if (character != null)
+            MaxSteps += Mathf.RoundToInt(realmTree.Shadowing * Helper.MultiplierFromPercent(1.0f, character.RealmTreeBoost));
+        else
+            MaxSteps += realmTree.Shadowing;
         CurrentStep = 0;
         X = 50;
         Y = 50;

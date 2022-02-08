@@ -168,7 +168,7 @@ public class GameplayControler : MonoBehaviour
             PlayerPrefsHelper.SaveRun(classicGameSceneBhv.Run);
             Resurect("repentance");
         }
-        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(_realmTree.LifeRoulette))
+        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.LifeRouletteOnce && _realmTree != null && Helper.RandomDice100(Mathf.RoundToInt(_realmTree.LifeRoulette * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost))))
         {
             classicGameSceneBhv.Run.LifeRouletteOnce = true;
             PlayerPrefsHelper.SaveRun(classicGameSceneBhv.Run);
@@ -759,7 +759,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : (_realmTree?.LockDelay ?? 0.0f));
+            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost)));
         }
         else
         {
@@ -775,7 +775,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : (_realmTree?.LockDelay ?? 0.0f));
+        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost)));
     }
 
     private void SetNextGravityFall()

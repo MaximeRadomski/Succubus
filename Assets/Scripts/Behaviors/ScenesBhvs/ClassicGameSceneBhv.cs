@@ -323,7 +323,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 Destroy(tmpDrillTarget);
         }
 
-        CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Cache.RandomizedAttackType, UnityEngine.Random.Range(1, 4), 1) };
+        CurrentOpponent.Attacks = new List<OpponentAttack> { new OpponentAttack(Cache.RandomizedAttackType, UnityEngine.Random.Range(1, 6), 1) };
         Cache.CurrentOpponentAttackId = 0;
         if (Cache.RandomizedAttackType == AttackType.Drill)
             _gameplayControler.AttackDrill(OpponentInstanceBhv.gameObject, CurrentOpponent.Realm, CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].Param1, true);
@@ -372,7 +372,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         if (Run.CurrentStep > Character.LandLordLateAmount)
             _stepsService.SetVisionOnRandomStep(Run);
         _stepsService.GenerateAdjacentSteps(Run, Character, _currentStep);
-        Run.CurrentItemCooldown = Cache.CurrentItemCooldown - _realmTree.PosthumousItem;
+        Run.CurrentItemCooldown = Cache.CurrentItemCooldown - Mathf.RoundToInt(_realmTree.PosthumousItem * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost));
         Run.CurrentItemUses = Cache.CurrentItemUses;
         PlayerPrefsHelper.SaveRun(Run);
         if (loot?.LootType == LootType.Character)
@@ -504,7 +504,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 PlayerPrefsHelper.IncrementRunBossVanquished();
                 var realmIdBeforeIncrease = Run.CurrentRealm.GetHashCode();
                 var hasUnlockedSkin = false;
-                Run.IncreaseLevel();
+                Run.IncreaseLevel(this.Character);
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
                 if (currentItem != null)
                     Run.CurrentItemUses = currentItem.Uses;
@@ -926,7 +926,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             var bossHateBonusPercent = 0;
             if (CurrentOpponent.Type == OpponentType.Boss)
-                bossHateBonusPercent = _realmTree.BossHate;
+                bossHateBonusPercent = Mathf.RoundToInt(_realmTree.BossHate * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost));
             DamageOpponent(Mathf.RoundToInt(_characterAttack * Helper.MultiplierFromPercent(1.0f, bossHateBonusPercent)), lastPiece);
         }
         else if (_characterAttack < 0)

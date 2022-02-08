@@ -401,9 +401,11 @@ public static class Helper
     public static void ApplyDifficulty(List<Opponent> opponents, Difficulty difficulty)
     {
         var realmTree = PlayerPrefsHelper.GetRealmTree();
+        var character = PlayerPrefsHelper.GetRunCharacter();
         foreach (var opponent in opponents)
         {
-            opponent.Cooldown += (realmTree.CooldownBrake * 0.666f);
+            var alteredCooldown = realmTree.CooldownBrake * 0.666f;
+            opponent.Cooldown += alteredCooldown * MultiplierFromPercent(1.0f, character.RealmTreeBoost);
             if (difficulty == Difficulty.Easy)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 3.0f);
