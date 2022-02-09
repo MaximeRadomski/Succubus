@@ -72,6 +72,7 @@ public static class Cache
     public static int NegateAttackBoostCount = 0;
     public static int CookieCount = 0;
     public static Character TemporaryCharacter = null;
+    public static int GatlingPiecesCount = 0;
 
     public static int PactFlatDamage = 0;
     public static int PactCritChance = 0;
@@ -132,6 +133,7 @@ public static class Cache
         NegateAttackBoostCount = 0;
         CookieCount = 0;
         TemporaryCharacter = null;
+        GatlingPiecesCount = 0;
 
         PactFlatDamage = 0;
         PactCritChance = 0;

@@ -51,6 +51,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         SaveRun(null);
         ResetLastFightPlayField();
+        SaveIsInFight(false);
     }
 
     public static void EndlessRun(Run run)

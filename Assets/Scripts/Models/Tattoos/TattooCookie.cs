@@ -19,6 +19,6 @@ public class TattooCookie : Tattoo
 
     public override string GetDescription()
     {
-        return $"your special loses {StatToString(after: Stat * Level == 1 ? " cooldown point": " cooldown points")} every {Constants.CookiePieceMax} pieces locked.";
+        return $"your special loses {StatToString(after: Stat * Level == 1 ? " cooldown point": " cooldown points")} every {Constants.CookiePiecesMax} pieces locked.";
     }
 }

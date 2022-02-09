@@ -8,8 +8,8 @@ public static class Constants
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
     public const bool OpponentsDebug = false;
-    public const bool TattoosDebug = false;
-    public const bool ItemsDebug = true;
+    public const bool TattoosDebug = true;
+    public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
     public const int DamageDebug = 0;
@@ -58,8 +58,8 @@ public static class Constants
     public const int StepsAssetsPositionId = 2;
     public const int StepsAssetsLootStart = 3;
     public const int StepsAssetsOpponentStart = 8;
-    public const int CookiePieceMax = 20;
-
+    public const int CookiePiecesMax = 20;
+    public const int GatlingPiecesMax = 12;
 
     //  TAGS  //
     public const string TagMusic = "Music";

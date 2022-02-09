@@ -162,7 +162,7 @@ public class GameplayControler : MonoBehaviour
             --Cache.TruthResurrection;
             Resurect();
         }
-        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.RepentanceOnce && _realmTree != null && _realmTree.Repentance > 0)
+        else if (!_isTraining.Value && classicGameSceneBhv != null && !classicGameSceneBhv.Run.RepentanceOnce && _realmTree != null && Mathf.RoundToInt(_realmTree.Repentance * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost)) > 0)
         {
             classicGameSceneBhv.Run.RepentanceOnce = true;
             PlayerPrefsHelper.SaveRun(classicGameSceneBhv.Run);
@@ -759,7 +759,7 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost)));
+            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
         }
         else
         {
@@ -775,7 +775,7 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character.RealmTreeBoost)));
+        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
     }
 
     private void SetNextGravityFall()
@@ -1067,15 +1067,11 @@ public class GameplayControler : MonoBehaviour
         CurrentPiece.GetComponent<Piece>().Lock(Instantiator);
         CurrentPiece.GetComponent<Piece>().HandleOpacityOnLock(1.0f);
         _nextLock = -1;
-        if (Character.CookieSpecialBonus > 0)
+        if (Character.CookieSpecialBonus > 0 && ++Cache.CookieCount >= Constants.CookiePiecesMax)
         {
-            ++Cache.CookieCount;
-            if (Cache.CookieCount >= Constants.CookiePieceMax)
-            {
-                Cache.SelectedCharacterSpecialCooldown -= Character.CookieSpecialBonus;
-                UpdateItemAndSpecialVisuals();
-                Cache.CookieCount = 0;
-            }
+            Cache.SelectedCharacterSpecialCooldown -= Character.CookieSpecialBonus;
+            UpdateItemAndSpecialVisuals();
+            Cache.CookieCount = 0;
         }
         bool isTwist = false;
         //Looks for Twists
@@ -1118,6 +1114,11 @@ public class GameplayControler : MonoBehaviour
         {
             ResetPlayHeight();
             Cache.HeightLimiterResetPieces = -1;
+        }
+        if (this.Character.GatlingPercentDamage > 0 && ++Cache.GatlingPiecesCount >= Constants.GatlingPiecesMax)
+        {
+            Cache.GatlingPiecesCount = 0;
+            SceneBhv.DamageOpponent(Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, this.Character.GatlingPercentDamage)), CurrentPiece, Helper.GetInferiorFrom(CharacterRealm));
         }
         SpreadEffect(CurrentPiece);
         CheckForLightRows();

@@ -19,6 +19,6 @@ public class TattooSeedofLight : Tattoo
 
     public override string GetDescription()
     {
-        return $"Boosts your Skill Tree bonuses by {StatToString(after: "%")}.";
+        return $"boosts your skill tree bonuses by {StatToString(after: "%")}.";
     }
 }

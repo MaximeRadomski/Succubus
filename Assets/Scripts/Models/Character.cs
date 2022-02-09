@@ -107,6 +107,7 @@ public class Character : Loot
     public int CookieSpecialBonus = 0;
     public int SneakerSPecialBonus = 0;
     public int RealmTreeBoost = 0;
+    public int GatlingPercentDamage = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
