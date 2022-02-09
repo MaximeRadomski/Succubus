@@ -106,6 +106,7 @@ public class Character : Loot
     public int NegateAttackBoost = 0;
     public int CookieSpecialBonus = 0;
     public int SneakerSPecialBonus = 0;
+    public int RealmTreeBoost = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
@@ -133,7 +134,7 @@ public class Character : Loot
     {
         if (!_realmTreeCriticalPrecision.HasValue)
             _realmTreeCriticalPrecision = PlayerPrefsHelper.GetRealmTree().CriticalPrecision;
-        return CritChancePercent + Cache.CumulativeCrit + Cache.PactCritChance + _realmTreeCriticalPrecision.Value;
+        return CritChancePercent + Cache.CumulativeCrit + Cache.PactCritChance + Mathf.RoundToInt(_realmTreeCriticalPrecision.Value * Helper.MultiplierFromPercent(1.0f, RealmTreeBoost));
     }
 
     public int GetAttackNoBoost()
@@ -148,7 +149,7 @@ public class Character : Loot
     private int GetFlatDamage()
     {
         if (!_realmTreeAttackBoost.HasValue)
-            _realmTreeAttackBoost = PlayerPrefsHelper.GetRealmTree().AttackBoost;
+            _realmTreeAttackBoost = Mathf.RoundToInt(PlayerPrefsHelper.GetRealmTree().AttackBoost * Helper.MultiplierFromPercent(1.0f, this.RealmTreeBoost));
         var flatDamage = Attack + DamageFlatBonus + Cache.BonusDamage + Cache.PactFlatDamage + _realmTreeAttackBoost.Value;
         if (Ying > 0 && Cache.SelectedCharacterSpecialCooldown <= 0)
             flatDamage += Ying;

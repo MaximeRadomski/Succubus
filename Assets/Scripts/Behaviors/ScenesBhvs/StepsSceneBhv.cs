@@ -328,7 +328,7 @@ public class StepsSceneBhv : SceneBhv
                 return;
 
             _run.RealmLevel = 2;
-            _run.IncreaseLevel();
+            _run.IncreaseLevel(this._character);
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             if (currentItem != null)
                 _run.CurrentItemUses = currentItem.Uses;
