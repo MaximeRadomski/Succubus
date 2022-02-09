@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemFlippingCoin : Item
+public class ItemNonEuclideanCoin : Item
 {
-    public ItemFlippingCoin()
+    public ItemNonEuclideanCoin()
     {
         Id = 11;
         Name = ItemsData.Items[Id];
@@ -20,20 +20,20 @@ public class ItemFlippingCoin : Item
         {
             case 0:
                 Cache.IsNextOpponentAttackCanceled = true;
-                _gameplayControler.Instantiator.PopText("opponent", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+                _gameplayControler.Instantiator.PopText("canceled\nattack", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
                 break;
             case 1:
                 Cache.SelectedCharacterSpecialCooldown = 0;
                 this._gameplayControler.UpdateItemAndSpecialVisuals();
-                _gameplayControler.Instantiator.PopText("special", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+                _gameplayControler.Instantiator.PopText("canceled\nspecial", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
                 break;
             case 2:
                 SpecialPenitence();
-                _gameplayControler.Instantiator.PopText("piece", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+                _gameplayControler.Instantiator.PopText("canceled\npiece", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
                 break;
             case 3:
                 Last2Rows();
-                _gameplayControler.Instantiator.PopText("lines", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
+                _gameplayControler.Instantiator.PopText("canceled\nlines", _gameplayControler.CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
                 break;
         }
 

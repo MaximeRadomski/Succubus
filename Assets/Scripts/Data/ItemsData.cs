@@ -10,7 +10,7 @@ public static class ItemsData
 
     public static string[] Items = 
     /* 00 */ { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert",
-    /* 10 */ "Justice Shovel", "Flipping Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield", "CRT Monitor", "Creeping Totem", "The Devil", "The World",
+    /* 10 */ "Justice Shovel", "Non-Euclidean Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield", "CRT Monitor", "Creeping Totem", "The Devil", "The World",
     /* 20 */ "The Hierophant", "Eliacube", "Mask of Duality", "Door of Truth", "Sun Juice", "Death Scythe", "Dark Milk", "Atlas Effigy", "Bloodlust Blade", "Moon Gun",
     /* 30 */ "Gender Swap Coffin"};
 
@@ -20,7 +20,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;
-    public static Item DebugItem = GetItemFromName("Flipping Coin");
+    public static Item DebugItem = GetItemFromName("Non-Euclidean Coin");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {
