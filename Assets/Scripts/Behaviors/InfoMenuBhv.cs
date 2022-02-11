@@ -126,15 +126,15 @@ public class InfoMenuBhv : PopupBhv
     {
         var bodyPart = (BodyPart)int.Parse(GameObject.Find(Cache.LastEndActionClickedName).transform.parent.name.Substring("BodyPart".Length));
         var clickedTattoo = PlayerPrefsHelper.GetCurrentInkedTattoo(TattoosData.Tattoos[int.Parse(Cache.LastEndActionClickedName.Substring("Tattoo".Length))]);
-        var tattooSuffixe = string.Empty;
+        var tattooSuffixe = $"{Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32)}";
         if (clickedTattoo.MaxLevel > 1)
         {
             if (clickedTattoo.Level > 1 && clickedTattoo.Level < clickedTattoo.MaxLevel)
-                tattooSuffixe = $" +{clickedTattoo.Level - 1}";
+                tattooSuffixe += $" +{clickedTattoo.Level - 1}";
             else if (clickedTattoo.Level > 1 && clickedTattoo.Level == clickedTattoo.MaxLevel)
-                tattooSuffixe = "Max";
+                tattooSuffixe += "Max";
         }
-        var upgradable = clickedTattoo.MaxLevel > 1 ? $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}[upgradable]" : "";
+        var upgradable = clickedTattoo.MaxLevel > 1 && !tattooSuffixe.Contains("Max") ? $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}[upgradable]" : string.Empty;
         _instantiator.NewPopupYesNo($"{clickedTattoo.Name} {tattooSuffixe}", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "inked: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + bodyPart.GetDescription().ToLower() + "\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + clickedTattoo.GetDescription() + upgradable, null, "Ok", null);
     }
 

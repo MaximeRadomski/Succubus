@@ -59,7 +59,7 @@ public static class Constants
     public const int StepsAssetsLootStart = 3;
     public const int StepsAssetsOpponentStart = 8;
     public const int CookiePiecesMax = 20;
-    public const int GatlingPiecesMax = 12;
+    public const int GatlingPiecesMax = 6;
 
     //  TAGS  //
     public const string TagMusic = "Music";

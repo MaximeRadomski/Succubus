@@ -9,7 +9,7 @@ public class TattooSeedofLight : Tattoo
         Name = TattoosData.Tattoos[Id];
         Stat = 25;
         Rarity = Rarity.Common;
-        MaxLevel = 4;
+        MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)
