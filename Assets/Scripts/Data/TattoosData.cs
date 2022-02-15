@@ -23,7 +23,7 @@ public static class TattoosData
     // DEBUG //
     public static bool DebugEnabled = Constants.TattoosDebug;
     public static bool DebugMultitude = false;
-    public static Tattoo DebugTattoo = GetTattooFromName("Gatling Gun");
+    public static Tattoo DebugTattoo = GetTattooFromName("Kinky Boot");
 
     public static Tattoo GetRandomTattoo()
     {

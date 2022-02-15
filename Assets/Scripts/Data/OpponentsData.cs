@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Shop Keeper";
+        var name = "Stan";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -398,7 +398,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Stan", Realm = Realm.Hell, Type = OpponentType.Boss,
-            HpMax = 666, Weakness = Weakness.None, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 12,
+            HpMax = 666, Weakness = Weakness.Combos, DamageOnWeakness = 20, Immunity = Immunity.xLines, XLineImmunity = 4, Cooldown = 12,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Gate, 3) },
             GravityLevel = 8, Weight = 999,

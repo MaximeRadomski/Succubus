@@ -3176,11 +3176,12 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)
     {
-        int lineY = GetHighestBlock() + 3;
+        int lineY = GetHighestBlock() + 5;
         if (lineY > 18)
-            return;
+            lineY = 18;
         int holeStartX = UnityEngine.Random.Range(1, 7 - Character.GateWidener);
         _soundControler.PlaySound(_idLightRows);
+        DeleteLine(lineY);
         FillLine(lineY, AttackType.LightRow, opponentRealm, holeStartX, holeStartX + 1 + Character.GateWidener);
         cooldown = cooldown < 1 ? 1 : cooldown;
         PlayFieldBhv.Grid[0, lineY].gameObject.tag = Constants.TagLightRows;

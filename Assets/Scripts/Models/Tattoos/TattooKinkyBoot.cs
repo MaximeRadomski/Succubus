@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TattooKinkyBoot : Tattoo
 {
+    private int thornMultiplier = 50;
+
     public TattooKinkyBoot()
     {
         Id = 7;
@@ -16,11 +18,11 @@ public class TattooKinkyBoot : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.GateWidener += Stat;
-        character.CanDoubleJump = true;
+        character.ThornsPercent += thornMultiplier;
     }
 
     public override string GetDescription()
     {
-        return $"increases gate attacks wideness by {StatToString(after: Stat * Level == 1 ? " block" : " blocks")}";
+        return $"increases gate attacks wideness by {StatToString(after: Stat * Level == 1 ? " block" : " blocks")},\nand hurts your opponent everytime it attacks by {StatToString(after: "%", statMultiplier: thornMultiplier)} of your attack.";
     }
 }

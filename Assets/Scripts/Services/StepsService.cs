@@ -361,7 +361,7 @@ public class StepsService
         var baseWeight = 50 + character.StepsWeightMalus;
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
-        weight *= 1.0f + (0.50f * run.CurrentRealm.GetHashCode());
+        weight *= 1.0f + (0.30f * run.CurrentRealm.GetHashCode());
         if (run.Difficulty >= Difficulty.Hard)
         {
             var harderCount = (run.Difficulty.GetHashCode() - Difficulty.Hard.GetHashCode()) + 1;

@@ -408,7 +408,7 @@ public static class Helper
             opponent.Cooldown += alteredCooldown * MultiplierFromPercent(1.0f, character.RealmTreeBoost);
             if (difficulty == Difficulty.Easy)
             {
-                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 3.0f);
+                opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 2.5f);
                 opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 0.5f);
                 opponent.GravityLevel -= 8;
             }

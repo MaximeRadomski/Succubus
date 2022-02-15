@@ -7,7 +7,7 @@ public class TattooCrownOfThorns : Tattoo
     {
         Id = 21;
         Name = TattoosData.Tattoos[Id];
-        Stat = 50;
+        Stat = 100;
         Rarity = Rarity.Common;
         MaxLevel = 2;
     }
