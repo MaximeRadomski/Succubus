@@ -7,9 +7,9 @@ public class TattooInsulatingFoam : Tattoo
     {
         Id = 48;
         Name = TattoosData.Tattoos[Id];
-        Stat = 1;
+        Stat = 2;
         Rarity = Rarity.Common;
-        MaxLevel = 8;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)
@@ -19,6 +19,6 @@ public class TattooInsulatingFoam : Tattoo
 
     public override string GetDescription()
     {
-        return $"fills your waste rows holes by {StatToString("+", Stat * Level == 1 ? " column" : " columns")}.";
+        return $"fills your waste rows holes by {StatToString("+", " columns")}.";
     }
 }
