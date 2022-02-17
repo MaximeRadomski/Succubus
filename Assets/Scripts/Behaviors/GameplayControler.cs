@@ -740,6 +740,7 @@ public class GameplayControler : MonoBehaviour
 
         if (Character != null)
             level -= Character.LoweredGravity;
+        level -= Cache.WhacAMoleGravityMalus;
         if (level < 0 || (Cache.PactZeroGravity && !_hasGate))
             level = 0;
         GravityLevel = level;
@@ -1109,8 +1110,7 @@ public class GameplayControler : MonoBehaviour
         _characterSpecial?.OnPieceLocked(CurrentPiece);
         _soundControler.PlaySound(_idLock);
         --_afterSpawnAttackCounter;
-        --Cache.HeightLimiterResetPieces;
-        if (Cache.HeightLimiterResetPieces == 0)
+        if (--Cache.HeightLimiterResetPieces == 0)
         {
             ResetPlayHeight();
             Cache.HeightLimiterResetPieces = -1;
@@ -1120,6 +1120,8 @@ public class GameplayControler : MonoBehaviour
             Cache.GatlingPiecesCount = 0;
             SceneBhv.DamageOpponent(Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, this.Character.GatlingPercentDamage)), CurrentPiece, Helper.GetInferiorFrom(CharacterRealm));
         }
+        if (Time.time <= Cache.ArcadeTime)
+            SceneBhv.DamageOpponent(Constants.ArcadeDamage, CurrentPiece.gameObject, Realm.Hell);
         SpreadEffect(CurrentPiece);
         CheckForLightRows();
         CheckForVisionBlocks();
@@ -2302,6 +2304,13 @@ public class GameplayControler : MonoBehaviour
                 ++Cache.NoodleShieldCount;
                 var shield = Instantiator.NewSimpShield(CharacterInstanceBhv.OriginalPosition, Cache.CurrentRemainingSimpShields++, CharacterRealm);
                 Instantiator.NewAttackLine(CurrentPiece.transform.position, shield.transform.position, CharacterRealm);
+            }
+            if (Character.WhacAMoleStrength > 0 && ++Cache.WhacAMoleAttackCount >= Constants.WhacAMoleMax)
+            {
+                Cache.WhacAMoleAttackCount = 0;
+                ++Cache.WhacAMoleGravityMalus;
+                SetGravity(GravityLevel);
+                Instantiator.PopText("whac-a-mole", CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             }
 
             SceneBhv.PopText();

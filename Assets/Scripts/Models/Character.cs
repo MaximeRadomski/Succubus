@@ -21,7 +21,7 @@ public class Character : Loot
     public int SkinId = 0;
 
     //Global to all
-    public int CritChancePercent = 1;
+    public int CritChancePercent = 2;
     public int CritMultiplier = 50;
     public int SingleLineDamageBonus = 0;
     public int DamagePercentBonus = 0;
@@ -108,6 +108,7 @@ public class Character : Loot
     public int SneakerSPecialBonus = 0;
     public int RealmTreeBoost = 0;
     public int GatlingPercentDamage = 0;
+    public int WhacAMoleStrength = 0;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;

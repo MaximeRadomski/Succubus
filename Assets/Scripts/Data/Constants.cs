@@ -60,6 +60,8 @@ public static class Constants
     public const int StepsAssetsOpponentStart = 8;
     public const int CookiePiecesMax = 20;
     public const int GatlingPiecesMax = 6;
+    public const int WhacAMoleMax = 3;
+    public const int ArcadeDamage = 10;
 
     //  TAGS  //
     public const string TagMusic = "Music";

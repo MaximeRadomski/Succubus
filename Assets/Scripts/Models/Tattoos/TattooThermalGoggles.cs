@@ -23,6 +23,6 @@ public class TattooThermalGoggles : Tattoo
 
     public override string GetDescription()
     {
-        return $"you see air pieces {StatToString("+", "0%")} more distinctively, and increases your critical chance\nby {StatToString(after: "%", statMultiplier: _multiplier)}.";
+        return $"you see air pieces {StatToString("+", "0%")} more distinctively, and increases your critical chance by {StatToString(after: "%", statMultiplier: _multiplier)}.";
     }
 }

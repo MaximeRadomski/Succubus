@@ -12,7 +12,7 @@ public static class ItemsData
     /* 00 */ { "Holy Water", "Demon Blood", "Grenade", "Voodoo Doll", "Smoke Bomb", "Inner Strength", "Holy Grenade", "Reverse Crucifix", "Wooden Cross", "Forbidden Camembert",
     /* 10 */ "Justice Shovel", "Non-Euclidean Coin", "D6", "Mold Fashioned", "Lucky Ladybug", "Knight Shield", "CRT Monitor", "Creeping Totem", "The Devil", "The World",
     /* 20 */ "The Hierophant", "Eliacube", "Mask of Duality", "Door of Truth", "Sun Juice", "Death Scythe", "Dark Milk", "Atlas Effigy", "Bloodlust Blade", "Moon Gun",
-    /* 30 */ "Gender Swap Coffin"};
+    /* 30 */ "Gender Swap Coffin", "Arcade Button" };
 
     public static string[] CommonItemsNames =    { Items[00], Items[01], Items[02], Items[03], Items[08], Items[11], Items[12], Items[16], Items[17], Items[21], Items[22], Items[26] };
     public static string[] RareItemsNames =      { Items[04], Items[05], Items[09], Items[10], Items[13], Items[14], Items[15], Items[18], Items[19], Items[20] };
