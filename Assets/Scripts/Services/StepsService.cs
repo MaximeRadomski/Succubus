@@ -201,7 +201,14 @@ public class StepsService
                         id = 0;
                 }
             }
-            opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            if (lootId >= 0)
+                opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            else
+            {
+                lootType = LootType.Resource;
+                lootId = run.CurrentRealm.GetHashCode();
+                opponentType = OpponentType.Common;
+            }
         }
         //DEBUG
         if (ItemsData.DebugEnabled && !run.Steps.Contains($"I{ItemsData.DebugItem.Id.ToString("00")}"))

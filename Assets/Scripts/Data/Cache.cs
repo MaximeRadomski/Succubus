@@ -74,7 +74,6 @@ public static class Cache
     public static Character TemporaryCharacter = null;
     public static int GatlingPiecesCount = 0;
     public static int WhacAMoleAttackCount = 0;
-    public static int WhacAMoleGravityMalus = 0;
     public static float ArcadeTime = 0.0f;
 
     public static int PactFlatDamage = 0;
@@ -138,7 +137,6 @@ public static class Cache
         TemporaryCharacter = null;
         GatlingPiecesCount = 0;
         WhacAMoleAttackCount = 0;
-        WhacAMoleGravityMalus = 0;
         ArcadeTime = 0.0f;
 
         PactFlatDamage = 0;

@@ -740,7 +740,6 @@ public class GameplayControler : MonoBehaviour
 
         if (Character != null)
             level -= Character.LoweredGravity;
-        level -= Cache.WhacAMoleGravityMalus;
         if (level < 0 || (Cache.PactZeroGravity && !_hasGate))
             level = 0;
         GravityLevel = level;
@@ -2308,8 +2307,8 @@ public class GameplayControler : MonoBehaviour
             if (Character.WhacAMoleStrength > 0 && ++Cache.WhacAMoleAttackCount >= Constants.WhacAMoleMax)
             {
                 Cache.WhacAMoleAttackCount = 0;
-                ++Cache.WhacAMoleGravityMalus;
-                SetGravity(GravityLevel);
+                var tmp = GravityLevel - Character.WhacAMoleStrength;
+                SetGravity(tmp < 1 ? 1 : tmp);
                 Instantiator.PopText("whac-a-mole", CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             }
 

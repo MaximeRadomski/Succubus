@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TattooZweihander : Tattoo
+public class TattooDarkSign : Tattoo
 {
-    public TattooZweihander()
+    public TattooDarkSign()
     {
         Id = 92;
         Name = TattoosData.Tattoos[Id];
         Stat = 1;
         Rarity = Rarity.Common;
-        MaxLevel = 2;
+        MaxLevel = 4;
     }
 
     public override void ApplyToCharacter(Character character)
