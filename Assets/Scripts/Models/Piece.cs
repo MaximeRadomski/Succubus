@@ -19,7 +19,7 @@ public class Piece : FrameRateBehavior
     public bool IsClassic;
 
     private Vector3 _originalScale = new Vector3(1.0f, 1.0f, 1.0f);
-    private Vector3 _doubleJumpScale = new Vector3(1.5f, 1.5f, 1.0f);
+    private Vector3 _doubleJumpScale = new Vector3(1.25f, 1.25f, 1.0f);
     private bool _isDoubleJumping = false;
     private bool _atLeastOneShadowSet = false;
     private bool _disableAsked = false;

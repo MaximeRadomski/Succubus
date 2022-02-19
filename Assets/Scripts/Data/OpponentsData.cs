@@ -557,7 +557,7 @@ public static class OpponentsData
             Name = "Stained Glass", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 90, Weakness = Weakness.xLines, XLineWeakness = 4, DamageOnWeakness = 60, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.ForcedBlock, 4, 1) },
+                new OpponentAttack(AttackType.ForcedBlock, 3, 1) },
             GravityLevel = 6, Weight = 40,
             Lore = "They can fight apparently... I'm the first stunned by it!"
         },

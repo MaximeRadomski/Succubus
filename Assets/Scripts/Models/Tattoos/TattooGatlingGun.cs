@@ -19,6 +19,6 @@ public class TattooGatlingGun : Tattoo
 
     public override string GetDescription()
     {
-        return $"deals {StatToString(after: "%")} of your attack every {Constants.CookiePiecesMax} pieces locked.";
+        return $"deals {StatToString(after: "%")} of your attack every {Constants.GatlingPiecesMax} pieces locked.";
     }
 }

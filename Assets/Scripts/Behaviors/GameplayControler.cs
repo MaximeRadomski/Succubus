@@ -1099,8 +1099,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece != null)
         {
             AddToPlayField(CurrentPiece);
-            if (Character.CanDoubleJump)
-                CurrentPiece.GetComponent<Piece>().DoubleJump();
+            CurrentPiece.GetComponent<Piece>().DoubleJump();
         }
         var drone = GameObject.Find(Constants.GoDrone);
         if (drone != null)

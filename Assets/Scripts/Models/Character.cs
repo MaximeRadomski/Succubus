@@ -39,7 +39,6 @@ public class Character : Loot
     public int LandLordLateAmount = 1; //1 beause he does not land vision on first step
     public int AirPieceOpacity = 0;
     public bool CanMimic = false;
-    public bool CanDoubleJump = false;
     public int PiecesWeight = 0;
     public int CumulativeCrit = 0;
     public int CumulativeNotCrit = 0;

@@ -1875,6 +1875,47 @@ public static class DialogsData
                 }
             }
         },
+        { "DOG|Podarge",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Uh? That's it? Just a doggo?",
+                    "Surprised, aren't you?. Humankind put me here, as I am man's best friend, and therefore...",
+                    "Yeah yeah I don't really care. Let's fight.",
+                    "Wait what? Aren't you full of questions?",
+                    "Not really... I'm just disappointed because I hoped for a better scenario...",
+                    "Are you for real?"
+                }
+            }
+        },
+        { "DOG|Belias",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Wait... I don't understand...",
+                    "You do not have to, Belias, betrayed and exiled for your nature. A better future awaits you!",
+                    "What do you mean?",
+                    "Come, my child. Join me, and together, we can rule the galaxy!",
+                    "..."
+                }
+            }
+        },
+        { "DOG|Floppyredoux",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Don't even talk to me you beast.",
+                    "That's rude for someone spending so much time with animals.",
+                    "What can I say, I'm a cat lady."
+                }
+            }
+        },
         #endregion
 
         #region The Beholder
