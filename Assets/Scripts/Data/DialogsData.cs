@@ -1875,6 +1875,21 @@ public static class DialogsData
                 }
             }
         },
+        { "DOG|Heaven",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Sigh... Hello Dog...",
+                    "You knew this was bound to happen didn't you?",
+                    "Yes yes...",
+                    "And you knew I would consider it mutinery as well?",
+                    "Well, that's the point I wanted to talk about!",
+                    "Show me what you got, and I might reconsider my judgment!"
+                }
+            }
+        },
         { "DOG|Podarge",
             new List<List<string>>()
             {
@@ -1913,6 +1928,36 @@ public static class DialogsData
                     "Don't even talk to me you beast.",
                     "That's rude for someone spending so much time with animals.",
                     "What can I say, I'm a cat lady."
+                }
+            }
+        },
+        { "DOG|Cereza",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Oh!!!",
+                    "?",
+                    "You're so cute!",
+                    "...",
+                    "Cannot believe something as cute as you are might be the reason for all the suffering.",
+                    "Don't call it suffering, call it order. I put order in this chaotic world of yours.",
+                    "Well... Let there be chaos then."
+                }
+            }
+        },
+        { "DOG|Tony",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Congratulation for making it this far!",
+                    "Shit... I might have drink to much once again...",
+                    "What are you talking about?",
+                    "Well don't take it personally mister god, but right now, I see you as some kind of a dog...",
+                    "Is that so hard to accept?",
+                    "Wow... that's even more fucked up than I thought it would be then!!"
                 }
             }
         },
