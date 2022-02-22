@@ -566,6 +566,18 @@ public static class DialogsData
                     "May be his grace remembered.",
                     "Wait, aren't you an angel? What are you doing here?",
                     "And may the culprits be damned for their sins."
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Still talking to yourself?",
+                    "And may the culprits be damned for their sins.",
+                    "Bla bla bla..."
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Yeah yeah fuck off!"
                 }
             }
         },
@@ -577,8 +589,13 @@ public static class DialogsData
                     "Ah! Long time no see my friend!",
                     "Asbeel? Is that you?",
                     "Haha you know it! Here to spread the lord's speech as well?",
-                    "Hmm... I see... I'm not. And I guess it makes us enemies then.",
+                    "Hmm... I see... And what if I weren't?",
                     "You hit rock bottom my friend..."
+                },
+                new List<string>()
+                {
+                    "Hi you.",
+                    "Come on, don't be a stranger!"
                 }
             }
         },
@@ -591,6 +608,11 @@ public static class DialogsData
                     "Isn't fighting for a noble cause justified?",
                     "You dare call shattering the sacred order a noble cause?",
                     "I dare call you a failure among angels!!"
+                },
+                new List<string>()
+                {
+                    "Hello mere human.",
+                    "Wow, still reeling as I can see."
                 }
             }
         },
@@ -603,7 +625,19 @@ public static class DialogsData
                     "Oh shit an angel!!",
                     "And may the culprits be damned for their sins.",
                     "Helloooo?! Anyone there? You seem pretty empty repeating your versets dude.",
-                }
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Oh come on, not again...",
+                    "And may the culprits be damned for their sins.",
+                    "...",
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Stooooop!!"
+                },
             }
         },
         { "Fallen Angel|Ivy",
@@ -615,6 +649,18 @@ public static class DialogsData
                     "What the actual fuck is an angel doing here?",
                     "And may the culprits be damned for their sins.",
                     "Rude. Just asked you a question...",
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Bla bla bla",
+                    "And may the culprits be damned for their sins.",
+                    "Bla bla bla",
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "Yeah yeah I know the music..."
                 }
             }
         },
@@ -627,6 +673,11 @@ public static class DialogsData
                     "How dare you step on hellish grounds!!",
                     "And may the culprits be damned for their sins.",
                     "Yeah yeah keep talking, and let me teach you a lesson.",
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "You won't get away with your trespassing!"
                 }
             }
         },
@@ -643,7 +694,13 @@ public static class DialogsData
                     "Purity? Me? No no you must be mistaken...",
                     "Your place is not here Belias, servitor of Hell.",
                     "How do you know my name??"
-                }
+                },
+                new List<string>()
+                {
+                    "May be his grace remembered.",
+                    "I have so many questions!",
+                    "And answers will come in time Belias."
+                },
             }
         },
         #endregion
@@ -656,7 +713,27 @@ public static class DialogsData
                     "Geez! I was just about to do the thing!!",
                     "The thing?",
                     "Yes... The THING!!!"
-                }
+                },
+                new List<string>()
+                {
+                    "Do you want to hear a story?",
+                    "Not now..."
+                },
+                new List<string>()
+                {
+                    "Do you have time for a story now?",
+                    "Nope, trying to save the world here."
+                },
+                new List<string>()
+                {
+                    "And now? Any time for a little story?",
+                    "I... I don't want to listen to one of your stories...",
+                    "Pff..."
+                },
+                new List<string>()
+                {
+                    "Pff..."
+                },
             }
         },
         #endregion
@@ -706,7 +783,17 @@ public static class DialogsData
                 {
                     "Go back where you come from vermin! Those gates have remained sealed for centuries and I am here to keep it that way.",
                     "Vermin?"
-                }
+                },
+                new List<string>()
+                {
+                    "Hmm... A déjà vu? Do I know you, vermin?",
+                    "Can you... Can you stop calling me vermin please?"
+                },
+                new List<string>()
+                {
+                    "This already happened before... Something isn't right...",
+                    "Well at least you don't call me vermin anymore!!"
+                },
             }
         },
         { "Baphomeh|Earth",
@@ -714,7 +801,18 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Go back where you come from human! Enjoy your stay in this place as long as your corpse can handle it."
+                    "Go back where you come from human! Enjoy your stay in this place as long as your corpse can handle it.",
+                    "Rude!!"
+                },
+                new List<string>()
+                {
+                    "What is happening human? Why does your presence feels familiar to me?",
+                    "I can see you're getting used to me. It's nice of you."
+                },
+                new List<string>()
+                {
+                    "Stop your sorcery human! Explain yourself!!",
+                    "Are you gonna ask every time??"
                 }
             }
         },
@@ -725,7 +823,12 @@ public static class DialogsData
                 {
                     "What?? No... Impossible! How come an angel be here?",
                     "It is a proof that the Twins are fighting for a just cause."
-                }
+                },
+                new List<string>()
+                {
+                    "An angel here... Why does it feel familiar...",
+                    "Hehe!!"
+                },
             }
         },
         { "Baphomeh|Ivy",
@@ -811,7 +914,12 @@ public static class DialogsData
                     "A human here? Wait a minute, I cannot find your soul in the registries... How did you even end up here???",
                     "I've been told some amulet brought me here.",
                     "Oh... The evil twins... What have they done again..."
-                }
+                },
+                new List<string>()
+                {
+                    "You again!!",
+                    "I'm afraid so."
+                },
             }
         },
 
@@ -822,8 +930,14 @@ public static class DialogsData
                 {
                     "Oh an angel? The angel of death is sending you?",
                     "Nope. Twins do.",
-                    "Oh... The evil twins... What have they done again..."
-                }
+                    "Wait what??"
+                },
+                new List<string>()
+                {
+                    "This is wrong... Why are you here already?",
+                    "Getting memories of the future aren't you?",
+                    "This is so wrong in so many levels!!"
+                },
             }
         },
         { "Devil's Advocate|Azrael",
@@ -901,7 +1015,13 @@ public static class DialogsData
                     "What?",
                     "What?",
                     "[ intelligible scream ]"
-                }
+                },
+                new List<string>()
+                {
+                    "Oh come on, you again??",
+                    "Wait I know you... Don't I?",
+                    "You must be kidding me..."
+                },
             }
         },
         #endregion
@@ -921,7 +1041,12 @@ public static class DialogsData
                 new List<string>()
                 {
                     "So... you are the one making this mess. I hope you know what you're doing, and what are the consequences!!"
-                }
+                },
+                new List<string>()
+                {
+                    "Wait... You again?",
+                    "Oh come on it's not that bad!"
+                },
             }
         },
         { "Stan|Earth",
@@ -932,7 +1057,18 @@ public static class DialogsData
                     "Is this some kind of joke??",
                     "Why would it be?",
                     "A mere human, trying to get out of hell. My children are really taking this matter too lightly..."
-                }
+                },
+                new List<string>()
+                {
+                    "Humans again??",
+                    "You'll have to get used to it for now I'm afraid...",
+                    "I guess so... Show me what you got, mortal."
+                },
+                new List<string>()
+                {
+                    "Human.",
+                    "Stan."
+                },
             }
         },
         { "Stan|Heaven",
@@ -945,6 +1081,19 @@ public static class DialogsData
                     "Don't tell me my children somehow got into your brain?",
                     "Their cause is worth fighting for!",
                     "Then tell me angel, is it worth dying for?"
+                },
+                new List<string>()
+                {
+                    "Sigh... Can't believe some angels are now wandering into my realm...",
+                    "Come on Stan! Isn't your will to changes in the angels laws the reason you were banished to begin with?",
+                    "Yeah I guess... But old habits die hard...",
+                    "Well let's begin slowly then! Why not letting us through this time?",
+                    "Do not misunderstand my will with my damnation, angel."
+                },
+                new List<string>()
+                {
+                    "Hi angel, ready for our little dance?",
+                    "Whenever you are, Stan."
                 }
             }
         },
@@ -1641,6 +1790,13 @@ public static class DialogsData
                     "I am and will always be. I'm the arm of saints, placed here to guide the humans to holiness.",
                     "Are you even human?",
                     "I am a benediction, and the last being you will see before your eternal suffering!"
+                },
+                new List<string>()
+                {
+                    "How dare you face the pop you devil!",
+                    "Gosh, I forgot how ugly you were...",
+                    "You just cannot endure the perfection I represent.",
+                    "Hahaha! Yeah, sure!!"
                 }
             }
         },
