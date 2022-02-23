@@ -553,6 +553,10 @@ public static class DialogsData
                     "Aren't you supposed to be on our side?",
                     "[ grunts stronger ]",
                     "Well... I guess it's settled then..."
+                },
+                new List<string>()
+                {
+                    "[ grunts ]"
                 }
             }
         },
@@ -862,6 +866,12 @@ public static class DialogsData
                     "My lord. Orders are orders. Nothing personal.",
                     "Be a good pawn Baphomeh, and show me what you got!",
                     "[ Snort ]"
+                },
+                new List<string>()
+                {
+                    "My lord.",
+                    "Let's do it Baphomeh, show me what you learned from last time.",
+                    "[ Snort ]"
                 }
             }
         },
@@ -1047,6 +1057,10 @@ public static class DialogsData
                     "Wait... You again?",
                     "Oh come on it's not that bad!"
                 },
+                new List<string>()
+                {
+                    "Sigh... You again..."
+                }
             }
         },
         { "Stan|Earth",
@@ -1206,7 +1220,7 @@ public static class DialogsData
                     "Patriarch Anthony?",
                     "Just Tony. Please.",
                     "But... But... What happened?",
-                    "Alcohol, monk. Alcohol happened..."
+                    "Alcohol, brother. Alcohol happened..."
                 }
             }
         },
@@ -1246,7 +1260,13 @@ public static class DialogsData
                     "Oh... A scumbag of the Church...",
                     "Can't you have at least some dignity?",
                     "I'm not here for dignity. Now come taste my spear."
-                }
+                },
+                new List<string>()
+                {
+                    "Oh! A fierce opponent of the Army of The Night!",
+                    "Already beat you once, and about to do it again.",
+                    "Wait what?"
+                },
             }
         },
         #endregion
@@ -1259,6 +1279,11 @@ public static class DialogsData
                     "Halt heretic!!",
                     "Let me guess. Something about the emperor?",
                     "For the emperor!!"
+                },
+                new List<string>()
+                {
+                    "Halt heretic!!",
+                    "Yeah yeah I know, for the emperor!!"
                 }
             }
         },
@@ -1292,6 +1317,10 @@ public static class DialogsData
                     "Hellspring. Die now, and leave this world. You'll never belong here!",
                     "Oh but we have no intention to stay here don't you worry!",
                     "To hell with your heresy! You're nothing but a blight on mankind."
+                },
+                new List<string>()
+                {
+                    "Hellspring..."
                 }
             }
         },
@@ -1306,6 +1335,12 @@ public static class DialogsData
                     "Out of my way, old illuminated.",
                     "The outcome of our fight is already written, you cannot kill me!",
                     "We will see about that."
+                },
+                new List<string>()
+                {
+                    "We meet again, devil worshipper.",
+                    "Again?",
+                    "Well yes... Wait... Why again?"
                 }
             }
         },
@@ -1331,6 +1366,16 @@ public static class DialogsData
                     "So much dark energy emanating from you...",
                     "Yeah seems fair...",
                     "You corrupted fool, let me help you finding redemption!"
+                },
+                new List<string>()
+                {
+                    "So much dark energy emanating from you...",
+                    "Have you seen yourself? Levitating all around the place?"
+                },
+                new List<string>()
+                {
+                    "So much dark energy emanating from you...",
+                    "About to make it darker!!"
                 }
             }
         },
@@ -1356,6 +1401,11 @@ public static class DialogsData
                     "He? You mean, your god?",
                     "Yes, in all his mercy.",
                     "But, do I want his mercy tho..."
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Well, I'm not looking for forgiveness and I won't move so..."
                 }
             }
         },
@@ -1367,6 +1417,17 @@ public static class DialogsData
                     "He forgives you, and therefore asks you to leave.",
                     "Nope, I'm pretty sure HE hates me.",
                     "Oh, a fallen angel, I see."
+                },
+                new List<string>()
+                {
+                    "He forgives you, and...",
+                    "And?",
+                    "Yeah... You might have betrayed him if you're standing before me right now...",
+                    "Haha!! Might!"
+                },
+                new List<string>()
+                {
+                    "he won't forgive you... He just won't..."
                 }
             }
         },
@@ -1379,6 +1440,11 @@ public static class DialogsData
                     "Hahaha, like I would like your god's mercy!",
                     "Even if he forgives your madness?",
                     "Where you see madness, I see justice. Now get out of my way, or I'll make you."
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Don't want his mercy, didn't ask."
                 }
             }
         },
@@ -1391,6 +1457,11 @@ public static class DialogsData
                     "Oh... That's so kind of him... Could you tell him to also act instead of just praying for us?",
                     "Isn't his mercy enough for your redemption?",
                     "I'll show you some mercy..."
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "The sad thing is that I don't forgive him..."
                 }
             }
         },
@@ -1420,7 +1491,12 @@ public static class DialogsData
                     "I'm no more slave, I am now the armed arm of mistress Ivy!",
                     "You... You just said \"mistress\" Ivy... Don't you see the Irony?",
                     "..."
-                }
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Like a slave like me could be forgiven..."
+                },
             }
         },
         { "Angelic Messenger|Sir Vixid",
@@ -1432,6 +1508,11 @@ public static class DialogsData
                     "Your god means nothing to me.",
                     "My god? He is the god of all of us!",
                     "I see no god in his acts, only a scared old fool trying to save his royal ass!!"
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "No. He's just afraid."
                 }
             }
         },
@@ -1444,7 +1525,12 @@ public static class DialogsData
                     "Oh please, like if I never heard it before.",
                     "You were in the clergy, shouldnt you know that he loves you unconditionally?",
                     "Yup, but he also made me hate myself... I'd rather love me unconditionally!!"
-                }
+                },
+                new List<string>()
+                {
+                    "He forgives you, and therefore asks you to leave.",
+                    "Yeah yeah, I know how terrified people try to act when their back is against the wall."
+                },
             }
         },
         #endregion
@@ -1588,6 +1674,22 @@ public static class DialogsData
                     "[ Target acquired ]",
                     "?\nIt is too quiet, something's fishy.",
                     "[ Engaging ]"
+                },
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Didn't I lived this situation before?",
+                    "[ Engaging ]",
+                    "I'm sure I already lived this...",
+                    "...",
+                    "Like a deja-vu or something"
+                },
+                new List<string>()
+                {
+                    "[ Target acquired ]",
+                    "Haha! You won't get me this time!",
+                    "[ Engaging ]",
+                    "I know something's up!"
                 }
             }
         },
