@@ -36,6 +36,10 @@ public abstract class Tattoo : Loot
     protected void FillAllSpace()
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        //DEBUG
+        if (Constants.TattoosStringDebug != string.Empty)
+            tattoosFullStr = Constants.TattoosStringDebug;
+        //DEBUG
         var nameToAdd = Name.Replace(" ", "").Replace("'", "").Replace("-", "");
         var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
         if (alreadyBodyPartsIds == null)

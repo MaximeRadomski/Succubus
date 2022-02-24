@@ -13,6 +13,7 @@ public static class Constants
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
     public const int DamageDebug = 0;
+    public const string TattoosStringDebug = "HammerL01B09;FireStoneL01B07;ThermalGogglesL01B04;HedgehogL01B02;FoxL01B06;InsulatingFoamL01B05;EclipseGlassesL01B01;";
 
     public const int MaxFps = 60;
     public const float Pixel = 0.14285f;

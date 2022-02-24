@@ -8,6 +8,8 @@ public class SplashScreenBhv : SceneBhv
     private List<string> _catchPhrases;
     private TMPro.TextMeshPro _continueText;
 
+    private bool _isGoingToMainMenu = false;
+
     public override MusicType MusicType => MusicType.SplashScreen;
 
     void Start()
@@ -93,6 +95,12 @@ public class SplashScreenBhv : SceneBhv
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = GoToMainMenu;
     }
 
+    protected override void NormalUpdate()
+    {
+        if (Input.anyKeyDown)
+            GoToMainMenu();
+    }
+
     private void TiltContinue()
     {
         _continueText.enabled = !_continueText.enabled;
@@ -164,6 +172,9 @@ public class SplashScreenBhv : SceneBhv
 
     private void GoToMainMenu()
     {
+        if (_isGoingToMainMenu)
+            return;
+        _isGoingToMainMenu = true;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         bool OnBlend(bool result)
         {

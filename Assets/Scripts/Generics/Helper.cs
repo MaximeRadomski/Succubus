@@ -560,9 +560,9 @@ public static class Helper
         return returnStr;
     }
 
-    public static string DateFormat(DateTime dateTime)
+    public static string DateFormat(DateTime dateTime, bool noSeconds = false)
     {
-        return $"{dateTime.Year}/{dateTime.Month.ToString("00")}/{dateTime.Day.ToString("00")} {dateTime.ToString("HH-mm-ss")}";
+        return $"{dateTime.Year}/{dateTime.Month.ToString("00")}/{dateTime.Day.ToString("00")} {(noSeconds ? dateTime.ToString("HH-mm") : dateTime.ToString("HH-mm-ss"))}";
     }
 
     public static int CountChar(this string str, char c)

@@ -415,6 +415,10 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static BodyPart AddTattoo(string name)
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        //DEBUG
+        if (Constants.TattoosStringDebug != string.Empty)
+            tattoosFullStr = Constants.TattoosStringDebug;
+        //DEBUG
         if (tattoosFullStr == null)
             tattoosFullStr = "";
         var nameToAdd = name.Replace(" ", "").Replace("'", "").Replace("-", "");
@@ -487,12 +491,20 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static string GetCurrentTattoosString()
     {
         var tattoos = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        //DEBUG
+        if (Constants.TattoosStringDebug != string.Empty)
+            tattoos = Constants.TattoosStringDebug;
+        //DEBUG
         return tattoos;
     }
 
     public static List<Tattoo> GetCurrentTattoos()
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        //DEBUG
+        if (Constants.TattoosStringDebug != string.Empty)
+            tattoosFullStr = Constants.TattoosStringDebug;
+        //DEBUG
         var tattoosList = new List<Tattoo>();
         if (tattoosFullStr == Constants.PpSerializeDefault)
             return tattoosList;
@@ -514,6 +526,10 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static Tattoo GetCurrentInkedTattoo(string name)
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        //DEBUG
+        if (Constants.TattoosStringDebug != string.Empty)
+            tattoosFullStr = Constants.TattoosStringDebug;
+        //DEBUG
         if (tattoosFullStr == Constants.PpSerializeDefault)
             return null;
         var parsedName = name.Replace(" ", "").Replace("'", "").Replace("-", "");
