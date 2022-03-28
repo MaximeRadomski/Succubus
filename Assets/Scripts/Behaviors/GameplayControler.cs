@@ -858,7 +858,7 @@ public class GameplayControler : MonoBehaviour
 
     private void SetBag()
     {
-        //var tmpStr = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
+        //var tmpStr = "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO";
         var tmpStr = "IJLOSTZ";
         if (Helper.RandomDice100(Character.TWorshipPercent))
             tmpStr += "T";
@@ -2290,7 +2290,7 @@ public class GameplayControler : MonoBehaviour
                 SceneBhv.DamageOpponent(Character.GetAttack() * Character.GodHandCombo, null, CharacterRealm);
             }
 
-            if (GetHighestBlock() == -1) //PERFECT
+            if (GetHighestBlock() == Cache.PlayFieldMinHeight - 1) //PERFECT
             {
                 _soundControler.PlaySound(_idPerfect);
                 _characterSpecial?.OnPerfectClear();
@@ -2319,6 +2319,7 @@ public class GameplayControler : MonoBehaviour
                     CheckForLineBreaks();
 
                 ClearLineSpace();
+                CheckAndUpdateGate();
 
                 if (nbLines >= 4
                 || (_lastLockTwist && nbLines >= 2)
@@ -2348,6 +2349,7 @@ public class GameplayControler : MonoBehaviour
                 //Debug.Log(DateTime.Now + "CheckForLine (no line)");
                 canSpawn = SceneBhv.OpponentAttack();
             }
+            CheckAndUpdateGate();
             if (canSpawn)
                 Spawn();
         }            
@@ -2424,6 +2426,24 @@ public class GameplayControler : MonoBehaviour
             }
         }
         return nbLinesDeleted;
+    }
+
+    private void CheckAndUpdateGate()
+    {
+        var allLightRows = GameObject.FindGameObjectsWithTag(Constants.TagLightRows);
+        foreach (var lightRowGameObject in allLightRows)
+        {
+            var lightRowBhv = lightRowGameObject.GetComponent<LightRowBlockBhv>();
+            if (lightRowBhv != null && lightRowBhv.IsGate)
+            {
+                MoveGateToY(Mathf.RoundToInt(lightRowBhv.transform.position.y), Constants.PlayFieldHeight - 1);
+                ClearLineSpace();
+                int lineY = GetHighestBlock() + 2;
+                if (lineY > 18)
+                    lineY = 18;
+                MoveGateToY(Mathf.RoundToInt(lightRowBhv.transform.position.y), lineY);
+            }
+        }
     }
 
     public void CheckForLineBreaks()
@@ -2589,7 +2609,7 @@ public class GameplayControler : MonoBehaviour
             if (!HasFullLineSpace(y))
                 return y;
         }
-        return -1;
+        return Cache.PlayFieldMinHeight - 1;
     }
 
     public int GetHighestBlockOnX(int x)
@@ -2599,7 +2619,7 @@ public class GameplayControler : MonoBehaviour
             if (PlayFieldBhv.Grid[x, y] != null)
                 return y;
         }
-        return -1;
+        return Cache.PlayFieldMinHeight - 1;
     }
 
     private bool HasFullLineSpace(int y)
@@ -2642,29 +2662,50 @@ public class GameplayControler : MonoBehaviour
     {
         if (nbRows == 0)
             return isShrinkOrLineBreak ? Cache.HeightLimiter : Cache.PlayFieldMinHeight;
-        for (int y = GetHighestBlock(); y >= Cache.HeightLimiter; --y)
+        var highest = GetHighestBlock();
+        for (int y = highest == Cache.PlayFieldMinHeight - 1 ? Cache.PlayFieldMinHeight : highest; y >= Cache.HeightLimiter; --y)
         {
             if (y + nbRows >= _playFieldHeight)
                 return -1;
             if (!isShrinkOrLineBreak && PlayFieldBhv.Grid[0, y] != null && PlayFieldBhv.Grid[0, y].gameObject.tag == Constants.TagLineBreak)
                 return y + 1; //Reached a Line Break, must return line id above
-            for (int x = xStart; x <= xEnd; ++x)
-            {
-                if ((xStart != 0 || xEnd != 9) && PlayFieldBhv.Grid[x, y] != null)
-                {
-                    var parentName = PlayFieldBhv.Grid[x, y].parent.name;
-                    if (parentName.Contains("Dark") || parentName.Contains("Light") || parentName.Contains("Break"))
-                        continue;
-                }
-                if (PlayFieldBhv.Grid[x, y] != null)
-                {
-                    PlayFieldBhv.Grid[x, y + nbRows] = PlayFieldBhv.Grid[x, y];
-                    PlayFieldBhv.Grid[x, y] = null;
-                    PlayFieldBhv.Grid[x, y + nbRows].transform.position += new Vector3(0.0f, nbRows, 0.0f);
-                }
-            }
+            IncreaseLine(xStart, xEnd, y, nbRows);
         }
         return isShrinkOrLineBreak ? Cache.HeightLimiter : Cache.PlayFieldMinHeight;
+    }
+
+    private void IncreaseLine(int xStart, int xEnd, int y, int nbRows)
+    {
+        for (int x = xStart; x <= xEnd; ++x)
+        {
+            if ((xStart != 0 || xEnd != 9) && PlayFieldBhv.Grid[x, y] != null)
+            {
+                var parentName = PlayFieldBhv.Grid[x, y].parent.name;
+                if (parentName.Contains("Dark") || parentName.Contains("Light") || parentName.Contains("Break"))
+                    continue;
+            }
+            if (PlayFieldBhv.Grid[x, y] != null)
+            {
+                PlayFieldBhv.Grid[x, y + nbRows] = PlayFieldBhv.Grid[x, y];
+                PlayFieldBhv.Grid[x, y] = null;
+                PlayFieldBhv.Grid[x, y + nbRows].transform.position += new Vector3(0.0f, nbRows, 0.0f);
+            }
+        }
+    }
+
+    private void MoveGateToY(int y, int yTarget)
+    {
+        for (int x = 0; x <= 9; ++x)
+        {
+            if (PlayFieldBhv.Grid[x, y] == null || !PlayFieldBhv.Grid[x, y].parent.name.Contains("Light"))
+                continue;
+            if (PlayFieldBhv.Grid[x, y] != null)
+            {
+                PlayFieldBhv.Grid[x, yTarget] = PlayFieldBhv.Grid[x, y];
+                PlayFieldBhv.Grid[x, y] = null;
+                PlayFieldBhv.Grid[x, yTarget].transform.position = new Vector3(x, yTarget, 0.0f);
+            }
+        }
     }
 
     public void OpponentAttack(AttackType type, int param1, int param2, Realm opponentRealm, GameObject opponentInstance)
@@ -2947,7 +2988,7 @@ public class GameplayControler : MonoBehaviour
             var x = UnityEngine.Random.Range(0, 10);
             var firstXTried = x;
             int y;
-            while ((y = GetHighestBlockOnX(x)) == -1)
+            while ((y = GetHighestBlockOnX(x)) == Cache.PlayFieldMinHeight - 1)
             {
                 if (++x >= 10)
                     x = 0;
@@ -3183,7 +3224,7 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackGate(GameObject opponentInstance, Realm opponentRealm, int cooldown)
     {
-        int lineY = GetHighestBlock() + 5;
+        int lineY = GetHighestBlock() + 3;
         if (lineY > 18)
             lineY = 18;
         int holeStartX = UnityEngine.Random.Range(1, 7 - Character.GateWidener);
@@ -3218,7 +3259,7 @@ public class GameplayControler : MonoBehaviour
         else for (int i = 0; i < deepness; ++i)
             {
                 var decreasingY = y - i;
-                if (decreasingY < 0)
+                if (decreasingY < Cache.PlayFieldMinHeight)
                     break;
                 var targetedGo = PlayFieldBhv.Grid[x, decreasingY];
                 if (targetedGo != null && targetedGo.GetComponent<BlockBhv>()?.Indestructible == false)

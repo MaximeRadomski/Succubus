@@ -505,4 +505,13 @@ public class Instantiator : MonoBehaviour
         rhythmIndicatorBhv.ApplyColor(color);
         return rhythmIndicatorBhv;
     }
+
+    public GameObject NewLurkerShop(Action<bool> resumeAction, Character character)
+    {
+        var tmpShopObject = Resources.Load<GameObject>("Prefabs/LurkerShop");
+        var tmpShopInstance = Instantiate(tmpShopObject, tmpShopObject.transform.position, tmpShopObject.transform.rotation);
+        Cache.IncreaseInputLayer(tmpShopInstance.name);
+        tmpShopInstance.GetComponent<LurkerShopBhv>().Init(this, resumeAction, character);
+        return tmpShopInstance;
+    }
 }

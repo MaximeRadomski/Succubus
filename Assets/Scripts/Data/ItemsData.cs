@@ -20,7 +20,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;
-    public static Item DebugItem = GetItemFromName("Arcade Button");
+    public static Item DebugItem = GetItemFromName("Non-Euclidean Coin");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

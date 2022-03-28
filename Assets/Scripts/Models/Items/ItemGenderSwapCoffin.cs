@@ -16,10 +16,12 @@ public class ItemGenderSwapCoffin : Item
     protected override void Effect()
     {
         Cache.PactFlatDamage += 2;
-        var id = Random.Range(0, 13);
+        var id = Random.Range(0, 14);
         Character tmpChar;
-        if (id == 12 || id == this._character.Id)
-            tmpChar = CharactersData.CustomCharacters[1];
+        if (id == this._character.Id)
+            tmpChar = CharactersData.CustomCharacters[Random.Range(1, CharactersData.CustomCharacters.Count)];
+        else if (id >= 12)
+            tmpChar = CharactersData.CustomCharacters[id - 11];
         else
             tmpChar = CharactersData.Characters[id];
         _gameplayControler.SceneBhv.TemporaryCharacter(tmpChar);        

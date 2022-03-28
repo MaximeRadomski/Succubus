@@ -55,7 +55,7 @@ public class ItemNonEuclideanCoin : Item
                     int roundedX = Mathf.RoundToInt(block.transform.position.x);
                     int roundedY = Mathf.RoundToInt(block.transform.position.y);
 
-                    if (_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY].gameObject != null)
+                    if (_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY]?.gameObject != null)
                         MonoBehaviour.Destroy(_gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY].gameObject);
                     _gameplayControler.PlayFieldBhv.Grid[roundedX, roundedY] = null;
                 }

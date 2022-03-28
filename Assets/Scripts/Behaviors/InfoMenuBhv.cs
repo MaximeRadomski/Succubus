@@ -190,14 +190,19 @@ public class InfoMenuBhv : PopupBhv
         }
         var pacts = PlayerPrefsHelper.GetCurrentPacts();
         var pactsStr = string.Empty;
-        if (pacts.Count == 0)
+        if (pacts.Count == 0
+            || Cache.CurrentGameMode == GameMode.TrainingDummy
+            || Cache.CurrentGameMode == GameMode.TrainingFree)
             pactsStr = "none.";
-        foreach (var pact in pacts)
+        else
         {
-            if (pactsStr != string.Empty)
-                pactsStr += "\n";
-            var remainingFights = pact.MaxFight - pact.NbFight;
-            pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{remainingFights} fight{(remainingFights > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
+            foreach (var pact in pacts)
+            {
+                if (pactsStr != string.Empty)
+                    pactsStr += "\n";
+                var remainingFights = pact.MaxFight - pact.NbFight;
+                pactsStr += $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{remainingFights} fight{(remainingFights > 1 ? "s" : "")}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{pact.ShortDescription}.{Constants.MaterialEnd}";
+            }
         }
         _fightFrame.transform.Find("PactsList").GetComponent<TMPro.TextMeshPro>().text = pactsStr.ToLower();
     }

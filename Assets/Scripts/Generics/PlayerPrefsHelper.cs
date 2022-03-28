@@ -412,7 +412,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         Mock.SetString(Constants.PpCurrentMaxedOutTattoos, null);
     }
 
-    public static BodyPart AddTattoo(string name)
+    public static BodyPart AddTattoo(string name, bool tryAdd = false) // tryAdd = no permanent save
     {
         var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
         //DEBUG
@@ -442,7 +442,7 @@ public class PlayerPrefsHelper : MonoBehaviour
                     return BodyPart.MaxLevelReached;
                 tattoosFullStr = tattoosFullStr.Replace(nameToAdd + "L" + currentTattooLevel.ToString("00"), nameToAdd + "L" + (++currentTattooLevel).ToString("00"));
                 newBodyPartStr = "-10"; // SO FUCKING UGLY
-                if (currentTattooLevel == tattooModel.MaxLevel)
+                if (currentTattooLevel == tattooModel.MaxLevel && !tryAdd)
                     AddMaxedOutTattoo(tattooModel.Id);
             }
         }
@@ -453,13 +453,15 @@ public class PlayerPrefsHelper : MonoBehaviour
             newBodyPartStr = availablesPartsIds.Substring(newBodyPartId * 2, 2);
             alreadyBodyPartsIds += newBodyPartStr;
             tattoosFullStr += nameToAdd + "L01B" + newBodyPartStr + ";";
-            if (tattooModel.MaxLevel == 1)
+            if (tattooModel.MaxLevel == 1 && !tryAdd)
                 AddMaxedOutTattoo(tattooModel.Id);
             //Debug.Log($"alreadyBodyPartsIds: {alreadyBodyPartsIds}");
-            Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
+            if (!tryAdd)
+                Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         }
 
-        Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
+        if (!tryAdd)
+            Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
         return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
     }
 
@@ -1084,6 +1086,17 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static bool GetHasMetBeholder()
     {
         var hasMetHim = PlayerPrefs.GetInt(Constants.PpHasMetBeholder, Constants.PpSerializeDefaultInt);
+        return hasMetHim == 1 ? true : false;
+    }
+
+    public static void SaveHasMetLurker(bool hasMetHim)
+    {
+        PlayerPrefs.SetInt(Constants.PpHasMetLurker, hasMetHim ? 1 : 0);
+    }
+
+    public static bool GetHasMetLurker()
+    {
+        var hasMetHim = PlayerPrefs.GetInt(Constants.PpHasMetLurker, Constants.PpSerializeDefaultInt);
         return hasMetHim == 1 ? true : false;
     }
 

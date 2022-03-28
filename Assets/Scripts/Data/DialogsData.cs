@@ -284,8 +284,8 @@ public static class DialogsData
                     "What? Never seen a nun on high heels before?",
                     "Those are high indeed! And what about the mini skirt?",
                     "Stripper high!! And well, listen, I've had a revelation a couple days ago. I got sick of this chasteness...",
-                    "How did the church saw your transition?",
-                    "Oh screw them... I am now resolved to do anything to get rid of their grip!",
+                    "How did the church see your transition?",
+                    "Screw them! Now I have the resolve to do anything I can to get rid of their grip!",
                     "Hehe, I think I can get you a cause to fight for!"
                 }
             }
@@ -302,7 +302,7 @@ public static class DialogsData
                     "Please?",
                     "Who do you think I am?",
                     "Not a good bartender that's for sure. Now quick, go get my drink!",
-                    "Sign... Can't believe we need help that desperately to hire dudes like you...",
+                    "Sigh... Can't believe we need help that desperately to hire dudes like you...",
                     "Dudes like me? To hire me? Are you expecting me to work for you?",
                     "If I get you your drink, will you help us kicking some asses?",
                     "Are you expecting me to say no to a free drink? That's a deal!!",
@@ -1363,7 +1363,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "So much dark energy emanating from you...",
+                    "So much dark energy is emanating from you...",
                     "Yeah seems fair...",
                     "You corrupted fool, let me help you finding redemption!"
                 },
@@ -1678,9 +1678,9 @@ public static class DialogsData
                 new List<string>()
                 {
                     "[ Target acquired ]",
-                    "Didn't I lived this situation before?",
+                    "Didn't I experience this before?",
                     "[ Engaging ]",
-                    "I'm sure I already lived this...",
+                    "I'm sure I already heard this...",
                     "...",
                     "Like a deja-vu or something"
                 },
@@ -1921,7 +1921,7 @@ public static class DialogsData
                 {
                     "How dare you face the pop you devil!",
                     "Oh SHIT an alien!!",
-                    "What did you just called me?",
+                    "What did you just call me?",
                     "You are not going to fool me martian!",
                     "..."
                 },
@@ -1965,7 +1965,7 @@ public static class DialogsData
                 {
                     "The princess of the underworld herself.",
                     "Thank you!! You are the first one to address me like so!",
-                    "Don't take my words as compliments, you mere existence and presence here are nothing more than-",
+                    "Don't take my words as compliments, your mere existence and presence here are nothing more than-",
                     "Annnd... Now you've ruined it."
                 },
                 new List<string>()
@@ -1973,7 +1973,7 @@ public static class DialogsData
                     "The princess of the underworld herself.",
                     "Yep, that's it. That's me. Let's keep it like so and start fighting!",
                     "Are you in a hurry Ivy, first of the dead?",
-                    "Wow you are in fire dude! If I could be blushing I would!"
+                    "Wow you're on fire dude! I would blush if I could!"
                 }
             }
         },
@@ -2052,7 +2052,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Who dares entering my court!",
+                    "Who dares enter my court!",
                     "The ugly ones, step aside!",
                     "Don't you give me any order hellspring!!",
                     "Then come down of your high horse and prepare to fight!!"
@@ -2064,7 +2064,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Who dares entering my court!",
+                    "Who dares enter my court!",
                     "An angel bored of your reign of terror!!",
                     "Haha, you wouldn't be the first one!",
                     "But I'll be the first to shut you up!"
@@ -2221,7 +2221,7 @@ public static class DialogsData
         },
         #endregion
 
-        #region The Beholder
+        #region TheBeholder
         { "The Beholder",
             new List<List<string>>()
             {
@@ -2458,6 +2458,67 @@ public static class DialogsData
                 {
                     "Greetings, Zaphkiel, legitimate king of Heaven.",
                     "Ahhh... Hearing this is pleasing..."
+                }
+            }
+        },
+        #endregion
+        #region TheLurker
+        { "The Lurker",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "In the name of hell... Why?"
+                }
+            }
+        },
+        { "The Lurker|FirstEncounter",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Please help me...",
+                    "Who are you? And what can I do for you?",
+                    "I'm no one, just lurking... And suffering...",
+                    "Suffering?",
+                    "I nourish from sins, and will offer you what I possess for yours!",
+                    "My... sins?"
+                }
+            }
+        },
+        { "The Lurker|Random1",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Please... Appease my suffering..."
+                }
+            }
+        },
+        { "The Lurker|Random2",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "I beg of you... Erase the pain..."
+                }
+            }
+        },
+        { "The Lurker|Random3",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "I implore you... Expunge my agony..."
+                }
+            }
+        },
+        { "The Lurker|Random4",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "This neverending torment..."
                 }
             }
         },

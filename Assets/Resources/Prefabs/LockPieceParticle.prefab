@@ -663,13 +663,13 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 2.21
+    angle: 2.6
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: -90, y: 0, z: 0}
+    m_Rotation: {x: -59.6, y: 0, z: 0}
     m_Scale: {x: 0.8, y: 1, z: 0.1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -978,7 +978,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 2
+        scalar: 3
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -3439,7 +3439,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    range: {x: 0, y: 1}
+    range: {x: 10.29, y: 1}
     separateAxes: 0
   RotationBySpeedModule:
     enabled: 0
@@ -4850,7 +4850,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: -1
   m_RenderMode: 0
   m_SortMode: 0
@@ -4972,7 +4972,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1078536199
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 1d3aa3a705648d54988bd04e09526f57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4997,3 +4997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e99241fe0030c4ca31dc5d8c602b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelfInit: 0
+  Speed: 0
+  FadeColor: {r: 0, g: 0, b: 0, a: 0}

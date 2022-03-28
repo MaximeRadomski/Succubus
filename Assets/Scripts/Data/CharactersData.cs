@@ -153,6 +153,15 @@ public static class CharactersData
             SpecialName = "Uncertainty", SpecialDescription = "Destroys 1 to 10 lines from the bottom.",
             Lore = "Who the hell might he be?",
             DialogId = 4, DialogPitch = 0.5f
+        },
+        new Character()
+        {
+            Id = 50, Name = "The Lurker", Kind = "Mystic Being", Realm = Realm.Hell,
+            Attack = 2,
+            Cooldown = 2,
+            SpecialName = "Pain", SpecialDescription = "Deals 10 to 100 damage.",
+            Lore = "Poor thing...",
+            DialogId = 2, DialogPitch = 2.0f
         }
     };
 }

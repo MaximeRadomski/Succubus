@@ -180,6 +180,7 @@ public static class Constants
     public const string PpDivineUnlocked = "DivineUnlocked";
     public const string PpLastSavedCredentials = "LastSavedCredentials";
     public const string PpHasMetBeholder = "HasMetBeholder";
+    public const string PpHasMetLurker = "HasMetLurker";
     public const string PpLastFightPlayField = "LastFightPlayField";
     public const string PpWatchedCinematics = "WatchedCinematics";
     public const string PpWatchedCinematicsDefault = "0000";

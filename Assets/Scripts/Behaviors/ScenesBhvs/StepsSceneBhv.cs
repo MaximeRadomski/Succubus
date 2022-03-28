@@ -27,8 +27,10 @@ public class StepsSceneBhv : SceneBhv
     private TMPro.TextMeshPro _lootName;
     private SpriteRenderer _characterPicture;
     private SpriteRenderer _beholderPicture;
+    private SpriteRenderer _lurkerPicture;
     private GameObject _buttonInfo;
     private GameObject _buttonBeholder;
+    private GameObject _buttonLurker;
     private InputControlerBhv _inputControler;
 
     private Step _selectedStep;
@@ -74,6 +76,10 @@ public class StepsSceneBhv : SceneBhv
             _beholderPicture.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
             _buttonBeholder = GameObject.Find("ButtonBeholder");
             _buttonBeholder.GetComponent<ButtonBhv>().EndActionDelegate = BeholderWarp;
+            _lurkerPicture = GameObject.Find("LurkerPicture").GetComponent<SpriteRenderer>();
+            _lurkerPicture.GetComponent<ButtonBhv>().EndActionDelegate = LurkerShop;
+            _buttonLurker = GameObject.Find("ButtonLurker");
+            _buttonLurker.GetComponent<ButtonBhv>().EndActionDelegate = LurkerShop;
             (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
             _selector = GameObject.Find("Selector");
             _position = GameObject.Find("Position");
@@ -165,6 +171,8 @@ public class StepsSceneBhv : SceneBhv
             _buttonInfo.SetActive(false);
             _beholderPicture.gameObject.SetActive(false);
             _buttonBeholder.SetActive(false);
+            _lurkerPicture.gameObject.SetActive(false);
+            _buttonLurker.SetActive(false);
             if (_selectedStep.LootType == LootType.Character)
             {
                 rarity = Rarity.Legendary;
@@ -233,11 +241,22 @@ public class StepsSceneBhv : SceneBhv
             {
                 _beholderPicture.gameObject.SetActive(true);
                 _buttonBeholder.SetActive(true);
+                _lurkerPicture.gameObject.SetActive(false);
+                _buttonLurker.SetActive(false);
+            }
+            else if (x == 50 && y == 50 && _run.RealmLevel == 2)
+            {
+                _lurkerPicture.gameObject.SetActive(true);
+                _buttonLurker.SetActive(true);
+                _beholderPicture.gameObject.SetActive(false);
+                _buttonBeholder.SetActive(false);
             }
             else
             {
                 _beholderPicture.gameObject.SetActive(false);
                 _buttonBeholder.SetActive(false);
+                _lurkerPicture.gameObject.SetActive(false);
+                _buttonLurker.SetActive(false);
             }
         }
     }
@@ -336,6 +355,26 @@ public class StepsSceneBhv : SceneBhv
                 ++_run.DeathScytheAscension;
             PlayerPrefsHelper.SaveRun(_run);
             NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
+        }
+    }
+
+    private void LurkerShop()
+    {
+        var lurker = CharactersData.CustomCharacters.First(c => c.Name.Contains("Lurker"));
+        if (!PlayerPrefsHelper.GetHasMetLurker())
+        {
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, lurker.Name, _character.Name, _character.StartingRealm, OfferShop, customDialogLibelle: "The Lurker|FirstEncounter");
+            PlayerPrefsHelper.SaveHasMetLurker(true);
+        }
+        else
+        {
+            Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, lurker.Name, _character.Name, _character.StartingRealm, OfferShop, customDialogLibelle: $"The Lurker|Random{UnityEngine.Random.Range(1, 5)}");
+        }
+
+        void OfferShop()
+        {
+            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+            Instantiator.NewLurkerShop(null, _character);
         }
     }
 

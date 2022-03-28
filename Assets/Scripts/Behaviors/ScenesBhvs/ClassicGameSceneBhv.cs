@@ -192,7 +192,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         Cache.InputLocked = false;
         _gameplayControler.GameplayOnHold = false;
         OpponentAppearance();
-        if (_pacts != null && _pacts.Count > 0)
+        if (!_isTraining && _pacts != null && _pacts.Count > 0)
             Instantiator.PopText($"{_pacts.Count} active pact{(_pacts.Count > 1 ? "s" : "")}", _characterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
     }
 
@@ -398,7 +398,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             }
             else if (currentItem.Id == ((Item)loot).Id)
             {
-                Instantiator.NewPopupYesNo("Same Item", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "well... this is awkward... you already use " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "...", null, "Oh...", LoadBackAfterVictory, sprite);
+                Instantiator.NewPopupYesNo("Same Item", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "well... this is awkward... you already use " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "...", null, "Oh...", LootResources, sprite);
                 Run.CurrentItemCooldown = 0;
                 Run.CurrentItemUses = ((Item)loot).Uses;
                 PlayerPrefsHelper.SaveRun(Run);
@@ -415,14 +415,103 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         Run.CurrentItemCooldown = 0;
                         Run.CurrentItemUses = ((Item)loot).Uses;
                         PlayerPrefsHelper.SaveRun(Run);
+                        LoadBackAfterVictory(true);
                     }
-                    LoadBackAfterVictory(true);
+                    else
+                        LootResources(instead: true);
+                    
                 }
             }
         }
         else if (loot?.LootType == LootType.Resource)
         {
             _musicControler.Play(Constants.VictoryAudioClip, once: true);
+            LootResources();
+        }
+        else if (loot?.LootType == LootType.Tattoo)
+        {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
+            var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
+            var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
+            var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name, tryAdd: true);
+            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + ((Tattoo)loot).Id);
+            if (bodyPart == BodyPart.MaxLevelReached)
+            {
+                Instantiator.NewPopupYesNo("Max Level", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Tattoo)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " reached its maximum level.", null, "Damn...", LootResources, sprite);
+            }
+            else if (bodyPart == BodyPart.None)
+            {
+                Instantiator.NewPopupYesNo("Filled!", $"sadly, you don't have any place left to ink anything...", null, "But...", LootResources, sprite);
+            }
+            else 
+            {
+                if (!tattoos.Contains(nameToCheck))
+                {
+                    Instantiator.NewPopupYesNo("Tattoo", $"are you ready to get inked?", "Nope!", "Sure!", InkTattoo, sprite, defaultPositive: true);
+
+                    void InkTattoo(bool ink)
+                    {
+                        if (ink)
+                        {
+                            _soundControler.PlaySound(_idTattooSound);
+                            PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+                            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                            Instantiator.NewPopupYesNo("New Tattoo", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Tattoo)loot).Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} has been inked \non your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{bodyPart.GetDescription().ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}.", null, "Ouch!", LoadBackAfterVictory, sprite);
+                        }
+                        else
+                            LootResources(instead: true);
+                    }
+                }
+                else
+                {
+                    _soundControler.PlaySound(_idTattooSound);
+                    PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+                    Instantiator.NewPopupYesNo("Tattoo Upgrade", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Tattoo)loot).Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} power has been increased.", null, "Noice", LoadBackAfterVictory, sprite);
+                }
+                ((Tattoo)loot).ApplyToCharacter(Character);
+                PlayerPrefsHelper.SaveRunCharacter(Character);
+            }
+        }
+        else if (loot?.LootType == LootType.Pact)
+        {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
+            var nameToCheck = ((Pact)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
+            var pacts = PlayerPrefsHelper.GetCurrentPactsString();
+            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Pacts_" + ((Pact)loot).Id);
+
+            if (pacts.Contains(nameToCheck))
+                Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LootResources, sprite);
+            else
+                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
+            void OnPactSign(bool result)
+            {
+                if (result)
+                {
+                    PlayerPrefsHelper.AddPact(((Pact)loot).Name);
+                    LoadBackAfterVictory(true);
+                }
+                else
+                    LootResources(instead: true);
+            }
+        }
+        else
+        {
+            _musicControler.Play(Constants.VictoryAudioClip, once: true);
+            LoadBackAfterVictory(false);
+        }
+        return true;
+
+        void LootResources(bool instead = false)
+        {
+            var insteadStr = string.Empty;
+            var title = "Resources";
+            if (instead)
+            {
+                title = "Booby Prize";
+                insteadStr = " instead";
+                loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[this.Run.CurrentRealm.GetHashCode()]);
+                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+            }
             var amount = 2;
             if (Run.Difficulty == Difficulty.Easy)
                 amount = 1;
@@ -437,58 +526,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
             Run.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.SaveRun(Run);
-            Instantiator.NewPopupYesNo("Resources", $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} added to your resources.", null, "Ka-Ching!", LoadBackAfterVictory);
+            Instantiator.NewPopupYesNo(title, $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} added to your resources{insteadStr}.", null, "Ka-Ching!", LoadBackAfterVictory);
         }
-        else if (loot?.LootType == LootType.Tattoo)
-        {
-            _musicControler.Play(Constants.VictoryAudioClip, once: true);
-            var nameToCheck = ((Tattoo)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
-            var tattoos = PlayerPrefsHelper.GetCurrentTattoosString();
-            var bodyPart = PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
-            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + ((Tattoo)loot).Id);
-            if (bodyPart == BodyPart.MaxLevelReached)
-            {
-                Instantiator.NewPopupYesNo("Max Level", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Tattoo)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " reached its maximum level.", null, "Damn...", LoadBackAfterVictory, sprite);
-            }
-            else if (bodyPart == BodyPart.None)
-            {
-                Instantiator.NewPopupYesNo("Filled!", $"sadly, you don't have any place left to ink anything...", null, "But...", LoadBackAfterVictory, sprite);
-            }
-            else 
-            {
-                _soundControler.PlaySound(_idTattooSound);
-                if (!tattoos.Contains(nameToCheck))
-                    Instantiator.NewPopupYesNo("New Tattoo", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Tattoo)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " has been inked \non your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + bodyPart.GetDescription().ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + ".", null, "Ouch!", LoadBackAfterVictory, sprite);
-                else
-                    Instantiator.NewPopupYesNo("Tattoo Upgrade", Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Tattoo)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " power has been increased.", null, "Noice", LoadBackAfterVictory, sprite);
-                ((Tattoo)loot).ApplyToCharacter(Character);
-                PlayerPrefsHelper.SaveRunCharacter(Character);
-            }
-        }
-        else if (loot?.LootType == LootType.Pact)
-        {
-            _musicControler.Play(Constants.VictoryAudioClip, once: true);
-            var nameToCheck = ((Pact)loot).Name.Replace(" ", "").Replace("'", "").Replace("-", "");
-            var pacts = PlayerPrefsHelper.GetCurrentPactsString();
-            var sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Pacts_" + ((Pact)loot).Id);
-
-            if (pacts.Contains(nameToCheck))
-                Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LoadBackAfterVictory, sprite);
-            else
-                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
-            void OnPactSign(bool result)
-            {
-                if (result)
-                    PlayerPrefsHelper.AddPact(((Pact)loot).Name);
-                LoadBackAfterVictory(true);
-            }
-        }
-        else
-        {
-            _musicControler.Play(Constants.VictoryAudioClip, once: true);
-            LoadBackAfterVictory(false);
-        }
-        return true;
     }
 
     private void LoadBackAfterVictory(bool result)
@@ -853,6 +892,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         else
         {
             attackText = $"</material>{attackText}!";
+            Instantiator.PopText("!!!", _characterInstanceBhv.transform.position + new Vector3(-2f, 2.0f, 0.0f));
             _soundControler.PlaySound(_idCrit);
         }
         VibrationService.Vibrate();

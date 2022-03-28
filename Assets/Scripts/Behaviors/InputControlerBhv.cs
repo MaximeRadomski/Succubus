@@ -263,9 +263,13 @@ public class InputControlerBhv : FrameRateBehavior
         foreach (var hitInformation in hitsInformation)
         {
             var tmpSprite = hitInformation.transform.gameObject.GetComponent<SpriteRenderer>();
-            if (tmpSprite != null &&
-                SortingLayer.GetLayerValueFromName(tmpSprite.sortingLayerName) > SortingLayer.GetLayerValueFromName(currentSprite.sortingLayerName))
-                return true;
+            if (tmpSprite != null)
+            {
+                var tmpLayerId = SortingLayer.GetLayerValueFromName(tmpSprite.sortingLayerName) + 1000;
+                var currentLayerId = SortingLayer.GetLayerValueFromName(currentSprite.sortingLayerName) + 1000;
+                if (tmpLayerId > currentLayerId)
+                    return true;
+            }
         }
         return false;
     }

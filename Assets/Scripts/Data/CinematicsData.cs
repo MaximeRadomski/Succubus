@@ -45,7 +45,7 @@ public static class CinematicsData
             "Having its head cut, clergy was no more.",
             "Suddenly, a gate opened, as an invitation to fulfill the twins' destiny.",
 
-            "A heavenly voice whispered with a deafing tone: \"Come, my children\".",
+            "A heavenly voice whispered with a deafening tone: \"Come, my children\".",
             "Night fell instantly, and stairs of light came on their way.",
 
             "Heaven... The forbidden realm... Its ruler...",
