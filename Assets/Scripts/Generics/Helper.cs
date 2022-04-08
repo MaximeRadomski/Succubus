@@ -141,6 +141,12 @@ public static class Helper
         str = str.Remove(id, 1);
         return str = str.Insert(id, character.ToString());
     }
+
+    public static void ReplaceText(this TMPro.TextMeshPro tmpro, string patternFind, string patternChange)
+    {
+        tmpro.text = tmpro.text.Replace(patternFind, patternChange);
+    }
+
     public static char GameplayButtonToLetter(string gameplayButton)
     {
         if (gameplayButton == Constants.GoButtonLeftName)
