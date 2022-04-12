@@ -230,7 +230,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 _gameplayControler.GameplayOnHold = true;
                 Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
                 {
-                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                    Helper.ReinitKeyboardInputs(this);
                     Victory();
                     ResetAndCleanCache();
                 });
@@ -379,7 +379,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         {
             Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, ((Character)loot).Name, Character.Name, Character.StartingRealm, AfterCharacterDialog);
             void AfterCharacterDialog() {
-                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                Helper.ReinitKeyboardInputs(this);
                 _musicControler.Play(Constants.VictoryAudioClip, once: true);
                 Instantiator.NewPopupYesNo("New Character", $"you unlocked {((Character)loot).Name.ToLower()}, a new playable character!", null, "Noice!", LoadBackAfterVictory);}
         }
@@ -455,7 +455,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         {
                             _soundControler.PlaySound(_idTattooSound);
                             PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
-                            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                            Helper.ReinitKeyboardInputs(this);
                             Instantiator.NewPopupYesNo("New Tattoo", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Tattoo)loot).Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} has been inked \non your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{bodyPart.GetDescription().ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}.", null, "Ouch!", LoadBackAfterVictory, sprite);
                         }
                         else
@@ -510,7 +510,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 title = "Booby Prize";
                 insteadStr = " instead";
                 loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[this.Run.CurrentRealm.GetHashCode()]);
-                StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                Helper.ReinitKeyboardInputs(this);
             }
             var amount = 2;
             if (Run.Difficulty == Difficulty.Easy)
@@ -557,7 +557,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
-                    StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                    Helper.ReinitKeyboardInputs(this);
                     var content = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you now start your ascensions with a random item.\n(up to a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Rarity)realmIdBeforeIncrease).ToString().ToLower()}{Constants.MaterialEnd} one).";
                     Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", content, null, "Neat!", CheckForSkin);
                 }
@@ -571,7 +571,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 {
                     if (hasUnlockedSkin)
                     {
-                        StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+                        Helper.ReinitKeyboardInputs(this);
                         var skinContent = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you unlocked a {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}new skin{Constants.MaterialEnd} on {Character.Name.ToLower()}.";
                         Instantiator.NewPopupYesNo($"{CurrentOpponent.Name} beaten!", skinContent, null, "Neat!", LoadNextAfterBoss);
                     }

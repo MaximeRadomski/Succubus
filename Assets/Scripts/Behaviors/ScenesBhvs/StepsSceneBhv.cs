@@ -336,7 +336,7 @@ public class StepsSceneBhv : SceneBhv
 
         void OffersWarp()
         {
-            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+            Helper.ReinitKeyboardInputs(this);
             Instantiator.NewPopupYesNo("Realm Warp", "the beholder offers you to warp to the next realm. do you accept?", "No", "Yes", OnWarp);
             return;
         }
@@ -373,7 +373,7 @@ public class StepsSceneBhv : SceneBhv
 
         void OfferShop()
         {
-            StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => { GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(); }));
+            Helper.ReinitKeyboardInputs(this);
             Instantiator.NewLurkerShop(null, _character);
         }
     }

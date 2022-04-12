@@ -648,4 +648,26 @@ public static class Helper
             return true;
         }
     }
+
+    public static Transform FindDeepChild(this Transform aParent, string aName)
+    {
+        Queue<Transform> queue = new Queue<Transform>();
+        queue.Enqueue(aParent);
+        while (queue.Count > 0)
+        {
+            var c = queue.Dequeue();
+            if (c.name == aName)
+                return c;
+            foreach (Transform t in c)
+                queue.Enqueue(t);
+        }
+        return null;
+    }
+
+    public static void ReinitKeyboardInputs(MonoBehaviour mb)
+    {
+        mb.StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => {
+            GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs();
+        }));
+    }
 }
