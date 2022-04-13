@@ -664,10 +664,10 @@ public static class Helper
         return null;
     }
 
-    public static void ReinitKeyboardInputs(MonoBehaviour mb)
+    public static void ReinitKeyboardInputs(MonoBehaviour mb, Vector3? preferedResetPos = null)
     {
         mb.StartCoroutine(Helper.ExecuteAfterDelay(0.0f, () => {
-            GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs();
+            GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>().InitMenuKeyboardInputs(preferedResetPos);
         }));
     }
 }

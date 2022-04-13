@@ -420,10 +420,15 @@ public class InputControlerBhv : FrameRateBehavior
             if (_lastSelectedGameObjects != null && _lastSelectedGameObjects.Count > 0)
             {
                 _lastSelectedGameObject = _lastSelectedGameObjects[_lastSelectedGameObjects.Count - 1];
-                if (_mainCamera == null)
-                    _mainCamera = Helper.GetMainCamera();
-                if (Helper.IsInsideCamera(_mainCamera, _lastSelectedGameObject.transform.position))
-                    MenuSelector.MoveTo(_lastSelectedGameObject);
+                if (_lastSelectedGameObject != null)
+                {
+                    if (_mainCamera == null)
+                        _mainCamera = Helper.GetMainCamera();
+                    if (Helper.IsInsideCamera(_mainCamera, _lastSelectedGameObject.transform.position))
+                        MenuSelector.MoveTo(_lastSelectedGameObject);
+                    else
+                        ResetMenuSelector(preferedResetPos);
+                }
                 else
                     ResetMenuSelector(preferedResetPos);
                 _lastSelectedGameObjects.RemoveAt(_lastSelectedGameObjects.Count - 1);

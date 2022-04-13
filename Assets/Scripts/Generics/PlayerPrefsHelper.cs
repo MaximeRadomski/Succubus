@@ -465,6 +465,21 @@ public class PlayerPrefsHelper : MonoBehaviour
         return string.IsNullOrEmpty(newBodyPartStr) ? BodyPart.None : (BodyPart)int.Parse(newBodyPartStr);
     }
 
+    public static void RemoveTattoo(Tattoo tattoo)
+    {
+        var tattoosFullStr = Mock.GetString(Constants.PpCurrentTattoos, Constants.PpSerializeDefault);
+        if (tattoosFullStr == null)
+            tattoosFullStr = "";
+        var nameToRemove = tattoo.Name.Replace(" ", "").Replace("'", "").Replace("-", "");
+        var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
+
+        tattoosFullStr = tattoosFullStr.Replace($"{nameToRemove}L{tattoo.Level.ToString("00")}B{tattoo.BodyPart.GetHashCode().ToString("00")};", "");
+        alreadyBodyPartsIds = alreadyBodyPartsIds.Replace(tattoo.BodyPart.GetHashCode().ToString("00"), "");
+        
+        Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
+        Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
+    }
+
     public static string GetRemainingAvailablesPartsIds(string alreadyBodyPartsIds = null)
     {
         if (alreadyBodyPartsIds == null)
