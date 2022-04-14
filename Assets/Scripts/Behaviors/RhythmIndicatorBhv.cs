@@ -141,7 +141,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
                 _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
             if (_opponentInstance == null)
                 _opponentInstance = GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().OpponentInstanceBhv;
-            if (!_hasMadeErrorInBeat)
+            if (!_hasMadeErrorInBeat && _nbEmptyRowsOnMiss > 0)
             {
                 _hasMadeErrorInBeat = true;
                 _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);

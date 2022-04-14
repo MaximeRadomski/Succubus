@@ -8,7 +8,7 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
     public float Speed;
     public Color FadeColor;
 
-    private SpriteRenderer _renderer;
+    private List<SpriteRenderer> _renderers;
     private TMPro.TextMeshPro _textRenderer;
 
     private bool _isFading;
@@ -19,16 +19,24 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
             Init(Speed, FadeColor);
     }
 
-    public void Init(float speed, Color? color)
+    public void Init(float speed, Color? color, bool recursiveChildren = false)
     {
-        _renderer = gameObject.GetComponent<SpriteRenderer>();
+        _renderers = new List<SpriteRenderer>();
+        if (!recursiveChildren)
+            _renderers.Add(gameObject.GetComponent<SpriteRenderer>());
+        else
+        {
+            foreach (Transform child in this.transform)
+                _renderers.Add(child.GetComponent<SpriteRenderer>());
+        }
         _textRenderer = gameObject.GetComponent<TMPro.TextMeshPro>();
-        if (color != null && _renderer != null)
-            _renderer.color = color.Value;
+        if (color != null && _renderers != null)
+            foreach (var renderer in _renderers)
+                renderer.color = color.Value;
         if (color != null && _textRenderer != null)
             _textRenderer.color = color.Value;
-        if (_renderer != null)
-            FadeColor = new Color(_renderer.color.r, _renderer.color.g, _renderer.color.b, 0.0f);
+        if (_renderers != null && _renderers.Count > 0)
+            FadeColor = new Color(_renderers[0].color.r, _renderers[0].color.g, _renderers[0].color.b, 0.0f);
         else if (_textRenderer != null)
             FadeColor = new Color(_textRenderer.color.r, _textRenderer.color.g, _textRenderer.color.b, 0.0f);
         Speed = speed;
@@ -48,14 +56,16 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
 
     private void Fading()
     {
-        if (_renderer != null)
-            _renderer.color = Color.Lerp(_renderer.color, FadeColor, Speed);
+        if (_renderers != null && _renderers.Count > 0)
+            foreach (var renderer in _renderers)
+                renderer.color = Color.Lerp(_renderers[0].color, FadeColor, Speed);
         if (_textRenderer != null)
             _textRenderer.color = Color.Lerp(_textRenderer.color, FadeColor, Speed);
-        if (_renderer != null && Helper.FloatEqualsPrecision(_renderer.color.a, FadeColor.a, 0.005f))
+        if (_renderers != null && _renderers.Count > 0 && Helper.FloatEqualsPrecision(_renderers[0].color.a, FadeColor.a, 0.005f))
         {
             _isFading = false;
-            _renderer.color = FadeColor;
+            foreach (var renderer in _renderers)
+                renderer.color = FadeColor;
             if (gameObject != null)
                 Destroy(gameObject);
         }

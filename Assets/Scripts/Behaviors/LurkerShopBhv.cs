@@ -12,6 +12,7 @@ public class LurkerShopBhv : PopupBhv
     private Run _run;
     private Character _character;
     private GameObject _menuSelector;
+    private GameObject _tradeContainer;
     private Vector3 _menuResetPos;
     private int _basePrice = 2;
     private int _totalResources;
@@ -54,6 +55,8 @@ public class LurkerShopBhv : PopupBhv
         _idTattooSound = _soundControler.SetSound("TattooSound");
         _idRemoveSound = _soundControler.SetSound("Jackhammer");
 
+        _tradeContainer = GameObject.Find("TradeContainer");
+
         UpdateTotalResources();
         _menuSelector.transform.position = new Vector3(-10.0f, 20.0f, _menuSelector.transform.position.z);
         ShowLevelUpTattoo();
@@ -92,6 +95,8 @@ public class LurkerShopBhv : PopupBhv
         var tmp = GameObject.Find(_tmpTattoosContainerName);
         if (tmp != null)
             Destroy(tmp);
+        _tradeContainer.transform.position = new Vector3(-51.0f, 50.0f, 0.0f);
+
     }
 
     private void ShowLevelUpTattoo()
@@ -212,6 +217,7 @@ public class LurkerShopBhv : PopupBhv
     private void ShowTradeResources()
     {
         GameObject.Find(_buttonNames[2]).transform.Find("Text").GetComponent<TMPro.TextMeshPro>().ReplaceText("3.2", "4.3");
+        _tradeContainer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
     private void ShowRandomBoost()

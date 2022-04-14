@@ -891,6 +891,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             PlayHit();
         else
         {
+            var tmpCritIndicator = this.Instantiator.NewRhythmIndicator(Constants.ColorPlain);
+            tmpCritIndicator.name = "TmpCritIndicator";
+            tmpCritIndicator.transform.SetParent(_gameplayControler.PlayFieldBhv.transform);
+            tmpCritIndicator.gameObject.AddComponent<FadeOnAppearanceBhv>().Init(0.075f, Constants.ColorPlain, recursiveChildren: true);
             attackText = $"</material>{attackText}!";
             Instantiator.PopText("!!!", _characterInstanceBhv.transform.position + new Vector3(-2f, 2.0f, 0.0f));
             _soundControler.PlaySound(_idCrit);

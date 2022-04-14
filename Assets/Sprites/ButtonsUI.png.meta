@@ -206,6 +206,12 @@ TextureImporter:
   - first:
       213: -1689600251111757920
     second: ButtonsUI_43
+  - first:
+      213: 6303312961380308284
+    second: ButtonsUI_44
+  - first:
+      213: -7410659435184223451
+    second: ButtonsUI_45
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -237,8 +243,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -1218,7 +1224,7 @@ TextureImporter:
         width: 8
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1226,6 +1232,48 @@ TextureImporter:
       bones: []
       spriteID: 0a7a21406855d88e0800000000000000
       internalID: -1689600251111757920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsUI_44
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 23
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c355033fdbdd97750800000000000000
+      internalID: 6303312961380308284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsUI_45
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 16
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b827ec18c082990800000000000000
+      internalID: -7410659435184223451
       vertices: []
       indices: 
       edges: []
