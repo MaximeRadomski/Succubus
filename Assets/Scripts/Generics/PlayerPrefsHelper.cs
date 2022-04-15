@@ -1148,4 +1148,26 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.GetString(Constants.PpLastRandomBosses, lastRandomBosses); 
     }
+
+    public static int GetTradingMarket()
+    {
+        var tradingMarket = PlayerPrefs.GetInt(Constants.PpTradingMarket, Constants.PpTradingMarketDefault);
+        return tradingMarket;
+    }
+
+    public static void SaveTradingMarket(int tradingMarket)
+    {
+        Mock.SetInt(Constants.PpTradingMarket, tradingMarket);
+    }
+
+    public static void SaveHasDoneTrading(bool enable)
+    {
+        PlayerPrefs.SetInt(Constants.PpHasDoneTrading, enable ? 1 : 0);
+    }
+
+    public static bool GetHasDoneTrading()
+    {
+        var hasDoneTrading = PlayerPrefs.GetInt(Constants.PpHasDoneTrading, Constants.PpHasDoneTradingDefault == true ? 1 : 0);
+        return hasDoneTrading == 1 ? true : false;
+    }
 }

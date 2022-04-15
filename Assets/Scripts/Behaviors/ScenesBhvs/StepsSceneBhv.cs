@@ -55,6 +55,13 @@ public class StepsSceneBhv : SceneBhv
             CameraBhv.Paused = Cache.NameLastScene == Constants.SettingsScene;
             _run = PlayerPrefsHelper.GetRun();
             _character = PlayerPrefsHelper.GetRunCharacter();
+            if (_run.RealmLevel == 1)
+            {
+                PlayerPrefsHelper.SaveHasDoneTrading(Constants.PpHasDoneTradingDefault);
+                PlayerPrefsHelper.SaveTradingMarket(Constants.PpTradingMarketDefault);
+            }
+            else if (_run.RealmLevel == 2 && PlayerPrefsHelper.GetTradingMarket() == Constants.PpTradingMarketDefault)
+                PlayerPrefsHelper.SaveTradingMarket(UnityEngine.Random.Range(0, 6));
 
             _lootCenterLocalY = GameObject.Find("LootCenter").transform.localPosition.y;
             GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _run.CurrentRealm + " - lvl " + _run.RealmLevel;

@@ -560,8 +560,7 @@ public class InputControlerBhv : FrameRateBehavior
                     selectedGameObject = button;
                 }
                 var distance = Vector2.Distance(button.transform.position, MenuSelector.transform.position);
-                if (hasMenuSelectorResetButton == false && distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value)
-                    && (_lastSelectedGameObject == null || button.name != _lastSelectedGameObject.name))
+                if (hasMenuSelectorResetButton == false && distance < minDistance && distance > precision && IsInsideVisionCone(MenuSelector.transform.position, button.transform.position, direction, visionConeMult.Value))
                 {                        
                     minDistance = distance;
                     selectedGameObject = button;

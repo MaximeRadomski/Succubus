@@ -13,10 +13,28 @@ public class LurkerShopBhv : PopupBhv
     private Character _character;
     private GameObject _menuSelector;
     private GameObject _tradeContainer;
+    private GameObject _selectorResourcesLeft;
+    private GameObject _selectorResourcesRight;
+    private TMPro.TextMeshPro _amountLeftText;
+    private TMPro.TextMeshPro _amountRightText;
+    private int _amountLeft;
+    private int _amountRight;
     private Vector3 _menuResetPos;
     private int _basePrice = 2;
     private int _totalResources;
+    private int _tradingMarkerId;
+    private int _resourceSelectedLeft;
+    private int _resourceSelectedRight;
     private string _currentResourcesStr => $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}you currently have: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{_totalResources}$";
+    private List<List<float>> _tradingMarketRate = new List<List<float>>
+    {
+        new List<float> { 0.35f, 0.40f, 0.70f},
+        new List<float> { 0.65f, 0.30f, 0.20f},
+        new List<float> { 0.35f, 0.65f, 0.50f},
+        new List<float> { 0.20f, 0.75f, 0.25f},
+        new List<float> { 0.50f, 0.40f, 0.60f},
+        new List<float> { 0.50f, 0.25f, 0.20f},
+    };
 
     private List<string> _buttonNames = new List<string>() {
     "ButtonLevelUpTattoo",
@@ -42,6 +60,7 @@ public class LurkerShopBhv : PopupBhv
         _menuSelector = GameObject.Find("MenuSelector");
         _menuResetPos = new Vector3(0.0f, 2.0f, 0.0f);
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
+        _tradingMarkerId = PlayerPrefsHelper.GetTradingMarket();
 
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = Resume;
         GameObject.Find("ButtonResources").GetComponent<ButtonBhv>().EndActionDelegate = ResourcesInfo;
@@ -51,6 +70,30 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find(_buttonNames[3]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowRandomBoost(); };
         GameObject.Find(_buttonNames[4]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowHaircut(); };
         GameObject.Find(_buttonNames[5]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowCleanPlayfield(); };
+
+        
+        GameObject.Find("ButtonUpLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(1); };
+        GameObject.Find("ButtonDownLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(-1); };
+
+        GameObject.Find("Resource0").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceLeft(0); };
+        GameObject.Find("Resource1").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceLeft(1); };
+        GameObject.Find("Resource2").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceLeft(2); };
+        GameObject.Find("Resource3").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(3); };
+        GameObject.Find("Resource4").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(4); };
+        GameObject.Find("Resource5").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(5); };
+
+        _amountLeftText = GameObject.Find("AmountLeft").GetComponent<TMPro.TextMeshPro>();
+        _amountRightText = GameObject.Find("AmountRight").GetComponent<TMPro.TextMeshPro>();
+
+        _selectorResourcesLeft = GameObject.Find("SelectorResourcesLeft");
+        _selectorResourcesRight = GameObject.Find("SelectorResourcesRight");
+
+        SelectResourceRight(4);
+        SelectResourceLeft(0);
+
+        GameObject.Find("ButtonValidateTrade").GetComponent<ButtonBhv>().EndActionDelegate = ValidateTrade;
+        if (PlayerPrefsHelper.GetHasDoneTrading())
+            GameObject.Find("ButtonValidateTrade").SetActive(false);
 
         _idTattooSound = _soundControler.SetSound("TattooSound");
         _idRemoveSound = _soundControler.SetSound("Jackhammer");
@@ -216,8 +259,80 @@ public class LurkerShopBhv : PopupBhv
 
     private void ShowTradeResources()
     {
+        GameObject.Find("TradeFrame").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TradeFrame_{_tradingMarkerId}");
         GameObject.Find(_buttonNames[2]).transform.Find("Text").GetComponent<TMPro.TextMeshPro>().ReplaceText("3.2", "4.3");
         _tradeContainer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    private void SelectResourceLeft(int id)
+    {
+        _resourceSelectedLeft = id;
+        _selectorResourcesLeft.transform.position = GameObject.Find($"Resource{id}").transform.position;
+        var maxResource = PlayerPrefsHelper.GetTotalResources()[id];
+        if (maxResource > 10)
+            maxResource = 10;
+        _amountLeft = maxResource;
+        _amountLeftText.text = $"{Constants.GetMaterial((Realm)id, TextType.succubus3x5, TextCode.c43)}{maxResource}";
+        if (_resourceSelectedRight == id + 3)
+        {
+            var rightId = id + 4;
+            if (rightId >= 6)
+                rightId = 3;
+            SelectResourceRight(rightId);
+        }
+        UpdateRateResources();
+    }
+
+    private void SelectResourceRight(int id)
+    {
+        _resourceSelectedRight = id;
+        _selectorResourcesRight.transform.position = GameObject.Find($"Resource{id}").transform.position;
+        if (_resourceSelectedLeft == id - 3)
+        {
+            var rightId = id - 2;
+            if (rightId == 3)
+                rightId = 0;
+            SelectResourceLeft(rightId);
+        }
+        UpdateRateResources();
+    }
+
+    private void AlterLeftAmount(int add)
+    {
+        var max = PlayerPrefsHelper.GetTotalResources()[_resourceSelectedLeft];
+        _amountLeft += add;
+        if (_amountLeft > 10)
+            _amountLeft = 10;
+        else if (_amountLeft > max)
+            _amountLeft = max;
+        else if (_amountLeft < 1)
+            _amountLeft = 1;
+        _amountLeftText.text = $"{Constants.GetMaterial((Realm)_resourceSelectedLeft, TextType.succubus3x5, TextCode.c43)}{_amountLeft}";
+        UpdateRateResources();
+    }
+
+    private void UpdateRateResources()
+    {
+        var rate1 = _tradingMarketRate[_tradingMarkerId][_resourceSelectedLeft];
+        var rate2 = _tradingMarketRate[_tradingMarkerId][_resourceSelectedRight - 3];
+        float rateResources = ((1.0f - Mathf.Abs(rate1 - rate2)) * _amountLeft);
+        int intRateResources = (int)Math.Round(rateResources);
+        _amountRightText.text = $"{Constants.GetMaterial((Realm)(_resourceSelectedRight - 3), TextType.succubus3x5, TextCode.c43)}{intRateResources}";
+        _amountRight = intRateResources;
+    }
+
+    private void ValidateTrade()
+    {
+        this._instantiator.NewPopupYesNo("Trading", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}trade {Constants.GetMaterial((Realm)_resourceSelectedLeft, TextType.succubus3x5, TextCode.c43)}{_amountLeft}${Constants.MaterialEnd} for {Constants.GetMaterial((Realm)_resourceSelectedRight - 3, TextType.succubus3x5, TextCode.c43)}{_amountRight}${Constants.MaterialEnd} ?\n\nonly one trade can be done per lurker shop.", "Cancel", "Trade", (result) =>
+        {
+            if (!result)
+                return;
+            PlayerPrefsHelper.SaveHasDoneTrading(true);
+            GameObject.Find("ButtonValidateTrade").SetActive(false);
+            PlayerPrefsHelper.AlterResource(_resourceSelectedRight - 3, _amountRight);
+            SpendResources(_amountLeft, _resourceSelectedLeft);
+            Helper.ReinitKeyboardInputs(this);
+        }, defaultPositive:true);
     }
 
     private void ShowRandomBoost()
@@ -258,11 +373,18 @@ public class LurkerShopBhv : PopupBhv
         return amount;
     }
 
-    private bool SpendResources(int amountSpent)
+    private bool SpendResources(int amountSpent, int idResource = -1)
     {
         var runResources = _run.GetRunResources();
         var totalResources = PlayerPrefsHelper.GetTotalResources();
-        for (int i = 0; i < 3; ++i)
+        var min = 0;
+        var max = 2;
+        if (idResource != -1)
+        {
+            min = idResource;
+            max = idResource;
+        }
+        for (int i = min; i <= max; ++i)
         {
             if (amountSpent <= 0)
                 break;
@@ -285,7 +407,7 @@ public class LurkerShopBhv : PopupBhv
             }
         }
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = min; i <= max; ++i)
         {
             if (amountSpent <= 0)
                 break;

@@ -186,6 +186,10 @@ public static class Constants
     public const string PpWatchedCinematicsDefault = "0000";
     public const string PpLastRandomBosses = "";
     public const string PpLastRandomBossesDefault = "00";
+    public const string PpTradingMarket = "TradingMarket";
+    public const int PpTradingMarketDefault = -1;
+    public const string PpHasDoneTrading = "HasDoneTrading";
+    public const bool PpHasDoneTradingDefault = false;
 
     public static string GetDefaultKeyBinding()
     {
