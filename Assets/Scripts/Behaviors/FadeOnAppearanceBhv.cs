@@ -30,12 +30,15 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
                 _renderers.Add(child.GetComponent<SpriteRenderer>());
         }
         _textRenderer = gameObject.GetComponent<TMPro.TextMeshPro>();
-        if (color != null && _renderers != null)
+        if (color != null && _renderers != null && _renderers.Count > 0)
             foreach (var renderer in _renderers)
-                renderer.color = color.Value;
+            {
+                if (renderer != null)
+                    renderer.color = color.Value;
+            }
         if (color != null && _textRenderer != null)
             _textRenderer.color = color.Value;
-        if (_renderers != null && _renderers.Count > 0)
+        if (_renderers != null && _renderers.Count > 0 && _renderers[0] != null)
             FadeColor = new Color(_renderers[0].color.r, _renderers[0].color.g, _renderers[0].color.b, 0.0f);
         else if (_textRenderer != null)
             FadeColor = new Color(_textRenderer.color.r, _textRenderer.color.g, _textRenderer.color.b, 0.0f);
@@ -56,7 +59,7 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
 
     private void Fading()
     {
-        if (_renderers != null && _renderers.Count > 0)
+        if (_renderers != null && _renderers.Count > 0 && _renderers[0] != null)
             foreach (var renderer in _renderers)
                 renderer.color = Color.Lerp(_renderers[0].color, FadeColor, Speed);
         if (_textRenderer != null)

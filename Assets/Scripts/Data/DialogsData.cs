@@ -2155,7 +2155,7 @@ public static class DialogsData
                 {
                     "Congratulation for making it this far!",
                     "Uh? That's it? Just a doggo?",
-                    "Surprised, aren't you?. Humankind put me here, as I am man's best friend, and therefore...",
+                    "Surprised, aren't you? Humankind put me here, as I am man's best friend, and therefore...",
                     "Yeah yeah I don't really care. Let's fight.",
                     "Wait what? Aren't you full of questions?",
                     "Not really... I'm just disappointed because I hoped for a better scenario...",
@@ -2241,7 +2241,7 @@ public static class DialogsData
                     "My apologies for my rudeness. Let me introduce myself properly.",
                     "...",
                     "I am the beholder, collector of chaos, master of distortion, and a big fan of your little adventure you have going on I must say!",
-                    "Hi mister beholder..., what little adventure?",
+                    "Hi mister beholder... what little adventure?",
                     "You know, your little \"hell against heaven\" thingy you are doing with your friends of yours.",
                     "Oh, yes... That little adventure...",
                     "No no I really enjoy it so far! I've been through many lifetimes and universes, and it is somewhat new for me to spectate such a thing!",
