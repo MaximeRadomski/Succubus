@@ -13,8 +13,10 @@ public class LurkerShopBhv : PopupBhv
     private Character _character;
     private GameObject _menuSelector;
     private GameObject _tradeContainer;
+    private GameObject _randomBoostContainer;
     private GameObject _selectorResourcesLeft;
     private GameObject _selectorResourcesRight;
+    private GameObject _boostButton;
     private TMPro.TextMeshPro _amountLeftText;
     private TMPro.TextMeshPro _amountRightText;
     private int _amountLeft;
@@ -71,7 +73,6 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find(_buttonNames[4]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowHaircut(); };
         GameObject.Find(_buttonNames[5]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowCleanPlayfield(); };
 
-        
         GameObject.Find("ButtonUpLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(1); };
         GameObject.Find("ButtonDownLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(-1); };
 
@@ -81,6 +82,9 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find("Resource3").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(3); };
         GameObject.Find("Resource4").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(4); };
         GameObject.Find("Resource5").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(5); };
+
+        (_boostButton = GameObject.Find("BoostButton")).GetComponent<ButtonBhv>().BeginActionDelegate = PushRandomBoost;
+        (_boostButton = GameObject.Find("BoostButton")).GetComponent<ButtonBhv>().EndActionDelegate = RandomBoost;
 
         _amountLeftText = GameObject.Find("AmountLeft").GetComponent<TMPro.TextMeshPro>();
         _amountRightText = GameObject.Find("AmountRight").GetComponent<TMPro.TextMeshPro>();
@@ -99,6 +103,7 @@ public class LurkerShopBhv : PopupBhv
         _idRemoveSound = _soundControler.SetSound("Jackhammer");
 
         _tradeContainer = GameObject.Find("TradeContainer");
+        _randomBoostContainer = GameObject.Find("RandomBoostContainer");
 
         UpdateTotalResources();
         _menuSelector.transform.position = new Vector3(-10.0f, 20.0f, _menuSelector.transform.position.z);
@@ -139,6 +144,7 @@ public class LurkerShopBhv : PopupBhv
         if (tmp != null)
             Destroy(tmp);
         _tradeContainer.transform.position = new Vector3(-51.0f, 50.0f, 0.0f);
+        _randomBoostContainer.transform.position = new Vector3(-51.0f, -50.0f, 0.0f);
 
     }
 
@@ -340,6 +346,39 @@ public class LurkerShopBhv : PopupBhv
     private void ShowRandomBoost()
     {
         GameObject.Find(_buttonNames[3]).transform.Find("Text").GetComponent<TMPro.TextMeshPro>().ReplaceText("3.2", "4.3");
+        UpdateRandomBoostPrice();
+        _randomBoostContainer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    private void UpdateRandomBoostPrice()
+    {
+        GameObject.Find("RandomBoostPrice").GetComponent<TMPro.TextMeshPro>().text = $"{PlayerPrefsHelper.GetPpBoostButtonPrice()}$";
+    }
+
+    private void PushRandomBoost()
+    {
+        _boostButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BoostButton_1");
+    }
+
+    private void RandomBoost()
+    {
+        Helper.ExecuteAfterDelay(0.15f, () =>
+        {
+            _boostButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BoostButton_0");
+        });
+        var price = PlayerPrefsHelper.GetPpBoostButtonPrice();
+        if (this._totalResources < price)
+        {
+            this._instantiator.NewPopupYesNo("Cheater!", "don't try to touch the big button if you don't have big money!", null, "Damn!", null);
+            return;
+        }
+        var nothingId = UnityEngine.Random.Range(0, 3);
+        if (nothingId == 0)
+        {
+            this._instantiator.NewPopupYesNo("Oops!", "nothing! nada! try again!", null, "Damn!", null);
+            return;
+        }
+        var randId = UnityEngine.Random.Range(0, 6);
     }
 
     private void ShowHaircut()

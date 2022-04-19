@@ -1170,4 +1170,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         var hasDoneTrading = PlayerPrefs.GetInt(Constants.PpHasDoneTrading, Constants.PpHasDoneTradingDefault == true ? 1 : 0);
         return hasDoneTrading == 1 ? true : false;
     }
+    public static void SavePpBoostButtonPrice(int price)
+    {
+        PlayerPrefs.SetInt(Constants.PpBoostButtonPrice, price);
+    }
+
+    public static int GetPpBoostButtonPrice()
+    {
+        var boostButtonPrice = PlayerPrefs.GetInt(Constants.PpBoostButtonPrice, Constants.PpBoostButtonPriceDefault);
+        return boostButtonPrice;
+    }
 }

@@ -190,6 +190,8 @@ public static class Constants
     public const int PpTradingMarketDefault = -1;
     public const string PpHasDoneTrading = "HasDoneTrading";
     public const bool PpHasDoneTradingDefault = false;
+    public const string PpBoostButtonPrice = "BoostButtonPrice";
+    public const int PpBoostButtonPriceDefault = 1;
 
     public static string GetDefaultKeyBinding()
     {
