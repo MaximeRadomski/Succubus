@@ -486,7 +486,9 @@ public class InputControlerBhv : FrameRateBehavior
         else if (Input.GetKeyDown(_keyBinding[13]))
             FindNearest(Direction.Right);
         else if (Input.GetKeyDown(_keyBinding[14]))
-            ButtonOnSelector();
+            ButtonOnSelector(Direction.Down);
+        else if (Input.GetKeyUp(_keyBinding[14]))
+            ButtonOnSelector(Direction.Up);
     }
 
     private void CheckKeyBoardTextInputs()
@@ -609,7 +611,7 @@ public class InputControlerBhv : FrameRateBehavior
         return false;
     }
 
-    private void ButtonOnSelector()
+    private void ButtonOnSelector(Direction direction)
     {
         if (Cache.OnlyMouseInMenu || _availableButtons == null || _availableButtons.Count == 0)
         {
@@ -636,13 +638,15 @@ public class InputControlerBhv : FrameRateBehavior
 
         if (selectedGameObject != null)
         {
-            MenuSelector.Click(selectedGameObject);
-            Cache.LastEndActionClickedName = selectedGameObject.name;
             var buttonBhv = selectedGameObject.GetComponent<ButtonBhv>();
-            buttonBhv.BeginAction(selectedGameObject.transform.position);
-            buttonBhv.DoAction(selectedGameObject.transform.position);
-            buttonBhv.EndAction(selectedGameObject.transform.position);
-            
+            Cache.LastEndActionClickedName = selectedGameObject.name;
+            if (direction == Direction.Down)
+                buttonBhv.BeginAction(selectedGameObject.transform.position);
+            else
+            {
+                buttonBhv.EndAction(selectedGameObject.transform.position);
+                MenuSelector.Click(selectedGameObject);
+            }
         }
     }
 }

@@ -14,9 +14,13 @@ public class LurkerShopBhv : PopupBhv
     private GameObject _menuSelector;
     private GameObject _tradeContainer;
     private GameObject _randomBoostContainer;
+    private GameObject _haircutContainer;
+    private GameObject _cleanContainer;
     private GameObject _selectorResourcesLeft;
     private GameObject _selectorResourcesRight;
     private GameObject _boostButton;
+    private GameObject _playfieldContainer;
+    private Transform[,] _grid;
     private TMPro.TextMeshPro _amountLeftText;
     private TMPro.TextMeshPro _amountRightText;
     private int _amountLeft;
@@ -73,8 +77,8 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find(_buttonNames[4]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowHaircut(); };
         GameObject.Find(_buttonNames[5]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowCleanPlayfield(); };
 
-        GameObject.Find("ButtonUpLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(1); };
-        GameObject.Find("ButtonDownLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(-1); };
+        GameObject.Find("ButtonTradeUpLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(1); };
+        GameObject.Find("ButtonTradeDownLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(-1); };
 
         GameObject.Find("Resource0").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceLeft(0); };
         GameObject.Find("Resource1").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceLeft(1); };
@@ -83,11 +87,15 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find("Resource4").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(4); };
         GameObject.Find("Resource5").GetComponent<ButtonBhv>().EndActionDelegate = () => { SelectResourceRight(5); };
 
+        GameObject.Find("HaircutHell").GetComponent<ButtonBhv>().EndActionDelegate = () => { Haircut(Realm.Hell); };
+        GameObject.Find("HaircutEarth").GetComponent<ButtonBhv>().EndActionDelegate = () => { Haircut(Realm.Earth); };
+        GameObject.Find("HaircutHeaven").GetComponent<ButtonBhv>().EndActionDelegate = () => { Haircut(Realm.Heaven); };
+
         (_boostButton = GameObject.Find("BoostButton")).GetComponent<ButtonBhv>().BeginActionDelegate = PushRandomBoost;
         (_boostButton = GameObject.Find("BoostButton")).GetComponent<ButtonBhv>().EndActionDelegate = RandomBoost;
 
-        _amountLeftText = GameObject.Find("AmountLeft").GetComponent<TMPro.TextMeshPro>();
-        _amountRightText = GameObject.Find("AmountRight").GetComponent<TMPro.TextMeshPro>();
+        _amountLeftText = GameObject.Find("AmountTradeLeft").GetComponent<TMPro.TextMeshPro>();
+        _amountRightText = GameObject.Find("AmountTradeRight").GetComponent<TMPro.TextMeshPro>();
 
         _selectorResourcesLeft = GameObject.Find("SelectorResourcesLeft");
         _selectorResourcesRight = GameObject.Find("SelectorResourcesRight");
@@ -104,6 +112,13 @@ public class LurkerShopBhv : PopupBhv
 
         _tradeContainer = GameObject.Find("TradeContainer");
         _randomBoostContainer = GameObject.Find("RandomBoostContainer");
+        _haircutContainer = GameObject.Find("HaircutContainer");
+        _cleanContainer = GameObject.Find("CleanContainer");
+        _playfieldContainer = GameObject.Find("PlayfieldContainer");
+        _grid = new Transform[Constants.PlayFieldWidth, Constants.PlayFieldHeight];
+        ApplyLastFightPlayField();
+
+        GameObject.Find("ButtonValidateClean").GetComponent<ButtonBhv>().EndActionDelegate = CleanPlayfield;
 
         UpdateTotalResources();
         _menuSelector.transform.position = new Vector3(-10.0f, 20.0f, _menuSelector.transform.position.z);
@@ -145,6 +160,8 @@ public class LurkerShopBhv : PopupBhv
             Destroy(tmp);
         _tradeContainer.transform.position = new Vector3(-51.0f, 50.0f, 0.0f);
         _randomBoostContainer.transform.position = new Vector3(-51.0f, -50.0f, 0.0f);
+        _haircutContainer.transform.position = new Vector3(0.0f, -50.0f, 0.0f);
+        _cleanContainer.transform.position = new Vector3(50.0f, -50.0f, 0.0f);
 
     }
 
@@ -352,7 +369,7 @@ public class LurkerShopBhv : PopupBhv
 
     private void UpdateRandomBoostPrice()
     {
-        GameObject.Find("RandomBoostPrice").GetComponent<TMPro.TextMeshPro>().text = $"{PlayerPrefsHelper.GetPpBoostButtonPrice()}$";
+        GameObject.Find("RandomBoostPrice").GetComponent<TMPro.TextMeshPro>().text = $"{PlayerPrefsHelper.GetBoostButtonPrice()}$";
     }
 
     private void PushRandomBoost()
@@ -362,32 +379,200 @@ public class LurkerShopBhv : PopupBhv
 
     private void RandomBoost()
     {
-        Helper.ExecuteAfterDelay(0.15f, () =>
-        {
-            _boostButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BoostButton_0");
-        });
-        var price = PlayerPrefsHelper.GetPpBoostButtonPrice();
+        _boostButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/BoostButton_0");
+        var price = PlayerPrefsHelper.GetBoostButtonPrice();
         if (this._totalResources < price)
         {
             this._instantiator.NewPopupYesNo("Cheater!", "don't try to touch the big button if you don't have big money!", null, "Damn!", null);
             return;
         }
+        SpendResources(price);
+        PlayerPrefsHelper.SaveBoostButtonPrice(++price);
+        UpdateRandomBoostPrice();
         var nothingId = UnityEngine.Random.Range(0, 3);
         if (nothingId == 0)
         {
             this._instantiator.NewPopupYesNo("Oops!", "nothing! nada! try again!", null, "Damn!", null);
             return;
         }
-        var randId = UnityEngine.Random.Range(0, 6);
+        var randId = UnityEngine.Random.Range(0, 3);
+        switch (randId)
+        {
+            case 0:
+                this._character.DamageFlatBonus += 1;
+                this._instantiator.NewPopupYesNo("Damage Up", "+1 damage.", null, "Noice!", null);
+                break;
+            case 1:
+                this._character.CritChancePercent += 4;
+                this._instantiator.NewPopupYesNo("Crit Up", "+4% crit chance.", null, "Noice!", null);
+                break;
+            case 2:
+                this._character.EnemyMaxCooldownMalus += 1;
+                this._instantiator.NewPopupYesNo("Cooldown Up", "+1 second to opponents cooldowns.", null, "Noice!", null);
+                break;
+        }
+        PlayerPrefsHelper.SaveRunCharacter(_character);
     }
 
     private void ShowHaircut()
     {
         GameObject.Find(_buttonNames[4]).transform.Find("Text").GetComponent<TMPro.TextMeshPro>().ReplaceText("3.2", "4.3");
+        _haircutContainer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
     }
+
+    private void Haircut(Realm realm)
+    {
+        var price = 8;
+        if (this._totalResources < price)
+        {
+            this._instantiator.NewPopupYesNo("Nope!", "you don't have enough resources to get a haircut.", null, "Damn...", null);
+            return;
+        }
+        else if (_character.Realm == realm)
+        {
+            this._instantiator.NewPopupYesNo("Ahem...", "you already have this haircut.", null, "Damn...", null);
+            return;
+        }
+        SpendResources(price);
+        _character.Realm = realm;
+        PlayerPrefsHelper.SaveRunCharacter(_character);
+        this._instantiator.NewPopupYesNo($"{realm}ish", $"you now look like a fervent worshiper of {realm}.", null, "Neat!", null);
+    }
+
     private void ShowCleanPlayfield()
     {
         GameObject.Find(_buttonNames[5]).transform.Find("Text").GetComponent<TMPro.TextMeshPro>().ReplaceText("3.2", "4.3");
+        _cleanContainer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    private void CleanPlayfield()
+    {
+        var price = 1;
+        if (this._totalResources < price)
+        {
+            this._instantiator.NewPopupYesNo("Nope!", "you don't have enough resources to get a nice clean.", null, "Damn...", null);
+            return;
+        }
+        SpendResources(1);
+        CleanRows();
+    }
+
+    public void ApplyLastFightPlayField()
+    {
+        var lastPlayField = PlayerPrefsHelper.GetLastFightPlayField();
+        if (lastPlayField == null)
+            return;
+        foreach (var cell in lastPlayField)
+        {
+            var remainingPiece = this._instantiator.NewPiece(AttackType.WasteRow.ToString(), _character.Realm.ToString(), _playfieldContainer.transform.position + new Vector3(cell.Item1, cell.Item2, 0.0f));
+            remainingPiece.transform.SetParent(_playfieldContainer.gameObject.transform);
+            _grid[cell.Item1, cell.Item2] = remainingPiece.transform.GetChild(0);
+            foreach (Transform bloc in remainingPiece.transform)
+            {
+                var spr = bloc.GetComponent<SpriteRenderer>();
+                if (spr != null)
+                {
+                    spr.sortingLayerName = "MenuTop";
+                    spr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                }
+            }
+        }
+    }
+
+    private void SaveLastFightPlayField()
+    {
+        var remainingBlocks = string.Empty;
+        foreach (Transform piece in _playfieldContainer.transform)
+        {
+            foreach (Transform block in piece)
+            {
+                var pos = $"{Mathf.RoundToInt(block.transform.localPosition.x)}-{Mathf.RoundToInt(block.transform.localPosition.y - (Cache.PlayFieldMinHeight > 0 ? Cache.PlayFieldMinHeight : 0))};";
+                if (remainingBlocks.Contains(pos))
+                    continue;
+                remainingBlocks += pos;
+            }
+        }
+        PlayerPrefsHelper.SaveLastFightPlayField(remainingBlocks);
+    }
+
+    private void CleanRows()
+    {
+        int start = 0;
+        int end = start + (4 - 1);
+        for (int y = start; y <= end; ++y)
+            DeleteLine(y);
+        ClearLineSpace();
+        SaveLastFightPlayField();
+    }
+
+    private void DeleteLine(int y)
+    {
+        for (int x = 0; x < Constants.PlayFieldWidth; ++x)
+        {
+            if (_grid[x, y] == null)
+                continue;
+            this._instantiator.NewFadeBlock(_character.Realm, _grid[x, y].transform.position, 5, 0);
+            Destroy(_grid[x, y].gameObject);
+            _grid[x, y] = null;
+        }
+    }
+
+    public void ClearLineSpace()
+    {
+        int highestBlock = Cache.PlayFieldMinHeight - 1;
+        for (int y = Cache.PlayFieldMinHeight; y < Constants.PlayFieldHeight; ++y)
+        {
+            if (y == Cache.PlayFieldMinHeight)
+                highestBlock = GetHighestBlock();
+            if (y > highestBlock || highestBlock == Cache.PlayFieldMinHeight - 1)
+                break;
+            if (HasFullLineSpace(y))
+            {
+                DropAllAboveLines(y);
+                y = Cache.PlayFieldMinHeight - 1;
+            }
+        }
+        foreach (Transform child in _playfieldContainer.transform)
+        {
+            if (child.childCount == 0 && child.GetComponent<Piece>() != null)
+                Destroy(child.gameObject);
+        }
+    }
+
+    public int GetHighestBlock()
+    {
+        for (int y = Constants.PlayFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
+        {
+            if (!HasFullLineSpace(y))
+                return y;
+        }
+        return Cache.PlayFieldMinHeight - 1;
+    }
+
+    private bool HasFullLineSpace(int y)
+    {
+        for (int x = 0; x < Constants.PlayFieldWidth; ++x)
+        {
+            if (_grid[x, y] != null)
+                return false;
+        }
+        return true;
+    }
+
+    private void DropAllAboveLines(int underY)
+    {
+        for (int y = underY + 1; y < Constants.PlayFieldHeight; ++y)
+        {
+            for (int x = 0; x < Constants.PlayFieldWidth; ++x)
+            {
+                if (_grid[x, y] != null)
+                {
+                    _grid[x, y - 1] = _grid[x, y];
+                    _grid[x, y] = null;
+                    _grid[x, y - 1].transform.position += new Vector3(0.0f, -1.0f, 0.0f);
+                }
+            }
+        }
     }
 
     private void UpdateTotalResources()

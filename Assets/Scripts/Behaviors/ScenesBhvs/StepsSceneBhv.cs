@@ -59,7 +59,7 @@ public class StepsSceneBhv : SceneBhv
             {
                 PlayerPrefsHelper.SaveHasDoneTrading(Constants.PpHasDoneTradingDefault);
                 PlayerPrefsHelper.SaveTradingMarket(Constants.PpTradingMarketDefault);
-                PlayerPrefsHelper.SavePpBoostButtonPrice(Constants.PpBoostButtonPriceDefault);
+                PlayerPrefsHelper.SaveBoostButtonPrice(Constants.PpBoostButtonPriceDefault);
             }
             else if (_run.RealmLevel == 2 && PlayerPrefsHelper.GetTradingMarket() == Constants.PpTradingMarketDefault)
                 PlayerPrefsHelper.SaveTradingMarket(UnityEngine.Random.Range(0, 6));

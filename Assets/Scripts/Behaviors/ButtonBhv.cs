@@ -10,6 +10,7 @@ public class ButtonBhv : InputBhv
     public ActionDelegate EndActionDelegate;
     public bool Disabled;
     public bool StretchDisabled;
+    public bool ColorDisabled;
     public bool CustomSound;
     public bool VibratesOnClick = false;
     public float ConeVisionMult = Constants.BaseButtonVisionConeMult;
@@ -65,7 +66,7 @@ public class ButtonBhv : InputBhv
             transform.localScale = _pressedScale;
         }
         _isResetingColor = false;
-        if (_spriteRenderer != null)
+        if (_spriteRenderer != null && !ColorDisabled)
             _spriteRenderer.color = _pressedColor;
         BeginActionDelegate?.Invoke();
     }
