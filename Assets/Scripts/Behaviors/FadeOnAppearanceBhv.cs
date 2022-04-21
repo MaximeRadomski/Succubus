@@ -64,7 +64,7 @@ public class FadeOnAppearanceBhv : FrameRateBehavior
                 renderer.color = Color.Lerp(_renderers[0].color, FadeColor, Speed);
         if (_textRenderer != null)
             _textRenderer.color = Color.Lerp(_textRenderer.color, FadeColor, Speed);
-        if (_renderers != null && _renderers.Count > 0 && Helper.FloatEqualsPrecision(_renderers[0].color.a, FadeColor.a, 0.005f))
+        if (_renderers != null && _renderers.Count > 0 && _renderers[0] != null && Helper.FloatEqualsPrecision(_renderers[0].color.a, FadeColor.a, 0.005f))
         {
             _isFading = false;
             foreach (var renderer in _renderers)

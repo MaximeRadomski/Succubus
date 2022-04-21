@@ -453,7 +453,7 @@ public class LurkerShopBhv : PopupBhv
             this._instantiator.NewPopupYesNo("Nope!", "you don't have enough resources to get a nice clean.", null, "Damn...", null);
             return;
         }
-        SpendResources(1);
+        //SpendResources(1);
         CleanRows();
     }
 
@@ -477,6 +477,7 @@ public class LurkerShopBhv : PopupBhv
                 }
             }
         }
+        ClearLineSpace();
     }
 
     private void SaveLastFightPlayField()
@@ -484,9 +485,11 @@ public class LurkerShopBhv : PopupBhv
         var remainingBlocks = string.Empty;
         foreach (Transform piece in _playfieldContainer.transform)
         {
-            foreach (Transform block in piece)
+            if (piece.childCount > 0)
             {
-                var pos = $"{Mathf.RoundToInt(block.transform.localPosition.x)}-{Mathf.RoundToInt(block.transform.localPosition.y - (Cache.PlayFieldMinHeight > 0 ? Cache.PlayFieldMinHeight : 0))};";
+                var x = Mathf.RoundToInt(piece.transform.localPosition.x + transform.GetChild(0).localPosition.x);
+                var y = Mathf.RoundToInt(piece.transform.localPosition.y + transform.GetChild(0).localPosition.y);
+                var pos = $"{x}-{y};";
                 if (remainingBlocks.Contains(pos))
                     continue;
                 remainingBlocks += pos;
