@@ -453,7 +453,7 @@ public class LurkerShopBhv : PopupBhv
             this._instantiator.NewPopupYesNo("Nope!", "you don't have enough resources to get a nice clean.", null, "Damn...", null);
             return;
         }
-        //SpendResources(1);
+        SpendResources(2);
         CleanRows();
     }
 
@@ -505,7 +505,7 @@ public class LurkerShopBhv : PopupBhv
         for (int y = start; y <= end; ++y)
             DeleteLine(y);
         ClearLineSpace();
-        SaveLastFightPlayField();
+        InvokeNextFrame(SaveLastFightPlayField);
     }
 
     private void DeleteLine(int y)

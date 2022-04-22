@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PopupBhv : MonoBehaviour
+public abstract class PopupBhv : FrameRateBehavior
 {
     private InputControlerBhv _inputControlerBhv;
 
