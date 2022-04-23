@@ -2695,6 +2695,10 @@ public class GameplayControler : MonoBehaviour
 
     private void MoveGateToY(int y, int yTarget)
     {
+        if (y == yTarget)
+            return;
+        if (!HasFullLineSpace(yTarget))
+            DeleteLine(yTarget);
         for (int x = 0; x <= 9; ++x)
         {
             if (PlayFieldBhv.Grid[x, y] == null || !PlayFieldBhv.Grid[x, y].parent.name.Contains("Light"))

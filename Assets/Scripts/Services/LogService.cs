@@ -27,7 +27,7 @@ public static class LogService
             var path = $"{Application.persistentDataPath}/Logs.txt";
             if (string.IsNullOrEmpty(_currentSessionLogs))
             {
-                _currentSessionLogs = $"---------------------------------------\nSession: {Helper.DateFormat(DateTime.Now, noSeconds: true)} | {Application.version}\n---------------------------------------\n";
+                _currentSessionLogs = $"---------------------------------------§Session: {Helper.DateFormat(DateTime.Now, noSeconds: true)} | {Application.version}§---------------------------------------§";
                 File.AppendAllText(path, _currentSessionLogs);
             }
 
@@ -37,14 +37,14 @@ public static class LogService
             {
                 var gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
                 var run = PlayerPrefsHelper.GetRun();
-                context = $"\n    [CONTEXT] Opponent: {gameScene.CurrentOpponent?.Name}, Character: {gameScene.Character?.Name}, Item: {gameplayControler?.CharacterItem?.Name}, CacheOpponentAttackId: {Cache.CurrentOpponentAttackId}, Difficulty: {run.Difficulty}, Tattoos: {PlayerPrefsHelper.GetCurrentTattoosString()}";
+                context = $"§    [CONTEXT] Opponent: {gameScene.CurrentOpponent?.Name}, Character: {gameScene.Character?.Name}, Item: {gameplayControler?.CharacterItem?.Name}, CacheOpponentAttackId: {Cache.CurrentOpponentAttackId}, Difficulty: {run.Difficulty}, Tattoos: {PlayerPrefsHelper.GetCurrentTattoosString()}";
             }
             else if (currentScene is LoreSceneBhv loreScene)
             {
-                context = $"\n    [CONTEXT] NavigationService.SceneParameter: {JsonUtility.ToJson(NavigationService.SceneParameter)}";
+                context = $"§    [CONTEXT] NavigationService.SceneParameter: {JsonUtility.ToJson(NavigationService.SceneParameter)}";
             }
 
-            var tmpLog = $"[{type.ToString().ToUpper()} - {SceneManager.GetActiveScene().name}] {condition}{context}\n    {stackTrace.Replace("\n", "\n    ")}";
+            var tmpLog = $"[{type.ToString().ToUpper()} - {SceneManager.GetActiveScene().name}] {condition}{context}§    {stackTrace.Replace("§", "§    ")}";
             if (tmpLog.Substring(tmpLog.Length - 4) == "    ")
                 tmpLog = tmpLog.Substring(0, tmpLog.Length - 4);
             _currentSessionLogs = tmpLog;
@@ -61,7 +61,7 @@ public static class LogService
         var title = $"Logs_{Helper.DateFormat(DateTime.Now).Replace(" ", "_")}";
         if (lastCredentials != null && !string.IsNullOrEmpty(lastCredentials.PlayerName))
         {
-            content = content.Insert(0, $"Player: {lastCredentials.PlayerName}\n");
+            content = content.Insert(0, $"Player: {lastCredentials.PlayerName}§");
             title += $"_{lastCredentials.PlayerName}";
         }
         DatabaseService.SendLog(title, new Dto { Checksum = content }, () =>

@@ -25,10 +25,8 @@ public class PauseMenuBhv : PopupBhv
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Cache.HorizontalCameraInitialPosition.Value.z);
             }
             if (Cache.HorizontalCameraInitialRotation == null)
-            {
                 Cache.HorizontalCameraInitialRotation = Camera.main.transform.rotation;
-                Camera.main.transform.rotation = transform.rotation;
-            }
+            Camera.main.transform.rotation = transform.rotation;
         }
 #endif
         _mainCamera = Helper.GetMainCamera();
