@@ -524,7 +524,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
             Run.AlterResource(((Resource)loot).Id, amount);
-            PlayerPrefsHelper.AlterResource(((Resource)loot).Id, amount);
+            PlayerPrefsHelper.AlterTotalResource(((Resource)loot).Id, amount);
             PlayerPrefsHelper.SaveRun(Run);
             Instantiator.NewPopupYesNo(title, $"+{amount} {((Resource)loot).Name.ToLower()}{(amount > 1 ? "s" : "")}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} added to your resources{insteadStr}.", null, "Ka-Ching!", LoadBackAfterVictory);
         }

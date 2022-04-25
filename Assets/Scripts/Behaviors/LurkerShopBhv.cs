@@ -354,8 +354,8 @@ public class LurkerShopBhv : PopupBhv
                 return;
             PlayerPrefsHelper.SaveHasDoneTrading(true);
             GameObject.Find("ButtonValidateTrade").SetActive(false);
-            PlayerPrefsHelper.AlterResource(_resourceSelectedRight - 3, _amountRight);
             SpendResources(_amountLeft, _resourceSelectedLeft);
+            PlayerPrefsHelper.AlterTotalResource(_resourceSelectedRight - 3, _amountRight);
             Helper.ReinitKeyboardInputs(this);
         }, defaultPositive:true);
     }
@@ -436,7 +436,7 @@ public class LurkerShopBhv : PopupBhv
         SpendResources(price);
         _character.Realm = realm;
         PlayerPrefsHelper.SaveRunCharacter(_character);
-        this._instantiator.NewPopupYesNo($"{realm}ish", $"you now look like a fervent worshiper of {realm}.", null, "Neat!", null);
+        this._instantiator.NewPopupYesNo($"{realm}ish", $"you now look like a fervent worshiper of {realm.ToString().ToLower()}.", null, "Neat!", null);
     }
 
     private void ShowCleanPlayfield()
@@ -620,7 +620,7 @@ public class LurkerShopBhv : PopupBhv
             if (runResources[i] - amountSpent >= 0)
             {
                 _run.AlterResource(i, -amountSpent);
-                PlayerPrefsHelper.AlterResource(i, -amountSpent);
+                PlayerPrefsHelper.AlterTotalResource(i, -amountSpent);
                 runResources[i] -= amountSpent;
                 totalResources[i] -= amountSpent;
                 amountSpent = 0;
@@ -628,11 +628,12 @@ public class LurkerShopBhv : PopupBhv
             }
             else
             {
-                amountSpent -= runResources[i];
-                _run.AlterResource(i, -runResources[i]);
-                PlayerPrefsHelper.AlterResource(i, -runResources[i]);
-                runResources[i] -= runResources[i];
-                totalResources[i] -= runResources[i];
+                int amountResource = runResources[i];
+                amountSpent -= amountResource;
+                _run.AlterResource(i, -amountResource);
+                PlayerPrefsHelper.AlterTotalResource(i, -amountResource);
+                runResources[i] -= amountResource;
+                totalResources[i] -= amountResource;
             }
         }
 
@@ -642,16 +643,17 @@ public class LurkerShopBhv : PopupBhv
                 break;
             if (totalResources[i] - amountSpent >= 0)
             {
-                PlayerPrefsHelper.AlterResource(i, -amountSpent);
+                PlayerPrefsHelper.AlterTotalResource(i, -amountSpent);
                 totalResources[i] -= amountSpent;
                 amountSpent = 0;
                 break;
             }
             else
             {
-                amountSpent -= totalResources[i];
-                PlayerPrefsHelper.AlterResource(i, -totalResources[i]);
-                totalResources[i] -= totalResources[i];
+                int amountResource = totalResources[i];
+                amountSpent -= amountResource;
+                PlayerPrefsHelper.AlterTotalResource(i, -amountResource);
+                totalResources[i] -= amountResource;
             }
         }
 

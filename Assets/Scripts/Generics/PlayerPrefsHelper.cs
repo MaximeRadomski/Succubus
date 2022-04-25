@@ -950,7 +950,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         return resources;
     }
 
-    public static void AlterResource(int resourceId, int amount)
+    public static void AlterTotalResource(int resourceId, int amount)
     {
         var resources = GetTotalResources();
         resources[resourceId] += amount;

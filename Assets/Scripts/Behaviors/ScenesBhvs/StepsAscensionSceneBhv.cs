@@ -50,7 +50,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         _characterPictureTarget = _characterPicture.transform.position + new Vector3(-5.0f, 5.0f, 0.0f);
         _infoRealmTarget = _infoRealm.transform.position + new Vector3(5.0f, 5.0f, 0.0f);
 
-        PlayerPrefsHelper.AlterResource(Realm.Hell.GetHashCode(), 0); // (OBSOLETE but usefull) In order not to get the lore intro cinematic again (obsolete, but I let it here this way in order to get something else than null)
+        PlayerPrefsHelper.AlterTotalResource(Realm.Hell.GetHashCode(), 0); // (OBSOLETE but usefull) In order not to get the lore intro cinematic again (obsolete, but I let it here this way in order to get something else than null)
 
         _isAnimated = true;
     }

@@ -125,7 +125,7 @@ public class TreeSceneBhv : SceneBhv
         {
             if (!result || !canBuy)
                 return;
-            PlayerPrefsHelper.AlterResource(node.Realm.GetHashCode(), -node.Price);
+            PlayerPrefsHelper.AlterTotalResource(node.Realm.GetHashCode(), -node.Price);
             PlayerPrefsHelper.AddBoughtTreeNode(node.Name, node.Type);
             UpdateResources();
             UpdateTreeNodes();
@@ -162,11 +162,11 @@ public class TreeSceneBhv : SceneBhv
             foreach (var node in _treeNodes)
             {
                 if (node.Bought)
-                    PlayerPrefsHelper.AlterResource(node.Realm.GetHashCode(), node.Price);
+                    PlayerPrefsHelper.AlterTotalResource(node.Realm.GetHashCode(), node.Price);
             }
-            PlayerPrefsHelper.AlterResource(Realm.Hell.GetHashCode(), -hellResourceAsked);
-            PlayerPrefsHelper.AlterResource(Realm.Earth.GetHashCode(), -earthResourceAsked);
-            PlayerPrefsHelper.AlterResource(Realm.Heaven.GetHashCode(), -heavenResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource(Realm.Hell.GetHashCode(), -hellResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource(Realm.Earth.GetHashCode(), -earthResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource(Realm.Heaven.GetHashCode(), -heavenResourceAsked);
             PlayerPrefsHelper.ResetBoughtTreeNodes();
             UpdateResources();
             UpdateTreeNodes();
