@@ -489,6 +489,8 @@ public class InputControlerBhv : FrameRateBehavior
             ButtonOnSelector(Direction.Down);
         else if (Input.GetKeyUp(_keyBinding[14]))
             ButtonOnSelector(Direction.Up);
+        else if (Input.GetKey(_keyBinding[14]))
+            ButtonOnSelector(Direction.None);
     }
 
     private void CheckKeyBoardTextInputs()
@@ -642,6 +644,8 @@ public class InputControlerBhv : FrameRateBehavior
             Cache.LastEndActionClickedName = selectedGameObject.name;
             if (direction == Direction.Down)
                 buttonBhv.BeginAction(selectedGameObject.transform.position);
+            else if (direction == Direction.None)
+                buttonBhv.DoAction(selectedGameObject.transform.position);
             else
             {
                 buttonBhv.EndAction(selectedGameObject.transform.position);

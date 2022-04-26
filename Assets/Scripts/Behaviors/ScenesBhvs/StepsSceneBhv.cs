@@ -95,14 +95,7 @@ public class StepsSceneBhv : SceneBhv
             _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
             _backgroundMask = GameObject.Find("BackgroundMask");
 
-            var resources = _run.GetRunResources();
-            for (int i = 0; i < resources.Count; ++i)
-            {
-                if (resources[i] <= 0)
-                    GameObject.Find($"Resource{i}").SetActive(false);
-                else
-                    GameObject.Find($"Resource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
-            }
+            UpdateResourcesInfo();
             _stepsService = new StepsService();
             _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * _run.CurrentRealm.GetHashCode())));
             _stepsBackground = GameObject.Find("StepsBackground");
@@ -127,6 +120,25 @@ public class StepsSceneBhv : SceneBhv
         {
             PlayerPrefsHelper.ResetRun();
             LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
+        }
+    }
+
+    private void UpdateResourcesInfo()
+    {
+        var resources = _run.GetRunResources();
+        for (int i = 0; i < resources.Count; ++i)
+        {
+            if (resources[i] <= 0)
+            {
+                GameObject.Find($"StepResource{i}").GetComponent<SpriteRenderer>().enabled = false;
+                GameObject.Find($"StepResource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().enabled = false; 
+            }
+            else
+            {
+                GameObject.Find($"StepResource{i}").GetComponent<SpriteRenderer>().enabled = true;
+                GameObject.Find($"StepResource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().enabled = true;
+                GameObject.Find($"StepResource{i}").transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = resources[i].ToString();
+            }
         }
     }
 
@@ -382,7 +394,11 @@ public class StepsSceneBhv : SceneBhv
         void OfferShop()
         {
             Helper.ReinitKeyboardInputs(this);
-            Instantiator.NewLurkerShop(null, _character);
+            Instantiator.NewLurkerShop((result) =>
+            {
+                _run = PlayerPrefsHelper.GetRun();
+                UpdateResourcesInfo();
+            }, _character);
         }
     }
 

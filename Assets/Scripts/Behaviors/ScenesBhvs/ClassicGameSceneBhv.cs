@@ -349,6 +349,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private bool Victory()
     {
         PlayerPrefsHelper.SaveIsInFight(false);
+        _musicControler?.SetNewVolumeLevel();
         _gameplayControler.GameplayOnHold = true;
         //_isVictorious = true;
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;

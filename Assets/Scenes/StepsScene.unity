@@ -385,6 +385,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -553,7 +554,7 @@ GameObject:
   - component: {fileID: 190780615}
   - component: {fileID: 190780616}
   m_Layer: 0
-  m_Name: Resource1
+  m_Name: StepResource1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,6 +702,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -831,6 +833,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -1175,6 +1178,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -1188,7 +1192,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1526,7 +1530,7 @@ GameObject:
   - component: {fileID: 541427921}
   - component: {fileID: 541427922}
   m_Layer: 0
-  m_Name: Resource0
+  m_Name: StepResource0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2766,6 +2770,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 0.75
@@ -3399,6 +3404,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -3573,6 +3579,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -4241,6 +4248,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 0.75
@@ -4372,6 +4380,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
   ConeVisionMult: 1.5
@@ -5027,7 +5036,7 @@ GameObject:
   - component: {fileID: 1715723905}
   - component: {fileID: 1715723906}
   m_Layer: 0
-  m_Name: Resource2
+  m_Name: StepResource2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
