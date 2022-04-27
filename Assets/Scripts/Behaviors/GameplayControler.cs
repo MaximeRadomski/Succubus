@@ -638,11 +638,12 @@ public class GameplayControler : MonoBehaviour
 
     public void SetHorizontalOrientationAndroid()
     {
+        var multRotation = PlayerPrefsHelper.GetHorizontalOrientation() == Direction.Right ? 1.0f : 3.0f;
         var resetRotation = new Quaternion();
         resetRotation.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         _mainCamera.transform.position = Constants._cameraHorizontalGameplayPosition;
         _mainCamera.transform.rotation = resetRotation;
-        _mainCamera.transform.Rotate(0.0f, 0.0f, 90.0f);
+        _mainCamera.transform.Rotate(0.0f, 0.0f, multRotation * 90.0f);
         _panelLeft.GetComponent<PositionBhv>().Rotated = true;
         _panelRight.GetComponent<PositionBhv>().Rotated = true;
         _uiPanelLeft.transform.rotation = resetRotation;
@@ -905,6 +906,8 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
         else
             HandleAdditionalOrLesserBlocks();
+        if (Character.ChanceOldSchool > 0 && Helper.RandomDice100(Character.ChanceOldSchool))
+            this.AttackOldSchool(tmpLastPiece, Character.Realm, 1, this.GravityLevel > 10 ? 10 : this.GravityLevel);
         _hasAlteredPiecePositionAfterResume = true;
         if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
             CurrentGhost.GetComponent<Piece>().SetColor(Constants.ColorPlainTransparent, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);

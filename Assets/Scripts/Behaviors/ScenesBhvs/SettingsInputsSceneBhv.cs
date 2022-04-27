@@ -17,6 +17,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     private GameObject _keyBindingPanelMenu;
     private GameObject _sensitivitySelector;
     private GameObject _menuSelector;
+    private SpriteRenderer _horizontalOrientation;
     private InputControlerBhv _inputControlerBhv;
     private List<GameObject> _gameplayButtons;
     private List<KeyCode> _keyBinding;
@@ -44,6 +45,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelMenu = GameObject.Find("KeyBindingPanelMenu");
         _sensitivitySelector = GameObject.Find("SensitivitySelector");
         _menuSelector = GameObject.Find("MenuSelector");
+        _horizontalOrientation = GameObject.Find("HorizontalOrientation").GetComponent<SpriteRenderer>();
         _gameplayButtons = new List<GameObject>();
         _listeningKeeBindingId = -1;
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
@@ -57,7 +59,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
         PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
         PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
-        SetOrientation(PlayerPrefsHelper.GetOrientation());
+        SetOrientation(PlayerPrefsHelper.GetOrientation(), init: true);
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _defaultKeyBinding = PlayerPrefsHelper.GetKeyBinding(Constants.PpKeyBindingDefault);
         for (int i = 0; i < _keyBinding.Count; ++i)
@@ -432,11 +434,28 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
     }
 
-    private void SetOrientation(Direction orientation)
+    private void SetOrientation(Direction orientation, bool init = false)
     {
         var combatOrientationSelector = GameObject.Find("CombatOrientationSelector");
         combatOrientationSelector.transform.position = new Vector3(GameObject.Find(orientation.ToString()).transform.position.x, combatOrientationSelector.transform.position.y, 0.0f);
-        PlayerPrefsHelper.SaveOrientation(orientation);
+        if (orientation == Direction.Horizontal)
+            _horizontalOrientation.enabled = true;
+        else
+            _horizontalOrientation.enabled = false;
+        if (!init)
+        {
+            if (orientation == Direction.Horizontal && PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)
+            {
+                var oldHorizontalOrientation = PlayerPrefsHelper.GetHorizontalOrientation();
+                var newHorizontalOrientation = oldHorizontalOrientation == Direction.Right ? Direction.Left : Direction.Right;
+                PlayerPrefsHelper.SaveHorizontalOrientation(newHorizontalOrientation);
+                _horizontalOrientation.flipX = newHorizontalOrientation == Direction.Left;
+                Cache.HorizontalCameraInitialRotation = null;
+            } 
+            PlayerPrefsHelper.SaveOrientation(orientation);
+        }
+        else
+            _horizontalOrientation.flipX = PlayerPrefsHelper.GetHorizontalOrientation() == Direction.Left;
     }
 
     public override void PauseOrPrevious()

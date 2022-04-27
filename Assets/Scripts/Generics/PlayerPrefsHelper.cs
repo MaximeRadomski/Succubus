@@ -831,6 +831,17 @@ public class PlayerPrefsHelper : MonoBehaviour
 #endif
     }
 
+    public static void SaveHorizontalOrientation(Direction horizontalOrientation)
+    {
+        PlayerPrefs.SetInt(Constants.PpHorizontalOrientation, horizontalOrientation == Direction.Right ? 0 : 1);
+    }
+
+    public static Direction GetHorizontalOrientation()
+    {
+        var horizontaleOrientation = PlayerPrefs.GetInt(Constants.PpHorizontalOrientation, Constants.PpHorizontalOrientationDefault == Direction.Right ? 0 : 1);
+        return horizontaleOrientation == 0 ? Direction.Right : Direction.Left;
+    }
+
     public static int GetDialogProgress(string dialogLibelle)
     {
         var progressId = PlayerPrefs.GetInt(dialogLibelle, Constants.PpSerializeDefaultInt);

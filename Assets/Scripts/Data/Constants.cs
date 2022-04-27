@@ -7,7 +7,7 @@ public static class Constants
 {
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
@@ -23,7 +23,7 @@ public static class Constants
     public const float GravityDelay = 1.0f;
     public const int GravityDivider = 4;
     public const int LinesForLevel = 10;
-    public const float LockDelay = 0.5f;
+    public const float LockDelay = 0.5f; 
     public const float OpponentCooldownIncrement = 0.05f;
     public const float OpponentCooldownOneHour = 3600.0f;
     public const float AfterDropDelay = 0.05f;
@@ -163,6 +163,8 @@ public static class Constants
     public const bool PpClassicPiecesDefault = false;
     public const string PpOrientation = "Orientation";
     public const Direction PpOrientationDefault = Direction.Vertical;
+    public const string PpHorizontalOrientation = "HorizontalOrientation";
+    public const Direction PpHorizontalOrientationDefault = Direction.Right;
     public const string PpRunAlreadyDialog = "RunAlreadyDialog";
     public const string PpRunAlreadyDialogDefault = null;
     public const string PpBonusRarePercent = "BonusRarePercent";
