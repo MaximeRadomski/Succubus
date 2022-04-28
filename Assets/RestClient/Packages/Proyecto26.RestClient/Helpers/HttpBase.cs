@@ -18,10 +18,10 @@ namespace Proyecto26
                     if (currentScene is GameSceneBhv gameScene && Cache.InputLayer == 0)
                     {
                         gameScene.PauseOrPrevious();
-                        gameScene.StartCoroutine(Helper.ExecuteAfterDelay(0.1f, DisplayErrorTooManyAttemptsPopup, false));
+                        gameScene.InvokeNextFrame(DisplayErrorTooManyAttemptsPopup);
                     }
                     else
-                        DisplayErrorTooManyAttemptsPopup();
+                        currentScene.InvokeNextFrame(DisplayErrorTooManyAttemptsPopup);
 
                     void DisplayErrorTooManyAttemptsPopup()
                     {

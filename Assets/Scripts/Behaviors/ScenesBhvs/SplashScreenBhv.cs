@@ -9,7 +9,6 @@ public class SplashScreenBhv : SceneBhv
     private TMPro.TextMeshPro _continueText;
 
     private bool _isGoingToMainMenu = false;
-    private bool _newUpdatePopup = false;
 
     public override MusicType MusicType => MusicType.SplashScreen;
 
@@ -98,7 +97,7 @@ public class SplashScreenBhv : SceneBhv
 
     protected override void NormalUpdate()
     {
-        if (Input.anyKeyDown && !_newUpdatePopup)
+        if (Input.anyKeyDown && Cache.InputLayer == 0)
             GoToMainMenu();
     }
 
@@ -154,13 +153,14 @@ public class SplashScreenBhv : SceneBhv
             var currentVersion = Application.version.Split('.');
             if (IsUnder(currentVersion, lastUpdatedVersion))
             {
-                _newUpdatePopup = true;
-                Instantiator.NewPopupYesNo("Update", "a new update is available!\nredirecting to download page?", "Not now", "Sure", (goOnline) =>
+                this.InvokeNextFrame(() =>
                 {
-                    _newUpdatePopup = false;
-                    if (!goOnline)
-                        return;
-                    Application.OpenURL("https://abject.itch.io/infidhells/");
+                    Instantiator.NewPopupYesNo("Update", "a new update is available!\nredirecting to download page?", "Not now", "Sure", (goOnline) =>
+                    {
+                        if (!goOnline)
+                            return;
+                        Application.OpenURL("https://abject.itch.io/infidhells/");
+                    });
                 });
             }
         });

@@ -72,7 +72,7 @@ public abstract class FrameRateBehavior : MonoBehaviour
 
     }
 
-    protected void InvokeNextFrame(Action action)
+    public void InvokeNextFrame(Action action)
     {
         StartCoroutine(Coroutine(action));
 

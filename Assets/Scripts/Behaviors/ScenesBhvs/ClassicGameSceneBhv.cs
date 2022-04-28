@@ -407,7 +407,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             else
             {
                 var content = Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "switch your " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + currentItem.Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + " for " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + ((Item)loot).Name.ToLower() + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32) + "?";
-                Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite, defaultPositive: true);
+                if (!Character.StairwayToHeaven)
+                    Instantiator.NewPopupYesNo("New Item", content, "No", "Yes", OnItemSwitch, sprite, defaultPositive: true);
+                else
+                    OnItemSwitch(true);
                 void OnItemSwitch(bool result)
                 {
                     if (result)
@@ -448,7 +451,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 if (!tattoos.Contains(nameToCheck))
                 {
-                    Instantiator.NewPopupYesNo("Tattoo", $"are you ready to get inked?", "Nope!", "Sure!", InkTattoo, sprite, defaultPositive: true);
+                    if (!Character.StairwayToHeaven)
+                        Instantiator.NewPopupYesNo("Tattoo", $"are you ready to get inked?", "Nope!", "Sure!", InkTattoo, sprite, defaultPositive: true);
+                    else
+                        InkTattoo(true);
 
                     void InkTattoo(bool ink)
                     {
@@ -483,7 +489,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (pacts.Contains(nameToCheck))
                 Instantiator.NewPopupYesNo("Ongoing Pact", $"this pact is already signed, you cannot commit to a same pact twice.", null, "Damn...", LootResources, sprite);
             else
-                Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
+            {
+                if (!Character.StairwayToHeaven)
+                    Instantiator.NewPopupYesNo("New Pact", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{((Pact)loot).FullDescription()}", "Withdraw", "Endorse", OnPactSign, sprite, defaultPositive: true);
+                else
+                    OnPactSign(true);
+            }
             void OnPactSign(bool result)
             {
                 if (result)

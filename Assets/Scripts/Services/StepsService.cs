@@ -98,7 +98,10 @@ public class StepsService
             if (Helper.RandomDice100(chancePercentToHaveAnExit))
             {
                 minimumExit = minimumExit.ReplaceChar(i, '1');
-                chancePercentToHaveAnExit -= 20;
+                if (!character.StairwayToHeaven)
+                    chancePercentToHaveAnExit -= 20;
+                else
+                    chancePercentToHaveAnExit -= 100;
             }
         }
         minimumExit = minimumExit.Replace('.', '0');

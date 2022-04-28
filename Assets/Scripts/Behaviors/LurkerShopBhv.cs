@@ -331,7 +331,12 @@ public class LurkerShopBhv : PopupBhv
         else if (_amountLeft > max)
             _amountLeft = max;
         else if (_amountLeft < 1)
-            _amountLeft = 1;
+        {
+            if (max >= 1)
+                _amountLeft = 1;
+            else
+                _amountLeft = 0;
+        }
         _amountLeftText.text = $"{Constants.GetMaterial((Realm)_resourceSelectedLeft, TextType.succubus3x5, TextCode.c43)}{_amountLeft}";
         UpdateRateResources();
     }
@@ -354,8 +359,8 @@ public class LurkerShopBhv : PopupBhv
                 return;
             PlayerPrefsHelper.SaveHasDoneTrading(true);
             GameObject.Find("ButtonValidateTrade").SetActive(false);
-            SpendResources(_amountLeft, _resourceSelectedLeft);
             PlayerPrefsHelper.AlterTotalResource(_resourceSelectedRight - 3, _amountRight);
+            SpendResources(_amountLeft, _resourceSelectedLeft);
             Helper.ReinitKeyboardInputs(this);
         }, defaultPositive:true);
     }

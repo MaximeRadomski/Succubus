@@ -109,6 +109,7 @@ public class Character : Loot
     public int RealmTreeBoost = 0;
     public int GatlingPercentDamage = 0;
     public int WhacAMoleStrength = 0;
+    public bool StairwayToHeaven = false;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
