@@ -36,7 +36,9 @@ public class StepsService
                 && first != StepType.S0100
                 && first != StepType.S1000)
                 isOk = true;
-        }        
+        }
+        if (character.StairwayToHeaven)
+            first = StepType.S1000;
         var originStep = new Step(50, 50, run.CurrentRealm, first, true, false, LootType.None, 0, null);
         run.Steps += originStep.ToParsedString();
         GenerateAdjacentSteps(run, character, originStep, character.MapAquired ? run.MaxSteps : -1);
@@ -91,6 +93,8 @@ public class StepsService
         if (customChancePercentToHaveAnExit == 0)
             Debug.Log("DEBUG");
         var chancePercentToHaveAnExit = customChancePercentToHaveAnExit >= 0 ? customChancePercentToHaveAnExit : 80;
+        if (character.StairwayToHeaven)
+            chancePercentToHaveAnExit = 100;
         for (int i = 0; i < 4; ++i)
         {
             if (chancePercentToHaveAnExit <= 0 || minimumExit[i] == '1' || minimumExit[i] == '.')
@@ -101,7 +105,7 @@ public class StepsService
                 if (!character.StairwayToHeaven)
                     chancePercentToHaveAnExit -= 20;
                 else
-                    chancePercentToHaveAnExit -= 100;
+                    break;
             }
         }
         minimumExit = minimumExit.Replace('.', '0');
