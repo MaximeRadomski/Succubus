@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpecialWisdom : Special
 {
     private int _nbPiece;
+    private SoundControlerBhv _soundControler;
+    private int _explosionId;
 
     public override bool Activate()
     {
@@ -37,6 +40,8 @@ public class SpecialWisdom : Special
     public override void OnPieceLocked(GameObject piece)
     {
         base.OnPieceLocked(piece);
+        if (_soundControler == null)
+            SetSoundControler();
         --_nbPiece;
         if (_nbPiece < 0)
             return;
@@ -62,6 +67,13 @@ public class SpecialWisdom : Special
             MonoBehaviour.Destroy(_gameplayControler.PlayFieldBhv.Grid[x, y].gameObject);
             _gameplayControler.PlayFieldBhv.Grid[x, y] = null;
         }
+        _soundControler.PlaySound(_explosionId);
+    }
+
+    private void SetSoundControler()
+    {
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _explosionId = _soundControler.SetSound("Perfect");
     }
 
     private void TryDestroy(int x, int y, Transform parent)

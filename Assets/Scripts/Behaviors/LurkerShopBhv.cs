@@ -63,7 +63,9 @@ public class LurkerShopBhv : PopupBhv
         _resumeAction = resumeAction;
         _character = character;
         _mainCamera = Helper.GetMainCamera();
+#if !UNITY_ANDROID
         _menuSelector = GameObject.Find("MenuSelector");
+#endif
         _menuResetPos = new Vector3(0.0f, 2.0f, 0.0f);
         transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         _tradingMarkerId = PlayerPrefsHelper.GetTradingMarket();
@@ -121,7 +123,9 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find("ButtonValidateClean").GetComponent<ButtonBhv>().EndActionDelegate = CleanPlayfield;
 
         UpdateTotalResources();
+#if !UNITY_ANDROID
         _menuSelector.transform.position = new Vector3(-10.0f, 20.0f, _menuSelector.transform.position.z);
+#endif
         ShowLevelUpTattoo();
     }
 
