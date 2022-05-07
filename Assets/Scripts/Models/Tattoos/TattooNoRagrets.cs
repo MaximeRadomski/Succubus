@@ -17,6 +17,11 @@ public class TattooNoRagrets : Tattoo
         character.QuadrupleLinesDamageOverride = Stat;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.QuadrupleLinesDamageOverride = 0;
+    }
+
     public override string GetDescription()
     {
         return $"your quadruple lines now deal {StatToString("fixed ", " damage")}.";

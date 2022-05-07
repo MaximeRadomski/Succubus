@@ -14,7 +14,7 @@ public class TattooQuadDamage : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.QuadDamage = Stat;
+        character.QuadDamage += Stat;
     }
 
     public override string GetDescription()

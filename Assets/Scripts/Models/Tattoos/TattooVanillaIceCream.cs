@@ -18,6 +18,11 @@ public class TattooVanillaIceCream : Tattoo
         character.SingleLinesDamageOverride = 1;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.SingleLinesDamageOverride = 0;
+    }
+
     public override string GetDescription()
     {
         return $"you deal {StatToString("+", " base damage")}, except for your single lines which now deal {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}1 damage{Constants.MaterialEnd}.";

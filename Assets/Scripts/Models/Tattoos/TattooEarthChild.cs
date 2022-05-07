@@ -18,6 +18,11 @@ public class TattooEarthChild : Tattoo
         character.Realm = Realm.Earth;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.Realm = character.StartingRealm;
+    }
+
     public override string GetDescription()
     {
         return $"change your nature to a {StatToString()} one.";

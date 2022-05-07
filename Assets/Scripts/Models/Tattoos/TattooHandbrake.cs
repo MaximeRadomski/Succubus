@@ -18,6 +18,11 @@ public class TattooHandbrake : Tattoo
         character.HighPlayPause = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.HighPlayPause = false;
+    }
+
     public override string GetDescription()
     {
         return $"playing high [ over 17 ] in the playfield {StatToString()}.";

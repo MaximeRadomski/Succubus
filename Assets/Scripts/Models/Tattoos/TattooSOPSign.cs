@@ -14,7 +14,7 @@ public class TattooSOPSign : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.MaxDarkAndWasteLines = Stat;
+        character.MaxDarkAndWasteLines += Stat;
     }
 
     public override string GetDescription()

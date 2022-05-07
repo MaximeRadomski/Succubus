@@ -3,26 +3,28 @@ using System.Collections;
 
 public class TattooXRayGlasses : Tattoo
 {
-    private int _dodgeChance = 15;
-
     public TattooXRayGlasses()
     {
         Id = 15;
         Name = TattoosData.Tattoos[Id];
-        Stat = 0;
-        StatStr = "through";
+        Stat = 15;
         Rarity = Rarity.Rare;
         MaxLevel = 2;
     }
 
     public override void ApplyToCharacter(Character character)
     {
+        character.DodgeChance += Stat;
         character.XRay = true;
-        character.DodgeChance += _dodgeChance;
+    }
+
+    protected override void CustomRemove(Character character)
+    {
+        character.XRay = false;
     }
 
     public override string GetDescription()
     {
-        return $"allows you to see your pieces' shadows {StatToString()} vision blocks, and gives you {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}+{_dodgeChance * Level}%{Constants.MaterialEnd} chance of dodging attacks.";
+        return $"allows you to see your pieces' shadows {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}through vision blocks, and gives you {StatToString("+", "%")} chance of dodging attacks.";
     }
 }

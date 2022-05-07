@@ -18,6 +18,11 @@ public class TattooStairwaytoHeaven : Tattoo
         character.StairwayToHeaven = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.StairwayToHeaven = false;
+    }
+
     public override string GetDescription()
     {
         return $"gives you {StatToString("+", " lives")}, but you don't get to refuse loot or choose which step to go to anymore.";

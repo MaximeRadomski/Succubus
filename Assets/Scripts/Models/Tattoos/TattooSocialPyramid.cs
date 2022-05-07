@@ -19,6 +19,11 @@ public class TattooSocialPyramid : Tattoo
         character.SocialPyramid = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.SocialPyramid = false;
+    }
+
     public override string GetDescription()
     {
         return $"reduces the opponents you encounter to only {StatToString()} ones.";

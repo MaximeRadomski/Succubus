@@ -19,6 +19,13 @@ public class TattooFullBlack : Tattoo
         FillAllSpace();
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        var tmpStr = PlayerPrefsHelper.GetCurrentTattoosString();
+        if (!tmpStr.Contains("FullBlack"))
+            character.BonusLife -= Stat;
+    }
+
     public override string GetDescription()
     {
         return $"gives you {StatToString("+", " life")}, but takes all the remaining place on your body.";

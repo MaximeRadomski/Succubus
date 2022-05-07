@@ -18,6 +18,11 @@ public class TattooSRS : Tattoo
         character.StupidRotationSystem = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.StupidRotationSystem = false;
+    }
+
     public override string GetDescription()
     {
         return $"stupid rotation system: adds {StatToString()} to your pieces, allowing crazy twists and piece-warping.";

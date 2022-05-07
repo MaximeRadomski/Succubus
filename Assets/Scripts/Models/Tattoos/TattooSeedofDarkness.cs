@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TattooSeedofDarkness : Tattoo
 {
-    private int percentStat = 33;
+    private int percentStat = 25;
 
     public TattooSeedofDarkness()
     {
@@ -16,7 +16,7 @@ public class TattooSeedofDarkness : Tattoo
 
     public override void ApplyToCharacter(Character character)
     {
-        character.RealmTreeBoost -= -percentStat;
+        character.RealmTreeBoost += -(100 / Stat);
         character.DamageFlatBonus += Stat;
     }
 

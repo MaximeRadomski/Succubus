@@ -18,6 +18,11 @@ public class TattooStar : Tattoo
         character.LineDestroyInvulnerability = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.LineDestroyInvulnerability = false;
+    }
+
     public override string GetDescription()
     {
         return $"{StatToString()} anymore if your last piece dropped cleared a line.\n(doesn't cancel the attack, just delays it)";

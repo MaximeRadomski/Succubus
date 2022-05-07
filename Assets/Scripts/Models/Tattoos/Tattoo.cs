@@ -56,4 +56,24 @@ public abstract class Tattoo : Loot
         Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
         Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
     }
+
+    protected virtual void CustomRemove(Character character)
+    {
+        return;
+    }
+
+    public void Remove(Character character)
+    {
+        if (Stat != 0)
+        {
+            Stat = -Stat;
+            for (int i = 0; i < Level; ++i)
+                ApplyToCharacter(character);
+            Stat = -Stat;
+            CustomRemove(character);
+        }
+        else
+            CustomRemove(character);
+        
+    }
 }

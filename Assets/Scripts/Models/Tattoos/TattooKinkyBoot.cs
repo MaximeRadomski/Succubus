@@ -18,7 +18,7 @@ public class TattooKinkyBoot : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.GateWidener += Stat;
-        character.ThornsPercent += thornMultiplier;
+        character.ThornsPercent += Stat * thornMultiplier;
     }
 
     public override string GetDescription()

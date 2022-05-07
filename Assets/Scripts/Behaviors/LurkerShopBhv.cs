@@ -269,6 +269,8 @@ public class LurkerShopBhv : PopupBhv
                 _soundControler.PlaySound(_idRemoveSound);
                 SpendResources(removePrice);
                 PlayerPrefsHelper.RemoveTattoo(clickedTattoo);
+                clickedTattoo.Remove(_character);
+                PlayerPrefsHelper.SaveRunCharacter(_character);
                 _instantiator.NewPopupYesNo("Tattoo Removal", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{clickedTattoo.Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} tattoo has been removed.", null, "Ouch", (result) =>
                 {
                     UnselectAllButtons();

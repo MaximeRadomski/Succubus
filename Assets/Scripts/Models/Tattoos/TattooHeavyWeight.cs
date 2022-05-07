@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class TattooHeavyWeight : Tattoo
 {
@@ -15,8 +16,7 @@ public class TattooHeavyWeight : Tattoo
     public override void ApplyToCharacter(Character character)
     {
         character.DamagePercentBonus += Stat;
-        character.PiecesWeight += 1;
-
+        character.PiecesWeight += Stat / Math.Abs(Stat);
     }
 
     public override string GetDescription()

@@ -18,6 +18,11 @@ public class TattooHeavenIcon : Tattoo
         character.Realm = Realm.Heaven;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.Realm = character.StartingRealm;
+    }
+
     public override string GetDescription()
     {
         return $"change your nature to a {StatToString()} one.";

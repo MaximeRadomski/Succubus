@@ -18,6 +18,11 @@ public class TattooWaterEye : Tattoo
         character.HasteForAll = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.HasteForAll = false;
+    }
+
     public override string GetDescription()
     {
         return $"you deal {StatToString("+", "%")} damage, but all your opponents now have haste.";

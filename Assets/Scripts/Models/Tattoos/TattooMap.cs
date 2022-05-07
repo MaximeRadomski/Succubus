@@ -24,6 +24,11 @@ public class TattooMap : Tattoo
         PlayerPrefsHelper.SaveRun(run);
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.MapAquired = false;
+    }
+
     public override string GetDescription()
     {
         return $"reveals {StatToString()} of the current level.";

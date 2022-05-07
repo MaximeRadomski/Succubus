@@ -18,6 +18,11 @@ public class TattooBloodEye : Tattoo
         character.HasteCancel = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.HasteCancel = false;
+    }
+
     public override string GetDescription()
     {
         return $"haste attacks {StatToString()} anymore.";

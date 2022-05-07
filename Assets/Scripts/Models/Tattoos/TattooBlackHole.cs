@@ -20,6 +20,13 @@ public class TattooBlackHole : Tattoo
         FillAllSpace();
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        var tmpStr = PlayerPrefsHelper.GetCurrentTattoosString();
+        if (!tmpStr.Contains("BlackHole"))
+            character.AllClear = false;
+    }
+
     public override string GetDescription()
     {
         return $"clears {StatToString()} after a fight, but takes all the remaining place on your body.";

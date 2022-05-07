@@ -19,6 +19,11 @@ public class TattooBlackMirror : Tattoo
         character.CanMimic = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.CanMimic = false;
+    }
+
     public override string GetDescription()
     {
         return $"going over the limits of the playfield gives your piece the {StatToString()} status!\n{StatToString()} pieces can't rotate but their blocks are individually affected by gravity.";

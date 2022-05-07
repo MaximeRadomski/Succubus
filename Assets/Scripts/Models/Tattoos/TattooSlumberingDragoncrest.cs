@@ -19,6 +19,11 @@ public class TattooSlumberingDragoncrest : Tattoo
         character.SlumberingDragoncrest = true;
     }
 
+    protected override void CustomRemove(Character character)
+    {
+        character.SlumberingDragoncrest = false;
+    }
+
     public override string GetDescription()
     {
         return $"{StatToString()}, the first opponent won't fight back until you attacked them once.";
