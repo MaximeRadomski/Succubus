@@ -19,8 +19,6 @@ public class SplashScreenBhv : SceneBhv
         LogService.Init();
         Init();
 
-        PlayerPrefsHelper.SaveHasMetLurker(false);
-
         //Instantiator.NewLoading();
         //AccountService.PutAccount(new AccountDto("Dasilver", "test", "test", "testAnswer", 5, "test"), () => { Helper.ResumeLoading(); });
 

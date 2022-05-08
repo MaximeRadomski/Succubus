@@ -25,6 +25,6 @@ public class TattooXRayGlasses : Tattoo
 
     public override string GetDescription()
     {
-        return $"allows you to see your pieces' shadows {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}through vision blocks, and gives you {StatToString("+", "%")} chance of dodging attacks.";
+        return $"allows you to see your pieces' shadows {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}through{Constants.MaterialEnd} vision blocks, and gives you {StatToString("+", "%")} chance of dodging attacks.";
     }
 }

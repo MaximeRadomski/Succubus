@@ -220,6 +220,8 @@ public class LurkerShopBhv : PopupBhv
                     _soundControler.PlaySound(_idTattooSound);
                     SpendResources(upgradePrice);
                     PlayerPrefsHelper.AddTattoo(clickedTattoo.Name);
+                    clickedTattoo.ApplyToCharacter(_character);
+                    PlayerPrefsHelper.SaveRunCharacter(_character);
                     _instantiator.NewPopupYesNo("Tattoo Upgrade", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{clickedTattoo.Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} power has been increased.", null, "Noice", null, sprite);
                 }, sprite, true);
             }

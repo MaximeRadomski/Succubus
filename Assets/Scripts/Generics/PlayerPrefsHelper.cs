@@ -474,8 +474,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
 
         tattoosFullStr = tattoosFullStr.Replace($"{nameToRemove}L{tattoo.Level.ToString("00")}B{tattoo.BodyPart.GetHashCode().ToString("00")};", "");
-        alreadyBodyPartsIds = alreadyBodyPartsIds.Replace(tattoo.BodyPart.GetHashCode().ToString("00"), "");
-        
+        for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
+        {
+            int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
+            if (id == tattoo.BodyPart.GetHashCode())
+            {
+                alreadyBodyPartsIds = alreadyBodyPartsIds.Remove(i, 2);
+                break;
+            }
+        }        
         Mock.SetString(Constants.PpCurrentTattoos, tattoosFullStr);
         Mock.SetString(Constants.PpCurrentBodyParts, alreadyBodyPartsIds);
     }
