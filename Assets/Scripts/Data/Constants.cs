@@ -54,7 +54,7 @@ public static class Constants
     public const int OldSchoolArr = 6;
     public const int WeightIncrementPercentPerDifficulty = 25;
     public const int MusicBeat = 380;
-    public const int StepsAssetsCount = 11;
+    public const int StepsAssetsCount = 12;
     public const int StepsAssetsSelectorId = 0;
     public const int StepsAssetsVisionId = 1;
     public const int StepsAssetsPositionId = 2;
