@@ -163,7 +163,7 @@ public class DifficultySceneBhv : SceneBhv
         {
             var item = ItemsData.GetRandomItem((Rarity)randomItemMaxRarity);
             PlayerPrefsHelper.SaveCurrentItem(item.Name);
-            if (item.IsUsesBased)
+            if (item.Type == ItemType.UsesBased)
                 run.CurrentItemUses = item.Uses;
         }
         PlayerPrefsHelper.SaveRun(run);

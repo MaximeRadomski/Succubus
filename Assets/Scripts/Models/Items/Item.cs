@@ -8,8 +8,8 @@ public abstract class Item : Loot
     public int Id;
     public string Name;
     public string Description;
+    public ItemType Type = ItemType.CooldownBased;
     public int Cooldown;
-    public bool IsUsesBased = false;
     public int Uses;
 
     protected Character _character;
@@ -29,11 +29,11 @@ public abstract class Item : Loot
         _character = character;
         _gameplayControler = gameplayControler;
         _soundFunc = soundFunc;
-        if (Cache.CurrentItemCooldown > 0 || (IsUsesBased && Cache.CurrentItemUses == 0))
+        if (Cache.CurrentItemCooldown > 0 || (Type == ItemType.UsesBased && Cache.CurrentItemUses == 0))
             return false;
         _gameplayControler.Instantiator.PopText(Name.ToLower(), new Vector2(4.5f, 17.4f));
         _gameplayControler.FadeBlocksOnText();
-        if (!IsUsesBased)
+        if (Type != ItemType.UsesBased)
             Cache.RestartCurrentItemCooldown(character, this);
         --Cache.CurrentItemUses;
         _gameplayControler.UpdateItemAndSpecialVisuals();
@@ -58,6 +58,11 @@ public abstract class Item : Loot
     public virtual string GetDescription()
     {
         return Description;
+    }
+
+    public virtual string GetKillBasedText()
+    {
+        return "-";
     }
 
     protected string Highlight(string highlight)

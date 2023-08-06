@@ -59,7 +59,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         ++run.Endless;
         run.CurrentRealm = Realm.Hell;
         run.RealmLevel = 1;
-        run.DeathScytheAscension = 0; 
+        run.DeathScytheCount = 0; 
         run.LifeRouletteOnce = false;
         run.RepentanceOnce = false;
         if (run.Difficulty != Difficulty.Divine666)

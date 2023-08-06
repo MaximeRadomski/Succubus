@@ -35,7 +35,7 @@ public class Run
     public int PactLootPercent = 20;
     public int TattooLootPercent = 35;
 
-    public int DeathScytheAscension;
+    public int DeathScytheCount;
     public bool LifeRouletteOnce;
     public bool RepentanceOnce;
 

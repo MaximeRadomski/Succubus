@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameplayControler : MonoBehaviour
 {
@@ -494,7 +495,7 @@ public class GameplayControler : MonoBehaviour
     public void UpdateItemAndSpecialVisuals()
     {
         //ITEM
-        if (CharacterItem != null && (Cache.CurrentItemCooldown <= 0 || CharacterItem.IsUsesBased))
+        if (CharacterItem != null && (Cache.CurrentItemCooldown <= 0 || CharacterItem.Type != ItemType.CooldownBased))
         {
             for (int i = 1; i <= 16; ++i)
             {
@@ -512,11 +513,11 @@ public class GameplayControler : MonoBehaviour
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (_itemTextDefaultLocalPos == null)
                     _itemTextDefaultLocalPos = tmp.transform.GetChild(0).localPosition;
-                if (CharacterItem.IsUsesBased)
+                if (CharacterItem.Type == ItemType.UsesBased || CharacterItem.Type == ItemType.KillBased)
                 {
                     tmp.transform.GetChild(0).position = tmp.transform.position + new Vector3(-1.284f, 1.261f, 0.0f);
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().color = (Color)Constants.GetColorFromRealm(CharacterRealm, 4);
-                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{Cache.CurrentItemUses}";
+                    tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long\">{(CharacterItem.Type == ItemType.UsesBased ? Cache.CurrentItemUses.ToString() : CharacterItem.GetKillBasedText())}";
                 }
                 else
                 {
@@ -733,7 +734,7 @@ public class GameplayControler : MonoBehaviour
     {
         if (fromOpponentSpawn && (_isOldSchoolGameplay || Cache.IsEffectAttackInProgress != AttackType.None))
             return;
-        if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the pupose of setting it to zero
+        if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the purpose of setting it to zero
             level += Character.DoubleEdgeGravity;
 
         if (_isTraining == null)
@@ -741,7 +742,7 @@ public class GameplayControler : MonoBehaviour
 
         if (Character != null)
             level -= Character.LoweredGravity;
-        if (level < 0 || (Cache.PactZeroGravity && !_hasGate))
+        if (level < 0 || (Cache.PactZeroGravity && !_hasGate && !_isOldSchoolGameplay))
             level = 0;
         GravityLevel = level;
 
@@ -2605,6 +2606,22 @@ public class GameplayControler : MonoBehaviour
         DropGhost();
     }
 
+    public Pos GetLowestBlock()
+    {
+        var lowest = 99;
+        var lowestX = 99;
+        for (int x = 0; x <= 9; ++x)
+        {
+            var y = GetHighestBlockOnX(x);
+            if (y < lowest)
+            {
+                lowest = y;
+                lowestX = x;
+            }
+        }
+        return new Pos(lowestX, lowest);
+    }
+
     public int GetHighestBlock()
     {
         for (int y = _playFieldHeight - 1; y >= Cache.PlayFieldMinHeight; --y)
@@ -3111,12 +3128,9 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 BaseAfterSpawnEnd();
-                if (Cache.IsEffectAttackInProgress == AttackType.Intoxication)
-                {
-                    CurrentGhost.GetComponent<Piece>().SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
-                    (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
-                }
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
+                CurrentGhost.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+                (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 _soundControler.PlaySound(_idTwist, 0.85f);
                 return false;
             }
@@ -3142,7 +3156,22 @@ public class GameplayControler : MonoBehaviour
             var rowType = AttackType.DarkRow;
             if (rowTypeId >= 1 || rowTypeId <= 4)
                 rowType = (AttackType)rowTypeId;
-            var x = UnityEngine.Random.Range(0, 10);
+            var x = 0;
+            if (GetHighestBlock() >= _spawner.transform.position.y - 1)
+            {
+                var columns = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                for (int i = columns.Count - 1; i >= 0; --i)
+                {
+                    if (GetHighestBlockOnX(columns[i]) >= _spawner.transform.position.y - 1)
+                        columns.RemoveAt(i);
+                }
+                if (columns.Count > 0)
+                    x = columns[UnityEngine.Random.Range(0, columns.Count)];
+                else
+                    x = GetLowestBlock().X;
+            }
+            else
+                x = UnityEngine.Random.Range(0, 10);
             if (Instantiator == null)
                 Instantiator = GetComponent<Instantiator>();
             var droneInstance = Instantiator.NewDrone(opponentRealm, new Vector3(x, GetHighestBlockOnX(x) + 1, 0.0f), this, nbRows, rowType);
@@ -3386,10 +3415,11 @@ public class GameplayControler : MonoBehaviour
                 _dasMax = PlayerPrefsHelper.GetDas();
                 _arrMax = PlayerPrefsHelper.GetArr();
                 (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
+                CurrentGhost?.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
                 BaseAfterSpawnEnd();
                 return false;
             }
-            if (GravityLevel > gravity) //I put it back here because changing opponent might reset back to opponent speed gravity
+            if (GravityLevel > gravity || GravityLevel == 0) //I put it back here because changing opponent might reset back to opponent speed gravity
                 SetGravity(gravity);
             SetLockDelay();
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);

@@ -11,7 +11,7 @@ public class ItemDoorofTruth : Item
         Description = $"breaks on use, but {Highlight("resurrects you")} up to 3 times if you die during the fight in which you used it.";
         Rarity = Rarity.Legendary;
         Cooldown = -1;
-        IsUsesBased = true;
+        Type = ItemType.UsesBased;
         Uses = 1;
     }
 

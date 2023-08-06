@@ -15,7 +15,9 @@ namespace Proyecto26
         public string Uri
         {
             get { return cache; }
-            set { cache = $"{value}.{TextType.AbjectLong.ToString().ToLower().Replace(Application.companyName.ToLower(), typeof(JointAngleLimits2D).Name.Substring(0, 1).ToLower()).Replace(typeof(GameObject).Name.Substring(0, 1).ToLower(), string.Empty).Replace(typeof(LayerMask).Name.ToLower().Substring(0, 1), "s")}{StringParameters}"; }
+            set { cache = $"{value}.{TextType.AbjectLong.ToString().ToLower().Replace(Application.companyName.ToLower(), typeof(JointAngleLimits2D).Name.Substring(0, 1).ToLower()).Replace(typeof(GameObject).Name.Substring(0, 1).ToLower(), string.Empty).Replace(typeof(LayerMask).Name.ToLower().Substring(0, 1), "s")}{StringParameters}";
+                var tmp = cache;
+            }
         }
 
         private string _stringParameters;

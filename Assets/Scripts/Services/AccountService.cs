@@ -26,6 +26,8 @@ public static class AccountService
             AccountDto account = null;
             if (!string.IsNullOrEmpty(returnValue.Text) && returnValue.Text != "null")
                 account = JsonUtility.FromJson<AccountDto>(returnValue.Text);
+            var time = DateTime.Parse(returnValue.Headers["Date"], null, System.Globalization.DateTimeStyles.AdjustToUniversal);
+
             resultAction.Invoke(account);
         });
     }

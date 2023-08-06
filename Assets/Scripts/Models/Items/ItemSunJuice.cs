@@ -11,7 +11,7 @@ public class ItemSunJuice : Item
         Description = $"removes {Highlight("8 lines")} from the top.\n{Highlight("5 uses")}, no cooldown. replenishes when you ascend.";
         Rarity = Rarity.Legendary;
         Cooldown = -1;
-        IsUsesBased = true;
+        Type = ItemType.UsesBased;
         Uses = 5;
     }
 

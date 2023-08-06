@@ -183,7 +183,7 @@ public static class Cache
             tmpCurrentItem = item;
         else
             tmpCurrentItem = PlayerPrefsHelper.GetCurrentItem();
-        if (tmpCurrentItem == null)
+        if (tmpCurrentItem == null || tmpCurrentItem.Type != ItemType.CooldownBased)
             return;
         CurrentItemCooldown = tmpCurrentItem.Cooldown - character.ItemMaxCooldownReducer;
         if (PactCooldownSwap)

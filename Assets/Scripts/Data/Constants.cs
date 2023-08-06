@@ -37,7 +37,7 @@ public static class Constants
     public static Vector3 _cameraVerticalGameplayPosition = new Vector3(4.5f, 1.64f, -10.0f);
     public static Vector3 _cameraHorizontalGameplayPosition = new Vector3(4.5f, 9.64f, -10.0f);
     public const float MaximumVolumeMusic = 0.2f;
-    public const float MaximumEffectsMusic = 1.0f;
+    public const float MaximumVolumeEffects = 1.0f;
     public const string PiecesLetters = "IJLOSTZ";
     public const string AvailableBodyPartsIds = "000102030405060708091011";
     public const float BaseButtonVisionConeMult = 1.5f;

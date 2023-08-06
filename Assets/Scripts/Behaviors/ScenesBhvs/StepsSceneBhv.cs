@@ -371,8 +371,6 @@ public class StepsSceneBhv : SceneBhv
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             if (currentItem != null)
                 _run.CurrentItemUses = currentItem.Uses;
-            if (currentItem != null && currentItem.Name == ItemsData.Items[25])
-                ++_run.DeathScytheAscension;
             PlayerPrefsHelper.SaveRun(_run);
             NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
         }

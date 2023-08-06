@@ -21,7 +21,7 @@ public static class PactsData
     // DEBUG //
     public static bool DebugEnabled = Constants.PactsDebug;
     public static bool DebugMultitude = false;
-    public static Pact DebugPact = GetPactFromName("Devoted Apostle");
+    public static Pact DebugPact = GetPactFromName("Small Paradise");
 
     public static Pact GetRandomPact()
     {

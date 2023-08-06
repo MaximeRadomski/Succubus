@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Headbanger";
+        var name = "Old Reverend";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -183,9 +183,12 @@ public static class OpponentsData
             Name = "Giant Spider", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 99, Weakness = Weakness.Consecutive, DamageOnWeakness = 20, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Drone, 1, 2) },
+                new OpponentAttack(AttackType.Drone, 1, 2),
+                new OpponentAttack(AttackType.Drone, 2, 2),
+                new OpponentAttack(AttackType.Drone, 3, 2),
+                new OpponentAttack(AttackType.Drone, 4, 2) },
             GravityLevel = 4, Weight = 40,
-            Lore = "Little spiders go to heaven for being good household bug killers. However, giant ones are already used to hell temperature since they mostly live in Austria."
+            Lore = "Little spiders go to heaven for being good household bug killers. However, giant ones are already used to hell's temperature since they mostly live in Austria."
         },
         new Opponent()
         {

@@ -141,6 +141,8 @@ public class SwipeControlerBhv : MonoBehaviour
             else if (!_isHoldingDown)
                 _gameplayControler.HardDrop();
         }
+        if (_isHoldingDown)
+            _gameplayControler.DownReleased();
         _isHoldingDown = false;
         _framesBeforeHoldingDown = 0;
         _direction = Direction.None;

@@ -72,7 +72,7 @@ public class SoundControlerBhv : MonoBehaviour
             _level = PlayerPrefsHelper.GetEffectsLevel();
         else
             _level = level ?? 0.0f;
-        _pcAudio.volume = Constants.MaximumEffectsMusic * _level;
+        _pcAudio.volume = Constants.MaximumVolumeEffects * _level;
     }
 
     void OnDestroy()

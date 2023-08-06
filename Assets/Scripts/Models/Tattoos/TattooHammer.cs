@@ -21,6 +21,6 @@ public class TattooHammer : Tattoo
 
     public override string GetDescription()
     {
-        return $"your triple and quadruple lines make {StatToString("+", "%")} damage.\nyour single and double lines make {StatToString("-", "%", 0.5f)} damage.";
+        return $"your triple and quadruple lines deal {StatToString("+", "%")} damage.\nyour single and double lines deal {StatToString("-", "%", 0.5f)} damage.";
     }
 }

@@ -20,7 +20,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;
-    public static Item DebugItem = GetItemFromName("Gender Swap Coffin");
+    public static Item DebugItem = GetItemFromName("Death Scythe");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

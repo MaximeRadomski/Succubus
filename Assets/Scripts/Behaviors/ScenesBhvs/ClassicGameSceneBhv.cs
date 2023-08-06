@@ -559,8 +559,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
                 if (currentItem != null)
                     Run.CurrentItemUses = currentItem.Uses;
-                if (currentItem != null && currentItem.Name == ItemsData.Items[25])
-                    ++Run.DeathScytheAscension;
                 if (Character.LastStandMultiplier > 0)
                     Cache.HasLastStanded = false;
                 PlayerPrefsHelper.SaveRun(Run);
@@ -1005,13 +1003,21 @@ public class ClassicGameSceneBhv : GameSceneBhv
             if (tmpDrillTarget != null)
                 Destroy(tmpDrillTarget);
         }
-        if (Character.ItemCooldownReducerOnKill > 0 && PlayerPrefsHelper.GetCurrentItemName() != null)
+        var currentItem = PlayerPrefsHelper.GetCurrentItem();
+        if (Character.ItemCooldownReducerOnKill > 0 && currentItem != null && currentItem.Type == ItemType.CooldownBased)
         {
             Cache.CurrentItemCooldown -= Character.ItemCooldownReducerOnKill;
             _gameplayControler.UpdateItemAndSpecialVisuals();
         }
         if (Character.TrashAfterKill > 0)
             _gameplayControler.DeleteFromBottom(Character.TrashAfterKill);
+        if (currentItem != null && currentItem.Name == ItemsData.Items[25])
+        {
+            Run = PlayerPrefsHelper.GetRun();
+            ++Run.DeathScytheCount;
+            PlayerPrefsHelper.SaveRun(Run);
+            _gameplayControler.UpdateItemAndSpecialVisuals();
+        }
         Cache.RandomizedAttackType = AttackType.None;
         Cache.HalvedCooldown = false;
         Cache.CurrentOpponentChangedRealm = Realm.None;
