@@ -3029,6 +3029,15 @@ public class GameplayControler : MonoBehaviour
 
     private int _afterSpawnAttackCounter;
 
+    private void CancelLastEffectAttack()
+    {
+        if (AfterSpawn != null)
+        {
+            _afterSpawnAttackCounter = 0;
+            AfterSpawn(true);
+        }
+    }
+
     private void BaseAfterSpawnEnd()
     {
         Cache.IsEffectAttackInProgress = AttackType.None;
@@ -3038,14 +3047,8 @@ public class GameplayControler : MonoBehaviour
 
     private void SetAfterSpawn(Func<bool,bool> newAfterSpawn)
     {
-        if (AfterSpawn != null)
-        {
-            _afterSpawnAttackCounter = 0;
-            AfterSpawn(true);
-        }
         AfterSpawn = null;
         AfterSpawn = newAfterSpawn;
-
     }
 
     private void AttackAirPiece(GameObject opponentInstance, Realm opponentRealm, int nbPieces)
@@ -3054,6 +3057,8 @@ public class GameplayControler : MonoBehaviour
             _afterSpawnAttackCounter += nbPieces;
         else
         {
+            if (Cache.IsEffectAttackInProgress != AttackType.None)
+                CancelLastEffectAttack();
             _afterSpawnAttackCounter = nbPieces;
             Cache.IsEffectAttackInProgress = AttackType.AirPiece;
             SetAfterSpawn(AirPieceAfterSpawn);
@@ -3081,6 +3086,8 @@ public class GameplayControler : MonoBehaviour
             _afterSpawnAttackCounter += nbPieces;
         else
         {
+            if (Cache.IsEffectAttackInProgress != AttackType.None)
+                CancelLastEffectAttack();
             _afterSpawnAttackCounter = nbPieces;
             Cache.IsEffectAttackInProgress = AttackType.ForcedBlock;
             SetAfterSpawn(ForcedBlockAfterSpawn);
@@ -3113,6 +3120,8 @@ public class GameplayControler : MonoBehaviour
             _afterSpawnAttackCounter += nbPieces;
         else
         {
+            if (Cache.IsEffectAttackInProgress != AttackType.None)
+                CancelLastEffectAttack();
             _afterSpawnAttackCounter = nbPieces;
             _effectsCamera.SetActive(true);
             _effectsCamera.GetComponent<EffectsCameraBhv>().SetAttack(attackType, param, nbPieces);
@@ -3129,7 +3138,8 @@ public class GameplayControler : MonoBehaviour
             {
                 BaseAfterSpawnEnd();
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
-                CurrentGhost.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+                if (CurrentGhost != null)
+                    CurrentGhost.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
                 (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 _soundControler.PlaySound(_idTwist, 0.85f);
                 return false;
@@ -3346,7 +3356,8 @@ public class GameplayControler : MonoBehaviour
     public void AttackShrink(GameObject opponentInstance, Realm opponentRealm, int nbLinesToShrink)
     {
         _soundControler.PlaySound(_idDarkRows);
-        ShrinkPlayHeight(nbLinesToShrink, afterLock: true);
+        if (Cache.HeightLimiter < Constants.PlayFieldHeight / 4)
+            ShrinkPlayHeight(nbLinesToShrink, afterLock: true);
         Instantiator.NewAttackLine(opponentInstance.transform.position, new Vector3(4.5f, Cache.HeightLimiter / 2, 0.0f), opponentRealm);
     }
 
@@ -3398,6 +3409,8 @@ public class GameplayControler : MonoBehaviour
             _afterSpawnAttackCounter += nbPieces;
         else
         {
+            if (Cache.IsEffectAttackInProgress != AttackType.None)
+                CancelLastEffectAttack();
             _isOldSchoolGameplay = true;
             _dasMax = Constants.OldSchoolDas;
             _arrMax = Constants.OldSchoolArr;
@@ -3434,6 +3447,8 @@ public class GameplayControler : MonoBehaviour
             _afterSpawnAttackCounter += nbPieces;
         else
         {
+            if (Cache.IsEffectAttackInProgress != AttackType.None)
+                CancelLastEffectAttack();
             _isScrewed = true;
             _afterSpawnAttackCounter = nbPieces;
             Cache.IsEffectAttackInProgress = AttackType.Screwed;
@@ -3457,6 +3472,8 @@ public class GameplayControler : MonoBehaviour
 
     private void AttackDropBomb(GameObject opponentInstance, Realm opponentRealm, int nbMoves)
     {
+        if (Cache.IsEffectAttackInProgress != AttackType.None)
+            CancelLastEffectAttack();
         _afterSpawnAttackCounter = 999;
         _dropBombCooldown = nbMoves;
         Cache.IsEffectAttackInProgress = AttackType.DropBomb;

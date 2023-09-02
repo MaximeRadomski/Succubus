@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class ResolutionService : MonoBehaviour
@@ -11,7 +12,12 @@ public class ResolutionService : MonoBehaviour
 
     private void Init()
     {
-        if (Screen.fullScreenMode == FullScreenMode.Windowed)
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            _maxResolutionHeight = Screen.height;
+            PlayerPrefsHelper.SaveLastMaxResolution(_maxResolutionHeight);
+        }
+        else if (Screen.fullScreenMode == FullScreenMode.Windowed)
             GetMaxResolution();
         else
         {

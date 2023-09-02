@@ -738,6 +738,8 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static bool GetFullscreen()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            return false;
         var enabled = PlayerPrefs.GetInt(Constants.PpFullScreen, Constants.PpFullScreenDefault == true ? 1 : 0);
         return enabled == 1 ? true : false;
     }

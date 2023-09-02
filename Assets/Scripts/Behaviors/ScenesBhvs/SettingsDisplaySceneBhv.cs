@@ -40,16 +40,19 @@ public class SettingsDisplaySceneBhv : SceneBhv
 
         SetButtons();
 
-#if !UNITY_ANDROID
-        Cache.SetLastEndActionClickedName($"Res{PlayerPrefsHelper.GetResolution()}");
-        SetRes(PlayerPrefsHelper.GetResolution());
-        Cache.SetLastEndActionClickedName($"Fullscreen{(PlayerPrefsHelper.GetFullscreen() == true ? "On" : "Off")}");
-        SetFullscreen(PlayerPrefsHelper.GetFullscreen());
-#else
-        _fullscreenContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
-        _resolutionContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
-        _loremIpsumContainer.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-#endif
+        if (Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            Cache.SetLastEndActionClickedName($"Res{PlayerPrefsHelper.GetResolution()}");
+            SetRes(PlayerPrefsHelper.GetResolution());
+            Cache.SetLastEndActionClickedName($"Fullscreen{(PlayerPrefsHelper.GetFullscreen() == true ? "On" : "Off")}");
+            SetFullscreen(PlayerPrefsHelper.GetFullscreen());
+        }
+        else
+        {
+            _fullscreenContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
+            _resolutionContainer.transform.position = new Vector3(-25.0f, -25.0f, 0.0f);
+            _loremIpsumContainer.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
         SetScanlines(PlayerPrefsHelper.GetScanlinesHardness());
     }
 
