@@ -59,6 +59,8 @@ public class InputControlerBhv : FrameRateBehavior
     public void GetKeyBinding()
     {
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
+        if (_keyBinding[(int)KeyBinding.SonicDrop] != KeyCode.None && _gameplayControler != null)
+            _gameplayControler.SonicDropHasKey = true;
     }
 
     private void GetScene()
@@ -96,7 +98,7 @@ public class InputControlerBhv : FrameRateBehavior
 #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyDown(_keyBinding[15]) && !Cache.EscapeLocked)
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.BackPause]) && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
@@ -104,7 +106,7 @@ public class InputControlerBhv : FrameRateBehavior
 #if UNITY_ANDROID
         if (Input.GetKeyUp(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyUp(_keyBinding[15]) && !Cache.EscapeLocked)
+        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.BackPause]) && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
@@ -289,11 +291,11 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
             return;
-        if (Input.GetKey(_keyBinding[2]))
+        if (Input.GetKey(_keyBinding[(int)KeyBinding.Left]))
         {
             _gameplayControler.LeftHeld();
         }
-        if (Input.GetKey(_keyBinding[3]))
+        if (Input.GetKey(_keyBinding[(int)KeyBinding.Right]))
         {
             _gameplayControler.RightHeld();
         }
@@ -304,59 +306,63 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
             return;
-        if (Input.GetKeyDown(_keyBinding[0]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.HardDrop]))
         {
             _gameplayControler.HardDrop();
         }
-        if (Input.GetKeyDown(_keyBinding[1]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.SoftDrop]))
         {
             _gameplayControler.Down();
         }
-        if (Input.GetKey(_keyBinding[1]))
+        if (Input.GetKey(_keyBinding[(int)KeyBinding.SoftDrop]))
         {
             _gameplayControler.SoftDropHeld();
         }
-        if (Input.GetKeyUp(_keyBinding[1]))
+        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.SoftDrop]))
         {
             _gameplayControler.DownReleased();
         }
-        if (Input.GetKeyDown(_keyBinding[2]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Left]))
         {
             _gameplayControler.Left();
         }
-        if (Input.GetKeyUp(_keyBinding[2]) || Input.GetKeyUp(_keyBinding[3]))
+        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.Left]) || Input.GetKeyUp(_keyBinding[(int)KeyBinding.Right]))
         {
             _gameplayControler.DirectionReleased();
         }
-        if (Input.GetKeyDown(_keyBinding[3]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Right]))
         {
             _gameplayControler.Right();
         }
-        if (Input.GetKeyDown(_keyBinding[4]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Clock]))
         {
             _gameplayControler.Clock();
         }
-        if (Input.GetKeyDown(_keyBinding[5]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.AntiClock]))
         {
             _gameplayControler.AntiClock();
         }
-        if (Input.GetKeyDown(_keyBinding[6]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Hold]))
         {
             _gameplayControler.Hold();
         }
-        if (Input.GetKeyDown(_keyBinding[7]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Item]))
         {
             _gameplayControler.Item();
         }
-        if (Input.GetKeyDown(_keyBinding[8]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Special]))
         {
             _gameplayControler.Special();
         }
-        if (Input.GetKeyDown(_keyBinding[9]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Rotation180]))
         {
             _gameplayControler.Rotation180();
         }
-        if (Input.GetKeyDown(_keyBinding[16]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.SonicDrop]))
+        {
+            _gameplayControler.SonicDrop();
+        }
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Restart]))
         {
             if (_currentScene == null)
                 GetScene();
@@ -477,19 +483,19 @@ public class InputControlerBhv : FrameRateBehavior
             else if (_lastSelectedGameObjects != null)
                 _lastSelectedGameObjects.Clear();
         }
-        if (Input.GetKeyDown(_keyBinding[10]))
+        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuUp]))
             FindNearest(Direction.Up);
-        else if (Input.GetKeyDown(_keyBinding[11]))
+        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuDown]))
             FindNearest(Direction.Down);
-        else if (Input.GetKeyDown(_keyBinding[12]))
+        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuLeft]))
             FindNearest(Direction.Left);
-        else if (Input.GetKeyDown(_keyBinding[13]))
+        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuRight]))
             FindNearest(Direction.Right);
-        else if (Input.GetKeyDown(_keyBinding[14]))
+        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuSelect]))
             ButtonOnSelector(Direction.Down);
-        else if (Input.GetKeyUp(_keyBinding[14]))
+        else if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.MenuSelect]))
             ButtonOnSelector(Direction.Up);
-        else if (Input.GetKey(_keyBinding[14]))
+        else if (Input.GetKey(_keyBinding[(int)KeyBinding.MenuSelect]))
             ButtonOnSelector(Direction.None);
     }
 

@@ -24,8 +24,8 @@ public class MusicPartitionBhv : MonoBehaviour
         _airLines = airLines;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _idCombo = _soundControler.SetSound("Combo");
-        GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{opponentRealm.GetHashCode()}");
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{3 + opponentRealm.GetHashCode()}");
+        GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{(int)opponentRealm}");
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{3 + (int)opponentRealm}");
         var segment = _containerPixelWidth / nbPieces;
         var halfSegment = segment / 2;
         _notes = new List<Note>();
@@ -48,7 +48,7 @@ public class MusicPartitionBhv : MonoBehaviour
                 spriteId = 0;
             }
             var spriteRenderer = note.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{8 + spriteId + (opponentRealm.GetHashCode() * 6)}");
+            spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{8 + spriteId + ((int)opponentRealm * 6)}");
 
             _notes.Add(new Note(spriteRenderer, keybinding, spriteId, opponentRealm, 2.0f - (0.1f * y)));
         }
@@ -70,13 +70,13 @@ public class MusicPartitionBhv : MonoBehaviour
 
         if (_id >= 0)
         {
-            _notes[_id].SpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{10 + _notes[_id].SpriteId + (_notes[_id].Realm.GetHashCode() * 6)}");
+            _notes[_id].SpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{10 + _notes[_id].SpriteId + ((int)_notes[_id].Realm * 6)}");
             _soundControler.PlaySound(_idCombo, _notes[_id].Tone);
         }
 
         ++_id;
         if (_id < _notes.Count)
-            _notes[_id].SpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{6 + _notes[_id].SpriteId + (_notes[_id].Realm.GetHashCode() * 6)}");
+            _notes[_id].SpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Music_{6 + _notes[_id].SpriteId + ((int)_notes[_id].Realm * 6)}");
         if (_id >= _notes.Count)
         {
             ((ClassicGameSceneBhv)_gameplayControler.SceneBhv).ResetToOpponentGravity();

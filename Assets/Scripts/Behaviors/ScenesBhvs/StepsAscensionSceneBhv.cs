@@ -37,10 +37,10 @@ public class StepsAscensionSceneBhv : SceneBhv
         _levelHeight = Constants.Pixel * 11;
         _levelsContainer = GameObject.Find("LevelsContainer");
         int idLayer = 0;
-        for (int idRealm = 0; idRealm <= _run.CurrentRealm.GetHashCode(); ++idRealm)
+        for (int idRealm = 0; idRealm <= (int)_run.CurrentRealm; ++idRealm)
         {
             var maxLevel = 2;
-            if (idRealm == _run.CurrentRealm.GetHashCode())
+            if (idRealm == (int)_run.CurrentRealm)
                 maxLevel = _run.RealmLevel;
             for (int idLevel = 0; idLevel < maxLevel; ++idLevel)
                 Instantiator.NewLevel((_levelHeight * idLevel) + (_levelHeight * 2 * idRealm), idRealm, idLayer++, _levelsContainer);
@@ -50,7 +50,7 @@ public class StepsAscensionSceneBhv : SceneBhv
         _characterPictureTarget = _characterPicture.transform.position + new Vector3(-5.0f, 5.0f, 0.0f);
         _infoRealmTarget = _infoRealm.transform.position + new Vector3(5.0f, 5.0f, 0.0f);
 
-        PlayerPrefsHelper.AlterTotalResource(Realm.Hell.GetHashCode(), 0); // (OBSOLETE but usefull) In order not to get the lore intro cinematic again (obsolete, but I let it here this way in order to get something else than null)
+        PlayerPrefsHelper.AlterTotalResource((int)Realm.Hell, 0); // (OBSOLETE but usefull) In order not to get the lore intro cinematic again (obsolete, but I let it here this way in order to get something else than null)
 
         _isAnimated = true;
     }

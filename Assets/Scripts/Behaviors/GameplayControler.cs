@@ -23,6 +23,7 @@ public class GameplayControler : MonoBehaviour
     public bool CanBeReload = true;
     public bool OpponentDeathScreen = false;
     public Realm CharacterRealm;
+    public bool SonicDropHasKey = false;
 
     private bool _gameplayOnHold;
     public bool GameplayOnHold
@@ -302,25 +303,29 @@ public class GameplayControler : MonoBehaviour
         }
         _panelGame = GameObject.Find("PanelGame");
         if (!_isFreeTraining)
-            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + (_levelRealm.GetHashCode() * 11)}");
+            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{0 + ((int)_levelRealm * 11)}");
         else
-            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{1 + (_levelRealm.GetHashCode() * 11)}");
+            _panelGame.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{1 + ((int)_levelRealm * 11)}");
         _panelLeft = GameObject.Find("PanelLeft");
-        _panelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + (_levelRealm.GetHashCode() * 11)}");
+        _panelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + ((int)_levelRealm * 11)}");
         _effectsCamera = GameObject.Find("EffectsCamera");
         _effectsCamera?.GetComponent<EffectsCameraBhv>().Reset();
         _panelRight = GameObject.Find("PanelRight");
-        _panelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + (_levelRealm.GetHashCode() * 11)}");
+        _panelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{2 + ((int)_levelRealm * 11)}");
         _uiPanelLeft = GameObject.Find("UiPanelLeft");
-        _uiPanelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + (_levelRealm.GetHashCode() * 11)}");
+        _uiPanelLeft.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + ((int)_levelRealm * 11)}");
         _uiPanelRight = GameObject.Find("UiPanelRight");
-        _uiPanelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + (_levelRealm.GetHashCode() * 11)}");
+        _uiPanelRight.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{3 + ((int)_levelRealm * 11)}");
         _mainCamera = GameObject.Find("Main Camera");
         CharacterInstanceBhv = GameObject.Find(Constants.GoCharacterInstance).GetComponent<CharacterInstanceBhv>();
         _gameplayButtons = new List<GameObject>();
         _ghostColor = (Color)Constants.GetColorFromRealm(CharacterRealm, int.Parse(PlayerPrefsHelper.GetGhostColor()));
-        PanelsVisuals(PlayerPrefsHelper.GetButtonsLeftPanel(), _panelLeft, isLeft: true);
-        PanelsVisuals(PlayerPrefsHelper.GetButtonsRightPanel(), _panelRight, isLeft: false);
+        var buttonsLeftPanelString = PlayerPrefsHelper.GetButtonsLeftPanel();
+        var buttonsRightPanelString = PlayerPrefsHelper.GetButtonsRightPanel();
+        PanelsVisuals(buttonsLeftPanelString, _panelLeft, isLeft: true);
+        PanelsVisuals(buttonsRightPanelString, _panelRight, isLeft: false);
+        if ((buttonsLeftPanelString + buttonsRightPanelString).Contains("s"))
+            SonicDropHasKey = true;
         _gameplayChoice = PlayerPrefsHelper.GetGameplayChoice();
         _hasAlteredPiecePositionAfterResume = false;
 #if UNITY_ANDROID
@@ -499,7 +504,7 @@ public class GameplayControler : MonoBehaviour
         {
             for (int i = 1; i <= 16; ++i)
             {
-                GameObject tmp = null;
+                GameObject tmp;
                 if (_gameplayChoice == GameplayChoice.Buttons)
                     tmp = GameObject.Find(Constants.GoButtonItemName + i.ToString("D2"));
                 else
@@ -509,7 +514,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + 0));//8 = item in sprite sheet | 0 = empty
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + 0));//8 = item in sprite sheet | 0 = empty
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (_itemTextDefaultLocalPos == null)
                     _itemTextDefaultLocalPos = tmp.transform.GetChild(0).localPosition;
@@ -548,7 +553,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (CharacterItem != null)
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.CurrentItemCooldown}";
@@ -574,7 +579,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + 9));//9 = special in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + 9));//9 = special in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -598,7 +603,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.SelectedCharacterSpecialCooldown}";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -626,7 +631,7 @@ public class GameplayControler : MonoBehaviour
         _panelRight.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         _panelRight.GetComponent<PositionBhv>().enabled = false;
         _panelSwipe = GameObject.Find("PanelSwipe");
-        _panelSwipe.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{4 + (_levelRealm.GetHashCode() * 11)}");
+        _panelSwipe.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Panels_{4 + ((int)_levelRealm * 11)}");
         _panelSwipe.GetComponent<PositionBhv>().HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.RightBorder : CameraHorizontalSide.LeftBorder;
         _panelSwipe.GetComponent<PositionBhv>().XOffset *= mult;
         _panelSwipe.GetComponent<PositionBhv>().UpdatePositions();
@@ -709,7 +714,7 @@ public class GameplayControler : MonoBehaviour
         var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
         var spriteName = gameplayButton.GetComponent<SpriteRenderer>().sprite.name;
         var spriteId = int.Parse(spriteName.Substring(spriteName.IndexOf('_') + 1));
-        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + (CharacterRealm.GetHashCode() * 11 + spriteId));
+        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + spriteId));
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
@@ -815,7 +820,8 @@ public class GameplayControler : MonoBehaviour
         LookForAllPossibleButton(Constants.GoButtonDropName, HardDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonAntiClockName, AntiClock, 0);
         LookForAllPossibleButton(Constants.GoButtonClockName, Clock, 0);
-        LookForAllPossibleButton(Constants.GoButton180, Rotation180, 0);
+        LookForAllPossibleButton(Constants.GoButton180Name, Rotation180, 0);
+        LookForAllPossibleButton(Constants.GoButtonSonicDropName, SonicDrop, 0);
         LookForAllPossibleButton(Constants.GoButtonItemName, Item, 0);
         LookForAllPossibleButton(Constants.GoButtonSpecialName, Special, 0);
 
@@ -823,7 +829,8 @@ public class GameplayControler : MonoBehaviour
         {
             HideAllPossibleButton(Constants.GoButtonHoldName);
             HideAllPossibleButton(Constants.GoButtonDropName);
-            HideAllPossibleButton(Constants.GoButton180);
+            HideAllPossibleButton(Constants.GoButton180Name);
+            HideAllPossibleButton(Constants.GoButtonSonicDropName);
             HideAllPossibleButton(Constants.GoButtonItemName);
             HideAllPossibleButton(Constants.GoButtonSpecialName);
             GameObject.Find($"{Constants.GoButtonItemName}Swipe").SetActive(false);
@@ -1311,7 +1318,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (SceneBhv.Paused || GameplayOnHold)
             return;
-        SoftDropStomp();
+        if (!SonicDropHasKey)
+            SoftDropStomp();
         if (Cache.IsEffectAttackInProgress == AttackType.Partition)
         {
             SendNoteToPartition(KeyBinding.SoftDrop);
@@ -1322,6 +1330,25 @@ public class GameplayControler : MonoBehaviour
     public void DownReleased()
     {
         _needDownRelease = false;
+    }
+
+    public void SonicDrop()
+    {
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
+        {
+            if (CurrentPiece.GetComponent<Piece>().IsLocked)
+                _inputWhileLocked = KeyBinding.SonicDrop;
+            return;
+        }
+        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        {
+            SendNoteToPartition(KeyBinding.SoftDrop);
+            return;
+        }
+        _lastDownSoftDrop = Time.time;
+        SoftDropStomp();
+        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+            DecrementDropBombCooldown(KeyBinding.SonicDrop);
     }
 
     public void SoftDropStomp()
@@ -2738,7 +2765,7 @@ public class GameplayControler : MonoBehaviour
         if (_difficulty >= Difficulty.Infernal)
             attackBoost = 1;
         if (_difficulty >= Difficulty.Divine2)
-            attackBoost += _difficulty.GetHashCode() - Difficulty.Divine2.GetHashCode() + 1;
+            attackBoost += (int)_difficulty - (int)Difficulty.Divine2 + 1;
         if (this.SceneBhv.CurrentOpponent.Realm == Helper.GetSuperiorFrom(CharacterRealm))
             attackBoost += 1;
         if (Helper.GetInferiorFrom(SceneBhv.CurrentOpponent.Realm) == Character.Realm && Cache.NegateAttackBoostCount < Character.NegateAttackBoost)

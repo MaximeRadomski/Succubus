@@ -45,9 +45,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
     public float GetCurrentOpponentMaxCooldown()
     {
         var cooldown = CurrentOpponent.Cooldown + Character.EnemyMaxCooldownMalus + Cache.EnemyCooldownInfiniteStairMalus + Character.DevilsContractMalus + Cache.PactEnemyMaxCooldownMalus;
-        if (cooldown < 1.0f && Run.Difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
+        if (cooldown < 1.0f && (int)Run.Difficulty <= (int)Difficulty.Infernal)
             return 1.0f;
-        else if (cooldown < 0.5f && Run.Difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
+        else if (cooldown < 0.5f && (int)Run.Difficulty >= (int)Difficulty.Divine)
             return 0.5f;
         return cooldown;
     }
@@ -117,9 +117,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
             for (int j = 0; j < _opponents.Count; ++j)
             {
                 if (j < Cache.CurrentListOpponentsId)
-                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[j].Realm.GetHashCode() * 2) + 1));
+                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (((int)_opponents[j].Realm * 2) + 1));
                 else
-                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (_opponents[j].Realm.GetHashCode() * 2));
+                    GameObject.Find("Opponent" + j).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((int)_opponents[j].Realm * 2));
             }
             _wetTimer = -1;
             _timeStopTimer = -1;
@@ -276,19 +276,19 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 OpponentAppearance(minHeight);
         }
         OpponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
-        _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((CurrentOpponent.Realm.GetHashCode() * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
+        _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)CurrentOpponent.Realm * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
         Cache.CurrentOpponentHp = Cache.CurrentOpponentHp <= 0 ? CurrentOpponent.HpMax : Cache.CurrentOpponentHp;
         _weaknessInstance.SetVisible(CurrentOpponent.Weakness != Weakness.None);
-        _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (CurrentOpponent.Realm.GetHashCode() * 2)));
+        _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + ((int)CurrentOpponent.Realm * 2)));
         _immunityInstance.SetVisible(CurrentOpponent.Immunity != Immunity.None);
-        _immunityInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + (CurrentOpponent.Realm.GetHashCode() * 2 + 1)));
-        _opponentHpBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 0),
-                               "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 1),
+        _immunityInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + ((int)CurrentOpponent.Realm * 2 + 1)));
+        _opponentHpBar.SetSkin("Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 0),
+                               "Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 1),
                                $"<material=\"{CurrentOpponent.Realm.ToString().ToLower()}.4.3\">");
         _opponentHpBar.UpdateContent(0, CurrentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Cache.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Up);
-        _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
-                                     "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
+        _opponentCooldownBar.SetSkin("Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 2),
+                                     "Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
         ResetToOpponentGravity(true);
         _gameplayControler.OnNextOpponent();
@@ -336,13 +336,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
         CurrentOpponent.Realm = newRealm;
         if (fromNextOpponent)
             return;
-        _opponentHpBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 0),
-                               "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 1),
+        _opponentHpBar.SetSkin("Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 0),
+                               "Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 1),
                                $"<material=\"{CurrentOpponent.Realm.ToString().ToLower()}.4.3\">");
         _opponentHpBar.UpdateContent(0, CurrentOpponent.HpMax);
         _opponentHpBar.UpdateContent(Cache.CurrentOpponentHp, CurrentOpponent.HpMax, Direction.Up);
-        _opponentCooldownBar.SetSkin("Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 2),
-                                     "Sprites/Bars_" + (CurrentOpponent.Realm.GetHashCode() * 4 + 3));
+        _opponentCooldownBar.SetSkin("Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 2),
+                                     "Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 3));
         _opponentCooldownBar.UpdateContent(0, 1);
     }
 
@@ -521,7 +521,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 title = "Booby Prize";
                 insteadStr = " instead";
-                loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[this.Run.CurrentRealm.GetHashCode()]);
+                loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[(int)Run.CurrentRealm]);
                 Helper.ReinitKeyboardInputs(this);
             }
             var amount = 2;
@@ -531,7 +531,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 amount = 3;
             else if (Run.Difficulty == Difficulty.Infernal)
                 amount = 4;
-            else if (Run.Difficulty == Difficulty.Divine || Run.Difficulty.GetHashCode() > Difficulty.Divine.GetHashCode())
+            else if (Run.Difficulty == Difficulty.Divine || (int)Run.Difficulty > (int)Difficulty.Divine)
                 amount = 5;
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
@@ -553,7 +553,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             {
                 Cache.CurrentBossId = 0;
                 PlayerPrefsHelper.IncrementRunBossVanquished();
-                var realmIdBeforeIncrease = Run.CurrentRealm.GetHashCode();
+                var realmIdBeforeIncrease = (int)Run.CurrentRealm;
                 var hasUnlockedSkin = false;
                 Run.IncreaseLevel(this.Character);
                 var currentItem = PlayerPrefsHelper.GetCurrentItem();
@@ -562,9 +562,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 if (Character.LastStandMultiplier > 0)
                     Cache.HasLastStanded = false;
                 PlayerPrefsHelper.SaveRun(Run);
-                if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && Helper.UnlockCharacterSkinIfNotAlready(Character.Id, realmIdBeforeIncrease))
+                if ((int)Run.CurrentRealm > realmIdBeforeIncrease && Helper.UnlockCharacterSkinIfNotAlready(Character.Id, realmIdBeforeIncrease))
                     hasUnlockedSkin = true;
-                if (Run.CurrentRealm.GetHashCode() > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
+                if ((int)Run.CurrentRealm > realmIdBeforeIncrease && realmIdBeforeIncrease > PlayerPrefsHelper.GetRealmBossProgression())
                 {
                     PlayerPrefsHelper.SaveRealmBossProgression(realmIdBeforeIncrease);
                     Helper.ReinitKeyboardInputs(this);
@@ -599,11 +599,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
                             PlayerPrefsHelper.SaveDivineUnlocked(true);
                         Cache.GameOverParams = $"{Character.Name}|{Run.CurrentRealm - 1}|3|{Constants.EndScene}";
                         PlayerPrefsHelper.EndlessRun(Run);
-                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.End.GetHashCode(), StringParam0 = Constants.EndScene });
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Realm.End, StringParam0 = Constants.EndScene });
                         return;
                     }
-                    if (!PlayerPrefsHelper.IsCinematicWatched(Run.CurrentRealm.GetHashCode()))
-                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Run.CurrentRealm.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
+                    if (!PlayerPrefsHelper.IsCinematicWatched((int)Run.CurrentRealm))
+                        NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Run.CurrentRealm, StringParam0 = Constants.StepsAscensionScene });
                     else
                         NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
                 }
@@ -992,7 +992,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private object AfterOpponentDeath()
     {
         var opponentIcon = GameObject.Find("Opponent" + Cache.CurrentListOpponentsId);
-        opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + ((_opponents[Cache.CurrentListOpponentsId].Realm.GetHashCode() * 2) + 1));
+        opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (((int)_opponents[Cache.CurrentListOpponentsId].Realm * 2) + 1));
         opponentIcon.GetComponent<IconInstanceBhv>().Pop();
         ++Cache.CurrentListOpponentsId;
         if (CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)

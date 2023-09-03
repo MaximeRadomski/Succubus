@@ -34,10 +34,12 @@ public class LoreSceneBhv : SceneBhv
         _pelliculeTop = GameObject.Find("PelliculeTop").transform;
         _pelliculeBot = GameObject.Find("PelliculeBot").transform;
 
-        _pellicules = new List<SpriteRenderer>();
-        _pellicules.Add(GameObject.Find("PelliculeLeft").GetComponent<SpriteRenderer>());
-        _pellicules.Add(GameObject.Find("PelliculeMid").GetComponent<SpriteRenderer>());
-        _pellicules.Add(GameObject.Find("PelliculeRight").GetComponent<SpriteRenderer>());
+        _pellicules = new List<SpriteRenderer>
+        {
+            GameObject.Find("PelliculeLeft").GetComponent<SpriteRenderer>(),
+            GameObject.Find("PelliculeMid").GetComponent<SpriteRenderer>(),
+            GameObject.Find("PelliculeRight").GetComponent<SpriteRenderer>()
+        };
 
         _loreText = GameObject.Find("LoreText").GetComponent<TMPro.TextMeshPro>();
         if (NavigationService.SceneParameter != null)
@@ -45,7 +47,7 @@ public class LoreSceneBhv : SceneBhv
         else
         {
             var run = PlayerPrefsHelper.GetRun();
-            _cinematicId = run?.CurrentRealm.GetHashCode() ?? 0;
+            _cinematicId = (int?)run?.CurrentRealm ?? 0;
         }
         _lore = CinematicsData.Cinematics[_cinematicId];
 

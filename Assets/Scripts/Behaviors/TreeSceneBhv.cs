@@ -60,25 +60,25 @@ public class TreeSceneBhv : SceneBhv
             {
                 node.Bought = true;
                 node.Locked = false;
-                var iconid = 3 + (node.Realm.GetHashCode() * 6) + (node.Branch * 2) + 1;
+                var iconid = 3 + ((int)node.Realm * 6) + (node.Branch * 2) + 1;
                 nodeRenderer.color = Constants.ColorPlain;
                 nodeRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TreeIcons_{iconid}");
                 node.Instance.GetComponent<ButtonBhv>().SetResetedColor(nodeRenderer.color);
             }
-            else if (boughtTreeNods.Contains($"R{node.Realm.GetHashCode()};B{altBranches[0]};") && boughtTreeNods.Contains($"R{node.Realm.GetHashCode()};B{altBranches[1]};")) //Locked
+            else if (boughtTreeNods.Contains($"R{(int)node.Realm};B{altBranches[0]};") && boughtTreeNods.Contains($"R{(int)node.Realm};B{altBranches[1]};")) //Locked
             {
                 node.Bought = false;
                 node.Locked = true;
-                var iconid = node.Realm.GetHashCode();
+                var iconid = (int)node.Realm;
                 nodeRenderer.color = Constants.ColorPlain;
                 nodeRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TreeIcons_{iconid}");
                 node.Instance.GetComponent<ButtonBhv>().SetResetedColor(nodeRenderer.color);
             }
-            else if (_resources[node.Realm.GetHashCode()] < node.Price) //Overpriced
+            else if (_resources[(int)node.Realm] < node.Price) //Overpriced
             {
                 node.Bought = false;
                 node.Locked = false;
-                var iconid = 3 + (node.Realm.GetHashCode() * 6) + (node.Branch * 2);
+                var iconid = 3 + ((int)node.Realm * 6) + (node.Branch * 2);
                 nodeRenderer.color = Constants.ColorBlackSemiTransparent;
                 nodeRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TreeIcons_{iconid}");
                 node.Instance.GetComponent<ButtonBhv>().SetResetedColor(nodeRenderer.color);
@@ -87,7 +87,7 @@ public class TreeSceneBhv : SceneBhv
             {
                 node.Bought = false;
                 node.Locked = false;
-                var iconid = 3 + (node.Realm.GetHashCode() * 6) + (node.Branch * 2);
+                var iconid = 3 + ((int)node.Realm * 6) + (node.Branch * 2);
                 nodeRenderer.color = Constants.ColorPlain;
                 nodeRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/TreeIcons_{iconid}");
                 node.Instance.GetComponent<ButtonBhv>().SetResetedColor(nodeRenderer.color);
@@ -102,17 +102,17 @@ public class TreeSceneBhv : SceneBhv
         var node = _treeNodes.Find(n => n.Name == Cache.LastEndActionClickedName);
         var firstSpace = node.Description.IndexOf(' ');
         var description = $"{node.Description.Substring(0, firstSpace)}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} {node.Description.Substring(firstSpace + 1)}";
-        var price = $"\n---\nprice: {Constants.GetMaterial(node.Realm, TextType.succubus3x5, TextCode.c43)}{node.Price} {ResourcesData.Resources[node.Realm.GetHashCode()].ToLower()}";
+        var price = $"\n---\nprice: {Constants.GetMaterial(node.Realm, TextType.succubus3x5, TextCode.c43)}{node.Price} {ResourcesData.Resources[(int)node.Realm].ToLower()}";
         var positive = "Pay";
         var negative = "Cancel";
         var canBuy = true;
-        if (node.Locked || node.Bought || _resources[node.Realm.GetHashCode()] < node.Price)
+        if (node.Locked || node.Bought || _resources[(int)node.Realm] < node.Price)
         {
             canBuy = false;
             positive = "Cancel";
             negative = null;
 
-            if (_resources[node.Realm.GetHashCode()] < node.Price && !node.Bought && !node.Locked)
+            if (_resources[(int)node.Realm] < node.Price && !node.Bought && !node.Locked)
                 description += price;
             else if (node.Locked)
                 description += $"\n---\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}locked: {Constants.MaterialEnd}only two branches available per realm.";
@@ -125,7 +125,7 @@ public class TreeSceneBhv : SceneBhv
         {
             if (!result || !canBuy)
                 return;
-            PlayerPrefsHelper.AlterTotalResource(node.Realm.GetHashCode(), -node.Price);
+            PlayerPrefsHelper.AlterTotalResource((int)node.Realm, -node.Price);
             PlayerPrefsHelper.AddBoughtTreeNode(node.Name, node.Type);
             UpdateResources();
             UpdateTreeNodes();
@@ -137,13 +137,13 @@ public class TreeSceneBhv : SceneBhv
     private void ResetTreeNodes()
     {
         var maxRealmResourceAsked = PlayerPrefsHelper.GetRealmBossProgression() + 1; //Starts at -1, increments on boss vainquished
-        var hellResourceAsked = maxRealmResourceAsked >= Realm.Hell.GetHashCode() ? 6 : 0;
-        var earthResourceAsked = maxRealmResourceAsked >= Realm.Earth.GetHashCode() ? 6 : 0;
-        var heavenResourceAsked = maxRealmResourceAsked >= Realm.Heaven.GetHashCode() ? 6 : 0;
+        var hellResourceAsked = maxRealmResourceAsked >= (int)Realm.Hell ? 6 : 0;
+        var earthResourceAsked = maxRealmResourceAsked >= (int)Realm.Earth ? 6 : 0;
+        var heavenResourceAsked = maxRealmResourceAsked >= (int)Realm.Heaven ? 6 : 0;
         var price = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}\n---\nprice: " +
-        $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[Realm.Hell.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
-        $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[Realm.Earth.GetHashCode()].ToLower()}{Constants.MaterialEnd}, " +
-        $"{Constants.GetMaterial(Realm.Heaven, TextType.succubus3x5, TextCode.c43)}{heavenResourceAsked} {ResourcesData.Resources[Realm.Heaven.GetHashCode()].ToLower()}{Constants.MaterialEnd}";
+        $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{hellResourceAsked} {ResourcesData.Resources[(int)Realm.Hell].ToLower()}{Constants.MaterialEnd}, " +
+        $"{Constants.GetMaterial(Realm.Earth, TextType.succubus3x5, TextCode.c43)}{earthResourceAsked} {ResourcesData.Resources[(int)Realm.Earth].ToLower()}{Constants.MaterialEnd}, " +
+        $"{Constants.GetMaterial(Realm.Heaven, TextType.succubus3x5, TextCode.c43)}{heavenResourceAsked} {ResourcesData.Resources[(int)Realm.Heaven].ToLower()}{Constants.MaterialEnd}";
         var positive = "Pay";
         var negative = "Cancel";
         var canBuy = true;
@@ -162,11 +162,11 @@ public class TreeSceneBhv : SceneBhv
             foreach (var node in _treeNodes)
             {
                 if (node.Bought)
-                    PlayerPrefsHelper.AlterTotalResource(node.Realm.GetHashCode(), node.Price);
+                    PlayerPrefsHelper.AlterTotalResource((int)node.Realm, node.Price);
             }
-            PlayerPrefsHelper.AlterTotalResource(Realm.Hell.GetHashCode(), -hellResourceAsked);
-            PlayerPrefsHelper.AlterTotalResource(Realm.Earth.GetHashCode(), -earthResourceAsked);
-            PlayerPrefsHelper.AlterTotalResource(Realm.Heaven.GetHashCode(), -heavenResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource((int)Realm.Hell, -hellResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource((int)Realm.Earth, -earthResourceAsked);
+            PlayerPrefsHelper.AlterTotalResource((int)Realm.Heaven, -heavenResourceAsked);
             PlayerPrefsHelper.ResetBoughtTreeNodes();
             UpdateResources();
             UpdateTreeNodes();
@@ -216,7 +216,7 @@ public class TreeSceneBhv : SceneBhv
             Realm = (Realm)int.Parse(splits[0].Substring(1));
             Branch = int.Parse(splits[1].Substring(1));
             Level = int.Parse(splits[2].Substring(1));
-            Type = (NodeType)((Realm.GetHashCode() * 3) + Branch);
+            Type = (NodeType)(((int)Realm * 3) + Branch);
             Instance = instance;
 
             Title = Type.GetAttribute<TitleAttribute>();

@@ -177,7 +177,7 @@ public class LurkerShopBhv : PopupBhv
         var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
         foreach (Tattoo tattoo in tattoos)
         {
-            var tmpTattooGameObject = tmpTattoosContainer.transform.FindDeepChild("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+            var tmpTattooGameObject = tmpTattoosContainer.transform.FindDeepChild("TattooPlaceHolder" + ((int)tattoo.BodyPart).ToString("00"));
             tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
             tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = LevelUpTattoo;
             tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
@@ -206,7 +206,7 @@ public class LurkerShopBhv : PopupBhv
             || (result && upgradable.Contains("not ")))
                 return;
             Helper.ReinitKeyboardInputs(this);
-            var upgradePrice = (clickedTattoo.Rarity.GetHashCode() + 1) * _basePrice;
+            var upgradePrice = ((int)clickedTattoo.Rarity + 1) * _basePrice;
             if (_totalResources < upgradePrice)
                 _instantiator.NewPopupYesNo("Not Enough", "you don't have enough resources to upgrade this tattoo.", null, "Damn...", null);
             else
@@ -236,7 +236,7 @@ public class LurkerShopBhv : PopupBhv
         var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
         foreach (Tattoo tattoo in tattoos)
         {
-            var tmpTattooGameObject = tmpTattoosContainer.transform.FindDeepChild("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+            var tmpTattooGameObject = tmpTattoosContainer.transform.FindDeepChild("TattooPlaceHolder" + ((int)tattoo.BodyPart).ToString("00"));
             tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
             tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = RemoveTattoo;
             tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");

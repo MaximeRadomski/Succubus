@@ -60,7 +60,7 @@ public class StepsService
             var y = (i == 1 || i == 3) ? currentStep.Y : (i == 0 ? currentStep.Y + 1 : currentStep.Y - 1);
             if (!TryGetStepOnPos(x, y, run.Steps, out var generatedStep))
                 generatedStep = GenerateRandomStepAtPosition(x, y, run, character,
-                    canEncounterCharacter: PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4) != "1111",
+                    canEncounterCharacter: PlayerPrefsHelper.GetUnlockedCharactersString().Substring((int)run.CurrentRealm * 4, 4) != "1111",
                     customChancePercentToHaveAnExit: recursiveIteration == 0 ? 0 : -1);
             if (recursiveIteration > 0)
                 GenerateAdjacentSteps(run, character, generatedStep, recursiveIteration - 1);
@@ -125,12 +125,12 @@ public class StepsService
         if (canEncounterCharacter && Helper.RandomDice100(run.GetCharEncounterPercent()) && !run.Steps.Contains("C") && run.CharacterEncounterAvailability && (run.CurrentRealm > Realm.Hell || run.RealmLevel > 1))
         {
             lootType = LootType.Character;
-            var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring(run.CurrentRealm.GetHashCode() * 4, 4);
+            var unlockedRealmString = PlayerPrefsHelper.GetUnlockedCharactersString().Substring((int)run.CurrentRealm * 4, 4);
             var unlockedIds = new List<int>();
             for (int i = 0; i < unlockedRealmString.Length; ++i)
             {
                 if (unlockedRealmString[i] == '0')
-                    unlockedIds.Add(i + run.CurrentRealm.GetHashCode() * 4);
+                    unlockedIds.Add(i + (int)run.CurrentRealm * 4);
             }
             if (unlockedIds.Count == 0)
             {
@@ -152,12 +152,12 @@ public class StepsService
                 lootId = ItemsData.GetRandomItem().Id;
                 ++nbTries;
             } while ((ItemsData.Items[lootId] == currentItem || run.Steps.Contains($"I{lootId.ToString("00")}")) && nbTries < 10);
-            opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            opponentType = (OpponentType)((int)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
         }
         else if (Helper.RandomDice100(run.ResourceLootPercent))
         {
             lootType = LootType.Resource;
-            lootId = run.CurrentRealm.GetHashCode();
+            lootId = (int)run.CurrentRealm;
             opponentType = OpponentType.Common;
         }
         else if (Helper.RandomDice100(run.PactLootPercent))
@@ -170,7 +170,7 @@ public class StepsService
                 lootId = PactsData.GetRandomPact().Id;
                 ++nbTries;
             } while ((currentPacts.Any(p => p.Id == lootId) || run.Steps.Contains($"P{lootId.ToString("00")}")) && nbTries < 10);
-            opponentType = (OpponentType)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            opponentType = (OpponentType)((int)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
         }
         else
         {
@@ -209,11 +209,11 @@ public class StepsService
                 }
             }
             if (lootId >= 0)
-                opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+                opponentType = (OpponentType)((int)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
             else
             {
                 lootType = LootType.Resource;
-                lootId = run.CurrentRealm.GetHashCode();
+                lootId = (int)run.CurrentRealm;
                 opponentType = OpponentType.Common;
             }
         }
@@ -222,19 +222,19 @@ public class StepsService
         {
             lootType = LootType.Item;
             lootId = ItemsData.DebugItem.Id;
-            opponentType = (OpponentType)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            opponentType = (OpponentType)((int)((Item)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
         }
         if (TattoosData.DebugEnabled && (TattoosData.DebugMultitude || !run.Steps.Contains($"T{TattoosData.DebugTattoo.Id.ToString("00")}")))
         {
             lootType = LootType.Tattoo;
             lootId = TattoosData.DebugTattoo.Id;
-            opponentType = (OpponentType)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            opponentType = (OpponentType)((int)((Tattoo)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
         }
         if (PactsData.DebugEnabled && (PactsData.DebugMultitude || !run.Steps.Contains($"P{PactsData.DebugPact.Id.ToString("00")}")))
         {
             lootType = LootType.Pact;
             lootId = PactsData.DebugPact.Id;
-            opponentType = (OpponentType)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity.GetHashCode();
+            opponentType = (OpponentType)((int)((Pact)Helper.GetLootFromTypeAndId(lootType, lootId)).Rarity);
         }
         if (CharactersData.DebugEnabled && !run.Steps.Contains($"C{CharactersData.DebugCharacter().Id.ToString("00")}"))
         {
@@ -252,7 +252,7 @@ public class StepsService
         if (character.SocialPyramid && opponentType == OpponentType.Champion)
             opponentType = OpponentType.Elite;
         var levelWeight = GetWeightFromRunLevel(run, character);
-        var weight = Mathf.RoundToInt(levelWeight + (levelWeight * (0.2f * opponentType.GetHashCode())));
+        var weight = Mathf.RoundToInt(levelWeight + (levelWeight * (0.2f * (int)opponentType)));
         var newStep = new Step(stepX, stepY, run.CurrentRealm, stepType, false, false, lootType, lootId, GetOpponentsFromWeight(run.CurrentRealm, weight, opponentType));
         _adjacentString += newStep.ToParsedString();
         run.Steps += newStep.ToParsedString();
@@ -342,16 +342,16 @@ public class StepsService
                 return stepOpponents;
         }
         //DEBUG
-        plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight && o.Type.GetHashCode() <= OpponentType.Boss.GetHashCode());
+        plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight && (int)o.Type <= (int)OpponentType.Boss);
         var averageWeight = plausibleOpponents.Sum(c => c.Weight) / plausibleOpponents.Count;
         var minSingleOpponentWeight = Random.Range(0, 2) == 0 ? 0 : averageWeight;
         while (i <= 12)
         {
-            plausibleOpponents = realmOpponents.FindAll(o => o.Weight > minSingleOpponentWeight && o.Weight <= weight - totalStepWeight && o.Type.GetHashCode() <= opponentType.GetHashCode());
+            plausibleOpponents = realmOpponents.FindAll(o => o.Weight > minSingleOpponentWeight && o.Weight <= weight - totalStepWeight && (int)o.Type <= (int)opponentType);
             if (totalStepWeight < weight && plausibleOpponents != null && plausibleOpponents.Count > 0)
             {
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
-                if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
+                if ((int)opponent.Type < opponentType.GetHashCode())
                 {
                     opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
                     stepOpponents.Add(opponent);
@@ -375,10 +375,10 @@ public class StepsService
         var baseWeight = 50 + character.StepsWeightMalus;
         float weight = baseWeight;
         weight += (baseWeight * 0.75f) * (run.RealmLevel - 1);
-        weight *= 1.0f + (0.30f * run.CurrentRealm.GetHashCode());
+        weight *= 1.0f + (0.30f * (int)run.CurrentRealm);
         if (run.Difficulty >= Difficulty.Hard)
         {
-            var harderCount = (run.Difficulty.GetHashCode() - Difficulty.Hard.GetHashCode()) + 1;
+            var harderCount = ((int)run.Difficulty - Difficulty.Hard.GetHashCode()) + 1;
             weight *= Helper.MultiplierFromPercent(1.0f, Constants.WeightIncrementPercentPerDifficulty * harderCount);
         }
         return Mathf.RoundToInt(weight);

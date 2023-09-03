@@ -40,7 +40,7 @@ public static class Helper
     public static Opponent UpgradeOpponentToUpperType(Opponent opponent, OpponentType opponentType)
     {
         var tmpOpponent = opponent.Clone();
-        var typeDifference = opponentType.GetHashCode() - opponent.Type.GetHashCode();
+        var typeDifference = (int)opponentType - (int)opponent.Type;
         tmpOpponent.Cooldown -= Mathf.RoundToInt(opponent.Cooldown * (typeDifference * Constants.OpponentUpgradeReducedCooldown));
         tmpOpponent.HpMax += Mathf.RoundToInt(opponent.HpMax * (typeDifference * Constants.OpponentUpgradeAddedLife));
         tmpOpponent.Type = opponentType;
@@ -167,8 +167,10 @@ public static class Helper
             return 'I';
         else if (gameplayButton == Constants.GoButtonSpecialName)
             return 'S';
-        else if (gameplayButton == Constants.GoButton180)
+        else if (gameplayButton == Constants.GoButton180Name)
             return '1';
+        else if (gameplayButton == Constants.GoButtonSonicDropName)
+            return 's';
         return '0';
     }
 
@@ -193,7 +195,9 @@ public static class Helper
         else if (letter == 'S')
             return Constants.GoButtonSpecialName;
         else if (letter == '1')
-            return Constants.GoButton180;
+            return Constants.GoButton180Name;
+        else if (letter == 's')
+            return Constants.GoButtonSonicDropName;
         return null;
     }
 
@@ -470,9 +474,9 @@ public static class Helper
                 opponent.HpMax = Mathf.RoundToInt(opponent.HpMax * 2.0f);
                 opponent.GravityLevel += 20;
             }
-            if (opponent.Cooldown < 1.0f && difficulty.GetHashCode() <= Difficulty.Infernal.GetHashCode())
+            if (opponent.Cooldown < 1.0f && (int)difficulty <= (int)Difficulty.Infernal)
                 opponent.Cooldown = 1.0f;
-            else if (opponent.Cooldown < 0.5f && difficulty.GetHashCode() >= Difficulty.Divine.GetHashCode())
+            else if (opponent.Cooldown < 0.5f && (int)difficulty >= (int)Difficulty.Divine)
                 opponent.Cooldown = 0.5f;
             if (difficulty != Difficulty.Normal)
                 opponent.HpMax = RoundToClosestTable(opponent.HpMax, 5);
@@ -610,7 +614,7 @@ public static class Helper
         var skins = new List<int>();
         var skinsString = PlayerPrefsHelper.GetUnlockedSkinsString();
         var nbUnlocked = 0;
-        for (int realmId = Realm.None.GetHashCode(); realmId <= Realm.Heaven.GetHashCode(); ++realmId)
+        for (int realmId = (int)Realm.None; realmId <= (int)Realm.Heaven; ++realmId)
         {
             var id = (nbChars * (realmId + 1)) + charId;
             var unlocked = int.Parse(skinsString[id].ToString());

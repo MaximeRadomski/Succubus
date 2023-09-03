@@ -63,7 +63,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         run.LifeRouletteOnce = false;
         run.RepentanceOnce = false;
         if (run.Difficulty != Difficulty.Divine666)
-            run.Difficulty = (Difficulty)(run.Difficulty.GetHashCode() + 1);
+            run.Difficulty = (Difficulty)((int)run.Difficulty + 1);
         SaveRun(run);
         ResetAlreadyDialog();
     }
@@ -184,7 +184,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveGameplayChoice(GameplayChoice gameplayChoice)
     {
-        PlayerPrefs.SetInt(Constants.PpGameplayChoice, gameplayChoice.GetHashCode());
+        PlayerPrefs.SetInt(Constants.PpGameplayChoice, (int)gameplayChoice);
     }
 
     public static GameplayChoice GetGameplayChoice()
@@ -219,7 +219,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var strKeyBinding = "";
         foreach (var key in keyBinding)
-            strKeyBinding += key.GetHashCode() + ";";
+            strKeyBinding += (int)key + ";";
         PlayerPrefs.SetString(Constants.PpKeyBinding, strKeyBinding);
     }
 
@@ -232,7 +232,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = customStr;
         var keyBindings = new List<KeyCode>();
         int i = 0;
-        while (!string.IsNullOrEmpty(strKeyBinding) || i >= 16)
+        while (!string.IsNullOrEmpty(strKeyBinding) || i < Constants.KeyBindingsCount)
         {
             var separatorId = strKeyBinding.IndexOf(';');
             if (separatorId == -1)
@@ -244,7 +244,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = strKeyBinding.Substring(separatorId + 1);
             ++i;
         }
-        if (keyBindings.Count < 16)
+        if (keyBindings.Count < Constants.KeyBindingsCount)
             keyBindings = GetKeyBinding(Constants.PpKeyBindingDefault);
         return keyBindings;
     }
@@ -321,7 +321,7 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static void SaveDifficulty(Difficulty difficulty)
     {
-        PlayerPrefs.SetInt(Constants.PpDifficulty, difficulty.GetHashCode());
+        PlayerPrefs.SetInt(Constants.PpDifficulty, (int)difficulty);
     }
 
     public static Difficulty GetDifficulty()
@@ -340,7 +340,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         var opponentsStr = "";
         foreach (var opponent in opponents)
         {
-            opponentsStr += opponent.Realm.GetHashCode() + ":" + opponent.Id + ";";
+            opponentsStr += (int)opponent.Realm + ":" + opponent.Id + ";";
         }
         Mock.SetString(Constants.PpCurrentOpponents, opponentsStr);
     }
@@ -473,11 +473,11 @@ public class PlayerPrefsHelper : MonoBehaviour
         var nameToRemove = tattoo.Name.Replace(" ", "").Replace("'", "").Replace("-", "");
         var alreadyBodyPartsIds = Mock.GetString(Constants.PpCurrentBodyParts);
 
-        tattoosFullStr = tattoosFullStr.Replace($"{nameToRemove}L{tattoo.Level.ToString("00")}B{tattoo.BodyPart.GetHashCode().ToString("00")};", "");
+        tattoosFullStr = tattoosFullStr.Replace($"{nameToRemove}L{tattoo.Level.ToString("00")}B{((int)tattoo.BodyPart).ToString("00")};", "");
         for (int i = 0; i < alreadyBodyPartsIds.Length; i += 2)
         {
             int id = int.Parse(alreadyBodyPartsIds.Substring(i, 2));
-            if (id == tattoo.BodyPart.GetHashCode())
+            if (id == (int)tattoo.BodyPart)
             {
                 alreadyBodyPartsIds = alreadyBodyPartsIds.Remove(i, 2);
                 break;

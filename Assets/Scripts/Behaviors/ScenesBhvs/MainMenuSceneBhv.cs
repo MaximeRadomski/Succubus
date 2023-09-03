@@ -93,15 +93,15 @@ public class MainMenuSceneBhv : SceneBhv
             Cache.CurrentGameMode = GameMode.Ascension;
             if (_currentRun != null)
             {
-                if (!PlayerPrefsHelper.IsCinematicWatched(Realm.Hell.GetHashCode()))
-                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.Hell.GetHashCode(), StringParam0 = Constants.StepsAscensionScene });
+                if (!PlayerPrefsHelper.IsCinematicWatched((int)Realm.Hell))
+                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Realm.Hell, StringParam0 = Constants.StepsAscensionScene });
                 else
                     NavigationService.LoadNextScene(Constants.StepsAscensionScene);
             }
             else
             {
-                if (!PlayerPrefsHelper.IsCinematicWatched(Realm.Hell.GetHashCode()))
-                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = Realm.Hell.GetHashCode(), StringParam0 = Constants.CharSelScene});
+                if (!PlayerPrefsHelper.IsCinematicWatched((int)Realm.Hell))
+                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Realm.Hell, StringParam0 = Constants.CharSelScene});
                 else
                     NavigationService.LoadNextScene(Constants.TreeScene);
             }
@@ -168,9 +168,30 @@ public class MainMenuSceneBhv : SceneBhv
     private void MenuClick()
     {
         ++_menuClickCount;
-        if (_menuClickCount == 69)
-        {
+        if (_menuClickCount == 2)
+            Instantiator.NewPopupYesNo("Yes.", "yes, this is clickable.", null, "Ok", null);
+        else if (_menuClickCount == 10)
+            Instantiator.NewPopupYesNo("Hmmm...", "you sure like to click don't you?", null, "Ok", null);
+        else if (_menuClickCount == 50)
+            Instantiator.NewPopupYesNo("50 !", "50 cliks!\nyou know there is nothing to unlock by clicking this right ?", null, "Ok", null);
+        else if (_menuClickCount == 69)
             Instantiator.NewPopupYesNo("Nice!", "congratulations!\nyou successfully clicked the game name 69 times!", null, "Ok", null);
+        else if (_menuClickCount == 100)
+            Instantiator.NewPopupYesNo("100 !", "100 clicks!\nthis is the last message about clicks tho.\nplease stop for your own good.", null, "Ok", null);
+        else if (_menuClickCount == 150)
+            Instantiator.NewPopupYesNo("...", "are you for real?", null, "Ok", null);
+        else if (_menuClickCount == 200)
+            Instantiator.NewPopupYesNo("!!!", "you've got to be kidding me!", null, "Ok", null);
+        else if (_menuClickCount == 300)
+            Instantiator.NewPopupYesNo("???", "stop it god damnit!", null, "Ok", null);
+        else if (_menuClickCount == 666)
+        {
+            Instantiator.NewPopupYesNo("666", "666 clicks!\nall skins are now unlocked.", null, "Ok", null);
+            PlayerPrefsHelper.SaveUnlockedSkins("111111111111111111111111111111111111111111111111");
         }
+        else if (_menuClickCount > 666 && _menuClickCount < 670)
+            Instantiator.NewPopupYesNo("Stop.", "you can stop now.", null, "Ok", null);
+        else if (_menuClickCount == 670)
+            Instantiator.NewPopupYesNo("You...", "you're a bit dense aren't you?", null, "Ok", null);
     }
 }

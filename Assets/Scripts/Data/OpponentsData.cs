@@ -34,17 +34,17 @@ public static class OpponentsData
         Realm? region = null;
         for (int realmId = 0; realmId < Helper.EnumCount<Realm>(); ++realmId)
         {
-            if (realmId == Realm.Hell.GetHashCode())
+            if (realmId == (int)Realm.Hell)
             {
                 realmOpponents = HellOpponents;
                 region = Realm.Hell;
             }
-            else if (realmId == Realm.Earth.GetHashCode())
+            else if (realmId == (int)Realm.Earth)
             {
                 realmOpponents = EarthOpponents;
                 region = Realm.Earth;
             }
-            else if (realmId == Realm.Heaven.GetHashCode())
+            else if (realmId == (int)Realm.Heaven)
             {
                 realmOpponents = HeavenOpponents;
                 region = Realm.Heaven;

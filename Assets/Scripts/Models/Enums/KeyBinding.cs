@@ -22,20 +22,22 @@ public enum KeyBinding
     Special = 8,
     [Description("Rotation 180")]
     Rotation180 = 9,
+    [Description("Sonic Drop")]
+    SonicDrop = 10,
     [Description("Menu Up")]
-    MenuUp = 10,
+    MenuUp = 11,
     [Description("Menu Down")]
-    MenuDown = 11,
+    MenuDown = 12,
     [Description("Menu Left")]
-    MenuLeft = 12,
+    MenuLeft = 13,
     [Description("Menu Right")]
-    MenuRight = 13,
+    MenuRight = 14,
     [Description("Menu Select")]
-    MenuSelect = 14,
+    MenuSelect = 15,
     [Description("Back / Pause")]
-    BackPause = 15,
+    BackPause = 16,
     [Description("Restart Training")]
-    Restart = 16,
+    Restart = 17,
     [Description("None")]
     None = 99
 }

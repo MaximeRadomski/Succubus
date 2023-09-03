@@ -40,7 +40,7 @@ public class Step
         Discovered = int.Parse(parsedString.Substring(parsedString.IndexOf('D') + 1, 1)) == 1 ? true : false;
         LandLordVision = int.Parse(parsedString.Substring(parsedString.IndexOf('V') + 1, 1)) == 1 ? true : false;
         var lootLetter = parsedString.Substring(parsedString.IndexOf('V') + 2, 1);
-        for (int i = LootType.None.GetHashCode(); i < Helper.EnumCount<LootType>(); ++i)
+        for (int i = (int)LootType.None; i < Helper.EnumCount<LootType>(); ++i)
         {
             if (lootLetter == ((LootType)i).ToString().Substring(0, 1))
                 LootType = (LootType)i;
@@ -56,12 +56,12 @@ public class Step
             realmOpponents = OpponentsData.HeavenOpponents;
         var nextOpponentIdStart = parsedString.IndexOf('O') + 1;
         Opponents = new List<Opponent>();
-        var opponentType = (OpponentType)(Helper.GetLootFromTypeAndId(LootType, LootId)?.Rarity.GetHashCode() ?? OpponentType.Common.GetHashCode());
+        var opponentType = (OpponentType)((int?)Helper.GetLootFromTypeAndId(LootType, LootId)?.Rarity ?? OpponentType.Common.GetHashCode());
         while (nextOpponentIdStart <= parsedString.Length && parsedString[nextOpponentIdStart] != ';')
         {
             var idOpponent = int.Parse(parsedString.Substring(nextOpponentIdStart, 2));
             var opponent = realmOpponents[idOpponent >= realmOpponents.Count ? realmOpponents.Count - 1 : idOpponent];
-            if (opponent.Type.GetHashCode() < opponentType.GetHashCode())
+            if ((int)opponent.Type < opponentType.GetHashCode())
             {
                 opponent = Helper.UpgradeOpponentToUpperType(opponent, opponentType);
                 Opponents.Add(opponent);
@@ -79,8 +79,8 @@ public class Step
         var stepStr = "";
         stepStr += "X" + X.ToString("00");
         stepStr += "Y" + Y.ToString("00");
-        stepStr += "R" + Realm.GetHashCode().ToString("0");
-        stepStr += "S" + StepType.GetHashCode().ToString("00");
+        stepStr += "R" + ((int)Realm).ToString("0");
+        stepStr += "S" + ((int)StepType).ToString("00");
         stepStr += "D" + (Discovered ? "1" : "0");
         stepStr += "V" + (LandLordVision ? "1" : "0");
         stepStr += LootType.ToString().Substring(0, 1) + LootId.ToString("00");

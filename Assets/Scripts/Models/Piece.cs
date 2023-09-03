@@ -346,7 +346,7 @@ public class Piece : FrameRateBehavior
     {
         _isScrewed = true;
         var spriteRenderer = EnableRotationPoint(true, instantiator);
-        spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{9 + realm.GetHashCode()}");
+        spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{9 + (int)realm}");
         if (Letter == "I")
             spriteRenderer.gameObject.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
     }

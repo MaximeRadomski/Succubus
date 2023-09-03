@@ -103,7 +103,7 @@ public class InfoMenuBhv : PopupBhv
             var tattoos = PlayerPrefsHelper.GetCurrentTattoos();
             foreach (Tattoo tattoo in tattoos)
             {
-                var tmpTattooGameObject = GameObject.Find("TattooPlaceHolder" + tattoo.BodyPart.GetHashCode().ToString("00"));
+                var tmpTattooGameObject = GameObject.Find("TattooPlaceHolder" + ((int)tattoo.BodyPart).ToString("00"));
                 tmpTattooGameObject.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Tattoos_" + tattoo.Id.ToString("00"));
                 tmpTattooGameObject.GetComponent<ButtonBhv>().EndActionDelegate = TattooInfo;
                 tmpTattooGameObject.name = "Tattoo" + tattoo.Id.ToString("00");
@@ -182,7 +182,7 @@ public class InfoMenuBhv : PopupBhv
             //   "- hits " + Helper.GetInferiorFrom(opponent.Realm).ToString().ToLower() + " characters stronger."
             _fightFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
             _fightFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
-            _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((opponent.Realm.GetHashCode() * 3) + (opponent.Type.GetHashCode() - 1)));
+            _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)opponent.Realm * 3) + ((int)opponent.Type - 1)));
             _fightFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
                 (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
             _fightFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +

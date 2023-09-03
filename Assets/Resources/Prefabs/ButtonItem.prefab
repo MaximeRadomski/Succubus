@@ -185,6 +185,7 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 1
   VibratesOnClick: 1
   ConeVisionMult: 1.5

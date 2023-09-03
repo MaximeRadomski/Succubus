@@ -23,7 +23,7 @@ public class SpecialSwap : Special
         Cache.EscapeLocked = true;
         _selector = GameObject.Instantiate(new GameObject());
         var selectorSpriteRenderer = _selector.AddComponent<SpriteRenderer>();
-        selectorSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{3 + _character.Realm.GetHashCode()}");
+        selectorSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{3 + (int)_character.Realm}");
         selectorSpriteRenderer.sortingLayerName = "Effects";
         _selector.transform.position = new Vector3(_gameplayControler.NextPieces[0].transform.position.x - 2.7143f, _gameplayControler.NextPieces[0].transform.position.y + 0.5f, 0.0f);
         _selectedId = -1;

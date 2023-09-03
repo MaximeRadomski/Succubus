@@ -188,9 +188,9 @@ public class DialogBoxBhv : FrameRateBehavior
         _talkingCharId = 0;
         _talkingFramesProgress = 0;
 
-        _titleBackground.sprite = TitleBackgroundSprites[_currentSubject.Realm.GetHashCode()];
-        _mainTop.sprite = MainTopBotSprites[_currentSubject.Realm.GetHashCode()];
-        _mainMid.sprite = MainMidSprites[_currentSubject.Realm.GetHashCode()];
+        _titleBackground.sprite = TitleBackgroundSprites[(int)_currentSubject.Realm];
+        _mainTop.sprite = MainTopBotSprites[(int)_currentSubject.Realm];
+        _mainMid.sprite = MainMidSprites[(int)_currentSubject.Realm];
         _mainBot.sprite = _mainTop.sprite;
 
         if (_sentences[_sentencesId].Contains("??")) _emoji.sprite = Emojies[0];

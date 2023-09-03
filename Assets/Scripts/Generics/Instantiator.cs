@@ -388,7 +388,7 @@ public class Instantiator : MonoBehaviour
         var tmpShieldObject = Resources.Load<GameObject>("Prefabs/SimpShield");
         var tmpShieldInstance = Instantiate(tmpShieldObject, parentPosition + localPosition, tmpShieldObject.transform.rotation);
         tmpShieldInstance.name = Constants.GoSimpShield;
-        tmpShieldInstance.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{6 + realm.GetHashCode()}");
+        tmpShieldInstance.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/Drone_{6 + (int)realm}");
         tmpShieldInstance.GetComponent<SpriteRenderer>().sortingOrder = id;
         return tmpShieldInstance;
     }

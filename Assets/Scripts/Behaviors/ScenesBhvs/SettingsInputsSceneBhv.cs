@@ -114,7 +114,8 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
         _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
         _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(16); };
-        _keyBindingPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+        _keyBindingPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(17); };
+        _keyBindingPanelMenu.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
 
         GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Vertical); };
         GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Horizontal); };
@@ -272,7 +273,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void CheckAlreadyKeyBinding(KeyCode code, int keyId)
     {
         //Check for menu controls
-        if (keyId >= 10 && keyId <= 16)
+        if (keyId >= (int)KeyBinding.MenuUp && keyId <= (int)KeyBinding.Restart)
         {
             for (int i = 10; i <= 16; ++i)
             {
@@ -285,7 +286,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             return;
         }
         //Check for gameplay + escape
-        for (int i = 0; i <= 9; ++i)
+        for (int i = (int)KeyBinding.HardDrop; i <= (int)KeyBinding.SonicDrop; ++i)
         {
             if (_keyBinding[i] == code)
             {
@@ -314,14 +315,20 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             if (!Cache.OnlyMouseInMenu)
-                _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(9).gameObject, true);
+                InvokeNextFrame(() =>
+                {
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(9).gameObject, true);
+                });
         }
         else
         {
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.GetComponent<PositionBhv>().UpdatePositions();
             if (!Cache.OnlyMouseInMenu)
-                _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(6).gameObject, true);
+                InvokeNextFrame(() =>
+                {
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(9).gameObject, true);
+                });
         }
     }
 

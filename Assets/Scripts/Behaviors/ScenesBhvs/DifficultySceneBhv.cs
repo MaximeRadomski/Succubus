@@ -41,7 +41,7 @@ public class DifficultySceneBhv : SceneBhv
         var lastSelectedDifficulty = PlayerPrefsHelper.GetDifficulty();
         if (lastSelectedDifficulty > Difficulty.Hard)
             Next();
-        SelectDifficulty(lastSelectedDifficulty.GetHashCode());
+        SelectDifficulty((int)lastSelectedDifficulty);
     }
 
     private void SetButtons()

@@ -91,15 +91,15 @@ public class StepsSceneBhv : SceneBhv
             (_playButton = GameObject.Find(Constants.GoButtonPlayName)).GetComponent<ButtonBhv>().EndActionDelegate = GoToStep;
             _selector = GameObject.Find("Selector");
             _position = GameObject.Find("Position");
-            _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
+            _position.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + ((int)_run.CurrentRealm * Constants.StepsAssetsCount)));
             _inputControler = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
             _backgroundMask = GameObject.Find("BackgroundMask");
 
             UpdateResourcesInfo();
             _stepsService = new StepsService();
-            _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * _run.CurrentRealm.GetHashCode())));
+            _selector.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsSelectorId + (Constants.StepsAssetsCount * (int)_run.CurrentRealm)));
             _stepsBackground = GameObject.Find("StepsBackground");
-            _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[_run.CurrentRealm.GetHashCode()];
+            _stepsBackground.GetComponent<SpriteRenderer>().sprite = _backgroundSprites[(int)_run.CurrentRealm];
             if (string.IsNullOrEmpty(_run.Steps))
             {
                 _stepsService.GenerateOriginSteps(_run, _character);
@@ -229,15 +229,15 @@ public class StepsSceneBhv : SceneBhv
                 _lootName.text = TattoosData.Tattoos[_selectedStep.LootId].ToLower();
             }
             _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + rarity.ToString().ToLower();
-            _opponents.text = "opponents\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + ((OpponentType)rarity.GetHashCode()).ToString().ToLower();
-            _opponentType.sprite = rarity == Rarity.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + ((_run.CurrentRealm.GetHashCode() * 3) + (rarity.GetHashCode() - 1)));
+            _opponents.text = "opponents\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + ((int)((OpponentType)rarity)).ToString().ToLower();
+            _opponentType.sprite = rarity == Rarity.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)_run.CurrentRealm * 3) + (rarity.GetHashCode() - 1)));
             _lootPicture.GetComponent<IconInstanceBhv>().Pop();
         }
         else
         {
             if (x == _run.X && y == _run.Y)
             {
-                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + (_run.CurrentRealm.GetHashCode() * Constants.StepsAssetsCount)));
+                _lootPicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsPositionId + ((int)_run.CurrentRealm * Constants.StepsAssetsCount)));
                 _lootPicture.transform.localPosition = new Vector3(_lootPicture.transform.localPosition.x, _lootCenterLocalY, 0.0f);
                 _lootName.text = "current location";
                 _lootTypeRarity.text = "";
@@ -257,7 +257,7 @@ public class StepsSceneBhv : SceneBhv
                 _buttonInfo.SetActive(false);
             }
 
-            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= _run.CurrentRealm.GetHashCode() && _run.RealmLevel == 1 && _run.CurrentRealm < Realm.Heaven)
+            if (x == 50 && y == 50 && PlayerPrefsHelper.GetRealmBossProgression() >= (int)_run.CurrentRealm && _run.RealmLevel == 1 && _run.CurrentRealm < Realm.Heaven)
             {
                 _beholderPicture.gameObject.SetActive(true);
                 _buttonBeholder.SetActive(true);

@@ -7,12 +7,12 @@ public static class Constants
 {
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
-    public const int DamageDebug = 0; 
+    public const int DamageDebug = 0;
     public const string TattoosStringDebug = "";
     //"HammerL01B09;FireStoneL01B07;ThermalGogglesL01B04;HedgehogL01B02;FoxL01B06;InsulatingFoamL01B05;EclipseGlassesL01B01;"
 
@@ -123,6 +123,7 @@ public static class Constants
     public const string PpButtonsRightPanelDefault = "S0I0000D0000A0C000000";
     public const string PpKeyBinding = "KeyLayout";
     public static string PpKeyBindingDefault = GetDefaultKeyBinding();
+    public const int KeyBindingsCount = 18;
     public const string PpRun = "Run";
     public const string PpRunCharacter = "RunCharacter";
     public const string PpBag = "Bag";
@@ -197,7 +198,7 @@ public static class Constants
 
     public static string GetDefaultKeyBinding()
     {
-        return $"{KeyCode.UpArrow.GetHashCode()};{KeyCode.DownArrow.GetHashCode()};{KeyCode.LeftArrow.GetHashCode()};{KeyCode.RightArrow.GetHashCode()};{KeyCode.C.GetHashCode()};{KeyCode.X.GetHashCode()};{KeyCode.Space.GetHashCode()};{KeyCode.D.GetHashCode()};{KeyCode.S.GetHashCode()};{KeyCode.W.GetHashCode()};{KeyCode.UpArrow.GetHashCode()};{KeyCode.DownArrow.GetHashCode()};{KeyCode.LeftArrow.GetHashCode()};{KeyCode.RightArrow.GetHashCode()};{KeyCode.Return.GetHashCode()};{KeyCode.Escape.GetHashCode()};{KeyCode.R.GetHashCode()};";
+        return $"{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.C};{(int)KeyCode.X};{(int)KeyCode.Space};{(int)KeyCode.D};{(int)KeyCode.S};{(int)KeyCode.W};{(int)KeyCode.None};{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.Return};{(int)KeyCode.Escape};{(int)KeyCode.R};";
     }
 
     //  SCENES  //
@@ -236,11 +237,12 @@ public static class Constants
     public const string GoButtonHoldName = "ButtonHold";
     public const string GoButtonDownName = "ButtonDown";
     public const string GoButtonDropName = "ButtonDrop";
+    public const string GoButtonSonicDropName = "ButtonSonicDrop";
     public const string GoButtonItemName = "ButtonItem";
     public const string GoButtonSpecialName = "ButtonSpecial";
     public const string GoButtonAntiClockName = "ButtonAntiClock";
     public const string GoButtonClockName = "ButtonClock";
-    public const string GoButton180 = "Button180";
+    public const string GoButton180Name = "Button180";
     public const string GoButtonPauseName = "ButtonPause";
     public const string GoButtonPlayName = "ButtonPlay";
     public const string GoButtonBackName = "ButtonBack";

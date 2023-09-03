@@ -16,8 +16,8 @@ public class HeightLimiterBhv : MonoBehaviour
         transform.GetChild(1).localPosition = new Vector3(0.0f, customHeight / 2.0f, 0.0f);
         var midRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
         midRenderer.size = new Vector2(midRenderer.size.x, customHeight - 0.13f);
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = RealmSprites[realm.GetHashCode() * 2];
-        midRenderer.sprite = RealmSprites[(realm.GetHashCode() * 2) + 1];
-        transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = RealmSprites[realm.GetHashCode() * 2];
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = RealmSprites[(int)realm * 2];
+        midRenderer.sprite = RealmSprites[((int)realm * 2) + 1];
+        transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = RealmSprites[(int)realm * 2];
     }
 }
