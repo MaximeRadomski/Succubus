@@ -22,8 +22,13 @@ public static class VibrationService
     {
         if (!force && _hasInit)
             return;
-        _vibrationEnabled = PlayerPrefsHelper.GetVibrationEnabled();
+        SetVibrationEnabled();
         _hasInit = true;
+    }
+
+    public static void SetVibrationEnabled()
+    {
+        _vibrationEnabled = PlayerPrefsHelper.GetVibrationEnabled();
     }
 
     public static void Vibrate()

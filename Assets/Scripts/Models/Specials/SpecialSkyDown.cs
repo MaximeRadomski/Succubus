@@ -18,7 +18,9 @@ public class SpecialSkyDown : Special
         {
             for (int x = 0; x < Constants.PlayFieldWidth; ++x)
             {
-                if (y > Cache.PlayFieldMinHeight && _gameplayControler.PlayFieldBhv.Grid[x, y] != null && _gameplayControler.PlayFieldBhv.Grid[x, y - 1] == null)
+                if (y > Cache.PlayFieldMinHeight && _gameplayControler.PlayFieldBhv.Grid[x, y] != null
+                    && _gameplayControler.PlayFieldBhv.Grid[x, y].GetComponent<BlockBhv>()?.Indestructible == false
+                    && _gameplayControler.PlayFieldBhv.Grid[x, y - 1] == null)
                 {
                     _gameplayControler.PlayFieldBhv.Grid[x, y - 1] = _gameplayControler.PlayFieldBhv.Grid[x, y];
                     _gameplayControler.PlayFieldBhv.Grid[x, y] = null;

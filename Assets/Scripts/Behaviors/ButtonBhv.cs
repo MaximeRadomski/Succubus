@@ -13,6 +13,7 @@ public class ButtonBhv : InputBhv
     public bool ColorDisabled;
     public bool CustomSound;
     public bool VibratesOnClick = false;
+    public bool AlterChildren = true;
     public float ConeVisionMult = Constants.BaseButtonVisionConeMult;
     public bool IsMenuSelectorResetButton;
 
@@ -69,13 +70,14 @@ public class ButtonBhv : InputBhv
         if (_spriteRenderer != null && !ColorDisabled)
         {
             _spriteRenderer.color = _pressedColor;
-            foreach (Transform child in this.transform)
-            {
-                if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+            if (AlterChildren)
+                foreach (Transform child in this.transform)
                 {
-                    childRenderer.color = _pressedColor;
+                    if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+                    {
+                        childRenderer.color = _pressedColor;
+                    }
                 }
-            }
         }
         BeginActionDelegate?.Invoke();
     }
@@ -123,26 +125,28 @@ public class ButtonBhv : InputBhv
         if (Disabled)
         {
             _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainSemiTransparent, 0.1f);
-            foreach (Transform child in this.transform)
-            {
-                if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+            if (AlterChildren)
+                foreach (Transform child in this.transform)
                 {
-                    childRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainSemiTransparent, 0.1f);
+                    if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+                    {
+                        childRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainSemiTransparent, 0.1f);
+                    }
                 }
-            }
             if (_spriteRenderer.color == Constants.ColorPlainSemiTransparent)
                 _isResetingColor = false;
         }
         else
         {
             _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, _resetedColor, 0.1f);
-            foreach (Transform child in this.transform)
-            {
-                if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+            if (AlterChildren)
+                foreach (Transform child in this.transform)
                 {
-                    childRenderer.color = Color.Lerp(_spriteRenderer.color, _resetedColor, 0.1f);
+                    if (child.TryGetComponent<SpriteRenderer>(out var childRenderer))
+                    {
+                        childRenderer.color = Color.Lerp(_spriteRenderer.color, _resetedColor, 0.1f);
+                    }
                 }
-            }
             if (_spriteRenderer.color == _resetedColor)
                 _isResetingColor = false;
         }

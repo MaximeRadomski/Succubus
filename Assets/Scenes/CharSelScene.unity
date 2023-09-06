@@ -696,8 +696,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &112964963
@@ -1135,8 +1137,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &297658040
@@ -2496,8 +2500,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &724955122
@@ -2855,8 +2861,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &767934853
@@ -2987,8 +2995,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &877763184
@@ -3870,8 +3880,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1110716840
@@ -4106,8 +4118,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1111992098
@@ -4186,8 +4200,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &1111992102
@@ -5271,8 +5287,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1427222500
@@ -5446,8 +5464,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 1
 --- !u!212 &1434796712
@@ -5629,8 +5649,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1527800777
@@ -5997,8 +6019,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1601270429
@@ -6789,8 +6813,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1803340083
@@ -7275,8 +7301,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1001 &1890396418
@@ -7733,8 +7761,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 0
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &2013879014

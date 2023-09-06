@@ -108,6 +108,7 @@ public class SettingsAudioSceneBhv : SceneBhv
         var choiceGameObject = GameObject.Find(Cache.LastEndActionClickedName);
         _vibrationSelector.transform.position = new Vector3(choiceGameObject.transform.position.x, _vibrationSelector.transform.position.y, 0.0f);
         PlayerPrefsHelper.SaveVibrationEnabled(result);
+        VibrationService.SetVibrationEnabled();
         if (result)
             VibrationService.Vibrate();
     }
