@@ -34,6 +34,7 @@ public class SettingsSceneBhv : SceneBhv
         (_buttonDisplay = GameObject.Find("ButtonDisplay")).GetComponent<ButtonBhv>().EndActionDelegate = GoToDisplaySettings;
 #if !UNITY_ANDROID
         _buttonAudio.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Audio";
+        _buttonAudio.transform.GetChild(1).localScale = new Vector3(2.411f, 1, 1);
 #endif
         //_buttonDisplay.transform.position = _buttonHowToPlay.transform.position;
         //_buttonHowToPlay.transform.position += new Vector3(0.0f, -_buttonSpacing, 0.0f);

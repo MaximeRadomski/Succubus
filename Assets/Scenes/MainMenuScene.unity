@@ -432,6 +432,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &86176634
@@ -869,6 +870,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &274888166
@@ -1001,6 +1003,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &275038437
@@ -1133,6 +1136,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &328909021
@@ -1346,6 +1350,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &390089016
@@ -1461,7 +1466,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Pivot.x
@@ -1669,6 +1674,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1001 &847159010
@@ -2066,6 +2072,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &944535801
@@ -2197,6 +2204,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &1270860756
@@ -3750,6 +3758,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.5
   IsMenuSelectorResetButton: 1
 --- !u!212 &2080949650

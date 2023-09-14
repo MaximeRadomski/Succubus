@@ -45,9 +45,17 @@ public class MainMenuSceneBhv : SceneBhv
         if (_currentRun != null)
         {
             if (_currentRun.Endless > 0)
+            {
                 buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Endless Ascension";
+                buttonAscension.transform.GetChild(1).localScale = new Vector3(7.742f, 1, 1);
+            }
             else
+            {
                 buttonAscension.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = "Continue Ascension";
+                buttonAscension.transform.GetChild(0).localPosition = new Vector3(0.038f, 0.326f, 0);
+                buttonAscension.transform.GetChild(1).localScale = new Vector3(8.250f, 1, 1);
+                buttonAscension.transform.GetChild(1).localPosition = new Vector3(-0.072f, 0, 0);
+            }
         }
         _menuClickCount = 0;
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = MenuClick;
@@ -162,7 +170,7 @@ public class MainMenuSceneBhv : SceneBhv
     private void WannaHelp()
     {
         //Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL", "Edam", null, 0);
-        Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedback, reporting bugs, and talking about the game around you are some stuff you can do!\nbut yeah donations might be what I suggest the most. definitely.", null, "Ok", null);
+        Instantiator.NewPopupYesNo("Thanks!", "donations, giving feedback, reporting bugs, and talking about the game around you are some stuff you can do!\nbut yeah donations might be what i suggest the most. definitely.", null, "Ok", null);
     }
 
     private void MenuClick()
