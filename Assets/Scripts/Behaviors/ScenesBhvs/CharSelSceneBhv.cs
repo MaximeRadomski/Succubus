@@ -129,7 +129,10 @@ public class CharSelSceneBhv : SceneBhv
     {
         if (Cache.CurrentGameMode == GameMode.TrainingFree
             || Cache.CurrentGameMode == GameMode.TrainingDummy)
+        {
+            Cache.TrainingFreeSelectedLevel = 0;
             Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Get Ready", 2, OnBlend);
+        }
         else
             Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         bool OnBlend(bool result)

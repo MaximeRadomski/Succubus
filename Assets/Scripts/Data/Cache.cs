@@ -33,6 +33,7 @@ public static class Cache
     public static int CurrentRemainingSimpShields = 0;
     public static Vector3? HorizontalCameraInitialPosition;
     public static Quaternion? HorizontalCameraInitialRotation;
+    public static int TrainingFreeSelectedLevel = 1;
 
     //Reset before each fight
     public static AttackType IsEffectAttackInProgress = AttackType.None;

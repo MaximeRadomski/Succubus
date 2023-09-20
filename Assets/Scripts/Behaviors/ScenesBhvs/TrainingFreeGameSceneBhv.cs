@@ -8,6 +8,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private int _level;
     private int _next;
     private int _lines;
+    private int _boostedLines;
     private int _pieces;
 
     private List<float> _verif;
@@ -44,7 +45,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _level = results[1];
         _lines = results[2];
         _pieces = results[3];
-        _next = _level * Constants.LinesForLevel - _lines;
+        _next = Constants.LinesForLevel - _lines % 10;
 
         _scoreTmp = GameObject.Find("Score").GetComponent<TMPro.TextMeshPro>();
         _levelTmp = GameObject.Find("Level").GetComponent<TMPro.TextMeshPro>();
@@ -59,7 +60,27 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _piecesTmp.text = _pieces.ToString();
 
         CurrentOpponent = null;
-        _gameplayControler.StartGameplay(_level, Character?.Realm ?? Realm.Hell, Realm.Hell);
+        if (Cache.TrainingFreeSelectedLevel == 0)
+        {
+            this.Instantiator.NewPopupTrainingFreeLevel((int selectedLevel) =>
+            {
+                SetLevelAndStart(selectedLevel);
+            });
+        }
+        else
+            SetLevelAndStart(Cache.TrainingFreeSelectedLevel);
+    }
+
+    void SetLevelAndStart(int selectedLevel)
+    {
+        _level = selectedLevel;
+        _boostedLines = (_level - 1) * 10;
+        Cache.TrainingFreeSelectedLevel = selectedLevel;
+        _levelTmp.text = _level.ToString();
+        this.InvokeNextFrame(() =>
+        {
+            _gameplayControler.StartGameplay(_level, Character?.Realm ?? Realm.Hell, Realm.Hell);
+        });
     }
 
     public override void OnGameOver()
@@ -106,7 +127,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         if (_gameplayControler == null)
             return;
-        if (_lines >= _level * Constants.LinesForLevel)
+        if (_lines + _boostedLines >= _level * Constants.LinesForLevel)
         {
             ++_level;
             _verif[4] += 4;
@@ -120,7 +141,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             CameraBhv.Bump(4);
         }
         _levelTmp.text = _level.ToString();
-        _next = _level * Constants.LinesForLevel - _lines;
+        _next = _level * Constants.LinesForLevel - _lines - _boostedLines;
         _nextTmp.text = _next.ToString();
     }
 

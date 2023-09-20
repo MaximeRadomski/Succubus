@@ -229,7 +229,7 @@ public class StepsSceneBhv : SceneBhv
                 _lootName.text = TattoosData.Tattoos[_selectedStep.LootId].ToLower();
             }
             _lootTypeRarity.text = _selectedStep.LootType.ToString().ToLower() + "\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + rarity.ToString().ToLower();
-            _opponents.text = "opponents\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + ((int)((OpponentType)rarity)).ToString().ToLower();
+            _opponents.text = "opponents\n" + Constants.GetMaterial(_run.CurrentRealm, TextType.succubus3x5, TextCode.c43) + ((OpponentType)((int)rarity)).ToString().ToLower();
             _opponentType.sprite = rarity == Rarity.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)_run.CurrentRealm * 3) + (rarity.GetHashCode() - 1)));
             _lootPicture.GetComponent<IconInstanceBhv>().Pop();
         }

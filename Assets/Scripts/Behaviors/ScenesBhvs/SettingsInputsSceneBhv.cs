@@ -208,6 +208,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             sprite.enabled = false;
             sprite.GetComponent<BoxCollider2D>().enabled = false;
             text.enabled = false;
+            text.gameObject.transform.Find("Overline").GetComponent<SpriteRenderer>().enabled = false;
         }
 #endif
     }

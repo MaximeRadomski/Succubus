@@ -234,6 +234,14 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupCharacterSkinsBhv>().Init(charId, unlockedSkins, currentSelectedSkin, resultAction);
     }
 
+    public void NewPopupTrainingFreeLevel(System.Action<int> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupTrainingFreeLevel");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Cache.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupTrainingFreeLevelBhv>().Init(resultAction);
+    }
+
     public void NewPopupGameplayButtons(Action<bool> resultAction)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupGameplayButtons");
