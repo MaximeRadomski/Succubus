@@ -38,7 +38,7 @@ public class StepInstanceBhv : MonoBehaviour
         if (step.X == 50 && step.Y == 50)
         {
             _stepOpponent.enabled = true;
-            _stepOpponent.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + Constants.StepsAssetsOriginMap);
+            _stepOpponent.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/StepsAssets_" + (Constants.StepsAssetsOriginMap + ((int)run.CurrentRealm * Constants.StepsAssetsCount)));
             return;
         }
         _stepOpponent.enabled = _stepLoot.enabled;

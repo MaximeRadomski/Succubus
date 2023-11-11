@@ -233,7 +233,8 @@ public class SettingsInputsSceneBhv : SceneBhv
     {
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; }));
         Cache.EscapeLocked = true;
-        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}", "Cancel", "Default", OnSetKey);
+        var sonicDropExplanation =  id == (int)KeyBinding.SonicDrop ? $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}if unset, you can sonic drop\r\nby tapping down twice" : "";
+        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}{sonicDropExplanation}", "Cancel", "Default", OnSetKey);
 
         void OnSetKey(bool result)
         {

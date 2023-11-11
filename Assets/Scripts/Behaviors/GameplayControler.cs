@@ -1368,8 +1368,9 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition || Cache.PactNoSoftDrop)
-            return;
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition
+            || (Cache.PactNoSoftDrop && !_isOldSchoolGameplay))
+                return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
             return;
         else if (CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall)
@@ -3455,7 +3456,8 @@ public class GameplayControler : MonoBehaviour
                 _dasMax = PlayerPrefsHelper.GetDas();
                 _arrMax = PlayerPrefsHelper.GetArr();
                 (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
-                CurrentGhost?.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
+                var noVisionBlock = GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0;
+                CurrentGhost?.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && noVisionBlock);
                 BaseAfterSpawnEnd();
                 return false;
             }
