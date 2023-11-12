@@ -167,6 +167,7 @@ public class DifficultySceneBhv : SceneBhv
                 run.CurrentItemUses = item.Uses;
         }
         PlayerPrefsHelper.SaveRun(run);
+        Cache.AlreadyConfrontedOpponents = null;
         Instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, "Ascending", 2, OnBlend);
         bool OnBlend(bool result)
         {

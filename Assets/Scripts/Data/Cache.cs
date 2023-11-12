@@ -22,6 +22,7 @@ public static class Cache
     public static bool KeyboardUp;
     public static int CurrentBossId;
     public static bool InAHurryPopup = false;
+    public static List<int> AlreadyConfrontedOpponents;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;

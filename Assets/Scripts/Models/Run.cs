@@ -31,9 +31,9 @@ public class Run
     public bool CharacterEncounterAvailability = true;
     public int CharEncounterPercent = 5;
     public int ItemLootPercent = 15;
-    public int ResourceLootPercent = 25;
+    public int ResourceLootPercent = 20;
     public int PactLootPercent = 20;
-    public int TattooLootPercent = 35;
+    public int TattooLootPercent = 40;
 
     public int DeathScytheCount;
     public bool LifeRouletteOnce;
@@ -72,6 +72,7 @@ public class Run
                 PlayerPrefsHelper.IncrementNumberRunWithoutCharacterEncounter();
             else
                 CharacterEncounterAvailability = true;
+            Cache.AlreadyConfrontedOpponents = null;
         }
         MaxSteps = 4;
         if (Difficulty == Difficulty.Easy)

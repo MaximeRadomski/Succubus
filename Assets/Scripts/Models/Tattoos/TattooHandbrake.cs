@@ -25,6 +25,6 @@ public class TattooHandbrake : Tattoo
 
     public override string GetDescription()
     {
-        return $"playing high [ over 17 ] in the playfield {StatToString()}.";
+        return $"playing high in the playfield, over 17, {StatToString()}.";
     }
 }

@@ -175,7 +175,10 @@ public class ClassicGameSceneBhv : GameSceneBhv
         catch (Exception e)
         {
             PlayerPrefsHelper.ResetRun();
-            LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
+            if (e == null)
+                LogService.LogCallback($"Custom Caught Exception:\nnull exception", "No StackTrace", LogType.Exception);
+            else
+                LogService.LogCallback($"Custom Caught Exception:\nMessage: {e.Message}\nSource:{e.Source}", e.StackTrace, LogType.Exception);
         }
     }
 

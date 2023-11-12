@@ -22,9 +22,9 @@ public static class TattoosData
     public static string[] LegendaryTattoosNames = { Tattoos[06], Tattoos[22], Tattoos[23], Tattoos[25], Tattoos[26], Tattoos[27], Tattoos[28], Tattoos[29], Tattoos[45], Tattoos[51], Tattoos[52], Tattoos[54], Tattoos[55], Tattoos[56], Tattoos[67], Tattoos[73], Tattoos[74], Tattoos[80], Tattoos[94] };
 
     // DEBUG //
-    public static bool DebugEnabled = Constants.TattoosDebug; 
+    public static bool DebugEnabled = Constants.TattoosDebug;
     public static bool DebugMultitude = false;
-    public static Tattoo DebugTattoo = GetTattooFromName("Gamegirl");
+    public static Tattoo DebugTattoo = GetTattooFromName("Map");
 
     public static Tattoo GetRandomTattoo()
     {

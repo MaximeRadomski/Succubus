@@ -371,6 +371,8 @@ public class StepsSceneBhv : SceneBhv
             var currentItem = PlayerPrefsHelper.GetCurrentItem();
             if (currentItem != null)
                 _run.CurrentItemUses = currentItem.Uses;
+            if (this._character.LastStandMultiplier > 0)
+                Cache.HasLastStanded = false;
             PlayerPrefsHelper.SaveRun(_run);
             NavigationService.LoadBackUntil(Constants.StepsAscensionScene);
         }

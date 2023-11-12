@@ -90,10 +90,8 @@ public class StepsService
                     minimumExit = minimumExit.ReplaceChar(i, '.');
             }
         }
-        if (customChancePercentToHaveAnExit == 0)
-            Debug.Log("DEBUG");
         var chancePercentToHaveAnExit = customChancePercentToHaveAnExit >= 0 ? customChancePercentToHaveAnExit : 80;
-        if (character.StairwayToHeaven)
+        if (character.StairwayToHeaven && customChancePercentToHaveAnExit != 0)
             chancePercentToHaveAnExit = 100;
         for (int i = 0; i < 4; ++i)
         {
@@ -344,10 +342,16 @@ public class StepsService
         //DEBUG
         plausibleOpponents = realmOpponents.FindAll(o => o.Weight > 0 && o.Weight <= weight && (int)o.Type <= (int)OpponentType.Boss);
         var averageWeight = plausibleOpponents.Sum(c => c.Weight) / plausibleOpponents.Count;
-        var minSingleOpponentWeight = Random.Range(0, 2) == 0 ? 0 : averageWeight;
+        var minSingleOpponentWeight = Random.Range(0, 3) == 0 ? 0 : averageWeight;
         while (i <= 12)
         {
             plausibleOpponents = realmOpponents.FindAll(o => o.Weight > minSingleOpponentWeight && o.Weight <= weight - totalStepWeight && (int)o.Type <= (int)opponentType);
+            if (Cache.AlreadyConfrontedOpponents != null && Cache.AlreadyConfrontedOpponents.Count > 0)
+            {
+                var nonDoublonsPlausibleOpponents = plausibleOpponents.Where(o => !Cache.AlreadyConfrontedOpponents.Contains(o.Id)).ToList();
+                if (nonDoublonsPlausibleOpponents.Count > 0)
+                    plausibleOpponents = nonDoublonsPlausibleOpponents;
+            }
             if (totalStepWeight < weight && plausibleOpponents != null && plausibleOpponents.Count > 0)
             {
                 var opponent = plausibleOpponents[Random.Range(0, plausibleOpponents.Count)];
@@ -358,6 +362,8 @@ public class StepsService
                 }
                 else
                     stepOpponents.Add(opponent.Clone());
+                Cache.AlreadyConfrontedOpponents ??= new List<int>();
+                Cache.AlreadyConfrontedOpponents.Add(opponent.Id);
                 totalStepWeight += opponent.Weight;
             }
             else
