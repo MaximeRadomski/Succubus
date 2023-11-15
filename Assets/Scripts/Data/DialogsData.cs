@@ -1540,7 +1540,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows her on a throne in the clouds ]",
+                    "[ shows ivy on a throne in the clouds ]",
                     "I'm not ashamed of that..."
                 },
             }
@@ -1550,7 +1550,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him killing his dad ]",
+                    "[ shows edam killing his dad ]",
                     "And what? All greeks stories have at least one patricide!!"
                 }
             }
@@ -1570,7 +1570,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him napping on Ivy's laps ]",
+                    "[ shows belias napping on Ivy's laps ]",
                     "..."
                 }
             }
@@ -1580,7 +1580,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows her riding a bike ]",
+                    "[ shows floppyredoux riding a bike ]",
                     "What is this weird broom!"
                 }
             }
@@ -1590,7 +1590,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him dying in battle ]",
+                    "[ shows vixid dying in battle ]",
                     "As it shall be."
                 }
             }
@@ -1600,7 +1600,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows her winning miss hell contest ]",
+                    "[ shows cereza winning miss hell contest ]",
                     "It'll happen for sure!"
                 }
             }
@@ -1610,7 +1610,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him drowning in a giant vodka glass ]",
+                    "[ shows tony drowning in a giant vodka glass ]",
                     "that's the dream..."
                 }
             }
@@ -1620,7 +1620,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him having legs ]",
+                    "[ shows melip having legs ]",
                     "Come on! That's private stuff!"
                 }
             }
@@ -1630,7 +1630,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him dying ]",
+                    "[ shows azrael dying ]",
                     "Hey! As the angel of death I really wonder how it feels!"
                 }
             }
@@ -1640,7 +1640,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him killing his brother ]",
+                    "[ shows uriel killing his brother ]",
                     "Only god can judge me..."
                 }
             }
@@ -1650,7 +1650,7 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "[ shows him as he is ]",
+                    "[ shows zaphkiel as he is ]",
                     "Ah! Perfection!"
                 }
             }
