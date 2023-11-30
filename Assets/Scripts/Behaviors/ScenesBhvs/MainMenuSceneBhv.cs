@@ -109,7 +109,16 @@ public class MainMenuSceneBhv : SceneBhv
             else
             {
                 if (!PlayerPrefsHelper.IsCinematicWatched((int)Realm.Hell))
-                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Realm.Hell, StringParam0 = Constants.CharSelScene});
+                {
+                    var nextScene = Constants.CharSelScene;
+                    var resources = PlayerPrefsHelper.GetTotalResources();
+                    var totalResources = 0;
+                    foreach (var resource in resources)
+                        totalResources += resource;
+                    if (PlayerPrefsHelper.GetBoughtTreeNodes() != "" || totalResources > 0)
+                        nextScene = Constants.TreeScene;
+                    NavigationService.LoadNextScene(Constants.LoreScene, new NavigationParameter() { IntParam0 = (int)Realm.Hell, StringParam0 = nextScene });
+                }
                 else
                     NavigationService.LoadNextScene(Constants.TreeScene);
             }

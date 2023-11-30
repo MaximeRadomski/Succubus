@@ -37,6 +37,16 @@ public static class NavigationService
         SceneManager.LoadScene(name);
     }
 
+    public static void LoadOverrideCurent(string name, NavigationParameter parameter = null)
+    {
+        SceneParameter = parameter;
+        if (name == SceneManager.GetActiveScene().name)
+            return;
+        Path.RemoveAt(Path.Count - 1);
+        Path.Add(name);
+        SceneManager.LoadScene(name);
+    }
+
     public static void OverBlendPreviousScene(string onRootPreviousScene = null)
     {
         var instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();

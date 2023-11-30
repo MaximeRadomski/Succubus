@@ -126,7 +126,7 @@ public class LoreSceneBhv : SceneBhv
             if (NavigationService.Path.Contains(Constants.StepsAscensionScene))
                 NavigationService.LoadBackUntil(NavigationService.SceneParameter?.StringParam0 ?? Constants.StepsAscensionScene);
             else
-                NavigationService.LoadNextScene(NavigationService.SceneParameter?.StringParam0 ?? Constants.CharSelScene);
+                NavigationService.LoadOverrideCurent(NavigationService.SceneParameter?.StringParam0 ?? Constants.CharSelScene);
             return true;
         }
     }

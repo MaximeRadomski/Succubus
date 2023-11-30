@@ -3652,9 +3652,9 @@ public class GameplayControler : MonoBehaviour
             _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Cache.HeightLimiter + Cache.LineBreakReach - 1, 0.0f);
     }
 
-    public void ResetPlayHeight()
+    public void ResetPlayHeight(bool destroyLimiter = true)
     {
-        if (_heightLimiter != null)
+        if (_heightLimiter != null && destroyLimiter)
             Destroy(_heightLimiter);
         Cache.HeightLimiter = 0;
         ClearLineSpace();

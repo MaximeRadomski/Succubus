@@ -29,9 +29,17 @@ public class SpecialDiabolusVult : Special
         {
             _gameplayControler.FillLine(y, AttackType.WasteRow, _character.Realm, emptyStart, emptyEnd);
         }
+        bool hasToMovePieceUp = false;
+        while (!_gameplayControler.IsPiecePosValid(_gameplayControler.CurrentPiece))
+        {
+            _gameplayControler.CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+            hasToMovePieceUp = true;
+        }
+        if (hasToMovePieceUp)
+            _gameplayControler.ResetLock();
         _gameplayControler.ClearLineSpace();
         _gameplayControler.DropGhost();
-        return true;
+        return true; 
     }
 
     public override void OnPerfectClear()

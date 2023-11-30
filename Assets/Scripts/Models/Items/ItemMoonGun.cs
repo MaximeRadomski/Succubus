@@ -23,7 +23,7 @@ public class ItemMoonGun : Item
             _gameplayControler.DeleteLine(y);
         }
         _gameplayControler.CheckForLineBreaks();
-        _gameplayControler.ResetPlayHeight();
+        _gameplayControler.ResetPlayHeight(destroyLimiter: false);
         _gameplayControler.ShrinkPlayHeight(10);
         Cache.HeightLimiterResetPieces = 40;
         base.Effect();
