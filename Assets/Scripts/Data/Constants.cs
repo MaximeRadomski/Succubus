@@ -12,7 +12,7 @@ public static class Constants
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
-    public const int DamageDebug = 0;
+    public const int DamageDebug = 10000;
     public const string TattoosStringDebug = "";
     //"HammerL01B09;FireStoneL01B07;ThermalGogglesL01B04;HedgehogL01B02;FoxL01B06;InsulatingFoamL01B05;EclipseGlassesL01B01;"
 

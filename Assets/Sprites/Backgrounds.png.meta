@@ -32,6 +32,12 @@ TextureImporter:
   - first:
       213: -5300894599359966224
     second: Backgrounds_9
+  - first:
+      213: 2775760495258707734
+    second: Backgrounds_10
+  - first:
+      213: 8527608349288026843
+    second: Backgrounds_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -63,8 +69,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -338,6 +344,48 @@ TextureImporter:
       bones: []
       spriteID: 0f3dc5d72707f66b0800000000000000
       internalID: -5300894599359966224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_10
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 286
+        width: 130
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 617257db67b758620800000000000000
+      internalID: 2775760495258707734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_11
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 190
+        width: 51
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd2d7facc96285670800000000000000
+      internalID: 8527608349288026843
       vertices: []
       indices: 
       edges: []

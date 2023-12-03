@@ -195,14 +195,14 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void CleanPlayerPrefs()
+    public void CleanPlayerPrefs(bool canResetPlayfield = true)
     {
         Bag = null;
         Cache.CurrentBossId = 0;
         Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss)
+        if (canResetPlayfield && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
             PlayerPrefsHelper.ResetLastFightPlayField();
         else
             SaveLastFightPlayField();

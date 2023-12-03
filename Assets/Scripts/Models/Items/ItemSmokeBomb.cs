@@ -26,7 +26,7 @@ public class ItemSmokeBomb : Item
         Cache.RestartCurrentItemCooldown(_character, this);
         run.CurrentItemCooldown = Cache.CurrentItemCooldown;
         PlayerPrefsHelper.SaveRun(run);
-        _gameplayControler.CleanPlayerPrefs();
+        _gameplayControler.CleanPlayerPrefs(canResetPlayfield: false);
         NavigationService.LoadBackUntil(Constants.StepsScene);
         base.Effect();
     }
