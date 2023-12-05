@@ -3393,8 +3393,8 @@ public class GameplayControler : MonoBehaviour
     {
         _soundControler.PlaySound(_idGarbageRows);
         Cache.LineBreakReach += nbLineBreak;
-        if (Cache.LineBreakReach > 15)
-            Cache.LineBreakReach = 15;
+        if (Cache.LineBreakReach > Constants.heightLimiterMaxHeight - Cache.HeightLimiter)
+            Cache.LineBreakReach = Constants.heightLimiterMaxHeight - Cache.HeightLimiter;
         if (_lineBreakLimiter == null && (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) == null)
         {
             _lineBreakLimiter = this.Instantiator.NewLineBreakLimiter(opponentRealm);
@@ -3405,7 +3405,7 @@ public class GameplayControler : MonoBehaviour
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * (nbLineBreak / 2));
     }
 
-    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbPieces, int nbEmptyRowsOnMiss)
+    private void AttackRhythmMania(GameObject opponentInstance, Realm opponentRealm, int nbMoves, int nbEmptyRowsOnMiss)
     {
         var color = (Color)Constants.GetColorFromRealm(opponentRealm, 3);
         if (_rhythmIndicatorBhv == null && (_rhythmIndicatorBhv = GameObject.Find(Constants.GoRhythmIndicator)?.GetComponent<RhythmIndicatorBhv>()) == null)
@@ -3417,7 +3417,7 @@ public class GameplayControler : MonoBehaviour
         var beat = Constants.MusicBeat;
         StartCoroutine(Helper.ExecuteAfterDelay(_musicControler.GetDelayForNextBeat(beat), () =>
         {
-            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbPieces, beat, color, nbEmptyRowsOnMiss, opponentRealm);
+            _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbMoves, beat, color, nbEmptyRowsOnMiss, opponentRealm);
         }));
         var newGravity = GravityLevel / 2;
         SetGravity(newGravity < 2 ? 2 : newGravity);

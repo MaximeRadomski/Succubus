@@ -7,7 +7,7 @@ public class TattooAceofClubs : Tattoo
     {
         Id = 83;
         Name = TattoosData.Tattoos[Id];
-        Stat = 10;
+        Stat = 20;
         Rarity = Rarity.Common;
         MaxLevel = 5;
     }

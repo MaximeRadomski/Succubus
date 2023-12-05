@@ -214,11 +214,11 @@ public class Instantiator : MonoBehaviour
     }
 
     public GameObject NewPopupYesNo(string title, string content, string negative, string positive,
-        Action<bool> resultAction, Sprite sprite = null, bool defaultPositive = false)
+        Action<bool> resultAction, Sprite sprite = null, bool defaultPositive = false, bool big = false)
     {
         if (!_hasInit)
             Init();
-        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupYesNo");
+        var tmpPopupObject = Resources.Load<GameObject>($"Prefabs/PopupYesNo{(big ? "Big" : string.Empty)}");
         var tmpPopupInstance = Instantiate(tmpPopupObject, new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f), tmpPopupObject.transform.rotation);
         Cache.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().Init(title, content, negative, positive, resultAction, sprite, defaultPositive);
@@ -521,5 +521,15 @@ public class Instantiator : MonoBehaviour
         Cache.IncreaseInputLayer(tmpShopInstance.name);
         tmpShopInstance.GetComponent<LurkerShopBhv>().Init(this, resumeAction, character);
         return tmpShopInstance;
+    }
+
+    public GameObject NewClickMe(Vector3 position, Transform parent)
+    {
+        var tmpClickMeObject = Resources.Load<GameObject>("Prefabs/ClickMe");
+        var tmpClickMeInstance = Instantiate(tmpClickMeObject, position, tmpClickMeObject.transform.rotation);
+        tmpClickMeInstance.name = Constants.GoClickMe;
+        tmpClickMeInstance.transform.SetParent(parent.transform);
+        tmpClickMeInstance.GetComponent<BounceBhv>().Init();
+        return tmpClickMeInstance;
     }
 }

@@ -8,11 +8,11 @@ public static class Constants
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
     public const bool OpponentsDebug = false;
-    public const bool TattoosDebug = false;
+    public const bool TattoosDebug = true;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
-    public const int DamageDebug = 10000;
+    public const int DamageDebug = 0;
     public const string TattoosStringDebug = "";
     //"HammerL01B09;FireStoneL01B07;ThermalGogglesL01B04;HedgehogL01B02;FoxL01B06;InsulatingFoamL01B05;EclipseGlassesL01B01;"
 
@@ -65,6 +65,7 @@ public static class Constants
     public const int GatlingPiecesMax = 6;
     public const int WhacAMoleMax = 3;
     public const int ArcadeDamage = 10;
+    public const int heightLimiterMaxHeight = 15;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -196,6 +197,7 @@ public static class Constants
     public const bool PpHasDoneTradingDefault = false;
     public const string PpBoostButtonPrice = "BoostButtonPrice";
     public const int PpBoostButtonPriceDefault = 1;
+    public const string PpHasClickedOnAttackDetails = "HasClickedOnAttackDetails";
 
     public static string GetDefaultKeyBinding()
     {
@@ -265,7 +267,8 @@ public static class Constants
     public const string GoFilledTarget = "Filled-Target";
     public const string GoBasketballHoop = "BasketballHoop";
     public const string GoLineBreakLimiter = "LineBreakLimiter";
-    public const string GoRhythmIndicator = "RhythmIndicator"; 
+    public const string GoRhythmIndicator = "RhythmIndicator";
+    public const string GoClickMe = "ClickMe";
 
     //  GAMEOBJECT VALUES  //
     public const float KeyboardHeight = 14.000f + 1.0f;

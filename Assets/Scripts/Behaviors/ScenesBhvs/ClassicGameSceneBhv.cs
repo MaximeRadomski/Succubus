@@ -465,6 +465,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
                         {
                             _soundControler.PlaySound(_idTattooSound);
                             PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+                            ((Tattoo)loot).ApplyToCharacter(Character);
                             Helper.ReinitKeyboardInputs(this);
                             Instantiator.NewPopupYesNo("New Tattoo", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Tattoo)loot).Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} has been inked \non your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{bodyPart.GetDescription().ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}.", null, "Ouch!", LoadBackAfterVictory, sprite);
                         }
@@ -476,9 +477,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 {
                     _soundControler.PlaySound(_idTattooSound);
                     PlayerPrefsHelper.AddTattoo(((Tattoo)loot).Name);
+                    ((Tattoo)loot).ApplyToCharacter(Character);
                     Instantiator.NewPopupYesNo("Tattoo Upgrade", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}your {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}{((Tattoo)loot).Name.ToLower()}{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)} power has been increased.", null, "Noice", LoadBackAfterVictory, sprite);
                 }
-                ((Tattoo)loot).ApplyToCharacter(Character);
                 PlayerPrefsHelper.SaveRunCharacter(Character);
             }
         }

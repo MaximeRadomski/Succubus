@@ -18,6 +18,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
     private float _beatTime;
     private int _remainingMoves;
     private int _nbEmptyRowsOnMiss;
+    private int _nbErrors;
 
     private bool _isTilting;
     private int _idTilt;
@@ -37,6 +38,7 @@ public class RhythmIndicatorBhv : FrameRateBehavior
         _opponentInstance = opponentInstance;
         _characterInstance = characterInstance;
         _nbEmptyRowsOnMiss = nbEmptyRowsOnMiss;
+        _nbErrors = 0;
         _realm = realm;
         _delay = beat / 1000.0f;
         if (_remainingMoves < 0)
@@ -143,8 +145,10 @@ public class RhythmIndicatorBhv : FrameRateBehavior
                 _opponentInstance = GameObject.Find(Constants.GoSceneBhvName).GetComponent<ClassicGameSceneBhv>().OpponentInstanceBhv;
             if (!_hasMadeErrorInBeat && _nbEmptyRowsOnMiss > 0)
             {
+                ++_nbErrors;
                 _hasMadeErrorInBeat = true;
-                _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);
+                if (_nbErrors <= 3)
+                    _gameplayControler.AttackEmptyRows(_opponentInstance.gameObject, _nbEmptyRowsOnMiss, _realm);
             }
             _gameplayControler.DropGhost();
         }

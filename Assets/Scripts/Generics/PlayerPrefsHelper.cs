@@ -1200,4 +1200,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var boostButtonPrice = PlayerPrefs.GetInt(Constants.PpBoostButtonPrice, Constants.PpBoostButtonPriceDefault);
         return boostButtonPrice;
     }
+
+    public static void SaveHasClickedOnAttackDetails(bool hasClickedOn)
+    {
+        PlayerPrefs.SetInt(Constants.PpHasClickedOnAttackDetails, hasClickedOn ? 1 : 0);
+    }
+
+    public static bool GetHasClickedOnAttackDetails()
+    {
+        var hasClickedOn = PlayerPrefs.GetInt(Constants.PpHasClickedOnAttackDetails, Constants.PpSerializeDefaultInt);
+        return hasClickedOn == 1 ? true : false;
+    }
 }

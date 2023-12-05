@@ -130,7 +130,10 @@ public class Character : Loot
 
     public string GetAttackDetails()
     {
-        return $"{GetFlatDamage()} + {DamagePercentBonus}%";
+        var percentBonus = "";
+        if (DamagePercentBonus != 0)
+            percentBonus = $" + {DamagePercentBonus}%";
+        return $"{GetFlatDamage()}{percentBonus}";
     }
 
     public int GetCriticalChancePercent()

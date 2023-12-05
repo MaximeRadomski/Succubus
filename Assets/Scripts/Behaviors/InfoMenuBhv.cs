@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class InfoMenuBhv : PopupBhv
 {
@@ -17,6 +18,7 @@ public class InfoMenuBhv : PopupBhv
     private Run _run;
     private Realm _currentRealm;
     private SceneBhv _currentScene;
+    private string _attackDetails;
 
     private Character _character;
     private Opponent _opponent;
@@ -77,8 +79,12 @@ public class InfoMenuBhv : PopupBhv
     private void InitCharacterFrame(Character character)
     {
         _characterFrame.transform.Find("CharacterName").GetComponent<TMPro.TextMeshPro>().text = character.Name + " - " + character.Kind;
-        _characterFrame.transform.Find("CharacterAttack").GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.GetAttackNoBoost();
-        _characterFrame.transform.Find("CharacterAttack").GetComponent<ButtonBhv>().EndActionDelegate = CharacterAttack;
+        GetAttackDetailsString();
+        var characterAttack = _characterFrame.transform.Find("CharacterAttack");
+        characterAttack.GetComponent<TMPro.TextMeshPro>().text = "attack: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.GetAttackNoBoost();        
+        characterAttack.GetComponent<ButtonBhv>().EndActionDelegate = CharacterAttack;
+        if (_attackDetails.CountChar('\n') > 3 && !PlayerPrefsHelper.GetHasClickedOnAttackDetails())
+            _instantiator.NewClickMe(characterAttack.position, _characterFrame.transform);
         _characterFrame.transform.Find("CharacterCooldown").GetComponent<TMPro.TextMeshPro>().text = "cooldown: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.Cooldown;
         _characterFrame.transform.Find("CharacterSpecial").GetComponent<TMPro.TextMeshPro>().text = "special: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.SpecialName.ToLower() + ":\n" + character.SpecialDescription;
         _characterFrame.transform.Find("CharacterRealm").GetComponent<TMPro.TextMeshPro>().text = "realm: " + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) + character.Realm.ToString().ToLower() + ":\n" + character.Realm.GetDescription().ToLower();
@@ -145,12 +151,54 @@ public class InfoMenuBhv : PopupBhv
         _instantiator.NewPopupYesNo("Lore", _character.Lore.ToLower(), null, "Ok", null);
     }
 
+    private void GetAttackDetailsString()
+    {
+        _attackDetails = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}attack: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetAttackDetails()}.";
+        _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit chance: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetCriticalChancePercent()}%.";
+        _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit damage: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.CritMultiplier}%.";
+        _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}against {Helper.GetInferiorFrom(_character.Realm).ToString().ToLower()}: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.DamagePercentToInferiorRealm}%.";
+        if (_character.QuadrupleLinesDamageOverride != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}fixed quadruple: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.QuadrupleLinesDamageOverride}.";
+        if (_character.SingleLinesDamageOverride != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}fixed single: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.SingleLinesDamageOverride}.";
+        if (_character.SingleLineDamageBonus != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}single bonus: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.SingleLineDamageBonus}.";
+        if (_character.DamageBigLinesBonus != 0 || _character.DamageBigLinesMalus != 0 || _character.DamageSmallLinesBonus != 0 || _character.DamageSmallLinesMalus != 0)
+        {
+            var bigLines = _character.DamageBigLinesBonus - _character.DamageBigLinesMalus;
+            var smallLines = _character.DamageSmallLinesBonus - _character.DamageSmallLinesMalus;
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}big lines: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{(bigLines > 0 ? "+" : "")}{bigLines}%.";
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}smal lines: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{(smallLines > 0 ? "+" : "")}{smallLines}%.";
+        }
+        if (_character.DamoclesDamage != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}damocles: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.DamoclesDamage}.";
+        if (_character.FireDamagePercent != 0)
+        {
+            var burnDamage = Mathf.RoundToInt(_character.GetAttack() * Helper.MultiplierFromPercent(0.0f, _character.FireDamagePercent));
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}fire ticks: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{burnDamage}.";
+        }
+        if (_character.WaterDamagePercent != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}water boost: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.WaterDamagePercent}%.";
+        if (_character.GatlingPercentDamage != 0)
+        {
+            var gatlingDamage = Mathf.RoundToInt(_character.GetAttack() * Helper.MultiplierFromPercent(0.0f, _character.GatlingPercentDamage));
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}gatling: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{gatlingDamage}.";
+        }
+        if (_character.SlavWheelDamagePercentBonus != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}slav wheel: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.SlavWheelDamagePercentBonus}%.";
+        if (_character.TwistBoostedDamage != 0)
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}after twist: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.TwistBoostedDamage}.";
+    }
+
     private void CharacterAttack()
     {
-        var details = $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}attack: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetAttackDetails()}.";
-        details += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit chance: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{_character.GetCriticalChancePercent()}%.";
-        details += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}crit damage: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.CritMultiplier}%.";
-        _instantiator.NewPopupYesNo("Attack Details", details, null, "Ok", null);
+        var clickMe = GameObject.Find(Constants.GoClickMe);
+        if (clickMe != null)
+        {
+            PlayerPrefsHelper.SaveHasClickedOnAttackDetails(true);
+            Destroy(clickMe.gameObject);
+        }
+        _instantiator.NewPopupYesNo("Attack Details", _attackDetails, null, "Ok", null, big: _attackDetails.CountChar('\n') > 5 ? true : false);
     }
 
     private void InitOpponentFrame(Opponent opponent)
