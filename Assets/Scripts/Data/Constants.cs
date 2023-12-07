@@ -65,7 +65,7 @@ public static class Constants
     public const int GatlingPiecesMax = 6;
     public const int WhacAMoleMax = 3;
     public const int ArcadeDamage = 10;
-    public const int heightLimiterMaxHeight = 15;
+    public const int LineBreakReachMaxHeight = 15;
 
     //  TAGS  //
     public const string TagMusic = "Music";

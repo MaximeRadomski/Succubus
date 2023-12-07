@@ -59,6 +59,7 @@ public class Character : Loot
     public int EarthStun = 0;
     public int WaterDamagePercent = 0;
     public int WindTripleBonus = 0;
+    public int BrobotStun = 0;
     public int QuadDamage = 0;
     public int DoubleEdgeGravity = 0;
     public int DamoclesDamage = 0;
@@ -96,6 +97,7 @@ public class Character : Loot
     public int InstantLineClear = 0;
     public int HolyMantle = 0;
     public int HeldBoosted = 0;
+    public int TwistDamage = 0;
     public int TwistBoostedDamage = 0;
     public int Ying = 0;
     public int Yang = 0;

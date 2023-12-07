@@ -1104,7 +1104,13 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.transform.position = _lastCurrentPieceValidPosition;
             isTwist = nbLocked == 3;
             if (isTwist)
+            {
                 _soundControler.PlaySound(_idTwist);
+                if (Character.TwistDamage > 0)
+                {
+                    SceneBhv.DamageOpponent(Mathf.RoundToInt(Character.GetAttack() * Helper.MultiplierFromPercent(0.0f, this.Character.TwistDamage)), CurrentPiece, CharacterRealm);
+                }
+            }
         }
         _lastLockTwist = isTwist;
         if (CurrentPiece != null)
@@ -3393,8 +3399,8 @@ public class GameplayControler : MonoBehaviour
     {
         _soundControler.PlaySound(_idGarbageRows);
         Cache.LineBreakReach += nbLineBreak;
-        if (Cache.LineBreakReach > Constants.heightLimiterMaxHeight - Cache.HeightLimiter)
-            Cache.LineBreakReach = Constants.heightLimiterMaxHeight - Cache.HeightLimiter;
+        if (Cache.LineBreakReach > Constants.LineBreakReachMaxHeight - Cache.HeightLimiter)
+            Cache.LineBreakReach = Constants.LineBreakReachMaxHeight - Cache.HeightLimiter;
         if (_lineBreakLimiter == null && (_lineBreakLimiter = GameObject.Find(Constants.GoLineBreakLimiter)) == null)
         {
             _lineBreakLimiter = this.Instantiator.NewLineBreakLimiter(opponentRealm);
@@ -3649,7 +3655,11 @@ public class GameplayControler : MonoBehaviour
         Cache.HeightLimiter += heightToReduce;
         ClearLineSpace();
         if (_lineBreakLimiter != null)
+        {
+            if (Cache.LineBreakReach > Constants.LineBreakReachMaxHeight - Cache.HeightLimiter)
+                Cache.LineBreakReach = Constants.LineBreakReachMaxHeight - Cache.HeightLimiter;
             _lineBreakLimiter.transform.position = new Vector3(_lineBreakLimiter.transform.position.x, Cache.HeightLimiter + Cache.LineBreakReach - 1, 0.0f);
+        }
     }
 
     public void ResetPlayHeight(bool destroyLimiter = true)

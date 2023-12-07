@@ -105,6 +105,7 @@ public static class Cache
         CurrentListOpponentsId = 0;
         CurrentOpponentHp = 0;
         CurrentOpponentCooldown = 0;
+        ComboCounter = 0;
         CumulativeCrit = 0;
         TripleLineDamageBonus = 0;
         BonusDamage = 0;

@@ -184,6 +184,11 @@ public class InfoMenuBhv : PopupBhv
             var gatlingDamage = Mathf.RoundToInt(_character.GetAttack() * Helper.MultiplierFromPercent(0.0f, _character.GatlingPercentDamage));
             _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}gatling: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{gatlingDamage}.";
         }
+        if (_character.TwistDamage != 0)
+        {
+            var twistDamage = Mathf.RoundToInt(_character.GetAttack() * Helper.MultiplierFromPercent(0.0f, _character.TwistDamage));
+            _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}twists: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}{twistDamage}.";
+        }
         if (_character.SlavWheelDamagePercentBonus != 0)
             _attackDetails += $"\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43)}slav wheel: {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}+{_character.SlavWheelDamagePercentBonus}%.";
         if (_character.TwistBoostedDamage != 0)

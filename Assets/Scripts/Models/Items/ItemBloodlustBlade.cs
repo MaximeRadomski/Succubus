@@ -18,7 +18,7 @@ public class ItemBloodlustBlade : Item
     protected override void Effect()
     {
         _gameplayControler.SceneBhv.DamageOpponent(_times * _character.GetAttack(), _gameplayControler.CharacterInstanceBhv.gameObject, textRealm: Realm.Hell);
-        _gameplayControler.ShrinkPlayHeight(2);
+        _gameplayControler.ShrinkPlayHeight(1);
         base.Effect();
     }
 }
