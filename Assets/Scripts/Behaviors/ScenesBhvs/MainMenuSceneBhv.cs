@@ -57,7 +57,7 @@ public class MainMenuSceneBhv : SceneBhv
                 buttonAscension.transform.GetChild(1).localPosition = new Vector3(-0.072f, 0, 0);
             }
         }
-        _menuClickCount = 0;
+        _menuClickCount = 650;
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = MenuClick;
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;
@@ -209,6 +209,9 @@ public class MainMenuSceneBhv : SceneBhv
         else if (_menuClickCount > 666 && _menuClickCount < 670)
             Instantiator.NewPopupYesNo("Stop.", "you can stop now.", null, "Ok", null);
         else if (_menuClickCount == 670)
+        {
             Instantiator.NewPopupYesNo("You...", "you're a bit dense aren't you?", null, "Ok", null);
+            GameObject.Find("Title").GetComponent<ButtonBhv>().DisableButton();
+        }
     }
 }

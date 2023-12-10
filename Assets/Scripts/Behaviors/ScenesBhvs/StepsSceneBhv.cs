@@ -66,7 +66,7 @@ public class StepsSceneBhv : SceneBhv
 
             _lootCenterLocalY = GameObject.Find("LootCenter").transform.localPosition.y;
             GameObject.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _run.CurrentRealm + " - lvl " + _run.RealmLevel;
-            GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.MaxSteps - _run.CurrentStep);
+            GameObject.Find("RemainingSteps").GetComponent<TMPro.TextMeshPro>().text = "Remaining Steps : " + (_run.getMaxSteps(_character) - _run.CurrentStep);
             _lootTypeRarity = GameObject.Find("LootTypeRarity").GetComponent<TMPro.TextMeshPro>();
             _opponents = GameObject.Find("Opponents").GetComponent<TMPro.TextMeshPro>();
             _opponentType = GameObject.Find("OpponentType").GetComponent<SpriteRenderer>();
@@ -105,7 +105,7 @@ public class StepsSceneBhv : SceneBhv
                 _stepsService.GenerateOriginSteps(_run, _character);
                 PlayerPrefsHelper.SaveRun(_run);
             }
-            else if (_run.CurrentStep >= _run.MaxSteps)
+            else if (_run.CurrentStep >= _run.getMaxSteps(_character))
                 _stepsService.SetVisionOnAllSteps(_run);
             UpdateAllStepsVisuals();
             FocusOnSelected(_run.X, _run.Y);

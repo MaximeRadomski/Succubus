@@ -1472,6 +1472,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &944535801

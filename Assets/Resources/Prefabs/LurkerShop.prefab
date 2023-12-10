@@ -516,6 +516,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &8135851739668194359
@@ -1092,6 +1093,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &6723255055201775849
@@ -1412,6 +1414,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &4005175771764324163
@@ -2237,6 +2240,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &4959160761561029802
@@ -3041,6 +3045,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &8153417300110804487
@@ -3601,6 +3606,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &3791440998004037461
@@ -3878,6 +3884,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &2329319544017118068
@@ -5041,6 +5048,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &866163539854299667
@@ -6601,6 +6609,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &6790232298116391987
@@ -6745,6 +6754,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &3414708183846309471
@@ -6984,6 +6994,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &7944605757690202179
@@ -7510,6 +7521,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &7082253417337453909
@@ -7737,6 +7749,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &9180842203758481015
@@ -7964,6 +7977,7 @@ MonoBehaviour:
   ColorDisabled: 1
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &6847215982236268375
@@ -8122,6 +8136,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &499288497479066448
@@ -8634,6 +8649,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &4545770489781069398
@@ -8804,6 +8820,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &5110093060254115097
@@ -9051,6 +9068,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &8730010505790822118
@@ -9415,7 +9433,7 @@ Transform:
   m_GameObject: {fileID: 4906727734414401780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.764, z: 0}
-  m_LocalScale: {x: 2.74, y: 1, z: 1}
+  m_LocalScale: {x: 2.4998944, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 657362447252970162}
   m_RootOrder: 5
@@ -9846,6 +9864,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &6910447549078758750
@@ -10165,7 +10184,7 @@ Transform:
   m_GameObject: {fileID: 5109966085269741688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.954, z: 0}
-  m_LocalScale: {x: 2.74, y: 1, z: 1}
+  m_LocalScale: {x: 2.499894, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 657362447252970162}
   m_RootOrder: 6
@@ -10433,6 +10452,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &1659069785845794397
@@ -10578,6 +10598,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &324486980094278251
@@ -11222,6 +11243,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &3200194345432209833
@@ -11677,6 +11699,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &8000038126426272377
@@ -12320,6 +12343,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &2510720507747634313
@@ -13176,6 +13200,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &7633050506052133798
@@ -13606,6 +13631,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!114 &5346895042690447641
@@ -13656,7 +13682,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -10.46}
-  m_SizeDelta: {x: 16.52, y: 1}
+  m_SizeDelta: {x: 16.52, y: 4.9239}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4780638289790606290
 MeshRenderer:
@@ -13719,8 +13745,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'the one and only: "big random red button of luck but not always and the
-    price goes up everytime you click on it so yeah..."'
+  m_text: 'the big button:  1/3 chance of nothing happening.
+
+    if something happens,
+
+    the
+    price goes up.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2871060d13c0dfb4d93127d5bf2103cf, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3499f323bf547964481c0aa55da7ce42, type: 2}
@@ -14298,6 +14328,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &5795572740121531438
@@ -14571,6 +14602,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &3537837088514349853
@@ -15084,6 +15116,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &1505796933427029935
@@ -15228,6 +15261,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &1480344606171608534
@@ -16238,8 +16272,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8111861080417945575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.5, y: -0.55099, z: 1}
+  m_LocalPosition: {x: 0, y: -0.095039, z: 0}
+  m_LocalScale: {x: 4.5, y: -0.33622494, z: 1}
   m_Children: []
   m_Father: {fileID: 657362447252970162}
   m_RootOrder: 7
@@ -16601,6 +16635,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &7532966320841972083
@@ -16878,6 +16913,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &3617093919312244212
@@ -17105,6 +17141,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &5623923262802767491
@@ -17900,6 +17937,7 @@ MonoBehaviour:
   ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!61 &4568826011302542141
@@ -17937,7 +17975,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -18176,7 +18214,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -18417,7 +18455,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -18656,7 +18694,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -18897,7 +18935,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -19138,7 +19176,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -19542,7 +19580,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -19783,7 +19821,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 655913355079711385, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_SortingLayer
@@ -20140,6 +20178,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c27a870e3f72e124a90ae7b61759c776, type: 2}
+    - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5465184894842975844, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
       propertyPath: m_padding
       value: 6.6535997

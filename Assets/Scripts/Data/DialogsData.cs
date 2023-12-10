@@ -1495,7 +1495,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "He forgives you, and therefore asks you to leave.",
-                    "Like a slave like me could be forgiven..."
+                    "As if a slave like me could be forgiven..."
                 },
             }
         },

@@ -78,6 +78,9 @@ public class LurkerShopBhv : PopupBhv
         GameObject.Find(_buttonNames[3]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowRandomBoost(); };
         GameObject.Find(_buttonNames[4]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowHaircut(); };
         GameObject.Find(_buttonNames[5]).GetComponent<ButtonBhv>().EndActionDelegate = () => { UnselectAllButtons(); ShowCleanPlayfield(); };
+        if (_character.RaccoonWaste)
+            GameObject.Find(_buttonNames[5]).GetComponent<ButtonBhv>().DisableButton();
+            //GameObject.Find(_buttonNames[5]).transform.position += new Vector3(50.0f, 50.0f, 0.0f);
 
         GameObject.Find("ButtonTradeUpLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(1); };
         GameObject.Find("ButtonTradeDownLeft").GetComponent<ButtonBhv>().EndActionDelegate = () => { AlterLeftAmount(-1); };
@@ -400,14 +403,14 @@ public class LurkerShopBhv : PopupBhv
             return;
         }
         SpendResources(price);
-        PlayerPrefsHelper.SaveBoostButtonPrice(++price);
-        UpdateRandomBoostPrice();
         var nothingId = UnityEngine.Random.Range(0, 3);
         if (nothingId == 0)
         {
             this._instantiator.NewPopupYesNo("Oops!", "nothing! nada! try again!", null, "Damn!", null);
             return;
         }
+        PlayerPrefsHelper.SaveBoostButtonPrice(++price);
+        UpdateRandomBoostPrice();
         var randId = UnityEngine.Random.Range(0, 3);
         switch (randId)
         {

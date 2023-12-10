@@ -49,10 +49,18 @@ public class Instantiator : MonoBehaviour
     }
     public void NewBackgroundLine(Vector3 position, Action afterAnimation)
     {
-        var tmpBackgroundPieceObject = Resources.Load<GameObject>("Prefabs/BackgroundLine");
-        var tmpBackgroundPieceInstance = Instantiate(tmpBackgroundPieceObject, position, tmpBackgroundPieceObject.transform.rotation);
-        DontDestroyOnLoad(tmpBackgroundPieceInstance);
-        tmpBackgroundPieceInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
+        var tmpBackgroundLineObject = Resources.Load<GameObject>("Prefabs/BackgroundLine");
+        var tmpBackgroundLineInstance = Instantiate(tmpBackgroundLineObject, position, tmpBackgroundLineObject.transform.rotation);
+        DontDestroyOnLoad(tmpBackgroundLineInstance);
+        tmpBackgroundLineInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
+    }
+
+    public void NewBackgroundCross(Vector3 position, Action afterAnimation)
+    {
+        var tmpBackgroundCrossObject = Resources.Load<GameObject>("Prefabs/BackgroundCross");
+        var tmpBackgroundCrossInstance = Instantiate(tmpBackgroundCrossObject, position, tmpBackgroundCrossObject.transform.rotation);
+        DontDestroyOnLoad(tmpBackgroundCrossInstance);
+        tmpBackgroundCrossInstance.GetComponent<FramesAnimationBhv>().Init(afterAnimation);
     }
 
     public GameObject NewRotationPoint(GameObject piece)

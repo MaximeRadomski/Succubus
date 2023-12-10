@@ -202,7 +202,9 @@ public class GameplayControler : MonoBehaviour
         Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (canResetPlayfield && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
+        if (canResetPlayfield
+            && Character.RaccoonWaste == false
+            && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
             PlayerPrefsHelper.ResetLastFightPlayField();
         else
             SaveLastFightPlayField();

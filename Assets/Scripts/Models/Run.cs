@@ -83,15 +83,21 @@ public class Run
             MaxSteps = 2;
         else if (Difficulty >= Difficulty.Divine)
             MaxSteps = 1;
-        var realmTree = PlayerPrefsHelper.GetRealmTree();
-        if (character != null)
-            MaxSteps += Mathf.RoundToInt(realmTree.Shadowing * Helper.MultiplierFromPercent(1.0f, character.RealmTreeBoost));
-        else
-            MaxSteps += realmTree.Shadowing;
         CurrentStep = 0;
         X = 50;
         Y = 50;
         Steps = null;
+    }
+
+    public int getMaxSteps(Character character)
+    {
+        var realmTree = PlayerPrefsHelper.GetRealmTree();
+        if (character != null)
+        {
+            var toAddRemove = Mathf.RoundToInt(realmTree.Shadowing * Helper.MultiplierFromPercent(1.0f, character.RealmTreeBoost));
+            return MaxSteps + toAddRemove;
+        }            
+        return MaxSteps + realmTree.Shadowing;
     }
 
     public List<int> GetRunResources()

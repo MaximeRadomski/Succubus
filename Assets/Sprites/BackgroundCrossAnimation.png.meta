@@ -1,0 +1,972 @@
+fileFormatVersion: 2
+guid: 3b9013232b5a88d448799abbaf7cf02b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6596237760615277316
+    second: BackgroundCrossAnimation_0
+  - first:
+      213: -7752055718433122944
+    second: BackgroundCrossAnimation_1
+  - first:
+      213: 8024329298319682603
+    second: BackgroundCrossAnimation_2
+  - first:
+      213: -552130958313596968
+    second: BackgroundCrossAnimation_3
+  - first:
+      213: -4526357786492125570
+    second: BackgroundCrossAnimation_4
+  - first:
+      213: 1700226348799241915
+    second: BackgroundCrossAnimation_5
+  - first:
+      213: 7246263046815329611
+    second: BackgroundCrossAnimation_6
+  - first:
+      213: 9083241012188589186
+    second: BackgroundCrossAnimation_7
+  - first:
+      213: -6224880782028510351
+    second: BackgroundCrossAnimation_8
+  - first:
+      213: 2033817750880777990
+    second: BackgroundCrossAnimation_9
+  - first:
+      213: 5367451987930739011
+    second: BackgroundCrossAnimation_10
+  - first:
+      213: 189792076485988817
+    second: BackgroundCrossAnimation_11
+  - first:
+      213: -7722400729587643174
+    second: BackgroundCrossAnimation_12
+  - first:
+      213: 4581849369435844003
+    second: BackgroundCrossAnimation_13
+  - first:
+      213: -8806678075725019373
+    second: BackgroundCrossAnimation_14
+  - first:
+      213: -6032929728331158930
+    second: BackgroundCrossAnimation_15
+  - first:
+      213: -6278441040987106120
+    second: BackgroundCrossAnimation_16
+  - first:
+      213: 5855011587115029220
+    second: BackgroundCrossAnimation_17
+  - first:
+      213: -6562181053676318801
+    second: BackgroundCrossAnimation_18
+  - first:
+      213: 9219060766994648745
+    second: BackgroundCrossAnimation_19
+  - first:
+      213: -7232507173521340513
+    second: BackgroundCrossAnimation_20
+  - first:
+      213: 5680805717195000675
+    second: BackgroundCrossAnimation_21
+  - first:
+      213: -2811744158425841565
+    second: BackgroundCrossAnimation_22
+  - first:
+      213: 6651778098386744300
+    second: BackgroundCrossAnimation_23
+  - first:
+      213: 1239359388562572074
+    second: BackgroundCrossAnimation_24
+  - first:
+      213: 1475155049042061921
+    second: BackgroundCrossAnimation_25
+  - first:
+      213: -1197421268976162057
+    second: BackgroundCrossAnimation_26
+  - first:
+      213: -7511372473251750338
+    second: BackgroundCrossAnimation_27
+  - first:
+      213: -1951435799075408311
+    second: BackgroundCrossAnimation_28
+  - first:
+      213: 4338308940383711953
+    second: BackgroundCrossAnimation_29
+  - first:
+      213: -6680878357004817992
+    second: BackgroundCrossAnimation_30
+  - first:
+      213: 3476217409206636025
+    second: BackgroundCrossAnimation_31
+  - first:
+      213: -6985389380832051798
+    second: BackgroundCrossAnimation_32
+  - first:
+      213: -2934535144541262349
+    second: BackgroundCrossAnimation_33
+  - first:
+      213: -7361184209372255052
+    second: BackgroundCrossAnimation_34
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 7
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 403ed7f7b4b8a8b50800000000000000
+      internalID: 6596237760615277316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08512cf656a2b6490800000000000000
+      internalID: -7752055718433122944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_2
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2caa1b6bf42c5f60800000000000000
+      internalID: 8024329298319682603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_3
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7d83891df6658f0800000000000000
+      internalID: -552130958313596968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_4
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e30d923952f21c0800000000000000
+      internalID: -4526357786492125570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_5
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe20f52bda689710800000000000000
+      internalID: 1700226348799241915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_6
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4da77649d5ef8460800000000000000
+      internalID: 7246263046815329611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_7
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ca2c453972e0e70800000000000000
+      internalID: 9083241012188589186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_8
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17be80ad8e7cc99a0800000000000000
+      internalID: -6224880782028510351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_9
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 129
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 607f1230872993c10800000000000000
+      internalID: 2033817750880777990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 341739125250d7a40800000000000000
+      internalID: 5367451987930739011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_11
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d1912453e642a200800000000000000
+      internalID: 189792076485988817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_12
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adc06b3937584d490800000000000000
+      internalID: -7722400729587643174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_13
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ad229fc9bff59f30800000000000000
+      internalID: 4581849369435844003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_14
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 317803d23f468c580800000000000000
+      internalID: -8806678075725019373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_15
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a6deb306ab64ca0800000000000000
+      internalID: -6032929728331158930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_16
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b4dab8432f7ed8a0800000000000000
+      internalID: -6278441040987106120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_17
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e299cd640e214150800000000000000
+      internalID: 5855011587115029220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_18
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faf03df79137ee4a0800000000000000
+      internalID: -6562181053676318801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_19
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 86
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aec4734ceea0ff70800000000000000
+      internalID: 9219060766994648745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f97cbce8b09f0ab90800000000000000
+      internalID: -7232507173521340513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_21
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36b8a6b93b646de40800000000000000
+      internalID: 5680805717195000675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_22
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3608fbdc59daaf8d0800000000000000
+      internalID: -2811744158425841565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_23
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce3b01710fcdf4c50800000000000000
+      internalID: 6651778098386744300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_24
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2341582cc6133110800000000000000
+      internalID: 1239359388562572074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_25
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16aa6ce83bdc87410800000000000000
+      internalID: 1475155049042061921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_26
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7faad2833b7e16fe0800000000000000
+      internalID: -1197421268976162057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_27
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3e9e24588e32c790800000000000000
+      internalID: -7511372473251750338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_28
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946312ada7b1be4e0800000000000000
+      internalID: -1951435799075408311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_29
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 43
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2f875fef4c43c30800000000000000
+      internalID: 4338308940383711953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9e127f780c843a0800000000000000
+      internalID: -6680878357004817992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_31
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fd4acdd0510e3030800000000000000
+      internalID: 3476217409206636025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_32
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 0
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad38b94e59ee0f90800000000000000
+      internalID: -6985389380832051798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_33
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fde7b875df6647d0800000000000000
+      internalID: -2934535144541262349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgroundCrossAnimation_34
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 7
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bce62a76f1d7d990800000000000000
+      internalID: -7361184209372255052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

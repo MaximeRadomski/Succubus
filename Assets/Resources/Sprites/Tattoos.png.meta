@@ -317,6 +317,9 @@ TextureImporter:
   - first:
       213: -5046392070106209517
     second: Tattoos_96
+  - first:
+      213: 2604175414212294634
+    second: Tattoos_97
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -2442,7 +2445,7 @@ TextureImporter:
         width: 29
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2450,6 +2453,27 @@ TextureImporter:
       bones: []
       spriteID: 313a8ff262d97f9b0800000000000000
       internalID: -5046392070106209517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tattoos_97
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae7fde0edb3e32420800000000000000
+      internalID: 2604175414212294634
       vertices: []
       indices: 
       edges: []

@@ -20,7 +20,7 @@ public class TattooMap : Tattoo
         var run = PlayerPrefsHelper.GetRun();
         var stepsService = new StepsService();
         var originStep = stepsService.GetStepOnPos(50, 50, run.Steps);
-        stepsService.GenerateAdjacentSteps(run, character, originStep, run.MaxSteps - run.CurrentStep);
+        stepsService.GenerateAdjacentSteps(run, character, originStep, run.getMaxSteps(character) - run.CurrentStep);
         PlayerPrefsHelper.SaveRun(run);
     }
 

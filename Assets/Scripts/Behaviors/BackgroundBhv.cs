@@ -39,11 +39,13 @@ public class BackgroundBhv : FrameRateBehavior
         if (BackgroundParticles)
         {
             ++_i;
-            if (_i == 25)
+            if (_i == 20)
                 _instantiator.NewBackgroundLine(new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), null);
-            if (_i >= 50)
-            {
+            if (_i == 40)
                 _instantiator.NewBackgroundPiece(new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), null);
+            if (_i >= 60)
+            {
+                _instantiator.NewBackgroundCross(new Vector3(Random.Range(-10.0f, 10.0f) + _mainCamera.transform.position.x, Random.Range(-18.0f, 18.0f) + _mainCamera.transform.position.y, 0.0f), null);
                 _i = 0;
             }
         }
