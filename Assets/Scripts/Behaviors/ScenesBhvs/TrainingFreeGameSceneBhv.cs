@@ -120,7 +120,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         Cache.ResetClassicGameCache();
         Cache.CurrentItemCooldown = 0;
         NavigationService.ReloadScene();
-        _gameplayControler.CleanPlayerPrefs();
+        _gameplayControler.CleanPlayerPrefs(isGameOver: true);
     }
 
     public override void OnNewPiece(GameObject lastPiece)

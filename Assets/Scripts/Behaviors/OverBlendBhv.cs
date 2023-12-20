@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OverBlendBhv : FrameRateBehavior
 {
@@ -22,6 +24,7 @@ public class OverBlendBhv : FrameRateBehavior
     private float _halfSpriteSize;
     private bool _midActionDone;
     private Camera _mainCamera;
+    private bool _reverse;
 
     public void Init(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, bool> resultAction, bool reverse)
     {
@@ -30,13 +33,14 @@ public class OverBlendBhv : FrameRateBehavior
         _audioSource = GetComponent<AudioSource>();
         _overBlendType = overBlendType;
         _loadPercent = 0;
+        _reverse = reverse;
         _mainCamera = Helper.GetMainCamera();
-        if (reverse)
+        if (_reverse)
             _sourcePosition = new Vector3(-20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
         else
             _sourcePosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
-        _activePosition = new Vector3(0.0f, 0.0f, 0.0f);
-        _endPosition = new Vector3(-_sourcePosition.x, 0.0f, 0.0f);
+        _activePosition = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
+        _endPosition = new Vector3(-_sourcePosition.x, _mainCamera.transform.position.y, 0.0f);
         State = 0;
         _constantLoadingSpeed = constantLoadingSpeed;
         _resultAction = resultAction;
@@ -64,6 +68,7 @@ public class OverBlendBhv : FrameRateBehavior
 
     protected override void FrameUpdate()
     {
+        ActualizeMidEndPositions();
         if (State == 0)
         {
             transform.position = Vector3.Lerp(transform.position, _activePosition, 0.25f);
@@ -74,7 +79,7 @@ public class OverBlendBhv : FrameRateBehavior
                 _spriteRenderer.color = Constants.ColorPlain;
                 State = 1;
                 if (_overBlendType == OverBlendType.StartActionLoadingEnd)
-                    HasResulted = (bool)_resultAction?.Invoke(true);
+                    HasResulted = CallResultAction();
             }
         }
         else if (State == 1)
@@ -95,7 +100,7 @@ public class OverBlendBhv : FrameRateBehavior
         else if (State == 3)
         {
             if (_overBlendType == OverBlendType.StartLoadingEndAction)
-                HasResulted = (bool)_resultAction?.Invoke(true);
+                HasResulted = CallResultAction();
             ExitOverBlend();
         }
     }
@@ -105,7 +110,7 @@ public class OverBlendBhv : FrameRateBehavior
         if (percentToAdd == null && _overBlendType == OverBlendType.StartLoadMidActionEnd)
         {
             _midActionDone = true;
-            HasResulted = (bool)_resultAction?.Invoke(true);
+            HasResulted = CallResultAction();
             Cache.InputLocked = false;
             EndPercent();
             return;
@@ -119,7 +124,7 @@ public class OverBlendBhv : FrameRateBehavior
         {
             _midActionDone = true;
             Cache.InputLocked = false;
-            HasResulted = (bool)_resultAction?.Invoke(true);
+            HasResulted = CallResultAction();
         }
     }
 
@@ -127,7 +132,23 @@ public class OverBlendBhv : FrameRateBehavior
     {
         State = 2;
         if (_overBlendType == OverBlendType.StartLoadingActionEnd)
-            HasResulted = (bool)_resultAction?.Invoke(true);
+            HasResulted = CallResultAction();
+    }
+
+    bool CallResultAction()
+    {
+        var result = (bool)_resultAction?.Invoke(true);
+        return result;
+    }
+
+    private void ActualizeMidEndPositions()
+    {
+        _mainCamera = Helper.GetMainCamera();
+        _activePosition = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
+        if (_reverse)
+            _endPosition = new Vector3(20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
+        else
+            _endPosition = new Vector3(-20.0f, 0.0f, 0.0f) + new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, 0.0f);
     }
 
     public virtual void ExitOverBlend()

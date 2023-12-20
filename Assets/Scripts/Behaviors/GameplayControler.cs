@@ -179,8 +179,21 @@ public class GameplayControler : MonoBehaviour
         else
         {
             CharacterInstanceBhv.Die();
-            Invoke(nameof(CleanPlayerPrefs), 1.0f);
-            StartCoroutine(Helper.ExecuteAfterDelay(1.0f, SceneBhv.OnGameOver));
+            int end = GetHighestBlock();
+            for (int y = Cache.PlayFieldMinHeight; y <= end; ++y)
+            {
+                if (y >= 40)
+                    break;
+                DeleteLine(y);
+            }
+            CheckForLineBreaks();
+            ClearLineSpace();
+            Instantiator.PopText("o-----------o\n|    game over    |\no-----------o", new Vector2(4.5f, 10.0f));
+            StartCoroutine(Helper.ExecuteAfterDelay(1.0f,
+                () => {
+                CleanPlayerPrefs(isGameOver: true);
+                SceneBhv.OnGameOver();
+            }));
         }
 
         void Resurect(string resurectionDefault = null)
@@ -195,14 +208,16 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void CleanPlayerPrefs(bool canResetPlayfield = true)
+    public void CleanPlayerPrefs(bool canResetPlayfield = true, bool isGameOver = false)
     {
         Bag = null;
         Cache.CurrentBossId = 0;
         Cache.ResetSelectedCharacterSpecialCooldown(this.Character);
         PlayerPrefsHelper.SaveBag(Bag);
         PlayerPrefsHelper.SaveHolder(null);
-        if (canResetPlayfield
+        if (isGameOver)
+            PlayerPrefsHelper.ResetLastFightPlayField();
+        else if (canResetPlayfield
             && Character.RaccoonWaste == false
             && (_difficulty <= Difficulty.Easy || SceneBhv.CurrentOpponent?.Type == OpponentType.Boss))
             PlayerPrefsHelper.ResetLastFightPlayField();
@@ -3067,6 +3082,11 @@ public class GameplayControler : MonoBehaviour
 
     private void CancelLastEffectAttack()
     {
+        if (_partitionBhv != null)
+        {
+            Destroy(_partitionBhv.gameObject);
+            _partitionBhv = null;
+        }
         if (AfterSpawn != null)
         {
             _afterSpawnAttackCounter = 0;
@@ -3074,9 +3094,10 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    private void BaseAfterSpawnEnd()
+    private void BaseAfterSpawnEnd(AttackType endingAttackType)
     {
-        Cache.IsEffectAttackInProgress = AttackType.None;
+        if (Cache.IsEffectAttackInProgress == endingAttackType)
+            Cache.IsEffectAttackInProgress = AttackType.None;
         AfterSpawn = null;
         _afterSpawnAttackCounter = 0;
     }
@@ -3105,7 +3126,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_afterSpawnAttackCounter <= 0)
             {
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(AttackType.AirPiece);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -3134,7 +3155,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_afterSpawnAttackCounter <= 0)
             {
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(AttackType.ForcedBlock);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -3172,7 +3193,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_afterSpawnAttackCounter <= 0)
             {
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(attackType);
                 _effectsCamera.GetComponent<EffectsCameraBhv>().Reset();
                 if (CurrentGhost != null)
                     CurrentGhost.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0);
@@ -3466,7 +3487,7 @@ public class GameplayControler : MonoBehaviour
                 (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 var noVisionBlock = GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0;
                 CurrentGhost?.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && noVisionBlock);
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(AttackType.OldSchool);
                 return false;
             }
             if (GravityLevel > gravity || GravityLevel == 0) //I put it back here because changing opponent might reset back to opponent speed gravity
@@ -3498,7 +3519,7 @@ public class GameplayControler : MonoBehaviour
             if (_afterSpawnAttackCounter <= 0)
             {
                 _isScrewed = false;
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(AttackType.Screwed);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -3521,7 +3542,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_afterSpawnAttackCounter <= 0)
             {
-                BaseAfterSpawnEnd();
+                BaseAfterSpawnEnd(AttackType.DropBomb);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -3537,7 +3558,7 @@ public class GameplayControler : MonoBehaviour
         UpdateDropBombCooldown(lastInput);
         if (_dropBombCooldown <= 0)
         {
-            BaseAfterSpawnEnd();
+            BaseAfterSpawnEnd(AttackType.DropBomb);
             if (lastInput != KeyBinding.HardDrop)
                 HardDrop();
             _soundControler.PlaySound(_idPerfect, 1.5f, 0.5f);
