@@ -40,4 +40,29 @@ public class ProgressionService : MonoBehaviour
         PlayerPrefsHelper.SaveBonusLegendaryPercent(onlineProgression.BonusLegendaryPercent);
         PlayerPrefsHelper.SaveRealmBossProgression(onlineProgression.RealmBossProgression);
     }
+
+    public static void DeleteProgression()
+    {
+        PlayerPrefsHelper.SaveUnlockedCharacters(Constants.PpUnlockedCharactersDefault);
+        PlayerPrefsHelper.SaveUnlockedSkins(Constants.PpUnlockedSkinsDefault);
+        PlayerPrefsHelper.ResetBoughtTreeNodes();
+        PlayerPrefsHelper.SaveBonusRarePercent(Constants.PpSerializeDefaultInt);
+        PlayerPrefsHelper.SaveBonusLegendaryPercent(Constants.PpSerializeDefaultInt);
+        PlayerPrefsHelper.SaveRealmBossProgression(Constants.PpRealmBossProgressionDefault);
+        PlayerPrefsHelper.ResetCinematicsWatched();
+        PlayerPrefsHelper.ResetRun();
+        PlayerPrefsHelper.ResetRunBossVanquished();
+        PlayerPrefsHelper.SaveHasMetBeholder(false);
+        PlayerPrefsHelper.SaveHasMetLurker(false);
+        PlayerPrefsHelper.ResetDifficulties();
+        PlayerPrefsHelper.SaveIsInFight(false);
+        PlayerPrefsHelper.ResetTotalResources();   
+        foreach (var dialogKey in DialogsData.DialogTree.Keys)
+        {
+            if (PlayerPrefs.GetInt(dialogKey, -1) != -1)
+                PlayerPrefsHelper.SaveDialogProgress(dialogKey, Constants.PpSerializeDefaultInt);
+        }
+        PlayerPrefsHelper.SaveInfernalUnlocked(false);
+        PlayerPrefsHelper.SaveDivineUnlocked(false);
+    }
 }

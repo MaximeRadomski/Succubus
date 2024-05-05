@@ -57,7 +57,7 @@ public class MainMenuSceneBhv : SceneBhv
                 buttonAscension.transform.GetChild(1).localPosition = new Vector3(-0.072f, 0, 0);
             }
         }
-        _menuClickCount = 650;
+        _menuClickCount = 0;
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = MenuClick;
         GameObject.Find("ButtonTraining").GetComponent<ButtonBhv>().EndActionDelegate = GoToTraining;
         GameObject.Find("ButtonSettings").GetComponent<ButtonBhv>().EndActionDelegate = GoToSettings;

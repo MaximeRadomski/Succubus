@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingsSceneBhv : SceneBhv
 {
@@ -40,7 +42,29 @@ public class SettingsSceneBhv : SceneBhv
         //_buttonHowToPlay.transform.position += new Vector3(0.0f, -_buttonSpacing, 0.0f);
         //_buttonContainer.transform.position += new Vector3(0.0f, _buttonSpacing / 2);
 
+        GameObject.Find("ButtonDelete").GetComponent<ButtonBhv>().EndActionDelegate = DeleteSave;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPrevious;
+    }
+
+    private void DeleteSave()
+    {
+        Instantiator.NewPopupYesNo("Delete  Progress", $"you are about to delete your progress. are you sure it is what you want?", "Cancel", "Yes", (bool result) =>
+        {
+            if (result)
+                InvokeNextFrame(() =>
+                {
+                    Instantiator.NewPopupYesNo("Delete  Progress", $"this is irreversible.\nit deletes everything.", "Cancel", "Proceed", OnSaveDeletion);
+                });
+        });
+    }
+
+    private void OnSaveDeletion(bool result)
+    {
+        if (result)
+        {
+            ProgressionService.DeleteProgression();
+            NavigationService.LoadBackUntil(Constants.SplashScreenScene);
+        }
     }
 
     private void GoToAudioSettings()

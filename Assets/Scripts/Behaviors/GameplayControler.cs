@@ -931,7 +931,9 @@ public class GameplayControler : MonoBehaviour
             CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
         else
             HandleAdditionalOrLesserBlocks();
-        if (Character.ChanceOldSchool > 0 && Helper.RandomDice100(Character.ChanceOldSchool))
+        if (Character.ChanceOldSchool > 0 && Helper.RandomDice100(Character.ChanceOldSchool)
+            && (Cache.IsEffectAttackInProgress == AttackType.None
+            || Cache.IsEffectAttackInProgress == AttackType.OldSchool))
             this.AttackOldSchool(tmpLastPiece, Character.Realm, 1, this.GravityLevel > 10 ? 10 : this.GravityLevel);
         _hasAlteredPiecePositionAfterResume = true;
         if (Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay)
@@ -3274,6 +3276,8 @@ public class GameplayControler : MonoBehaviour
             var xFromDirection = direction == Direction.Left ? -1 : 1;
             for (int y = startFromBottom; y < startFromBottom + nbRows; ++y)
             {
+                if (y >= Constants.PlayFieldHeight)
+                    break;
                 Transform cache = null;
                 var xStart = direction == Direction.Left ? 9 : 0;
                 for (int x = xStart; x != (direction == Direction.Left ? -1 : 10); x += xFromDirection)

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Proyecto26;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Resources;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -328,6 +330,11 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         var difficulty = PlayerPrefs.GetInt(Constants.PpDifficulty, Constants.PpDifficultyDefault);
         return (Difficulty)difficulty;
+    }
+
+    public static void ResetDifficulties()
+    {
+        PlayerPrefs.SetInt(Constants.PpDifficulty, Constants.PpDifficultyDefault);
     }
 
     public static void SaveCurrentOpponents(List<Opponent> opponents)
@@ -980,6 +987,11 @@ public class PlayerPrefsHelper : MonoBehaviour
             resourcesStr += $"{resource};";
         }
         Mock.SetString(Constants.PpTotalResources, resourcesStr);
+    }
+
+    public static void ResetTotalResources()
+    {
+        Mock.SetString(Constants.PpTotalResources, Constants.PpTotalResourcesDefault);
     }
 
     public static string GetBoughtTreeNodes()
