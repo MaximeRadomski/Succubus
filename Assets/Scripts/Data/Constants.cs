@@ -7,14 +7,14 @@ public static class Constants
 {
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool OpponentsDebug = false;
+    public const bool OpponentsDebug = true;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
     public const bool RunDebug = false;
     public const int DamageDebug = 0;
     public const string TattoosStringDebug = "";
-    //"HammerL01B09;FireStoneL01B07;ThermalGogglesL01B04;HedgehogL01B02;FoxL01B06;InsulatingFoamL01B05;EclipseGlassesL01B01;"
+    //"Slumbering DragoncrestL01B09;Bass GuitarL01B07;"
 
     public const int MaxFps = 60;
     public const float Pixel = 0.14285f;

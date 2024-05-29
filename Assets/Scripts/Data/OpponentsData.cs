@@ -10,7 +10,7 @@ public static class OpponentsData
     public static Realm DebugRealm;
     public static Opponent DebugOpponent()
     {
-        var name = "Tactical Nun";
+        var name = "Abject";
         var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
         DebugRealm = Realm.Hell;
         if (tmpOpponent == null)
@@ -824,6 +824,19 @@ public static class OpponentsData
                 new OpponentAttack(AttackType.Screwed, 1) },
             GravityLevel = 12, Weight = 50,
             Lore = "The true aspect of the prophet is hard to accept, but is reachable for the chosen ones!"
+        },
+        new Opponent()
+        {
+            Name = "Abject", Realm = Realm.Hell, Type = OpponentType.Elite,
+            HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, Cooldown = 1,
+            Attacks = new List<OpponentAttack>() {
+                new OpponentAttack(AttackType.Shift, 1),
+            new OpponentAttack(AttackType.Shift, 2),
+            new OpponentAttack(AttackType.Shift, 3),
+            new OpponentAttack(AttackType.Shift, 4)},
+            GravityLevel = 15, Weight = 50,
+            DialogId = 6,
+            Lore = "Just your average developer with a god complex."
         },
         new Opponent()
         {

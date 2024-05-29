@@ -2037,6 +2037,27 @@ public static class DialogsData
             }
         },
         #endregion
+        #region Abject
+        { "Abject",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "I think I've just added more bugs..."
+                }
+            }
+        },
+        { "Abject|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "Oh don't mind me, just fixing bugs!",
+                    "Who... who are you talking to?"
+                }
+            }
+        },
+        #endregion
         #region Seraphim King
         { "Seraphim King",
             new List<List<string>>()

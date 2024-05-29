@@ -228,7 +228,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             var effectsCamera = GameObject.Find("EffectsCamera");
             if (effectsCamera != null)
                 effectsCamera.GetComponent<EffectsCameraBhv>()?.Reset();
-            if (CurrentOpponent.Type == OpponentType.Boss)
+            if (CurrentOpponent.Type == OpponentType.Boss || DialogsData.DialogTree.ContainsKey(CurrentOpponent.Name))
             {
                 _gameplayControler.GameplayOnHold = true;
                 Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
@@ -999,6 +999,21 @@ public class ClassicGameSceneBhv : GameSceneBhv
         var opponentIcon = GameObject.Find("Opponent" + Cache.CurrentListOpponentsId);
         opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (((int)_opponents[Cache.CurrentListOpponentsId].Realm * 2) + 1));
         opponentIcon.GetComponent<IconInstanceBhv>().Pop();
+
+        if (Cache.CurrentListOpponentsId + 1 < _opponents.Count && DialogsData.DialogTree.ContainsKey(CurrentOpponent.Name))
+        {
+            _gameplayControler.GameplayOnHold = true;
+            Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
+            {
+                _gameplayControler.GameplayOnHold = false;
+                ProceedOpponentDeath();
+            });
+        } else
+            ProceedOpponentDeath();
+        return true;
+    }
+
+    private void ProceedOpponentDeath() { 
         ++Cache.CurrentListOpponentsId;
         if (CurrentOpponent.Attacks[Cache.CurrentOpponentAttackId].AttackType == AttackType.ForcedPiece)
             Destroy(_gameplayControler.ForcedPiece);
@@ -1030,7 +1045,6 @@ public class ClassicGameSceneBhv : GameSceneBhv
         _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = false;
         _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(0);
         _gameplayControler.OpponentDeathScreen = false;
-        return true;
     }
 
     public override void OnPieceLocked(string pieceLetterTwist)

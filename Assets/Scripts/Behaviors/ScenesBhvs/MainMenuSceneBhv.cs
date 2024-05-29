@@ -212,6 +212,14 @@ public class MainMenuSceneBhv : SceneBhv
         {
             Instantiator.NewPopupYesNo("You...", "you're a bit dense aren't you?", null, "Ok", null);
             GameObject.Find("Title").GetComponent<ButtonBhv>().DisableButton();
-        }
+        } else
+            return;
+        Cache.InputLocked = true;
+        Invoke(nameof(Unlock), 1f);
+    }
+
+    private void Unlock()
+    {
+        Cache.InputLocked = false;
     }
 }
