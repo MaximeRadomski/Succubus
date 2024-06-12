@@ -11,7 +11,7 @@ public class MusicPartitionBhv : MonoBehaviour
     private int _id;
     private int _airLines;
 
-    private List<KeyBinding> _keys = new List<KeyBinding>() { KeyBinding.Left, KeyBinding.SoftDrop, KeyBinding.Right };
+    private List<Binding> _keys = new List<Binding>() { Binding.Left, Binding.SoftDrop, Binding.Right };
     private List<Note> _notes;
 
     private GameplayControler _gameplayControler;
@@ -38,9 +38,9 @@ public class MusicPartitionBhv : MonoBehaviour
             note.transform.SetParent(transform);
             var keybinding = _keys[Random.Range(0, _keys.Count)];
             var spriteId = 0;
-            if (keybinding == KeyBinding.SoftDrop)
+            if (keybinding == Binding.SoftDrop)
                 spriteId = 1;
-            else if (keybinding == KeyBinding.Right)
+            else if (keybinding == Binding.Right)
                 spriteId = 2;
             if (spriteId == 2)
             {
@@ -56,11 +56,11 @@ public class MusicPartitionBhv : MonoBehaviour
         NextNote();
     }
 
-    public void NextNote(KeyBinding pressedNote = KeyBinding.None)
+    public void NextNote(Binding pressedNote = Binding.None)
     {
         if (_id >= _notes.Count)
             return;
-        if (pressedNote != KeyBinding.None && pressedNote != _notes[_id].KeyBinding)
+        if (pressedNote != Binding.None && pressedNote != _notes[_id].KeyBinding)
         {
             _gameplayControler.CurrentPiece.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
             _gameplayControler.AttackEmptyRows((_gameplayControler.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv.gameObject, _airLines, (_gameplayControler.SceneBhv as ClassicGameSceneBhv).CurrentOpponent.Realm);
@@ -88,22 +88,22 @@ public class MusicPartitionBhv : MonoBehaviour
         }
     }
 
-    public KeyBinding GetLastKeyBinding()
+    public Binding GetLastKeyBinding()
     {
         if (_id - 1 < 0)
-            return KeyBinding.None;
+            return Binding.None;
         return _notes[_id - 1].KeyBinding;
     }
 
     class Note
     {
         public SpriteRenderer SpriteRenderer;
-        public KeyBinding KeyBinding;
+        public Binding KeyBinding;
         public int SpriteId;
         public Realm Realm;
         public float Tone;
 
-        public Note(SpriteRenderer spriteRenderer, KeyBinding keyBinding, int spriteId, Realm realm, float tone)
+        public Note(SpriteRenderer spriteRenderer, Binding keyBinding, int spriteId, Realm realm, float tone)
         {
             SpriteRenderer = spriteRenderer;
             KeyBinding = keyBinding;

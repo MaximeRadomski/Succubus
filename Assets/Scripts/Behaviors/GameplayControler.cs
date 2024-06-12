@@ -24,6 +24,7 @@ public class GameplayControler : MonoBehaviour
     public bool OpponentDeathScreen = false;
     public Realm CharacterRealm;
     public bool SonicDropHasKey = false;
+    public bool SonicDropHasControllerInput = false;
 
     private bool _gameplayOnHold;
     public bool GameplayOnHold
@@ -90,7 +91,7 @@ public class GameplayControler : MonoBehaviour
     private List<Vector3> _currentGhostPiecesOriginalPos;
     private GameplayChoice _gameplayChoice;
     private Color _ghostColor;
-    private KeyBinding _inputWhileLocked = KeyBinding.None;
+    private Binding _inputWhileLocked = Binding.None;
 
     private SoundControlerBhv _soundControler;
     private MusicControlerBhv _musicControler;
@@ -981,22 +982,22 @@ public class GameplayControler : MonoBehaviour
 
     private void CheckInputWhileLocked()
     {
-        if (_inputWhileLocked != KeyBinding.None)
+        if (_inputWhileLocked != Binding.None)
         {
-            if (_inputWhileLocked == KeyBinding.Hold)
+            if (_inputWhileLocked == Binding.Hold)
             {
-                _inputWhileLocked = KeyBinding.None;
+                _inputWhileLocked = Binding.None;
                 Hold();
             }
-            else if (_inputWhileLocked == KeyBinding.Clock)
+            else if (_inputWhileLocked == Binding.Clock)
                 Clock();
-            else if (_inputWhileLocked == KeyBinding.AntiClock)
+            else if (_inputWhileLocked == Binding.AntiClock)
                 AntiClock();
-            else if (_inputWhileLocked == KeyBinding.Left)
+            else if (_inputWhileLocked == Binding.Left)
                 Left();
-            else if (_inputWhileLocked == KeyBinding.Right)
+            else if (_inputWhileLocked == Binding.Right)
                 Right();
-            _inputWhileLocked = KeyBinding.None;
+            _inputWhileLocked = Binding.None;
         }
     }
 
@@ -1192,7 +1193,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.Left;
+                _inputWhileLocked = Binding.Left;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
@@ -1200,11 +1201,11 @@ public class GameplayControler : MonoBehaviour
             _leftHeld = _rightHeld = -100;
             return;
         }
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
             if (!canTriggerPartition)
                 return;
-            SendNoteToPartition(KeyBinding.Left);
+            SendNoteToPartition(Binding.Left);
             return;
         }
         ResetDasArr();
@@ -1215,7 +1216,7 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idLeftRightDown);
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                DecrementDropBombCooldown(KeyBinding.Left);
+                DecrementDropBombCooldown(Binding.Left);
         }
         else
             this.SceneBhv.CameraBhv.SidePounder(-1.0f);
@@ -1229,7 +1230,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
             _das += _dasMax;
             return;
@@ -1248,7 +1249,7 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idLeftRightDown);
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                DecrementDropBombCooldown(KeyBinding.Left);
+                DecrementDropBombCooldown(Binding.Left);
         }
         else if (_leftHeldPounder == 0)
         {
@@ -1266,7 +1267,7 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.Right;
+                _inputWhileLocked = Binding.Right;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
@@ -1274,11 +1275,11 @@ public class GameplayControler : MonoBehaviour
             _leftHeld = _rightHeld = -100;
             return;
         }
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
             if (!canTriggerPartition)
                 return;
-            SendNoteToPartition(KeyBinding.Right);
+            SendNoteToPartition(Binding.Right);
             return;
         }
         ResetDasArr();
@@ -1289,7 +1290,7 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idLeftRightDown);
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                DecrementDropBombCooldown(KeyBinding.Right);
+                DecrementDropBombCooldown(Binding.Right);
         }
         else
             this.SceneBhv.CameraBhv.SidePounder();
@@ -1303,7 +1304,7 @@ public class GameplayControler : MonoBehaviour
         ++_das;
         if (_rhythmIndicatorBhv != null)
             return;
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
             _das += _dasMax;
             return;
@@ -1322,7 +1323,7 @@ public class GameplayControler : MonoBehaviour
         {
             _soundControler.PlaySound(_idLeftRightDown);
             if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                DecrementDropBombCooldown(KeyBinding.Left);
+                DecrementDropBombCooldown(Binding.Left);
         }
         else if (_rightHeldPounder == 0)
         {
@@ -1345,9 +1346,9 @@ public class GameplayControler : MonoBehaviour
             return;
         if (!SonicDropHasKey)
             SoftDropStomp();
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.SoftDrop);
+            SendNoteToPartition(Binding.SoftDrop);
             return;
         }
     }
@@ -1362,18 +1363,18 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.SonicDrop;
+                _inputWhileLocked = Binding.SonicDrop;
             return;
         }
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.SoftDrop);
+            SendNoteToPartition(Binding.SoftDrop);
             return;
         }
         _lastDownSoftDrop = Time.time;
         SoftDropStomp();
         if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown(KeyBinding.SonicDrop);
+            DecrementDropBombCooldown(Binding.SonicDrop);
     }
 
     public void SoftDropStomp()
@@ -1382,7 +1383,7 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_lastDownSoftDrop >= Time.time - 0.2f)
         {
-            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition)
+            if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
                 return;
             if (CurrentPiece.GetComponent<Piece>().IsHollowed)
                 return;
@@ -1393,7 +1394,7 @@ public class GameplayControler : MonoBehaviour
 
     public void SoftDropHeld()
     {
-        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.Partition
+        if (CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || Cache.IsEffectAttackInProgress == AttackType.SheetMusic
             || (Cache.PactNoSoftDrop && !_isOldSchoolGameplay))
                 return;
         if (!CurrentPiece.GetComponent<Piece>().IsHollowed && Time.time < _nextGravityFall - GravityDelay * 0.95f)
@@ -1469,9 +1470,9 @@ public class GameplayControler : MonoBehaviour
             return;
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.SoftDrop);
+            SendNoteToPartition(Binding.SoftDrop);
             return;
         }
         bool hardDropping = true;
@@ -1505,7 +1506,7 @@ public class GameplayControler : MonoBehaviour
         SceneBhv.OnHardDrop(nbLinesDropped);
         PounderCamera();
         if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown(KeyBinding.HardDrop);
+            DecrementDropBombCooldown(Binding.HardDrop);
     }
 
     private void PounderCamera()
@@ -1625,14 +1626,14 @@ public class GameplayControler : MonoBehaviour
             if (_isScrewed)
                 Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.Clock;
+                _inputWhileLocked = Binding.Clock;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.Clock);
+            SendNoteToPartition(Binding.Clock);
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1742,7 +1743,7 @@ public class GameplayControler : MonoBehaviour
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
                 if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                    DecrementDropBombCooldown(KeyBinding.Clock);
+                    DecrementDropBombCooldown(Binding.Clock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
@@ -1761,14 +1762,14 @@ public class GameplayControler : MonoBehaviour
             if (_isScrewed)
                 Instantiator.PopText(_afterSpawnAttackCounter.ToString(), CurrentPiece.transform.position);
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.AntiClock;
+                _inputWhileLocked = Binding.AntiClock;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.AntiClock);
+            SendNoteToPartition(Binding.AntiClock);
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1878,7 +1879,7 @@ public class GameplayControler : MonoBehaviour
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
                 if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                    DecrementDropBombCooldown(KeyBinding.AntiClock);
+                    DecrementDropBombCooldown(Binding.AntiClock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
@@ -1895,14 +1896,14 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || CurrentPiece.GetComponent<Piece>().IsMimic || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked)
-                _inputWhileLocked = KeyBinding.Rotation180;
+                _inputWhileLocked = Binding.Rotation180;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.Rotation180);
+            SendNoteToPartition(Binding.Rotation180);
             return;
         }
         var currentPieceModel = CurrentPiece.GetComponent<Piece>();
@@ -1951,7 +1952,7 @@ public class GameplayControler : MonoBehaviour
                 DropGhost(withRotationAngle: 180.0f);
                 _soundControler.PlaySound(_idRotate);
                 if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-                    DecrementDropBombCooldown(KeyBinding.Rotation180);
+                    DecrementDropBombCooldown(Binding.Rotation180);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
             }
@@ -1968,14 +1969,14 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
-                _inputWhileLocked = KeyBinding.Hold;
+                _inputWhileLocked = Binding.Hold;
             return;
         }
         if (_rhythmIndicatorBhv != null && !IsInBeat())
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.Hold);
+            SendNoteToPartition(Binding.Hold);
             return;
         }
         if (_holder.transform.childCount <= 0)
@@ -2046,7 +2047,7 @@ public class GameplayControler : MonoBehaviour
             CheckInputWhileLocked();
         }
         if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
-            DecrementDropBombCooldown(KeyBinding.Hold);
+            DecrementDropBombCooldown(Binding.Hold);
         _soundControler.PlaySound(_idHold);
     }
 
@@ -2054,9 +2055,9 @@ public class GameplayControler : MonoBehaviour
     {
         if (_usingItem || CurrentPiece.GetComponent<Piece>().IsLocked || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
             return;
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.Item);
+            SendNoteToPartition(Binding.Item);
             return;
         }
         if (CharacterItem != null)
@@ -2093,9 +2094,9 @@ public class GameplayControler : MonoBehaviour
             UpdateItemAndSpecialVisuals();
             return;
         }
-        if (Cache.IsEffectAttackInProgress == AttackType.Partition)
+        if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
         {
-            SendNoteToPartition(KeyBinding.Special);
+            SendNoteToPartition(Binding.Special);
             return;
         }
         if (_characterSpecial.Activate())
@@ -2844,7 +2845,7 @@ public class GameplayControler : MonoBehaviour
             case AttackType.Gate:
                 AttackGate(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
                 break;
-            case AttackType.Partition:
+            case AttackType.SheetMusic:
                 AttackPartition(opponentInstance, opponentRealm, param1 + attackBoost, param2);
                 break;
             case AttackType.Shrink:
@@ -3382,7 +3383,7 @@ public class GameplayControler : MonoBehaviour
 
     public void AttackPartition(GameObject opponentInstance, Realm opponentRealm, int nbNotes, int airLines)
     {
-        Cache.IsEffectAttackInProgress = AttackType.Partition;
+        Cache.IsEffectAttackInProgress = AttackType.SheetMusic;
         SetGravity(2);
         var halfPixel = Constants.Pixel / 2.0f;
         float y = GetHighestBlock() + 3.0f + halfPixel;
@@ -3395,12 +3396,12 @@ public class GameplayControler : MonoBehaviour
         Cache.MusicAttackCount++;
     }
 
-    private void SendNoteToPartition(KeyBinding note)
+    private void SendNoteToPartition(Binding note)
     {
         if (_partitionBhv == null)
             _partitionBhv = GameObject.Find(Constants.GoPartition).GetComponent<MusicPartitionBhv>();
         if (Character.BassGuitarBonus > 0 && Cache.MusicAttackCount <= Character.BassGuitarBonus)
-            note = KeyBinding.None;
+            note = Binding.None;
         _partitionBhv.NextNote(note);
     }
 
@@ -3550,36 +3551,36 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            UpdateDropBombCooldown(KeyBinding.Hold);
+            UpdateDropBombCooldown(Binding.Hold);
             _soundControler.PlaySound(_idLeftRightDown);
             return true;
         }
     }
 
-    private void DecrementDropBombCooldown(KeyBinding lastInput)
+    private void DecrementDropBombCooldown(Binding lastInput)
     {
         --_dropBombCooldown;
         UpdateDropBombCooldown(lastInput);
         if (_dropBombCooldown <= 0)
         {
             BaseAfterSpawnEnd(AttackType.DropBomb);
-            if (lastInput != KeyBinding.HardDrop)
+            if (lastInput != Binding.HardDrop)
                 HardDrop();
             _soundControler.PlaySound(_idPerfect, 1.5f, 0.5f);
         }
     }
 
-    private void UpdateDropBombCooldown(KeyBinding lastInput)
+    private void UpdateDropBombCooldown(Binding lastInput)
     {
         var cooldownText = CurrentPiece.transform.GetChild(0)?.Find(Constants.GoDropBombCooldown);
         if (cooldownText == null)
             cooldownText = CurrentPiece.GetComponent<Piece>().SetDropBombCooldown(this.Instantiator);
         cooldownText.GetComponent<TMPro.TextMeshPro>().text = _dropBombCooldown.ToString();
-        if (lastInput == KeyBinding.Clock)
+        if (lastInput == Binding.Clock)
             cooldownText.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
-        else if (lastInput == KeyBinding.AntiClock)
+        else if (lastInput == Binding.AntiClock)
             cooldownText.Rotate(new Vector3(0.0f, 0.0f, -90.0f));
-        else if (lastInput == KeyBinding.Rotation180)
+        else if (lastInput == Binding.Rotation180)
             cooldownText.Rotate(new Vector3(0.0f, 0.0f, -180.0f));
     }
 

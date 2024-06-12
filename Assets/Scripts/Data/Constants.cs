@@ -7,7 +7,7 @@ public static class Constants
 {
     public const bool CharactersDebug = false;
     public const bool ResourcesDebug = false;
-    public const bool OpponentsDebug = true;
+    public const bool OpponentsDebug = false;
     public const bool TattoosDebug = false;
     public const bool ItemsDebug = false;
     public const bool PactsDebug = false;
@@ -125,7 +125,9 @@ public static class Constants
     public const string PpButtonsRightPanelDefault = "S0I0000D0000A0C000000";
     public const string PpKeyBinding = "KeyLayout";
     public static string PpKeyBindingDefault = GetDefaultKeyBinding();
-    public const int KeyBindingsCount = 18;
+    public const string PpControllerBinding = "ControllerLayout";
+    public static string PpControllerBindingDefault = GetDefaultControllerBinding();
+    public const int BindingsCount = 19;
     public const string PpRun = "Run";
     public const string PpRunCharacter = "RunCharacter";
     public const string PpBag = "Bag";
@@ -201,7 +203,12 @@ public static class Constants
 
     public static string GetDefaultKeyBinding()
     {
-        return $"{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.C};{(int)KeyCode.X};{(int)KeyCode.Space};{(int)KeyCode.D};{(int)KeyCode.S};{(int)KeyCode.W};{(int)KeyCode.None};{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.Return};{(int)KeyCode.Escape};{(int)KeyCode.R};";
+        return $"{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.C};{(int)KeyCode.X};{(int)KeyCode.Space};{(int)KeyCode.D};{(int)KeyCode.S};{(int)KeyCode.W};{(int)KeyCode.None};{(int)KeyCode.UpArrow};{(int)KeyCode.DownArrow};{(int)KeyCode.LeftArrow};{(int)KeyCode.RightArrow};{(int)KeyCode.Return};{(int)KeyCode.Escape};{(int)KeyCode.R};{(int)KeyCode.Escape};";
+    }
+
+    public static string GetDefaultControllerBinding()
+    {
+        return $"{JoystickInput.Up_7p.Id};{JoystickInput.Down_7m.Id};{JoystickInput.Left_6m.Id};{JoystickInput.Right_6p.Id};{JoystickInput.B_1.Id};{JoystickInput.A_0.Id};{JoystickInput.LB_4.Id};{JoystickInput.RT_10p.Id};{JoystickInput.LT_9p.Id};{JoystickInput.X_2.Id};{-1};{JoystickInput.Up_7p.Id};{JoystickInput.Down_7m.Id};{JoystickInput.Left_6m.Id};{JoystickInput.Right_6p.Id};{JoystickInput.A_0.Id};{JoystickInput.B_1.Id};{JoystickInput.Back_6.Id};{JoystickInput.Start_7.Id};";
     }
 
     //  SCENES  //

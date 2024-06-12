@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -234,7 +235,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = customStr;
         var keyBindings = new List<KeyCode>();
         int i = 0;
-        while (!string.IsNullOrEmpty(strKeyBinding) || i < Constants.KeyBindingsCount)
+        while (!string.IsNullOrEmpty(strKeyBinding) || i < Constants.BindingsCount)
         {
             var separatorId = strKeyBinding.IndexOf(';');
             if (separatorId == -1)
@@ -246,9 +247,43 @@ public class PlayerPrefsHelper : MonoBehaviour
             strKeyBinding = strKeyBinding.Substring(separatorId + 1);
             ++i;
         }
-        if (keyBindings.Count < Constants.KeyBindingsCount)
+        if (keyBindings.Count < Constants.BindingsCount)
             keyBindings = GetKeyBinding(Constants.PpKeyBindingDefault);
         return keyBindings;
+    }
+
+    public static void SaveControllerBinding(List<JoystickInput> controllerBinding)
+    {
+        var strControllerBinding = "";
+        foreach (var input in controllerBinding)
+            strControllerBinding += input.Id + ";";
+        PlayerPrefs.SetString(Constants.PpControllerBinding, strControllerBinding);
+    }
+
+    public static List<JoystickInput> GetControllerBinding(string customStr = null)
+    {
+        string strControllerBinding;
+        if (customStr == null)
+            strControllerBinding = PlayerPrefs.GetString(Constants.PpControllerBinding, Constants.PpControllerBindingDefault);
+        else
+            strControllerBinding = customStr;
+        var controllerBindings = new List<JoystickInput>();
+        int i = 0;
+        while (!string.IsNullOrEmpty(strControllerBinding) || i < Constants.BindingsCount)
+        {
+            var separatorId = strControllerBinding.IndexOf(';');
+            if (separatorId == -1)
+                break;
+            var controllerCodeHashCode = int.Parse(strControllerBinding.Substring(0, separatorId));
+            controllerBindings.Add(JoystickInput.JoystickInputs.First((ji) => ji.Id == controllerCodeHashCode));
+            if (separatorId + 1 >= strControllerBinding.Length)
+                break;
+            strControllerBinding = strControllerBinding.Substring(separatorId + 1);
+            ++i;
+        }
+        if (controllerBindings.Count < Constants.BindingsCount)
+            controllerBindings = GetControllerBinding(Constants.PpControllerBindingDefault);
+        return controllerBindings;
     }
 
     public static void AddUnlockedCharacters(Character character)

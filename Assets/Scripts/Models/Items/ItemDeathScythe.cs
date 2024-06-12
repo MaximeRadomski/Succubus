@@ -32,7 +32,7 @@ public class ItemDeathScythe : Item
     public override string GetDescription()
     {
         GetFavorUnfavor();
-        return $"{Highlight($"{favor}%")} chance of killing your opponent, {Highlight($"{unfavor}%")} chance of killing you. switches {percentBonus}% in your favor each time you kill and opponent.\nresets on a successful opponent kill.";
+        return $"{Highlight($"{favor}%")} chance of killing your opponent, {Highlight($"{unfavor}%")} chance of killing you. switches {percentBonus}% in your favor each time you kill an opponent.\nresets on a successful opponent kill.";
     }
 
     protected override void Effect()

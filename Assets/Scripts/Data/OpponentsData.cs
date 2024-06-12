@@ -173,8 +173,8 @@ public static class OpponentsData
             Name = "Bass Sinner", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.None, Cooldown = 8,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Partition, 2, 1),
-                new OpponentAttack(AttackType.Partition, 3, 1) },
+                new OpponentAttack(AttackType.SheetMusic, 2, 1),
+                new OpponentAttack(AttackType.SheetMusic, 3, 1) },
             GravityLevel = 1, Weight = 40,
             Lore = "Bassists always go to Hell. This is all they deserve by being totally worthless musicians."
         },
@@ -464,7 +464,7 @@ public static class OpponentsData
             Name = "Chorists", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 120, Weakness = Weakness.Combos, DamageOnWeakness = 10, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.Partition, 5, 1) },
+                new OpponentAttack(AttackType.SheetMusic, 5, 1) },
             GravityLevel = 8, Weight = 40,
             Lore = "Small group of traumatized children, singing traumatizing songs in Latin."
         },

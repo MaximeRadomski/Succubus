@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-public enum KeyBinding
+public enum Binding
 {
     [Description("Hard Drop")]
     HardDrop = 0,
@@ -34,10 +34,12 @@ public enum KeyBinding
     MenuRight = 14,
     [Description("Menu Select")]
     MenuSelect = 15,
-    [Description("Back / Pause")]
-    BackPause = 16,
+    [Description("Back")]
+    Back = 16,
     [Description("Restart Training")]
     Restart = 17,
+    [Description("Pause")]
+    Pause = 18,
     [Description("None")]
     None = 99
 }

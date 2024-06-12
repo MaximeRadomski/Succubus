@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SettingsInputsSceneBhv : SceneBhv
@@ -11,10 +13,13 @@ public class SettingsInputsSceneBhv : SceneBhv
     private GameObject _panelRight;
     private GameObject _gameplayChoiceButtons;
     private GameObject _gameplayChoiceSwipes;
+    private GameObject _gameplayChoiceController;
     private GameObject _buttonsPanels;
     private GameObject _swipesPanels;
     private GameObject _keyBindingPanelGameplay;
     private GameObject _keyBindingPanelMenu;
+    private GameObject _controllerPanelGameplay;
+    private GameObject _controllerPanelMenu;
     private GameObject _sensitivitySelector;
     private GameObject _menuSelector;
     private SpriteRenderer _horizontalOrientation;
@@ -22,8 +27,12 @@ public class SettingsInputsSceneBhv : SceneBhv
     private List<GameObject> _gameplayButtons;
     private List<KeyCode> _keyBinding;
     private List<KeyCode> _defaultKeyBinding;
+    private List<JoystickInput> _controllerBinding;
+    private List<JoystickInput> _defaultControllerBinding;
 
-    private int _listeningKeeBindingId;
+    private int _listeningKeyBindingId;
+    private int _listeningControllerBindingId;
+    private int _listeningAxisFirstPass;
     private GameObject _listeningPopup;
 
     public override MusicType MusicType => MusicType.Continue;
@@ -43,16 +52,25 @@ public class SettingsInputsSceneBhv : SceneBhv
         _swipesPanels = GameObject.Find("SwipesPanels");
         _keyBindingPanelGameplay = GameObject.Find("KeyBindingPanelGameplay");
         _keyBindingPanelMenu = GameObject.Find("KeyBindingPanelMenu");
+        _controllerPanelGameplay = GameObject.Find("ControllerPanelGameplay");
+        _controllerPanelMenu = GameObject.Find("ControllerPanelMenu");
         _sensitivitySelector = GameObject.Find("SensitivitySelector");
         _menuSelector = GameObject.Find("MenuSelector");
         _horizontalOrientation = GameObject.Find("HorizontalOrientation").GetComponent<SpriteRenderer>();
         _gameplayButtons = new List<GameObject>();
-        _listeningKeeBindingId = -1;
+        _listeningKeyBindingId = -1;
+        _listeningControllerBindingId = -1;
         _inputControlerBhv = GameObject.Find(Constants.GoInputControler).GetComponent<InputControlerBhv>();
 
         SetButtons();
 
-        Cache.SetLastEndActionClickedName(PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.Buttons ? _gameplayChoiceButtons.name : _gameplayChoiceSwipes.name);
+        var gameplayChoise = PlayerPrefsHelper.GetGameplayChoice();
+        if (gameplayChoise == GameplayChoice.Buttons)
+            Cache.SetLastEndActionClickedName(_gameplayChoiceButtons.name);
+        else if (gameplayChoise == GameplayChoice.SwipesRightHanded || gameplayChoise == GameplayChoice.SwipesLeftHanded)
+            Cache.SetLastEndActionClickedName(_gameplayChoiceSwipes.name);
+        else if (gameplayChoise == GameplayChoice.Controller)
+            Cache.SetLastEndActionClickedName(_gameplayChoiceController.name);
         GameplayButtonChoice();
 
         SetSensitivity(PlayerPrefsHelper.GetTouchSensitivity());
@@ -62,8 +80,12 @@ public class SettingsInputsSceneBhv : SceneBhv
         SetOrientation(PlayerPrefsHelper.GetOrientation(), init: true);
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
         _defaultKeyBinding = PlayerPrefsHelper.GetKeyBinding(Constants.PpKeyBindingDefault);
+        _controllerBinding = PlayerPrefsHelper.GetControllerBinding();
+        _defaultControllerBinding = PlayerPrefsHelper.GetControllerBinding(Constants.PpControllerBindingDefault);
         for (int i = 0; i < _keyBinding.Count; ++i)
             UpdateKeyBindingVisual(i);
+        for (int i = 0; i < _keyBinding.Count; ++i)
+            UpdateControllerBindingVisual(i);
     }
 
     private void PanelsVisuals(string panelStr, GameObject panel, bool isLeft)
@@ -82,6 +104,7 @@ public class SettingsInputsSceneBhv : SceneBhv
     {
         (_gameplayChoiceButtons = GameObject.Find("GameplayButtons")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
         (_gameplayChoiceSwipes = GameObject.Find("GameplaySwipes")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
+        (_gameplayChoiceController = GameObject.Find("GameplayController")).GetComponent<ButtonBhv>().EndActionDelegate = GameplayButtonChoice;
 #if !UNITY_ANDROID
         _gameplayChoiceButtons.GetComponent<SpriteRenderer>().sprite = PcKeyboard;
         _gameplayChoiceSwipes.GetComponent<SpriteRenderer>().sprite = PcMouse;
@@ -104,18 +127,42 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelGameplay.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(6); };
         _keyBindingPanelGameplay.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(7); };
         _keyBindingPanelGameplay.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(8); };
-        _keyBindingPanelGameplay.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(1); };
+        _keyBindingPanelGameplay.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(9); };
+        _keyBindingPanelGameplay.transform.GetChild(10).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(10); };
+        _keyBindingPanelGameplay.transform.GetChild(11).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(1); };
 
-        _keyBindingPanelMenu.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(9); };
-        _keyBindingPanelMenu.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(10); };
-        _keyBindingPanelMenu.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(11); };
-        _keyBindingPanelMenu.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(12); };
-        _keyBindingPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(13); };
-        _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
-        _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
-        _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(16); };
-        _keyBindingPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(17); };
-        _keyBindingPanelMenu.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+        _keyBindingPanelMenu.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(11); };
+        _keyBindingPanelMenu.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(12); };
+        _keyBindingPanelMenu.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(13); };
+        _keyBindingPanelMenu.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(14); };
+        _keyBindingPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(15); };
+        _keyBindingPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(16); };
+        _keyBindingPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(17); };
+        _keyBindingPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetKeyBinding(18); };
+        _keyBindingPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchKeyBindingPanels(0); };
+
+        _controllerPanelGameplay.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(0); };
+        _controllerPanelGameplay.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(1); };
+        _controllerPanelGameplay.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(2); };
+        _controllerPanelGameplay.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(3); };
+        _controllerPanelGameplay.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(4); };
+        _controllerPanelGameplay.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(5); };
+        _controllerPanelGameplay.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(6); };
+        _controllerPanelGameplay.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(7); };
+        _controllerPanelGameplay.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(8); };
+        _controllerPanelGameplay.transform.GetChild(9).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(9); };
+        _controllerPanelGameplay.transform.GetChild(10).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(10); };
+        _controllerPanelGameplay.transform.GetChild(11).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchControllerBindingPanels(1); };
+
+        _controllerPanelMenu.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(11); };
+        _controllerPanelMenu.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(12); };
+        _controllerPanelMenu.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(13); };
+        _controllerPanelMenu.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(14); };
+        _controllerPanelMenu.transform.GetChild(4).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(15); };
+        _controllerPanelMenu.transform.GetChild(5).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(16); };
+        _controllerPanelMenu.transform.GetChild(6).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(17); };
+        _controllerPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(18); };
+        _controllerPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchControllerBindingPanels(0); };
 
         GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Vertical); };
         GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Horizontal); };
@@ -142,7 +189,11 @@ public class SettingsInputsSceneBhv : SceneBhv
         var choiceGameObject = GameObject.Find(choiceButtonName);
 
         var choiceType = GameplayChoice.Buttons;
-        if (!choiceButtonName.Contains("Buttons"))
+        if (choiceButtonName.Contains("Controller"))
+        {
+            choiceType = GameplayChoice.Controller;
+        }
+        else if (choiceButtonName.Contains("Swipes"))
         {
             if (PlayerPrefsHelper.GetGameplayChoice() == GameplayChoice.SwipesLeftHanded)
                 choiceType = GameplayChoice.SwipesLeftHanded;
@@ -156,21 +207,33 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void UpdateViewFromGameplayChoice(GameplayChoice gameplayChoice)
     {
-#if UNITY_ANDROID
-        if (gameplayChoice == GameplayChoice.Buttons)
+        if (gameplayChoice == GameplayChoice.Controller)
         {
-
+            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _buttonsPanels.GetComponent<PositionBhv>().UpdatePositions();
+            _controllerPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         }
-        else
+#if UNITY_ANDROID
+        if (gameplayChoice == GameplayChoice.Buttons)
         {
-            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _buttonsPanels.GetComponent<PositionBhv>().UpdatePositions();
+            _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+        }
+        else if (gameplayChoice == GameplayChoice.SwipesLeftHanded || gameplayChoice == GameplayChoice.SwipesRightHanded) //Swipes
+        {
+            _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
+            _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
             sprite.enabled = true;
@@ -192,17 +255,21 @@ public class SettingsInputsSceneBhv : SceneBhv
 #else
         if (gameplayChoice == GameplayChoice.Buttons) //KeyBoard
         {
-            _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _swipesPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         }
-        else //Mouse
+        else if (gameplayChoice == GameplayChoice.SwipesLeftHanded || gameplayChoice == GameplayChoice.SwipesRightHanded) //Mouse
         {
             _buttonsPanels.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
             _keyBindingPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
-            _swipesPanels.GetComponent<PositionBhv>().UpdatePositions();
+            _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
             sprite.enabled = false;
@@ -231,22 +298,22 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void SetKeyBinding(int id)
     {
-        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeeBindingId = id; }));
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningKeyBindingId = id; }));
         Cache.EscapeLocked = true;
-        var sonicDropExplanation =  id == (int)KeyBinding.SonicDrop ? $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}if unset, you can sonic drop\r\nby tapping{Constants.MaterialEnd} soft drop {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}twice" : "";
-        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((KeyBinding)id).GetDescription().ToLower()}{sonicDropExplanation}", "Cancel", "Default", OnSetKey);
+        var sonicDropExplanation =  id == (int)Binding.SonicDrop ? $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}if unset, you can sonic drop\r\nby tapping{Constants.MaterialEnd} soft drop {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}twice" : "";
+        _listeningPopup = Instantiator.NewPopupYesNo("Set Key", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new key for: {Constants.MaterialEnd}{((Binding)id).GetDescription().ToLower()}{sonicDropExplanation}", "Cancel", "Default", OnSetKey);
 
-        void OnSetKey(bool result)
+        void OnSetKey(bool setDefault)
         {
-            if (result)
+            if (setDefault)
             {
-                CheckAlreadyKeyBinding(_defaultKeyBinding[_listeningKeeBindingId], _listeningKeeBindingId);
-                _keyBinding[_listeningKeeBindingId] = _defaultKeyBinding[_listeningKeeBindingId];
+                CheckAlreadyBinding(_defaultKeyBinding[_listeningKeyBindingId], _listeningKeyBindingId);
+                _keyBinding[_listeningKeyBindingId] = _defaultKeyBinding[_listeningKeyBindingId];
                 PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
                 _inputControlerBhv.GetKeyBinding();
-                UpdateKeyBindingVisual(_listeningKeeBindingId);
+                UpdateKeyBindingVisual(_listeningKeyBindingId);
             }
-            _listeningKeeBindingId = -1;
+            _listeningKeyBindingId = -1;
             Invoke(nameof(UnlockEscape), 0.25f);
         }
     }
@@ -256,26 +323,113 @@ public class SettingsInputsSceneBhv : SceneBhv
     void OnGUI()
     {
         Event e = Event.current;
-        if (e.isKey && e.rawType == EventType.KeyUp && _listeningKeeBindingId >= 0)
+        if (_listeningKeyBindingId >= 0 && e.isKey && e.rawType == EventType.KeyUp)
         {
-            if (_listeningKeeBindingId == 14 && e.keyCode == _keyBinding[14])
+            if (_listeningKeyBindingId == 14 && e.keyCode == _keyBinding[14])
                 return;
             //Debug.Log("Detected key code: " + e.keyCode);
-            CheckAlreadyKeyBinding(e.keyCode, _listeningKeeBindingId);
-            _keyBinding[_listeningKeeBindingId] = e.keyCode;
+            CheckAlreadyBinding(e.keyCode, _listeningKeyBindingId);
+            _keyBinding[_listeningKeyBindingId] = e.keyCode;
             PlayerPrefsHelper.SaveKeyBinding(_keyBinding);
             _inputControlerBhv.GetKeyBinding();
-            UpdateKeyBindingVisual(_listeningKeeBindingId);
+            UpdateKeyBindingVisual(_listeningKeyBindingId);
             _listeningPopup.GetComponent<PopupBhv>().ExitPopup();
-            _listeningKeeBindingId = -1;
+            _listeningKeyBindingId = -1;
             Invoke(nameof(UnlockEscape), 0.25f);
         }
     }
 
-    private void CheckAlreadyKeyBinding(KeyCode code, int keyId)
+    private void SetControllerBinding(int id)
+    {
+        UpdateControllerType();
+        StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningControllerBindingId = id; }));
+        Cache.EscapeLocked = true;
+        var sonicDropExplanation = id == (int)Binding.SonicDrop ? $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}if unset, you can sonic drop\r\nby tapping{Constants.MaterialEnd} soft drop {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}twice" : "";
+        _listeningPopup = Instantiator.NewPopupYesNo("Set Input", $"{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}set new input for: {Constants.MaterialEnd}{((Binding)id).GetDescription().ToLower()}{sonicDropExplanation}", "Cancel", "Default", OnSetInput);
+
+        void OnSetInput(bool setDefault)
+        {
+            if (setDefault)
+            {
+                CheckAlreadyControllerBinding(_defaultControllerBinding[_listeningControllerBindingId], _listeningControllerBindingId);
+                _controllerBinding[_listeningControllerBindingId] = _defaultControllerBinding[_listeningControllerBindingId];
+                PlayerPrefsHelper.SaveControllerBinding(_controllerBinding);
+                _inputControlerBhv.GetControllerBinding();
+                UpdateControllerBindingVisual(_listeningControllerBindingId);
+            }
+            _listeningControllerBindingId = -1;
+            Invoke(nameof(UnlockEscape), 0.25f);
+        }
+    }
+
+    private void UpdateControllerType()
+    {
+        var joystickNames = Input.GetJoystickNames();
+        if (joystickNames.Length > 0)
+        {
+            var name = joystickNames[0];
+            Debug.Log(name);
+            if (name.ToLower().Contains("xbox"))
+                Cache.controllerType = ControllerType.Xbox;
+            else
+                Cache.controllerType = ControllerType.Unknown;
+        }
+    }
+
+    protected override void NormalUpdate()
+    {
+        if (_listeningControllerBindingId >= 0)
+        {
+            ++_listeningAxisFirstPass;
+            JoystickInput input = null;
+            foreach (var joystickButton in JoystickInput.JoystickButtons)
+            {
+                if (Input.GetButtonDown(joystickButton.Code))
+                {
+                    input = joystickButton;
+                    Debug.Log(joystickButton.DisplayName);
+                }
+            }
+            if (input == null)
+                foreach (var joystickAxis in JoystickInput.JoystickAxes)
+                {
+                    if (_listeningAxisFirstPass == 1)
+                    {
+                        var defaultValue = Input.GetAxisRaw(joystickAxis.Code);
+                        joystickAxis.DefaultValue = defaultValue;
+                    }
+                    else if (Input.GetAxisRaw(joystickAxis.Code) > joystickAxis.DefaultValue)
+                    {
+                        input = joystickAxis;
+                        Debug.Log(joystickAxis.DisplayName);
+                    }
+            }
+            if (input != null)
+            {
+                Cache.InputLocked = true;
+                CheckAlreadyControllerBinding(input, _listeningControllerBindingId);
+                _controllerBinding[_listeningControllerBindingId] = input;
+                PlayerPrefsHelper.SaveControllerBinding(_controllerBinding);
+                _inputControlerBhv.GetControllerBinding();
+                UpdateControllerBindingVisual(_listeningControllerBindingId);
+                _listeningPopup.GetComponent<PopupBhv>().ExitPopup();
+                _listeningControllerBindingId = -1;
+                Invoke(nameof(UnlockEscape), 0.25f);
+                Invoke(nameof(UnlockInput), 0.15f);
+            }
+        } else
+        {
+            _listeningAxisFirstPass = 0;
+        }
+
+    }
+
+    private void UnlockInput() { Cache.InputLocked = false; }
+
+    private void CheckAlreadyBinding(KeyCode code, int keyId)
     {
         //Check for menu controls
-        if (keyId >= (int)KeyBinding.MenuUp && keyId <= (int)KeyBinding.Restart)
+        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Restart)
         {
             for (int i = 10; i <= 16; ++i)
             {
@@ -288,7 +442,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             return;
         }
         //Check for gameplay + escape
-        for (int i = (int)KeyBinding.HardDrop; i <= (int)KeyBinding.SonicDrop; ++i)
+        for (int i = (int)Binding.HardDrop; i <= (int)Binding.SonicDrop; ++i)
         {
             if (_keyBinding[i] == code)
             {
@@ -298,16 +452,55 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
     }
 
+    private void CheckAlreadyControllerBinding(JoystickInput input, int keyId)
+    {
+        //Check for menu controls
+        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Restart)
+        {
+            for (int i = 10; i <= 16; ++i)
+            {
+                if (_controllerBinding[i] == input)
+                {
+                    _controllerBinding[i] = JoystickInput.None;
+                    UpdateControllerBindingVisual(i);
+                }
+            }
+            return;
+        }
+        //Check for gameplay + escape
+        for (int i = (int)Binding.HardDrop; i <= (int)Binding.SonicDrop; ++i)
+        {
+            if (_controllerBinding[i] == input)
+            {
+                _controllerBinding[i] = JoystickInput.None;
+                UpdateControllerBindingVisual(i);
+            }
+        }
+    }
+
     private void UpdateKeyBindingVisual(int id)
     {
         TMPro.TextMeshPro tmPro = null;
-        if (id < 9)
+        if (id < 11)
             tmPro = _keyBindingPanelGameplay.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
         else
-            tmPro = _keyBindingPanelMenu.transform.GetChild(id - 9).GetComponent<TMPro.TextMeshPro>();
+            tmPro = _keyBindingPanelMenu.transform.GetChild(id - 11).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
         tmPro.text = $"{tmpText}\n{(_keyBinding[id] == KeyCode.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_keyBinding[id]}";
+    }
+
+    private void UpdateControllerBindingVisual(int id)
+    {
+        UpdateControllerType();
+        TMPro.TextMeshPro tmPro = null;
+        if (id < 11)
+            tmPro = _controllerPanelGameplay.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
+        else
+            tmPro = _controllerPanelMenu.transform.GetChild(id - 11).GetComponent<TMPro.TextMeshPro>();
+        var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
+        var tmpText = tmPro.text.Substring(0, separatorId);
+        tmPro.text = $"{tmpText}\n{(_controllerBinding[id] == JoystickInput.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_controllerBinding[id].DisplayName}";
     }
 
     private void SwitchKeyBindingPanels(int idPanel)
@@ -319,7 +512,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             if (!Cache.OnlyMouseInMenu)
                 InvokeNextFrame(() =>
                 {
-                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(9).gameObject, true);
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelGameplay.transform.GetChild(11).gameObject, true);
                 });
         }
         else
@@ -329,7 +522,31 @@ public class SettingsInputsSceneBhv : SceneBhv
             if (!Cache.OnlyMouseInMenu)
                 InvokeNextFrame(() =>
                 {
-                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(9).gameObject, true);
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_keyBindingPanelMenu.transform.GetChild(8).gameObject, true);
+                });
+        }
+    }
+
+    private void SwitchControllerBindingPanels(int idPanel)
+    {
+        if (idPanel == 0)
+        {
+            _controllerPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
+            _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            if (!Cache.OnlyMouseInMenu)
+                InvokeNextFrame(() =>
+                {
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_controllerPanelGameplay.transform.GetChild(11).gameObject, true);
+                });
+        }
+        else
+        {
+            _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPanelMenu.GetComponent<PositionBhv>().UpdatePositions();
+            if (!Cache.OnlyMouseInMenu)
+                InvokeNextFrame(() =>
+                {
+                    _menuSelector.GetComponent<MenuSelectorBhv>().MoveTo(_controllerPanelMenu.transform.GetChild(8).gameObject, true);
                 });
         }
     }
@@ -525,6 +742,8 @@ public class SettingsInputsSceneBhv : SceneBhv
             PlayerPrefsHelper.SaveButtonsRightPanel(Constants.PpButtonsRightPanelDefault);
             PlayerPrefsHelper.SaveKeyBinding(_defaultKeyBinding);
             _inputControlerBhv.GetKeyBinding();
+            PlayerPrefsHelper.SaveControllerBinding(_defaultControllerBinding);
+            _inputControlerBhv.GetControllerBinding();
             foreach (var gm in _gameplayButtons)
                 Destroy(gm);
             _gameplayButtons.Clear();

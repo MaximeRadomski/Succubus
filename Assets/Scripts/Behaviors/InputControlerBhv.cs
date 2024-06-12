@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class InputControlerBhv : FrameRateBehavior
@@ -14,9 +17,11 @@ public class InputControlerBhv : FrameRateBehavior
     private GameplayControler _gameplayControler;
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
+    private List<JoystickInput> _controllerBinding;
     private List<GameObject> _availableButtons;
     private InputKeyBhv _anyInputKey;
     private bool _hasInit;
+    private List<JoystickInput> _axesInUse = new List<JoystickInput>{};
 
     private int _currentInputLayer = -1;
     private List<GameObject> _lastSelectedGameObjects;
@@ -47,11 +52,12 @@ public class InputControlerBhv : FrameRateBehavior
         MenuSelector = menuSelectorGameObject.GetComponent<MenuSelectorBhv>();
 #endif
         GetKeyBinding();
+        GetControllerBinding();
         _mainCamera = Helper.GetMainCamera();
         _inputNames = new List<string>();
         for (int i = 0; i < _keyBinding.Count; ++i)
         {
-            _inputNames.Add(((KeyBinding)i).GetDescription());
+            _inputNames.Add(((Binding)i).GetDescription());
         }
         _hasInit = true;
     }
@@ -59,8 +65,15 @@ public class InputControlerBhv : FrameRateBehavior
     public void GetKeyBinding()
     {
         _keyBinding = PlayerPrefsHelper.GetKeyBinding();
-        if (_keyBinding[(int)KeyBinding.SonicDrop] != KeyCode.None && _gameplayControler != null)
+        if (_keyBinding[(int)Binding.SonicDrop] != KeyCode.None && _gameplayControler != null)
             _gameplayControler.SonicDropHasKey = true;
+    }
+
+    public void GetControllerBinding()
+    {
+        _controllerBinding = PlayerPrefsHelper.GetControllerBinding();
+        if (_controllerBinding[(int)Binding.SonicDrop] != JoystickInput.None && _gameplayControler != null)
+            _gameplayControler.SonicDropHasControllerInput = true;
     }
 
     private void GetScene()
@@ -73,7 +86,7 @@ public class InputControlerBhv : FrameRateBehavior
         if (Cache.InputLocked)
             return;
 #if !UNITY_ANDROID || UNITY_EDITOR
-        CheckFrameDependentGameKeyboardInputs();
+        CheckFrameDependentGameInputs();
 #endif
     }
 
@@ -91,22 +104,28 @@ public class InputControlerBhv : FrameRateBehavior
         if (Cache.InputLocked)
             return;
 #if !UNITY_ANDROID || UNITY_EDITOR
-        CheckGameKeyboardInputs();
-        CheckMenuKeyboardInputs();
+        if (Cache.InputLayer == 0)
+            CheckGameInputs();
+        CheckMenuInputs();
+        CleanAxesInUse();
 #endif
         // IF BACK BUTTON //
 #if UNITY_ANDROID
-        if (Input.GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
+        if (GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.BackPause]) && !Cache.EscapeLocked)
+        if (((GetBindingDown(Binding.Pause) && _currentScene is GameSceneBhv)
+            || (GetBindingDown(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused)))
+            && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickIn);
         }
 #if UNITY_ANDROID
-        if (Input.GetKeyUp(KeyCode.Escape) && !Cache.EscapeLocked)
+        if (GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
 #else
-        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.BackPause]) && !Cache.EscapeLocked)
+        if (((GetBindingUp(Binding.Pause) && _currentScene is GameSceneBhv)
+            || (GetBindingUp(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused) && !_gameplayControler.GameplayOnHold))
+            && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
@@ -287,82 +306,129 @@ public class InputControlerBhv : FrameRateBehavior
     //8: Special
     //9: Back-Pause
 
-    private void CheckFrameDependentGameKeyboardInputs()
+    private void CheckFrameDependentGameInputs()
     {
         if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
             return;
-        if (Input.GetKey(_keyBinding[(int)KeyBinding.Left]))
+        if (GetBinding(Binding.Left))
         {
             _gameplayControler.LeftHeld();
         }
-        if (Input.GetKey(_keyBinding[(int)KeyBinding.Right]))
+        if (GetBinding(Binding.Right))
         {
             _gameplayControler.RightHeld();
         }
         HandleFrameKeysPressOrHeld();
     }
 
-    private void CheckGameKeyboardInputs()
+    public bool GetBindingDown(Binding binding)
+    {
+        var key = _keyBinding[(int)binding];
+        var joystickInput = _controllerBinding[(int)binding];
+        bool cameThroughAxis = false;
+        if (Input.GetKeyDown(key)
+            || (joystickInput.Type == JoystickInputType.button && Input.GetButtonDown(joystickInput.Code))
+            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && !_axesInUse.Contains(joystickInput))))
+        {
+            if (cameThroughAxis)
+                _axesInUse.Add(joystickInput);
+            Debug.Log(binding.ToString());
+            return true;
+        }
+        return false;
+    }
+
+    public bool GetBinding(Binding binding)
+    {
+        var key = _keyBinding[(int)binding];
+        var joystickInput = _controllerBinding[(int)binding];
+        bool cameThroughAxis = false;
+        if (Input.GetKey(key)
+            || (joystickInput.Type == JoystickInputType.button && Input.GetButton(joystickInput.Code))
+            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool GetBindingUp(Binding binding)
+    {
+        var key = _keyBinding[(int)binding];
+        var joystickInput = _controllerBinding[(int)binding];
+        bool cameThroughAxis = false;
+        if (Input.GetKeyUp(key)
+            || (joystickInput.Type == JoystickInputType.button && Input.GetButtonUp(joystickInput.Code))
+            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) == joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
+        {
+            if (cameThroughAxis)
+                _axesInUse.Remove(joystickInput);
+            return true;
+        }
+        return false;
+    }
+
+    private void CheckGameInputs()
     {
         if (_gameplayControler == null || _gameplayControler.CurrentPiece == null)
             return;
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.HardDrop]))
+        if (GetBindingDown(Binding.HardDrop))
         {
             _gameplayControler.HardDrop();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.SoftDrop]))
+        if (GetBindingDown(Binding.SoftDrop))
         {
             _gameplayControler.Down();
         }
-        if (Input.GetKey(_keyBinding[(int)KeyBinding.SoftDrop]))
+        if (GetBinding(Binding.SoftDrop))
         {
             _gameplayControler.SoftDropHeld();
         }
-        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.SoftDrop]))
+        if (GetBindingUp(Binding.SoftDrop))
         {
             _gameplayControler.DownReleased();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Left]))
+        if (GetBindingDown(Binding.Left))
         {
             _gameplayControler.Left();
         }
-        if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.Left]) || Input.GetKeyUp(_keyBinding[(int)KeyBinding.Right]))
+        if (GetBindingUp(Binding.Left) || GetBindingUp(Binding.Right))
         {
             _gameplayControler.DirectionReleased();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Right]))
+        if (GetBindingDown(Binding.Right))
         {
             _gameplayControler.Right();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Clock]))
+        if (GetBindingDown(Binding.Clock))
         {
             _gameplayControler.Clock();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.AntiClock]))
+        if (GetBindingDown(Binding.AntiClock))
         {
             _gameplayControler.AntiClock();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Hold]))
+        if (GetBindingDown(Binding.Hold))
         {
             _gameplayControler.Hold();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Item]))
+        if (GetBindingDown(Binding.Item))
         {
             _gameplayControler.Item();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Special]))
+        if (GetBindingDown(Binding.Special))
         {
             _gameplayControler.Special();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Rotation180]))
+        if (GetBindingDown(Binding.Rotation180))
         {
             _gameplayControler.Rotation180();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.SonicDrop]))
+        if (GetBindingDown(Binding.SonicDrop))
         {
             _gameplayControler.SonicDrop();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.Restart]))
+        if (GetBindingDown(Binding.Restart))
         {
             if (_currentScene == null)
                 GetScene();
@@ -372,19 +438,48 @@ public class InputControlerBhv : FrameRateBehavior
         HandleFrameKeysPressOrHeld();
     }
 
+    private void CleanAxesInUse()
+    {
+        if (_axesInUse.Count > 0)
+            for (int i = _axesInUse.Count - 1; i >= 0; --i)
+            {
+                if (Input.GetAxisRaw(_axesInUse[i].Code) == _axesInUse[i].DefaultValue)
+                    _axesInUse.RemoveAt(i);
+            }
+    }
+
     private void HandleFrameKeysPressOrHeld()
     {
-        if (Input.anyKeyDown || Input.anyKey)
+        if (Input.anyKeyDown || Input.anyKey || AnyJoyStickButton())
         {
-            for (int i = 0; i < _keyBinding.Count; ++i)
+            for (int i = 0; i < Constants.BindingsCount; ++i)
             {
-                if (Input.GetKeyDown(_keyBinding[i]) || Input.GetKey(_keyBinding[i]))
+                if (GetBindingDown((Binding)i) || GetBinding((Binding)i))
                 {
                     _gameplayControler.AddFrameKeyPressOrHeld(_inputNames[i]);
                 }
             }
         }
         _gameplayControler.UpdateFrameKeysPressOrHeld();
+    }
+
+    private bool AnyJoyStickButton()
+    {
+        foreach (var joystickButton in JoystickInput.JoystickButtons)
+        {
+            if (Input.GetButtonDown(joystickButton.Code))
+            {
+                return true;
+            }
+        }
+        foreach (var joystickAxis in JoystickInput.JoystickAxes)
+        {
+            if (Input.GetAxisRaw(joystickAxis.Code) > joystickAxis.DefaultValue)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void InitMenuKeyboardInputs(Vector3? preferedResetPos = null)
@@ -466,7 +561,7 @@ public class InputControlerBhv : FrameRateBehavior
         }
     }
 
-    private void CheckMenuKeyboardInputs()
+    private void CheckMenuInputs()
     {
         if (MenuSelector == null || Cache.KeyboardUp)
             return;
@@ -483,20 +578,34 @@ public class InputControlerBhv : FrameRateBehavior
             else if (_lastSelectedGameObjects != null)
                 _lastSelectedGameObjects.Clear();
         }
-        if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuUp]))
+        if (GetBindingDown(Binding.MenuUp))
+        {
             FindNearest(Direction.Up);
-        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuDown]))
+        }
+        else if (GetBindingDown(Binding.MenuDown))
+        {
             FindNearest(Direction.Down);
-        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuLeft]))
+        }
+        else if (GetBindingDown(Binding.MenuLeft))
+        {
             FindNearest(Direction.Left);
-        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuRight]))
+        }
+        else if (GetBindingDown(Binding.MenuRight))
+        {
             FindNearest(Direction.Right);
-        else if (Input.GetKeyDown(_keyBinding[(int)KeyBinding.MenuSelect]))
+        }
+        else if (GetBindingDown(Binding.MenuSelect))
+        {
             ButtonOnSelector(Direction.Down);
-        else if (Input.GetKeyUp(_keyBinding[(int)KeyBinding.MenuSelect]))
+        }
+        else if (GetBindingUp(Binding.MenuSelect))
+        {
             ButtonOnSelector(Direction.Up);
-        else if (Input.GetKey(_keyBinding[(int)KeyBinding.MenuSelect]))
+        }
+        else if (GetBinding(Binding.MenuSelect))
+        {
             ButtonOnSelector(Direction.None);
+        }
     }
 
     private void CheckKeyBoardTextInputs()

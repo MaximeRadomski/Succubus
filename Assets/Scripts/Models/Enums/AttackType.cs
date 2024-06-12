@@ -68,8 +68,8 @@ public enum AttackType
     Gate = 14, //A gate of light rows with (param1) cooldown
     [Prefixe(null)]
     [Suffixe(" notes")]
-    [Description("Partition")]
-    Partition = 15, //A music partition with (param1) notes, with (param2) air lines thrown if failed
+    [Description("Sheet Music")]
+    SheetMusic = 15, //A sheet music with (param1) notes, with (param2) air lines thrown if failed
     [Prefixe(null)]
     [Suffixe(" lines")]
     [Description("Shrink")]
