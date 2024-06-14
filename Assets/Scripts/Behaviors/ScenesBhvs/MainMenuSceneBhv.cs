@@ -151,9 +151,7 @@ public class MainMenuSceneBhv : SceneBhv
         Instantiator.NewPopupYesNo("Quit", "do you wish to quit the game?", "Nope", "Yup", OnQuit);
         void OnQuit(bool result)
         {
-#if !UNITY_ANDROID
             _inputControlerBhv.MenuSelector.Reset();
-#endif
             if (result)
                 Application.Quit();
         }

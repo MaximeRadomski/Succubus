@@ -33,13 +33,9 @@ public class MenuSelectorBhv : FrameRateBehavior
 
     private void Init()
     {
-#if UNITY_ANDROID
-        return;
-#else
         DontDestroyOnLoad(transform.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
         GetSoundControler();
-#endif
     }
 
     private void GetSoundControler()

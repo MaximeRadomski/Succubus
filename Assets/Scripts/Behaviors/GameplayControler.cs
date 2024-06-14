@@ -348,7 +348,7 @@ public class GameplayControler : MonoBehaviour
         _hasAlteredPiecePositionAfterResume = false;
 #if UNITY_ANDROID
         if (_gameplayChoice != GameplayChoice.Buttons)
-            SetSwipeGameplayChoice(_gameplayChoice);
+            SetSwipeGameplayChoice(_gameplayChoice == GameplayChoice.Controller ? GameplayChoice.SwipesRightHanded : _gameplayChoice);
         else
         {
             if (PlayerPrefsHelper.GetOrientation() == Direction.Horizontal)

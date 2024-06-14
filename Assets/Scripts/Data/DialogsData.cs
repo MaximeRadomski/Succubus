@@ -1128,7 +1128,7 @@ public static class DialogsData
                     "Podarge my little harpy, you didn't think I would let you go this easily this time!!",
                     "This time? You know about the time amulet??",
                     "Like I just stole it yesterday!",
-                    "Oh good to know! Can you explain to me how it exactly works then? I'm to afraid too ask your son, to be honest...",
+                    "Oh good to know! Can you explain to me how it exactly works then? I'm too afraid to ask your son, to be honest...",
                     "Sigh... How can you oppose any resistance to my legions..."
                 },
                 new List<string>()

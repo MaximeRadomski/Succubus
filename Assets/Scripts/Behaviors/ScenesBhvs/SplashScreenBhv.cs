@@ -15,6 +15,7 @@ public class SplashScreenBhv : SceneBhv
     void Start()
     {
         Cache.HasStartedBySplashScreen = true;
+        Cache.CurrentHighScoreMult = UnityEngine.Random.Range(0.8f, 1.2f);
         Helper.VarMockTest();
         LogService.Init();
         Init();

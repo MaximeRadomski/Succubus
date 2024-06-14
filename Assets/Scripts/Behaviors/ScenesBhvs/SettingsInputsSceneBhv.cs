@@ -368,7 +368,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         if (joystickNames.Length > 0)
         {
             var name = joystickNames[0];
-            Debug.Log(name);
+            //Debug.Log(name);
             if (name.ToLower().Contains("xbox"))
                 Cache.controllerType = ControllerType.Xbox;
             else
@@ -429,9 +429,12 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void CheckAlreadyBinding(KeyCode code, int keyId)
     {
         //Check for menu controls
-        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Restart)
+        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Pause)
         {
-            for (int i = 10; i <= 16; ++i)
+            if ((keyId == (int)Binding.Pause && _keyBinding[(int)Binding.Back] == code)
+                || (keyId == (int)Binding.Back && _keyBinding[(int)Binding.Pause] == code))
+                return;
+            for (int i = (int)Binding.MenuUp; i <= (int)Binding.Pause; ++i)
             {
                 if (_keyBinding[i] == code)
                 {
@@ -455,9 +458,12 @@ public class SettingsInputsSceneBhv : SceneBhv
     private void CheckAlreadyControllerBinding(JoystickInput input, int keyId)
     {
         //Check for menu controls
-        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Restart)
+        if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Pause)
         {
-            for (int i = 10; i <= 16; ++i)
+            if ((keyId == (int)Binding.Pause && _controllerBinding[(int)Binding.Back] == input)
+                || (keyId == (int)Binding.Back && _controllerBinding[(int)Binding.Pause] == input))
+                return;
+            for (int i = (int)Binding.MenuUp; i <= (int)Binding.Pause; ++i)
             {
                 if (_controllerBinding[i] == input)
                 {

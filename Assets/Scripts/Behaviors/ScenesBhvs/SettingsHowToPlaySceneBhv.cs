@@ -61,12 +61,10 @@ public class SettingsHowToPlaySceneBhv : SceneBhv
             else
             _buttonNext.SetActive(true);
 
-#if !UNITY_ANDROID
         if (direction == Direction.None)
             _inputControlerBhv.InitMenuKeyboardInputs();
         else
             _inputControlerBhv.InitMenuKeyboardInputs(_inputControlerBhv.MenuSelector.transform.position + new Vector3(0.0f, 3.0f, 0.0f));
-#endif
     }
 
     private void Previous()

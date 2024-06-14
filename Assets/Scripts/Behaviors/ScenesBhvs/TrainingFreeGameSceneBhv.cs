@@ -11,14 +11,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     private int _boostedLines;
     private int _pieces;
 
-    private List<float> _verif;
-    /* _verif
-     * _verif[0] = soft drops * 8
-     * _verif[1] = lines / 3
-     * _verif[2] = combos * 4
-     * _verif[3] = perfect clears / 20
-     * _verif[4] = levels * 4
-     */
+    private float _verif;
 
     private TMPro.TextMeshPro _scoreTmp;
     private TMPro.TextMeshPro _levelTmp;
@@ -45,7 +38,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _level = results[1];
         _lines = results[2];
         _pieces = results[3];
-        _next = Constants.LinesForLevel - _lines % 10;
+        _boostedLines = (Cache.TrainingFreeSelectedLevel - 1) * 10;
+        _next = Constants.LinesForLevel - (_lines % 10);
 
         _scoreTmp = GameObject.Find("Score").GetComponent<TMPro.TextMeshPro>();
         _levelTmp = GameObject.Find("Level").GetComponent<TMPro.TextMeshPro>();
@@ -68,7 +62,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
             });
         }
         else
-            SetLevelAndStart(Cache.TrainingFreeSelectedLevel);
+            _gameplayControler.StartGameplay(_level, Character?.Realm ?? Realm.Hell, Realm.Hell);
     }
 
     void SetLevelAndStart(int selectedLevel)
@@ -85,8 +79,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
 
     public override void OnGameOver()
     {
-        var verif = (_verif[0] / 8.0f) + (_verif[1] * 3.0f) + (_verif[2] / 4.0f) + (_verif[3] * 20.0f);
-        Cache.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id, (int)verif, (int)(_verif[4] / 4) };
+        Cache.CurrentHighScoreContext = new List<int>() {_score, _level, _lines, _pieces, Character.Id, (int)_verif};
         //_score = 0;
         //_level = 1;
         //_lines = 0;
@@ -130,7 +123,6 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         if (_lines + _boostedLines >= _level * Constants.LinesForLevel)
         {
             ++_level;
-            _verif[4] += 4;
             _gameplayControler.SetGravity(_level);
             _soundControler.PlaySound(_levelUp);
             var maxHeight = 15.0f;
@@ -156,7 +148,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         var toAdd = 1 * linesStomped;
         _score += toAdd;
-        _verif[0] += toAdd * 8;
+        _verif += toAdd * Cache.CurrentHighScoreMult;
         DisplayScore();
     }
 
@@ -164,7 +156,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         var toAdd = 1;
         _score += toAdd;
-        _verif[0] += toAdd * 8;
+        _verif += toAdd * Cache.CurrentHighScoreMult;
         DisplayScore();
     }
 
@@ -172,7 +164,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         var toAdd = 2 * nbLines;
         _score += toAdd;
-        _verif[0] += toAdd * 8;
+        _verif += toAdd * Cache.CurrentHighScoreMult;
         DisplayScore();
     }
 
@@ -242,7 +234,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         }
 
         _score += tmpAdded;
-        _verif[1] += tmpAdded / 3;
+        _verif += tmpAdded * Cache.CurrentHighScoreMult;
         DisplayScore();
 
         _lines += nbLines;
@@ -253,7 +245,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
     {
         var tmpAdded = 50 * nbCombo * _level;
         _score += tmpAdded;
-        _verif[2] += tmpAdded * 4;
+        _verif += tmpAdded * Cache.CurrentHighScoreMult;
         DisplayScore();
 
         _poppingText += "\n*" + nbCombo + " combo";
@@ -282,7 +274,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _poppingText += "<b>perfect clear!</b>";
         var toAdd = 4000 * _level;
         _score += toAdd;
-        _verif[3] += toAdd / 20;
+        _verif += toAdd * Cache.CurrentHighScoreMult;
         DisplayScore();
     }
 }

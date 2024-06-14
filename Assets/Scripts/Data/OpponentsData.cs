@@ -831,9 +831,9 @@ public static class OpponentsData
             HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 1),
-            new OpponentAttack(AttackType.Shift, 2),
-            new OpponentAttack(AttackType.Shift, 3),
-            new OpponentAttack(AttackType.Shift, 4)},
+                new OpponentAttack(AttackType.Ascension, 1, 1),
+                new OpponentAttack(AttackType.Shift, 2),
+                new OpponentAttack(AttackType.Ascension, 1, 2) },
             GravityLevel = 15, Weight = 50,
             DialogId = 6,
             Lore = "Just your average developer with a god complex."

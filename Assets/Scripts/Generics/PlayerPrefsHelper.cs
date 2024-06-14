@@ -93,13 +93,13 @@ public class PlayerPrefsHelper : MonoBehaviour
         return holder;
     }
 
-    public static void SaveTraining(int score, int level, int lines, int pieces, List<float> verif)
+    public static void SaveTraining(int score, int level, int lines, int pieces, float verif)
     {
         Mock.SetInt(Constants.PpTrainingScore, score);
         Mock.SetInt(Constants.PpTrainingLevel, level);
         Mock.SetInt(Constants.PpTrainingLines, lines);
         Mock.SetInt(Constants.PpTrainingPieces, pieces);
-        Mock.SetString(Constants.PpVerif, verif.ToParsedString(';'));
+        Mock.SetFloat(Constants.PpVerif, verif);
     }
 
     public static void ResetTraining()
@@ -108,7 +108,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         Mock.SetInt(Constants.PpTrainingLevel, 1);
         Mock.SetInt(Constants.PpTrainingLines, 0);
         Mock.SetInt(Constants.PpTrainingPieces, 0);
-        Mock.SetString(Constants.PpVerif, null);
+        Mock.SetFloat(Constants.PpVerif, 0);
     }
 
     public static List<int> GetTraining()
@@ -121,14 +121,10 @@ public class PlayerPrefsHelper : MonoBehaviour
         return results;
     }
 
-    public static List<float> GetVerif()
+    public static float GetVerif()
     {
-        var parsedVerif = Mock.GetString(Constants.PpVerif, Constants.PpSerializeDefault);
-        if (string.IsNullOrEmpty(parsedVerif))
-            return new List<float>() { 0.0f, 0.0f, 0.0f, 0.0f, 4.0f};
-        var verifArray = parsedVerif.Split(';');
-        var verifList = verifArray.ToFloatList();
-        return verifList;
+        var verif = Mock.GetFloat(Constants.PpVerif, Constants.PpSerializeDefaultInt);
+        return verif;
     }
 
     public static void SaveTrainingHighScoreHistory(List<int> scoreHistory, bool isOldSchool)

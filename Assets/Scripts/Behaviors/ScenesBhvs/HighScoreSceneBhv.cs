@@ -42,8 +42,7 @@ public class HighScoreSceneBhv : SceneBhv
         _encryptType = UnityEngine.Random.Range(0, Mock.test.Count);
         if (Cache.CurrentHighScoreContext != null)
         {
-            if (!Helper.FloatEqualsPrecision(Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[5], Cache.CurrentHighScoreContext[0] * 0.005f)
-                || Cache.CurrentHighScoreContext[1] != Cache.CurrentHighScoreContext[6])
+            if (!Helper.FloatEqualsPrecision(Cache.CurrentHighScoreContext[0], Cache.CurrentHighScoreContext[5] / Cache.CurrentHighScoreMult, Cache.CurrentHighScoreContext[0] * 0.005f))
             {
                 Cache.CurrentHighScoreContext[0] = 0;
                 scoreValueStr = "altered score";

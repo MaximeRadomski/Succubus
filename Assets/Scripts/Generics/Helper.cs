@@ -416,10 +416,10 @@ public static class Helper
         {
             var alteredCooldown = realmTree.CooldownBrake * 0.666f;
             opponent.Cooldown += alteredCooldown * MultiplierFromPercent(1.0f, character.RealmTreeBoost);
-#if UNITY_ANDROID
-            opponent.Cooldown += 2;
-            opponent.GravityLevel -= 4;
-#endif
+//#if UNITY_ANDROID
+//            opponent.Cooldown += 2;
+//            opponent.GravityLevel -= 4;
+//#endif
             if (difficulty == Difficulty.Easy)
             {
                 opponent.Cooldown = Mathf.RoundToInt(opponent.Cooldown * 2.5f);

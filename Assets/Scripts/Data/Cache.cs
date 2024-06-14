@@ -17,6 +17,8 @@ public static class Cache
     public static List<string> InputTopLayerNames = null;
     public static GameMode CurrentGameMode;
     public static string NameLastScene;
+    public static float CurrentHighScoreMult;
+    public static float Verif;
     public static List<int> CurrentHighScoreContext;
     public static bool OnlyMouseInMenu;
     public static bool KeyboardUp;

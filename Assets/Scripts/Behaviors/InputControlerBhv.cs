@@ -41,7 +41,7 @@ public class InputControlerBhv : FrameRateBehavior
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _gameplayControler = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GameplayControler>();
-#if !UNITY_ANDROID
+
         var menuSelectorGameObject = GameObject.Find(Constants.GoMenuSelector);
         if (menuSelectorGameObject == null)
         {
@@ -50,7 +50,7 @@ public class InputControlerBhv : FrameRateBehavior
             menuSelectorGameObject = _currentScene.Instantiator.NewMenuSelector();
         }
         MenuSelector = menuSelectorGameObject.GetComponent<MenuSelectorBhv>();
-#endif
+
         GetKeyBinding();
         GetControllerBinding();
         _mainCamera = Helper.GetMainCamera();
@@ -85,9 +85,7 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (Cache.InputLocked)
             return;
-#if !UNITY_ANDROID || UNITY_EDITOR
         CheckFrameDependentGameInputs();
-#endif
     }
 
     void OnGUI()
@@ -103,15 +101,20 @@ public class InputControlerBhv : FrameRateBehavior
     {
         if (Cache.InputLocked)
             return;
-#if !UNITY_ANDROID || UNITY_EDITOR
         if (Cache.InputLayer == 0)
             CheckGameInputs();
         CheckMenuInputs();
         CleanAxesInUse();
-#endif
+
+        if (_currentScene == null)
+            GetScene();
+
         // IF BACK BUTTON //
 #if UNITY_ANDROID
-        if (GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
+        if (((GetBindingDown(Binding.Pause) && _currentScene is GameSceneBhv)
+        || (GetBindingDown(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused)))
+        || Input.GetKeyDown(KeyCode.Escape)
+        && !Cache.EscapeLocked)
 #else
         if (((GetBindingDown(Binding.Pause) && _currentScene is GameSceneBhv)
             || (GetBindingDown(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused)))
@@ -121,16 +124,17 @@ public class InputControlerBhv : FrameRateBehavior
             _soundControler.PlaySound(_soundControler.ClickIn);
         }
 #if UNITY_ANDROID
-        if (GetKeyDown(KeyCode.Escape) && !Cache.EscapeLocked)
+        if (((GetBindingUp(Binding.Pause) && _currentScene is GameSceneBhv)
+            || (GetBindingUp(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused)))
+            || Input.GetKeyUp(KeyCode.Escape)
+            && !Cache.EscapeLocked)
 #else
         if (((GetBindingUp(Binding.Pause) && _currentScene is GameSceneBhv)
-            || (GetBindingUp(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused) && !_gameplayControler.GameplayOnHold))
+            || (GetBindingUp(Binding.Back) && (!(_currentScene is GameSceneBhv) || _currentScene.Paused) && (_gameplayControler == null || !_gameplayControler.GameplayOnHold)))
             && !Cache.EscapeLocked)
 #endif
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
-            if (_currentScene == null)
-                GetScene();
             if (Cache.InputLayer > 0)
             {
                 var gameObjectToDestroy = GameObject.Find(Cache.InputTopLayerNames[Cache.InputTopLayerNames.Count - 1]);
@@ -163,6 +167,11 @@ public class InputControlerBhv : FrameRateBehavior
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
+            if (!Cache.OnlyMouseInMenu)
+            {
+                Cache.OnlyMouseInMenu = true;
+                ResetMenuSelector();
+            }
             for (int i = 0; i < Input.touchCount; i++)
             {
                 _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.GetTouch(i).position);
@@ -208,13 +217,11 @@ public class InputControlerBhv : FrameRateBehavior
                 || (_endPhase = Input.GetMouseButtonUp(0))
                 || (_doPhase = Input.GetMouseButton(0)))
             {
-#if !UNITY_ANDROID
                 if (!Cache.OnlyMouseInMenu)
                 {
                     Cache.OnlyMouseInMenu = true;
                     ResetMenuSelector();
                 }
-#endif
                 _touchPosWorld = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
                 RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, _mainCamera.transform.forward);
@@ -332,7 +339,6 @@ public class InputControlerBhv : FrameRateBehavior
         {
             if (cameThroughAxis)
                 _axesInUse.Add(joystickInput);
-            Debug.Log(binding.ToString());
             return true;
         }
         return false;
@@ -484,9 +490,6 @@ public class InputControlerBhv : FrameRateBehavior
 
     public void InitMenuKeyboardInputs(Vector3? preferedResetPos = null)
     {
-#if UNITY_ANDROID
-        return;
-#else
         if (!_hasInit)
             Init();
         var buttonTaggedGameObjects = GameObject.FindGameObjectsWithTag(Constants.TagButton);
@@ -543,7 +546,6 @@ public class InputControlerBhv : FrameRateBehavior
             ResetMenuSelector(preferedResetPos);
         }
         _currentInputLayer = Cache.InputLayer;
-#endif
     }
 
     public void ResetMenuSelector(Vector3? preferedResetPos = null)
