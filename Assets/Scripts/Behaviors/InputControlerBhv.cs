@@ -144,10 +144,13 @@ public class InputControlerBhv : FrameRateBehavior
                 {
                     var popupBhv = gameObjectToDestroy.GetComponent<PopupBhv>();
                     var dialogBoxBhv = gameObjectToDestroy.GetComponent<DialogBoxBhv>();
+                    var toastBhv = gameObjectToDestroy.GetComponent <ToastBhv>();
                     if (popupBhv != null)
                         popupBhv.ExitPopup();
                     else if (dialogBoxBhv != null)
                         dialogBoxBhv.PrevSentence();
+                    else if (toastBhv != null)
+                        toastBhv.ExitToast();
                     else if (!_currentScene.Paused)
                         _mainCamera.gameObject.GetComponent<CameraBhv>().Unfocus();
                 }
@@ -264,8 +267,10 @@ public class InputControlerBhv : FrameRateBehavior
 
     private void CancelCurrentObjectIfNewBeforeEnd(GameObject touchedGameObject = null)
     {
-        if (_currentInput == null || _currentInput.gameObject == touchedGameObject)
+        if (_currentInput == null || _currentInput.gameObject == touchedGameObject ||
+            (_currentInput is ButtonBhv && ((ButtonBhv)_currentInput).LongPressActionDelegate != null))
             return;
+
         _currentInput.CancelAction();
         _currentInput = null;
         //_lastDownInput = null; Not Sure

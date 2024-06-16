@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class ButtonBhv : InputBhv
     public ActionDelegate BeginActionDelegate;
     public ActionDelegate DoActionDelegate;
     public ActionDelegate EndActionDelegate;
+    public ActionDelegate LongPressActionDelegate;
     public bool Disabled;
     public bool StretchDisabled;
     public bool ColorDisabled;
@@ -26,6 +28,9 @@ public class ButtonBhv : InputBhv
     private bool _isResetingColor;
     private Color _resetedColor;
     private Color _pressedColor;
+    private float? _beginPress = null;
+    private float _longPressDelay = 0.5f;
+    private bool _hasDoneLongPress = false;
 
     void Start()
     {
@@ -55,6 +60,8 @@ public class ButtonBhv : InputBhv
 
     public override void BeginAction(Vector2 initialTouchPosition)
     {
+        _beginPress = Time.time;
+        _hasDoneLongPress = false;
         if (_soundControler == null)
             SetPrivates();
         if (!CustomSound)
@@ -85,18 +92,28 @@ public class ButtonBhv : InputBhv
     public override void DoAction(Vector2 touchPosition)
     {
         DoActionDelegate?.Invoke();
+        if (_beginPress != null && Time.time - _beginPress > _longPressDelay)
+        {
+            _beginPress = null;
+            _hasDoneLongPress = true;
+            _isResetingColor = true;
+            LongPressActionDelegate?.Invoke();
+        }
     }
 
     public override void EndAction(Vector2 lastTouchPosition)
     {
         if (!CustomSound)
             _soundControler.PlaySound(_soundControler.ClickOut);
+        _beginPress = null;
         _isResetingColor = true;
-        EndActionDelegate?.Invoke();
+        if (_hasDoneLongPress == false)
+            EndActionDelegate?.Invoke();
     }
 
     public override void CancelAction()
     {
+        _beginPress = null;
         _isResetingColor = true;
     }
 
@@ -104,7 +121,7 @@ public class ButtonBhv : InputBhv
     {
         if (_isStretching)
             StretchOnBegin();
-        if (_isResetingColor)
+        if (_isResetingColor && !ColorDisabled)
             ResetColorOnEnd();
     }
 

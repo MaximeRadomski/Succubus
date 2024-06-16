@@ -7,7 +7,7 @@ public class PopupGameplayButtonsBhv : PopupBhv
 {
     private Action<bool> _resultAction;
 
-    public void Init(Action<bool> resultAction)
+    public void Init(Action<bool> resultAction, Instantiator instantiator)
     {
         _resultAction = resultAction;
 
@@ -15,6 +15,7 @@ public class PopupGameplayButtonsBhv : PopupBhv
         foreach (Transform child in buttonsContainer.transform)
         {
             child.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = ChooseButton;
+            child.gameObject.GetComponent<ButtonBhv>().LongPressActionDelegate = () => { instantiator.NewToast(Helper.GameplayButtonToBinding(child.name).ToLower()); };
         }
 
         var buttonNegative = transform.Find("ButtonNegative");

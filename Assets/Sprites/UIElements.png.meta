@@ -137,6 +137,18 @@ TextureImporter:
   - first:
       213: -3716314983549518540
     second: UIElements_37
+  - first:
+      213: 958011314549615788
+    second: UIElements_38
+  - first:
+      213: 7657925975380030624
+    second: UIElements_39
+  - first:
+      213: 516347381082310711
+    second: UIElements_40
+  - first:
+      213: 6701822848902880556
+    second: UIElements_41
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1023,7 +1035,7 @@ TextureImporter:
         width: 48
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1031,6 +1043,90 @@ TextureImporter:
       bones: []
       spriteID: 43db11c563ffc6cc0800000000000000
       internalID: -3716314983549518540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_38
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cace88ef63a8b4d00800000000000000
+      internalID: 958011314549615788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_39
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a473c6e91b664a60800000000000000
+      internalID: 7657925975380030624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_40
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7384d16153f6a2700800000000000000
+      internalID: 516347381082310711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UIElements_41
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2dd3709f58a10d50800000000000000
+      internalID: 6701822848902880556
       vertices: []
       indices: 
       edges: []

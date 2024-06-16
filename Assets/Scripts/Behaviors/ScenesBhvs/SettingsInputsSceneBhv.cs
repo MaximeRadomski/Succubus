@@ -20,6 +20,8 @@ public class SettingsInputsSceneBhv : SceneBhv
     private GameObject _keyBindingPanelMenu;
     private GameObject _controllerPanelGameplay;
     private GameObject _controllerPanelMenu;
+    private GameObject _controllerPresetsContainer;
+    private GameObject _controllerPresetsSelector;
     private GameObject _sensitivitySelector;
     private GameObject _menuSelector;
     private SpriteRenderer _horizontalOrientation;
@@ -54,6 +56,8 @@ public class SettingsInputsSceneBhv : SceneBhv
         _keyBindingPanelMenu = GameObject.Find("KeyBindingPanelMenu");
         _controllerPanelGameplay = GameObject.Find("ControllerPanelGameplay");
         _controllerPanelMenu = GameObject.Find("ControllerPanelMenu");
+        _controllerPresetsContainer = GameObject.Find("ControllerPresetsContainer");
+        _controllerPresetsSelector = GameObject.Find("PresetSelector");
         _sensitivitySelector = GameObject.Find("SensitivitySelector");
         _menuSelector = GameObject.Find("MenuSelector");
         _horizontalOrientation = GameObject.Find("HorizontalOrientation").GetComponent<SpriteRenderer>();
@@ -164,6 +168,11 @@ public class SettingsInputsSceneBhv : SceneBhv
         _controllerPanelMenu.transform.GetChild(7).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerBinding(18); };
         _controllerPanelMenu.transform.GetChild(8).GetComponent<ButtonBhv>().EndActionDelegate = () => { SwitchControllerBindingPanels(0); };
 
+        _controllerPresetsContainer.transform.GetChild(0).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerType(ControllerType.Unknown); };
+        _controllerPresetsContainer.transform.GetChild(1).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerType(ControllerType.Xbox); };
+        _controllerPresetsContainer.transform.GetChild(2).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerType(ControllerType.Playstation); };
+        _controllerPresetsContainer.transform.GetChild(3).GetComponent<ButtonBhv>().EndActionDelegate = () => { SetControllerType(ControllerType.Nintendo); };
+
         GameObject.Find("Vertical").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Vertical); };
         GameObject.Find("Horizontal").GetComponent<ButtonBhv>().EndActionDelegate = () => { SetOrientation(Direction.Horizontal); };
 
@@ -215,6 +224,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelGameplay.GetComponent<PositionBhv>().UpdatePositions();
             _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPresetsContainer.GetComponent<PositionBhv>().UpdatePositions();
         }
 #if UNITY_ANDROID
         if (gameplayChoice == GameplayChoice.Buttons)
@@ -225,6 +235,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPresetsContainer.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         }
         else if (gameplayChoice == GameplayChoice.SwipesLeftHanded || gameplayChoice == GameplayChoice.SwipesRightHanded) //Swipes
         {
@@ -234,6 +245,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPresetsContainer.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
             sprite.enabled = true;
@@ -261,6 +273,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPresetsContainer.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
         }
         else if (gameplayChoice == GameplayChoice.SwipesLeftHanded || gameplayChoice == GameplayChoice.SwipesRightHanded) //Mouse
         {
@@ -270,6 +283,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             _keyBindingPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelGameplay.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             _controllerPanelMenu.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
+            _controllerPresetsContainer.transform.position = new Vector3(-30.0f, 30.0f, 0.0f);
             var text = _swipesPanels.transform.GetChild(0).Find("TypeText").GetComponent<TMPro.TextMeshPro>();
             var sprite = _swipesPanels.transform.GetChild(0).Find("SwipeType").GetComponent<SpriteRenderer>();
             sprite.enabled = false;
@@ -341,7 +355,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void SetControllerBinding(int id)
     {
-        UpdateControllerType();
+        AutoUpdateControllerType();
         StartCoroutine(Helper.ExecuteAfterDelay(0.25f, () => { _listeningControllerBindingId = id; }));
         Cache.EscapeLocked = true;
         var sonicDropExplanation = id == (int)Binding.SonicDrop ? $"\n\n{Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}if unset, you can sonic drop\r\nby tapping{Constants.MaterialEnd} soft drop {Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c32)}twice" : "";
@@ -362,18 +376,36 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
     }
 
-    private void UpdateControllerType()
+    private void AutoUpdateControllerType()
     {
+        var savedControllerType = PlayerPrefsHelper.GetControllerType();
         var joystickNames = Input.GetJoystickNames();
-        if (joystickNames.Length > 0)
+        var name = joystickNames.Length > 0 ? joystickNames[0] : null;
+        if (Cache.ControllerName != name)
         {
-            var name = joystickNames[0];
-            //Debug.Log(name);
-            if (name.ToLower().Contains("xbox"))
-                Cache.controllerType = ControllerType.Xbox;
-            else
-                Cache.controllerType = ControllerType.Unknown;
+            Cache.ControllerName = name;
+            InvokeNextFrame(() =>
+            {
+                Instantiator.NewToast(name.ToLower());
+            });
+            if (savedControllerType == ControllerType.Unknown)
+            {
+                if (name.ToLower().Contains("xbox"))
+                    SetControllerType(ControllerType.Xbox);
+                else
+                    SetControllerType(ControllerType.Unknown);
+            }
         }
+        else
+            _controllerPresetsSelector.transform.position = _controllerPresetsContainer.transform.GetChild((int)savedControllerType).transform.position;
+    }
+
+    private void SetControllerType(ControllerType type)
+    {
+        PlayerPrefsHelper.SaveControllerType(type);
+        _controllerPresetsSelector.transform.position = _controllerPresetsContainer.transform.GetChild((int)type).transform.position;
+        for (int i = 0; i < _keyBinding.Count; ++i)
+            UpdateControllerBindingVisual(i);
     }
 
     protected override void NormalUpdate()
@@ -387,7 +419,6 @@ public class SettingsInputsSceneBhv : SceneBhv
                 if (Input.GetButtonDown(joystickButton.Code))
                 {
                     input = joystickButton;
-                    Debug.Log(joystickButton.DisplayName);
                 }
             }
             if (input == null)
@@ -401,7 +432,6 @@ public class SettingsInputsSceneBhv : SceneBhv
                     else if (Input.GetAxisRaw(joystickAxis.Code) > joystickAxis.DefaultValue)
                     {
                         input = joystickAxis;
-                        Debug.Log(joystickAxis.DisplayName);
                     }
             }
             if (input != null)
@@ -498,7 +528,7 @@ public class SettingsInputsSceneBhv : SceneBhv
 
     private void UpdateControllerBindingVisual(int id)
     {
-        UpdateControllerType();
+        AutoUpdateControllerType();
         TMPro.TextMeshPro tmPro = null;
         if (id < 11)
             tmPro = _controllerPanelGameplay.transform.GetChild(id).GetComponent<TMPro.TextMeshPro>();
@@ -506,7 +536,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             tmPro = _controllerPanelMenu.transform.GetChild(id - 11).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
-        tmPro.text = $"{tmpText}\n{(_controllerBinding[id] == JoystickInput.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_controllerBinding[id].DisplayName}";
+        tmPro.text = $"{tmpText}\n{(_controllerBinding[id] == JoystickInput.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_controllerBinding[id].DisplayName(PlayerPrefsHelper.GetControllerType())}";
     }
 
     private void SwitchKeyBindingPanels(int idPanel)
@@ -576,6 +606,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         //Debug.Log("\t[DEBUG]\tgameplayButtonName = " + gameplayButtonName);
         var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
         gameplayButton.GetComponent<ButtonBhv>().EndActionDelegate = UnsetGameplayButtonPosition;
+        gameplayButton.GetComponent<ButtonBhv>().LongPressActionDelegate = () => { Instantiator.NewToast(Helper.GameplayButtonToBinding(gameplayButtonName).ToLower()); };
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);

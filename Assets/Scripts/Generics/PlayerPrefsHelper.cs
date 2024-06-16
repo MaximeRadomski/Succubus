@@ -282,6 +282,17 @@ public class PlayerPrefsHelper : MonoBehaviour
         return controllerBindings;
     }
 
+    public static void SaveControllerType(ControllerType type)
+    {
+        PlayerPrefs.SetInt(Constants.PpControllerType, (int)type);
+    }
+
+    public static ControllerType GetControllerType()
+    {
+        var type = PlayerPrefs.GetInt(Constants.PpControllerType, (int)Constants.PpAudioLevelDefault);
+        return (ControllerType)type;
+    }
+
     public static void AddUnlockedCharacters(Character character)
     {
         var currentUnlockedCharactersString = GetUnlockedCharactersString();

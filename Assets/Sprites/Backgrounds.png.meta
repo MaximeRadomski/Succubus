@@ -38,6 +38,9 @@ TextureImporter:
   - first:
       213: 8527608349288026843
     second: Backgrounds_11
+  - first:
+      213: -5834020994102906367
+    second: Backgrounds_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -386,6 +389,27 @@ TextureImporter:
       bones: []
       spriteID: bd2d7facc96285670800000000000000
       internalID: 8527608349288026843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Backgrounds_12
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 496
+        width: 106
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 102335ad0d4690fa0800000000000000
+      internalID: -5834020994102906367
       vertices: []
       indices: 
       edges: []

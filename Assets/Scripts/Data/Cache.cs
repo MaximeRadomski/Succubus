@@ -25,7 +25,7 @@ public static class Cache
     public static int CurrentBossId;
     public static bool InAHurryPopup = false;
     public static List<int> AlreadyConfrontedOpponents;
-    public static ControllerType controllerType = ControllerType.Unknown;
+    public static string ControllerName = null;
 
     //CACHE CLASSIC GAME
     public static int SelectedCharacterSpecialCooldown;

@@ -201,6 +201,33 @@ public static class Helper
         return null;
     }
 
+    public static string GameplayButtonToBinding(string gameplayButton)
+    {
+        if (gameplayButton == Constants.GoButtonLeftName)
+            return Binding.Left.GetDescription();
+        else if (gameplayButton == Constants.GoButtonRightName)
+            return Binding.Right.GetDescription();
+        else if (gameplayButton == Constants.GoButtonDownName)
+            return Binding.SoftDrop.GetDescription();
+        else if (gameplayButton == Constants.GoButtonDropName)
+            return Binding.HardDrop.GetDescription();
+        else if (gameplayButton == Constants.GoButtonHoldName)
+            return Binding.Hold.GetDescription();
+        else if (gameplayButton == Constants.GoButtonAntiClockName)
+            return Binding.AntiClock.GetDescription();
+        else if (gameplayButton == Constants.GoButtonClockName)
+            return Binding.Clock.GetDescription();
+        else if (gameplayButton == Constants.GoButtonItemName)
+            return Binding.Item.GetDescription();
+        else if (gameplayButton == Constants.GoButtonSpecialName)
+            return Binding.Special.GetDescription();
+        else if (gameplayButton == Constants.GoButton180Name)
+            return Binding.Rotation180.GetDescription();
+        else if (gameplayButton == Constants.GoButtonSonicDropName)
+            return Binding.SonicDrop.GetDescription();
+        return "Unknown button";
+    }
+
     public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)
     {
         float x = Mathf.Abs(start.x - end.x);

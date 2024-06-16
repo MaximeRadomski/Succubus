@@ -1968,6 +1968,8 @@ public class GameplayControler : MonoBehaviour
     {
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
+            if (Cache.PactNoHold)
+                Instantiator.PopText("can't hold", CharacterInstanceBhv.transform.position + new Vector3(-3.0f, 0.0f), distance: 2.0f, startFadingDistancePercent: 0.6f, fadingSpeed: 0.04f);
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = Binding.Hold;
             return;

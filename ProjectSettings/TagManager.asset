@@ -95,6 +95,9 @@ TagManager:
   - name: Snack
     uniqueID: 3932137079
     locked: 0
+  - name: SnackTop
+    uniqueID: 2830948279
+    locked: 0
   - name: Loading
     uniqueID: 3571761231
     locked: 0

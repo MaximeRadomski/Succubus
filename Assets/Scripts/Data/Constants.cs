@@ -127,6 +127,8 @@ public static class Constants
     public static string PpKeyBindingDefault = GetDefaultKeyBinding();
     public const string PpControllerBinding = "ControllerLayout";
     public static string PpControllerBindingDefault = GetDefaultControllerBinding();
+    public const string PpControllerType = "ControllerType";
+    public const ControllerType PpControllerTypeDefault = ControllerType.Unknown;
     public const int BindingsCount = 19;
     public const string PpRun = "Run";
     public const string PpRunCharacter = "RunCharacter";
