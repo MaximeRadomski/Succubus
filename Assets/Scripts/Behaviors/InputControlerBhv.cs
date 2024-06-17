@@ -17,11 +17,11 @@ public class InputControlerBhv : FrameRateBehavior
     private GameplayControler _gameplayControler;
     private Camera _mainCamera;
     private List<KeyCode> _keyBinding;
-    private List<JoystickInput> _controllerBinding;
+    private List<ControllerInput> _controllerBinding;
     private List<GameObject> _availableButtons;
     private InputKeyBhv _anyInputKey;
     private bool _hasInit;
-    private List<JoystickInput> _axesInUse = new List<JoystickInput>{};
+    private List<ControllerInput> _axesInUse = new List<ControllerInput>{};
 
     private int _currentInputLayer = -1;
     private List<GameObject> _lastSelectedGameObjects;
@@ -72,7 +72,7 @@ public class InputControlerBhv : FrameRateBehavior
     public void GetControllerBinding()
     {
         _controllerBinding = PlayerPrefsHelper.GetControllerBinding();
-        if (_controllerBinding[(int)Binding.SonicDrop] != JoystickInput.None && _gameplayControler != null)
+        if (_controllerBinding[(int)Binding.SonicDrop] != ControllerInput.None && _gameplayControler != null)
             _gameplayControler.SonicDropHasControllerInput = true;
     }
 
@@ -339,8 +339,8 @@ public class InputControlerBhv : FrameRateBehavior
         var joystickInput = _controllerBinding[(int)binding];
         bool cameThroughAxis = false;
         if (Input.GetKeyDown(key)
-            || (joystickInput.Type == JoystickInputType.button && Input.GetButtonDown(joystickInput.Code))
-            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && !_axesInUse.Contains(joystickInput))))
+            || (joystickInput.Type == ControllerInputType.button && Input.GetButtonDown(joystickInput.Code))
+            || (joystickInput.Type == ControllerInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && !_axesInUse.Contains(joystickInput))))
         {
             if (cameThroughAxis)
                 _axesInUse.Add(joystickInput);
@@ -355,8 +355,8 @@ public class InputControlerBhv : FrameRateBehavior
         var joystickInput = _controllerBinding[(int)binding];
         bool cameThroughAxis = false;
         if (Input.GetKey(key)
-            || (joystickInput.Type == JoystickInputType.button && Input.GetButton(joystickInput.Code))
-            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
+            || (joystickInput.Type == ControllerInputType.button && Input.GetButton(joystickInput.Code))
+            || (joystickInput.Type == ControllerInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) > joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
         {
             return true;
         }
@@ -369,8 +369,8 @@ public class InputControlerBhv : FrameRateBehavior
         var joystickInput = _controllerBinding[(int)binding];
         bool cameThroughAxis = false;
         if (Input.GetKeyUp(key)
-            || (joystickInput.Type == JoystickInputType.button && Input.GetButtonUp(joystickInput.Code))
-            || (joystickInput.Type == JoystickInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) == joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
+            || (joystickInput.Type == ControllerInputType.button && Input.GetButtonUp(joystickInput.Code))
+            || (joystickInput.Type == ControllerInputType.axis && (cameThroughAxis = Input.GetAxisRaw(joystickInput.Code) == joystickInput.DefaultValue && _axesInUse.Contains(joystickInput))))
         {
             if (cameThroughAxis)
                 _axesInUse.Remove(joystickInput);
@@ -476,14 +476,14 @@ public class InputControlerBhv : FrameRateBehavior
 
     private bool AnyJoyStickButton()
     {
-        foreach (var joystickButton in JoystickInput.JoystickButtons)
+        foreach (var joystickButton in ControllerInput.JoystickButtons)
         {
             if (Input.GetButtonDown(joystickButton.Code))
             {
                 return true;
             }
         }
-        foreach (var joystickAxis in JoystickInput.JoystickAxes)
+        foreach (var joystickAxis in ControllerInput.JoystickAxes)
         {
             if (Input.GetAxisRaw(joystickAxis.Code) > joystickAxis.DefaultValue)
             {

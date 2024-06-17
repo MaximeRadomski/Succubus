@@ -29,8 +29,8 @@ public class SettingsInputsSceneBhv : SceneBhv
     private List<GameObject> _gameplayButtons;
     private List<KeyCode> _keyBinding;
     private List<KeyCode> _defaultKeyBinding;
-    private List<JoystickInput> _controllerBinding;
-    private List<JoystickInput> _defaultControllerBinding;
+    private List<ControllerInput> _controllerBinding;
+    private List<ControllerInput> _defaultControllerBinding;
 
     private int _listeningKeyBindingId;
     private int _listeningControllerBindingId;
@@ -381,7 +381,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         var savedControllerType = PlayerPrefsHelper.GetControllerType();
         var joystickNames = Input.GetJoystickNames();
         var name = joystickNames.Length > 0 ? joystickNames[0] : null;
-        if (Cache.ControllerName != name)
+        if (Cache.ControllerName != name && name.Length > 0)
         {
             Cache.ControllerName = name;
             InvokeNextFrame(() =>
@@ -413,8 +413,8 @@ public class SettingsInputsSceneBhv : SceneBhv
         if (_listeningControllerBindingId >= 0)
         {
             ++_listeningAxisFirstPass;
-            JoystickInput input = null;
-            foreach (var joystickButton in JoystickInput.JoystickButtons)
+            ControllerInput input = null;
+            foreach (var joystickButton in ControllerInput.JoystickButtons)
             {
                 if (Input.GetButtonDown(joystickButton.Code))
                 {
@@ -422,7 +422,7 @@ public class SettingsInputsSceneBhv : SceneBhv
                 }
             }
             if (input == null)
-                foreach (var joystickAxis in JoystickInput.JoystickAxes)
+                foreach (var joystickAxis in ControllerInput.JoystickAxes)
                 {
                     if (_listeningAxisFirstPass == 1)
                     {
@@ -485,7 +485,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         }
     }
 
-    private void CheckAlreadyControllerBinding(JoystickInput input, int keyId)
+    private void CheckAlreadyControllerBinding(ControllerInput input, int keyId)
     {
         //Check for menu controls
         if (keyId >= (int)Binding.MenuUp && keyId <= (int)Binding.Pause)
@@ -497,7 +497,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             {
                 if (_controllerBinding[i] == input)
                 {
-                    _controllerBinding[i] = JoystickInput.None;
+                    _controllerBinding[i] = ControllerInput.None;
                     UpdateControllerBindingVisual(i);
                 }
             }
@@ -508,7 +508,7 @@ public class SettingsInputsSceneBhv : SceneBhv
         {
             if (_controllerBinding[i] == input)
             {
-                _controllerBinding[i] = JoystickInput.None;
+                _controllerBinding[i] = ControllerInput.None;
                 UpdateControllerBindingVisual(i);
             }
         }
@@ -536,7 +536,7 @@ public class SettingsInputsSceneBhv : SceneBhv
             tmPro = _controllerPanelMenu.transform.GetChild(id - 11).GetComponent<TMPro.TextMeshPro>();
         var separatorId = tmPro.text.IndexOf(Constants.MaterialEnd) + Constants.MaterialEnd.Length;
         var tmpText = tmPro.text.Substring(0, separatorId);
-        tmPro.text = $"{tmpText}\n{(_controllerBinding[id] == JoystickInput.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_controllerBinding[id].DisplayName(PlayerPrefsHelper.GetControllerType())}";
+        tmPro.text = $"{tmpText}\n{(_controllerBinding[id] == ControllerInput.None ? Constants.GetMaterial(Realm.Hell, TextType.AbjectLong, TextCode.c32) : "")}{_controllerBinding[id].DisplayName(PlayerPrefsHelper.GetControllerType())}";
     }
 
     private void SwitchKeyBindingPanels(int idPanel)

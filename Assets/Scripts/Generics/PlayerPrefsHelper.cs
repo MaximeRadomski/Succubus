@@ -248,7 +248,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         return keyBindings;
     }
 
-    public static void SaveControllerBinding(List<JoystickInput> controllerBinding)
+    public static void SaveControllerBinding(List<ControllerInput> controllerBinding)
     {
         var strControllerBinding = "";
         foreach (var input in controllerBinding)
@@ -256,14 +256,14 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetString(Constants.PpControllerBinding, strControllerBinding);
     }
 
-    public static List<JoystickInput> GetControllerBinding(string customStr = null)
+    public static List<ControllerInput> GetControllerBinding(string customStr = null)
     {
         string strControllerBinding;
         if (customStr == null)
             strControllerBinding = PlayerPrefs.GetString(Constants.PpControllerBinding, Constants.PpControllerBindingDefault);
         else
             strControllerBinding = customStr;
-        var controllerBindings = new List<JoystickInput>();
+        var controllerBindings = new List<ControllerInput>();
         int i = 0;
         while (!string.IsNullOrEmpty(strControllerBinding) || i < Constants.BindingsCount)
         {
@@ -271,7 +271,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             if (separatorId == -1)
                 break;
             var controllerCodeHashCode = int.Parse(strControllerBinding.Substring(0, separatorId));
-            controllerBindings.Add(JoystickInput.JoystickInputs.First((ji) => ji.Id == controllerCodeHashCode));
+            controllerBindings.Add(ControllerInput.JoystickInputs.First((ji) => ji.Id == controllerCodeHashCode));
             if (separatorId + 1 >= strControllerBinding.Length)
                 break;
             strControllerBinding = strControllerBinding.Substring(separatorId + 1);

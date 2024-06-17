@@ -66,6 +66,7 @@ public static class Constants
     public const int WhacAMoleMax = 3;
     public const int ArcadeDamage = 10;
     public const int LineBreakReachMaxHeight = 15;
+    public const int GameplayButtonCount = 13;
 
     //  TAGS  //
     public const string TagMusic = "Music";
@@ -210,7 +211,7 @@ public static class Constants
 
     public static string GetDefaultControllerBinding()
     {
-        return $"{JoystickInput.Up_7p.Id};{JoystickInput.Down_7m.Id};{JoystickInput.Left_6m.Id};{JoystickInput.Right_6p.Id};{JoystickInput.B_1.Id};{JoystickInput.A_0.Id};{JoystickInput.LB_4.Id};{JoystickInput.RT_10p.Id};{JoystickInput.LT_9p.Id};{JoystickInput.X_2.Id};{-1};{JoystickInput.Up_7p.Id};{JoystickInput.Down_7m.Id};{JoystickInput.Left_6m.Id};{JoystickInput.Right_6p.Id};{JoystickInput.A_0.Id};{JoystickInput.B_1.Id};{JoystickInput.Back_6.Id};{JoystickInput.Start_7.Id};";
+        return $"{ControllerInput.Up_7p.Id};{ControllerInput.Down_7m.Id};{ControllerInput.Left_6m.Id};{ControllerInput.Right_6p.Id};{ControllerInput.B_1.Id};{ControllerInput.A_0.Id};{ControllerInput.LB_4.Id};{ControllerInput.RT_10p.Id};{ControllerInput.LT_9p.Id};{ControllerInput.X_2.Id};{-1};{ControllerInput.Up_7p.Id};{ControllerInput.Down_7m.Id};{ControllerInput.Left_6m.Id};{ControllerInput.Right_6p.Id};{ControllerInput.A_0.Id};{ControllerInput.B_1.Id};{ControllerInput.Back_6.Id};{ControllerInput.Start_7.Id};";
     }
 
     //  SCENES  //
@@ -250,6 +251,7 @@ public static class Constants
     public const string GoButtonDownName = "ButtonDown";
     public const string GoButtonDropName = "ButtonDrop";
     public const string GoButtonSonicDropName = "ButtonSonicDrop";
+    public const string GoButtonLock = "ButtonLock";
     public const string GoButtonItemName = "ButtonItem";
     public const string GoButtonSpecialName = "ButtonSpecial";
     public const string GoButtonAntiClockName = "ButtonAntiClock";

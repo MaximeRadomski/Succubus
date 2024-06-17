@@ -118,6 +118,7 @@ public class GameplayControler : MonoBehaviour
     private int _idCleanRows;
     private int _idVisionBlock;
     private int _idEndCooldown;
+    private int _idImmunity;
     private List<List<int>> _stupidTriesDown;
     private List<List<int>> _stupidTriesUp;
 
@@ -384,6 +385,7 @@ public class GameplayControler : MonoBehaviour
         _idCleanRows = _soundControler.SetSound("CleanRows");
         _idVisionBlock = _soundControler.SetSound("VisionBlock");
         _idEndCooldown = _soundControler.SetSound("EndCooldown");
+        _idImmunity = _soundControler.SetSound("Immunity");
 
         _spawner = GameObject.Find(Constants.GoSpawnerName);
         _holder = GameObject.Find(Constants.GoHolderName);
@@ -532,7 +534,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + 0));//8 = item in sprite sheet | 0 = empty
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount + 0));//8 = item in sprite sheet | 0 = empty
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (_itemTextDefaultLocalPos == null)
                     _itemTextDefaultLocalPos = tmp.transform.GetChild(0).localPosition;
@@ -571,7 +573,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 if (CharacterItem != null)
                     tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.CurrentItemCooldown}";
@@ -597,7 +599,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + 9));//9 = special in sprite sheet
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount + 9));//9 = special in sprite sheet
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = null;
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -621,7 +623,7 @@ public class GameplayControler : MonoBehaviour
                 }
                 if (tmp == null)
                     break;
-                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12));
+                tmp.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount));
                 var beforeText = tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text;
                 tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = $"<material=\"Long{CharacterRealm}.2.1\">{Cache.SelectedCharacterSpecialCooldown}";
                 if (beforeText != tmp.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text)
@@ -729,10 +731,17 @@ public class GameplayControler : MonoBehaviour
     private void SetGameplayButton(GameObject addButton, int buttonId, string gameplayButtonName)
     {
         //Debug.Log("\t[DEBUG]\tgameplayButtonName = " + gameplayButtonName);
+        var locked = false;
+        if ((Cache.PactNoHold && gameplayButtonName == Constants.GoButtonHoldName)
+            || (Cache.PactNoSoftDrop && gameplayButtonName == Constants.GoButtonDownName))
+            locked = true;
         var gameplayButton = Instantiator.NewGameplayButton(gameplayButtonName, addButton.transform.position);
         var spriteName = gameplayButton.GetComponent<SpriteRenderer>().sprite.name;
         var spriteId = int.Parse(spriteName.Substring(spriteName.IndexOf('_') + 1));
-        gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * 12 + spriteId));
+        if (locked)
+            gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount + 12));
+        else
+            gameplayButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsGameplay_" + ((int)CharacterRealm * Constants.GameplayButtonCount + spriteId));
         if (addButton.gameObject.name[0] == 'L')
         {
             _gameplayButtons.Add(gameplayButton);
@@ -1344,6 +1353,11 @@ public class GameplayControler : MonoBehaviour
     {
         if (SceneBhv.Paused || GameplayOnHold)
             return;
+        if (Cache.PactNoSoftDrop)
+        {
+            Instantiator.PopText("can't\nsoft drop", CharacterInstanceBhv.transform.position + new Vector3(-3.0f, 0.0f), distance: 2.0f, startFadingDistancePercent: 0.6f, fadingSpeed: 0.04f);
+            _soundControler.PlaySound(_idImmunity);
+        }
         if (!SonicDropHasKey)
             SoftDropStomp();
         if (Cache.IsEffectAttackInProgress == AttackType.SheetMusic)
@@ -1969,7 +1983,10 @@ public class GameplayControler : MonoBehaviour
         if (CurrentPiece.GetComponent<Piece>().IsLocked || !_canHold || Cache.PactNoHold || SceneBhv.Paused || GameplayOnHold || _isOldSchoolGameplay)
         {
             if (Cache.PactNoHold)
-                Instantiator.PopText("can't hold", CharacterInstanceBhv.transform.position + new Vector3(-3.0f, 0.0f), distance: 2.0f, startFadingDistancePercent: 0.6f, fadingSpeed: 0.04f);
+            {
+                Instantiator.PopText("can't\nhold", CharacterInstanceBhv.transform.position + new Vector3(-3.0f, 0.0f), distance: 2.0f, startFadingDistancePercent: 0.6f, fadingSpeed: 0.04f);
+                _soundControler.PlaySound(_idImmunity);
+            }
             if (CurrentPiece.GetComponent<Piece>().IsLocked && _canHold)
                 _inputWhileLocked = Binding.Hold;
             return;
