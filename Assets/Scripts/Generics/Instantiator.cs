@@ -258,14 +258,14 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupGameplayButtonsBhv>().Init(resultAction, this);
     }
 
-    public GameObject NewToast(string content)
+    public GameObject NewToast(string content, float duration = 1.5f)
     {
         if (!_hasInit)
             Init();
         var tmpToastObject = Resources.Load<GameObject>($"Prefabs/Toast");
         var tmpToastInstance = Instantiate(tmpToastObject, new Vector3(_mainCamera.transform.position.x - 30.0f, _mainCamera.transform.position.y - 30.0f, 0.0f), tmpToastObject.transform.rotation);
         Cache.IncreaseInputLayer(tmpToastInstance.name);
-        tmpToastInstance.GetComponent<ToastBhv>().Init(content);
+        tmpToastInstance.GetComponent<ToastBhv>().Init(content, duration);
         tmpToastInstance.transform.SetParent(this._mainCamera.transform);
         return tmpToastInstance;
     }

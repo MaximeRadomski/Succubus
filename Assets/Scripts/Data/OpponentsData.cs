@@ -136,7 +136,7 @@ public static class OpponentsData
             Name = "Reverse Centaur", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 60, Weakness = Weakness.Twists, DamageOnWeakness = 70, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 2, 1) },
+                new OpponentAttack(AttackType.UpsideDown, 2, 1) },
             GravityLevel = 3, Weight = 30,
             Lore = "Centaurs were pretty difficult being to be crafted. All the failed attempts ended up in Hell."
         },
@@ -164,7 +164,7 @@ public static class OpponentsData
             Name = "Dark Coffee", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 60, Weakness = Weakness.Twists, DamageOnWeakness = 50, Cooldown = 10,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 2, 0) },
+                new OpponentAttack(AttackType.UpsideDown, 2, 0) },
             GravityLevel = 3, Weight = 30,
             Lore = "A drink so dark it could only have dark desires."
         },
@@ -435,7 +435,7 @@ public static class OpponentsData
             Name = "Nun", Realm = Realm.Earth, Type = OpponentType.Common,
             HpMax = 150, Weakness = Weakness.None, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 2, 2),
+                new OpponentAttack(AttackType.UpsideDown, 2, 2),
                 new OpponentAttack(AttackType.Shift, 6) },
             GravityLevel = 6, Weight = 20,
             DialogId = 4, DialogPitch = 1.75f,
@@ -512,7 +512,7 @@ public static class OpponentsData
             Name = "Lost Cherub", Realm = Realm.Heaven, Type = OpponentType.Common,
             HpMax = 120, Cooldown = 7, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.DropBomb, 10) },
+                new OpponentAttack(AttackType.BombDrop, 10) },
             GravityLevel = 5, Weight = 30,
             Lore = "Smallest of the angels, this Cherub seems to have lost his way on earth."
         },
@@ -522,7 +522,7 @@ public static class OpponentsData
             HpMax = 170, Cooldown = 8, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 5),
-                new OpponentAttack(AttackType.DropBomb, 6) },
+                new OpponentAttack(AttackType.BombDrop, 6) },
             GravityLevel = 8, Weight = 40,
             DialogId = 5, DialogPitch = 0.5f,
             Lore = "The speech of the Lord has only few times in history been told to humans by the Lord himself. Most of the time, Messengers are used for this purpose."
@@ -661,7 +661,7 @@ public static class OpponentsData
             Name = "Mirror of Erised", Realm = Realm.Hell, Type = OpponentType.Common,
             HpMax = 200, Weakness = Weakness.Combos, DamageOnWeakness = 20, Cooldown = 17, Haste = true,
             Attacks = new List<OpponentAttack>() {
-                new OpponentAttack(AttackType.MirrorMirror, 4, 1) },
+                new OpponentAttack(AttackType.UpsideDown, 4, 1) },
             GravityLevel = 2, Weight = 40,
             Lore = "This old device shows your deepest desires!"
         },
@@ -757,7 +757,7 @@ public static class OpponentsData
             HpMax = 250, Cooldown = 10, Haste = true,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.LineBreak, 6),
-                new OpponentAttack(AttackType.DropBomb, 5) },
+                new OpponentAttack(AttackType.BombDrop, 5) },
             GravityLevel = 8, Weight = 30,
             Lore = "Smallest of the angels, look how cute they are, with their little wings and their little child skull."
         },

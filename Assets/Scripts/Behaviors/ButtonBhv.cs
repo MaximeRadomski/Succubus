@@ -29,7 +29,7 @@ public class ButtonBhv : InputBhv
     private Color _resetedColor;
     private Color _pressedColor;
     private float? _beginPress = null;
-    private float _longPressDelay = 0.5f;
+    private float _longPressDelay = 0.35f;
     private bool _hasDoneLongPress = false;
 
     void Start()

@@ -2,10 +2,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using UnityEngine;
 
-public enum AttackType
+public class AttackType
+{
+    public AttackType(int id, string name, string description, string prefixe, string suffixe)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Prefixe = prefixe;
+        Suffixe = suffixe;
+    }
+
+    public int Id;
+    public string Name;
+    public string Description;
+    public string Prefixe;
+    public string Suffixe;
+
+    public static AttackType FromId(int id)
+    {
+        return AttackTypes.FirstOrDefault(t => t.Id == id);
+    }
+
+    public override string ToString() {
+        return Name.Replace(" ", "");
+    }
+
+    public static AttackType None = new AttackType(0, "None", "None", "", "");
+    public static AttackType DarkRow = new AttackType(1, "Dark Row", "a row destroyed by clearing 2+ rows.", "x", "");
+    public static AttackType WasteRow = new AttackType(2, "Waste Row", "a row with a hole in it.", "x", "");
+    public static AttackType LightRow = new AttackType(3, "Light Row", "a row with a cooldown. locking a piece decreases it.", "x", "");
+    public static AttackType EmptyRow = new AttackType(4, "Empty Row", "a row of nothing.", "x", "");
+    public static AttackType VisionBlock = new AttackType(5, "Vision Block", "a block partially hiding your playfield.", "", " rows");
+    public static AttackType ForcedPiece = new AttackType(6, "Forced Piece", "a piece added by force to your playfield.", "", "");
+    public static AttackType Drill = new AttackType(7, "Drill", "drills a hole in your playfield.", "", "");
+    public static AttackType AirPiece = new AttackType(8, "Air Piece", "an almost transparent piece.", "", " pieces");
+    public static AttackType ForcedBlock = new AttackType(9, "Forced Block", "a block added to your piece.", "", " pieces");
+    public static AttackType UpsideDown = new AttackType(10, "Upside Down", "reverses the camera through the x and/or y axis.", "", " pieces");
+    public static AttackType Intoxication = new AttackType(11, "Intoxication", "makes you experience the effects of alcohol.", "", " pieces");
+    public static AttackType Drone = new AttackType(12, "Drone", "invokes a drone that spawn lines until pounded.", "", "");
+    public static AttackType Shift = new AttackType(13, "Shift", "shifts some rows of your playfield horizontally.", "", " rows");
+    public static AttackType Gate = new AttackType(14, "Gate", "a row with a hole at the top of your playfield.", "", " pieces");
+    public static AttackType SheetMusic = new AttackType(15, "Sheet Music", "a sheet of directional inputs.", "", " notes");
+    public static AttackType Shrink = new AttackType(16, "Shrink", "shrinks your playfield from the bottom.", "", " lines");
+    public static AttackType OldSchool = new AttackType(17, "Old School", "forces a retro gameplay.", "", " pieces");
+    public static AttackType Screwed = new AttackType(18, "Old School", "prevent piece rotation.", "", " pieces");
+    public static AttackType BombDrop = new AttackType(19, "Bomb Drop", "a cooldown of moves until hard dropping.", "", " moves");
+    public static AttackType Tunnel = new AttackType(20, "Tunnel", "a vertical hole in your playfield.", "", " deep");
+    public static AttackType RhythmMania = new AttackType(21, "Rhythm Mania", "a rhythm forcing you to play in beat.", "", " beats");
+    public static AttackType LineBreak = new AttackType(22, "Line Break", "a limit that prevents line clearing until reached.", "", " lines");
+    public static AttackType Shelter = new AttackType(23, "Shelter", "a shield that counters your next attack.", "", " attacks");
+    public static AttackType Ascension = new AttackType(24, "Ascension", "rises a part of your playfield.", "", " columns");
+
+    public static List<AttackType> AttackTypes = new List<AttackType>() {
+        DarkRow,
+        WasteRow,
+        LightRow,
+        EmptyRow,
+        VisionBlock,
+        ForcedPiece,
+        Drill,
+        AirPiece,
+        ForcedBlock,
+        UpsideDown,
+        Intoxication,
+        Drone,
+        Shift,
+        Gate,
+        SheetMusic,
+        Shrink,
+        OldSchool,
+        Screwed,
+        BombDrop,
+        Tunnel,
+        RhythmMania,
+        LineBreak,
+        Shelter,
+        Ascension
+    };
+}
+
+public enum AttackTypeEnum
 {
     //Param1 will be the one displayed between pefixes and suffixes
 

@@ -1224,7 +1224,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                 DecrementDropBombCooldown(Binding.Left);
         }
         else
@@ -1257,7 +1257,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _rightHeld == 0)
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                 DecrementDropBombCooldown(Binding.Left);
         }
         else if (_leftHeldPounder == 0)
@@ -1298,7 +1298,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible: mimicPossible || CurrentPiece.GetComponent<Piece>().IsMimic))
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                 DecrementDropBombCooldown(Binding.Right);
         }
         else
@@ -1331,7 +1331,7 @@ public class GameplayControler : MonoBehaviour
         if (IsPiecePosValidOrReset(mimicPossible:CurrentPiece.GetComponent<Piece>().IsMimic) && _leftHeld == 0)
         {
             _soundControler.PlaySound(_idLeftRightDown);
-            if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+            if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                 DecrementDropBombCooldown(Binding.Left);
         }
         else if (_rightHeldPounder == 0)
@@ -1387,7 +1387,7 @@ public class GameplayControler : MonoBehaviour
         }
         _lastDownSoftDrop = Time.time;
         SoftDropStomp();
-        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+        if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
             DecrementDropBombCooldown(Binding.SonicDrop);
     }
 
@@ -1519,7 +1519,7 @@ public class GameplayControler : MonoBehaviour
         //_soundControler.PlaySound(_idHardDrop);
         SceneBhv.OnHardDrop(nbLinesDropped);
         PounderCamera();
-        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+        if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
             DecrementDropBombCooldown(Binding.HardDrop);
     }
 
@@ -1756,7 +1756,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
-                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                     DecrementDropBombCooldown(Binding.Clock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -1892,7 +1892,7 @@ public class GameplayControler : MonoBehaviour
                 _soundControler.PlaySound(_idRotate);
                 if (currentPieceModel.IsClassic)
                     currentPieceModel.ApplyClassicBlocksNoRotation();
-                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                     DecrementDropBombCooldown(Binding.AntiClock);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -1965,7 +1965,7 @@ public class GameplayControler : MonoBehaviour
                 //CurrentGhost.transform.Rotate(0.0f, 0.0f, 90.0f);
                 DropGhost(withRotationAngle: 180.0f);
                 _soundControler.PlaySound(_idRotate);
-                if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+                if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
                     DecrementDropBombCooldown(Binding.Rotation180);
                 _hasMovedOrRotatedCurrentPiece = true;
                 return;
@@ -2065,7 +2065,7 @@ public class GameplayControler : MonoBehaviour
             _hasMovedOrRotatedCurrentPiece = false;
             CheckInputWhileLocked();
         }
-        if (Cache.IsEffectAttackInProgress == AttackType.DropBomb)
+        if (Cache.IsEffectAttackInProgress == AttackType.BombDrop)
             DecrementDropBombCooldown(Binding.Hold);
         _soundControler.PlaySound(_idHold);
     }
@@ -2821,86 +2821,61 @@ public class GameplayControler : MonoBehaviour
             attackBoost -= 1;
         }
         VibrationService.Vibrate();
-        Instantiator.PopText($"{type.GetDescription().ToLower()}", opponentInstance.transform.position + new Vector3(+3f, 0.0f, 0.0f));
-        switch (type)
-        {
-            case AttackType.DarkRow:
+        Instantiator.PopText($"{type.Name.ToLower()}", opponentInstance.transform.position + new Vector3(+3f, 0.0f, 0.0f));
+        if (type == AttackType.DarkRow)
                 AttackDarkRows(opponentInstance, param1 + (attackBoost / 2), opponentRealm);
-                break;
-            case AttackType.WasteRow:
-                AttackWasteRows(opponentInstance, param1 + (attackBoost / 2), opponentRealm, param2);
-                break;
-            case AttackType.LightRow:
-                AttackLightRows(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
-                break;
-            case AttackType.EmptyRow:
-                AttackEmptyRows(opponentInstance, param1 + attackBoost, opponentRealm);
-                break;
-            case AttackType.VisionBlock:
-                AttackVisionBlock(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
-                break;
-            case AttackType.ForcedPiece:
-                AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
-                break;
-            case AttackType.Drill:
-                AttackDrill(opponentInstance, opponentRealm, param1);
-                break;
-            case AttackType.AirPiece:
-                AttackAirPiece(opponentInstance, opponentRealm, param1 + attackBoost);
-                break;
-            case AttackType.ForcedBlock:
-                AttackForcedBlock(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
-                break;
-            case AttackType.MirrorMirror:
-            case AttackType.Intoxication:
-                AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + attackBoost, param2);
-                break;
-            case AttackType.Drone:
-                AttackDrone(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
-                break;
-            case AttackType.Shift:
-                AttackShift(opponentInstance, opponentRealm, param1);
-                break;
-            case AttackType.Gate:
-                AttackGate(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
-                break;
-            case AttackType.SheetMusic:
-                AttackPartition(opponentInstance, opponentRealm, param1 + attackBoost, param2);
-                break;
-            case AttackType.Shrink:
-                AttackShrink(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
-                break;
-            case AttackType.OldSchool:
-                AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
-                break;
-            case AttackType.Screwed:
-                AttackScrewed(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
-                break;
-            case AttackType.DropBomb:
-                AttackDropBomb(opponentInstance, opponentRealm, param1);
-                break;
-            case AttackType.Tunnel:
-                AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
-                break;
-            case AttackType.RhythmMania:
-                if (PlayerPrefsHelper.GetRhythmAttacksEnabled() == true)
-                    AttackRhythmMania(opponentInstance, opponentRealm, param1 + (attackBoost * 2), param2);
-                else
-                {
-                    var nbNotes = param1 + attackBoost;
-                    AttackPartition(opponentInstance, opponentRealm, (nbNotes > 8 ? 8 : nbNotes), param2);
-                }
-                break;
-            case AttackType.LineBreak:
-                AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
-                break;
-            case AttackType.Shelter:
-                AttackShelter(opponentInstance, opponentRealm);
-                break;
-            case AttackType.Ascension:
-                AttackAscension(opponentInstance, opponentRealm, param1 + attackBoost, param2);
-                break;
+        else if (type == AttackType.WasteRow)
+            AttackWasteRows(opponentInstance, param1 + (attackBoost / 2), opponentRealm, param2);
+        else if (type == AttackType.LightRow)
+            AttackLightRows(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
+        else if (type == AttackType.EmptyRow)
+            AttackEmptyRows(opponentInstance, param1 + attackBoost, opponentRealm);
+        else if (type == AttackType.VisionBlock)
+            AttackVisionBlock(opponentInstance, param1 + attackBoost, opponentRealm, param2 + attackBoost);
+        else if (type == AttackType.ForcedPiece)
+            AttackForcedPiece(opponentInstance, opponentRealm, param1, param2);
+        else if (type == AttackType.Drill)
+            AttackDrill(opponentInstance, opponentRealm, param1);
+        else if (type == AttackType.AirPiece)
+            AttackAirPiece(opponentInstance, opponentRealm, param1 + attackBoost);
+        else if (type == AttackType.ForcedBlock)
+            AttackForcedBlock(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
+        else if (type == AttackType.UpsideDown || type == AttackType.Intoxication)
+            AttackCameraEffects(type, opponentInstance, opponentRealm, param1 + attackBoost, param2);
+        else if (type == AttackType.Drone)
+            AttackDrone(opponentInstance, opponentRealm, param1 + (attackBoost / 2), param2);
+        else if (type == AttackType.Shift)
+            AttackShift(opponentInstance, opponentRealm, param1);
+        else if (type == AttackType.Gate)
+            AttackGate(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
+        else if (type == AttackType.SheetMusic)
+            AttackPartition(opponentInstance, opponentRealm, param1 + attackBoost, param2);
+        else if (type == AttackType.Shrink)
+            AttackShrink(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
+        else if (type == AttackType.OldSchool)
+            AttackOldSchool(opponentInstance, opponentRealm, param1 + attackBoost, param2 + attackBoost);
+        else if (type == AttackType.Screwed)
+            AttackScrewed(opponentInstance, opponentRealm, param1 + (attackBoost / 2));
+        else if (type == AttackType.BombDrop)
+            AttackDropBomb(opponentInstance, opponentRealm, param1);
+        else if (type == AttackType.Tunnel)
+            AttackTunnel(opponentInstance, opponentRealm, param1 + attackBoost);
+        else if (type == AttackType.RhythmMania)
+        {
+            if (PlayerPrefsHelper.GetRhythmAttacksEnabled() == true)
+                AttackRhythmMania(opponentInstance, opponentRealm, param1 + (attackBoost * 2), param2);
+            else
+            {
+                var nbNotes = param1 + attackBoost;
+                AttackPartition(opponentInstance, opponentRealm, (nbNotes > 8 ? 8 : nbNotes), param2);
+            }
         }
+        else if (type == AttackType.LineBreak)
+            AttackLineBreak(opponentInstance, opponentRealm, param1 + attackBoost);
+        else if (type == AttackType.Shelter)
+            AttackShelter(opponentInstance, opponentRealm);
+        else if (type == AttackType.Ascension)
+            AttackAscension(opponentInstance, opponentRealm, param1 + attackBoost, param2);
         UpdateItemAndSpecialVisuals();
     }
 
@@ -3244,7 +3219,7 @@ public class GameplayControler : MonoBehaviour
             _soundControler.PlaySound(_idBipItem);
             var rowType = AttackType.DarkRow;
             if (rowTypeId >= 1 || rowTypeId <= 4)
-                rowType = (AttackType)rowTypeId;
+                rowType = AttackType.FromId(rowTypeId);
             var x = 0;
             if (GetHighestBlock() >= _spawner.transform.position.y - 1)
             {
@@ -3558,7 +3533,7 @@ public class GameplayControler : MonoBehaviour
             CancelLastEffectAttack();
         _afterSpawnAttackCounter = 999;
         _dropBombCooldown = nbMoves;
-        Cache.IsEffectAttackInProgress = AttackType.DropBomb;
+        Cache.IsEffectAttackInProgress = AttackType.BombDrop;
         SetAfterSpawn(DropBombAfterSpawn);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 2);
 
@@ -3566,7 +3541,7 @@ public class GameplayControler : MonoBehaviour
         {
             if (_afterSpawnAttackCounter <= 0)
             {
-                BaseAfterSpawnEnd(AttackType.DropBomb);
+                BaseAfterSpawnEnd(AttackType.BombDrop);
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
@@ -3582,7 +3557,7 @@ public class GameplayControler : MonoBehaviour
         UpdateDropBombCooldown(lastInput);
         if (_dropBombCooldown <= 0)
         {
-            BaseAfterSpawnEnd(AttackType.DropBomb);
+            BaseAfterSpawnEnd(AttackType.BombDrop);
             if (lastInput != Binding.HardDrop)
                 HardDrop();
             _soundControler.PlaySound(_idPerfect, 1.5f, 0.5f);

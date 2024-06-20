@@ -50,7 +50,7 @@ public class EffectsCameraBhv : FrameRateBehavior
 
     public void SetAttack(AttackType attackType, int param, int cooldown)
     {
-        if (attackType == AttackType.MirrorMirror)
+        if (attackType == AttackType.UpsideDown)
             SetMirrorMirror(param, cooldown);
         else if (attackType == AttackType.Intoxication)
             SetIntoxication(cooldown);
