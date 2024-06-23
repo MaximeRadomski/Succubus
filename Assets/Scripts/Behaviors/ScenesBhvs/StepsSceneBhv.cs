@@ -32,6 +32,7 @@ public class StepsSceneBhv : SceneBhv
     private GameObject _buttonBeholder;
     private GameObject _buttonLurker;
     private InputControlerBhv _inputControler;
+    private bool _firstMenuSelectorSelect = false;
 
     private Step _selectedStep;
     private float _lootCenterLocalY;
@@ -177,10 +178,20 @@ public class StepsSceneBhv : SceneBhv
             PositionOnCurrent();
         _selector.GetComponent<IconInstanceBhv>().Pop();
         var distance = Vector2.Distance(CameraBhv.gameObject.transform.position, _stepsBackground.transform.position);
-        StartCoroutine(Helper.ExecuteAfterDelay(0.05f, () => {
+        InvokeNextFrame(() => {
             CameraBhv.SlideToPosition(_selector.transform.position + new Vector3(0.0f, -distance, 0.0f));
             _inputControler.InitMenuKeyboardInputs(_selector.transform.position + new Vector3(0.0f, 1.5f, 0.0f));
-        }));
+            if (!_firstMenuSelectorSelect)
+            {
+                var _firstMenuSelectorTarget = GameObject.Find($"{x}_{y}").GetComponent<ButtonBhv>();
+                _firstMenuSelectorTarget.IsMenuSelectorResetButton = true;
+                StartCoroutine(Helper.ExecuteAfterDelay(0.5f, () =>
+                {
+                    _firstMenuSelectorTarget.IsMenuSelectorResetButton = false;
+                }));
+                this._firstMenuSelectorSelect = true;
+            }
+        });
         _playButton.SetActive(_selectedStep.LootType != LootType.None);
         var rarity = Rarity.Common;
         if (_selectedStep.LootType != LootType.None)

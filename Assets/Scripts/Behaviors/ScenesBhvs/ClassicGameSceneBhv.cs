@@ -529,15 +529,13 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[(int)Run.CurrentRealm]);
                 Helper.ReinitKeyboardInputs(this);
             }
-            var amount = 2;
-            if (Run.Difficulty == Difficulty.Easy)
-                amount = 1;
-            else if (Run.Difficulty == Difficulty.Hard)
-                amount = 3;
+            var amount = 1;
+            if (Run.Difficulty == Difficulty.Hard)
+                amount = 2;
             else if (Run.Difficulty == Difficulty.Infernal)
-                amount = 4;
+                amount = 3;
             else if (Run.Difficulty == Difficulty.Divine || (int)Run.Difficulty > (int)Difficulty.Divine)
-                amount = 5;
+                amount = 4;
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
             Run.AlterResource(((Resource)loot).Id, amount);
@@ -1000,9 +998,12 @@ public class ClassicGameSceneBhv : GameSceneBhv
         opponentIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/OpponentsIcons_" + (((int)_opponents[Cache.CurrentListOpponentsId].Realm * 2) + 1));
         opponentIcon.GetComponent<IconInstanceBhv>().Pop();
 
-        if (Cache.CurrentListOpponentsId + 1 < _opponents.Count && DialogsData.DialogTree.ContainsKey(CurrentOpponent.Name))
+        var alreadyDialog = PlayerPrefsHelper.GetAlreadyDialog();
+        if (Cache.CurrentListOpponentsId + 1 < _opponents.Count
+            && DialogsData.DialogTree.ContainsKey(CurrentOpponent.Name) && !alreadyDialog.Contains($"{CurrentOpponent.Name}|Death"))
         {
             _gameplayControler.GameplayOnHold = true;
+            PlayerPrefsHelper.AddToAlreadyDialog($"{CurrentOpponent.Name}|Death");
             Instantiator.NewDialogBoxDeath(CameraBhv.transform.position, CurrentOpponent.Name, () =>
             {
                 _gameplayControler.GameplayOnHold = false;

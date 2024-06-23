@@ -57,9 +57,7 @@ public class SpriteOrderBhv : MonoBehaviour
             {
                 var attack = AttackType.FromId(i);
                 var name = attack.Name.ToLower();
-                if (attack == AttackType.WasteRow)
-                    Debug.Log("test");
-                if (_textMesh.text.Contains(name)) {
+                if (_textMesh.text.Contains($" {name}")) {
                     var boxCollider = _textMesh.gameObject.GetComponent<BoxCollider2D>();
                     if (boxCollider == null)
                     {

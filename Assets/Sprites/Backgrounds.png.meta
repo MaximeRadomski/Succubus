@@ -397,10 +397,10 @@ TextureImporter:
       name: Backgrounds_12
       rect:
         serializedVersion: 2
-        x: 544
-        y: 496
-        width: 142
-        height: 59
+        x: 501
+        y: 474
+        width: 228
+        height: 81
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

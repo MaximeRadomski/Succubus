@@ -44,7 +44,7 @@ public class PopupYesNoBhv : PopupBhv
                 transform.position += new Vector3(0.0f, -2.3f, 0.0f);
             }
         }
-        if (defaultPositive == true)
+        if (defaultPositive == true || string.IsNullOrEmpty(negative))
         {
             _buttonPositive.IsMenuSelectorResetButton = true;
         }

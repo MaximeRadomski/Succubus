@@ -746,19 +746,22 @@ public class InputControlerBhv : FrameRateBehavior
         var minDistance = 99.0f;
         GameObject selectedGameObject = null;
 
-        foreach (var button in _availableButtons)
-        {
-            if (button == null)
-                continue;
-            var boxCollider = button.GetComponent<BoxCollider2D>();
-            var offset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
-            var currentDistance = Vector2.Distance(button.transform.position + offset, MenuSelector.transform.position);
-            if (currentDistance < minDistance && currentDistance < 1.0f)
+        if (_availableButtons.Count == 1)
+            selectedGameObject = _availableButtons[0];
+        else
+            foreach (var button in _availableButtons)
             {
-                minDistance = currentDistance;
-                selectedGameObject = button;
+                if (button == null)
+                    continue;
+                var boxCollider = button.GetComponent<BoxCollider2D>();
+                var offset = new Vector3(boxCollider.offset.x, boxCollider.offset.y, 0.0f);
+                var currentDistance = Vector2.Distance(button.transform.position + offset, MenuSelector.transform.position);
+                if (currentDistance < minDistance && currentDistance < 1.0f)
+                {
+                    minDistance = currentDistance;
+                    selectedGameObject = button;
+                }
             }
-        }
 
         if (selectedGameObject != null)
         {

@@ -9,7 +9,7 @@ public class ToastBhv : FrameRateBehavior
     private TMPro.TextMeshPro _textRenderer;
     private int _state = 0;
     private float _duration;
-    private float _verticalOffset = 7.17f;
+    private float _verticalOffset = 10.0f;
     private Vector3 _targetPosition;
     private Vector3 _originPosition;
     private float _speed = 0.15f;
