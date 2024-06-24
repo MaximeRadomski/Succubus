@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17564625708695013}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.256, y: -0.475, z: 0}
+  m_LocalPosition: {x: 4.256, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1845033012988537504}
@@ -1347,6 +1347,7 @@ GameObject:
   - component: {fileID: 6169581554471279326}
   - component: {fileID: 3998724501577860808}
   - component: {fileID: 7694130043032028222}
+  - component: {fileID: 644526385862140846}
   m_Layer: 0
   m_Name: OpponentAttack1
   m_TagString: Untagged
@@ -1518,6 +1519,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &644526385862140846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747193492521046977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 1
+  CheckImmunities: 0
+  CheckWeaknesses: 0
 --- !u!1 &833103424159203470
 GameObject:
   m_ObjectHideFlags: 0
@@ -4749,6 +4765,7 @@ GameObject:
   - component: {fileID: 7761640384536819188}
   - component: {fileID: 672850322079066594}
   - component: {fileID: 9072536063236023199}
+  - component: {fileID: 4976396672996700474}
   m_Layer: 0
   m_Name: OpponentAttack4
   m_TagString: Untagged
@@ -4920,6 +4937,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4976396672996700474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3780406811224964331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 1
+  CheckImmunities: 0
+  CheckWeaknesses: 0
 --- !u!1 &3927861857071961817
 GameObject:
   m_ObjectHideFlags: 0
@@ -4932,6 +4964,7 @@ GameObject:
   - component: {fileID: 7584836610206195654}
   - component: {fileID: 838324525796213712}
   - component: {fileID: 5887045714333793007}
+  - component: {fileID: 2029029982049837244}
   m_Layer: 0
   m_Name: OpponentAttack3
   m_TagString: Untagged
@@ -5103,6 +5136,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2029029982049837244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927861857071961817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 1
+  CheckImmunities: 0
+  CheckWeaknesses: 0
 --- !u!1 &4006742277800958809
 GameObject:
   m_ObjectHideFlags: 0
@@ -7769,6 +7817,7 @@ GameObject:
   - component: {fileID: 1076395822929432261}
   - component: {fileID: 7786920909206409939}
   - component: {fileID: 6342623522881482138}
+  - component: {fileID: 1366610641185097337}
   m_Layer: 0
   m_Name: OpponentImmunity
   m_TagString: Untagged
@@ -7793,8 +7842,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.36, y: 1.48}
-  m_SizeDelta: {x: 8.5, y: 1.09}
+  m_AnchoredPosition: {x: 5.36, y: 0.998}
+  m_SizeDelta: {x: 8.5, y: 2.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1076395822929432261
 MeshRenderer:
@@ -7857,7 +7906,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: immunity
+  m_text: 'immunity
+
+    none'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2871060d13c0dfb4d93127d5bf2103cf, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3499f323bf547964481c0aa55da7ce42, type: 2}
@@ -7892,7 +7943,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -7941,6 +7992,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1366610641185097337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5850300667243988954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 0
+  CheckImmunities: 1
+  CheckWeaknesses: 0
 --- !u!1 &6000035016635545932
 GameObject:
   m_ObjectHideFlags: 0
@@ -8529,6 +8595,7 @@ GameObject:
   - component: {fileID: 412376194163772486}
   - component: {fileID: 7447158236871299152}
   - component: {fileID: 8990338023218714300}
+  - component: {fileID: 1313976097827029346}
   m_Layer: 0
   m_Name: OpponentAttack2
   m_TagString: Untagged
@@ -8700,6 +8767,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1313976097827029346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519343980224103769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 1
+  CheckImmunities: 0
+  CheckWeaknesses: 0
 --- !u!1 &6888422566955667115
 GameObject:
   m_ObjectHideFlags: 0
@@ -9383,6 +9465,7 @@ GameObject:
   - component: {fileID: 3786402691819835740}
   - component: {fileID: 6227513105755278666}
   - component: {fileID: 6444714789583676164}
+  - component: {fileID: 1890243768708287876}
   m_Layer: 0
   m_Name: OpponentWeakness
   m_TagString: Untagged
@@ -9407,8 +9490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.36, y: 1.48}
-  m_SizeDelta: {x: 8.5, y: 1.09}
+  m_AnchoredPosition: {x: -5.36, y: 0.998}
+  m_SizeDelta: {x: 8.5, y: 2.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3786402691819835740
 MeshRenderer:
@@ -9471,7 +9554,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: weakness
+  m_text: 'weakness
+
+    none'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2871060d13c0dfb4d93127d5bf2103cf, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3499f323bf547964481c0aa55da7ce42, type: 2}
@@ -9506,7 +9591,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -9555,6 +9640,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536cab130fd7110498ff0bcd92451319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1890243768708287876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7731642717681375299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367278bdd1fbba04884696475fa257a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckAttacks: 0
+  CheckImmunities: 0
+  CheckWeaknesses: 1
 --- !u!1 &7761197447918617111
 GameObject:
   m_ObjectHideFlags: 0
@@ -10382,7 +10482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8374373884264323226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.256, y: -0.475, z: 0}
+  m_LocalPosition: {x: -4.256, y: -0.079, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2587035258492925241}
@@ -11839,14 +11939,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
---- !u!224 &3649824125642362976 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
-  m_PrefabInstance: {fileID: 2396342154325410212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4643290509140222595 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7003603624851055399, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
+  m_PrefabInstance: {fileID: 2396342154325410212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &3649824125642362976 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1434189542567186884, guid: 0fc7d662fa2f6824080f7e3be338410f, type: 3}
   m_PrefabInstance: {fileID: 2396342154325410212}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4904240770424875422
@@ -12473,14 +12573,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
---- !u!224 &2916786907465230897 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
-  m_PrefabInstance: {fileID: 7650489379873616817}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2916786907465230898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4778738889613007235, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
+  m_PrefabInstance: {fileID: 7650489379873616817}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2916786907465230897 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4778738889613007232, guid: b1998ef90c125ae46af9f84a69df53e6, type: 3}
   m_PrefabInstance: {fileID: 7650489379873616817}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3829169590300581405

@@ -236,10 +236,12 @@ public class InfoMenuBhv : PopupBhv
             _fightFrame.transform.Find("ButtonOpponent").GetComponent<ButtonBhv>().EndActionDelegate = OpponentLore;
             _fightFrame.transform.Find("ButtonOpponent").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{opponent.Region}Opponents_" + opponent.Id);
             _fightFrame.transform.Find("OpponentType").GetComponent<SpriteRenderer>().sprite = opponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)opponent.Realm * 3) + ((int)opponent.Type - 1)));
+            opponent.Weakness ??= Weakness.None;
+            opponent.Immunity ??= Immunity.None;
             _fightFrame.transform.Find("OpponentWeakness").GetComponent<TMPro.TextMeshPro>().text = "weakness\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
-                (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.GetDescription().ToLower() : opponent.Weakness.GetDescription().ToLower());
+                (opponent.Weakness == Weakness.xLines ? opponent.XLineWeakness + " " + opponent.Weakness.Name.ToLower() : opponent.Weakness.Name.ToLower());
             _fightFrame.transform.Find("OpponentImmunity").GetComponent<TMPro.TextMeshPro>().text = "immunity\n" + Constants.GetMaterial(Realm.Hell, TextType.succubus3x5, TextCode.c43) +
-                (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.GetDescription().ToLower() : opponent.Immunity.GetDescription().ToLower());
+                (opponent.Immunity == Immunity.xLines ? opponent.XLineImmunity + " " + opponent.Immunity.Name.ToLower() : opponent.Immunity.Name.ToLower());
         }
         var pacts = PlayerPrefsHelper.GetCurrentPacts();
         var pactsStr = string.Empty;

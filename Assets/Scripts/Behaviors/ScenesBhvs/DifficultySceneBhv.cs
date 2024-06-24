@@ -183,7 +183,11 @@ public class DifficultySceneBhv : SceneBhv
         var tmpPos = _baseDifficultiesContainer.transform.position;
         _baseDifficultiesContainer.transform.position = _advancedDifficultiesContainer.transform.position;
         _advancedDifficultiesContainer.transform.position = tmpPos;
-        _inputControlerBhv.InitMenuKeyboardInputs(_buttonNext.transform.position + new Vector3(0.0f, 1.0f, 0.0f));
+        if (!Cache.OnlyMouseInMenu)
+            InvokeNextFrame(() =>
+            {
+                _inputControlerBhv.InitMenuKeyboardInputs(_buttonNext.transform.position + new Vector3(0.0f, 1.0f, 0.0f));
+            });
     }
 
     private void Next()
@@ -194,6 +198,10 @@ public class DifficultySceneBhv : SceneBhv
         var tmpPos = _advancedDifficultiesContainer.transform.position;
         _advancedDifficultiesContainer.transform.position = _baseDifficultiesContainer.transform.position;
         _baseDifficultiesContainer.transform.position = tmpPos;
-        _inputControlerBhv.InitMenuKeyboardInputs(_buttonPrevious.transform.position + new Vector3(0.0f, 1.1f, 0.0f));
+        if (!Cache.OnlyMouseInMenu)
+            InvokeNextFrame(() =>
+            {
+                _inputControlerBhv.InitMenuKeyboardInputs(_buttonPrevious.transform.position + new Vector3(0.0f, 1.1f, 0.0f));
+            });
     }
 }

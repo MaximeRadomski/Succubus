@@ -38,7 +38,8 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _level = results[1];
         _lines = results[2];
         _pieces = results[3];
-        _boostedLines = (Cache.TrainingFreeSelectedLevel - 1) * 10;
+        if (Cache.CurrentGameMode != GameMode.TrainingOldSchool)
+            _boostedLines = (Cache.TrainingFreeSelectedLevel - 1) * 10;
         _next = Constants.LinesForLevel - (_lines % 10);
 
         _scoreTmp = GameObject.Find("Score").GetComponent<TMPro.TextMeshPro>();
@@ -54,7 +55,7 @@ public class TrainingFreeGameSceneBhv : GameSceneBhv
         _piecesTmp.text = _pieces.ToString();
 
         CurrentOpponent = null;
-        if (Cache.TrainingFreeSelectedLevel == 0)
+        if (Cache.TrainingFreeSelectedLevel == 0 && Cache.CurrentGameMode != GameMode.TrainingOldSchool)
         {
             this.Instantiator.NewPopupTrainingFreeLevel((int selectedLevel) =>
             {
