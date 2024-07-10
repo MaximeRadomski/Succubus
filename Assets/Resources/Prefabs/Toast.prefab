@@ -148,7 +148,7 @@ MonoBehaviour:
   Layer: 0
   ForcedLayer: 0
   Disabled: 0
-  StretchDisabled: 1
+  StretchDisabled: 0
   ColorDisabled: 1
   CustomSound: 0
   VibratesOnClick: 0

@@ -335,8 +335,8 @@ public class StepsService
         //DEBUG
         if (OpponentsData.DebugEnabled)
         {
-            stepOpponents.Add(OpponentsData.DebugOpponent());
-            if (OpponentsData.OnlyOpponent)
+            stepOpponents.AddRange(OpponentsData.DebugOpponent());
+            if (OpponentsData.OnlyDebugOpponents)
                 return stepOpponents;
         }
         //DEBUG

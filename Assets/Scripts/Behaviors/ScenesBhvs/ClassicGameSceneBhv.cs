@@ -281,9 +281,9 @@ public class ClassicGameSceneBhv : GameSceneBhv
         OpponentInstanceBhv.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet($"Sprites/{CurrentOpponent.Region}Opponents_{CurrentOpponent.Id}");
         _opponentType.sprite = CurrentOpponent.Type == OpponentType.Common ? null : Helper.GetSpriteFromSpriteSheet("Sprites/OpponentTypes_" + (((int)CurrentOpponent.Realm * 3) + (CurrentOpponent.Type.GetHashCode() - 1)));
         Cache.CurrentOpponentHp = Cache.CurrentOpponentHp <= 0 ? CurrentOpponent.HpMax : Cache.CurrentOpponentHp;
-        _weaknessInstance.SetVisible(CurrentOpponent.Weakness != Weakness.None);
+        _weaknessInstance.SetVisible(CurrentOpponent.Weakness != null && CurrentOpponent.Weakness != Weakness.None);
         _weaknessInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + ((int)CurrentOpponent.Realm * 2)));
-        _immunityInstance.SetVisible(CurrentOpponent.Immunity != Immunity.None);
+        _immunityInstance.SetVisible(CurrentOpponent.Immunity != null && CurrentOpponent.Immunity != Immunity.None); 
         _immunityInstance.SetSkin(Helper.GetSpriteFromSpriteSheet("Sprites/WeaknessImmunity_" + ((int)CurrentOpponent.Realm * 2 + 1)));
         _opponentHpBar.SetSkin("Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 0),
                                "Sprites/Bars_" + ((int)CurrentOpponent.Realm * 4 + 1),

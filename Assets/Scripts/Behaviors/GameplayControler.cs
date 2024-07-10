@@ -122,6 +122,8 @@ public class GameplayControler : MonoBehaviour
     private List<List<int>> _stupidTriesDown;
     private List<List<int>> _stupidTriesUp;
 
+    private bool noGhost => Cache.IsEffectAttackInProgress == AttackType.Intoxication || _isOldSchoolGameplay;
+
     public void StartGameplay(int level, Realm characterRealm, Realm levelRealm)
     {
         Init(level, characterRealm, levelRealm);
@@ -641,7 +643,7 @@ public class GameplayControler : MonoBehaviour
         var uiPanelLeftPositionBhv = _uiPanelLeft.GetComponent<PositionBhv>();
         uiPanelLeftPositionBhv.HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.LeftBorder : CameraHorizontalSide.RightBorder;
         uiPanelLeftPositionBhv.XOffset = 2.285f * mult;
-        uiPanelLeftPositionBhv.UpdatePositions();        
+        uiPanelLeftPositionBhv.UpdatePositions();
         var uiPanelRightPositionBhv = _uiPanelRight.GetComponent<PositionBhv>();
         uiPanelRightPositionBhv.HorizontalSide = gameplayChoice == GameplayChoice.SwipesRightHanded ? CameraHorizontalSide.LeftBorder : CameraHorizontalSide.RightBorder;
         uiPanelRightPositionBhv.XOffset = 2.285f * mult;
@@ -938,7 +940,7 @@ public class GameplayControler : MonoBehaviour
             CurrentGhost.transform.rotation = Cache.OnResumeLastPieceRotation.Value;
         }
         if (!_hasAlteredPiecePositionAfterResume && Cache.NameLastScene == Constants.SettingsScene && Cache.OnResumeLastForcedBlocks != null)
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor);
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(SceneBhv.CurrentOpponent.Realm, Cache.OnResumeLastForcedBlocks.Value, Instantiator, CurrentGhost.transform, _ghostColor, noGhost: noGhost);
         else
             HandleAdditionalOrLesserBlocks();
         if (Character.ChanceOldSchool > 0 && Helper.RandomDice100(Character.ChanceOldSchool)
@@ -984,7 +986,7 @@ public class GameplayControler : MonoBehaviour
     private void HandleAdditionalOrLesserBlocks()
     {
         if ((Character.ChanceAdditionalBlock > 0 || Cache.PactChanceAdditionalBlock > 0) && Helper.RandomDice100(Character.ChanceAdditionalBlock + Cache.PactChanceAdditionalBlock))
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor);
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(CharacterRealm, 1, Instantiator, CurrentGhost.transform, _ghostColor, noGhost: noGhost);
         if (Character.ChanceLesserBlock > 0 && Helper.RandomDice100(Character.ChanceLesserBlock))
             CurrentPiece.GetComponent<Piece>().RemoveLastBlock(CurrentGhost.transform, CharacterRealm, this);
     }
@@ -3156,7 +3158,7 @@ public class GameplayControler : MonoBehaviour
                 return false;
             }
             Instantiator.NewAttackLine(opponentInstance.gameObject.transform.position, _spawner.transform.position, opponentRealm);
-            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform, _ghostColor);
+            CurrentPiece.GetComponent<Piece>().AddRandomBlocks(opponentRealm, nbBlocks, Instantiator, CurrentGhost.transform, _ghostColor, noGhost: noGhost);
             _soundControler.PlaySound(_idGarbageRows);
             return true;
         }
@@ -3485,7 +3487,12 @@ public class GameplayControler : MonoBehaviour
                 _arrMax = PlayerPrefsHelper.GetArr();
                 (this.SceneBhv as ClassicGameSceneBhv).ResetToOpponentGravity();
                 var noVisionBlock = GameObject.FindGameObjectsWithTag(Constants.TagVisionBlock).Length > 0;
-                CurrentGhost?.GetComponent<Piece>()?.SetColor(_ghostColor, Character.XRay && noVisionBlock);
+                if (CurrentGhost != null)
+                {
+                    var piece = CurrentGhost?.GetComponent<Piece>();
+                    if (piece != null)
+                        piece?.SetColor(_ghostColor, Character.XRay && noVisionBlock);
+                }
                 BaseAfterSpawnEnd(AttackType.OldSchool);
                 return false;
             }

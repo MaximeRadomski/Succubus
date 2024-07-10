@@ -92,7 +92,7 @@ public class ButtonBhv : InputBhv
     public override void DoAction(Vector2 touchPosition)
     {
         DoActionDelegate?.Invoke();
-        if (_beginPress != null && Time.time - _beginPress > _longPressDelay)
+        if (LongPressActionDelegate != null && _beginPress != null && Time.time - _beginPress > _longPressDelay)
         {
             _beginPress = null;
             _hasDoneLongPress = true;

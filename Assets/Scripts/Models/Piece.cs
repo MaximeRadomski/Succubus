@@ -184,7 +184,7 @@ public class Piece : FrameRateBehavior
         }
     }
 
-    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost, Color ghostColor)
+    public void AddRandomBlocks(Realm realm, int nbBlocks, Instantiator instantiator, Transform ghost, Color ghostColor, bool noGhost = false)
     {
         int remainingBlocks = nbBlocks;
         var id = Random.Range(0, transform.childCount);
@@ -209,7 +209,7 @@ public class Piece : FrameRateBehavior
                     ghost.transform.position = transform.position;
                     instantiator.NewPieceBlock(realm.ToString(), new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), transform);
                     var shadowBlock = instantiator.NewPieceBlock(realm + "Ghost", new Vector3(roundedChildX + x, roundedChildY + y, 0.0f), ghost);
-                    shadowBlock.GetComponent<SpriteRenderer>().color = Cache.IsEffectAttackInProgress == AttackType.Intoxication ? Constants.ColorPlainTransparent : ghostColor;
+                    shadowBlock.GetComponent<SpriteRenderer>().color = noGhost ? Constants.ColorPlainTransparent : ghostColor;
                     AddRandomBlocks(realm, --nbBlocks, instantiator, ghost, ghostColor);
                     return;
                 }

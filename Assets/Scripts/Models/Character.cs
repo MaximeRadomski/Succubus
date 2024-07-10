@@ -113,6 +113,7 @@ public class Character : Loot
     public int WhacAMoleStrength = 0;
     public bool StairwayToHeaven = false;
     public bool RaccoonWaste = false;
+    public bool PenroseTriangle = false;
 
     [System.NonSerialized]
     private int? _realmTreeAttackBoost;
@@ -128,7 +129,13 @@ public class Character : Loot
     {
         if (BoostAttack < 0)
             BoostAttack = 0;
-        return GetAttackNoBoost() + BoostAttack + Constants.DamageDebug;
+        var attack = GetAttackNoBoost() + BoostAttack + Constants.DamageDebug;
+        if (PenroseTriangle)
+        {
+            float floatAttack = attack * Random.Range(0.0f, 3.0f);
+            return Mathf.RoundToInt(floatAttack);
+        }
+        return attack;
     }
 
     public string GetAttackDetails()

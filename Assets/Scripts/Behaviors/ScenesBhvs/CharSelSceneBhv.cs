@@ -152,7 +152,7 @@ public class CharSelSceneBhv : SceneBhv
                 var opponents = new List<Opponent>() { OpponentsData.HellOpponents[0], OpponentsData.HellOpponents[1], OpponentsData.HellOpponents[2] };
                 //DEBUG
                 if (OpponentsData.DebugEnabled)
-                    opponents.Insert(0, OpponentsData.DebugOpponent());
+                    opponents.InsertRange(0, OpponentsData.DebugOpponent());
                 //DEBUG
                 PlayerPrefsHelper.SaveCurrentOpponents(opponents);
                 //PlayerPrefsHelper.ResetTattoos();

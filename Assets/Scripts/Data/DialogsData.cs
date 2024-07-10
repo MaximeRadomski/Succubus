@@ -938,8 +938,8 @@ public static class DialogsData
             {
                 new List<string>()
                 {
-                    "Oh an angel? The angel of death is sending you?",
-                    "Nope. Twins do.",
+                    "Oh an angel? Is Azrael sending you?",
+                    "Nope. The angel of death have no power over me. The twins gave me a purpose.",
                     "Wait what??"
                 },
                 new List<string>()

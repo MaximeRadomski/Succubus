@@ -6,26 +6,34 @@ public static class OpponentsData
 {
     //DEBUG
     public static bool DebugEnabled = Constants.OpponentsDebug;
-    public static bool OnlyOpponent = false;
+    public static bool OnlyDebugOpponents = true;
     public static Realm DebugRealm;
-    public static Opponent DebugOpponent()
+    public static List<string> debugNames = new List<string>() { "Truthful Truth", };
+
+    public static List<Opponent> DebugOpponent()
     {
-        var name = "Abject";
-        var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
-        DebugRealm = Realm.Hell;
-        if (tmpOpponent == null)
+        var listOpponents = new List<Opponent>();
+        foreach (var name in debugNames)
         {
-            tmpOpponent = EarthOpponents?.Find(o => o.Name.Contains(name));
-            DebugRealm = Realm.Earth;
+
+            var tmpOpponent = HellOpponents?.Find(o => o.Name.Contains(name));
+            DebugRealm = Realm.Hell;
+            if (tmpOpponent == null)
+            {
+                tmpOpponent = EarthOpponents?.Find(o => o.Name.Contains(name));
+                DebugRealm = Realm.Earth;
+            }
+            if (tmpOpponent == null)
+            {
+                tmpOpponent = HeavenOpponents?.Find(o => o.Name.Contains(name));
+                DebugRealm = Realm.Heaven;
+            }
+            if (tmpOpponent == null)
+                return null;
+            var clone = tmpOpponent.Clone();
+            listOpponents.Add(clone);
         }
-        if (tmpOpponent == null)
-        {
-            tmpOpponent = HeavenOpponents?.Find(o => o.Name.Contains(name));
-            DebugRealm = Realm.Heaven;
-        }
-        if (tmpOpponent == null)
-            return null;
-        return tmpOpponent.Clone(); ;
+        return listOpponents;
     }
 
     static OpponentsData()
@@ -828,7 +836,7 @@ public static class OpponentsData
         new Opponent()
         {
             Name = "Abject", Realm = Realm.Hell, Type = OpponentType.Elite,
-            HpMax = 150, Weakness = Weakness.xLines, XLineWeakness = 4, Cooldown = 1,
+            HpMax = 500, Weakness = Weakness.xLines, XLineWeakness = 4, Cooldown = 1,
             Attacks = new List<OpponentAttack>() {
                 new OpponentAttack(AttackType.Shift, 1),
                 new OpponentAttack(AttackType.Ascension, 1, 1),
