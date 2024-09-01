@@ -249,8 +249,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1851050
@@ -379,8 +381,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &35747378
@@ -969,10 +973,115 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
+--- !u!1 &341737871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 341737872}
+  - component: {fileID: 341737874}
+  - component: {fileID: 341737873}
+  m_Layer: 0
+  m_Name: BLACKLEFT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &341737872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341737871}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -50, y: 0, z: 0}
+  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2013879015}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &341737873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341737871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1fc782fb5044c478e669d9518701fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VerticalSide: 0
+  HorizontalSide: 1
+  XOffset: -38.57
+  YOffset: 0
+  DontActivateOnStart: 0
+  Rotated: 0
+  _customParent: {fileID: 0}
+  KeepUpdating: 0
+--- !u!212 &341737874
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341737871}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 43650419
+  m_SortingLayer: 9
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -5151787287431868109, guid: 079b94e0344b3324db0562a473530b20, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3.857143, y: 2.857143}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &391820986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,8 +1208,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &403402836
@@ -1229,8 +1340,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!21 &479958839
@@ -1564,10 +1677,115 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
+--- !u!1 &539931908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 539931909}
+  - component: {fileID: 539931911}
+  - component: {fileID: 539931910}
+  m_Layer: 0
+  m_Name: BLACKRIGHT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &539931909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539931908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50, y: 0, z: 0}
+  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2013879015}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539931910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539931908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1fc782fb5044c478e669d9518701fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VerticalSide: 0
+  HorizontalSide: 2
+  XOffset: 38.57
+  YOffset: 0
+  DontActivateOnStart: 0
+  Rotated: 0
+  _customParent: {fileID: 0}
+  KeepUpdating: 0
+--- !u!212 &539931911
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539931908}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 43650419
+  m_SortingLayer: 9
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -5151787287431868109, guid: 079b94e0344b3324db0562a473530b20, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3.857143, y: 2.857143}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &576413842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,8 +1974,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &641638827
@@ -1886,8 +2106,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &641929535
@@ -2016,8 +2238,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &693711521
@@ -2146,8 +2370,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &754906117
@@ -2380,8 +2606,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!21 &836636169
@@ -2612,8 +2840,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &884789981
@@ -2822,8 +3052,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &953387881
@@ -2952,8 +3184,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1049602963
@@ -3239,8 +3473,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &1111992102
@@ -3554,8 +3790,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1219652583
@@ -3684,8 +3922,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1232643526
@@ -3814,8 +4054,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1310921294
@@ -3894,8 +4136,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 1
 --- !u!212 &1310921298
@@ -4075,8 +4319,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1339121793
@@ -4309,8 +4555,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1391570572
@@ -4581,8 +4829,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1434796708
@@ -4661,8 +4911,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 0.75
   IsMenuSelectorResetButton: 0
 --- !u!212 &1434796712
@@ -4842,8 +5094,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!21 &1435885905
@@ -5258,8 +5512,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1573058612
@@ -5388,8 +5644,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1592072026
@@ -5702,8 +5960,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1680876400
@@ -6111,8 +6371,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1844560463
@@ -6506,8 +6768,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1966032250
@@ -6718,8 +6982,10 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1975540350
@@ -6920,6 +7186,8 @@ Transform:
   - {fileID: 1110716841}
   - {fileID: 36310333}
   - {fileID: 754906118}
+  - {fileID: 539931909}
+  - {fileID: 341737872}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7145,7 +7413,9 @@ MonoBehaviour:
   ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0

@@ -26,8 +26,9 @@ public static class Helper
 
     public static bool IsInsideCamera(Camera camera, Vector3 position)
     {
+        var aspectRatio = camera.aspect >= 1 ? 1 : camera.aspect;
         var halfHeight = camera.orthographicSize;
-        var halfWidth = camera.orthographicSize * camera.aspect;
+        var halfWidth = camera.orthographicSize * aspectRatio;
         return position.x >= camera.transform.position.x - halfWidth && position.x <= camera.transform.position.x + halfWidth
             && position.y >= camera.transform.position.y - halfHeight && position.y <= camera.transform.position.y + halfHeight;
     }

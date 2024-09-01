@@ -1582,6 +1582,8 @@ MonoBehaviour:
   CanBeReload: 1
   OpponentDeathScreen: 0
   CharacterRealm: 0
+  SonicDropHasKey: 0
+  SonicDropHasControllerInput: 0
 --- !u!114 &331272313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,8 +2136,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &488515786
@@ -5990,8 +5994,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!212 &1466922717
@@ -8158,8 +8164,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1 &1940658361
@@ -8840,8 +8848,10 @@ MonoBehaviour:
   ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
+  ColorDisabled: 0
   CustomSound: 0
   VibratesOnClick: 0
+  AlterChildren: 1
   ConeVisionMult: 1.5
   IsMenuSelectorResetButton: 0
 --- !u!1001 &2082865255

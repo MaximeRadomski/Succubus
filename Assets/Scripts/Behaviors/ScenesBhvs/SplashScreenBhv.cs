@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SplashScreenBhv : SceneBhv
@@ -9,6 +10,7 @@ public class SplashScreenBhv : SceneBhv
     private TMPro.TextMeshPro _continueText;
 
     private bool _isGoingToMainMenu = false;
+    private ScreenOrientation screenOrientation;
 
     public override MusicType MusicType => MusicType.SplashScreen;
 
@@ -61,6 +63,10 @@ public class SplashScreenBhv : SceneBhv
 #else
         _continueText.text = "Touch Anywhere To Continue";
 #endif
+        Screen.autorotateToLandscapeRight = true;
+        Screen.autorotateToLandscapeLeft = true;
+        Screen.autorotateToPortraitUpsideDown = true;
+        screenOrientation = getOrientationFromCamera();
         Invoke(nameof(TiltContinue), 0.75f);
         var canCheckOnlineVersionRightAway = CheckLastInstalledVersion();
         if (canCheckOnlineVersionRightAway)
@@ -96,10 +102,32 @@ public class SplashScreenBhv : SceneBhv
         GameObject.Find("Title").GetComponent<ButtonBhv>().EndActionDelegate = GoToMainMenu;
     }
 
+    private ScreenOrientation getOrientationFromCamera()
+    {
+        var camera = Helper.GetMainCamera();
+        if (camera.aspect < 0.99f)
+            return ScreenOrientation.Portrait;
+        else if (camera.aspect > 1.01f)
+            return ScreenOrientation.Landscape;
+        return ScreenOrientation.Square;
+    }
+
     protected override void NormalUpdate()
     {
         if (Input.anyKeyDown && Cache.InputLayer == 0)
             GoToMainMenu();
+#if UNITY_ANDROID
+        var actualOrientation = getOrientationFromCamera();
+        if (screenOrientation != actualOrientation)
+        {
+            screenOrientation = actualOrientation;
+            var camera = Helper.GetMainCamera();
+            camera.GetComponent<CameraBhv>().Init();
+            var allPositionBhv = GameObject.FindObjectsOfType<PositionBhv>().ToList();
+            foreach (var positionBhv in allPositionBhv)
+                positionBhv.UpdatePositions();
+        }
+#endif
     }
 
     private void TiltContinue()
@@ -178,6 +206,9 @@ public class SplashScreenBhv : SceneBhv
     {
         if (_isGoingToMainMenu)
             return;
+        Screen.autorotateToLandscapeRight = false;
+        Screen.autorotateToLandscapeLeft = false;
+        Screen.autorotateToPortraitUpsideDown = false;
         _isGoingToMainMenu = true;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         bool OnBlend(bool result)
