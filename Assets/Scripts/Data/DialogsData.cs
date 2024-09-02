@@ -1099,7 +1099,7 @@ public static class DialogsData
                 new List<string>()
                 {
                     "Sigh... Can't believe some angels are now wandering into my realm...",
-                    "Come on Stan! Isn't your will to changes in the angels laws the reason you were banished to begin with?",
+                    "Come on Stan! Isn't your will to make changes in the angels laws the reason you were banished to begin with?",
                     "Yeah I guess... But old habits die hard...",
                     "Well let's begin slowly then! Why not letting us through this time?",
                     "Do not misunderstand my will with my damnation, angel."

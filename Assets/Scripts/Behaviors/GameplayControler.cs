@@ -515,7 +515,7 @@ public class GameplayControler : MonoBehaviour
         if (_rhythmIndicatorBhv != null)
         {
             var newGravity = GravityLevel / 2;
-            SetGravity(newGravity < 2 ? 2 : newGravity);
+            SetGravity(newGravity < 2 ? 2 : newGravity, shoudlBeAlteredByTattoos: false);
         }
     }
 
@@ -764,17 +764,17 @@ public class GameplayControler : MonoBehaviour
         }
     }
 
-    public void SetGravity(int level, bool fromOpponentSpawn = false)
+    public void SetGravity(int level, bool fromOpponentSpawn = false, bool shoudlBeAlteredByTattoos = true)
     {
         if (fromOpponentSpawn && (_isOldSchoolGameplay || Cache.IsEffectAttackInProgress != AttackType.None))
             return;
-        if (Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the purpose of setting it to zero
+        if (shoudlBeAlteredByTattoos && Character != null && Character.DoubleEdgeGravity > 0 && level != 0) //Called with the purpose of setting it to zero
             level += Character.DoubleEdgeGravity;
 
         if (_isTraining == null)
             SetTraining();
 
-        if (Character != null)
+        if (shoudlBeAlteredByTattoos && Character != null && level - Character.LoweredGravity > 0)
             level -= Character.LoweredGravity;
         if (level < 0 || (Cache.PactZeroGravity && !_hasGate && !_isOldSchoolGameplay))
             level = 0;
@@ -795,7 +795,10 @@ public class GameplayControler : MonoBehaviour
         {
             GravityDelay = -1.0f;
             int levelAfter20 = level - 20;
-            _lockDelay = Constants.LockDelay + Cache.BonusLockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
+            if (Cache.BonusLockDelay > 0.0f)
+                _lockDelay = Cache.BonusLockDelay;
+            else
+                _lockDelay = Constants.LockDelay - (Constants.LockDelay * 0.04f * levelAfter20) + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
         }
         else
         {
@@ -811,7 +814,10 @@ public class GameplayControler : MonoBehaviour
     public void SetLockDelay()
     {
         var pieceWeightBonusLockDelay = 0.0f;
-        _lockDelay = Constants.LockDelay + Cache.BonusLockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
+        if (Cache.BonusLockDelay > 0.0f)
+            _lockDelay = Cache.BonusLockDelay;
+        else
+            _lockDelay = Constants.LockDelay + pieceWeightBonusLockDelay + (_isFreeTraining ? 0.0f : Mathf.RoundToInt((_realmTree?.LockDelay ?? 0.0f) * Helper.MultiplierFromPercent(1.0f, this.Character?.RealmTreeBoost ?? 0)));
     }
 
     private void SetNextGravityFall()
@@ -1097,7 +1103,37 @@ public class GameplayControler : MonoBehaviour
         else if (_nextLock <= Time.time && !CurrentPiece.GetComponent<Piece>().IsLocked)
         {
             PounderCamera();
-            Lock();
+            if (Cache.BonusLockDelay > 0)
+            {
+                _nextLock = -1;
+                bool ascending = true;
+                int nbLinesAscended = 0;
+                int yMin = Mathf.RoundToInt(CurrentPiece.transform.position.y);
+                while (ascending)
+                {
+                    CurrentPiece.transform.position += new Vector3(0.0f, +1.0f, 0.0f);
+                    if (CurrentPiece.transform.position.y >= _spawner.transform.position.y && IsPiecePosValid(CurrentPiece))
+                    {
+                        ascending = false;
+                        string columns = "";
+                        foreach (Transform child in CurrentPiece.transform)
+                        {
+                            int x = Mathf.RoundToInt(child.transform.position.x);
+                            if (columns.Contains(x.ToString()))
+                                continue;
+                            HardDropFadeBlocksOnX(x, yMin);
+                            columns += x.ToString();
+                        }
+                    }
+                    else
+                        ++nbLinesAscended;
+                    if (nbLinesAscended >= 20)
+                        break;
+                }
+                DropGhost();
+            }
+            else
+                Lock();
         }
     }
 
@@ -2386,7 +2422,7 @@ public class GameplayControler : MonoBehaviour
             {
                 Cache.WhacAMoleAttackCount = 0;
                 var tmp = GravityLevel - Character.WhacAMoleStrength;
-                SetGravity(tmp < 1 ? 1 : tmp);
+                SetGravity(tmp < 1 ? 1 : tmp, shoudlBeAlteredByTattoos: false);
                 Instantiator.PopText("whac-a-mole", CharacterInstanceBhv.transform.position + new Vector3(-3f, 0.0f, 0.0f));
             }
 
@@ -3450,7 +3486,7 @@ public class GameplayControler : MonoBehaviour
             _rhythmIndicatorBhv.StartRhythm((this.SceneBhv as ClassicGameSceneBhv).OpponentInstanceBhv, this.CharacterInstanceBhv, nbMoves, beat, color, nbEmptyRowsOnMiss, opponentRealm);
         }));
         var newGravity = GravityLevel / 2;
-        SetGravity(newGravity < 2 ? 2 : newGravity);
+        SetGravity(newGravity < 2 ? 2 : newGravity, shoudlBeAlteredByTattoos: false);
         Instantiator.NewAttackLine(opponentInstance.transform.position, _rhythmIndicatorBhv.transform.position, opponentRealm);
         Cache.CurrentItemCooldown -= Mathf.RoundToInt(Character.ItemCooldownReducer * 1.0f); //Not more because each Missed Empty Row might reduce it
         Cache.MusicAttackCount++;

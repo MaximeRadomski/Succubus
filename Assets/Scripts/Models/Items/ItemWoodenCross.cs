@@ -15,7 +15,7 @@ public class ItemWoodenCross : Item
 
     protected override void Effect()
     {
-        _gameplayControler.SetGravity(1);
+        _gameplayControler.SetGravity(1, shoudlBeAlteredByTattoos: false);
         base.Effect();
     }
 }

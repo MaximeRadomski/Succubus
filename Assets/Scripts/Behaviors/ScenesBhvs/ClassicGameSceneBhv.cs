@@ -680,7 +680,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
 
     public void StopTime(int seconds)
     {
-        _gameplayControler.SetGravity(0);
+        _gameplayControler.SetGravity(0, shoudlBeAlteredByTattoos: false);
         _nextCooldownTick = Time.time + Constants.OpponentCooldownOneHour;
         _timeStopTimer = Time.time + seconds;
     }

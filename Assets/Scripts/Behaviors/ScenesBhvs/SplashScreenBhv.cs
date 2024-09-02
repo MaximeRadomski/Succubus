@@ -66,6 +66,7 @@ public class SplashScreenBhv : SceneBhv
         Screen.autorotateToLandscapeRight = true;
         Screen.autorotateToLandscapeLeft = true;
         Screen.autorotateToPortraitUpsideDown = true;
+        Screen.autorotateToPortrait = true;
         screenOrientation = getOrientationFromCamera();
         Invoke(nameof(TiltContinue), 0.75f);
         var canCheckOnlineVersionRightAway = CheckLastInstalledVersion();
@@ -209,6 +210,7 @@ public class SplashScreenBhv : SceneBhv
         Screen.autorotateToLandscapeRight = false;
         Screen.autorotateToLandscapeLeft = false;
         Screen.autorotateToPortraitUpsideDown = false;
+        Screen.autorotateToPortrait = false;
         _isGoingToMainMenu = true;
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         bool OnBlend(bool result)

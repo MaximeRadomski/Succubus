@@ -52,7 +52,7 @@ public static class Cache
     public static bool HalvedCooldown = false;
     public static int AddedDodgeChancePercent = 0;
     public static int BlockPerAttack = -1;
-    public static float BonusLockDelay = 0.0f;
+    public static float BonusLockDelay = -1.0f;
     public static int TruthResurrection = 0;
     public static Realm CurrentOpponentChangedRealm = Realm.None;
     public static int HeightLimiter = 0;
@@ -116,7 +116,7 @@ public static class Cache
         HalvedCooldown = false;
         AddedDodgeChancePercent = 0;
         BlockPerAttack = -1;
-        BonusLockDelay = 0.0f;
+        BonusLockDelay = -1.0f;
         TruthResurrection = 0;
         CurrentOpponentChangedRealm = Realm.None;
         HeightLimiter = 0;
