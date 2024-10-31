@@ -535,6 +535,19 @@ public static class DialogsData
                 }
             }
         },
+        { "PHILL@Invoke|Any",
+            new List<List<string>>()
+            {
+                new List<string>()
+                {
+                    "STOP",
+                    "What's happening?",
+                    "This... This madness has to stop...",
+                    "Did you just stop time??",
+                    "Oh... My sweet innocent child..."
+                }
+            }
+        },
         #endregion
         #region Boom Slayer
         { "Boom Slayer|Any",

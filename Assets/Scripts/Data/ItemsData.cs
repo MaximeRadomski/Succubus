@@ -20,7 +20,7 @@ public static class ItemsData
 
     //DEBUG
     public static bool DebugEnabled = Constants.ItemsDebug;
-    public static Item DebugItem = GetItemFromName("Atlas Effigy");
+    public static Item DebugItem = GetItemFromName("The Hierophant");
 
     public static Item GetRandomItem(Rarity maxRarity = Rarity.Legendary)
     {

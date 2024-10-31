@@ -29,6 +29,8 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private bool _isCrit;
     //private bool _isVictorious;
     private bool _isTraining;
+    private int _b2bCounter;
+    private bool _phillInvoked;
 
     private SoundControlerBhv _soundControler;
     private int _idOpponentDeath;
@@ -39,6 +41,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
     private int _idImmunity;
     private int _idDodge;
     private int _idTattooSound;
+    private int _idInvoke;
 
     public override MusicType MusicType => GetMusicType();
 
@@ -141,6 +144,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
             _idImmunity = _soundControler.SetSound("Immunity");
             _idDodge = _soundControler.SetSound("LevelUp");
             _idTattooSound = _soundControler.SetSound("TattooSound");
+            _idInvoke = _soundControler.SetSound("Invoke");
             var realm = _isTraining ? Realm.Hell : Run?.CurrentRealm ?? Realm.Hell;
             GameObject.Find("InfoRealm").GetComponent<TMPro.TextMeshPro>().text = $"{Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c32B)}realm:\n{ Constants.GetMaterial(realm, TextType.succubus3x5, TextCode.c43B)}{ (realm.ToString().ToLower())}\nlvl {Run?.RealmLevel.ToString() ?? "?"}";
             NextOpponent(sceneInit: true);
@@ -529,13 +533,17 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 loot = ResourcesData.GetResourceFromName(ResourcesData.Resources[(int)Run.CurrentRealm]);
                 Helper.ReinitKeyboardInputs(this);
             }
-            var amount = 1;
-            if (Run.Difficulty == Difficulty.Hard)
+            int amount = 1;
+            if (Run.Difficulty == Difficulty.Easy || instead)
+                amount = 1;
+            else if (Run.Difficulty == Difficulty.Normal)
                 amount = 2;
-            else if (Run.Difficulty == Difficulty.Infernal)
+            else if (Run.Difficulty == Difficulty.Hard)
                 amount = 3;
-            else if (Run.Difficulty == Difficulty.Divine || (int)Run.Difficulty > (int)Difficulty.Divine)
+            else if (Run.Difficulty == Difficulty.Infernal)
                 amount = 4;
+            else if (Run.Difficulty == Difficulty.Divine || (int)Run.Difficulty > (int)Difficulty.Divine)
+                amount = 5;
             if (Character.ResourceFarmBonus > 0)
                 amount += Character.ResourceFarmBonus;
             Run.AlterResource(((Resource)loot).Id, amount);
@@ -933,6 +941,11 @@ public class ClassicGameSceneBhv : GameSceneBhv
             StartOpponentCooldown();
             Cache.SlumberingDragoncrestInEffect = false;
         }
+        if (_phillInvoked)
+        {
+            InvokePhill();
+            return true;
+        }
         if (Cache.CurrentOpponentHp <= 0)
         {
             KillOpponent();
@@ -951,6 +964,37 @@ public class ClassicGameSceneBhv : GameSceneBhv
             SetNextCooldownTick();
             return false;
         }
+    }
+
+    public void InvokePhill()
+    {
+        _musicControler.Stop();
+        _stunIcon.Hide();
+        _gameplayControler.CurrentPiece.GetComponent<Piece>().IsLocked = true;
+        _gameplayControler.PlayFieldBhv.ShowSemiOpcaity(1);
+        _gameplayControler.OpponentDeathScreen = true;
+        _soundControler.PlaySound(_idInvoke);
+        var minHeight = 9.0f;
+        var highestBlockY = _gameplayControler.GetHighestBlock();
+        if (minHeight < highestBlockY)
+            minHeight = highestBlockY + 2;
+        Instantiator.PopText("?????????????", new Vector2(4.5f, minHeight));
+        PlayerPrefsHelper.SavePhillHasBeenInvoked(true);
+        CurrentOpponent.IsDead = true;
+        _opponentOnCooldown = false;
+        Cache.CurrentOpponentCooldown = 0;
+        UpdateCooldownBar(Direction.Down);
+        _gameplayControler.GameplayOnHold = true;
+        PlayerPrefsHelper.SaveIsInFight(false);
+        Invoke(nameof(PhillDialog), 2.0f);
+    }
+
+    void PhillDialog()
+    {
+        Instantiator.NewDialogBoxEncounter(CameraBhv.transform.position, "PHILL@Invoke", Character.Name, Realm.Hell, () =>
+        {
+            Application.Quit();
+        });
     }
 
     public void KillOpponent()
@@ -1174,6 +1218,7 @@ public class ClassicGameSceneBhv : GameSceneBhv
         }
         if (isB2B)
         {
+            ++_b2bCounter;
             if (CurrentOpponent.Weakness == Weakness.Consecutive && nbLines >= 2)
             {
                 _weaknessInstance.Pop();
@@ -1187,6 +1232,15 @@ public class ClassicGameSceneBhv : GameSceneBhv
                 incomingDamage = 0;
             }
         }
+        else if (nbLines > 0)
+            _b2bCounter = 0;
+
+        if ((int)Run.Difficulty >= (int)Difficulty.Hard && nbLines >= 4 && _b2bCounter >= 3 && CurrentOpponent?.Name == OpponentsData.HellOpponents[28].Name /* PHILL */)
+        {
+            if (!PlayerPrefsHelper.GetPhillHasBeenInvoked())
+                _phillInvoked = true;
+        }
+
         _characterAttack += incomingDamage;
     }
 

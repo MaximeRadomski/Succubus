@@ -8,7 +8,7 @@ public static class OpponentsData
     public static bool DebugEnabled = Constants.OpponentsDebug;
     public static bool OnlyDebugOpponents = true;
     public static Realm DebugRealm;
-    public static List<string> debugNames = new List<string>() { "Truthful Truth", };
+    public static List<string> debugNames = new List<string>() { "PHILL", };
 
     public static List<Opponent> DebugOpponent()
     {

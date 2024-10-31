@@ -1265,4 +1265,15 @@ public class PlayerPrefsHelper : MonoBehaviour
         var hasClickedOn = PlayerPrefs.GetInt(Constants.PpHasClickedOnAttackDetails, Constants.PpSerializeDefaultInt);
         return hasClickedOn == 1 ? true : false;
     }
+
+    public static void SavePhillHasBeenInvoked(bool enable)
+    {
+        PlayerPrefs.SetInt(Constants.PpPhillHasBeenInvoked, enable ? 1 : 0);
+    }
+
+    public static bool GetPhillHasBeenInvoked()
+    {
+        var phillHasBeenInvoked = PlayerPrefs.GetInt(Constants.PpPhillHasBeenInvoked, Constants.PpPhillHasBeenInvokedDefault == true ? 1 : 0);
+        return phillHasBeenInvoked == 1 ? true : false;
+    }
 }

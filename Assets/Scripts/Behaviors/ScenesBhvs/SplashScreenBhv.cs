@@ -8,6 +8,7 @@ public class SplashScreenBhv : SceneBhv
     private TMPro.TextMeshPro _catchPhrase;
     private List<string> _catchPhrases;
     private TMPro.TextMeshPro _continueText;
+    private bool _hasInvoke;
 
     private bool _isGoingToMainMenu = false;
     private ScreenOrientation screenOrientation;
@@ -55,6 +56,7 @@ public class SplashScreenBhv : SceneBhv
     protected override void Init()
     {
         base.Init();
+        _hasInvoke = PlayerPrefsHelper.GetPhillHasBeenInvoked();
         _continueText = GameObject.Find("ContinueText").GetComponent<TMPro.TextMeshPro>();
 #if !UNITY_ANDROID
         var resolutionService = GetComponent<ResolutionService>();
@@ -72,30 +74,38 @@ public class SplashScreenBhv : SceneBhv
         var canCheckOnlineVersionRightAway = CheckLastInstalledVersion();
         if (canCheckOnlineVersionRightAway)
             CheckLastUpdatedVersion();
-        _catchPhrases = new List<string>()
+        if (_hasInvoke)
+            _catchPhrases = new List<string>()
+            {
+                "유 얼 트랖트",
+            };
+        else
         {
-            "Welcome, sinner",
-            "Glad to see you back",
-            "Here we go again",
-            "Always a pleasure",
-            "Welcome back",
-            "Oh hi there",
-            "Good day to you",
-            "Nice to see you here",
-            "Excellent shape my dear",
-            "Ready to burst some angel ass",
-            "How are you doing?",
-            "My regards",
-            "Back in the game",
-            "Since 2020",
-            "Do you like the game?",
-            "Looking goood",
-            "Hey you"
-        };
-        if (DateTime.Today.DayOfWeek == DayOfWeek.Monday || DateTime.Today.DayOfWeek == DayOfWeek.Thursday)
-            _catchPhrases.Add("Urgh... [DAY]s am I right?");
-        else if (DateTime.Today.DayOfWeek == DayOfWeek.Wednesday)
-            _catchPhrases.Add("It's [DAY] my dudes!");
+            _catchPhrases = new List<string>()
+            {
+                "Welcome, sinner",
+                "Glad to see you back",
+                "Here we go again",
+                "Always a pleasure",
+                "Welcome back",
+                "Oh hi there",
+                "Good day to you",
+                "Nice to see you here",
+                "Excellent shape my dear",
+                "Ready to burst some angel ass",
+                "How are you doing?",
+                "My regards",
+                "Back in the game",
+                "Since 2020",
+                "Do you like the game?",
+                "Looking goood",
+                "Hey you"
+            };
+            if (DateTime.Today.DayOfWeek == DayOfWeek.Monday || DateTime.Today.DayOfWeek == DayOfWeek.Thursday)
+                _catchPhrases.Add("Urgh... [DAY]s am I right?");
+            else if (DateTime.Today.DayOfWeek == DayOfWeek.Wednesday)
+                _catchPhrases.Add("It's [DAY] my dudes!");
+        }
         _catchPhrase = GameObject.Find("CatchPhrase").GetComponent<TMPro.TextMeshPro>();
         var tmpTxt = _catchPhrases[UnityEngine.Random.Range(0, _catchPhrases.Count)];
         tmpTxt = tmpTxt.Replace("[DAY]", DateTime.Today.DayOfWeek.ToString());
@@ -116,7 +126,9 @@ public class SplashScreenBhv : SceneBhv
     protected override void NormalUpdate()
     {
         if (Input.anyKeyDown && Cache.InputLayer == 0)
+        {
             GoToMainMenu();
+        }
 #if UNITY_ANDROID
         var actualOrientation = getOrientationFromCamera();
         if (screenOrientation != actualOrientation)
@@ -215,6 +227,9 @@ public class SplashScreenBhv : SceneBhv
         Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "", null, OnBlend);
         bool OnBlend(bool result)
         {
+            if (_hasInvoke)
+            NavigationService.NewRootScene(Constants.ClickerScene);
+            else
             NavigationService.NewRootScene(Constants.MainMenuScene);
             return true;
         }

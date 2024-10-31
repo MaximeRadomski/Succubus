@@ -74,5 +74,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AccountScene.unity
     guid: be025324d76c80545a3a9a2ce418039f
+  - enabled: 1
+    path: Assets/Scenes/ClickerScene.unity
+    guid: 0cd9e1df037f8cd418186550eae20c74
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2be493e1868ee174083e5a3262e27d84, type: 2}

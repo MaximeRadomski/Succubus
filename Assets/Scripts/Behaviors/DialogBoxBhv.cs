@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -79,7 +80,12 @@ public class DialogBoxBhv : FrameRateBehavior
         _musicControler = GameObject.Find(Constants.GoMusicControler)?.GetComponent<MusicControlerBhv>();
 
         _dialogLibelle = secondaryName == null ? subjectName : $"{subjectName}|{secondaryName}";
-        _subject = GetSubjectFromName(subjectName);
+        var rawSubject = subjectName;
+        if (rawSubject.Contains("@"))
+        {
+            rawSubject = rawSubject.Split('@').First();
+        }
+        _subject = GetSubjectFromName(rawSubject);
         _secondary = GetSubjectFromName(secondaryName);
         List<List<string>> tmpSentences = null;
         if (customDialogLibelle != null)
